@@ -17,7 +17,6 @@ const Example = () => (
       <CardDescription>A luxurious 3-bedroom house with a modern design.</CardDescription>
     </CardHeader>
     <CardContent className="p-0">
-      {/** biome-ignore lint/performance/noImgElement: "Kibo UI is framework agnostic" */}
       <img
         alt=""
         height={1380}
