@@ -2,7 +2,8 @@
 {
   // Configurando a busca (excluindo de resultados) e o observador de arquivos
   "files.watcherExclude": {
-    "**/routeTree.gen.ts": true
+    "**/routeTree.gen.ts": true,
+    "**/tsconfig.json": true
   },
   "search.exclude": {
     "**/routeTree.gen.ts": true,
@@ -12,7 +13,8 @@
     "node_modules": true
   },
   "files.readonlyInclude": {
-    "**/routeTree.gen.ts": true
+    "**/routeTree.gen.ts": true,
+    "**/tsconfig.json": true
   },
   "prettier.printWidth": 180,
   "prettier.tabWidth": 2,
