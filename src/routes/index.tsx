@@ -7,21 +7,38 @@ import {
   Clock,
   DollarSign,
   Download,
+  FileText,
   Filter,
   Heart,
+  Layout,
   Mail,
   MapPin,
   Phone,
+  PieChart,
   Settings,
   Share2,
   Star,
+  Table,
   TrendingUp,
   Upload,
   Users,
   Zap,
 } from "lucide-react";
-
+import AccordionTabs1 from "@/components/accordion-tabs-1";
+import CardStandard4 from "@/components/card-standard-4";
+import EmptyStandard5 from "@/components/empty-standard-5";
+import FieldLayouts4 from "@/components/field-layouts-4";
+import FieldLayouts5 from "@/components/field-layouts-5";
+import FieldSelects5 from "@/components/field-selects-5";
+import FieldToggles3 from "@/components/field-toggles-3";
+import FormAdvanced7 from "@/components/form-advanced-7";
+import FormPatterns3 from "@/components/form-patterns-3";
 import { Status, StatusIndicator, StatusLabel } from "@/components/kibo-ui/status";
+import Stats01 from "@/components/stats-01";
+import Stats03 from "@/components/stats-03";
+import Stats09 from "@/components/stats-09";
+import Table05 from "@/components/table-05";
+import TableStandard3 from "@/components/table-standard-3";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -94,7 +111,7 @@ function App() {
 
         {/* Main Tabs Navigation */}
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-8 h-auto">
             <TabsTrigger value="overview">
               <Activity />
               Overview
@@ -110,6 +127,22 @@ function App() {
             <TabsTrigger value="data">
               <TrendingUp />
               Data
+            </TabsTrigger>
+            <TabsTrigger value="analytics">
+              <PieChart />
+              Analytics
+            </TabsTrigger>
+            <TabsTrigger value="tables">
+              <Table />
+              Tables
+            </TabsTrigger>
+            <TabsTrigger value="advanced-forms">
+              <FileText />
+              Advanced Forms
+            </TabsTrigger>
+            <TabsTrigger value="content">
+              <Layout />
+              Content
             </TabsTrigger>
           </TabsList>
 
@@ -529,6 +562,48 @@ function App() {
                 </Button>
               </CardFooter>
             </Card>
+          </TabsContent>
+
+          {/* Analytics Tab */}
+          <TabsContent value="analytics" className="space-y-6">
+            <Stats01 />
+            <Stats03 />
+            <Stats09 />
+          </TabsContent>
+
+          {/* Tables Tab */}
+          <TabsContent value="tables" className="space-y-6">
+            <Table05 />
+            <TableStandard3 />
+          </TabsContent>
+
+          {/* Advanced Forms Tab */}
+          <TabsContent value="advanced-forms" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-6">
+                <FormAdvanced7 />
+                <FormPatterns3 />
+              </div>
+              <div className="space-y-6">
+                <FieldLayouts4 />
+                <FieldLayouts5 />
+                <FieldSelects5 />
+                <FieldToggles3 />
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* Content Tab */}
+          <TabsContent value="content" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-6">
+                <AccordionTabs1 />
+                <EmptyStandard5 />
+              </div>
+              <div className="space-y-6">
+                <CardStandard4 />
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
