@@ -4,3 +4,8 @@ dist
 dist-ssr
 *.local
 *pnpm-store
+count.txt
+.env
+.nitro
+.tanstack
+.wrangler

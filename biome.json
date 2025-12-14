@@ -22,11 +22,7 @@
   },
   "overrides": [
     {
-      "includes": [
-        "src/routeTree.gen.ts",
-        "**/*.gen.ts",
-        "public"
-      ],
+      "includes": ["src/routeTree.gen.ts", "**/*.gen.ts", "public", "src/styles.css"],
       "linter": {
         "enabled": false
       },
