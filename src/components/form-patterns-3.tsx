@@ -16,11 +16,12 @@ const formSchema = z.object({
     message: "Username must be at least 3 characters.",
   }),
   email: z
+    .string()
     .email({
-      error: "Please enter a valid email address.",
+      message: "Please enter a valid email address.",
     })
     .min(1, {
-      error: "Email is required.",
+      message: "Email is required.",
     }),
   bio: z.string().max(160, {
     message: "Bio must not exceed 160 characters.",

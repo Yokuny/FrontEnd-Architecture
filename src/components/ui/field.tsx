@@ -1,9 +1,8 @@
-import { useMemo } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-
-import { cn } from "@/lib/utils";
+import { useMemo } from "react";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   return (
@@ -54,7 +53,7 @@ const fieldVariants = cva("group/field flex w-full gap-3 data-[invalid=true]:tex
 });
 
 function Field({ className, orientation = "vertical", ...props }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
-  return <div role="group" data-slot="field" data-orientation={orientation} className={cn(fieldVariants({ orientation }), className)} {...props} />;
+  return <div data-slot="field" data-orientation={orientation} className={cn(fieldVariants({ orientation }), className)} {...props} />;
 }
 
 function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
@@ -137,11 +136,11 @@ function FieldError({
       return null;
     }
 
-    if (errors?.length == 1) {
+    if (errors?.length === 1) {
       return errors[0]?.message;
     }
 
-    return <ul className="ml-4 flex list-disc flex-col gap-1">{errors.map((error, index) => error?.message && <li key={index}>{error.message}</li>)}</ul>;
+    return <ul className="ml-4 flex list-disc flex-col gap-1">{errors.map((e) => e?.message && <li key={e.message}>{e.message}</li>)}</ul>;
   }, [children, errors]);
 
   if (!content) {
