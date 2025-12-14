@@ -1,6 +1,6 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "short_name": "IoTLog",
+  "name": "IoTLog",
   "icons": [
     {
       "src": "favicon.ico",
@@ -24,7 +24,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/index.html",
   "display": "standalone",
   "theme_color": "light",
   "background_color": "#ffffff",
