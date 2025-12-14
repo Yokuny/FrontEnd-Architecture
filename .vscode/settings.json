@@ -1,6 +1,6 @@
 // Configurando o VS Code
-// Configurando a busca (excluindo de resultados) e o observador de arquivos
 {
+  // Configurando a busca (excluindo de resultados) e o observador de arquivos
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true
   },
@@ -18,11 +18,11 @@
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
   "prettier.singleQuote": false,
-  "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports.biome": "explicit"
   },
+  "editor.defaultFormatter": "biomejs.biome",
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
