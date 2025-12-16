@@ -9,12 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as ComponentsIndexRouteImport } from './routes/components/index'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
+import { Route as AuthUnlockRouteImport } from './routes/auth/unlock'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ComponentsIndexRoute = ComponentsIndexRouteImport.update({
+  id: '/components/',
+  path: '/components/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthIndexRoute = AuthIndexRouteImport.update({
@@ -22,40 +23,49 @@ const AuthIndexRoute = AuthIndexRouteImport.update({
   path: '/auth/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthUnlockRoute = AuthUnlockRouteImport.update({
+  id: '/auth/unlock',
+  path: '/auth/unlock',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/auth/unlock': typeof AuthUnlockRoute
   '/auth': typeof AuthIndexRoute
+  '/components': typeof ComponentsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/auth/unlock': typeof AuthUnlockRoute
   '/auth': typeof AuthIndexRoute
+  '/components': typeof ComponentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/auth/unlock': typeof AuthUnlockRoute
   '/auth/': typeof AuthIndexRoute
+  '/components/': typeof ComponentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth'
+  fullPaths: '/auth/unlock' | '/auth' | '/components'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth'
-  id: '__root__' | '/' | '/auth/'
+  to: '/auth/unlock' | '/auth' | '/components'
+  id: '__root__' | '/auth/unlock' | '/auth/' | '/components/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthUnlockRoute: typeof AuthUnlockRoute
   AuthIndexRoute: typeof AuthIndexRoute
+  ComponentsIndexRoute: typeof ComponentsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/components/': {
+      id: '/components/'
+      path: '/components'
+      fullPath: '/components'
+      preLoaderRoute: typeof ComponentsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/': {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/unlock': {
+      id: '/auth/unlock'
+      path: '/auth/unlock'
+      fullPath: '/auth/unlock'
+      preLoaderRoute: typeof AuthUnlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthUnlockRoute: AuthUnlockRoute,
   AuthIndexRoute: AuthIndexRoute,
+  ComponentsIndexRoute: ComponentsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
