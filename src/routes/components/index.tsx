@@ -34,11 +34,13 @@ import FieldToggles3 from "@/components/field-toggles-3";
 import FormAdvanced7 from "@/components/form-advanced-7";
 import FormPatterns3 from "@/components/form-patterns-3";
 import { Status, StatusIndicator, StatusLabel } from "@/components/kibo-ui/status";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import Stats01 from "@/components/stats-01";
 import Stats03 from "@/components/stats-03";
 import Stats09 from "@/components/stats-09";
 import Table05 from "@/components/table-05";
 import TableStandard3 from "@/components/table-standard-3";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -53,7 +55,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toggle } from "@/components/ui/toggle";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/components/")({
   component: App,
 });
 
@@ -74,6 +76,9 @@ function App() {
           </div>
 
           <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <ThemeSwitcher />
+
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>

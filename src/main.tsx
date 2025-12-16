@@ -1,11 +1,17 @@
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { StrictMode } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
+import { IntlProvider } from "react-intl";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
 import "./styles.css";
+
+// Import translations
+import enText from "../translations/en.json";
+import esText from "../translations/es.json";
+import ptText from "../translations/pt.json";
 import reportWebVitals from "./reportWebVitals.ts";
 
 // Create a new router instance
@@ -25,13 +31,54 @@ declare module "@tanstack/react-router" {
   }
 }
 
+// Available messages by locale
+const messages: Record<string, Record<string, string>> = {
+  en: enText,
+  es: esText,
+  pt: ptText,
+};
+
+// Get browser language or default to 'en'
+const getBrowserLanguage = (): string => {
+  const savedLanguage = localStorage.getItem("language");
+  if (savedLanguage && messages[savedLanguage]) {
+    return savedLanguage;
+  }
+
+  const browserLang = navigator.language.split("-")[0];
+  return messages[browserLang] ? browserLang : "en";
+};
+
+// App component with IntlProvider
+function App() {
+  const [locale, setLocale] = useState<string>(getBrowserLanguage());
+
+  useEffect(() => {
+    // Listen for language changes
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "language" && e.newValue && messages[e.newValue]) {
+        setLocale(e.newValue);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  return (
+    <IntlProvider locale={locale} messages={messages[locale]} defaultLocale="en">
+      <RouterProvider router={router} />
+    </IntlProvider>
+  );
+}
+
 // Render the app
 const rootElement = document.getElementById("app");
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <App />
     </StrictMode>,
   );
 }

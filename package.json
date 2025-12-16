@@ -50,6 +50,7 @@
     "react-day-picker": "^9",
     "react-dom": "^19",
     "react-hook-form": "^7",
+    "react-intl": "^7.1.14",
     "recharts": "2",
     "sonner": "^2",
     "tailwind-merge": "^3",
