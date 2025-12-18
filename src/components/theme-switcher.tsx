@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react";
+import { Moon, Settings, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -39,6 +39,10 @@ export function ThemeSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => changeTheme("system")} className={theme === "system" ? "bg-accent" : ""}>
+          <Settings className="mr-2 h-4 w-4" />
+          System {theme === "system" && "✓"}
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => changeTheme("light")} className={theme === "light" ? "bg-accent" : ""}>
           <Sun className="mr-2 h-4 w-4" />
           Light {theme === "light" && "✓"}
@@ -46,10 +50,6 @@ export function ThemeSwitcher() {
         <DropdownMenuItem onClick={() => changeTheme("dark")} className={theme === "dark" ? "bg-accent" : ""}>
           <Moon className="mr-2 h-4 w-4" />
           Dark {theme === "dark" && "✓"}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeTheme("system")} className={theme === "system" ? "bg-accent" : ""}>
-          <span className="mr-2 h-4 w-4 flex items-center justify-center">💻</span>
-          System {theme === "system" && "✓"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

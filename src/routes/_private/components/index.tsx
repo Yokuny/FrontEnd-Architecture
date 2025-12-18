@@ -55,7 +55,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toggle } from "@/components/ui/toggle";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-export const Route = createFileRoute("/components/")({
+export const Route = createFileRoute("/_private/components/")({
   component: App,
 });
 

@@ -1,8 +1,16 @@
+import { EventType, PublicClientApplication } from "@azure/msal-browser";
+import { MsalProvider } from "@azure/msal-react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { StrictMode, useEffect, useState } from "react";
+import { ThemeProvider } from "next-themes";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { IntlProvider } from "react-intl";
-
+import { Toaster } from "sonner";
+// Import configurations and contexts
+import { msalConfig } from "./config/authConfig";
+import { SocketProvider } from "./config/SocketConfig.tsx";
+import { useLocale } from "./hooks/use-locale";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
@@ -14,10 +22,39 @@ import esText from "../translations/es.json";
 import ptText from "../translations/pt.json";
 import reportWebVitals from "./reportWebVitals.ts";
 
+// Create QueryClient instance
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 10, // 10 minutes (formerly cacheTime)
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+// Create MSAL instance
+const msalInstance = new PublicClientApplication(msalConfig);
+
+// Set active account if available
+if (!msalInstance.getActiveAccount() && msalInstance.getAllAccounts().length > 0) {
+  msalInstance.setActiveAccount(msalInstance.getAllAccounts()[0]);
+}
+
+// Add event callback for login success
+msalInstance.addEventCallback((event) => {
+  if (event.eventType === EventType.LOGIN_SUCCESS && event.payload && "account" in event.payload && event.payload.account) {
+    msalInstance.setActiveAccount(event.payload.account);
+  }
+});
+
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  context: {},
+  context: {
+    queryClient,
+  },
   defaultPreload: "intent",
   scrollRestoration: true,
   defaultStructuralSharing: true,
@@ -38,37 +75,24 @@ const messages: Record<string, Record<string, string>> = {
   pt: ptText,
 };
 
-// Get browser language or default to 'en'
-const getBrowserLanguage = (): string => {
-  const savedLanguage = localStorage.getItem("language");
-  if (savedLanguage && messages[savedLanguage]) {
-    return savedLanguage;
-  }
-
-  const browserLang = navigator.language.split("-")[0];
-  return messages[browserLang] ? browserLang : "en";
-};
-
-// App component with IntlProvider
+// App component with all providers
 function App() {
-  const [locale, setLocale] = useState<string>(getBrowserLanguage());
-
-  useEffect(() => {
-    // Listen for language changes
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === "language" && e.newValue && messages[e.newValue]) {
-        setLocale(e.newValue);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
+  // Use Zustand store for locale - this will automatically re-render when locale changes
+  const locale = useLocale((state) => state.locale);
 
   return (
-    <IntlProvider locale={locale} messages={messages[locale]} defaultLocale="en">
-      <RouterProvider router={router} />
-    </IntlProvider>
+    <MsalProvider instance={msalInstance}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <IntlProvider locale={locale} messages={messages[locale]} defaultLocale="en">
+            <SocketProvider>
+              <RouterProvider router={router} />
+              <Toaster position="top-right" expand={false} richColors closeButton />
+            </SocketProvider>
+          </IntlProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </MsalProvider>
   );
 }
 

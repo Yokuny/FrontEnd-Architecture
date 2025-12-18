@@ -33,9 +33,7 @@ const Example = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  function onSubmit(_values: z.infer<typeof formSchema>) {}
 
   return (
     <div className="w-full max-w-md">

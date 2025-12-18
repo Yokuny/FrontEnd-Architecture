@@ -3,16 +3,18 @@ import { FormattedMessage } from "react-intl";
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useLocale } from "@/hooks/use-locale";
+import { type Locale, useLocale } from "@/hooks/use-locale";
 
-const languageNames: Record<string, string> = {
+const languageNames: Record<Locale, string> = {
   en: "English",
   es: "Español",
   pt: "Português",
 };
 
+const availableLocales: Locale[] = ["en", "es", "pt"];
+
 export function LanguageSwitcher() {
-  const { locale, changeLocale, availableLocales } = useLocale();
+  const { locale, setLocale } = useLocale();
 
   return (
     <DropdownMenu>
@@ -26,7 +28,7 @@ export function LanguageSwitcher() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {availableLocales.map((lang) => (
-          <DropdownMenuItem key={lang} onClick={() => changeLocale(lang)} className={locale === lang ? "bg-accent" : ""}>
+          <DropdownMenuItem key={lang} onClick={() => setLocale(lang)} className={locale === lang ? "bg-accent" : ""}>
             {languageNames[lang]}
             {locale === lang && " ✓"}
           </DropdownMenuItem>

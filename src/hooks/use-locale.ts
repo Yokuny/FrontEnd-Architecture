@@ -1,34 +1,28 @@
-import { useIntl } from "react-intl";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-/**
- * Hook to manage language/locale changes
- * @returns Object with current locale and function to change it
- */
-export function useLocale() {
-  const intl = useIntl();
+const getBrowserLanguage = (): Locale => {
+  const browserLang = navigator.language.split("-")[0];
+  const availableLocales: Locale[] = ["en", "es", "pt"];
+  return availableLocales.includes(browserLang as Locale) ? (browserLang as Locale) : "en";
+};
 
-  const changeLocale = (newLocale: string) => {
-    const availableLocales = ["en", "es", "pt"];
+export const useLocale = create<LocaleStore>()(
+  persist(
+    (set) => ({
+      locale: getBrowserLanguage(),
+      setLocale: (locale: Locale) => set({ locale }),
+    }),
+    {
+      name: "language-storage",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
 
-    if (availableLocales.includes(newLocale)) {
-      localStorage.setItem("language", newLocale);
-      // Trigger storage event for cross-tab communication
-      window.dispatchEvent(
-        new StorageEvent("storage", {
-          key: "language",
-          newValue: newLocale,
-        }),
-      );
-      // Reload to apply new locale
-      window.location.reload();
-    } else {
-      console.warn(`Locale "${newLocale}" is not available. Available locales: ${availableLocales.join(", ")}`);
-    }
-  };
+export type Locale = "en" | "es" | "pt";
 
-  return {
-    locale: intl.locale,
-    changeLocale,
-    availableLocales: ["en", "es", "pt"] as const,
-  };
-}
+type LocaleStore = {
+  locale: Locale;
+  setLocale: (locale: Locale) => void;
+};
