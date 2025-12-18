@@ -5,7 +5,6 @@ import { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -15,32 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRegister } from "@/hooks/use-auth-api";
 import { useLocale } from "@/hooks/use-locale";
-import { AuthLayout } from "@/routes/_public/auth/componentes/AuthLayout";
-
-// ============================================================================
-// Types & Schemas
-// ============================================================================
-
-const registerSearchSchema = z.object({
-  id: z.string().optional(), // Enterprise ID
-  enterprise: z.string().optional(), // Enterprise name
-});
-
-const registerSchema = z
-  .object({
-    name: z.string().min(1, "Name is required"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
-    termsAccepted: z.boolean().refine((val) => val === true, "You must accept the terms and conditions"),
-    reCaptcha: z.string().min(1, "Please complete the reCAPTCHA"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
-
-type RegisterFormValues = z.infer<typeof registerSchema>;
+import { AuthLayout } from "@/routes/_public/auth/@components/AuthLayout";
+import { type RegisterFormValues, registerSchema, registerSearchSchema } from "@/routes/_public/auth/@interface/register.types";
 
 // ============================================================================
 // Route Definition

@@ -12,6 +12,8 @@ export default defineConfig({
     tanstackRouter({
       target: "react",
       autoCodeSplitting: true,
+      // Ignorar o prefixo @
+      routeFileIgnorePrefix: "@",
     }),
     viteReact(),
     tailwindcss(),
