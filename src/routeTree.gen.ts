@@ -9,16 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PublicRouteImport } from './routes/_public'
 import { Route as PrivateRouteImport } from './routes/_private'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index'
-import { Route as PrivateFleetIndexRouteImport } from './routes/_private/fleet/index'
-import { Route as PrivateDashboardIndexRouteImport } from './routes/_private/dashboard/index'
 import { Route as PrivateComponentsIndexRouteImport } from './routes/_private/components/index'
-import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock'
-import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password'
+import { Route as PrivateDashboardIndexRouteImport } from './routes/_private/dashboard/index'
+import { Route as PrivateFleetIndexRouteImport } from './routes/_private/fleet/index'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index'
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register'
+import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password'
+import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock'
+import { Route as IndexRouteImport } from './routes/index'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',

@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, redirect, useRouterState } from "@tanstack/react-router";
-import { DashboardSidebar } from "@/components/sidebar-03/app-sidebar";
+import { AppSidebar } from "@/components/sidebar-03/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -26,7 +26,7 @@ function PrivateLayout() {
   return (
     <SidebarProvider defaultOpen={!isFullscreenRoute}>
       <div className="relative flex h-screen w-full">
-        <DashboardSidebar />
+        <AppSidebar />
         <SidebarInset className="flex flex-1 flex-col overflow-hidden">
           <Outlet />
         </SidebarInset>

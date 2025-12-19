@@ -6,7 +6,8 @@ import { Logo } from "@/components/sidebar-03/logo";
 import DashboardNavigation from "@/components/sidebar-03/nav-main";
 import { NotificationsPopover } from "@/components/sidebar-03/nav-notifications";
 import { TeamSwitcher } from "@/components/sidebar-03/team-switcher";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/sidebar-trigger";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import type { Route } from "./nav-main";
 
@@ -149,7 +150,7 @@ const teams = [
   { id: "3", name: "Gamma Tech", logo: Logo, plan: "Free" },
 ];
 
-export function DashboardSidebar() {
+export function AppSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
