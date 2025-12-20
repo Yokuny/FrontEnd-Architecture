@@ -2,7 +2,7 @@
  * Token management utilities
  */
 
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 
 export interface DecodedToken {
   id: string;
@@ -44,25 +44,25 @@ export function isTokenValid(token: string): boolean {
  * Get stored token from localStorage
  */
 export function getStoredToken(): string | null {
-  return localStorage.getItem("token");
+  return localStorage.getItem('token');
 }
 
 /**
  * Save token to localStorage
  */
 export function setStoredToken(token: string): void {
-  localStorage.setItem("token", token);
+  localStorage.setItem('token', token);
 }
 
 /**
  * Remove token from localStorage
  */
 export function clearStoredToken(): void {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  localStorage.removeItem("id_enterprise_filter");
-  localStorage.removeItem("typelog");
-  localStorage.removeItem("map_show_name");
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('id_enterprise_filter');
+  localStorage.removeItem('typelog');
+  localStorage.removeItem('map_show_name');
 }
 
 /**
@@ -75,13 +75,13 @@ export function getUserFromToken(token: string): DecodedToken | null {
 /**
  * Save user data to localStorage
  */
-export function saveUserData(user: DecodedToken, loginType: "normal" | "sso" = "normal"): void {
-  localStorage.setItem("user", JSON.stringify(user));
-  localStorage.setItem("typelog", loginType);
-  localStorage.setItem("map_show_name", "true");
+export function saveUserData(user: DecodedToken, loginType: 'normal' | 'sso' = 'normal'): void {
+  localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem('typelog', loginType);
+  localStorage.setItem('map_show_name', 'true');
 
   if (user.request) {
-    localStorage.setItem("id_enterprise_filter", user.request);
+    localStorage.setItem('id_enterprise_filter', user.request);
   }
 }
 
@@ -90,7 +90,7 @@ export function saveUserData(user: DecodedToken, loginType: "normal" | "sso" = "
  */
 export function getUserData(): DecodedToken | null {
   try {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
   } catch {
     return null;

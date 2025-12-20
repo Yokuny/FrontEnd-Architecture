@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 /**
  * Criação rotas publicas
@@ -9,6 +9,6 @@ function PublicLayout() {
   return <Outlet />;
 }
 
-export const Route = createFileRoute("/_public")({
+export const Route = createFileRoute('/_public')({
   component: PublicLayout,
 });

@@ -1,0 +1,68 @@
+import { DataMultiSelect } from '@/components/ui/data-multi-select';
+import { DataSelect } from '@/components/ui/data-select';
+import { type Fleet, mapFleetsToOptions, useFleetsSelect } from '@/hooks/use-fleets-api';
+
+export function FleetSelect(props: FleetSelectProps) {
+  const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
+  const query = useFleetsSelect(idEnterprise);
+
+  const noOptionsMessage = !idEnterprise ? 'Selecione primeiro uma empresa.' : 'Nenhuma frota disponível.';
+
+  if (mode === 'multi') {
+    return (
+      <DataMultiSelect<Fleet>
+        label={label || 'Frota (Múltiplo)'}
+        placeholder={placeholder || 'Selecione as frotas...'}
+        value={props.value}
+        onChange={(vals) => props.onChange(vals as string[])}
+        query={query}
+        mapToOptions={mapFleetsToOptions}
+        disabled={disabled}
+        searchPlaceholder="Buscar frota..."
+        noOptionsMessage={noOptionsMessage}
+        noResultsMessage="Nenhuma frota encontrada."
+        className={className}
+      />
+    );
+  }
+
+  return (
+    <DataSelect<Fleet>
+      label={label || 'Frota (Único)'}
+      placeholder={placeholder || 'Selecione uma frota...'}
+      value={props.value}
+      onChange={(val) => props.onChange(val as string)}
+      query={query}
+      mapToOptions={mapFleetsToOptions}
+      disabled={disabled}
+      clearable={props.clearable ?? true}
+      searchPlaceholder="Buscar frota..."
+      noOptionsMessage={noOptionsMessage}
+      noResultsMessage="Nenhuma frota encontrada."
+      className={className}
+    />
+  );
+}
+
+interface FleetSelectBaseProps {
+  idEnterprise?: string;
+  disabled?: boolean;
+  className?: string;
+  label?: string;
+  placeholder?: string;
+  clearable?: boolean;
+}
+
+interface FleetSelectSingleProps extends FleetSelectBaseProps {
+  mode: 'single';
+  value?: string;
+  onChange: (value: string | undefined) => void;
+}
+
+interface FleetSelectMultiProps extends FleetSelectBaseProps {
+  mode: 'multi';
+  value?: string[];
+  onChange: (value: string[]) => void;
+}
+
+export type FleetSelectProps = FleetSelectSingleProps | FleetSelectMultiProps;

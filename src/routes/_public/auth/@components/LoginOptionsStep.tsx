@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Eye, EyeOff } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { type LoginOption, type PasswordFormValues, passwordSchema } from "../@interface/login.types";
-import { SSOButton } from "./SSOButton";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from '@tanstack/react-router';
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { type LoginOption, type PasswordFormValues, passwordSchema } from '../@interface/login.types';
+import { SSOButton } from './SSOButton';
 
 interface LoginOptionsStepProps {
   email: string;
@@ -28,7 +28,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
 
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
-    defaultValues: { password: "" },
+    defaultValues: { password: '' },
   });
 
   return (
@@ -69,8 +69,8 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
                     <div className="relative">
                       <Input
                         {...field}
-                        type={showPassword ? "text" : "password"}
-                        placeholder={intl.formatMessage({ id: "login.password.placeholder", defaultMessage: "Enter your password" })}
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder={intl.formatMessage({ id: 'login.password.placeholder', defaultMessage: 'Enter your password' })}
                         className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                         autoFocus
                       />
@@ -111,7 +111,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
           <Button
             type="button"
             variant="link"
-            onClick={() => navigate({ to: "/auth/reset-password" })}
+            onClick={() => navigate({ to: '/auth/reset-password' })}
             className="h-auto p-0 text-blue-400 hover:text-blue-300 transition-colors font-medium decoration-transparent hover:no-underline"
           >
             <FormattedMessage id="lost.password" defaultMessage="Forgot password?" />

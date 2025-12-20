@@ -2,4 +2,4 @@
 // Storage Keys
 // ============================================================================
 
-export const REMEMBER_EMAIL_KEY = "loginRememberEmail";
+export const REMEMBER_EMAIL_KEY = 'loginRememberEmail';

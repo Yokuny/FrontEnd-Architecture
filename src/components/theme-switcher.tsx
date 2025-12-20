@@ -1,23 +1,23 @@
-import { Moon, Settings, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Moon, Settings, Sun } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
-type Theme = "light" | "dark" | "system";
+type Theme = 'light' | 'dark' | 'system';
 
 export function ThemeSwitcher() {
   const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme;
-    return savedTheme || "system";
+    const savedTheme = localStorage.getItem('theme') as Theme;
+    return savedTheme || 'system';
   });
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
+    root.classList.remove('light', 'dark');
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       root.classList.add(systemTheme);
     } else {
       root.classList.add(theme);
@@ -26,7 +26,7 @@ export function ThemeSwitcher() {
 
   const changeTheme = (newTheme: Theme) => {
     setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
+    localStorage.setItem('theme', newTheme);
   };
 
   return (
@@ -39,17 +39,17 @@ export function ThemeSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => changeTheme("system")} className={theme === "system" ? "bg-accent" : ""}>
+        <DropdownMenuItem onClick={() => changeTheme('system')} className={theme === 'system' ? 'bg-accent' : ''}>
           <Settings className="mr-2 h-4 w-4" />
-          System {theme === "system" && "✓"}
+          System {theme === 'system' && '✓'}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeTheme("light")} className={theme === "light" ? "bg-accent" : ""}>
+        <DropdownMenuItem onClick={() => changeTheme('light')} className={theme === 'light' ? 'bg-accent' : ''}>
           <Sun className="mr-2 h-4 w-4" />
-          Light {theme === "light" && "✓"}
+          Light {theme === 'light' && '✓'}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeTheme("dark")} className={theme === "dark" ? "bg-accent" : ""}>
+        <DropdownMenuItem onClick={() => changeTheme('dark')} className={theme === 'dark' ? 'bg-accent' : ''}>
           <Moon className="mr-2 h-4 w-4" />
-          Dark {theme === "dark" && "✓"}
+          Dark {theme === 'dark' && '✓'}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

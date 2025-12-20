@@ -1,1 +1,1 @@
-export * from "./login.consts";
+export * from './login.consts';

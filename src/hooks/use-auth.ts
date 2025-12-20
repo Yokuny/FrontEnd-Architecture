@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
-import { clearStoredToken, type DecodedToken, decodeToken, setStoredToken } from "@/lib/auth/token";
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import { clearStoredToken, type DecodedToken, decodeToken, setStoredToken } from '@/lib/auth/token';
 
 interface LockedAccount {
   id: string;
@@ -17,7 +17,7 @@ export const useAuth = create<AuthStore>()(
       locked: null,
       rememberEmail: false,
 
-      setAuth: (token: string, loginType: "normal" | "sso" = "normal") => {
+      setAuth: (token: string, loginType: 'normal' | 'sso' = 'normal') => {
         const user = decodeToken(token);
         if (!user) {
           return;
@@ -25,12 +25,12 @@ export const useAuth = create<AuthStore>()(
 
         // Save to localStorage
         setStoredToken(token);
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("typelog", loginType);
-        localStorage.setItem("map_show_name", "true");
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('typelog', loginType);
+        localStorage.setItem('map_show_name', 'true');
 
         if (user.request) {
-          localStorage.setItem("id_enterprise_filter", user.request);
+          localStorage.setItem('id_enterprise_filter', user.request);
         }
 
         set({
@@ -61,7 +61,7 @@ export const useAuth = create<AuthStore>()(
 
       // Initialize from localStorage on mount
       hydrate: () => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         if (token) {
           const user = decodeToken(token);
           if (user) {
@@ -75,7 +75,7 @@ export const useAuth = create<AuthStore>()(
       },
     }),
     {
-      name: "auth-storage",
+      name: 'auth-storage',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         // Only persist these fields
@@ -95,7 +95,7 @@ type AuthStore = {
   isLoading: boolean;
   locked: LockedAccount | null;
   rememberEmail: boolean;
-  setAuth: (token: string, loginType?: "normal" | "sso") => void;
+  setAuth: (token: string, loginType?: 'normal' | 'sso') => void;
   clearAuth: () => void;
   setLoading: (isLoading: boolean) => void;
   setLocked: (locked: LockedAccount) => void;

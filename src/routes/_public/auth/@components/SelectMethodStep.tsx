@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, ArrowRight, Mail, Shield } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field } from "@/components/ui/field";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { type UnlockMethodFormValues, type UnlockOption, unlockMethodSchema } from "../@interface/unlock.types";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeft, ArrowRight, Mail, Shield } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field } from '@/components/ui/field';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { type UnlockMethodFormValues, type UnlockOption, unlockMethodSchema } from '../@interface/unlock.types';
 
 interface SelectMethodStepProps {
   options: UnlockOption[];
@@ -19,7 +19,7 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
   const form = useForm<UnlockMethodFormValues>({
     resolver: zodResolver(unlockMethodSchema),
     defaultValues: {
-      method: "email",
+      method: 'email',
     },
   });
 
@@ -56,10 +56,10 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
                           <Label htmlFor={option.type} className="flex-1 cursor-pointer font-normal">
                             <div className="flex items-center gap-4">
                               <div className="h-10 w-10 rounded-lg bg-white/5 flex items-center justify-center text-zinc-400 group-hover:text-white transition-colors">
-                                {option.type === "email" ? <Mail className="h-5 w-5" /> : <Shield className="h-5 w-5" />}
+                                {option.type === 'email' ? <Mail className="h-5 w-5" /> : <Shield className="h-5 w-5" />}
                               </div>
                               <div>
-                                <p className="text-white font-medium">{option.type === "email" ? "Email" : "SMS"}</p>
+                                <p className="text-white font-medium">{option.type === 'email' ? 'Email' : 'SMS'}</p>
                                 <p className="text-zinc-500 text-sm">{option.destination}</p>
                               </div>
                             </div>

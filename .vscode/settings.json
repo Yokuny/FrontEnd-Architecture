@@ -1,16 +1,24 @@
 // Configurando o VS Code
 {
-  // Configurando a busca (excluindo de resultados) e o observador de arquivos
+  // Excluindo da busca estes arquivos
+  "search.useIgnoreFiles": true,
+  "search.exclude": {
+    "**/routeTree.gen.ts": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.pnpm-store": true,
+    "**/.gitignore": true,
+    "**/pnpm-lock.yaml": true,
+    "**/yarn.lock": true,
+    "**/package-lock.json": true,
+    "**pnpm*": true,
+    "**yarn*": true,
+    "**npm*": true
+  },
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true,
     "**/tsconfig.json": true
-  },
-  "search.exclude": {
-    "**/routeTree.gen.ts": true,
-    "**pnpm*": true,
-    "**yarn*": true,
-    "**npm*": true,
-    "node_modules": true
   },
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true,

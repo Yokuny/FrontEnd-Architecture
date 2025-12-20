@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { SidebarTrigger } from "@/components/sidebar-trigger";
+import { createFileRoute } from '@tanstack/react-router';
+import { SidebarTrigger } from '@/components/sidebar-trigger';
 
-export const Route = createFileRoute("/_private/fleet/")({
+export const Route = createFileRoute('/_private/fleet/')({
   component: FleetPage,
 });
 

@@ -3,16 +3,16 @@
  * Fetch configurado para requitar ao backend
  */
 
-import { toast } from "sonner";
+import { toast } from 'sonner';
 
-const baseURL = import.meta.env.VITE_URI_BASE || "http://localhost:3001";
-const timeout = parseInt(import.meta.env.VITE_URI_TIMEOUT || "30000", 10);
+const baseURL = import.meta.env.VITE_URI_BASE || 'http://localhost:3001';
+const timeout = parseInt(import.meta.env.VITE_URI_TIMEOUT || '30000', 10);
 
 interface ApiOptions {
   defaultTakeCareError?: boolean;
   handleUploadProgress?: (percent: number) => void;
   headers?: Record<string, string>;
-  responseType?: "json" | "blob" | "text" | "arraybuffer";
+  responseType?: 'json' | 'blob' | 'text' | 'arraybuffer';
   isV2?: boolean;
 }
 
@@ -27,11 +27,11 @@ interface ApiResponse<T = unknown> {
  * Clear localStorage and redirect to login
  */
 function clearLocalStorage() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  localStorage.removeItem("id_enterprise_filter");
-  localStorage.removeItem("typelog");
-  localStorage.removeItem("map_show_name");
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('id_enterprise_filter');
+  localStorage.removeItem('typelog');
+  localStorage.removeItem('map_show_name');
 }
 
 /**
@@ -39,10 +39,10 @@ function clearLocalStorage() {
  */
 function translate(code: string): string {
   const translations: Record<string, string> = {
-    "session.expired": "Session expired. Please login again.",
-    "user.notAllowed": "You don't have permission to perform this action.",
-    "no.connection": "Connection error. Please try again.",
-    "server.too.many.request": "Too many requests. Please wait a moment.",
+    'session.expired': 'Session expired. Please login again.',
+    'user.notAllowed': "You don't have permission to perform this action.",
+    'no.connection': 'Connection error. Please try again.',
+    'server.too.many.request': 'Too many requests. Please wait a moment.',
   };
   return translations[code] || code;
 }
@@ -63,14 +63,14 @@ async function handleError(response: Response, options: ApiOptions) {
   }
 
   if (response.status === 401) {
-    toast.error(translate("session.expired"));
+    toast.error(translate('session.expired'));
     clearLocalStorage();
     window.location.href = `${window.location.origin}/auth`;
   } else if (response.status === 403) {
     if (errorData?.code) {
       toast.warning(translate(errorData.code));
     } else {
-      toast.warning(translate("user.notAllowed"));
+      toast.warning(translate('user.notAllowed'));
     }
   } else if (response.status === 400) {
     if (errorData?.code) {
@@ -82,12 +82,12 @@ async function handleError(response: Response, options: ApiOptions) {
     if (errorData?.code) {
       toast.error(translate(errorData.code));
     } else {
-      toast.error(translate("no.connection"));
+      toast.error(translate('no.connection'));
     }
   } else if (response.status === 429) {
-    toast.error(translate("server.too.many.request"));
+    toast.error(translate('server.too.many.request'));
   } else {
-    toast.error(translate("no.connection"));
+    toast.error(translate('no.connection'));
   }
 
   throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -96,13 +96,13 @@ async function handleError(response: Response, options: ApiOptions) {
 /**
  * Parse response based on responseType
  */
-async function parseResponse<T>(response: Response, responseType: ApiOptions["responseType"]): Promise<T> {
+async function parseResponse<T>(response: Response, responseType: ApiOptions['responseType']): Promise<T> {
   switch (responseType) {
-    case "blob":
+    case 'blob':
       return (await response.blob()) as T;
-    case "text":
+    case 'text':
       return (await response.text()) as T;
-    case "arraybuffer":
+    case 'arraybuffer':
       return (await response.arrayBuffer()) as T;
     default:
       return (await response.json()) as T;
@@ -142,8 +142,8 @@ async function fetchWithTimeout<T>(url: string, init: RequestInit, options: ApiO
     };
   } catch (error) {
     clearTimeout(timeoutId);
-    if (error instanceof Error && error.name === "AbortError") {
-      toast.error("Request timeout");
+    if (error instanceof Error && error.name === 'AbortError') {
+      toast.error('Request timeout');
     }
     throw error;
   }
@@ -153,13 +153,13 @@ async function fetchWithTimeout<T>(url: string, init: RequestInit, options: ApiO
  * Create request headers
  */
 function createHeaders(options: ApiOptions): HeadersInit {
-  const token = localStorage.getItem("token");
-  const enterprise = localStorage.getItem("id_enterprise_filter");
+  const token = localStorage.getItem('token');
+  const enterprise = localStorage.getItem('id_enterprise_filter');
 
   return {
-    "Content-Type": "application/json",
-    token: token || "",
-    environment: enterprise || "",
+    'Content-Type': 'application/json',
+    token: token || '',
+    environment: enterprise || '',
     ...(options.headers || {}),
   };
 }
@@ -168,7 +168,7 @@ function createHeaders(options: ApiOptions): HeadersInit {
  * Get base URL with version
  */
 function getBaseURL(options: ApiOptions): string {
-  return options.isV2 ? baseURL.replace("/v1", "/v2") : baseURL;
+  return options.isV2 ? baseURL.replace('/v1', '/v2') : baseURL;
 }
 
 /**
@@ -176,8 +176,8 @@ function getBaseURL(options: ApiOptions): string {
  */
 class ApiClient {
   async get<T = unknown>(url: string, options: ApiOptions = {}) {
-    const paramsQuery = url.split("?")[1];
-    let urlNormalized = url.split("?")[0];
+    const paramsQuery = url.split('?')[1];
+    let urlNormalized = url.split('?')[0];
 
     if (paramsQuery) {
       const query = new URLSearchParams(paramsQuery);
@@ -189,7 +189,7 @@ class ApiClient {
     return fetchWithTimeout<T>(
       fullUrl,
       {
-        method: "GET",
+        method: 'GET',
         headers: createHeaders(options),
       },
       options,
@@ -203,13 +203,13 @@ class ApiClient {
     // Handle FormData (don't set Content-Type, let browser set it with boundary)
     const isFormData = data instanceof FormData;
     if (isFormData) {
-      delete (headers as Record<string, string>)["Content-Type"];
+      delete (headers as Record<string, string>)['Content-Type'];
     }
 
     return fetchWithTimeout<T>(
       fullUrl,
       {
-        method: "POST",
+        method: 'POST',
         headers,
         body: isFormData ? data : JSON.stringify(data),
       },
@@ -223,13 +223,13 @@ class ApiClient {
 
     const isFormData = data instanceof FormData;
     if (isFormData) {
-      delete (headers as Record<string, string>)["Content-Type"];
+      delete (headers as Record<string, string>)['Content-Type'];
     }
 
     return fetchWithTimeout<T>(
       fullUrl,
       {
-        method: "PUT",
+        method: 'PUT',
         headers,
         body: isFormData ? data : JSON.stringify(data),
       },
@@ -243,13 +243,13 @@ class ApiClient {
 
     const isFormData = data instanceof FormData;
     if (isFormData) {
-      delete (headers as Record<string, string>)["Content-Type"];
+      delete (headers as Record<string, string>)['Content-Type'];
     }
 
     return fetchWithTimeout<T>(
       fullUrl,
       {
-        method: "PATCH",
+        method: 'PATCH',
         headers,
         body: isFormData ? data : JSON.stringify(data),
       },
@@ -263,7 +263,7 @@ class ApiClient {
     return fetchWithTimeout<T>(
       fullUrl,
       {
-        method: "DELETE",
+        method: 'DELETE',
         headers: createHeaders(options),
       },
       options,

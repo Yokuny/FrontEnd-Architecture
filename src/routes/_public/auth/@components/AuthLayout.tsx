@@ -1,5 +1,5 @@
-import { Outlet } from "@tanstack/react-router";
-import { LanguageSwitcher } from "@/components/language-switcher";
+import { Outlet } from '@tanstack/react-router';
+import { LanguageSwitcher } from '@/components/language-switcher';
 
 /**
  * Shared layout for all authentication pages
@@ -30,10 +30,10 @@ export function AuthLayout({ children }: { children?: React.ReactNode }) {
       {/* Footer */}
       <div className="absolute bottom-4 left-0 right-0 text-center z-10">
         <p className="text-zinc-500 text-xs">
-          IoT Log powered by{" "}
+          IoT Log powered by{' '}
           <a href="https://www.bykonz.com?origin=iotlog" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors">
             Bykonz
-          </a>{" "}
+          </a>{' '}
           © {new Date().getFullYear()}
         </p>
       </div>

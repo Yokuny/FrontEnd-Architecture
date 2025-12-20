@@ -1,23 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
-import { useRef, useState } from "react";
-import type ReCAPTCHA from "react-google-recaptcha";
-import { FormattedMessage } from "react-intl";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/hooks/use-auth";
-import { useLogin, useLoginSSO, useVerifyEmail } from "@/hooks/use-auth-api";
-import { AuthLayout } from "@/routes/_public/auth/@components/AuthLayout";
-import { EmailStep } from "@/routes/_public/auth/@components/EmailStep";
-import { LoginOptionsStep } from "@/routes/_public/auth/@components/LoginOptionsStep";
-import { RecaptchaStep } from "@/routes/_public/auth/@components/RecaptchaStep";
-import { REMEMBER_EMAIL_KEY } from "@/routes/_public/auth/@consts/login.consts";
-import type { LoginOption, LoginStep, PasswordFormValues } from "@/routes/_public/auth/@interface/login.types";
+import { createFileRoute } from '@tanstack/react-router';
+import { Loader2 } from 'lucide-react';
+import { useRef, useState } from 'react';
+import type ReCAPTCHA from 'react-google-recaptcha';
+import { FormattedMessage } from 'react-intl';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuth } from '@/hooks/use-auth';
+import { useLogin, useLoginSSO, useVerifyEmail } from '@/hooks/use-auth-api';
+import { AuthLayout } from '@/routes/_public/auth/@components/AuthLayout';
+import { EmailStep } from '@/routes/_public/auth/@components/EmailStep';
+import { LoginOptionsStep } from '@/routes/_public/auth/@components/LoginOptionsStep';
+import { RecaptchaStep } from '@/routes/_public/auth/@components/RecaptchaStep';
+import { REMEMBER_EMAIL_KEY } from '@/routes/_public/auth/@consts/login.consts';
+import type { LoginOption, LoginStep, PasswordFormValues } from '@/routes/_public/auth/@interface/login.types';
 
 // ============================================================================
 // Route Definition
 // ============================================================================
 
-export const Route = createFileRoute("/_public/auth/")({
+export const Route = createFileRoute('/_public/auth/')({
   component: LoginPage,
 });
 
@@ -28,8 +28,8 @@ export const Route = createFileRoute("/_public/auth/")({
 function LoginPage() {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
-  const [step, setStep] = useState<LoginStep>("email");
-  const [email, setEmail] = useState("");
+  const [step, setStep] = useState<LoginStep>('email');
+  const [email, setEmail] = useState('');
   const [loginOptions, setLoginOptions] = useState<LoginOption[]>([]);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -57,7 +57,7 @@ function LoginPage() {
   });
 
   const handleEmailSubmit = () => {
-    setStep("recaptcha");
+    setStep('recaptcha');
   };
 
   const handleRecaptchaVerify = (token: string | null) => {
@@ -69,15 +69,15 @@ function LoginPage() {
         onSuccess: (data) => {
           if (data && data.length > 0) {
             setLoginOptions(data);
-            setStep("options");
+            setStep('options');
           } else {
             // No login options available
-            setStep("email");
+            setStep('email');
             recaptchaRef.current?.reset();
           }
         },
         onError: () => {
-          setStep("email");
+          setStep('email');
           recaptchaRef.current?.reset();
         },
       },
@@ -93,15 +93,15 @@ function LoginPage() {
   };
 
   const handleBackToEmail = () => {
-    setStep("email");
+    setStep('email');
     recaptchaRef.current?.reset();
   };
 
   const renderStep = () => {
     switch (step) {
-      case "email":
+      case 'email':
         return <EmailStep email={email} onEmailChange={setEmail} rememberEmail={rememberEmail} onRememberChange={setRememberEmail} onSubmit={handleEmailSubmit} />;
-      case "recaptcha":
+      case 'recaptcha':
         return (
           <RecaptchaStep
             email={email}
@@ -111,7 +111,7 @@ function LoginPage() {
             isLoading={isVerifying}
           />
         );
-      case "options":
+      case 'options':
         return (
           <LoginOptionsStep
             email={email}

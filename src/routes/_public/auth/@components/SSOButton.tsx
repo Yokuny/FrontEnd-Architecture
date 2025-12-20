@@ -1,7 +1,7 @@
-import { useMsal } from "@azure/msal-react";
-import { Loader2 } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useMsal } from '@azure/msal-react';
+import { Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 interface SSOButtonProps {
   onSuccess: (data: { token: string; idToken: string }) => void;
@@ -20,8 +20,8 @@ export function SSOButton({ onSuccess }: SSOButtonProps) {
 
     try {
       const response = await instance.loginPopup({
-        scopes: ["user.read"],
-        prompt: "select_account",
+        scopes: ['user.read'],
+        prompt: 'select_account',
       });
 
       if (response.accessToken && response.idToken) {

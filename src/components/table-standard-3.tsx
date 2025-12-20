@@ -1,30 +1,30 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-export const title = "Table Without Dividers";
+export const title = 'Table Without Dividers';
 
 const products = [
   {
-    name: "Laptop",
-    category: "Electronics",
-    price: "$999.00",
+    name: 'Laptop',
+    category: 'Electronics',
+    price: '$999.00',
     stock: 24,
   },
   {
-    name: "Headphones",
-    category: "Audio",
-    price: "$199.00",
+    name: 'Headphones',
+    category: 'Audio',
+    price: '$199.00',
     stock: 156,
   },
   {
-    name: "Keyboard",
-    category: "Accessories",
-    price: "$79.00",
+    name: 'Keyboard',
+    category: 'Accessories',
+    price: '$79.00',
     stock: 89,
   },
   {
-    name: "Mouse",
-    category: "Accessories",
-    price: "$49.00",
+    name: 'Mouse',
+    category: 'Accessories',
+    price: '$49.00',
     stock: 234,
   },
 ];

@@ -1,7 +1,7 @@
-import { createFileRoute, Outlet, redirect, useRouterState } from "@tanstack/react-router";
-import { AppSidebar } from "@/components/sidebar-03/app-sidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { useAuth } from "@/hooks/use-auth";
+import { createFileRoute, Outlet, redirect, useRouterState } from '@tanstack/react-router';
+import { AppSidebar } from '@/components/sidebar-03/app-sidebar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { useAuth } from '@/hooks/use-auth';
 
 /**
  * Criando Rotas Privadas
@@ -15,7 +15,7 @@ import { useAuth } from "@/hooks/use-auth";
  */
 
 // Lista de rotas que devem ter layout fullscreen (sem sidebar visível por padrão)
-const FULLSCREEN_ROUTES = ["/fleet"];
+const FULLSCREEN_ROUTES = ['/fleet'];
 
 function PrivateLayout() {
   const router = useRouterState();
@@ -35,13 +35,13 @@ function PrivateLayout() {
   );
 }
 
-export const Route = createFileRoute("/_private")({
+export const Route = createFileRoute('/_private')({
   beforeLoad: async () => {
     const { isAuthenticated } = useAuth.getState();
 
     if (!isAuthenticated) {
       throw redirect({
-        to: "/auth",
+        to: '/auth',
       });
     }
   },

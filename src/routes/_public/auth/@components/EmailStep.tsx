@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, Mail } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { type EmailFormValues, emailSchema } from "../@interface/login.types";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowRight, Mail } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { type EmailFormValues, emailSchema } from '../@interface/login.types';
 
 interface EmailStepProps {
   email: string;
@@ -45,7 +45,7 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
                   <Input
                     {...field}
                     type="email"
-                    placeholder={intl.formatMessage({ id: "login.email.placeholder", defaultMessage: "Enter your email" })}
+                    placeholder={intl.formatMessage({ id: 'login.email.placeholder', defaultMessage: 'Enter your email' })}
                     className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                     autoFocus
                   />

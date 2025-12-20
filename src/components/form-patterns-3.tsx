@@ -1,48 +1,48 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
-export const title = "Profile Edit Form";
+export const title = 'Profile Edit Form';
 
 const formSchema = z.object({
   username: z.string().min(3, {
-    message: "Username must be at least 3 characters.",
+    message: 'Username must be at least 3 characters.',
   }),
   email: z
     .string()
     .email({
-      message: "Please enter a valid email address.",
+      message: 'Please enter a valid email address.',
     })
     .min(1, {
-      message: "Email is required.",
+      message: 'Email is required.',
     }),
   bio: z.string().max(160, {
-    message: "Bio must not exceed 160 characters.",
+    message: 'Bio must not exceed 160 characters.',
   }),
   website: z
     .string()
     .url({
-      message: "Please enter a valid URL.",
+      message: 'Please enter a valid URL.',
     })
     .optional()
-    .or(z.literal("")),
+    .or(z.literal('')),
 });
 
 const Example = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "johndoe",
-      email: "john@example.com",
-      bio: "Software developer passionate about building great products.",
-      website: "https://johndoe.com",
+      username: 'johndoe',
+      email: 'john@example.com',
+      bio: 'Software developer passionate about building great products.',
+      website: 'https://johndoe.com',
     },
   });
 

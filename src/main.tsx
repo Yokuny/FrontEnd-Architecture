@@ -1,26 +1,26 @@
-import { EventType, PublicClientApplication } from "@azure/msal-browser";
-import { MsalProvider } from "@azure/msal-react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { ThemeProvider } from "next-themes";
-import { StrictMode } from "react";
-import ReactDOM from "react-dom/client";
-import { IntlProvider } from "react-intl";
-import { Toaster } from "sonner";
+import { EventType, PublicClientApplication } from '@azure/msal-browser';
+import { MsalProvider } from '@azure/msal-react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
+import { ThemeProvider } from 'next-themes';
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
+import { IntlProvider } from 'react-intl';
+import { Toaster } from 'sonner';
 // Import configurations and contexts
-import { msalConfig } from "./config/authConfig";
-import { SocketProvider } from "./config/SocketConfig.tsx";
-import { useLocale } from "./hooks/use-locale";
+import { msalConfig } from './config/authConfig';
+import { SocketProvider } from './config/SocketConfig.tsx';
+import { useLocale } from './hooks/use-locale';
 // Import the generated route tree
-import { routeTree } from "./routeTree.gen";
+import { routeTree } from './routeTree.gen';
 
-import "./styles.css";
+import './styles.css';
 
 // Import translations
-import enText from "../translations/en.json";
-import esText from "../translations/es.json";
-import ptText from "../translations/pt.json";
-import reportWebVitals from "./reportWebVitals.ts";
+import enText from '../translations/en.json';
+import esText from '../translations/es.json';
+import ptText from '../translations/pt.json';
+import reportWebVitals from './reportWebVitals.ts';
 
 // Create QueryClient instance
 const queryClient = new QueryClient({
@@ -44,7 +44,7 @@ if (!msalInstance.getActiveAccount() && msalInstance.getAllAccounts().length > 0
 
 // Add event callback for login success
 msalInstance.addEventCallback((event) => {
-  if (event.eventType === EventType.LOGIN_SUCCESS && event.payload && "account" in event.payload && event.payload.account) {
+  if (event.eventType === EventType.LOGIN_SUCCESS && event.payload && 'account' in event.payload && event.payload.account) {
     msalInstance.setActiveAccount(event.payload.account);
   }
 });
@@ -55,14 +55,14 @@ const router = createRouter({
   context: {
     queryClient,
   },
-  defaultPreload: "intent",
+  defaultPreload: 'intent',
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
 });
 
 // Register the router instance for type safety
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }
@@ -97,7 +97,7 @@ function App() {
 }
 
 // Render the app
-const rootElement = document.getElementById("app");
+const rootElement = document.getElementById('app');
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // ============================================================================
 // Schemas
@@ -9,11 +9,11 @@ export const unlockSearchSchema = z.object({
 });
 
 export const unlockMethodSchema = z.object({
-  method: z.enum(["email", "sms"]),
+  method: z.enum(['email', 'sms']),
 });
 
 export const unlockCodeSchema = z.object({
-  code: z.string().min(6, "Code must be at least 6 characters").max(10),
+  code: z.string().min(6, 'Code must be at least 6 characters').max(10),
 });
 
 // ============================================================================
@@ -23,9 +23,9 @@ export const unlockCodeSchema = z.object({
 export type UnlockMethodFormValues = z.infer<typeof unlockMethodSchema>;
 export type UnlockCodeFormValues = z.infer<typeof unlockCodeSchema>;
 
-export type UnlockStep = "select-method" | "verify-code" | "success";
+export type UnlockStep = 'select-method' | 'verify-code' | 'success';
 
 export interface UnlockOption {
-  type: "email" | "sms";
+  type: 'email' | 'sms';
   destination: string; // Masked email or phone
 }

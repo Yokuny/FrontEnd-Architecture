@@ -1,9 +1,9 @@
-import { faker } from "@faker-js/faker";
-import { MinusIcon, PlusIcon } from "lucide-react";
+import { faker } from '@faker-js/faker';
+import { MinusIcon, PlusIcon } from 'lucide-react';
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-export const title = "Tabs with Left Plus Trigger";
+export const title = 'Tabs with Left Plus Trigger';
 
 const data: { value: string; title: string; content: string }[] = [];
 

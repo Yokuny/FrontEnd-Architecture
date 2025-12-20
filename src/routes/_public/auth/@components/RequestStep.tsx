@@ -1,17 +1,17 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Loader2, Mail } from "lucide-react";
-import { useRef } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field } from "@/components/ui/field";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useRequestPasswordReset } from "@/hooks/use-auth-api";
-import { type RequestResetFormValues, requestResetSchema } from "../@interface/reset-password.types";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from '@tanstack/react-router';
+import { ArrowLeft, Loader2, Mail } from 'lucide-react';
+import { useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useForm } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field } from '@/components/ui/field';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useRequestPasswordReset } from '@/hooks/use-auth-api';
+import { type RequestResetFormValues, requestResetSchema } from '../@interface/reset-password.types';
 
 interface RequestStepProps {
   onSuccess: (email: string) => void;
@@ -27,8 +27,8 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
   const form = useForm<RequestResetFormValues>({
     resolver: zodResolver(requestResetSchema),
     defaultValues: {
-      email: "",
-      reCaptcha: "",
+      email: '',
+      reCaptcha: '',
     },
   });
 
@@ -44,7 +44,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
   };
 
   const handleRecaptchaChange = (token: string | null) => {
-    form.setValue("reCaptcha", token || "");
+    form.setValue('reCaptcha', token || '');
   };
 
   return (
@@ -75,7 +75,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
                         <Input
                           {...field}
                           type="email"
-                          placeholder={intl.formatMessage({ id: "login.email.placeholder", defaultMessage: "Enter your email" })}
+                          placeholder={intl.formatMessage({ id: 'login.email.placeholder', defaultMessage: 'Enter your email' })}
                           className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                           autoFocus
                         />
@@ -91,7 +91,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
             />
 
             <div className="flex justify-center">
-              <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ""} onChange={handleRecaptchaChange} theme="dark" />
+              <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={handleRecaptchaChange} theme="dark" />
             </div>
             {form.formState.errors.reCaptcha && <p className="text-sm text-red-400 text-center">{form.formState.errors.reCaptcha.message}</p>}
 
@@ -114,7 +114,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
         </Form>
 
         <div className="text-center">
-          <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: "/auth" })} className="text-sm text-zinc-400 hover:text-white transition-colors gap-2">
+          <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })} className="text-sm text-zinc-400 hover:text-white transition-colors gap-2">
             <ArrowLeft className="h-4 w-4" />
             <FormattedMessage id="back.login" defaultMessage="Back to Login" />
           </Button>

@@ -1,7 +1,7 @@
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-export const title = "Select with Helper Text Above";
+export const title = 'Select with Helper Text Above';
 
 const Example = () => (
   <div className="w-full max-w-md">

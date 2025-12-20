@@ -1,9 +1,9 @@
-import { faker } from "@faker-js/faker";
-import { Bath, Bed, Maximize } from "lucide-react";
+import { faker } from '@faker-js/faker';
+import { Bath, Bed, Maximize } from 'lucide-react';
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
-export const title = "Image Card";
+export const title = 'Image Card';
 
 const price = faker.commerce.price({ min: 100_000, max: 500_000, dec: 0 });
 const beds = faker.number.int({ min: 2, max: 5 });

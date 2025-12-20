@@ -1,9 +1,9 @@
-import { ArrowLeft, Loader2 } from "lucide-react";
-import ReCAPTCHA from "react-google-recaptcha";
-import { FormattedMessage } from "react-intl";
-import { Button } from "@/components/ui/button";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { ArrowLeft, Loader2 } from 'lucide-react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { FormattedMessage } from 'react-intl';
+import { Button } from '@/components/ui/button';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
 
 interface RecaptchaStepProps {
   email: string;
@@ -29,7 +29,7 @@ export function RecaptchaStep({ email, recaptchaRef, onVerify, onBack, isLoading
         </div>
       ) : (
         <div className="flex justify-center">
-          <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ""} onChange={onVerify} theme="dark" />
+          <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={onVerify} theme="dark" />
         </div>
       )}
 

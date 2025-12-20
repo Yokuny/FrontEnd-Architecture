@@ -1,18 +1,18 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Eye, EyeOff, Loader2, Shield } from "lucide-react";
-import { useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field } from "@/components/ui/field";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useResetPassword } from "@/hooks/use-auth-api";
-import { type ResetPasswordFormValues, resetPasswordSchema } from "../@interface/reset-password.types";
-import { PasswordRequirement } from "./PasswordRequirement";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from '@tanstack/react-router';
+import { ArrowLeft, Eye, EyeOff, Loader2, Shield } from 'lucide-react';
+import { useRef, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useForm } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field } from '@/components/ui/field';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useResetPassword } from '@/hooks/use-auth-api';
+import { type ResetPasswordFormValues, resetPasswordSchema } from '../@interface/reset-password.types';
+import { PasswordRequirement } from './PasswordRequirement';
 
 interface ResetStepProps {
   requestId: string;
@@ -30,13 +30,13 @@ export function ResetStep({ requestId }: ResetStepProps) {
   const form = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      code: "",
-      password: "",
-      confirmPassword: "",
+      code: '',
+      password: '',
+      confirmPassword: '',
     },
   });
 
-  const password = form.watch("password");
+  const password = form.watch('password');
 
   // Password strength indicators
   const passwordStrength = {
@@ -55,7 +55,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
   };
 
   const handleRecaptchaChange = (token: string | null) => {
-    form.setValue("code", token || "");
+    form.setValue('code', token || '');
   };
 
   return (
@@ -89,8 +89,8 @@ export function ResetStep({ requestId }: ResetStepProps) {
                       <div className="relative">
                         <Input
                           {...field}
-                          type={showPassword ? "text" : "password"}
-                          placeholder={intl.formatMessage({ id: "new.password.placeholder", defaultMessage: "Enter new password" })}
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder={intl.formatMessage({ id: 'new.password.placeholder', defaultMessage: 'Enter new password' })}
                           className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                           autoFocus
                         />
@@ -118,12 +118,12 @@ export function ResetStep({ requestId }: ResetStepProps) {
                   <FormattedMessage id="password.requirements" defaultMessage="Password Requirements:" />
                 </p>
                 <div className="space-y-1">
-                  <PasswordRequirement met={passwordStrength.minLength} text={intl.formatMessage({ id: "form.min.length", defaultMessage: "At least 8 characters" })} />
-                  <PasswordRequirement met={passwordStrength.hasLowerCase} text={intl.formatMessage({ id: "form.has.lower.case", defaultMessage: "One lowercase letter" })} />
-                  <PasswordRequirement met={passwordStrength.hasUpperCase} text={intl.formatMessage({ id: "form.has.upper.case", defaultMessage: "One uppercase letter" })} />
+                  <PasswordRequirement met={passwordStrength.minLength} text={intl.formatMessage({ id: 'form.min.length', defaultMessage: 'At least 8 characters' })} />
+                  <PasswordRequirement met={passwordStrength.hasLowerCase} text={intl.formatMessage({ id: 'form.has.lower.case', defaultMessage: 'One lowercase letter' })} />
+                  <PasswordRequirement met={passwordStrength.hasUpperCase} text={intl.formatMessage({ id: 'form.has.upper.case', defaultMessage: 'One uppercase letter' })} />
                   <PasswordRequirement
                     met={passwordStrength.hasSpecialChar}
-                    text={intl.formatMessage({ id: "form.has.special.char", defaultMessage: "One special character (*@#!?_-=+$)" })}
+                    text={intl.formatMessage({ id: 'form.has.special.char', defaultMessage: 'One special character (*@#!?_-=+$)' })}
                   />
                 </div>
               </div>
@@ -143,8 +143,8 @@ export function ResetStep({ requestId }: ResetStepProps) {
                       <div className="relative">
                         <Input
                           {...field}
-                          type={showConfirmPassword ? "text" : "password"}
-                          placeholder={intl.formatMessage({ id: "account.confirm.password.placeholder", defaultMessage: "Re-enter password" })}
+                          type={showConfirmPassword ? 'text' : 'password'}
+                          placeholder={intl.formatMessage({ id: 'account.confirm.password.placeholder', defaultMessage: 'Re-enter password' })}
                           className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                         />
                         <Button
@@ -166,7 +166,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
 
             {/* reCAPTCHA */}
             <div className="flex justify-center">
-              <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ""} onChange={handleRecaptchaChange} theme="dark" />
+              <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={handleRecaptchaChange} theme="dark" />
             </div>
             {form.formState.errors.code && <p className="text-sm text-red-400 text-center">{form.formState.errors.code.message}</p>}
 
@@ -189,7 +189,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
         </Form>
 
         <div className="text-center">
-          <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: "/auth" })} className="text-sm text-zinc-400 hover:text-white transition-colors gap-2">
+          <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })} className="text-sm text-zinc-400 hover:text-white transition-colors gap-2">
             <ArrowLeft className="h-4 w-4" />
             <FormattedMessage id="back.login" defaultMessage="Back to Login" />
           </Button>

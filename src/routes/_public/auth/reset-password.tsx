@@ -1,16 +1,16 @@
-import { createFileRoute, useSearch } from "@tanstack/react-router";
-import { useState } from "react";
-import { AuthLayout } from "@/routes/_public/auth/@components/AuthLayout";
-import { RequestStep } from "@/routes/_public/auth/@components/RequestStep";
-import { ResetStep } from "@/routes/_public/auth/@components/ResetStep";
-import { SuccessStep } from "@/routes/_public/auth/@components/SuccessStep";
-import { type ResetStep as ResetStepType, resetSearchSchema } from "@/routes/_public/auth/@interface/reset-password.types";
+import { createFileRoute, useSearch } from '@tanstack/react-router';
+import { useState } from 'react';
+import { AuthLayout } from '@/routes/_public/auth/@components/AuthLayout';
+import { RequestStep } from '@/routes/_public/auth/@components/RequestStep';
+import { ResetStep } from '@/routes/_public/auth/@components/ResetStep';
+import { SuccessStep } from '@/routes/_public/auth/@components/SuccessStep';
+import { type ResetStep as ResetStepType, resetSearchSchema } from '@/routes/_public/auth/@interface/reset-password.types';
 
 // ============================================================================
 // Route Definition
 // ============================================================================
 
-export const Route = createFileRoute("/_public/auth/reset-password")({
+export const Route = createFileRoute('/_public/auth/reset-password')({
   component: ResetPasswordPage,
   validateSearch: resetSearchSchema,
 });
@@ -20,19 +20,19 @@ export const Route = createFileRoute("/_public/auth/reset-password")({
 // ============================================================================
 
 function ResetPasswordPage() {
-  const search = useSearch({ from: "/_public/auth/reset-password" }) as { request?: string };
+  const search = useSearch({ from: '/_public/auth/reset-password' }) as { request?: string };
 
-  const [step, setStep] = useState<ResetStepType>(search.request ? "reset" : "request");
-  const [_email, setEmail] = useState("");
-  const [requestId, _setRequestId] = useState(search.request || "");
+  const [step, setStep] = useState<ResetStepType>(search.request ? 'reset' : 'request');
+  const [_email, setEmail] = useState('');
+  const [requestId, _setRequestId] = useState(search.request || '');
 
   const renderStep = () => {
     switch (step) {
-      case "request":
+      case 'request':
         return <RequestStep onSuccess={handleRequestSuccess} />;
-      case "reset":
+      case 'reset':
         return <ResetStep requestId={requestId} />;
-      case "success":
+      case 'success':
         return <SuccessStep />;
       default:
         return null;
@@ -41,7 +41,7 @@ function ResetPasswordPage() {
 
   function handleRequestSuccess(email: string) {
     setEmail(email);
-    setStep("success");
+    setStep('success');
   }
 
   return (

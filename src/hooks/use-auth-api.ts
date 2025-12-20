@@ -2,12 +2,12 @@
  * TanStack Query hooks for authentication API operations
  */
 
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { toast } from "sonner";
-import { api } from "@/lib/api/client";
-import { encryptSSOPayload } from "@/lib/auth/crypto";
-import { useAuth } from "./use-auth";
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
+import { toast } from 'sonner';
+import { api } from '@/lib/api/client';
+import { encryptSSOPayload } from '@/lib/auth/crypto';
+import { useAuth } from './use-auth';
 
 // ============================================================================
 // Types
@@ -43,7 +43,7 @@ interface RegisterData {
 export function useVerifyEmail() {
   return useMutation({
     mutationFn: async ({ email, reCaptcha }: { email: string; reCaptcha: string }) => {
-      const response = await api.post<VerifyEmailResponse[]>("/auth/verifyemail", {
+      const response = await api.post<VerifyEmailResponse[]>('/auth/verifyemail', {
         email,
         reCaptcha,
       });
@@ -68,7 +68,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: async ({ email, password }: { email: string; password: string }) => {
       setLoading(true);
-      const response = await api.post<LoginResponse>("/auth/login", {
+      const response = await api.post<LoginResponse>('/auth/login', {
         email: email.trim(),
         password,
       });
@@ -79,14 +79,14 @@ export function useLogin() {
 
       if (data?.isBlockedTemporary && data?.id) {
         setLocked({ id: data.id, isBlockedTemporary: true });
-        navigate({ to: "/auth/unlock", search: { r: data.id } });
+        navigate({ to: '/auth/unlock', search: { r: data.id } });
         return;
       }
 
       if (data?.token) {
-        setAuth(data.token, "normal");
-        toast.success("Login successful!");
-        navigate({ to: "/components" });
+        setAuth(data.token, 'normal');
+        toast.success('Login successful!');
+        navigate({ to: '/components' });
       }
     },
     onError: () => {
@@ -117,12 +117,12 @@ export function useLoginSSO() {
       );
 
       const response = await api.post<LoginResponse>(
-        "/auth/login/sso",
+        '/auth/login/sso',
         { token: encryptedPayload },
         {
           defaultTakeCareError: true,
           headers: {
-            "x-time": time.toString(),
+            'x-time': time.toString(),
           },
         },
       );
@@ -133,14 +133,14 @@ export function useLoginSSO() {
 
       if (data?.isBlockedTemporary && data?.id) {
         setLocked({ id: data.id, isBlockedTemporary: true });
-        navigate({ to: "/auth/unlock", search: { r: data.id } });
+        navigate({ to: '/auth/unlock', search: { r: data.id } });
         return;
       }
 
       if (data?.token) {
-        setAuth(data.token, "sso");
-        toast.success("SSO login successful!");
-        navigate({ to: "/components" });
+        setAuth(data.token, 'sso');
+        toast.success('SSO login successful!');
+        navigate({ to: '/components' });
       }
     },
     onError: () => {
@@ -160,16 +160,16 @@ export function useRegister() {
   return useMutation({
     mutationFn: async (data: RegisterData) => {
       setLoading(true);
-      const response = await api.post<LoginResponse>("/account/new-portal", data);
+      const response = await api.post<LoginResponse>('/account/new-portal', data);
       return response.data;
     },
     onSuccess: (data) => {
       setLoading(false);
 
       if (data?.token) {
-        setAuth(data.token, "normal");
-        toast.success("Account created successfully!");
-        navigate({ to: "/components" });
+        setAuth(data.token, 'normal');
+        toast.success('Account created successfully!');
+        navigate({ to: '/components' });
       }
     },
     onError: () => {
@@ -185,14 +185,14 @@ export function useRegister() {
 export function useRequestPasswordReset() {
   return useMutation({
     mutationFn: async ({ email, reCaptcha }: { email: string; reCaptcha: string }) => {
-      const response = await api.post("/account/request-change-password", {
-        email: email.replace(/ /g, ""), // Remove spaces from email
+      const response = await api.post('/account/request-change-password', {
+        email: email.replace(/ /g, ''), // Remove spaces from email
         reCaptcha,
       });
       return response.data;
     },
     onSuccess: () => {
-      toast.success("Password reset code sent to your email");
+      toast.success('Password reset code sent to your email');
     },
   });
 }
@@ -206,7 +206,7 @@ export function useResetPassword() {
 
   return useMutation({
     mutationFn: async ({ request, password, reCaptcha }: { request: string; password: string; reCaptcha: string }) => {
-      const response = await api.post("/account/new-password", {
+      const response = await api.post('/account/new-password', {
         request,
         password,
         reCaptcha,
@@ -214,9 +214,9 @@ export function useResetPassword() {
       return response.data;
     },
     onSuccess: () => {
-      toast.success("Password reset successfully!");
+      toast.success('Password reset successfully!');
       setTimeout(() => {
-        navigate({ to: "/auth" });
+        navigate({ to: '/auth' });
       }, 1000);
     },
   });
@@ -228,15 +228,15 @@ export function useResetPassword() {
 
 export function useSendUnlockCode() {
   return useMutation({
-    mutationFn: async ({ requestId, method }: { requestId: string; method: "email" | "sms" }) => {
-      const response = await api.post("/auth/send-unlock-code", {
+    mutationFn: async ({ requestId, method }: { requestId: string; method: 'email' | 'sms' }) => {
+      const response = await api.post('/auth/send-unlock-code', {
         requestId,
         method,
       });
       return response.data;
     },
     onSuccess: (_, variables) => {
-      toast.success(`Unlock code sent to your ${variables.method === "email" ? "email" : "phone"}`);
+      toast.success(`Unlock code sent to your ${variables.method === 'email' ? 'email' : 'phone'}`);
     },
   });
 }
@@ -251,7 +251,7 @@ export function useVerifyUnlockCode() {
 
   return useMutation({
     mutationFn: async ({ requestId, code }: { requestId: string; code: string }) => {
-      const response = await api.post("/auth/verify-unlock-code", {
+      const response = await api.post('/auth/verify-unlock-code', {
         requestId,
         code,
       });
@@ -259,8 +259,8 @@ export function useVerifyUnlockCode() {
     },
     onSuccess: () => {
       clearLocked();
-      toast.success("Account unlocked successfully!");
-      navigate({ to: "/auth" });
+      toast.success('Account unlocked successfully!');
+      navigate({ to: '/auth' });
     },
   });
 }

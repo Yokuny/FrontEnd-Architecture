@@ -1,7 +1,7 @@
-import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
-import { io, type Socket } from "socket.io-client";
+import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
+import { io, type Socket } from 'socket.io-client';
 
-const baseUserURLSocket = import.meta.env.VITE_URI_SOCKET || "";
+const baseUserURLSocket = import.meta.env.VITE_URI_SOCKET || '';
 
 interface SocketContextType {
   socket: Socket | null;
@@ -17,7 +17,7 @@ export function SocketProvider({ children }: SocketProviderProps) {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) {
       return;
     }
@@ -30,9 +30,9 @@ export function SocketProvider({ children }: SocketProviderProps) {
       reconnectionDelay: 1000,
     });
 
-    newSocket.on("connect", () => {});
+    newSocket.on('connect', () => {});
 
-    newSocket.on("connect_error", (_error) => {
+    newSocket.on('connect_error', (_error) => {
       // Logic to handle failures (e.g., renew token)
     });
 
@@ -49,7 +49,7 @@ export function SocketProvider({ children }: SocketProviderProps) {
 export function useSocket() {
   const context = useContext(SocketContext);
   if (context === undefined) {
-    throw new Error("useSocket must be used within a SocketProvider");
+    throw new Error('useSocket must be used within a SocketProvider');
   }
   return context.socket;
 }

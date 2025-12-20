@@ -1,27 +1,27 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
-import { ArrowLeft, Eye, EyeOff, Loader2, Mail, User } from "lucide-react";
-import { useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useForm } from "react-hook-form";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useRegister } from "@/hooks/use-auth-api";
-import { useLocale } from "@/hooks/use-locale";
-import { AuthLayout } from "@/routes/_public/auth/@components/AuthLayout";
-import { type RegisterFormValues, registerSchema, registerSearchSchema } from "@/routes/_public/auth/@interface/register.types";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
+import { ArrowLeft, Eye, EyeOff, Loader2, Mail, User } from 'lucide-react';
+import { useRef, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useForm } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useRegister } from '@/hooks/use-auth-api';
+import { useLocale } from '@/hooks/use-locale';
+import { AuthLayout } from '@/routes/_public/auth/@components/AuthLayout';
+import { type RegisterFormValues, registerSchema, registerSearchSchema } from '@/routes/_public/auth/@interface/register.types';
 
 // ============================================================================
 // Route Definition
 // ============================================================================
 
-export const Route = createFileRoute("/_public/auth/register")({
+export const Route = createFileRoute('/_public/auth/register')({
   component: RegisterPage,
   validateSearch: registerSearchSchema,
 });
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/_public/auth/register")({
 function RegisterPage() {
   const intl = useIntl();
   const navigate = useNavigate();
-  const search = useSearch({ from: "/_public/auth/register" }) as { id?: string; enterprise?: string };
+  const search = useSearch({ from: '/_public/auth/register' }) as { id?: string; enterprise?: string };
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const { locale } = useLocale();
 
@@ -45,12 +45,12 @@ function RegisterPage() {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       termsAccepted: false,
-      reCaptcha: "",
+      reCaptcha: '',
     },
   });
 
@@ -67,7 +67,7 @@ function RegisterPage() {
   };
 
   const handleRecaptchaChange = (token: string | null) => {
-    form.setValue("reCaptcha", token || "");
+    form.setValue('reCaptcha', token || '');
   };
 
   return (
@@ -100,7 +100,7 @@ function RegisterPage() {
                           <Input
                             {...field}
                             type="text"
-                            placeholder={intl.formatMessage({ id: "account.name.placeholder", defaultMessage: "Enter your full name" })}
+                            placeholder={intl.formatMessage({ id: 'account.name.placeholder', defaultMessage: 'Enter your full name' })}
                             className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                             autoFocus
                           />
@@ -130,7 +130,7 @@ function RegisterPage() {
                           <Input
                             {...field}
                             type="email"
-                            placeholder={intl.formatMessage({ id: "login.email.placeholder", defaultMessage: "Enter your email" })}
+                            placeholder={intl.formatMessage({ id: 'login.email.placeholder', defaultMessage: 'Enter your email' })}
                             className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                           />
                           <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -159,8 +159,8 @@ function RegisterPage() {
                           <div className="relative">
                             <Input
                               {...field}
-                              type={showPassword ? "text" : "password"}
-                              placeholder={intl.formatMessage({ id: "login.password.placeholder", defaultMessage: "Enter password" })}
+                              type={showPassword ? 'text' : 'password'}
+                              placeholder={intl.formatMessage({ id: 'login.password.placeholder', defaultMessage: 'Enter password' })}
                               className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                             />
                             <Button
@@ -194,8 +194,8 @@ function RegisterPage() {
                           <div className="relative">
                             <Input
                               {...field}
-                              type={showConfirmPassword ? "text" : "password"}
-                              placeholder={intl.formatMessage({ id: "account.confirm.password.placeholder", defaultMessage: "Re-enter password" })}
+                              type={showConfirmPassword ? 'text' : 'password'}
+                              placeholder={intl.formatMessage({ id: 'account.confirm.password.placeholder', defaultMessage: 'Re-enter password' })}
                               className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                             />
                             <Button
@@ -241,11 +241,11 @@ function RegisterPage() {
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <Label htmlFor="termsAccepted" className="text-sm text-zinc-300 font-normal cursor-pointer leading-relaxed">
-                        <FormattedMessage id="accept.terms" defaultMessage="I accept the" />{" "}
+                        <FormattedMessage id="accept.terms" defaultMessage="I accept the" />{' '}
                         <a href="/terms" target="_blank" className="text-blue-400 hover:text-blue-300 underline" rel="noopener">
                           <FormattedMessage id="terms" defaultMessage="Terms of Service" />
-                        </a>{" "}
-                        <FormattedMessage id="accept.policy" defaultMessage="and" />{" "}
+                        </a>{' '}
+                        <FormattedMessage id="accept.policy" defaultMessage="and" />{' '}
                         <a href="/policy" target="_blank" className="text-blue-400 hover:text-blue-300 underline" rel="noopener">
                           <FormattedMessage id="policy" defaultMessage="Privacy Policy" />
                         </a>
@@ -259,7 +259,7 @@ function RegisterPage() {
 
               {/* reCAPTCHA */}
               <div className="flex justify-center">
-                <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ""} onChange={handleRecaptchaChange} theme="dark" />
+                <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={handleRecaptchaChange} theme="dark" />
               </div>
               {form.formState.errors.reCaptcha && <p className="text-sm text-red-400 text-center">{form.formState.errors.reCaptcha.message}</p>}
 
@@ -284,7 +284,7 @@ function RegisterPage() {
 
           {/* Back to Login */}
           <div className="text-center">
-            <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: "/auth" })} className="text-sm text-zinc-400 hover:text-white transition-colors gap-2">
+            <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })} className="text-sm text-zinc-400 hover:text-white transition-colors gap-2">
               <ArrowLeft className="h-4 w-4" />
               <FormattedMessage id="back.login" defaultMessage="Back to Login" />
             </Button>

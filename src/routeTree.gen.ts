@@ -8,102 +8,182 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as PrivateRouteImport } from './routes/_private'
-import { Route as PrivateComponentsIndexRouteImport } from './routes/_private/components/index'
-import { Route as PrivateDashboardIndexRouteImport } from './routes/_private/dashboard/index'
-import { Route as PrivateFleetIndexRouteImport } from './routes/_private/fleet/index'
-import { Route as PublicRouteImport } from './routes/_public'
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index'
-import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register'
-import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password'
-import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as rootRouteImport } from './routes/__root';
+import { Route as PublicRouteImport } from './routes/_public';
+import { Route as PrivateRouteImport } from './routes/_private';
+import { Route as IndexRouteImport } from './routes/index';
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateFleetIndexRouteImport } from './routes/_private/fleet/index';
+import { Route as PrivateDashboardIndexRouteImport } from './routes/_private/dashboard/index';
+import { Route as PrivateComponentsIndexRouteImport } from './routes/_private/components/index';
+import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
+import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
+import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
+import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
+import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
+import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
+import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions.add';
+import { Route as PrivatePermissionsUsersPasswordIdRouteImport } from './routes/_private/permissions/users/password.$id';
+import { Route as PrivatePermissionsUsersEditIdRouteImport } from './routes/_private/permissions/users/edit.$id';
+import { Route as PrivatePermissionsRolesEditIdRouteImport } from './routes/_private/permissions/roles/edit.$id';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const PrivateRoute = PrivateRouteImport.update({
   id: '/_private',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   id: '/auth/',
   path: '/auth/',
   getParentRoute: () => PublicRoute,
-} as any)
+} as any);
 const PrivateFleetIndexRoute = PrivateFleetIndexRouteImport.update({
   id: '/fleet/',
   path: '/fleet/',
   getParentRoute: () => PrivateRoute,
-} as any)
+} as any);
 const PrivateDashboardIndexRoute = PrivateDashboardIndexRouteImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
   getParentRoute: () => PrivateRoute,
-} as any)
+} as any);
 const PrivateComponentsIndexRoute = PrivateComponentsIndexRouteImport.update({
   id: '/components/',
   path: '/components/',
   getParentRoute: () => PrivateRoute,
-} as any)
+} as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
   id: '/auth/unlock',
   path: '/auth/unlock',
   getParentRoute: () => PublicRoute,
-} as any)
+} as any);
 const PublicAuthResetPasswordRoute = PublicAuthResetPasswordRouteImport.update({
   id: '/auth/reset-password',
   path: '/auth/reset-password',
   getParentRoute: () => PublicRoute,
-} as any)
+} as any);
 const PublicAuthRegisterRoute = PublicAuthRegisterRouteImport.update({
   id: '/auth/register',
   path: '/auth/register',
   getParentRoute: () => PublicRoute,
-} as any)
+} as any);
+const PrivatePermissionsUsersIndexRoute =
+  PrivatePermissionsUsersIndexRouteImport.update({
+    id: '/permissions/users/',
+    path: '/permissions/users/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsRolesIndexRoute =
+  PrivatePermissionsRolesIndexRouteImport.update({
+    id: '/permissions/roles/',
+    path: '/permissions/roles/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsUsersAddRoute =
+  PrivatePermissionsUsersAddRouteImport.update({
+    id: '/permissions/users/add',
+    path: '/permissions/users/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsRolesAddRoute =
+  PrivatePermissionsRolesAddRouteImport.update({
+    id: '/permissions/roles/add',
+    path: '/permissions/roles/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsUsersPermissionsAddRoute =
+  PrivatePermissionsUsersPermissionsAddRouteImport.update({
+    id: '/permissions/users/permissions/add',
+    path: '/permissions/users/permissions/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsUsersPasswordIdRoute =
+  PrivatePermissionsUsersPasswordIdRouteImport.update({
+    id: '/permissions/users/password/$id',
+    path: '/permissions/users/password/$id',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsUsersEditIdRoute =
+  PrivatePermissionsUsersEditIdRouteImport.update({
+    id: '/permissions/users/edit/$id',
+    path: '/permissions/users/edit/$id',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsRolesEditIdRoute =
+  PrivatePermissionsRolesEditIdRouteImport.update({
+    id: '/permissions/roles/edit/$id',
+    path: '/permissions/roles/edit/$id',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/auth/register': typeof PublicAuthRegisterRoute
-  '/auth/reset-password': typeof PublicAuthResetPasswordRoute
-  '/auth/unlock': typeof PublicAuthUnlockRoute
-  '/components': typeof PrivateComponentsIndexRoute
-  '/dashboard': typeof PrivateDashboardIndexRoute
-  '/fleet': typeof PrivateFleetIndexRoute
-  '/auth': typeof PublicAuthIndexRoute
+  '/': typeof IndexRoute;
+  '/auth/register': typeof PublicAuthRegisterRoute;
+  '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
+  '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/components': typeof PrivateComponentsIndexRoute;
+  '/dashboard': typeof PrivateDashboardIndexRoute;
+  '/fleet': typeof PrivateFleetIndexRoute;
+  '/auth': typeof PublicAuthIndexRoute;
+  '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
+  '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
+  '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
+  '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
+  '/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
+  '/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
+  '/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
+  '/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/auth/register': typeof PublicAuthRegisterRoute
-  '/auth/reset-password': typeof PublicAuthResetPasswordRoute
-  '/auth/unlock': typeof PublicAuthUnlockRoute
-  '/components': typeof PrivateComponentsIndexRoute
-  '/dashboard': typeof PrivateDashboardIndexRoute
-  '/fleet': typeof PrivateFleetIndexRoute
-  '/auth': typeof PublicAuthIndexRoute
+  '/': typeof IndexRoute;
+  '/auth/register': typeof PublicAuthRegisterRoute;
+  '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
+  '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/components': typeof PrivateComponentsIndexRoute;
+  '/dashboard': typeof PrivateDashboardIndexRoute;
+  '/fleet': typeof PrivateFleetIndexRoute;
+  '/auth': typeof PublicAuthIndexRoute;
+  '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
+  '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
+  '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
+  '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
+  '/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
+  '/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
+  '/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
+  '/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/_private': typeof PrivateRouteWithChildren
-  '/_public': typeof PublicRouteWithChildren
-  '/_public/auth/register': typeof PublicAuthRegisterRoute
-  '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute
-  '/_public/auth/unlock': typeof PublicAuthUnlockRoute
-  '/_private/components/': typeof PrivateComponentsIndexRoute
-  '/_private/dashboard/': typeof PrivateDashboardIndexRoute
-  '/_private/fleet/': typeof PrivateFleetIndexRoute
-  '/_public/auth/': typeof PublicAuthIndexRoute
+  __root__: typeof rootRouteImport;
+  '/': typeof IndexRoute;
+  '/_private': typeof PrivateRouteWithChildren;
+  '/_public': typeof PublicRouteWithChildren;
+  '/_public/auth/register': typeof PublicAuthRegisterRoute;
+  '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
+  '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/_private/components/': typeof PrivateComponentsIndexRoute;
+  '/_private/dashboard/': typeof PrivateDashboardIndexRoute;
+  '/_private/fleet/': typeof PrivateFleetIndexRoute;
+  '/_public/auth/': typeof PublicAuthIndexRoute;
+  '/_private/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
+  '/_private/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
+  '/_private/permissions/roles/': typeof PrivatePermissionsRolesIndexRoute;
+  '/_private/permissions/users/': typeof PrivatePermissionsUsersIndexRoute;
+  '/_private/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
+  '/_private/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
+  '/_private/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
+  '/_private/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
     | '/auth/register'
@@ -113,7 +193,15 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/fleet'
     | '/auth'
-  fileRoutesByTo: FileRoutesByTo
+    | '/permissions/roles/add'
+    | '/permissions/users/add'
+    | '/permissions/roles'
+    | '/permissions/users'
+    | '/permissions/roles/edit/$id'
+    | '/permissions/users/edit/$id'
+    | '/permissions/users/password/$id'
+    | '/permissions/users/permissions/add';
+  fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
     | '/auth/register'
@@ -123,6 +211,14 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/fleet'
     | '/auth'
+    | '/permissions/roles/add'
+    | '/permissions/users/add'
+    | '/permissions/roles'
+    | '/permissions/users'
+    | '/permissions/roles/edit/$id'
+    | '/permissions/users/edit/$id'
+    | '/permissions/users/password/$id'
+    | '/permissions/users/permissions/add';
   id:
     | '__root__'
     | '/'
@@ -135,109 +231,191 @@ export interface FileRouteTypes {
     | '/_private/dashboard/'
     | '/_private/fleet/'
     | '/_public/auth/'
-  fileRoutesById: FileRoutesById
+    | '/_private/permissions/roles/add'
+    | '/_private/permissions/users/add'
+    | '/_private/permissions/roles/'
+    | '/_private/permissions/users/'
+    | '/_private/permissions/roles/edit/$id'
+    | '/_private/permissions/users/edit/$id'
+    | '/_private/permissions/users/password/$id'
+    | '/_private/permissions/users/permissions/add';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PrivateRoute: typeof PrivateRouteWithChildren
-  PublicRoute: typeof PublicRouteWithChildren
+  IndexRoute: typeof IndexRoute;
+  PrivateRoute: typeof PrivateRouteWithChildren;
+  PublicRoute: typeof PublicRouteWithChildren;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/_public': {
-      id: '/_public'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof PublicRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/_public';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof PublicRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_private': {
-      id: '/_private'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof PrivateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/_private';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof PrivateRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_public/auth/': {
-      id: '/_public/auth/'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof PublicAuthIndexRouteImport
-      parentRoute: typeof PublicRoute
-    }
+      id: '/_public/auth/';
+      path: '/auth';
+      fullPath: '/auth';
+      preLoaderRoute: typeof PublicAuthIndexRouteImport;
+      parentRoute: typeof PublicRoute;
+    };
     '/_private/fleet/': {
-      id: '/_private/fleet/'
-      path: '/fleet'
-      fullPath: '/fleet'
-      preLoaderRoute: typeof PrivateFleetIndexRouteImport
-      parentRoute: typeof PrivateRoute
-    }
+      id: '/_private/fleet/';
+      path: '/fleet';
+      fullPath: '/fleet';
+      preLoaderRoute: typeof PrivateFleetIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/dashboard/': {
-      id: '/_private/dashboard/'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof PrivateDashboardIndexRouteImport
-      parentRoute: typeof PrivateRoute
-    }
+      id: '/_private/dashboard/';
+      path: '/dashboard';
+      fullPath: '/dashboard';
+      preLoaderRoute: typeof PrivateDashboardIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/components/': {
-      id: '/_private/components/'
-      path: '/components'
-      fullPath: '/components'
-      preLoaderRoute: typeof PrivateComponentsIndexRouteImport
-      parentRoute: typeof PrivateRoute
-    }
+      id: '/_private/components/';
+      path: '/components';
+      fullPath: '/components';
+      preLoaderRoute: typeof PrivateComponentsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_public/auth/unlock': {
-      id: '/_public/auth/unlock'
-      path: '/auth/unlock'
-      fullPath: '/auth/unlock'
-      preLoaderRoute: typeof PublicAuthUnlockRouteImport
-      parentRoute: typeof PublicRoute
-    }
+      id: '/_public/auth/unlock';
+      path: '/auth/unlock';
+      fullPath: '/auth/unlock';
+      preLoaderRoute: typeof PublicAuthUnlockRouteImport;
+      parentRoute: typeof PublicRoute;
+    };
     '/_public/auth/reset-password': {
-      id: '/_public/auth/reset-password'
-      path: '/auth/reset-password'
-      fullPath: '/auth/reset-password'
-      preLoaderRoute: typeof PublicAuthResetPasswordRouteImport
-      parentRoute: typeof PublicRoute
-    }
+      id: '/_public/auth/reset-password';
+      path: '/auth/reset-password';
+      fullPath: '/auth/reset-password';
+      preLoaderRoute: typeof PublicAuthResetPasswordRouteImport;
+      parentRoute: typeof PublicRoute;
+    };
     '/_public/auth/register': {
-      id: '/_public/auth/register'
-      path: '/auth/register'
-      fullPath: '/auth/register'
-      preLoaderRoute: typeof PublicAuthRegisterRouteImport
-      parentRoute: typeof PublicRoute
-    }
+      id: '/_public/auth/register';
+      path: '/auth/register';
+      fullPath: '/auth/register';
+      preLoaderRoute: typeof PublicAuthRegisterRouteImport;
+      parentRoute: typeof PublicRoute;
+    };
+    '/_private/permissions/users/': {
+      id: '/_private/permissions/users/';
+      path: '/permissions/users';
+      fullPath: '/permissions/users';
+      preLoaderRoute: typeof PrivatePermissionsUsersIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/roles/': {
+      id: '/_private/permissions/roles/';
+      path: '/permissions/roles';
+      fullPath: '/permissions/roles';
+      preLoaderRoute: typeof PrivatePermissionsRolesIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/users/add': {
+      id: '/_private/permissions/users/add';
+      path: '/permissions/users/add';
+      fullPath: '/permissions/users/add';
+      preLoaderRoute: typeof PrivatePermissionsUsersAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/roles/add': {
+      id: '/_private/permissions/roles/add';
+      path: '/permissions/roles/add';
+      fullPath: '/permissions/roles/add';
+      preLoaderRoute: typeof PrivatePermissionsRolesAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/users/permissions/add': {
+      id: '/_private/permissions/users/permissions/add';
+      path: '/permissions/users/permissions/add';
+      fullPath: '/permissions/users/permissions/add';
+      preLoaderRoute: typeof PrivatePermissionsUsersPermissionsAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/users/password/$id': {
+      id: '/_private/permissions/users/password/$id';
+      path: '/permissions/users/password/$id';
+      fullPath: '/permissions/users/password/$id';
+      preLoaderRoute: typeof PrivatePermissionsUsersPasswordIdRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/users/edit/$id': {
+      id: '/_private/permissions/users/edit/$id';
+      path: '/permissions/users/edit/$id';
+      fullPath: '/permissions/users/edit/$id';
+      preLoaderRoute: typeof PrivatePermissionsUsersEditIdRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/roles/edit/$id': {
+      id: '/_private/permissions/roles/edit/$id';
+      path: '/permissions/roles/edit/$id';
+      fullPath: '/permissions/roles/edit/$id';
+      preLoaderRoute: typeof PrivatePermissionsRolesEditIdRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
   }
 }
 
 interface PrivateRouteChildren {
-  PrivateComponentsIndexRoute: typeof PrivateComponentsIndexRoute
-  PrivateDashboardIndexRoute: typeof PrivateDashboardIndexRoute
-  PrivateFleetIndexRoute: typeof PrivateFleetIndexRoute
+  PrivateComponentsIndexRoute: typeof PrivateComponentsIndexRoute;
+  PrivateDashboardIndexRoute: typeof PrivateDashboardIndexRoute;
+  PrivateFleetIndexRoute: typeof PrivateFleetIndexRoute;
+  PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
+  PrivatePermissionsUsersAddRoute: typeof PrivatePermissionsUsersAddRoute;
+  PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
+  PrivatePermissionsUsersIndexRoute: typeof PrivatePermissionsUsersIndexRoute;
+  PrivatePermissionsRolesEditIdRoute: typeof PrivatePermissionsRolesEditIdRoute;
+  PrivatePermissionsUsersEditIdRoute: typeof PrivatePermissionsUsersEditIdRoute;
+  PrivatePermissionsUsersPasswordIdRoute: typeof PrivatePermissionsUsersPasswordIdRoute;
+  PrivatePermissionsUsersPermissionsAddRoute: typeof PrivatePermissionsUsersPermissionsAddRoute;
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateComponentsIndexRoute: PrivateComponentsIndexRoute,
   PrivateDashboardIndexRoute: PrivateDashboardIndexRoute,
   PrivateFleetIndexRoute: PrivateFleetIndexRoute,
-}
+  PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
+  PrivatePermissionsUsersAddRoute: PrivatePermissionsUsersAddRoute,
+  PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,
+  PrivatePermissionsUsersIndexRoute: PrivatePermissionsUsersIndexRoute,
+  PrivatePermissionsRolesEditIdRoute: PrivatePermissionsRolesEditIdRoute,
+  PrivatePermissionsUsersEditIdRoute: PrivatePermissionsUsersEditIdRoute,
+  PrivatePermissionsUsersPasswordIdRoute:
+    PrivatePermissionsUsersPasswordIdRoute,
+  PrivatePermissionsUsersPermissionsAddRoute:
+    PrivatePermissionsUsersPermissionsAddRoute,
+};
 
 const PrivateRouteWithChildren =
-  PrivateRoute._addFileChildren(PrivateRouteChildren)
+  PrivateRoute._addFileChildren(PrivateRouteChildren);
 
 interface PublicRouteChildren {
-  PublicAuthRegisterRoute: typeof PublicAuthRegisterRoute
-  PublicAuthResetPasswordRoute: typeof PublicAuthResetPasswordRoute
-  PublicAuthUnlockRoute: typeof PublicAuthUnlockRoute
-  PublicAuthIndexRoute: typeof PublicAuthIndexRoute
+  PublicAuthRegisterRoute: typeof PublicAuthRegisterRoute;
+  PublicAuthResetPasswordRoute: typeof PublicAuthResetPasswordRoute;
+  PublicAuthUnlockRoute: typeof PublicAuthUnlockRoute;
+  PublicAuthIndexRoute: typeof PublicAuthIndexRoute;
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
@@ -245,16 +423,16 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicAuthResetPasswordRoute: PublicAuthResetPasswordRoute,
   PublicAuthUnlockRoute: PublicAuthUnlockRoute,
   PublicAuthIndexRoute: PublicAuthIndexRoute,
-}
+};
 
 const PublicRouteWithChildren =
-  PublicRoute._addFileChildren(PublicRouteChildren)
+  PublicRoute._addFileChildren(PublicRouteChildren);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PrivateRoute: PrivateRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();

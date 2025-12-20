@@ -2,9 +2,9 @@
  * Crypto utilities for SSO authentication
  */
 
-import CryptoJS from "crypto-js";
+import CryptoJS from 'crypto-js';
 
-const SSO_SECRET = import.meta.env.VITE_SSO_TOKEN || "";
+const SSO_SECRET = import.meta.env.VITE_SSO_TOKEN || '';
 
 /**
  * Encrypt SSO payload for backend
@@ -16,7 +16,7 @@ export function encryptSSOPayload(data: object, time: number): string {
     const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), secret).toString();
     return encrypted;
   } catch {
-    return "";
+    return '';
   }
 }
 
@@ -38,8 +38,8 @@ export function decryptSSOPayload(encrypted: string, time: number): object | nul
  * Generate random string for nonce/state
  */
 export function generateRandomString(length: number = 32): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
   }

@@ -1,8 +1,8 @@
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import { useIsMobile } from '@/hooks/use-mobile';
 
-const SIDEBAR_COOKIE_NAME = "sidebar_state";
+const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 
 type SidebarToggleStore = {
   isOpen: boolean;
@@ -11,7 +11,7 @@ type SidebarToggleStore = {
   setMobileOpen: (open: boolean) => void;
   toggle: () => void;
   // Computed state
-  state: "expanded" | "collapsed";
+  state: 'expanded' | 'collapsed';
 };
 
 export const useSidebarToggle = create<SidebarToggleStore>()(
@@ -19,10 +19,10 @@ export const useSidebarToggle = create<SidebarToggleStore>()(
     (set, get) => ({
       isOpen: true,
       isMobileOpen: false,
-      state: "expanded",
+      state: 'expanded',
 
       setOpen: (open: boolean) => {
-        set({ isOpen: open, state: open ? "expanded" : "collapsed" });
+        set({ isOpen: open, state: open ? 'expanded' : 'collapsed' });
       },
 
       setMobileOpen: (open: boolean) => {
@@ -35,7 +35,7 @@ export const useSidebarToggle = create<SidebarToggleStore>()(
         const newOpen = !isOpen;
         set({
           isOpen: newOpen,
-          state: newOpen ? "expanded" : "collapsed",
+          state: newOpen ? 'expanded' : 'collapsed',
         });
       },
     }),

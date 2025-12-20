@@ -1,8 +1,8 @@
-import { useNavigate } from "@tanstack/react-router";
-import { CheckCircle2 } from "lucide-react";
-import { FormattedMessage } from "react-intl";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { useNavigate } from '@tanstack/react-router';
+import { CheckCircle2 } from 'lucide-react';
+import { FormattedMessage } from 'react-intl';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 export function SuccessStep() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export function SuccessStep() {
           </p>
         </div>
         <Button
-          onClick={() => navigate({ to: "/auth" })}
+          onClick={() => navigate({ to: '/auth' })}
           className="w-full h-12 font-semibold text-base bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
           size="lg"
         >

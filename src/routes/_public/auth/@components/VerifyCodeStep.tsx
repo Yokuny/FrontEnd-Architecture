@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, Shield } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field } from "@/components/ui/field";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { type UnlockCodeFormValues, unlockCodeSchema } from "../@interface/unlock.types";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeft, Shield } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field } from '@/components/ui/field';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { type UnlockCodeFormValues, unlockCodeSchema } from '../@interface/unlock.types';
 
 interface VerifyCodeStepProps {
   destination: string;
@@ -22,7 +22,7 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
   const form = useForm<UnlockCodeFormValues>({
     resolver: zodResolver(unlockCodeSchema),
     defaultValues: {
-      code: "",
+      code: '',
     },
   });
 
@@ -97,7 +97,7 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
             disabled={resendCooldown > 0}
             className="text-amber-500 hover:text-amber-400 transition-colors font-medium disabled:text-zinc-600 disabled:cursor-not-allowed"
           >
-            {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : "Resend code"}
+            {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend code'}
           </Button>
         </div>
       </CardContent>
