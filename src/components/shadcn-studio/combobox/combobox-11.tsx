@@ -1,23 +1,23 @@
-import { CheckIcon, ChevronsUpDownIcon, XIcon } from "lucide-react";
-import { useId, useState } from "react";
+import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react';
+import { useId, useState } from 'react';
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const frameworks = [
-  { value: "react", label: "React" },
-  { value: "nextjs", label: "Nextjs" },
-  { value: "angular", label: "Angular" },
-  { value: "vue", label: "VueJS" },
-  { value: "django", label: "Django" },
-  { value: "astro", label: "Astro" },
-  { value: "remix", label: "Remix" },
-  { value: "svelte", label: "Svelte" },
-  { value: "solidjs", label: "SolidJS" },
-  { value: "qwik", label: "Qwik" },
+  { value: 'react', label: 'React' },
+  { value: 'nextjs', label: 'Nextjs' },
+  { value: 'angular', label: 'Angular' },
+  { value: 'vue', label: 'VueJS' },
+  { value: 'django', label: 'Django' },
+  { value: 'astro', label: 'Astro' },
+  { value: 'remix', label: 'Remix' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'solidjs', label: 'SolidJS' },
+  { value: 'qwik', label: 'Qwik' },
 ];
 
 const ComboboxMultipleExpandableDemo = () => {
@@ -25,7 +25,7 @@ const ComboboxMultipleExpandableDemo = () => {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  const [selectedValues, setSelectedValues] = useState<string[]>(["react", "qwik", "solidjs", "angular", "astro"]);
+  const [selectedValues, setSelectedValues] = useState<string[]>(['react', 'qwik', 'solidjs', 'angular', 'astro']);
 
   const toggleSelection = (value: string) => {
     setSelectedValues((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
@@ -81,7 +81,7 @@ const ComboboxMultipleExpandableDemo = () => {
                       }}
                       className="rounded-sm"
                     >
-                      {expanded ? "Show Less" : `+${hiddenCount} more`}
+                      {expanded ? 'Show Less' : `+${hiddenCount} more`}
                     </Badge>
                   ) : null}
                 </>

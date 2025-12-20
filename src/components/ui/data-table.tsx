@@ -1,13 +1,13 @@
-import { ChevronDown, ChevronUp, Filter, Search, X } from "lucide-react";
-import type React from "react";
-import { useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { ChevronDown, ChevronUp, Filter, Search, X } from 'lucide-react';
+import type React from 'react';
+import { useMemo, useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 export type DataTableColumn<T> = {
   key: keyof T;
@@ -42,7 +42,7 @@ export function DataTable<T extends Record<string, any>>({
   columns,
   className,
   searchable = true,
-  searchPlaceholder = "Search...",
+  searchPlaceholder = 'Search...',
   itemsPerPage = 10,
   showPagination = true,
   striped = false,
@@ -50,14 +50,14 @@ export function DataTable<T extends Record<string, any>>({
   bordered = true,
   compact = false,
   loading = false,
-  emptyMessage = "No data available",
+  emptyMessage = 'No data available',
   onRowClick,
 }: DataTableProps<T>) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [sortConfig, setSortConfig] = useState<{
     key: keyof T | null;
-    direction: "asc" | "desc";
-  }>({ key: null, direction: "asc" });
+    direction: 'asc' | 'desc';
+  }>({ key: null, direction: 'asc' });
   const [currentPage, setCurrentPage] = useState(1);
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
 
@@ -98,10 +98,10 @@ export function DataTable<T extends Record<string, any>>({
       const bValue = b[key];
 
       if (aValue < bValue) {
-        return direction === "asc" ? -1 : 1;
+        return direction === 'asc' ? -1 : 1;
       }
       if (aValue > bValue) {
-        return direction === "asc" ? 1 : -1;
+        return direction === 'asc' ? 1 : -1;
       }
       return 0;
     });
@@ -120,7 +120,7 @@ export function DataTable<T extends Record<string, any>>({
   const handleSort = (key: keyof T) => {
     setSortConfig((current) => ({
       key,
-      direction: current.key === key && current.direction === "asc" ? "desc" : "asc",
+      direction: current.key === key && current.direction === 'asc' ? 'desc' : 'asc',
     }));
   };
 
@@ -177,7 +177,7 @@ export function DataTable<T extends Record<string, any>>({
   }
 
   return (
-    <Card className={cn(className, !bordered && "border-0 shadow-none")}>
+    <Card className={cn(className, !bordered && 'border-0 shadow-none')}>
       {/* Search and Filters */}
       {searchable && (
         <CardHeader className="pb-4">
@@ -208,25 +208,25 @@ export function DataTable<T extends Record<string, any>>({
                 {columns.map((column) => (
                   <th
                     key={String(column.key)}
-                    className={cn("text-left font-medium text-muted-foreground align-top", compact ? "p-4" : "p-6", column.width && `w-[${column.width}]`)}
+                    className={cn('text-left font-medium text-muted-foreground align-top', compact ? 'p-4' : 'p-6', column.width && `w-[${column.width}]`)}
                     style={column.width ? { width: column.width } : undefined}
                   >
                     {/* biome-ignore lint/a11y/noStaticElementInteractions: Interactive only when sortable */}
                     {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Interactive only when sortable */}
                     <div
-                      className={cn("flex items-center justify-between gap-2", column.sortable && "cursor-pointer hover:text-foreground transition-colors group")}
+                      className={cn('flex items-center justify-between gap-2', column.sortable && 'cursor-pointer hover:text-foreground transition-colors group')}
                       onClick={column.sortable ? () => handleSort(column.key) : undefined}
                       onKeyDown={
                         column.sortable
                           ? (e) => {
-                              if (e.key === "Enter" || e.key === " ") {
+                              if (e.key === 'Enter' || e.key === ' ') {
                                 e.preventDefault();
                                 handleSort(column.key);
                               }
                             }
                           : undefined
                       }
-                      role={column.sortable ? "button" : undefined}
+                      role={column.sortable ? 'button' : undefined}
                       tabIndex={column.sortable ? 0 : undefined}
                     >
                       <div className="flex items-center gap-2">
@@ -235,14 +235,14 @@ export function DataTable<T extends Record<string, any>>({
                           <div className="flex flex-col">
                             <ChevronUp
                               className={cn(
-                                "h-3 w-3",
-                                sortConfig.key === column.key && sortConfig.direction === "asc" ? "text-primary" : "text-muted-foreground/40 group-hover:text-muted-foreground/70",
+                                'h-3 w-3',
+                                sortConfig.key === column.key && sortConfig.direction === 'asc' ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground/70',
                               )}
                             />
                             <ChevronDown
                               className={cn(
-                                "h-3 w-3 -mt-1",
-                                sortConfig.key === column.key && sortConfig.direction === "desc" ? "text-primary" : "text-muted-foreground/40 group-hover:text-muted-foreground/70",
+                                'h-3 w-3 -mt-1',
+                                sortConfig.key === column.key && sortConfig.direction === 'desc' ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground/70',
                               )}
                             />
                           </div>
@@ -260,7 +260,7 @@ export function DataTable<T extends Record<string, any>>({
                         <Input
                           type="text"
                           placeholder="Filter..."
-                          value={columnFilters[String(column.key)] || ""}
+                          value={columnFilters[String(column.key)] || ''}
                           onChange={(e) => handleColumnFilter(String(column.key), e.target.value)}
                           className="h-8 text-xs pr-8"
                         />
@@ -278,7 +278,7 @@ export function DataTable<T extends Record<string, any>>({
             <tbody className="bg-card">
               {paginatedData.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length} className={cn("text-center text-muted-foreground bg-card", compact ? "px-4 py-12" : "px-6 py-16")}>
+                  <td colSpan={columns.length} className={cn('text-center text-muted-foreground bg-card', compact ? 'px-4 py-12' : 'px-6 py-16')}>
                     <div className="flex flex-col items-center space-y-2">
                       <div className="text-4xl">📊</div>
                       <div className="font-medium">{emptyMessage}</div>
@@ -291,16 +291,16 @@ export function DataTable<T extends Record<string, any>>({
                     // biome-ignore lint/suspicious/noArrayIndexKey: Data does not have a guaranteed unique ID
                     key={index}
                     className={cn(
-                      "border-t border-border bg-card transition-colors",
-                      striped && index % 2 === 0 && "bg-muted/20",
-                      hoverable && "hover:bg-muted/30",
-                      onRowClick && "cursor-pointer",
+                      'border-t border-border bg-card transition-colors',
+                      striped && index % 2 === 0 && 'bg-muted/20',
+                      hoverable && 'hover:bg-muted/30',
+                      onRowClick && 'cursor-pointer',
                     )}
                     onClick={() => onRowClick?.(row, index)}
                   >
                     {columns.map((column) => (
-                      <td key={String(column.key)} className={cn("text-sm text-foreground align-middle", compact ? "px-4 py-3" : "px-6 py-4")}>
-                        {column.render ? column.render(row[column.key], row) : String(row[column.key] ?? "")}
+                      <td key={String(column.key)} className={cn('text-sm text-foreground align-middle', compact ? 'px-4 py-3' : 'px-6 py-4')}>
+                        {column.render ? column.render(row[column.key], row) : String(row[column.key] ?? '')}
                       </td>
                     ))}
                   </tr>
@@ -323,7 +323,7 @@ export function DataTable<T extends Record<string, any>>({
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  className={cn(currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer")}
+                  className={cn(currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer')}
                 />
               </PaginationItem>
 
@@ -359,7 +359,7 @@ export function DataTable<T extends Record<string, any>>({
               <PaginationItem>
                 <PaginationNext
                   onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  className={cn(currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer")}
+                  className={cn(currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer')}
                 />
               </PaginationItem>
             </PaginationContent>

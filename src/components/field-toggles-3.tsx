@@ -1,7 +1,7 @@
-import { Field, FieldDescription, FieldLabel, FieldSet } from "@/components/ui/field";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Field, FieldDescription, FieldLabel, FieldSet } from '@/components/ui/field';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
-export const title = "Radio Buttons";
+export const title = 'Radio Buttons';
 
 const Example = () => (
   <div className="w-full max-w-md">

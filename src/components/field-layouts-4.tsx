@@ -1,7 +1,7 @@
-import { Field, FieldGroup, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Field, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
 
-export const title = "Grid Layout";
+export const title = 'Grid Layout';
 
 const Example = () => (
   <div className="w-full max-w-md">

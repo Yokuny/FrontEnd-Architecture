@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Calendar } from "lucide-react";
+import { Calendar } from 'lucide-react';
 
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 
-export const title = "Empty with Multiple Paragraphs";
+export const title = 'Empty with Multiple Paragraphs';
 
 const Example = () => (
   <Empty>

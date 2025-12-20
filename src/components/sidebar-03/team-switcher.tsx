@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { ChevronsUpDown, Plus } from "lucide-react";
-import * as React from "react";
+import { ChevronsUpDown, Plus } from 'lucide-react';
+import * as React from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+} from '@/components/ui/dropdown-menu';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 
 type Team = {
   name: string;
@@ -43,7 +43,7 @@ export function TeamSwitcher({ teams }: { teams: Team[] }) {
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg mb-4" align="start" side={isMobile ? "bottom" : "right"} sideOffset={4}>
+          <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg mb-4" align="start" side={isMobile ? 'bottom' : 'right'} sideOffset={4}>
             <DropdownMenuLabel className="text-xs text-muted-foreground">Teams</DropdownMenuLabel>
             {teams.map((team, index) => (
               <DropdownMenuItem key={team.name} onClick={() => setActiveTeam(team)} className="gap-2 p-2">

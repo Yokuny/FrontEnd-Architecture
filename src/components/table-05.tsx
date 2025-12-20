@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   type ColumnDef,
@@ -9,19 +9,19 @@ import {
   getSortedRowModel,
   type SortingState,
   useReactTable,
-} from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight, Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
+} from '@tanstack/react-table';
+import { ChevronLeft, ChevronRight, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { cn } from '@/lib/utils';
 
-type Status = "completed" | "pending" | "processing" | "cancelled";
+type Status = 'completed' | 'pending' | 'processing' | 'cancelled';
 
 interface Item {
   id: string;
@@ -33,27 +33,27 @@ interface Item {
 
 const statusConfig: Record<Status, { label: string; className: string }> = {
   completed: {
-    label: "Completed",
-    className: "bg-emerald-500/15 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400",
+    label: 'Completed',
+    className: 'bg-emerald-500/15 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400',
   },
   pending: {
-    label: "Pending",
-    className: "bg-amber-500/15 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400",
+    label: 'Pending',
+    className: 'bg-amber-500/15 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400',
   },
   processing: {
-    label: "Processing",
-    className: "bg-blue-500/15 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400",
+    label: 'Processing',
+    className: 'bg-blue-500/15 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400',
   },
   cancelled: {
-    label: "Cancelled",
-    className: "bg-rose-500/15 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400",
+    label: 'Cancelled',
+    className: 'bg-rose-500/15 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400',
   },
 };
 
 function StatusBadge({ status }: { status: Status }) {
   const config = statusConfig[status];
   return (
-    <Badge variant="outline" className={cn("border-0", config.className)}>
+    <Badge variant="outline" className={cn('border-0', config.className)}>
       {config.label}
     </Badge>
   );
@@ -61,10 +61,10 @@ function StatusBadge({ status }: { status: Status }) {
 
 const columns: ColumnDef<Item>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
-        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
       />
@@ -74,26 +74,26 @@ const columns: ColumnDef<Item>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <span className="font-medium">{row.getValue("name")}</span>,
+    accessorKey: 'name',
+    header: 'Name',
+    cell: ({ row }) => <span className="font-medium">{row.getValue('name')}</span>,
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: 'date',
+    header: 'Date',
   },
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => <StatusBadge status={row.getValue("status")} />,
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => <StatusBadge status={row.getValue('status')} />,
   },
   {
-    accessorKey: "amount",
+    accessorKey: 'amount',
     header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => <div className="text-right font-medium">{row.getValue("amount")}</div>,
+    cell: ({ row }) => <div className="text-right font-medium">{row.getValue('amount')}</div>,
   },
   {
-    id: "actions",
+    id: 'actions',
     cell: () => (
       <div className="text-right">
         <DropdownMenu>
@@ -126,67 +126,67 @@ const columns: ColumnDef<Item>[] = [
 
 const data: Item[] = [
   {
-    id: "1",
-    name: "Project Alpha",
-    date: "Jan 15, 2024",
-    status: "completed",
-    amount: "$2,500",
+    id: '1',
+    name: 'Project Alpha',
+    date: 'Jan 15, 2024',
+    status: 'completed',
+    amount: '$2,500',
   },
   {
-    id: "2",
-    name: "Website Redesign",
-    date: "Feb 3, 2024",
-    status: "processing",
-    amount: "$4,200",
+    id: '2',
+    name: 'Website Redesign',
+    date: 'Feb 3, 2024',
+    status: 'processing',
+    amount: '$4,200',
   },
   {
-    id: "3",
-    name: "Mobile App MVP",
-    date: "Feb 18, 2024",
-    status: "pending",
-    amount: "$8,750",
+    id: '3',
+    name: 'Mobile App MVP',
+    date: 'Feb 18, 2024',
+    status: 'pending',
+    amount: '$8,750',
   },
   {
-    id: "4",
-    name: "Brand Identity",
-    date: "Mar 5, 2024",
-    status: "completed",
-    amount: "$1,800",
+    id: '4',
+    name: 'Brand Identity',
+    date: 'Mar 5, 2024',
+    status: 'completed',
+    amount: '$1,800',
   },
   {
-    id: "5",
-    name: "Marketing Campaign",
-    date: "Mar 22, 2024",
-    status: "cancelled",
-    amount: "$3,400",
+    id: '5',
+    name: 'Marketing Campaign',
+    date: 'Mar 22, 2024',
+    status: 'cancelled',
+    amount: '$3,400',
   },
   {
-    id: "6",
-    name: "Analytics Dashboard",
-    date: "Apr 8, 2024",
-    status: "processing",
-    amount: "$5,600",
+    id: '6',
+    name: 'Analytics Dashboard',
+    date: 'Apr 8, 2024',
+    status: 'processing',
+    amount: '$5,600',
   },
   {
-    id: "7",
-    name: "E-commerce Platform",
-    date: "Apr 25, 2024",
-    status: "pending",
-    amount: "$12,000",
+    id: '7',
+    name: 'E-commerce Platform',
+    date: 'Apr 25, 2024',
+    status: 'pending',
+    amount: '$12,000',
   },
   {
-    id: "8",
-    name: "API Integration",
-    date: "May 10, 2024",
-    status: "completed",
-    amount: "$3,200",
+    id: '8',
+    name: 'API Integration',
+    date: 'May 10, 2024',
+    status: 'completed',
+    amount: '$3,200',
   },
 ];
 
 export default function Table05() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
-  const [globalFilter, setGlobalFilter] = useState("");
+  const [globalFilter, setGlobalFilter] = useState('');
 
   const table = useReactTable({
     data,
@@ -198,7 +198,7 @@ export default function Table05() {
     onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: "includesString",
+    globalFilterFn: 'includesString',
     state: {
       sorting,
       rowSelection,
@@ -248,7 +248,7 @@ export default function Table05() {
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                   ))}
@@ -267,8 +267,8 @@ export default function Table05() {
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{" "}
-          {Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)} of{" "}
+          Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
+          {Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)} of{' '}
           {table.getFilteredRowModel().rows.length} entries
         </p>
         <div className="flex items-center gap-1">
@@ -277,7 +277,7 @@ export default function Table05() {
             <span className="sr-only">Previous page</span>
           </Button>
           {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
-            <Button key={page} variant={currentPage === page ? "default" : "outline"} size="icon" className="h-8 w-8" onClick={() => table.setPageIndex(page - 1)}>
+            <Button key={page} variant={currentPage === page ? 'default' : 'outline'} size="icon" className="h-8 w-8" onClick={() => table.setPageIndex(page - 1)}>
               {page}
             </Button>
           ))}

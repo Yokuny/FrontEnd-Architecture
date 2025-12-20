@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { Card, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 
 const data = [
   {
-    name: "Requests",
-    stat: "996",
-    limit: "10,000",
+    name: 'Requests',
+    stat: '996',
+    limit: '10,000',
     percentage: 9.96,
   },
   {
-    name: "Credits",
-    stat: "$672",
-    limit: "$1,000",
+    name: 'Credits',
+    stat: '$672',
+    limit: '$1,000',
     percentage: 67.2,
   },
   {
-    name: "Storage",
-    stat: "1.85",
-    limit: "10GB",
+    name: 'Storage',
+    stat: '1.85',
+    limit: '10GB',
     percentage: 18.5,
   },
   {
-    name: "API Calls",
-    stat: "4,328",
-    limit: "5,000",
+    name: 'API Calls',
+    stat: '4,328',
+    limit: '5,000',
     percentage: 86.56,
   },
 ];
