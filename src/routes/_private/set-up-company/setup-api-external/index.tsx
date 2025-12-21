@@ -1,0 +1,95 @@
+import { createFileRoute, useSearch } from '@tanstack/react-router';
+import { Eye, EyeOff, Save } from 'lucide-react';
+import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { z } from 'zod';
+
+import { EnterpriseSelect } from '@/components/selects';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useApiExternalForm } from './@hooks/use-api-external-form';
+
+const searchSchema = z.object({
+  id: z.string().optional(),
+});
+
+export const Route = createFileRoute('/_private/set-up-company/setup-api-external/')({
+  component: SetupApiExternalPage,
+  validateSearch: searchSchema,
+});
+
+function SetupApiExternalPage() {
+  const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/setup-api-external/' });
+  const [showKey, setShowKey] = useState(false);
+  const [selectedEnterprise, setSelectedEnterprise] = useState<string | undefined>(idEnterpriseQuery);
+
+  const { form, onSubmit, isLoading, isPending } = useApiExternalForm({
+    idEnterprise: selectedEnterprise,
+  });
+
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    watch,
+  } = form;
+
+  const windyKeyValue = watch('windyKey');
+  const isKeyMasked = windyKeyValue?.includes('***');
+
+  const handleEnterpriseChange = (value: string | undefined) => {
+    setSelectedEnterprise(value);
+    if (value) {
+      setValue('idEnterprise', value);
+    }
+  };
+
+  return (
+    <div className="container mx-auto p-6">
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle>
+            <FormattedMessage id="setup.api.external" defaultMessage="Configuração de API Externa" />
+          </CardTitle>
+        </CardHeader>
+        <form onSubmit={onSubmit}>
+          <CardContent className="space-y-6">
+            {!idEnterpriseQuery && (
+              <div className="space-y-2">
+                <EnterpriseSelect mode="single" value={selectedEnterprise} onChange={handleEnterpriseChange} />
+                {errors.idEnterprise && (
+                  <p className="text-sm text-destructive">
+                    <FormattedMessage id={errors.idEnterprise.message} />
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <Label htmlFor="windyKey">API Key Windy *</Label>
+              <div className="relative">
+                <Input id="windyKey" type={showKey ? 'text' : 'password'} {...register('windyKey')} placeholder="API KEY" disabled={isLoading || isPending} className="pr-10" />
+                <button type="button" onClick={() => setShowKey(!showKey)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                  {showKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              {errors.windyKey && (
+                <p className="text-sm text-destructive">
+                  <FormattedMessage id={errors.windyKey.message} />
+                </p>
+              )}
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-end">
+            <Button type="submit" disabled={isLoading || isPending || isKeyMasked}>
+              <Save className="mr-2 h-4 w-4" />
+              <FormattedMessage id="save" defaultMessage="Salvar" />
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
+    </div>
+  );
+}

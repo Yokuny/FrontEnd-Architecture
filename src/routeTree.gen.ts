@@ -17,6 +17,9 @@ import { Route as PrivateComponentsIndexRouteImport } from './routes/_private/co
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
+import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
+import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
 import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
 import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
 import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
@@ -66,6 +69,24 @@ const PublicAuthRegisterRoute = PublicAuthRegisterRouteImport.update({
   path: '/auth/register',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateSetUpCompanySetupEmailIndexRoute =
+  PrivateSetUpCompanySetupEmailIndexRouteImport.update({
+    id: '/set-up-company/setup-email/',
+    path: '/set-up-company/setup-email/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateSetUpCompanySetupApiExternalIndexRoute =
+  PrivateSetUpCompanySetupApiExternalIndexRouteImport.update({
+    id: '/set-up-company/setup-api-external/',
+    path: '/set-up-company/setup-api-external/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateSetUpCompanyIntegrationListIndexRoute =
+  PrivateSetUpCompanyIntegrationListIndexRouteImport.update({
+    id: '/set-up-company/integration-list/',
+    path: '/set-up-company/integration-list/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivatePermissionsUsersIndexRoute =
   PrivatePermissionsUsersIndexRouteImport.update({
     id: '/permissions/users/',
@@ -138,6 +159,9 @@ export interface FileRoutesByFullPath {
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
+  '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
+  '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
+  '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
   '/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
   '/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
@@ -156,6 +180,9 @@ export interface FileRoutesByTo {
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
+  '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
+  '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
+  '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
   '/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
   '/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
@@ -177,6 +204,9 @@ export interface FileRoutesById {
   '/_private/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/_private/permissions/roles/': typeof PrivatePermissionsRolesIndexRoute;
   '/_private/permissions/users/': typeof PrivatePermissionsUsersIndexRoute;
+  '/_private/set-up-company/integration-list/': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
+  '/_private/set-up-company/setup-api-external/': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
+  '/_private/set-up-company/setup-email/': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/_private/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
   '/_private/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
   '/_private/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
@@ -197,6 +227,9 @@ export interface FileRouteTypes {
     | '/permissions/users/add'
     | '/permissions/roles'
     | '/permissions/users'
+    | '/set-up-company/integration-list'
+    | '/set-up-company/setup-api-external'
+    | '/set-up-company/setup-email'
     | '/permissions/roles/edit/$id'
     | '/permissions/roles/users/$id'
     | '/permissions/users/edit/$id'
@@ -215,6 +248,9 @@ export interface FileRouteTypes {
     | '/permissions/users/add'
     | '/permissions/roles'
     | '/permissions/users'
+    | '/set-up-company/integration-list'
+    | '/set-up-company/setup-api-external'
+    | '/set-up-company/setup-email'
     | '/permissions/roles/edit/$id'
     | '/permissions/roles/users/$id'
     | '/permissions/users/edit/$id'
@@ -235,6 +271,9 @@ export interface FileRouteTypes {
     | '/_private/permissions/users/add'
     | '/_private/permissions/roles/'
     | '/_private/permissions/users/'
+    | '/_private/set-up-company/integration-list/'
+    | '/_private/set-up-company/setup-api-external/'
+    | '/_private/set-up-company/setup-email/'
     | '/_private/permissions/roles/edit/$id'
     | '/_private/permissions/roles/users/$id'
     | '/_private/permissions/users/edit/$id'
@@ -306,6 +345,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/register';
       preLoaderRoute: typeof PublicAuthRegisterRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/set-up-company/setup-email/': {
+      id: '/_private/set-up-company/setup-email/';
+      path: '/set-up-company/setup-email';
+      fullPath: '/set-up-company/setup-email';
+      preLoaderRoute: typeof PrivateSetUpCompanySetupEmailIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/set-up-company/setup-api-external/': {
+      id: '/_private/set-up-company/setup-api-external/';
+      path: '/set-up-company/setup-api-external';
+      fullPath: '/set-up-company/setup-api-external';
+      preLoaderRoute: typeof PrivateSetUpCompanySetupApiExternalIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/set-up-company/integration-list/': {
+      id: '/_private/set-up-company/integration-list/';
+      path: '/set-up-company/integration-list';
+      fullPath: '/set-up-company/integration-list';
+      preLoaderRoute: typeof PrivateSetUpCompanyIntegrationListIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/permissions/users/': {
       id: '/_private/permissions/users/';
@@ -386,6 +446,9 @@ interface PrivateRouteChildren {
   PrivatePermissionsUsersAddRoute: typeof PrivatePermissionsUsersAddRoute;
   PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
   PrivatePermissionsUsersIndexRoute: typeof PrivatePermissionsUsersIndexRoute;
+  PrivateSetUpCompanyIntegrationListIndexRoute: typeof PrivateSetUpCompanyIntegrationListIndexRoute;
+  PrivateSetUpCompanySetupApiExternalIndexRoute: typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
+  PrivateSetUpCompanySetupEmailIndexRoute: typeof PrivateSetUpCompanySetupEmailIndexRoute;
   PrivatePermissionsRolesEditIdRoute: typeof PrivatePermissionsRolesEditIdRoute;
   PrivatePermissionsRolesUsersIdRoute: typeof PrivatePermissionsRolesUsersIdRoute;
   PrivatePermissionsUsersEditIdRoute: typeof PrivatePermissionsUsersEditIdRoute;
@@ -400,6 +463,12 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivatePermissionsUsersAddRoute: PrivatePermissionsUsersAddRoute,
   PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,
   PrivatePermissionsUsersIndexRoute: PrivatePermissionsUsersIndexRoute,
+  PrivateSetUpCompanyIntegrationListIndexRoute:
+    PrivateSetUpCompanyIntegrationListIndexRoute,
+  PrivateSetUpCompanySetupApiExternalIndexRoute:
+    PrivateSetUpCompanySetupApiExternalIndexRoute,
+  PrivateSetUpCompanySetupEmailIndexRoute:
+    PrivateSetUpCompanySetupEmailIndexRoute,
   PrivatePermissionsRolesEditIdRoute: PrivatePermissionsRolesEditIdRoute,
   PrivatePermissionsRolesUsersIdRoute: PrivatePermissionsRolesUsersIdRoute,
   PrivatePermissionsUsersEditIdRoute: PrivatePermissionsUsersEditIdRoute,
