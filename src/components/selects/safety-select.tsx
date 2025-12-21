@@ -35,7 +35,6 @@ export function SafetySelect(props: SafetySelectProps) {
         placeholder={placeholder || 'Selecione as áreas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
-        // biome-ignore lint/suspicious/noExplicitAny: static query mapping
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
@@ -51,7 +50,6 @@ export function SafetySelect(props: SafetySelectProps) {
       placeholder={placeholder || 'Selecione uma área...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}
-      // biome-ignore lint/suspicious/noExplicitAny: static query mapping
       query={query as any}
       mapToOptions={mapToOptions}
       disabled={disabled}

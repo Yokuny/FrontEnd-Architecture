@@ -52,9 +52,9 @@ function IntegrationListPage() {
       idEnterprise,
       type: item.type,
       updateTime: item.updateTime,
-      idMoon: item.idMoon ? parseInt(item.idMoon) : null,
-      imo: item.imo ? parseInt(item.imo) : null,
-      mmsi: item.mmsi ? parseInt(item.mmsi) : null,
+      idMoon: item.idMoon ? parseInt(item.idMoon, 10) : null,
+      imo: item.imo ? parseInt(item.imo, 10) : null,
+      mmsi: item.mmsi ? parseInt(item.mmsi, 10) : null,
       disabled: item.disabled,
     }));
 
@@ -141,7 +141,11 @@ function IntegrationListPage() {
                         </Select>
                       </TableCell>
                       <TableCell>
-                        <Select value={item.updateTime?.toString() || ''} onValueChange={(value) => handleChange(index, 'updateTime', parseInt(value))} disabled={item.disabled}>
+                        <Select
+                          value={item.updateTime?.toString() || ''}
+                          onValueChange={(value) => handleChange(index, 'updateTime', parseInt(value, 10))}
+                          disabled={item.disabled}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder={intl.formatMessage({ id: 'interval' })} />
                           </SelectTrigger>

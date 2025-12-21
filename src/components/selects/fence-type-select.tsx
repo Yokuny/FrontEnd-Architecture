@@ -36,7 +36,6 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
         placeholder={placeholder || 'Selecione os tipos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
-        // biome-ignore lint/suspicious/noExplicitAny: static query mapping
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
@@ -54,7 +53,6 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
       placeholder={placeholder || 'Selecione um tipo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}
-      // biome-ignore lint/suspicious/noExplicitAny: static query mapping
       query={query as any}
       mapToOptions={mapToOptions}
       disabled={disabled}

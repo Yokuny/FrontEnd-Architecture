@@ -23,7 +23,8 @@
         "noReactSpecificProps": "off",
         "noConsole": "warn",
         "noAlert": "warn",
-        "noArrayIndexKey": "info"
+        "noArrayIndexKey": "info",
+        "noExplicitAny": "off"
       }
     }
   },

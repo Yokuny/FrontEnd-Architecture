@@ -35,7 +35,6 @@ export function ViewSelect(props: ViewSelectProps) {
         placeholder={placeholder || 'Selecione as visualizações...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
-        // biome-ignore lint/suspicious/noExplicitAny: mapping static query
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
@@ -53,7 +52,6 @@ export function ViewSelect(props: ViewSelectProps) {
       placeholder={placeholder || 'Selecione uma visualização...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}
-      // biome-ignore lint/suspicious/noExplicitAny: mapping static query
       query={query as any}
       mapToOptions={mapToOptions}
       disabled={disabled}

@@ -48,7 +48,6 @@ export function LevelSelect(props: LevelSelectProps) {
         placeholder={placeholder || 'Selecione os níveis...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
-        // biome-ignore lint/suspicious/noExplicitAny: static query mapping
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
@@ -66,7 +65,6 @@ export function LevelSelect(props: LevelSelectProps) {
       placeholder={placeholder || 'Selecione um nível...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}
-      // biome-ignore lint/suspicious/noExplicitAny: static query mapping
       query={query as any}
       mapToOptions={mapToOptions}
       disabled={disabled}

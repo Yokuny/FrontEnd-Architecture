@@ -35,7 +35,6 @@ export function PrioritySelect(props: PrioritySelectProps) {
         placeholder={placeholder || 'Selecione as prioridades...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as number[])}
-        // biome-ignore lint/suspicious/noExplicitAny: mapping static query
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
@@ -53,7 +52,6 @@ export function PrioritySelect(props: PrioritySelectProps) {
       placeholder={placeholder || 'Selecione uma prioridade...'}
       value={props.value}
       onChange={(val) => props.onChange(val as number)}
-      // biome-ignore lint/suspicious/noExplicitAny: mapping static query
       query={query as any}
       mapToOptions={mapToOptions}
       disabled={disabled}

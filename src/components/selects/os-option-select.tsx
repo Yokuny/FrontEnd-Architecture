@@ -33,7 +33,6 @@ export function OsOptionSelect(props: OsOptionSelectProps) {
       placeholder={placeholder || 'Selecione...'}
       value={props.value}
       onChange={props.onChange}
-      // biome-ignore lint/suspicious/noExplicitAny: static query mapping
       query={query as any}
       mapToOptions={mapToOptions}
       disabled={disabled}

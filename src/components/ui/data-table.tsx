@@ -14,7 +14,6 @@ export type DataTableColumn<T> = {
   header: string;
   sortable?: boolean;
   filterable?: boolean;
-  // biome-ignore lint/suspicious/noExplicitAny: Generic render function
   render?: (value: any, row: T) => React.ReactNode;
   width?: string;
 };
@@ -36,7 +35,6 @@ export type DataTableProps<T> = {
   onRowClick?: (row: T, index: number) => void;
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: Generic component
 export function DataTable<T extends Record<string, any>>({
   data,
   columns,

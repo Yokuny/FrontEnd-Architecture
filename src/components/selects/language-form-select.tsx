@@ -27,7 +27,6 @@ export function LanguageFormSelect(props: LanguageFormSelectProps) {
       placeholder={placeholder || 'Selecione o idioma...'}
       value={value}
       onChange={(val) => onChange?.(val as string)}
-      // biome-ignore lint/suspicious/noExplicitAny: static query mapping
       query={query as any}
       mapToOptions={mapToOptions}
       disabled={disabled}

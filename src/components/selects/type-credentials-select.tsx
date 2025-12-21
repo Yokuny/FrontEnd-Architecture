@@ -31,7 +31,6 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
         placeholder={placeholder || intl.formatMessage({ id: 'credentials.by' })}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
-        // biome-ignore lint/suspicious/noExplicitAny: static query mapping
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
@@ -46,7 +45,6 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
       placeholder={placeholder || intl.formatMessage({ id: 'credentials.by' })}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}
-      // biome-ignore lint/suspicious/noExplicitAny: static query mapping
       query={query as any}
       mapToOptions={mapToOptions}
       disabled={disabled}

@@ -68,7 +68,7 @@ function AddPermissionPage() {
               <div className="space-y-2">
                 <EnterpriseSelect
                   mode="single"
-                  label={intl.formatMessage({ id: 'enterprise' }) + ' *'}
+                  label={`${intl.formatMessage({ id: 'enterprise' })} *`}
                   value={form.watch('idEnterprise')}
                   onChange={(val) => form.setValue('idEnterprise', val || '')}
                   disabled={!!id}
