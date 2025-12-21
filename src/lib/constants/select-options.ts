@@ -189,3 +189,13 @@ export const EDIT_PERMISSION_OPTIONS: EditPermissionOption[] = [
   { value: 'admin', labelKey: 'edit.permission.admin' },
   { value: 'owner', labelKey: 'edit.permission.owner' },
 ];
+
+export interface CredentialsOption {
+  value: string;
+  labelKey: string;
+}
+
+export const CREDENTIALS_OPTIONS: CredentialsOption[] = [
+  { value: 'password', labelKey: 'login.password' },
+  { value: 'sso', labelKey: 'SSO' },
+];

@@ -2,11 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { Activity, DollarSign, Home, LinkIcon, Package2, Percent, PieChart, Settings, ShoppingBag, Sparkles, Store, TrendingUp, Users } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { Logo } from '@/components/sidebar-03/logo';
 import DashboardNavigation from '@/components/sidebar-03/nav-main';
 import { NotificationsPopover } from '@/components/sidebar-03/nav-notifications';
 import { TeamSwitcher } from '@/components/sidebar-03/team-switcher';
 import { SidebarTrigger } from '@/components/sidebar-trigger';
+import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 import type { Route } from './nav-main';
@@ -174,7 +176,8 @@ export function AppSidebar() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <NotificationsPopover notifications={sampleNotifications} />
+          <LanguageSwitcher />
+          <ThemeSwitcher />
           <SidebarTrigger />
         </motion.div>
       </SidebarHeader>
@@ -182,6 +185,7 @@ export function AppSidebar() {
         <DashboardNavigation routes={dashboardRoutes} />
       </SidebarContent>
       <SidebarFooter className="px-2">
+        <NotificationsPopover notifications={sampleNotifications} />
         <TeamSwitcher teams={teams} />
       </SidebarFooter>
     </Sidebar>

@@ -4,10 +4,10 @@ import { z } from 'zod';
 export const userSchema = z.object({
   id: z.string().optional(),
   name: z.string().min(1, 'Name is required').max(150),
-  email: z.string().email('Invalid email').optional(),
-  phone: z.string().optional(),
+  email: z.string().email('Invalid email').optional().or(z.literal('')),
+  phone: z.string().optional().or(z.literal('')),
   idEnterprise: z.string().min(1, 'Enterprise is required'),
-  language: z.string().optional(),
+  language: z.string().nullable().optional().or(z.literal('')),
   isUser: z.boolean().default(true),
   isOnlyContact: z.boolean().default(false),
   isSentMessageWelcome: z.boolean().default(true),
@@ -83,3 +83,11 @@ export interface UserFilterData {
   filteredRole: string[];
   filteredType: string[];
 }
+
+// Search Params for permissions
+export const userPermissionSearchSchema = z.object({
+  id: z.string().optional(),
+  idRef: z.string().optional(),
+});
+
+export type UserPermissionSearch = z.infer<typeof userPermissionSearchSchema>;

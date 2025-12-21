@@ -64,10 +64,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
                 <DropdownMenuContent align="end">
                   {hasPermissionPermissions && user.userEnterprise && (
                     <DropdownMenuItem asChild>
-                      <Link
-                        to={user.userEnterprise.length === 1 ? '/permissions/users/permissions/edit/$id' : '/permissions/users/enterprises/$id'}
-                        params={{ id: user.userEnterprise.length === 1 ? user.userEnterprise[0].id : user.id }}
-                      >
+                      <Link to="/permissions/users/permissions/add" search={user.userEnterprise.length === 1 ? { id: user.userEnterprise[0].id } : { idRef: user.id }}>
                         <Shield className="mr-2 h-4 w-4" />
                         <FormattedMessage id="permissions" />
                       </Link>

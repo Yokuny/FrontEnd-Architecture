@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { FormattedMessage } from 'react-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useRoles } from '@/hooks/use-roles-api';
+import { useRolesAll } from '@/hooks/use-roles-api';
 import { RoleCard } from './@components/role-card';
 
 export const Route = createFileRoute('/_private/permissions/roles/')({
@@ -12,7 +12,7 @@ export const Route = createFileRoute('/_private/permissions/roles/')({
 
 function ListRolesPage() {
   const navigate = useNavigate();
-  const { data: roles, isLoading } = useRoles();
+  const { data: roles, isLoading } = useRolesAll();
 
   // TODO: Get from permissions/menu state
   const hasPermissionAdd = true;

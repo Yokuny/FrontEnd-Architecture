@@ -29,7 +29,7 @@ export function EnterpriseWithSetupSelect(props: EnterpriseWithSetupSelectProps)
       label={label || 'Empresa com Setup'}
       placeholder={placeholder || 'Selecione uma empresa...'}
       value={props.value}
-      onChange={(val) => props.onChange(val as string)}
+      onChange={(val, opt) => props.onChange(val as string, opt?.data)}
       query={query}
       mapToOptions={mapEnterprisesToOptions}
       oneBlocked={oneBlocked}
@@ -54,7 +54,7 @@ interface EnterpriseWithSetupSelectBaseProps {
 interface EnterpriseWithSetupSelectSingleProps extends EnterpriseWithSetupSelectBaseProps {
   mode: 'single';
   value?: string;
-  onChange: (value: string | undefined) => void;
+  onChange: (value: string | undefined, data?: Enterprise) => void;
 }
 
 interface EnterpriseWithSetupSelectMultiProps extends EnterpriseWithSetupSelectBaseProps {

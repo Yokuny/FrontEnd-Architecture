@@ -1,14 +1,11 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useForm } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { toast } from 'sonner';
+import { ArrowLeft, CheckCircle2, RefreshCw, XCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
 import { useUsersApi } from '@/hooks/use-users-api';
-import { type PasswordUpdate, passwordUpdateSchema } from './@interface/user';
 
 export const Route = createFileRoute('/_private/permissions/users/password/$id')({
   component: UpdatePasswordPage,
@@ -17,56 +14,81 @@ export const Route = createFileRoute('/_private/permissions/users/password/$id')
 function UpdatePasswordPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
-  const intl = useIntl();
-  const { updatePassword } = useUsersApi();
+  const { sendPasswordResetEmail } = useUsersApi();
 
-  const form = useForm<PasswordUpdate>({
-    resolver: zodResolver(passwordUpdateSchema),
-    defaultValues: {
-      idUser: id,
-      newPassword: '',
-    },
-  });
+  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
 
-  const onSubmit = async (data: PasswordUpdate) => {
+  useEffect(() => {
+    const sendResetEmail = async () => {
+      setStatus('loading');
+      try {
+        await sendPasswordResetEmail.mutateAsync(id);
+        setStatus('success');
+      } catch (_error) {
+        setStatus('error');
+      }
+    };
+    sendResetEmail();
+  }, [id, sendPasswordResetEmail]);
+
+  const handleRetry = async () => {
+    setStatus('loading');
     try {
-      await updatePassword.mutateAsync(data);
-      toast.success(intl.formatMessage({ id: 'password.updated' }));
-      navigate({ to: '/permissions/users' });
+      await sendPasswordResetEmail.mutateAsync(id);
+      setStatus('success');
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.update.password' }));
+      setStatus('error');
     }
   };
 
   return (
     <div className="container mx-auto p-6">
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Card className="max-w-md mx-auto">
-          <CardHeader>
-            <CardTitle>
-              <FormattedMessage id="new.password" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              <FormattedMessage id="new.password.details" />
-            </p>
+      <Card className="max-w-md mx-auto">
+        <CardContent className="pt-12 pb-8">
+          <div className="flex flex-col items-center justify-center text-center space-y-6">
+            {status === 'loading' && (
+              <>
+                <div className="h-16 w-16 rounded-full bg-muted animate-pulse flex items-center justify-center">
+                  <RefreshCw className="h-8 w-8 text-muted-foreground animate-spin" />
+                </div>
+                <p className="text-muted-foreground">
+                  <FormattedMessage id="loading" defaultMessage="Carregando..." />
+                </p>
+              </>
+            )}
 
-            <div className="space-y-2">
-              <Label htmlFor="newPassword">
-                <FormattedMessage id="new.password" /> *
-              </Label>
-              <Input id="newPassword" type="password" {...form.register('newPassword')} placeholder={intl.formatMessage({ id: 'new.password' })} />
-              {form.formState.errors.newPassword && <p className="text-sm text-destructive">{form.formState.errors.newPassword.message}</p>}
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            <Button type="submit" disabled={updatePassword.isPending}>
-              {updatePassword.isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
-            </Button>
-          </CardFooter>
-        </Card>
-      </form>
+            {status === 'success' && (
+              <>
+                <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center">
+                  <CheckCircle2 className="h-10 w-10 text-green-600" />
+                </div>
+                <p className="text-muted-foreground">
+                  <FormattedMessage id="send.password.email" defaultMessage="E-mail de redefinição de senha enviado com sucesso." />
+                </p>
+                <Button variant="ghost" onClick={() => navigate({ to: '/permissions/users' })}>
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  <FormattedMessage id="back" defaultMessage="Voltar" />
+                </Button>
+              </>
+            )}
+
+            {status === 'error' && (
+              <>
+                <div className="h-16 w-16 rounded-full bg-red-100 flex items-center justify-center">
+                  <XCircle className="h-10 w-10 text-red-600" />
+                </div>
+                <p className="text-muted-foreground">
+                  <FormattedMessage id="error.sent.email" defaultMessage="Erro ao enviar e-mail. Tente novamente." />
+                </p>
+                <Button variant="outline" onClick={handleRetry}>
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  <FormattedMessage id="try.again" defaultMessage="Tentar Novamente" />
+                </Button>
+              </>
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -23,7 +23,9 @@ import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_privat
 import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
 import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions.add';
 import { Route as PrivatePermissionsUsersPasswordIdRouteImport } from './routes/_private/permissions/users/password.$id';
+import { Route as PrivatePermissionsUsersEnterprisesIdRouteImport } from './routes/_private/permissions/users/enterprises.$id';
 import { Route as PrivatePermissionsUsersEditIdRouteImport } from './routes/_private/permissions/users/edit.$id';
+import { Route as PrivatePermissionsRolesUsersIdRouteImport } from './routes/_private/permissions/roles/users.$id';
 import { Route as PrivatePermissionsRolesEditIdRouteImport } from './routes/_private/permissions/roles/edit.$id';
 
 const PublicRoute = PublicRouteImport.update({
@@ -100,10 +102,22 @@ const PrivatePermissionsUsersPasswordIdRoute =
     path: '/permissions/users/password/$id',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivatePermissionsUsersEnterprisesIdRoute =
+  PrivatePermissionsUsersEnterprisesIdRouteImport.update({
+    id: '/permissions/users/enterprises/$id',
+    path: '/permissions/users/enterprises/$id',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivatePermissionsUsersEditIdRoute =
   PrivatePermissionsUsersEditIdRouteImport.update({
     id: '/permissions/users/edit/$id',
     path: '/permissions/users/edit/$id',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsRolesUsersIdRoute =
+  PrivatePermissionsRolesUsersIdRouteImport.update({
+    id: '/permissions/roles/users/$id',
+    path: '/permissions/roles/users/$id',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivatePermissionsRolesEditIdRoute =
@@ -125,7 +139,9 @@ export interface FileRoutesByFullPath {
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
   '/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
+  '/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
   '/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
+  '/permissions/users/enterprises/$id': typeof PrivatePermissionsUsersEnterprisesIdRoute;
   '/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
   '/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
 }
@@ -141,7 +157,9 @@ export interface FileRoutesByTo {
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
   '/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
+  '/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
   '/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
+  '/permissions/users/enterprises/$id': typeof PrivatePermissionsUsersEnterprisesIdRoute;
   '/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
   '/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
 }
@@ -160,7 +178,9 @@ export interface FileRoutesById {
   '/_private/permissions/roles/': typeof PrivatePermissionsRolesIndexRoute;
   '/_private/permissions/users/': typeof PrivatePermissionsUsersIndexRoute;
   '/_private/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
+  '/_private/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
   '/_private/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
+  '/_private/permissions/users/enterprises/$id': typeof PrivatePermissionsUsersEnterprisesIdRoute;
   '/_private/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
   '/_private/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
 }
@@ -178,7 +198,9 @@ export interface FileRouteTypes {
     | '/permissions/roles'
     | '/permissions/users'
     | '/permissions/roles/edit/$id'
+    | '/permissions/roles/users/$id'
     | '/permissions/users/edit/$id'
+    | '/permissions/users/enterprises/$id'
     | '/permissions/users/password/$id'
     | '/permissions/users/permissions/add';
   fileRoutesByTo: FileRoutesByTo;
@@ -194,7 +216,9 @@ export interface FileRouteTypes {
     | '/permissions/roles'
     | '/permissions/users'
     | '/permissions/roles/edit/$id'
+    | '/permissions/roles/users/$id'
     | '/permissions/users/edit/$id'
+    | '/permissions/users/enterprises/$id'
     | '/permissions/users/password/$id'
     | '/permissions/users/permissions/add';
   id:
@@ -212,7 +236,9 @@ export interface FileRouteTypes {
     | '/_private/permissions/roles/'
     | '/_private/permissions/users/'
     | '/_private/permissions/roles/edit/$id'
+    | '/_private/permissions/roles/users/$id'
     | '/_private/permissions/users/edit/$id'
+    | '/_private/permissions/users/enterprises/$id'
     | '/_private/permissions/users/password/$id'
     | '/_private/permissions/users/permissions/add';
   fileRoutesById: FileRoutesById;
@@ -323,11 +349,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivatePermissionsUsersPasswordIdRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/permissions/users/enterprises/$id': {
+      id: '/_private/permissions/users/enterprises/$id';
+      path: '/permissions/users/enterprises/$id';
+      fullPath: '/permissions/users/enterprises/$id';
+      preLoaderRoute: typeof PrivatePermissionsUsersEnterprisesIdRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/permissions/users/edit/$id': {
       id: '/_private/permissions/users/edit/$id';
       path: '/permissions/users/edit/$id';
       fullPath: '/permissions/users/edit/$id';
       preLoaderRoute: typeof PrivatePermissionsUsersEditIdRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/roles/users/$id': {
+      id: '/_private/permissions/roles/users/$id';
+      path: '/permissions/roles/users/$id';
+      fullPath: '/permissions/roles/users/$id';
+      preLoaderRoute: typeof PrivatePermissionsRolesUsersIdRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/permissions/roles/edit/$id': {
@@ -347,7 +387,9 @@ interface PrivateRouteChildren {
   PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
   PrivatePermissionsUsersIndexRoute: typeof PrivatePermissionsUsersIndexRoute;
   PrivatePermissionsRolesEditIdRoute: typeof PrivatePermissionsRolesEditIdRoute;
+  PrivatePermissionsRolesUsersIdRoute: typeof PrivatePermissionsRolesUsersIdRoute;
   PrivatePermissionsUsersEditIdRoute: typeof PrivatePermissionsUsersEditIdRoute;
+  PrivatePermissionsUsersEnterprisesIdRoute: typeof PrivatePermissionsUsersEnterprisesIdRoute;
   PrivatePermissionsUsersPasswordIdRoute: typeof PrivatePermissionsUsersPasswordIdRoute;
   PrivatePermissionsUsersPermissionsAddRoute: typeof PrivatePermissionsUsersPermissionsAddRoute;
 }
@@ -359,7 +401,10 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,
   PrivatePermissionsUsersIndexRoute: PrivatePermissionsUsersIndexRoute,
   PrivatePermissionsRolesEditIdRoute: PrivatePermissionsRolesEditIdRoute,
+  PrivatePermissionsRolesUsersIdRoute: PrivatePermissionsRolesUsersIdRoute,
   PrivatePermissionsUsersEditIdRoute: PrivatePermissionsUsersEditIdRoute,
+  PrivatePermissionsUsersEnterprisesIdRoute:
+    PrivatePermissionsUsersEnterprisesIdRoute,
   PrivatePermissionsUsersPasswordIdRoute:
     PrivatePermissionsUsersPasswordIdRoute,
   PrivatePermissionsUsersPermissionsAddRoute:

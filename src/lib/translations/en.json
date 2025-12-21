@@ -2298,5 +2298,11 @@
   "limit.collaborators.required": "The limit of collaborators is required",
   "cmms": "CMMS",
   "days.paid": "Days paid",
-  "fences.report": "Fences report"
+  "fences.report": "Fences report",
+  "visibility.public": "Public",
+  "visibility.private": "Private",
+  "visibility.limited": "Limited",
+  "edit.permission.all": "Everyone",
+  "edit.permission.admin": "Administrators",
+  "edit.permission.owner": "Owner"
 }

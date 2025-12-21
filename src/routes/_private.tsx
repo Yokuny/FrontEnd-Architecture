@@ -27,7 +27,7 @@ function PrivateLayout() {
     <SidebarProvider defaultOpen={!isFullscreenRoute}>
       <div className="relative flex h-screen w-full">
         <AppSidebar />
-        <SidebarInset className="flex flex-1 flex-col overflow-hidden">
+        <SidebarInset>
           <Outlet />
         </SidebarInset>
       </div>

@@ -1,9 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
-import { useForm } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { toast } from 'sonner';
+import { FormattedMessage } from 'react-intl';
+import { LanguageFormSelect, TypeCredentialsSelect, UserTypeSelect } from '@/components/selects';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,8 +18,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUsersApi } from '@/hooks/use-users-api';
-import { type User, userSchema } from './@interface/user';
+import { useUserForm } from './@hooks/use-user-form';
 
 export const Route = createFileRoute('/_private/permissions/users/edit/$id')({
   component: EditUserPage,
@@ -29,62 +26,21 @@ export const Route = createFileRoute('/_private/permissions/users/edit/$id')({
 
 function EditUserPage() {
   const { id } = Route.useParams();
-  const navigate = useNavigate();
-  const intl = useIntl();
-  const { getUser, updateUser, deleteUser, disableUser, enableUser } = useUsersApi();
+  const { form, onSubmit, handleDelete, handleDisable, isLoading, isPending } = useUserForm(id);
 
-  const { data: user, isLoading } = getUser(id);
-
-  const form = useForm<User>({
-    resolver: zodResolver(userSchema),
-    values: user,
-  });
-
-  const isDisabled = !!user?.disabledAt;
+  const user = form.getValues();
+  const isDisabled = !!user.disabledAt;
   const isOnlyContact = form.watch('isOnlyContact');
   const phone = form.watch('phone');
-
-  const onSubmit = async (data: User) => {
-    try {
-      await updateUser.mutateAsync(data);
-      toast.success(intl.formatMessage({ id: 'save.successfull' }));
-      navigate({ to: '/permissions/users' });
-    } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
-    }
-  };
-
-  const handleDelete = async () => {
-    try {
-      await deleteUser.mutateAsync(id);
-      toast.success(intl.formatMessage({ id: 'delete.successfull' }));
-      navigate({ to: '/permissions/users' });
-    } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.delete' }));
-    }
-  };
-
-  const handleDisable = async () => {
-    try {
-      if (isDisabled) {
-        await enableUser.mutateAsync(id);
-        toast.success(intl.formatMessage({ id: 'user.enabled' }));
-      } else {
-        await disableUser.mutateAsync({ id, reason: 'Disabled by admin' });
-        toast.success(intl.formatMessage({ id: 'user.disabled' }));
-      }
-      navigate({ to: '/permissions/users' });
-    } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error' }));
-    }
-  };
 
   if (isLoading) {
     return (
       <div className="container mx-auto p-6">
         <Card>
           <CardContent className="p-12">
-            <div className="text-center text-muted-foreground">Loading...</div>
+            <div className="text-center text-muted-foreground">
+              <FormattedMessage id="loading" defaultMessage="Loading..." />
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -93,7 +49,7 @@ function EditUserPage() {
 
   return (
     <div className="container mx-auto p-6">
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <Card>
           <CardHeader>
             <CardTitle>
@@ -107,7 +63,7 @@ function EditUserPage() {
                 <Label htmlFor="name">
                   <FormattedMessage id="account.name" /> *
                 </Label>
-                <Input id="name" {...form.register('name')} placeholder={intl.formatMessage({ id: 'account.name' })} maxLength={150} disabled={isDisabled} />
+                <Input id="name" {...form.register('name')} placeholder="Nome" maxLength={150} disabled={isDisabled} />
                 {form.formState.errors.name && <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>}
               </div>
 
@@ -124,7 +80,7 @@ function EditUserPage() {
                 <Label htmlFor="email">
                   <FormattedMessage id="login.email" /> {!isOnlyContact && '*'}
                 </Label>
-                <Input id="email" type="email" {...form.register('email')} placeholder={intl.formatMessage({ id: 'login.email' })} disabled={isDisabled} />
+                <Input id="email" type="email" {...form.register('email')} placeholder="Email" disabled={isDisabled} />
                 {form.formState.errors.email && <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>}
               </div>
 
@@ -134,12 +90,9 @@ function EditUserPage() {
                 <Input id="phone" {...form.register('phone')} placeholder="WhatsApp" disabled={isDisabled} />
               </div>
 
-              {/* Language - TODO: Add language selector */}
+              {/* Language */}
               <div className="space-y-2">
-                <Label htmlFor="language">
-                  <FormattedMessage id="language" />
-                </Label>
-                <Input id="language" {...form.register('language')} placeholder={intl.formatMessage({ id: 'language' })} disabled={isDisabled} />
+                <LanguageFormSelect disabled={isDisabled} value={form.watch('language')} onChange={(val) => form.setValue('language', val)} />
               </div>
 
               {/* Send Welcome Message */}
@@ -157,12 +110,14 @@ function EditUserPage() {
                 </div>
               )}
 
-              {/* User Types - TODO: Add user type selector */}
+              {/* User Types */}
               <div className="space-y-2 md:col-span-2">
-                <Label>
-                  <FormattedMessage id="type" />
-                </Label>
-                <p className="text-sm text-muted-foreground">User type selector will be added here</p>
+                <UserTypeSelect mode="multi" idEnterprise={user.idEnterprise} value={form.watch('types')} onChange={(vals) => form.setValue('types', vals)} disabled={isDisabled} />
+              </div>
+
+              {/* Credentials By */}
+              <div className="space-y-2 md:col-span-2">
+                <TypeCredentialsSelect mode="multi" value={form.watch('typeCredentials')} onChange={(vals) => form.setValue('typeCredentials', vals)} disabled={isDisabled} />
               </div>
             </div>
           </CardContent>
@@ -223,8 +178,8 @@ function EditUserPage() {
             </div>
 
             {!isDisabled && (
-              <Button type="submit" disabled={updateUser.isPending}>
-                {updateUser.isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+              <Button type="submit" disabled={isPending}>
+                {isPending ? <FormattedMessage id="saving" defaultMessage="Salvando..." /> : <FormattedMessage id="save" />}
               </Button>
             )}
           </CardFooter>

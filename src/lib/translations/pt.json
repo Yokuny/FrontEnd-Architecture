@@ -2315,5 +2315,11 @@
   "cmms": "CMMS",
   "fences.report": "Relatório de cercas",
   "limit.collaborators.required": "Informe o limite de colaboradores",
-  "days.paid": "Dias pagos"
+  "days.paid": "Dias pagos",
+  "visibility.public": "Público",
+  "visibility.private": "Privado",
+  "visibility.limited": "Limitado",
+  "edit.permission.all": "Todos",
+  "edit.permission.admin": "Administradores",
+  "edit.permission.owner": "Proprietário"
 }

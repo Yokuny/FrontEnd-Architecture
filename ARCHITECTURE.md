@@ -38,7 +38,7 @@ Ao converter componentes do `iotlog-frontend/src/components/Select` para a nova 
 | `SelectFleet` | `FleetSelect` |
 | `SelectFleetVessels` | `FleetVesselsSelect` |
 | `SelectForm` | `FormSelect` |
-| `SelectLanguage` | `LanguageSelect` |
+| `SelectLanguage` | `LanguageFormSelect` |
 | `SelectLanguageForm` | `LanguageFormSelect` |
 | `SelectLevel` | `LevelSelect` |
 | `SelectMachine` | `MachineSelect` |
@@ -115,6 +115,7 @@ src/routes/
 │   └── auth/
 │       ├── @components/     # Componentes da rota
 │       ├── @consts/         # Valores fixos
+│       ├── @hooks/          # Logic (Form, Queries, Handlers)
 │       ├── @interface/      # Tipagens e schemas Zod
 │       ├── index.tsx        # Rota principal
 │       ├── register.tsx     # Subrota
@@ -125,6 +126,7 @@ src/routes/
 - Pastas com `@` são ignoradas pelo router
 - `@components` - Componentes específicos da rota
 - `@consts` - Constantes e valores fixos
+- `@hooks` - Lógica de formulários (useForm), Handlers e Queries locais
 - `@interface` - Types, interfaces e schemas Zod
 
 ### Criar Rota
@@ -156,6 +158,11 @@ export const Route = createFileRoute("/_public/auth/register")({
 ### Padrões de Hooks
 
 #### API Hook (TanStack Query)
+As funções de API devem utilizar o `ApiClient` centralizado ([`src/lib/api/client.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/lib/api/client.ts)), que simplifica as chamadas ao gerenciar:
+- **Versionamento Automático**: O `/api/v1` já está na `baseURL`. **NUNCA** repita esse prefixo nas URLs internas dos hooks.
+- **Suporte a v2**: Basta enviar `{ isV2: true }` nas opções para alternar para a base `/api/v2`.
+- **Contexto de Autenticação**: O Token JWT e o `idEnterprise` são anexados automaticamente aos cabeçalhos.
+
 ```tsx
 // src/hooks/use-auth-api.ts
 export const useAuthApi = () => {
@@ -287,6 +294,7 @@ src/routes/minha-rota/
 - [ ] Definir em `src/hooks/`
 - [ ] Usar Zustand para estado global
 - [ ] Usar TanStack Query para API
+- [ ] **Importante**: Não incluir `/api/v1` manualmente na URL (o `ApiClient` já possui na `baseURL`)
 - [ ] Exportar tipos e interfaces
 
 ### Adicionar Texto

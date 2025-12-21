@@ -1,83 +1,97 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useForm } from 'react-hook-form';
+import { createFileRoute } from '@tanstack/react-router';
+import { Trash2 } from 'lucide-react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { toast } from 'sonner';
+
+import { CustomerSelect, EnterpriseSelect, RoleSelect, UserSelect } from '@/components/selects';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUsersApi } from '@/hooks/use-users-api';
-import { type UserPermission, userPermissionSchema } from './@interface/user';
+import { useUser } from '@/hooks/use-users-api';
+import { usePermissionForm } from './@hooks/use-permission-form';
+import { userPermissionSearchSchema } from './@interface/user';
 
 export const Route = createFileRoute('/_private/permissions/users/permissions/add')({
   component: AddPermissionPage,
+  validateSearch: (search) => userPermissionSearchSchema.parse(search),
 });
 
 function AddPermissionPage() {
-  const navigate = useNavigate();
   const intl = useIntl();
-  const { addPermission } = useUsersApi();
+  const search = Route.useSearch();
+  const { id, idRef } = search;
 
-  const form = useForm<UserPermission>({
-    resolver: zodResolver(userPermissionSchema.omit({ id: true })),
-    defaultValues: {
-      idUser: '',
-      idEnterprise: '',
-      roles: [],
-      isUserCustomer: false,
-      customers: [],
-    },
-  });
+  const { form, onSubmit, handleDelete, isLoading, isPending } = usePermissionForm(id, idRef);
+  const { data: userRefData, isLoading: isLoadingUserRef } = useUser(idRef || '');
 
+  const idEnterprise = form.watch('idEnterprise');
   const isUserCustomer = form.watch('isUserCustomer');
 
-  const onSubmit = async (data: UserPermission) => {
-    try {
-      await addPermission.mutateAsync(data);
-      toast.success(intl.formatMessage({ id: 'save.successfull' }));
-      navigate({ to: '/permissions/users' });
-    } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
-    }
-  };
+  if (isLoading && id) {
+    return (
+      <div className="container mx-auto p-6">
+        <Card>
+          <CardContent className="p-12">
+            <div className="text-center text-muted-foreground">
+              <FormattedMessage id="loading" defaultMessage="Loading..." />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-6">
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <Card>
           <CardHeader>
             <CardTitle>
-              <FormattedMessage id="add.user.permission" />
+              <FormattedMessage id={id ? 'edit.user.permission' : 'add.user.permission'} />
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Enterprise - TODO: Add enterprise selector */}
+              {/* Enterprise */}
               <div className="space-y-2">
-                <Label htmlFor="idEnterprise">
-                  <FormattedMessage id="enterprise" /> *
-                </Label>
-                <Input id="idEnterprise" {...form.register('idEnterprise')} placeholder={intl.formatMessage({ id: 'enterprise' })} />
+                <EnterpriseSelect
+                  mode="single"
+                  label={intl.formatMessage({ id: 'enterprise' }) + ' *'}
+                  value={form.watch('idEnterprise')}
+                  onChange={(val) => form.setValue('idEnterprise', val || '')}
+                  disabled={!!id}
+                />
                 {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{form.formState.errors.idEnterprise.message}</p>}
               </div>
 
-              {/* User - TODO: Add user selector */}
+              {/* User */}
               <div className="space-y-2">
-                <Label htmlFor="idUser">
+                <Label>
                   <FormattedMessage id="username" /> *
                 </Label>
-                <Input id="idUser" {...form.register('idUser')} placeholder={intl.formatMessage({ id: 'username' })} />
+                {idRef ? (
+                  <Input value={isLoadingUserRef ? '...' : userRefData?.name || idRef} disabled className="bg-muted" />
+                ) : (
+                  <UserSelect idEnterprise={idEnterprise} value={form.watch('idUser')} onChange={(val) => form.setValue('idUser', (val as string) || '')} disabled={!!id} />
+                )}
                 {form.formState.errors.idUser && <p className="text-sm text-destructive">{form.formState.errors.idUser.message}</p>}
               </div>
 
-              {/* Roles - TODO: Add role selector */}
+              {/* Roles */}
               <div className="space-y-2 md:col-span-2">
-                <Label>
-                  <FormattedMessage id="role" />
-                </Label>
-                <p className="text-sm text-muted-foreground">Role selector will be added here</p>
+                <RoleSelect mode="multi" label={intl.formatMessage({ id: 'role' })} value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals as string[])} />
               </div>
 
               {/* Is Customer User */}
@@ -88,20 +102,53 @@ function AddPermissionPage() {
                 </Label>
               </div>
 
-              {/* Customers - TODO: Add customer selector */}
+              {/* Customers */}
               {isUserCustomer && (
                 <div className="space-y-2 md:col-span-2">
-                  <Label>
-                    <FormattedMessage id="customer" />
-                  </Label>
-                  <p className="text-sm text-muted-foreground">Customer selector will be added here</p>
+                  <CustomerSelect
+                    mode="multi"
+                    idEnterprise={idEnterprise}
+                    label={intl.formatMessage({ id: 'customer' })}
+                    value={form.watch('customers')}
+                    onChange={(vals) => form.setValue('customers', vals)}
+                  />
                 </div>
               )}
             </div>
           </CardContent>
-          <CardFooter className="flex justify-end">
-            <Button type="submit" disabled={addPermission.isPending}>
-              {addPermission.isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+          <CardFooter className="flex justify-between">
+            <div>
+              {id && (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button type="button" variant="destructive">
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      <FormattedMessage id="delete" />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        <FormattedMessage id="delete.confirmation" />
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        <FormattedMessage id="delete.message.default" />
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>
+                        <FormattedMessage id="cancel" />
+                      </AlertDialogCancel>
+                      <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
+                        <FormattedMessage id="confirm" />
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
+            </div>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
             </Button>
           </CardFooter>
         </Card>

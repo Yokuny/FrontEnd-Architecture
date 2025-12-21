@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api/client';
 import type { PasswordUpdate, User, UserListItem, UserPermission } from '@/routes/_private/permissions/users/@interface/user';
-
-const API_BASE = '/api';
 
 // Query keys
 export const usersKeys = {
@@ -11,107 +10,74 @@ export const usersKeys = {
   details: () => [...usersKeys.all, 'detail'] as const,
   detail: (id: string) => [...usersKeys.details(), id] as const,
   enterprises: (id: string) => [...usersKeys.all, 'enterprises', id] as const,
+  permissions: () => [...usersKeys.all, 'permissions'] as const,
+  permission: (id: string) => [...usersKeys.permissions(), id] as const,
 };
 
 // API functions
-async function fetchUsers(params?: Record<string, unknown>): Promise<{ data: UserListItem[]; pageInfo: any[] }> {
-  const queryString = params ? `?${new URLSearchParams(params as Record<string, string>).toString()}` : '';
-  const response = await fetch(`${API_BASE}/user/enterprise/list${queryString}`);
-  if (!response.ok) throw new Error('Failed to fetch users');
-  return response.json();
+async function fetchUsers(params?: Record<string, unknown>): Promise<{ data: UserListItem[]; pageInfo: { count: number }[] }> {
+  // Garantir que temos o idEnterprise
+  const idEnterprise = (params?.idEnterprise as string) || localStorage.getItem('id_enterprise_filter') || '';
+  const queryParams = { ...params, idEnterprise };
+
+  const queryString = new URLSearchParams(queryParams as Record<string, string>).toString();
+  const response = await api.get<{ data: UserListItem[]; pageInfo: { count: number }[] }>(`/user/enterprise/list?${queryString}`);
+  return response.data;
 }
 
 async function fetchUsersByEnterprise(idEnterprise: string): Promise<UserListItem[]> {
-  const response = await fetch(`${API_BASE}/user/list/enterprise?id=${idEnterprise}`);
-  if (!response.ok) throw new Error('Failed to fetch users by enterprise');
-  return response.json();
+  const response = await api.get<UserListItem[]>(`/user/enterprise/list?idEnterprise=${idEnterprise}`);
+  return response.data;
 }
 
 async function fetchUser(id: string): Promise<User> {
-  const response = await fetch(`${API_BASE}/user/find/details?id=${id}`);
-  if (!response.ok) throw new Error('Failed to fetch user');
-  return response.json();
+  const response = await api.get<User>(`/user/find/details?id=${id}`);
+  return response.data;
 }
 
 async function createUser(user: Partial<User>): Promise<User> {
-  const response = await fetch(`${API_BASE}/user/add`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user),
-  });
-  if (!response.ok) throw new Error('Failed to create user');
-  return response.json();
+  const response = await api.post<User>('/user/add', user);
+  return response.data;
 }
 
 async function updateUser(user: User): Promise<User> {
-  const response = await fetch(`${API_BASE}/user/update`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user),
-  });
-  if (!response.ok) throw new Error('Failed to update user');
-  return response.json();
+  const response = await api.put<User>('/user/update', user);
+  return response.data;
 }
 
 async function deleteUser(id: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/user/delete?id=${id}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) throw new Error('Failed to delete user');
+  await api.delete(`/user/delete?id=${id}`);
 }
 
 async function disableUser(id: string, reason: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/user/disable`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id, reason }),
-  });
-  if (!response.ok) throw new Error('Failed to disable user');
+  await api.put('/user/disable', { id, reason });
 }
 
 async function enableUser(id: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/user/enable`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id }),
-  });
-  if (!response.ok) throw new Error('Failed to enable user');
+  await api.put('/user/enable', { id });
 }
 
 async function updatePassword(data: PasswordUpdate): Promise<void> {
-  const response = await fetch(`${API_BASE}/user/password/update`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) throw new Error('Failed to update password');
+  await api.put('/user/password/update', data);
 }
 
 async function addUserPermission(permission: UserPermission): Promise<UserPermission> {
-  const response = await fetch(`${API_BASE}/user/enterprise`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(permission),
-  });
-  if (!response.ok) throw new Error('Failed to add permission');
-  return response.json();
+  const response = await api.post<UserPermission>('/user/enterprise', permission);
+  return response.data;
 }
 
 async function updateUserPermission(permission: UserPermission): Promise<UserPermission> {
-  const response = await fetch(`${API_BASE}/user/enterprise`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(permission),
-  });
-  if (!response.ok) throw new Error('Failed to update permission');
-  return response.json();
+  const response = await api.put<UserPermission>('/user/enterprise', permission);
+  return response.data;
 }
 
 async function deleteUserPermission(id: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/user/enterprise?id=${id}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) throw new Error('Failed to delete permission');
+  await api.delete(`/user/enterprise?id=${id}`);
+}
+
+async function fetchUserPermission(id: string): Promise<any> {
+  const response = await api.get<any>(`/user/find/userenterprise?id=${id}`);
+  return response.data;
 }
 
 // Hooks - Query hooks
@@ -133,6 +99,14 @@ export function useUser(id: string) {
   return useQuery({
     queryKey: usersKeys.detail(id),
     queryFn: () => fetchUser(id),
+    enabled: !!id,
+  });
+}
+
+export function useUserPermission(id: string) {
+  return useQuery({
+    queryKey: usersKeys.permission(id),
+    queryFn: () => fetchUserPermission(id),
     enabled: !!id,
   });
 }

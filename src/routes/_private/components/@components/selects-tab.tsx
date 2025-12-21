@@ -20,7 +20,6 @@ import {
   FleetVesselsSelect,
   FormSelect,
   LanguageFormSelect,
-  LanguageSelect,
   LevelSelect,
   MachineByEnterpriseSelect,
   MachineManagerSelect,
@@ -332,7 +331,6 @@ export function SelectsTab() {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <CountrySelect mode="single" onChange={() => {}} />
-                  <LanguageSelect onChange={() => {}} />
                   <LanguageFormSelect onChange={() => {}} />
                   <PortSelect mode="single" onChange={() => {}} />
                 </CardContent>
