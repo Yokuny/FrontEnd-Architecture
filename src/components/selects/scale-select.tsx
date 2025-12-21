@@ -16,7 +16,7 @@ export function ScaleSelect(props: ScaleSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Scale, Scale>
-        label={label || 'Escala (Múltiplo)'}
+        label={label || 'Escala'}
         placeholder={placeholder || 'Selecione as escalas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -33,7 +33,7 @@ export function ScaleSelect(props: ScaleSelectProps) {
 
   return (
     <DataSelect<Scale, Scale>
-      label={label || 'Escala (Único)'}
+      label={label || 'Escala'}
       placeholder={placeholder || 'Selecione uma escala...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

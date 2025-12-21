@@ -18,7 +18,7 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Platform, Platform>
-        label={label || 'Plataformas (Múltiplo)'}
+        label={label || 'Plataformas'}
         placeholder={placeholder || 'Selecione as plataformas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
 
   return (
     <DataSelect<Platform, Platform>
-      label={label || 'Plataforma (Único)'}
+      label={label || 'Plataforma'}
       placeholder={placeholder || 'Selecione uma plataforma...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

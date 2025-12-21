@@ -18,7 +18,7 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<UserTeamMember, UserTeamMember>
-        label={label || 'Usuários da Equipe (Múltiplo)'}
+        label={label || 'Usuários da Equipe'}
         placeholder={placeholder || 'Selecione os usuários...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
 
   return (
     <DataSelect<UserTeamMember, UserTeamMember>
-      label={label || 'Usuário da Equipe (Único)'}
+      label={label || 'Usuário da Equipe'}
       placeholder={placeholder || 'Selecione um usuário...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

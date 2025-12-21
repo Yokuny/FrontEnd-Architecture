@@ -17,9 +17,9 @@ import { routeTree } from './routeTree.gen';
 import './styles.css';
 
 // Import translations
-import enText from '../translations/en.json';
-import esText from '../translations/es.json';
-import ptText from '../translations/pt.json';
+import enText from './lib/translations/en.json';
+import esText from './lib/translations/es.json';
+import ptText from './lib/translations/pt.json';
 import reportWebVitals from './reportWebVitals.ts';
 
 // Create QueryClient instance

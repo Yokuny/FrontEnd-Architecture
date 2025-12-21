@@ -5,8 +5,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
+import { encryptSSOPayload } from '@/config/crypto';
 import { api } from '@/lib/api/client';
-import { encryptSSOPayload } from '@/lib/auth/crypto';
 import { useAuth } from './use-auth';
 
 // ============================================================================

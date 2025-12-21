@@ -32,7 +32,7 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<FenceTypeOption, FenceTypeOption>
-        label={label || 'Tipo de Cerca (Múltiplo)'}
+        label={label || 'Tipo de Cerca'}
         placeholder={placeholder || 'Selecione os tipos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -50,7 +50,7 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
 
   return (
     <DataSelect<FenceTypeOption, FenceTypeOption>
-      label={label || 'Tipo de Cerca (Único)'}
+      label={label || 'Tipo de Cerca'}
       placeholder={placeholder || 'Selecione um tipo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

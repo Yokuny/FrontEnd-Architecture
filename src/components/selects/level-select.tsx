@@ -44,7 +44,7 @@ export function LevelSelect(props: LevelSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<LevelOption, LevelOption>
-        label={label || 'Nível (Múltiplo)'}
+        label={label || 'Nível'}
         placeholder={placeholder || 'Selecione os níveis...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -62,7 +62,7 @@ export function LevelSelect(props: LevelSelectProps) {
 
   return (
     <DataSelect<LevelOption, LevelOption>
-      label={label || 'Nível (Único)'}
+      label={label || 'Nível'}
       placeholder={placeholder || 'Selecione um nível...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

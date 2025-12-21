@@ -11,7 +11,7 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<ConsumptionGroup>
-        label={label || 'Grupo de Consumo (Múltiplo)'}
+        label={label || 'Grupo de Consumo'}
         placeholder="Selecione os grupos..."
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -28,7 +28,7 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
 
   return (
     <DataSelect<ConsumptionGroup>
-      label={label || 'Grupo de Consumo (Único)'}
+      label={label || 'Grupo de Consumo'}
       placeholder="Selecione um grupo..."
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

@@ -16,7 +16,7 @@ export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps)
   if (mode === 'multi') {
     return (
       <DataMultiSelect<UserCodeIntegration, UserCodeIntegration>
-        label={label || 'Integração de Usuários (Múltiplo)'}
+        label={label || 'Integração de Usuários'}
         placeholder={placeholder || 'Selecione os usuários...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -33,7 +33,7 @@ export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps)
 
   return (
     <DataSelect<UserCodeIntegration, UserCodeIntegration>
-      label={label || 'Integração de Usuário (Único)'}
+      label={label || 'Integração de Usuário'}
       placeholder={placeholder || 'Selecione um usuário...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

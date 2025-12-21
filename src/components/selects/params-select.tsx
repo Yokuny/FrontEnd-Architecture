@@ -16,7 +16,7 @@ export function ParamsSelect(props: ParamsSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Param, Param>
-        label={label || 'Parâmetros (Múltiplo)'}
+        label={label || 'Parâmetros'}
         placeholder={placeholder || 'Selecione os parâmetros...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -33,7 +33,7 @@ export function ParamsSelect(props: ParamsSelectProps) {
 
   return (
     <DataSelect<Param, Param>
-      label={label || 'Parâmetro (Único)'}
+      label={label || 'Parâmetro'}
       placeholder={placeholder || 'Selecione um parâmetro...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

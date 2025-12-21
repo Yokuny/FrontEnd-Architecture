@@ -29,7 +29,7 @@ export function UserRoleSelect(props: UserRoleSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<UserListItem, UserListItem>
-        label={label || 'Usuários para o Perfil (Múltiplo)'}
+        label={label || 'Usuários para o Perfil'}
         placeholder={placeholder || 'Selecione os usuários...'}
         value={props.value}
         onChange={(vals) => {
@@ -49,7 +49,7 @@ export function UserRoleSelect(props: UserRoleSelectProps) {
 
   return (
     <DataSelect<UserListItem, UserListItem>
-      label={label || 'Usuário para o Perfil (Único)'}
+      label={label || 'Usuário para o Perfil'}
       placeholder={placeholder || 'Selecione um usuário...'}
       value={props.value}
       onChange={(val) => {

@@ -31,7 +31,7 @@ export function SafetySelect(props: SafetySelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<SafetyAreaOption, SafetyAreaOption>
-        label={label || 'Área de Segurança (Múltiplo)'}
+        label={label || 'Área de Segurança'}
         placeholder={placeholder || 'Selecione as áreas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -47,7 +47,7 @@ export function SafetySelect(props: SafetySelectProps) {
 
   return (
     <DataSelect<SafetyAreaOption, SafetyAreaOption>
-      label={label || 'Área de Segurança (Único)'}
+      label={label || 'Área de Segurança'}
       placeholder={placeholder || 'Selecione uma área...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

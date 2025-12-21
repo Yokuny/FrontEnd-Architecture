@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { clearStoredToken, type DecodedToken, decodeToken, setStoredToken } from '@/lib/auth/token';
+import { clearStoredToken, type DecodedToken, decodeToken, setStoredToken } from '@/config/token';
 
 interface LockedAccount {
   id: string;

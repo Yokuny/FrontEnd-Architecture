@@ -31,7 +31,7 @@ export function CountrySelect(props: CountrySelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Country, Country>
-        label={label || 'Países (Múltiplo)'}
+        label={label || 'Países'}
         placeholder={placeholder || 'Selecione os países...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -49,7 +49,7 @@ export function CountrySelect(props: CountrySelectProps) {
 
   return (
     <DataSelect<Country, Country>
-      label={label || 'País (Único)'}
+      label={label || 'País'}
       placeholder={placeholder || 'Selecione um país...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

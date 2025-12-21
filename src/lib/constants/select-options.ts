@@ -167,3 +167,25 @@ export const CONDITION_OPTIONS: ConditionOption[] = [
   { value: 'between', label: 'Entre' },
   { value: 'different', label: 'Diferente de' },
 ];
+
+export interface VisibilityOption {
+  value: string;
+  labelKey: string;
+}
+
+export const VISIBILITY_OPTIONS: VisibilityOption[] = [
+  { value: 'public', labelKey: 'visibility.public' },
+  { value: 'private', labelKey: 'visibility.private' },
+  { value: 'limited', labelKey: 'visibility.limited' },
+];
+
+export interface EditPermissionOption {
+  value: string;
+  labelKey: string;
+}
+
+export const EDIT_PERMISSION_OPTIONS: EditPermissionOption[] = [
+  { value: 'all', labelKey: 'edit.permission.all' },
+  { value: 'admin', labelKey: 'edit.permission.admin' },
+  { value: 'owner', labelKey: 'edit.permission.owner' },
+];

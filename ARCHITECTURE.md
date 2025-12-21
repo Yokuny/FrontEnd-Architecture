@@ -1,6 +1,6 @@
 # Arquitetura do Projeto
 
-> Documentação rápida para navegação e desenvolvimento
+> Esta é a nova arquitetura do front-end utilizando **TanStack Router**, focada em modularidade e escalabilidade.
 
 ## 🎨 Componentes UI
 
@@ -8,6 +8,77 @@
 - **Localização**: [`src/components/ui`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/ui)
 - **Uso**: Todos os componentes base do projeto (40+ componentes)
 - **Importante**: Sempre usar estes componentes para manter integridade visual
+
+### Componentes de Seleção (Selects)
+- **Localização**: [`src/components/selects`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/selects)
+- **Exportação Central**: [`src/components/selects/index.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/selects/index.ts)
+
+Estes são componentes de seleção especializados, geralmente integrados com a API:
+
+#### 📋 Mapeamento: Legado para Novo
+Ao converter componentes do `iotlog-frontend/src/components/Select` para a nova arquitetura, utilize obrigatoriamente a versão em `src/components/selects`.
+
+| Nome Legado (SelectX) | Novo Nome (XSelect) |
+| :--- | :--- |
+| `SelectAlertType` | `AlertTypeSelect` |
+| `SelectCMMSEquipment` | `CmmsEquipmentSelect` |
+| `SelectCondition` | `ConditionSelect` |
+| `SelectConsumptionGroup` | `ConsumptionGroupSelect` |
+| `SelectConsumptionMachine` | `ConsumptionMachineSelect` |
+| `SelectContractAssetEnterprise` | `ContractAssetEnterpriseSelect` |
+| `SelectCustomer` | `CustomerSelect` |
+| `SelectEnterprise` | `EnterpriseSelect` |
+| `SelectEnterprisePreferred` | `EnterprisePreferredSelect` |
+| `SelectEnterpriseWithSetup` | `EnterpriseWithSetupSelect` |
+| `SelectFasPlanner` | `FasPlannerSelect` |
+| `SelectFasType` | `FasTypeSelect` |
+| `SelectFence` | `FenceSelect` |
+| `SelectFenceType` | `FenceTypeSelect` |
+| `SelectFilterEnterprise` | `EnterpriseFilterSelect` |
+| `SelectFleet` | `FleetSelect` |
+| `SelectFleetVessels` | `FleetVesselsSelect` |
+| `SelectForm` | `FormSelect` |
+| `SelectLanguage` | `LanguageSelect` |
+| `SelectLanguageForm` | `LanguageFormSelect` |
+| `SelectLevel` | `LevelSelect` |
+| `SelectMachine` | `MachineSelect` |
+| `SelectMachineEnterprise` | `MachineByEnterpriseSelect` |
+| `SelectMaintenancePlan` | `MaintenancePlanSelect` |
+| `SelectMaintenancePlanByMachine` | `MaintenancePlanByMachineSelect` |
+| `SelectMaintenanceType` | `MaintenanceTypeSelect` |
+| `SelectManagerPerson` | `MachineManagerSelect` |
+| `SelectModelMachine` | `ModelMachineSelect` |
+| `SelectOperationsContract` | `OperationsContractSelect` |
+| `SelectOsOption` | `OsOptionSelect` |
+| `SelectParams` | `ParamsSelect` |
+| `SelectPart` | `PartSelect` |
+| `SelectPartByMachine` | `PartByMachineSelect` |
+| `SelectPlatformEnterprise` | `PlatformEnterpriseSelect` |
+| `SelectPort` | `PortSelect` |
+| `SelectPriority` | `PrioritySelect` |
+| `SelectProductService` | `ProductServiceSelect` |
+| `SelectQLP` | `QlpSelect` |
+| `SelectRole` | `RoleSelect` |
+| `SelectSafety` | `SafetySelect` |
+| `SelectScale` | `ScaleSelect` |
+| `SelectSensor` | `SensorSelect` |
+| `SelectSensorByAssets` | `SensorByAssetsSelect` |
+| `SelectSensorByEnterprise` | `SensorByEnterpriseSelect` |
+| `SelectSensorByMachine` | `SensorByMachineSelect` |
+| `SelectStatus` | `StatusSelect` |
+| `SelectSupplier` | `SupplierSelect` |
+| `SelectTypeMachine` | `TypeMachineSelect` |
+| `SelectTypeProblem` | `TypeProblemSelect` |
+| `SelectTypeSensor` | `TypeSensorSelect` |
+| `SelectTypeUser` | `UserTypeSelect` |
+| `SelectUserCodeIntegration` | `UserCodeIntegrationSelect` |
+| `SelectUserRole` | `UserRoleSelect` |
+| `SelectUserSamePermission` | `UserSamePermissionSelect` |
+| `SelectUserTeam` | `UserTeamSelect` |
+| `SelectUsers` | `UserSelect` |
+| `SelectView` | `ViewSelect` |
+
+> **REGRA OBRIGATÓRIA**: Nunca utilize placeholders ou seletores genéricos se um componente especializado existir nesta lista. Se encontrar um componente legado da arquitetura anterior, ele **DEVE** ser importado de `src/components/selects`.
 
 ### Componentes Prontos
 
@@ -118,35 +189,88 @@ Ver:
 
 ## 🌍 Internacionalização (i18n)
 
-### Idiomas Suportados
-- **Inglês** (`en`)
-- **Espanhol** (`es`)
-- **Português** (`pt`)
+### Estrutura de Arquivos
+- **Traduções**: [`translations/`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/translations)
+  - `en.json`: Inglês (Source of truth)
+  - `es.json`: Espanhol
+  - `pt.json`: Português
+- **Hook de Idioma**: [`src/hooks/use-locale.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/hooks/use-locale.ts)
 
-### Traduções
-- **Localização**: [`translations/`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/translations)
-  - `en.json`
-  - `es.json`
-  - `pt.json`
+### Como Usar Traduções
 
-### Hook de Idioma
-```tsx
-import { useLocale } from "@/hooks/use-locale";
+#### 1. No JSX (Componentes)
+Para a maioria dos textos na interface, use o componente `<FormattedMessage />`.
 
-const { locale, setLocale } = useLocale();
-```
-
-### Uso no Código
 ```tsx
 import { FormattedMessage } from "react-intl";
 
+// Uso simples
+<FormattedMessage id="login.title" defaultMessage="Bem-vindo" />
+
+// Com valores dinâmicos
 <FormattedMessage 
-  id="login.title" 
-  defaultMessage="Welcome Back" 
+  id="message.users.role.quantity" 
+  values={{ quantity: '5' }}
 />
 ```
 
-**Exemplo completo**: [`src/routes/_public/auth/index.tsx:L135-L140`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/routes/_public/auth/index.tsx#L135-L140)
+#### 2. Fora do JSX (Placeholders, Toasts, Hooks)
+Use o hook `useIntl` para obter a instância `intl` e formatar mensagens programaticamente.
+
+```tsx
+import { useIntl } from "react-intl";
+
+const MyComponent = () => {
+  const intl = useIntl();
+
+  const placeholder = intl.formatMessage({ id: "search.placeholder" });
+  
+  const handleNotify = () => {
+    toast.success(intl.formatMessage({ id: "save.success" }));
+  };
+
+  return <input placeholder={placeholder} />;
+};
+```
+
+#### 3. Adicionando Novos Textos
+1. Adicione a chave no [`translations/en.json`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/translations/en.json) (use pontos para categorizar, ex: `auth.login.title`).
+2. Replique a chave em `pt.json` e `es.json`.
+3. Use o ID no seu componente.
+
+> **Dica**: Sempre tente fornecer um `defaultMessage` para o `<FormattedMessage />` para evitar telas vazias caso a chave falhe no carregamento.
+
+---
+
+## 🏗️ Padrões de Interface (@interface)
+
+Cada rota principal ou entidade deve ter sua própria pasta `@interface` contendo:
+- **Schemas Zod**: Para validação de formulários e runtime.
+- **Types/Interfaces**: Derivados dos schemas ou definidos manualmente para listagens.
+
+### Exemplo: Permissões
+- **Roles**: [`src/routes/_private/permissions/roles/@interface/role.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/routes/_private/permissions/roles/@interface/role.ts)
+- **Users**: [`src/routes/_private/permissions/users/@interface/user.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/routes/_private/permissions/users/@interface/user.ts)
+
+#### Conversão de Legado para Novo Padrão:
+Ao converter componentes do `iotlog-frontend`:
+1. **Lógica de Dados em Hooks**: Processos de fetch inicial (como o `loadingEdit`), gerenciamento de formulário e ações de salvar/deletar devem ser movidos para uma pasta `@hooks` dentro da pasta da rota (ex: `src/routes/_private/permissions/roles/@hooks/use-role-form.ts`).
+2. **Seletores Globais**: Se a página legada possui seletores de contexto global (como o `SelectEnterprise` ou `SelectEnterpriseWithSetup`), estes DEVEM ser incluídos na nova versão, geralmente antes dos campos específicos do formulário.
+3. **Componentes de Seleção Especializados**: Sempre verifique em [`src/components/selects`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/selects) se já existe um componente de seleção para o campo (ex: `SensorByAssetsSelect`, `MachineSelect`, etc.). Use-os em vez de criar seletores genéricos ou placeholders.
+4. **Zod e Tipagem**: Use o arquivo `.ts` na pasta `@interface` para definir o schema e inferir os tipos.
+
+---
+
+## 🛠️ Exemplo de Estrutura de Pasta de Rota
+
+```
+src/routes/minha-rota/
+├── @components/     # Componentes visuais específicos
+├── @hooks/          # Lógica, React Query, Form Handling
+├── @interface/      # Schemas Zod e Types
+├── @consts/         # Constantes
+└── index.tsx        # Ponto de entrada (View)
+```
 
 ---
 

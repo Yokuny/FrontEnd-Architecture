@@ -20,7 +20,7 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<SensorSignal, SensorSignal>
-        label={label || 'Sinais (Múltiplo)'}
+        label={label || 'Sinais'}
         placeholder={placeholder || 'Selecione os sinais...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -37,7 +37,7 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
 
   return (
     <DataSelect<SensorSignal, SensorSignal>
-      label={label || 'Sinal (Único)'}
+      label={label || 'Sinal'}
       placeholder={placeholder || 'Selecione um sinal...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

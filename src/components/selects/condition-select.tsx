@@ -31,7 +31,7 @@ export function ConditionSelect(props: ConditionSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<ConditionOption, ConditionOption>
-        label={label || 'Condições (Múltiplo)'}
+        label={label || 'Condições'}
         placeholder={placeholder || 'Selecione as condições...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -49,7 +49,7 @@ export function ConditionSelect(props: ConditionSelectProps) {
 
   return (
     <DataSelect<ConditionOption, ConditionOption>
-      label={label || 'Condição (Único)'}
+      label={label || 'Condição'}
       placeholder={placeholder || 'Selecione uma condição...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

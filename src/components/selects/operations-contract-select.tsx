@@ -18,7 +18,7 @@ export function OperationsContractSelect(props: OperationsContractSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<OperationByAsset, OperationByAsset>
-        label={label || 'Operação (Múltiplo)'}
+        label={label || 'Operação'}
         placeholder={placeholder || 'Selecione as operações...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function OperationsContractSelect(props: OperationsContractSelectProps) {
 
   return (
     <DataSelect<OperationByAsset, OperationByAsset>
-      label={label || 'Operação (Único)'}
+      label={label || 'Operação'}
       placeholder={placeholder || 'Selecione uma operação...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

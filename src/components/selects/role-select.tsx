@@ -16,7 +16,7 @@ export function RoleSelect(props: RoleSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<RoleListItem, RoleListItem>
-        label={label || 'Perfis (Múltiplo)'}
+        label={label || 'Perfis'}
         placeholder={placeholder || 'Selecione os perfis...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as (string | number)[])}
@@ -33,7 +33,7 @@ export function RoleSelect(props: RoleSelectProps) {
 
   return (
     <DataSelect<RoleListItem, RoleListItem>
-      label={label || 'Perfil (Único)'}
+      label={label || 'Perfil'}
       placeholder={placeholder || 'Selecione um perfil...'}
       value={props.value}
       onChange={props.onChange}

@@ -12,7 +12,7 @@ export function ModelMachineSelect(props: ModelMachineSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<ModelMachine, ModelMachine>
-        label={label || 'Modelo de Máquina (Múltiplo)'}
+        label={label || 'Modelo de Máquina'}
         placeholder={placeholder || 'Selecione os modelos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -29,7 +29,7 @@ export function ModelMachineSelect(props: ModelMachineSelectProps) {
 
   return (
     <DataSelect<ModelMachine, ModelMachine>
-      label={label || 'Modelo de Máquina (Único)'}
+      label={label || 'Modelo de Máquina'}
       placeholder={placeholder || 'Selecione um modelo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

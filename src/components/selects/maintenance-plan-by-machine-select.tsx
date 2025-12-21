@@ -18,7 +18,7 @@ export function MaintenancePlanByMachineSelect(props: MaintenancePlanByMachineSe
   if (mode === 'multi') {
     return (
       <DataMultiSelect<MaintenancePlanByMachine, MaintenancePlanByMachine>
-        label={label || 'Plano de Manutenção (Múltiplo)'}
+        label={label || 'Plano de Manutenção'}
         placeholder={placeholder || 'Selecione os planos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function MaintenancePlanByMachineSelect(props: MaintenancePlanByMachineSe
 
   return (
     <DataSelect<MaintenancePlanByMachine, MaintenancePlanByMachine>
-      label={label || 'Plano de Manutenção (Único)'}
+      label={label || 'Plano de Manutenção'}
       placeholder={placeholder || 'Selecione um plano...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

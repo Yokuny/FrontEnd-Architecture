@@ -13,8 +13,6 @@ import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PrivateFleetIndexRouteImport } from './routes/_private/fleet/index';
-import { Route as PrivateDashboardIndexRouteImport } from './routes/_private/dashboard/index';
 import { Route as PrivateComponentsIndexRouteImport } from './routes/_private/components/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
@@ -45,16 +43,6 @@ const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   id: '/auth/',
   path: '/auth/',
   getParentRoute: () => PublicRoute,
-} as any);
-const PrivateFleetIndexRoute = PrivateFleetIndexRouteImport.update({
-  id: '/fleet/',
-  path: '/fleet/',
-  getParentRoute: () => PrivateRoute,
-} as any);
-const PrivateDashboardIndexRoute = PrivateDashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
-  getParentRoute: () => PrivateRoute,
 } as any);
 const PrivateComponentsIndexRoute = PrivateComponentsIndexRouteImport.update({
   id: '/components/',
@@ -131,8 +119,6 @@ export interface FileRoutesByFullPath {
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
   '/components': typeof PrivateComponentsIndexRoute;
-  '/dashboard': typeof PrivateDashboardIndexRoute;
-  '/fleet': typeof PrivateFleetIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -149,8 +135,6 @@ export interface FileRoutesByTo {
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
   '/components': typeof PrivateComponentsIndexRoute;
-  '/dashboard': typeof PrivateDashboardIndexRoute;
-  '/fleet': typeof PrivateFleetIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -170,8 +154,6 @@ export interface FileRoutesById {
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
   '/_private/components/': typeof PrivateComponentsIndexRoute;
-  '/_private/dashboard/': typeof PrivateDashboardIndexRoute;
-  '/_private/fleet/': typeof PrivateFleetIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/_private/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -190,8 +172,6 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/auth/unlock'
     | '/components'
-    | '/dashboard'
-    | '/fleet'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
@@ -208,8 +188,6 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/auth/unlock'
     | '/components'
-    | '/dashboard'
-    | '/fleet'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
@@ -228,8 +206,6 @@ export interface FileRouteTypes {
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
     | '/_private/components/'
-    | '/_private/dashboard/'
-    | '/_private/fleet/'
     | '/_public/auth/'
     | '/_private/permissions/roles/add'
     | '/_private/permissions/users/add'
@@ -276,20 +252,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth';
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
-    };
-    '/_private/fleet/': {
-      id: '/_private/fleet/';
-      path: '/fleet';
-      fullPath: '/fleet';
-      preLoaderRoute: typeof PrivateFleetIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
-    '/_private/dashboard/': {
-      id: '/_private/dashboard/';
-      path: '/dashboard';
-      fullPath: '/dashboard';
-      preLoaderRoute: typeof PrivateDashboardIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
     };
     '/_private/components/': {
       id: '/_private/components/';
@@ -380,8 +342,6 @@ declare module '@tanstack/react-router' {
 
 interface PrivateRouteChildren {
   PrivateComponentsIndexRoute: typeof PrivateComponentsIndexRoute;
-  PrivateDashboardIndexRoute: typeof PrivateDashboardIndexRoute;
-  PrivateFleetIndexRoute: typeof PrivateFleetIndexRoute;
   PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
   PrivatePermissionsUsersAddRoute: typeof PrivatePermissionsUsersAddRoute;
   PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
@@ -394,8 +354,6 @@ interface PrivateRouteChildren {
 
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateComponentsIndexRoute: PrivateComponentsIndexRoute,
-  PrivateDashboardIndexRoute: PrivateDashboardIndexRoute,
-  PrivateFleetIndexRoute: PrivateFleetIndexRoute,
   PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
   PrivatePermissionsUsersAddRoute: PrivatePermissionsUsersAddRoute,
   PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,

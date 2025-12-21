@@ -31,7 +31,7 @@ export function ViewSelect(props: ViewSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<ViewOption, ViewOption>
-        label={label || 'Visualizações (Múltiplo)'}
+        label={label || 'Visualizações'}
         placeholder={placeholder || 'Selecione as visualizações...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -49,7 +49,7 @@ export function ViewSelect(props: ViewSelectProps) {
 
   return (
     <DataSelect<ViewOption, ViewOption>
-      label={label || 'Visualização (Único)'}
+      label={label || 'Visualização'}
       placeholder={placeholder || 'Selecione uma visualização...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

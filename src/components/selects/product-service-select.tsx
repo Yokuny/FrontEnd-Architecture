@@ -19,7 +19,7 @@ export function ProductServiceSelect(props: ProductServiceSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Machine, Machine>
-        label={label || 'Produto/Serviço (Múltiplo)'}
+        label={label || 'Produto/Serviço'}
         placeholder={placeholder || 'Selecione...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -36,7 +36,7 @@ export function ProductServiceSelect(props: ProductServiceSelectProps) {
 
   return (
     <DataSelect<Machine, Machine>
-      label={label || 'Produto/Serviço (Único)'}
+      label={label || 'Produto/Serviço'}
       placeholder={placeholder || 'Selecione...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

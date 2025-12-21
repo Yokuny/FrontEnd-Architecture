@@ -18,7 +18,7 @@ export function TypeProblemSelect(props: TypeProblemSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<TypeProblem, TypeProblem>
-        label={label || 'Tipo de Problema (Múltiplo)'}
+        label={label || 'Tipo de Problema'}
         placeholder={placeholder || 'Selecione os tipos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function TypeProblemSelect(props: TypeProblemSelectProps) {
 
   return (
     <DataSelect<TypeProblem, TypeProblem>
-      label={label || 'Tipo de Problema (Único)'}
+      label={label || 'Tipo de Problema'}
       placeholder={placeholder || 'Selecione um tipo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

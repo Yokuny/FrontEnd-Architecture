@@ -107,7 +107,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
   if (mode === "multi") {
     return (
       <DataMultiSelect<Supplier>
-        label="Fornecedor (Múltiplo)"
+        label="Fornecedor"
         placeholder="Selecione os fornecedores..."
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -124,7 +124,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
 
   return (
     <DataSelect<Supplier>
-      label="Fornecedor (Único)"
+      label="Fornecedor"
       placeholder="Selecione um fornecedor..."
       value={props.value}
       onChange={(val) => props.onChange(val as string)}
@@ -146,25 +146,59 @@ export function SupplierSelect(props: SupplierSelectProps) {
 
 ## � Dados Estáticos e Fixos
 
-Para componentes que utilizam dados fixos (opções que não vem da API), seguimos estas regras:
+Para componentes que utilizam dados fixos (opções que não vêm da API), seguimos estas regras:
 
-1. **Centralização**: Os dados devem ser armazenados em `src/lib/constants/select-options.ts`.
-2. **Encapsulamento**: Se a lógica for simples, o componente select deve conter a lógica de simulação de query internamente, sem necessidade de um arquivo de hook separado.
-3. **Simulação de Query**: Para manter a compatibilidade com `DataSelect`, simulamos o objeto de retorno do TanStack Query.
+1. **Centralização**: Os dados devem ser obrigatoriamente armazenados em [`src/lib/constants/select-options.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/lib/constants/select-options.ts). Nunca duplique ou sobrescreva valores existentes.
+2. **Encapsulamento**: A lógica de simulação de query e a internacionalização das labels devem residir dentro do componente especializado em `src/components/selects`.
+3. **Simulação de Query**: Para manter a compatibilidade com `DataSelect`, simulamos o objeto de retorno do TanStack Query usando `UseQueryResult`.
+4. **Tradução (i18n)**: Utilize o hook `useIntl()` dentro do componente e a prop `mapToOptions` para traduzir as chaves de label (`labelKey`) no momento da renderização.
 
 ### Exemplo de Constante (`select-options.ts`)
 
 ```typescript
 export interface PriorityOption {
   value: string;
-  label: string;
+  labelKey: string; // Chave para tradução
 }
 
 export const PRIORITY_OPTIONS: PriorityOption[] = [
-  { value: "low", label: "Baixa" },
-  { value: "medium", label: "Média" },
-  { value: "high", label: "Alta" },
+  { value: "low", labelKey: "priority.low" },
+  { value: "medium", labelKey: "priority.medium" },
+  { value: "high", labelKey: "priority.high" },
 ];
+```
+
+### Exemplo de Componente Estático Traduzido
+
+```tsx
+import { useIntl } from 'react-intl';
+import { DataSelect } from '@/components/ui/data-select';
+import { PRIORITY_OPTIONS, type PriorityOption } from '@/lib/constants/select-options';
+
+export function PrioritySelect(props: PrioritySelectProps) {
+  const intl = useIntl();
+
+  // Simulação de query para compatibilidade
+  const query = {
+    data: PRIORITY_OPTIONS,
+    isLoading: false,
+    isSuccess: true,
+    status: "success",
+  } as UseQueryResult<PriorityOption[], Error>;
+
+  return (
+    <DataSelect<PriorityOption>
+      label={props.label || intl.formatMessage({ id: 'priority' })}
+      query={query}
+      mapToOptions={(data) => data.map(opt => ({
+        value: opt.value,
+        label: intl.formatMessage({ id: opt.labelKey }),
+        data: opt
+      }))}
+      {...props}
+    />
+  );
+}
 ```
 
 ### Exemplo de Componente Estático
@@ -339,7 +373,7 @@ export function MinhaEntidadeSelect(props: MinhaEntidadeSelectProps) {
   if (mode === "multi") {
     return (
       <DataMultiSelect<MinhaEntidade>
-        label="Minha Entidade (Múltiplo)"
+        label="Minha Entidade"
         placeholder="Selecione..."
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -354,7 +388,7 @@ export function MinhaEntidadeSelect(props: MinhaEntidadeSelectProps) {
 
   return (
     <DataSelect<MinhaEntidade>
-      label="Minha Entidade (Único)"
+      label="Minha Entidade"
       placeholder="Selecione..."
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

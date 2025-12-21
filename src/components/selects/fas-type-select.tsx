@@ -38,7 +38,7 @@ export function FasTypeSelect(props: FasTypeSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<FasTypeOption, FasTypeOption>
-        label={label || 'Tipo de FAS (Múltiplo)'}
+        label={label || 'Tipo de FAS'}
         placeholder={placeholder || 'Selecione os tipos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -56,7 +56,7 @@ export function FasTypeSelect(props: FasTypeSelectProps) {
 
   return (
     <DataSelect<FasTypeOption, FasTypeOption>
-      label={label || 'Tipo de FAS (Único)'}
+      label={label || 'Tipo de FAS'}
       placeholder={placeholder || 'Selecione um tipo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

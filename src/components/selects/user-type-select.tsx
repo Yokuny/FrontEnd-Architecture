@@ -16,7 +16,7 @@ export function UserTypeSelect(props: UserTypeSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<UserType, UserType>
-        label={label || 'Tipos de Usuário (Múltiplo)'}
+        label={label || 'Tipos de Usuário'}
         placeholder={placeholder || 'Selecione os tipos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -33,7 +33,7 @@ export function UserTypeSelect(props: UserTypeSelectProps) {
 
   return (
     <DataSelect<UserType, UserType>
-      label={label || 'Tipo de Usuário (Único)'}
+      label={label || 'Tipo de Usuário'}
       placeholder={placeholder || 'Selecione um tipo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

@@ -18,7 +18,7 @@ export function StatusSelect(props: StatusSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<string, string>
-        label={label || 'Status (Múltiplo)'}
+        label={label || 'Status'}
         placeholder={placeholder || 'Selecione os status...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function StatusSelect(props: StatusSelectProps) {
 
   return (
     <DataSelect<string, string>
-      label={label || 'Status (Único)'}
+      label={label || 'Status'}
       placeholder={placeholder || 'Selecione um status...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

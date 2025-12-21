@@ -26,7 +26,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<SensorByAsset, SensorByAsset>
-        label={label || 'Sensores por Ativos (Múltiplo)'}
+        label={label || 'Sensores por Ativos'}
         placeholder={placeholder || 'Selecione os sensores...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -43,7 +43,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
 
   return (
     <DataSelect<SensorByAsset, SensorByAsset>
-      label={label || 'Sensor por Ativos (Único)'}
+      label={label || 'Sensor por Ativos'}
       placeholder={placeholder || 'Selecione um sensor...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

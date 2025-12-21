@@ -9,7 +9,7 @@ export function FormSelect(props: FormSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Form, Form>
-        label={label || 'Formulário (Múltiplo)'}
+        label={label || 'Formulário'}
         placeholder={placeholder || 'Selecione os formulários...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -26,7 +26,7 @@ export function FormSelect(props: FormSelectProps) {
 
   return (
     <DataSelect<Form, Form>
-      label={label || 'Formulário (Único)'}
+      label={label || 'Formulário'}
       placeholder={placeholder || 'Selecione um formulário...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

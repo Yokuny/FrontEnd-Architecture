@@ -12,7 +12,7 @@ export function MachineManagerSelect(props: MachineManagerSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<MachineManager, MachineManager>
-        label={label || 'Gestor (Múltiplo)'}
+        label={label || 'Gestor'}
         placeholder={placeholder || 'Selecione os gestores...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -29,7 +29,7 @@ export function MachineManagerSelect(props: MachineManagerSelectProps) {
 
   return (
     <DataSelect<MachineManager, MachineManager>
-      label={label || 'Gestor (Único)'}
+      label={label || 'Gestor'}
       placeholder={placeholder || 'Selecione um gestor...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

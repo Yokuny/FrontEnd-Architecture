@@ -33,7 +33,7 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<VariableTypeOption, VariableTypeOption>
-        label={label || 'Tipo de Variável (Múltiplo)'}
+        label={label || 'Tipo de Variável'}
         placeholder={placeholder || 'Selecione os tipos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -49,7 +49,7 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
 
   return (
     <DataSelect<VariableTypeOption, VariableTypeOption>
-      label={label || 'Tipo de Variável (Único)'}
+      label={label || 'Tipo de Variável'}
       placeholder={placeholder || 'Selecione um tipo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

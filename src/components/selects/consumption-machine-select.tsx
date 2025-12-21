@@ -11,7 +11,7 @@ export function ConsumptionMachineSelect(props: ConsumptionMachineSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<ConsumptionMachine>
-        label={label || 'Máquina de Consumo (Múltiplo)'}
+        label={label || 'Máquina de Consumo'}
         placeholder={placeholder || 'Selecione as máquinas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -28,7 +28,7 @@ export function ConsumptionMachineSelect(props: ConsumptionMachineSelectProps) {
 
   return (
     <DataSelect<ConsumptionMachine>
-      label={label || 'Máquina de Consumo (Único)'}
+      label={label || 'Máquina de Consumo'}
       placeholder={placeholder || 'Selecione uma máquina...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

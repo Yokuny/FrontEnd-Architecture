@@ -16,7 +16,7 @@ export function FenceSelect(props: FenceSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Fence>
-        label={label || 'Cerca (Múltiplo)'}
+        label={label || 'Cerca'}
         placeholder={placeholder || 'Selecione as cercas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -33,7 +33,7 @@ export function FenceSelect(props: FenceSelectProps) {
 
   return (
     <DataSelect<Fence>
-      label={label || 'Cerca (Único)'}
+      label={label || 'Cerca'}
       placeholder={placeholder || 'Selecione uma cerca...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

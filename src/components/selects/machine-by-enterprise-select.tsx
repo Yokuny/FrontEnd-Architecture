@@ -12,7 +12,7 @@ export function MachineByEnterpriseSelect(props: MachineByEnterpriseSelectProps)
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Machine, Machine>
-        label={label || 'Máquina por Empresa (Múltiplo)'}
+        label={label || 'Máquina por Empresa'}
         placeholder={placeholder || 'Selecione as máquinas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -29,7 +29,7 @@ export function MachineByEnterpriseSelect(props: MachineByEnterpriseSelectProps)
 
   return (
     <DataSelect<Machine, Machine>
-      label={label || 'Máquina por Empresa (Único)'}
+      label={label || 'Máquina por Empresa'}
       placeholder={placeholder || 'Selecione uma máquina...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

@@ -11,7 +11,7 @@ export function FasPlannerSelect(props: FasPlannerSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<FasPlanner>
-        label={label || 'Planejador (Múltiplo)'}
+        label={label || 'Planejador'}
         placeholder={placeholder || 'Selecione os planejadores...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -28,7 +28,7 @@ export function FasPlannerSelect(props: FasPlannerSelectProps) {
 
   return (
     <DataSelect<FasPlanner>
-      label={label || 'Planejador (Único)'}
+      label={label || 'Planejador'}
       placeholder={placeholder || 'Selecione um planejador...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

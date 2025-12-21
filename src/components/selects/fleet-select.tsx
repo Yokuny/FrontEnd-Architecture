@@ -11,7 +11,7 @@ export function FleetSelect(props: FleetSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Fleet>
-        label={label || 'Frota (Múltiplo)'}
+        label={label || 'Frota'}
         placeholder={placeholder || 'Selecione as frotas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -28,7 +28,7 @@ export function FleetSelect(props: FleetSelectProps) {
 
   return (
     <DataSelect<Fleet>
-      label={label || 'Frota (Único)'}
+      label={label || 'Frota'}
       placeholder={placeholder || 'Selecione uma frota...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

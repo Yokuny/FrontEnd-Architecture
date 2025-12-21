@@ -5,7 +5,7 @@ export const visibilityEnum = z.enum(['public', 'private', 'limited']);
 export type Visibility = z.infer<typeof visibilityEnum>;
 
 // Edit permission options
-export const editPermissionEnum = z.enum(['all', 'admin', 'owner']);
+export const editPermissionEnum = z.enum(['any', 'me', 'all', 'admin', 'owner']);
 export type EditPermission = z.infer<typeof editPermissionEnum>;
 
 // Role path/permission

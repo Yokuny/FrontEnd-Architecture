@@ -63,7 +63,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
         )}
 
         <DataMultiSelect<Supplier, Supplier>
-          label={label || 'Fornecedor (Múltiplo)'}
+          label={label || 'Fornecedor'}
           placeholder={placeholder || 'Selecione os fornecedores...'}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
@@ -95,7 +95,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
       )}
 
       <DataSelect<Supplier, Supplier>
-        label={label || 'Fornecedor (Único)'}
+        label={label || 'Fornecedor'}
         placeholder={placeholder || 'Selecione um fornecedor...'}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}

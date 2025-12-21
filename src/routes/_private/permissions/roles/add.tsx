@@ -1,75 +1,29 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { Edit2, MessageCircle, Monitor, Settings } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { toast } from 'sonner';
+import { EnterpriseSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useRolesApi } from '@/hooks/use-roles-api';
 import { AssetsPermissions } from './@components/assets-permissions';
 import { ChatbotPermissions } from './@components/chatbot-permissions';
 import { PathsSelector } from './@components/paths-selector';
 import { VisibilitySettings } from './@components/visibility-settings';
-import { type RoleFormData, roleSchema } from './@interface/role';
+import { useRoleForm } from './@hooks/use-role-form';
 
 export const Route = createFileRoute('/_private/permissions/roles/add')({
   component: AddRolePage,
 });
 
 function AddRolePage() {
-  const navigate = useNavigate();
   const intl = useIntl();
-  const { createRole } = useRolesApi();
-
-  const form = useForm<RoleFormData>({
-    resolver: zodResolver(roleSchema.omit({ id: true })),
-    defaultValues: {
-      description: '',
-      idEnterprise: '',
-      visibility: 'public',
-      edit: 'admin',
-      users: [],
-      roles: [],
-      allMachines: false,
-      idMachines: [],
-      allSensors: false,
-      idSensors: [],
-      interactChatbot: false,
-      purchaseChatbot: false,
-      notifyTravelWhatsapp: false,
-      notifyTravelEmail: false,
-      isShowStatusFleet: false,
-      isShowConsumption: false,
-      isShowStatus: false,
-      isChangeStatusFleet: false,
-      isSendLinkLocation: false,
-      isNotifyEventVoyage: false,
-      isAllowReceivedChangeStatus: false,
-      isNotifyByChatbotAnomaly: false,
-      isNotifyByMailAnomaly: false,
-      isNotifyAlertOperational: false,
-      isNotifyRVEDivergencies: false,
-      isNotifyInsuranceDT: false,
-    },
-  });
-
-  const onSubmit = async (data: RoleFormData) => {
-    try {
-      await createRole.mutateAsync(data);
-      toast.success(intl.formatMessage({ id: 'save.successfull' }));
-      navigate({ to: '/permissions/roles' });
-    } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
-    }
-  };
+  const { form, onSubmit, isPending } = useRoleForm();
 
   return (
     <div className="container mx-auto p-6">
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <Card>
           <CardHeader>
             <CardTitle>
@@ -77,12 +31,19 @@ function AddRolePage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="description">
-                <FormattedMessage id="description" /> *
-              </Label>
-              <Input id="description" {...form.register('description')} placeholder={intl.formatMessage({ id: 'message.description.placeholder' })} maxLength={150} />
-              {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <EnterpriseSelect mode="single" value={form.watch('idEnterprise')} onChange={(val) => form.setValue('idEnterprise', val || '')} oneBlocked />
+                {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{form.formState.errors.idEnterprise.message}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="description">
+                  <FormattedMessage id="description" /> *
+                </Label>
+                <Input id="description" {...form.register('description')} placeholder={intl.formatMessage({ id: 'message.description.placeholder' })} maxLength={150} />
+                {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
+              </div>
             </div>
 
             <Tabs defaultValue="pages" className="w-full">
@@ -123,8 +84,8 @@ function AddRolePage() {
             </Tabs>
           </CardContent>
           <CardFooter className="flex justify-end">
-            <Button type="submit" disabled={createRole.isPending}>
-              {createRole.isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+            <Button type="submit" disabled={isPending}>
+              {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
             </Button>
           </CardFooter>
         </Card>

@@ -18,7 +18,7 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<string, string>
-        label={label || 'Equipamentos CMMS (Múltiplo)'}
+        label={label || 'Equipamentos CMMS'}
         placeholder={placeholder || 'Selecione...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
 
   return (
     <DataSelect<string, string>
-      label={label || 'Equipamento CMMS (Único)'}
+      label={label || 'Equipamento CMMS'}
       placeholder={placeholder || 'Selecione...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

@@ -1,9 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { Edit2, MessageCircle, Monitor, Settings, Trash2 } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { toast } from 'sonner';
+import { EnterpriseSelect } from '@/components/selects';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,12 +18,11 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useRolesApi } from '@/hooks/use-roles-api';
 import { AssetsPermissions } from './@components/assets-permissions';
 import { ChatbotPermissions } from './@components/chatbot-permissions';
 import { PathsSelector } from './@components/paths-selector';
 import { VisibilitySettings } from './@components/visibility-settings';
-import { type Role, roleSchema } from './@interface/role';
+import { useRoleForm } from './@hooks/use-role-form';
 
 export const Route = createFileRoute('/_private/permissions/roles/edit/$id')({
   component: EditRolePage,
@@ -33,36 +30,8 @@ export const Route = createFileRoute('/_private/permissions/roles/edit/$id')({
 
 function EditRolePage() {
   const { id } = Route.useParams();
-  const navigate = useNavigate();
   const intl = useIntl();
-  const { getRole, updateRole, deleteRole } = useRolesApi();
-
-  const { data: role, isLoading } = getRole(id);
-
-  const form = useForm<Role>({
-    resolver: zodResolver(roleSchema),
-    values: role,
-  });
-
-  const onSubmit = async (data: Role) => {
-    try {
-      await updateRole.mutateAsync(data);
-      toast.success(intl.formatMessage({ id: 'save.successfull' }));
-      navigate({ to: '/permissions/roles' });
-    } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
-    }
-  };
-
-  const handleDelete = async () => {
-    try {
-      await deleteRole.mutateAsync({ id, idEnterprise: form.getValues('idEnterprise') });
-      toast.success(intl.formatMessage({ id: 'delete.successfull' }));
-      navigate({ to: '/permissions/roles' });
-    } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.delete' }));
-    }
-  };
+  const { form, onSubmit, handleDelete, isLoading, isPending } = useRoleForm(id);
 
   if (isLoading) {
     return (
@@ -78,7 +47,7 @@ function EditRolePage() {
 
   return (
     <div className="container mx-auto p-6">
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <Card>
           <CardHeader>
             <CardTitle>
@@ -86,12 +55,19 @@ function EditRolePage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="description">
-                <FormattedMessage id="description" /> *
-              </Label>
-              <Input id="description" {...form.register('description')} placeholder={intl.formatMessage({ id: 'message.description.placeholder' })} maxLength={150} />
-              {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <EnterpriseSelect mode="single" value={form.watch('idEnterprise')} onChange={(val) => form.setValue('idEnterprise', val || '')} oneBlocked />
+                {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{form.formState.errors.idEnterprise.message}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="description">
+                  <FormattedMessage id="description" /> *
+                </Label>
+                <Input id="description" {...form.register('description')} placeholder={intl.formatMessage({ id: 'message.description.placeholder' })} maxLength={150} />
+                {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
+              </div>
             </div>
 
             <Tabs defaultValue="pages" className="w-full">
@@ -152,15 +128,15 @@ function EditRolePage() {
                   <AlertDialogCancel>
                     <FormattedMessage id="cancel" />
                   </AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
+                  <AlertDialogAction onClick={() => handleDelete()} className="bg-destructive text-destructive-foreground">
                     <FormattedMessage id="delete" />
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
 
-            <Button type="submit" disabled={updateRole.isPending}>
-              {updateRole.isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+            <Button type="submit" disabled={isPending}>
+              {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
             </Button>
           </CardFooter>
         </Card>

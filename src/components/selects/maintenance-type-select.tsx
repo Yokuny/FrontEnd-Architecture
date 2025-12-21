@@ -12,7 +12,7 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<string, string>
-        label={label || 'Tipo de Manutenção (Múltiplo)'}
+        label={label || 'Tipo de Manutenção'}
         placeholder={placeholder || 'Selecione os tipos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -29,7 +29,7 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
 
   return (
     <DataSelect<string, string>
-      label={label || 'Tipo de Manutenção (Único)'}
+      label={label || 'Tipo de Manutenção'}
       placeholder={placeholder || 'Selecione um tipo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

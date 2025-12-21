@@ -23,7 +23,7 @@ export function MachineSelect(props: MachineSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Machine, Machine>
-        label={label || 'Máquina (Múltiplo)'}
+        label={label || 'Máquina'}
         placeholder={placeholder || 'Selecione as máquinas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -40,7 +40,7 @@ export function MachineSelect(props: MachineSelectProps) {
 
   return (
     <DataSelect<Machine, Machine>
-      label={label || 'Máquina (Único)'}
+      label={label || 'Máquina'}
       placeholder={placeholder || 'Selecione uma máquina...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

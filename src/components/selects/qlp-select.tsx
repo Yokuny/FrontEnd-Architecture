@@ -18,7 +18,7 @@ export function QlpSelect(props: QlpSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Qlp, Qlp>
-        label={label || 'QLP (Múltiplo)'}
+        label={label || 'QLP'}
         placeholder={placeholder || 'Selecione...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function QlpSelect(props: QlpSelectProps) {
 
   return (
     <DataSelect<Qlp, Qlp>
-      label={label || 'QLP (Único)'}
+      label={label || 'QLP'}
       placeholder={placeholder || 'Selecione...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

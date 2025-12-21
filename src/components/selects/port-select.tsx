@@ -16,7 +16,7 @@ export function PortSelect(props: PortSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Port, Port>
-        label={label || 'Porto (Múltiplo)'}
+        label={label || 'Porto'}
         placeholder={placeholder || 'Selecione os portos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -33,7 +33,7 @@ export function PortSelect(props: PortSelectProps) {
 
   return (
     <DataSelect<Port, Port>
-      label={label || 'Porto (Único)'}
+      label={label || 'Porto'}
       placeholder={placeholder || 'Selecione um porto...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

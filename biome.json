@@ -22,7 +22,8 @@
       "suspicious": {
         "noReactSpecificProps": "off",
         "noConsole": "warn",
-        "noAlert": "warn"
+        "noAlert": "warn",
+        "noArrayIndexKey": "info"
       }
     }
   },

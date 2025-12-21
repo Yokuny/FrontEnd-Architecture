@@ -21,7 +21,7 @@ export function UserSamePermissionSelect(props: UserSamePermissionSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<UserSamePermission, UserSamePermission>
-        label={label || 'Usuários (Múltiplo)'}
+        label={label || 'Usuários'}
         placeholder={placeholder || 'Selecione os usuários...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -38,7 +38,7 @@ export function UserSamePermissionSelect(props: UserSamePermissionSelectProps) {
 
   return (
     <DataSelect<UserSamePermission, UserSamePermission>
-      label={label || 'Usuário (Único)'}
+      label={label || 'Usuário'}
       placeholder={placeholder || 'Selecione um usuário...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

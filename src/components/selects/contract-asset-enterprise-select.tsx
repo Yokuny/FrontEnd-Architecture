@@ -11,7 +11,7 @@ export function ContractAssetEnterpriseSelect(props: ContractAssetEnterpriseSele
   if (mode === 'multi') {
     return (
       <DataMultiSelect<ContractAsset>
-        label={label || 'Ativo de Contrato (Múltiplo)'}
+        label={label || 'Ativo de Contrato'}
         placeholder={placeholder || 'Selecione os ativos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -28,7 +28,7 @@ export function ContractAssetEnterpriseSelect(props: ContractAssetEnterpriseSele
 
   return (
     <DataSelect<ContractAsset>
-      label={label || 'Ativo de Contrato (Único)'}
+      label={label || 'Ativo de Contrato'}
       placeholder={placeholder || 'Selecione um ativo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

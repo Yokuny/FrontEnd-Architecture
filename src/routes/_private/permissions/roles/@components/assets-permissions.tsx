@@ -1,5 +1,6 @@
 import type { UseFormReturn } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
+import { MachineByEnterpriseSelect, SensorByAssetsSelect } from '@/components/selects';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import type { RoleFormData } from '../@interface/role';
@@ -11,6 +12,9 @@ interface AssetsPermissionsProps {
 export function AssetsPermissions({ form }: AssetsPermissionsProps) {
   const allMachines = form.watch('allMachines');
   const allSensors = form.watch('allSensors');
+  const idEnterprise = form.watch('idEnterprise');
+  const idMachines = form.watch('idMachines');
+  const idSensors = form.watch('idSensors');
 
   return (
     <div className="space-y-6">
@@ -26,9 +30,14 @@ export function AssetsPermissions({ form }: AssetsPermissionsProps) {
           </Label>
         </div>
         {!allMachines && (
-          <div className="ml-6 text-sm text-muted-foreground">
-            {/* TODO: Add machine selector component */}
-            <p>Machine selector will be added here</p>
+          <div className="space-y-2">
+            <MachineByEnterpriseSelect
+              mode="multi"
+              idEnterprise={idEnterprise}
+              value={idMachines}
+              onChange={(vals) => form.setValue('idMachines', vals)}
+              label={undefined} // Using internal label or FormattedMessage
+            />
           </div>
         )}
       </div>
@@ -45,9 +54,8 @@ export function AssetsPermissions({ form }: AssetsPermissionsProps) {
           </Label>
         </div>
         {!allSensors && (
-          <div className="ml-6 text-sm text-muted-foreground">
-            {/* TODO: Add sensor selector component */}
-            <p>Sensor selector will be added here</p>
+          <div className="space-y-2">
+            <SensorByAssetsSelect mode="multi" idAssets={idMachines} value={idSensors} onChange={(vals) => form.setValue('idSensors', vals)} label={undefined} />
           </div>
         )}
       </div>

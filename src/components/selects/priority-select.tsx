@@ -31,7 +31,7 @@ export function PrioritySelect(props: PrioritySelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<PriorityOption, PriorityOption>
-        label={label || 'Prioridades (Múltiplo)'}
+        label={label || 'Prioridades'}
         placeholder={placeholder || 'Selecione as prioridades...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as number[])}
@@ -49,7 +49,7 @@ export function PrioritySelect(props: PrioritySelectProps) {
 
   return (
     <DataSelect<PriorityOption, PriorityOption>
-      label={label || 'Prioridade (Único)'}
+      label={label || 'Prioridade'}
       placeholder={placeholder || 'Selecione uma prioridade...'}
       value={props.value}
       onChange={(val) => props.onChange(val as number)}

@@ -9,7 +9,7 @@ export function EnterpriseSelect(props: EnterpriseSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Enterprise>
-        label={label || 'Empresa (Múltiplo)'}
+        label={label || 'Empresa'}
         placeholder={placeholder || 'Selecione as empresas...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -26,7 +26,7 @@ export function EnterpriseSelect(props: EnterpriseSelectProps) {
 
   return (
     <DataSelect<Enterprise>
-      label={label || 'Empresa (Único)'}
+      label={label || 'Empresa'}
       placeholder={placeholder || 'Selecione uma empresa...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

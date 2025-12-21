@@ -18,7 +18,7 @@ export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<FleetMachines, FleetVesselItem>
-        label={label || 'Embarcações (Múltiplo)'}
+        label={label || 'Embarcações'}
         placeholder={placeholder || 'Selecione as embarcações...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -35,7 +35,7 @@ export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
 
   return (
     <DataSelect<FleetMachines, FleetVesselItem>
-      label={label || 'Embarcação (Único)'}
+      label={label || 'Embarcação'}
       placeholder={placeholder || 'Selecione uma embarcação...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

@@ -11,7 +11,7 @@ export function CustomerSelect(props: CustomerSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<Customer>
-        label={label || 'Cliente (Múltiplo)'}
+        label={label || 'Cliente'}
         placeholder={placeholder || 'Selecione os clientes...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -28,7 +28,7 @@ export function CustomerSelect(props: CustomerSelectProps) {
 
   return (
     <DataSelect<Customer>
-      label={label || 'Cliente (Único)'}
+      label={label || 'Cliente'}
       placeholder={placeholder || 'Selecione um cliente...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}

@@ -31,7 +31,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
   if (mode === 'multi') {
     return (
       <DataMultiSelect<MachineTypeOption, MachineTypeOption>
-        label={label || 'Tipo de Máquina (Múltiplo)'}
+        label={label || 'Tipo de Máquina'}
         placeholder={placeholder || 'Selecione os tipos...'}
         value={props.value}
         onChange={(vals) => props.onChange(vals as string[])}
@@ -47,7 +47,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
 
   return (
     <DataSelect<MachineTypeOption, MachineTypeOption>
-      label={label || 'Tipo de Máquina (Único)'}
+      label={label || 'Tipo de Máquina'}
       placeholder={placeholder || 'Selecione um tipo...'}
       value={props.value}
       onChange={(val) => props.onChange(val as string)}
