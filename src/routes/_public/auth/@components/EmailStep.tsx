@@ -60,22 +60,13 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
         />
 
         <div className="flex items-center space-x-2">
-          <Checkbox
-            id="remember"
-            checked={rememberEmail}
-            onCheckedChange={(checked) => onRememberChange(checked === true)}
-            className="border-white/30 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
-          />
+          <Checkbox id="remember" checked={rememberEmail} onCheckedChange={(checked: boolean | 'indeterminate') => onRememberChange(checked === true)} variant="blue" />
           <Label htmlFor="remember" className="text-sm text-zinc-300 font-normal cursor-pointer">
             <FormattedMessage id="remember.email" defaultMessage="Remember email" />
           </Label>
         </div>
 
-        <Button
-          type="submit"
-          className="w-full h-12 font-semibold text-base bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-          size="lg"
-        >
+        <Button type="submit" variant="blue" className="w-full font-semibold text-base" size="lg">
           <FormattedMessage id="next" defaultMessage="Next" />
           <ArrowRight className="ml-2 h-5 w-5" />
         </Button>

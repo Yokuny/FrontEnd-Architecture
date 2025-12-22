@@ -114,7 +114,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
             role="combobox"
             aria-expanded={open}
             disabled={isDisabled || isLoading}
-            className={cn('h-9 w-full justify-between hover:bg-transparent', !selectedOption && 'text-muted-foreground')}
+            className={cn('w-full justify-between', !selectedOption && 'text-muted-foreground')}
           >
             <span className="truncate">{isLoading ? 'Loading...' : selectedOption ? selectedOption.label : placeholder}</span>
             <ChevronsUpDownIcon className="text-muted-foreground/80 ml-2 h-4 w-4 shrink-0" aria-hidden="true" />

@@ -1,6 +1,4 @@
-'use client';
-
-import { Card, CardContent } from '@/components/ui/card';
+import { Item, ItemContent } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 
 const data = [
@@ -35,8 +33,8 @@ export default function Stats03() {
     <div className="flex items-center justify-center p-10 w-full">
       <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 w-full">
         {data.map((item) => (
-          <Card key={item.name} className="p-6 py-4">
-            <CardContent className="p-0">
+          <Item key={item.name} variant="outline" className="p-6 py-4 bg-background">
+            <ItemContent>
               <dt className="text-sm font-medium text-muted-foreground">{item.name}</dt>
               <dd className="mt-2 flex items-baseline space-x-2.5">
                 <span className="text-3xl font-semibold text-foreground">{item.stat}</span>
@@ -44,8 +42,8 @@ export default function Stats03() {
                   {item.change}
                 </span>
               </dd>
-            </CardContent>
-          </Card>
+            </ItemContent>
+          </Item>
         ))}
       </dl>
     </div>

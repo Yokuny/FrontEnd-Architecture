@@ -50,7 +50,7 @@ function ListUserEnterprisesPage() {
             <Building2 className="h-5 w-5" />
             <FormattedMessage id="permission.enterprises" defaultMessage="Permissões por Empresa" />
           </CardTitle>
-          <Button size="sm" onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { idRef: id } })}>
+          <Button onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { idRef: id } })}>
             <Plus className="mr-2 h-4 w-4" />
             <FormattedMessage id="new.permission" defaultMessage="Nova Permissão" />
           </Button>
@@ -81,7 +81,7 @@ function ListUserEnterprisesPage() {
                     ))}
                   </div>
                 </div>
-                <Button size="sm" variant="outline" onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { id: item.id } })}>
+                <Button variant="outline" onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { id: item.id } })}>
                   <Edit className="mr-2 h-3 w-3" />
                   <FormattedMessage id="edit" defaultMessage="Editar" />
                 </Button>

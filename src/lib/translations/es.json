@@ -2312,5 +2312,7 @@
   "visibility.limited": "Limitado",
   "edit.permission.all": "Todos",
   "edit.permission.admin": "Administradores",
-  "edit.permission.owner": "Propietario"
+  "edit.permission.owner": "Permisos del propietario",
+  "setup.company": "Configurar empresa",
+  "setup.api.external": "API externa"
 }

@@ -9,7 +9,7 @@ import { IntlProvider } from 'react-intl';
 import { Toaster } from 'sonner';
 // Import configurations and contexts
 import { msalConfig } from './config/authConfig';
-import { SocketProvider } from './config/SocketConfig.tsx';
+// import { SocketProvider } from './config/SocketConfig.tsx';
 import { useLocale } from './hooks/use-locale';
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';
@@ -85,10 +85,10 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <IntlProvider locale={locale} messages={messages[locale]} defaultLocale="en">
-            <SocketProvider>
-              <RouterProvider router={router} />
-              <Toaster position="top-right" expand={false} richColors closeButton />
-            </SocketProvider>
+            {/* <SocketProvider> */}
+            <RouterProvider router={router} />
+            <Toaster position="top-right" expand={false} richColors closeButton />
+            {/* </SocketProvider> */}
           </IntlProvider>
         </ThemeProvider>
       </QueryClientProvider>

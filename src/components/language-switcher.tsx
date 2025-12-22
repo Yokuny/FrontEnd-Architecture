@@ -14,8 +14,8 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
-          <Globe className="h-5 w-5" />
+        <Button variant="ghost" className="relative">
+          <Globe className="size-5" />
           <span className="sr-only">
             <FormattedMessage id="login.language" defaultMessage="Change language" />
           </span>

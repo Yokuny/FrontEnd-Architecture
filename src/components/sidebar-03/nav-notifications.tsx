@@ -17,8 +17,9 @@ export function NotificationsPopover({ notifications }: { notifications: Notific
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full" aria-label="Open notifications">
+        <Button variant="ghost" aria-label="Open notifications">
           <BellIcon className="size-5" />
+          <span className="sr-only">Open notifications</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" className="w-80 my-6">

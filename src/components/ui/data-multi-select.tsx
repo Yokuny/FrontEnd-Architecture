@@ -102,14 +102,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
       {label && <Label htmlFor={id}>{label}</Label>}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button
-            id={id}
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            disabled={disabled || isLoading}
-            className="h-auto min-h-9 w-full justify-between hover:bg-transparent"
-          >
+          <Button id={id} variant="outline" role="combobox" aria-expanded={open} disabled={disabled || isLoading} className="w-full justify-between">
             <div className="flex flex-wrap items-center gap-1 pr-2.5">
               {isLoading ? (
                 <span className="text-muted-foreground">Loading...</span>

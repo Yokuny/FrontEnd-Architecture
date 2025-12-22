@@ -114,7 +114,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
         </Form>
 
         <div className="text-center">
-          <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })} className="text-sm text-zinc-400 hover:text-white transition-colors gap-2">
+          <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })}>
             <ArrowLeft className="h-4 w-4" />
             <FormattedMessage id="back.login" defaultMessage="Back to Login" />
           </Button>

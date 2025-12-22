@@ -233,14 +233,10 @@ function RegisterPage() {
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                     <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="border-white/30 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 mt-1"
-                      />
+                      <Checkbox id="termsAccepted" checked={field.value} onCheckedChange={field.onChange} variant="blue" className="mt-1" />
                     </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <Label htmlFor="termsAccepted" className="text-sm text-zinc-300 font-normal cursor-pointer leading-relaxed">
+                    <div className="space-y-1">
+                      <Label htmlFor="termsAccepted" className="block text-sm text-zinc-300 font-normal cursor-pointer leading-relaxed">
                         <FormattedMessage id="accept.terms" defaultMessage="I accept the" />{' '}
                         <a href="/terms" target="_blank" className="text-blue-400 hover:text-blue-300 underline" rel="noopener">
                           <FormattedMessage id="terms" defaultMessage="Terms of Service" />
@@ -264,12 +260,7 @@ function RegisterPage() {
               {form.formState.errors.reCaptcha && <p className="text-sm text-red-400 text-center">{form.formState.errors.reCaptcha.message}</p>}
 
               {/* Submit Button */}
-              <Button
-                type="submit"
-                disabled={isPending}
-                className="w-full h-12 font-semibold text-base bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-600 shadow-lg shadow-green-600/30 hover:shadow-green-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-                size="lg"
-              >
+              <Button type="submit" disabled={isPending} variant="green" className="w-full font-semibold text-base">
                 {isPending ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -284,7 +275,7 @@ function RegisterPage() {
 
           {/* Back to Login */}
           <div className="text-center">
-            <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })} className="text-sm text-zinc-400 hover:text-white transition-colors gap-2">
+            <Button type="button" variant="ghost" onClick={() => navigate({ to: '/auth' })}>
               <ArrowLeft className="h-4 w-4" />
               <FormattedMessage id="back.login" defaultMessage="Back to Login" />
             </Button>

@@ -103,6 +103,19 @@ Preciso de useUserForm() para gerenciar formulário de usuário?
 - **Uso**: Todos os componentes base do projeto (40+ componentes)
 - **Importante**: Sempre usar estes componentes para manter integridade visual
 
+#### ⚠️ Regra de Uso: Card vs Item
+
+- **[`Card`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/ui/card.tsx)**: **OBRIGATÓRIO** para iniciar e envolver qualquer página (Shell/Wrapper de página). Use para construir a estrutura principal e as grandes seções de conteúdo.
+- **[`Item`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/ui/item.tsx)**: Use para criar **cards informativos**, listagens de dados, cartões de entidade ou estatísticas.
+
+> **REGRA GERAL**: Toda página começa com um `Card`. Se dentro dela você precisar exibir dados repetíveis ou blocos de informação (como métricas), use o componente `Item`.
+
+#### 📚 Exemplos de Uso do `Item`:
+Para ver como implementar cards informativos de forma correta, consulte:
+- [`stats-01.tsx`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/stats-01.tsx) - Grid de estatísticas sem bordas internas.
+- [`stats-03.tsx`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/stats-03.tsx) - Cards de métricas com indicadores de variação.
+- [`stats-09.tsx`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/stats-09.tsx) - Cards de uso de recursos com barras de progresso.
+
 ### Componentes de Seleção (Selects)
 - **Localização**: [`src/components/selects`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/selects)
 - **Exportação Central**: [`src/components/selects/index.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/selects/index.ts)

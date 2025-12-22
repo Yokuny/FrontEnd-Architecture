@@ -1,6 +1,4 @@
-'use client';
-
-import { Card, CardContent } from '@/components/ui/card';
+import { Item, ItemContent } from '@/components/ui/item';
 import { Progress } from '@/components/ui/progress';
 
 const data = [
@@ -35,8 +33,8 @@ export default function Stats09() {
     <div className="flex items-center justify-center p-10 w-full">
       <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 w-full">
         {data.map((item) => (
-          <Card key={item.name} className="py-4">
-            <CardContent className="p-0">
+          <Item key={item.name} variant="outline" className="py-4 bg-background">
+            <ItemContent>
               <dt className="text-sm text-muted-foreground">{item.name}</dt>
               <dd className="text-2xl font-semibold text-foreground">{item.stat}</dd>
               <Progress value={item.percentage} className="mt-6 h-2" />
@@ -46,8 +44,8 @@ export default function Stats09() {
                   {item.stat} of {item.limit}
                 </span>
               </dd>
-            </CardContent>
-          </Card>
+            </ItemContent>
+          </Item>
         ))}
       </dl>
     </div>

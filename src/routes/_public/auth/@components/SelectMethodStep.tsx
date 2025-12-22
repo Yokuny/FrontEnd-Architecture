@@ -84,7 +84,7 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
           </form>
         </Form>
 
-        <Button variant="ghost" size="sm" onClick={onBack} className="w-full text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+        <Button variant="ghost" size="sm" onClick={onBack} className="w-full">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Login
         </Button>

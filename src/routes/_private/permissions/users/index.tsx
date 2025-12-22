@@ -35,18 +35,18 @@ function ListUsersPage() {
             <FormattedMessage id="users.permissions" />
           </CardTitle>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
+            <Button variant="outline">
               <Filter className="size-4" />
               <FormattedMessage id="filter" />
             </Button>
             {hasPermissionAdd && (
-              <Button size="sm" onClick={() => navigate({ to: '/permissions/users/add' })}>
+              <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
                 <Plus className="size-4" />
                 <FormattedMessage id="add.user" />
               </Button>
             )}
             {hasPermissionPermissions && (
-              <Button size="sm" onClick={() => navigate({ to: '/permissions/users/permissions/add' })}>
+              <Button onClick={() => navigate({ to: '/permissions/users/permissions/add' })}>
                 <Shield className="size-4" />
                 <FormattedMessage id="new.permission" />
               </Button>

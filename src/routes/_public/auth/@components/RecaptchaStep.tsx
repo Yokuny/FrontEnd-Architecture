@@ -33,7 +33,7 @@ export function RecaptchaStep({ email, recaptchaRef, onVerify, onBack, isLoading
         </div>
       )}
 
-      <Button type="button" variant="ghost" onClick={onBack} className="w-full text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+      <Button type="button" variant="ghost" onClick={onBack} className="w-full">
         <ArrowLeft className="mr-2 h-4 w-4" />
         <FormattedMessage id="back" defaultMessage="Back" />
       </Button>

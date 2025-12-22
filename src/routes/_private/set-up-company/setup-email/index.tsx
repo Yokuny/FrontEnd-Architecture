@@ -89,7 +89,7 @@ function SetupEmailPage() {
 
               <div className="flex items-center justify-center pt-6">
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="secure" checked={secureValue} onCheckedChange={(checked) => setValue('secure', !!checked)} disabled={isLoading || isPending} />
+                  <Checkbox id="secure" checked={secureValue} onCheckedChange={(checked) => setValue('secure', !!checked)} disabled={isLoading || isPending} variant="blue" />
                   <Label htmlFor="secure" className="text-sm">
                     Secure (SSL/TLS)
                   </Label>

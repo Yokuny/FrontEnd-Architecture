@@ -88,7 +88,7 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
           </form>
         </Form>
         <div className="flex items-center justify-between text-sm">
-          <Button variant="ghost" size="sm" onClick={onBack} className="text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+          <Button variant="ghost" size="sm" onClick={onBack}>
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>

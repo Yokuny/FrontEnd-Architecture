@@ -42,7 +42,6 @@ function extractRoutes(): string[] {
   // Encontrar a seção FileRoutesByFullPath
   const sectionMatch = content.match(/export interface FileRoutesByFullPath \{([\s\S]*?)\}/);
   if (!sectionMatch) {
-    console.error('❌ Não foi possível encontrar FileRoutesByFullPath');
     return [];
   }
 
@@ -82,19 +81,11 @@ function updateRouteConfig(routes: string[]): void {
   }
 
   fs.writeFileSync(ROUTE_CONFIG_PATH, content);
-  console.log('✅ routeConfig.ts atualizado com sucesso!');
-  console.log(`📍 ${routes.length} rotas extraídas:`);
-  routes.forEach((r) => {
-    console.log(`   ${r}`);
-  });
+  routes.forEach((_r) => {});
 }
-
-// Executar
-console.log('🔍 Extraindo rotas de routeTree.gen.ts...\n');
 const routes = extractRoutes();
 
 if (routes.length > 0) {
   updateRouteConfig(routes);
 } else {
-  console.error('❌ Nenhuma rota encontrada');
 }
