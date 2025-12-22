@@ -19,41 +19,39 @@ function ListRolesPage() {
   const hasPermissionViewUsers = true;
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>
-              <FormattedMessage id="role" />
-            </CardTitle>
-            {hasPermissionAdd && (
-              <Button onClick={() => navigate({ to: '/permissions/roles/add' })}>
-                <Plus className="mr-2 h-4 w-4" />
-                <FormattedMessage id="new.role" />
-              </Button>
-            )}
-          </div>
-        </CardHeader>
-        <CardContent>
-          {isLoading ? (
-            <div className="space-y-4">
-              {[...Array(3)].map((_, i) => (
-                <div key={`skeleton-${i}`} className="h-24 bg-muted animate-pulse rounded-lg" />
-              ))}
-            </div>
-          ) : roles && roles.length > 0 ? (
-            <div className="space-y-4">
-              {roles.map((role) => (
-                <RoleCard key={role.id} role={role} hasPermissionEdit={hasPermissionAdd} hasPermissionViewUsers={hasPermissionViewUsers} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              <FormattedMessage id="no.roles.found" />
-            </div>
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <CardTitle>
+            <FormattedMessage id="role" />
+          </CardTitle>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/permissions/roles/add' })}>
+              <Plus className="mr-2 h-4 w-4" />
+              <FormattedMessage id="new.role" />
+            </Button>
           )}
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <div className="space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={`skeleton-${i}`} className="h-24 bg-muted animate-pulse rounded-lg" />
+            ))}
+          </div>
+        ) : roles && roles.length > 0 ? (
+          <div className="space-y-4">
+            {roles.map((role) => (
+              <RoleCard key={role.id} role={role} hasPermissionEdit={hasPermissionAdd} hasPermissionViewUsers={hasPermissionViewUsers} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-muted-foreground">
+            <FormattedMessage id="no.roles.found" />
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

@@ -131,7 +131,7 @@ function LoginPage() {
   return (
     <AuthLayout>
       <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
-        <CardHeader className="text-center pb-4">
+        <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold tracking-tight text-white">
             <FormattedMessage id="login.title" defaultMessage="Welcome Back" />
           </CardTitle>

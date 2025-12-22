@@ -1,11 +1,10 @@
 import type { LucideIcon } from 'lucide-react';
-import { Building2, Layers, Mail, Network, Settings, Shield, Users } from 'lucide-react';
+import { Building2, KeySquare, Mail, MonitorCog, Network, Shield, Users } from 'lucide-react';
 
 // Mapeamento de ícones por segmento de rota
 export const ROUTE_ICONS: Record<string, LucideIcon> = {
-  permissions: Shield,
-  'set-up-company': Settings,
-  components: Layers,
+  permissions: KeySquare,
+  'set-up-company': MonitorCog,
 };
 
 // Ícones para sub-rotas específicas
@@ -21,7 +20,6 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
 export const ROUTE_LABELS: Record<string, string> = {
   permissions: 'permissions',
   'set-up-company': 'setup.company',
-  components: 'components',
   users: 'users',
   roles: 'role',
   'setup-email': 'setup.email',
@@ -37,7 +35,6 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
-  '/components',
   '/permissions/roles',
   '/permissions/users',
   '/set-up-company/integration-list',

@@ -43,59 +43,57 @@ function ListUserEnterprisesPage() {
   const { data: enterprises, isLoading } = useUserEnterprises(id);
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2">
-              <Building2 className="h-5 w-5" />
-              <FormattedMessage id="permission.enterprises" defaultMessage="Permissões por Empresa" />
-            </CardTitle>
-            <Button size="sm" onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { idRef: id } })}>
-              <Plus className="mr-2 h-4 w-4" />
-              <FormattedMessage id="new.permission" defaultMessage="Nova Permissão" />
-            </Button>
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2">
+            <Building2 className="h-5 w-5" />
+            <FormattedMessage id="permission.enterprises" defaultMessage="Permissões por Empresa" />
+          </CardTitle>
+          <Button size="sm" onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { idRef: id } })}>
+            <Plus className="mr-2 h-4 w-4" />
+            <FormattedMessage id="new.permission" defaultMessage="Nova Permissão" />
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <div className="space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={`skeleton-${i}`} className="h-16 bg-muted animate-pulse rounded-lg" />
+            ))}
           </div>
-        </CardHeader>
-        <CardContent>
-          {isLoading ? (
-            <div className="space-y-4">
-              {[...Array(3)].map((_, i) => (
-                <div key={`skeleton-${i}`} className="h-16 bg-muted animate-pulse rounded-lg" />
-              ))}
-            </div>
-          ) : enterprises && enterprises.length > 0 ? (
-            <div className="space-y-3">
-              {enterprises.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
-                  style={{ borderLeft: '4px solid #115C93' }}
-                >
-                  <div className="flex-1">
-                    <h4 className="font-medium">{item.enterprise?.name}</h4>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {item.role?.map((r) => (
-                        <Badge key={r.id} variant="secondary" className="text-xs">
-                          {r.description}
-                        </Badge>
-                      ))}
-                    </div>
+        ) : enterprises && enterprises.length > 0 ? (
+          <div className="space-y-3">
+            {enterprises.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                style={{ borderLeft: '4px solid #115C93' }}
+              >
+                <div className="flex-1">
+                  <h4 className="font-medium">{item.enterprise?.name}</h4>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {item.role?.map((r) => (
+                      <Badge key={r.id} variant="secondary" className="text-xs">
+                        {r.description}
+                      </Badge>
+                    ))}
                   </div>
-                  <Button size="sm" variant="outline" onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { id: item.id } })}>
-                    <Edit className="mr-2 h-3 w-3" />
-                    <FormattedMessage id="edit" defaultMessage="Editar" />
-                  </Button>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8 text-muted-foreground">
-              <FormattedMessage id="no.permissions.found" defaultMessage="Nenhuma permissão encontrada." />
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+                <Button size="sm" variant="outline" onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { id: item.id } })}>
+                  <Edit className="mr-2 h-3 w-3" />
+                  <FormattedMessage id="edit" defaultMessage="Editar" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 text-muted-foreground">
+            <FormattedMessage id="no.permissions.found" defaultMessage="Nenhuma permissão encontrada." />
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

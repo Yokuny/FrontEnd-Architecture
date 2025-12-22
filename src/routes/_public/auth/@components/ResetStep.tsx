@@ -60,7 +60,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
 
   return (
     <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
-      <CardHeader className="text-center pb-4">
+      <CardHeader className="text-center">
         <div className="mx-auto mb-6 bg-gradient-to-br from-blue-500/20 to-blue-500/5 p-4 rounded-2xl w-fit backdrop-blur-sm border border-blue-500/20 shadow-lg shadow-blue-500/10">
           <Shield className="h-12 w-12 text-blue-500" />
         </div>

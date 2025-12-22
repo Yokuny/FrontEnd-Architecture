@@ -32,12 +32,12 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
-      <CardContent className="p-6">
+    <Card>
+      <CardContent>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4 flex-1">
             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-warning/10">
-              <Shield className="w-6 h-6 text-warning" />
+              <Shield className="size-6 text-warning" />
             </div>
 
             <div className="flex-1 min-w-0">
@@ -52,8 +52,8 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
             {(hasPermissionEdit || hasPermissionViewUsers) && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <MoreVertical className="h-4 w-4" />
+                  <Button variant="ghost" size="icon" className="size-8">
+                    <MoreVertical className="size-4" />
                     <span className="sr-only">
                       <FormattedMessage id="actions" />
                     </span>
@@ -63,7 +63,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
                   {hasPermissionEdit && (
                     <DropdownMenuItem asChild>
                       <Link to="/permissions/roles/edit/$id" params={{ id: role.id }}>
-                        <Edit className="mr-2 h-4 w-4" />
+                        <Edit className="mr-2 size-4" />
                         <FormattedMessage id="edit" />
                       </Link>
                     </DropdownMenuItem>
@@ -71,7 +71,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
                   {hasPermissionViewUsers && (
                     <DropdownMenuItem asChild>
                       <Link to="/permissions/roles/users/$id" params={{ id: role.id }}>
-                        <Users className="mr-2 h-4 w-4" />
+                        <Users className="mr-2 size-4" />
                         <FormattedMessage id="users" />
                       </Link>
                     </DropdownMenuItem>

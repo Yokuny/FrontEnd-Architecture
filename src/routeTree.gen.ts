@@ -13,7 +13,6 @@ import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PrivateComponentsIndexRouteImport } from './routes/_private/components/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
@@ -48,11 +47,6 @@ const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   id: '/auth/',
   path: '/auth/',
   getParentRoute: () => PublicRoute,
-} as any);
-const PrivateComponentsIndexRoute = PrivateComponentsIndexRouteImport.update({
-  id: '/components/',
-  path: '/components/',
-  getParentRoute: () => PrivateRoute,
 } as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
   id: '/auth/unlock',
@@ -153,7 +147,6 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
-  '/components': typeof PrivateComponentsIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -174,7 +167,6 @@ export interface FileRoutesByTo {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
-  '/components': typeof PrivateComponentsIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -198,7 +190,6 @@ export interface FileRoutesById {
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
-  '/_private/components/': typeof PrivateComponentsIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/_private/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -221,7 +212,6 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
-    | '/components'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
@@ -242,7 +232,6 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
-    | '/components'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
@@ -265,7 +254,6 @@ export interface FileRouteTypes {
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
-    | '/_private/components/'
     | '/_public/auth/'
     | '/_private/permissions/roles/add'
     | '/_private/permissions/users/add'
@@ -317,13 +305,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth';
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
-    };
-    '/_private/components/': {
-      id: '/_private/components/';
-      path: '/components';
-      fullPath: '/components';
-      preLoaderRoute: typeof PrivateComponentsIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
     };
     '/_public/auth/unlock': {
       id: '/_public/auth/unlock';
@@ -441,7 +422,6 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
-  PrivateComponentsIndexRoute: typeof PrivateComponentsIndexRoute;
   PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
   PrivatePermissionsUsersAddRoute: typeof PrivatePermissionsUsersAddRoute;
   PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
@@ -458,7 +438,6 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
-  PrivateComponentsIndexRoute: PrivateComponentsIndexRoute,
   PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
   PrivatePermissionsUsersAddRoute: PrivatePermissionsUsersAddRoute,
   PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,

@@ -35,112 +35,110 @@ function EditRolePage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
-        <Card>
-          <CardContent className="p-12">
-            <div className="text-center text-muted-foreground">Loading...</div>
-          </CardContent>
-        </Card>
-      </div>
+      <Card>
+        <CardContent className="p-12">
+          <div className="text-center text-muted-foreground">
+            <FormattedMessage id="loading" defaultMessage="Loading..." />
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <Card>
       <form onSubmit={onSubmit}>
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <FormattedMessage id="edit.role" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <EnterpriseSelect mode="single" value={form.watch('idEnterprise')} onChange={(val) => form.setValue('idEnterprise', val || '')} oneBlocked />
-                {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{form.formState.errors.idEnterprise.message}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="description">
-                  <FormattedMessage id="description" /> *
-                </Label>
-                <Input id="description" {...form.register('description')} placeholder={intl.formatMessage({ id: 'message.description.placeholder' })} maxLength={150} />
-                {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
-              </div>
+        <CardHeader>
+          <CardTitle>
+            <FormattedMessage id="edit.role" />
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <EnterpriseSelect mode="single" value={form.watch('idEnterprise')} onChange={(val) => form.setValue('idEnterprise', val || '')} oneBlocked />
+              {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{form.formState.errors.idEnterprise.message}</p>}
             </div>
 
-            <Tabs defaultValue="pages" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="pages" className="gap-2">
-                  <Monitor className="h-4 w-4" />
-                  <FormattedMessage id="pages" />
-                </TabsTrigger>
-                <TabsTrigger value="machines" className="gap-2">
-                  <Settings className="h-4 w-4" />
-                  <FormattedMessage id="machines" />
-                </TabsTrigger>
-                <TabsTrigger value="chatbot" className="gap-2">
-                  <MessageCircle className="h-4 w-4" />
-                  Chatbot
-                </TabsTrigger>
-                <TabsTrigger value="permissions" className="gap-2">
-                  <Edit2 className="h-4 w-4" />
-                  <FormattedMessage id="edit.role" />
-                </TabsTrigger>
-              </TabsList>
+            <div className="space-y-2">
+              <Label htmlFor="description">
+                <FormattedMessage id="description" /> *
+              </Label>
+              <Input id="description" {...form.register('description')} placeholder={intl.formatMessage({ id: 'message.description.placeholder' })} maxLength={150} />
+              {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
+            </div>
+          </div>
 
-              <TabsContent value="pages" className="mt-6">
-                <PathsSelector form={form} />
-              </TabsContent>
+          <Tabs defaultValue="pages" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="pages" className="gap-2">
+                <Monitor className="h-4 w-4" />
+                <FormattedMessage id="pages" />
+              </TabsTrigger>
+              <TabsTrigger value="machines" className="gap-2">
+                <Settings className="h-4 w-4" />
+                <FormattedMessage id="machines" />
+              </TabsTrigger>
+              <TabsTrigger value="chatbot" className="gap-2">
+                <MessageCircle className="h-4 w-4" />
+                Chatbot
+              </TabsTrigger>
+              <TabsTrigger value="permissions" className="gap-2">
+                <Edit2 className="h-4 w-4" />
+                <FormattedMessage id="edit.role" />
+              </TabsTrigger>
+            </TabsList>
 
-              <TabsContent value="machines" className="mt-6">
-                <AssetsPermissions form={form} />
-              </TabsContent>
+            <TabsContent value="pages" className="mt-6">
+              <PathsSelector form={form} />
+            </TabsContent>
 
-              <TabsContent value="chatbot" className="mt-6">
-                <ChatbotPermissions form={form} />
-              </TabsContent>
+            <TabsContent value="machines" className="mt-6">
+              <AssetsPermissions form={form} />
+            </TabsContent>
 
-              <TabsContent value="permissions" className="mt-6">
-                <VisibilitySettings form={form} />
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button type="button" variant="destructive">
-                  <Trash2 className="mr-2 h-4 w-4" />
+            <TabsContent value="chatbot" className="mt-6">
+              <ChatbotPermissions form={form} />
+            </TabsContent>
+
+            <TabsContent value="permissions" className="mt-6">
+              <VisibilitySettings form={form} />
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+        <CardFooter>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button type="button" variant="destructive">
+                <Trash2 className="mr-2 h-4 w-4" />
+                <FormattedMessage id="delete" />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  <FormattedMessage id="delete.confirmation" />
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  <FormattedMessage id="delete.message.default" />
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>
+                  <FormattedMessage id="cancel" />
+                </AlertDialogCancel>
+                <AlertDialogAction onClick={() => handleDelete()} className="bg-destructive text-destructive-foreground">
                   <FormattedMessage id="delete" />
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    <FormattedMessage id="delete.confirmation" />
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    <FormattedMessage id="delete.message.default" />
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>
-                    <FormattedMessage id="cancel" />
-                  </AlertDialogCancel>
-                  <AlertDialogAction onClick={() => handleDelete()} className="bg-destructive text-destructive-foreground">
-                    <FormattedMessage id="delete" />
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
-            <Button type="submit" disabled={isPending}>
-              {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
-            </Button>
-          </CardFooter>
-        </Card>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+          </Button>
+        </CardFooter>
       </form>
-    </div>
+    </Card>
   );
 }

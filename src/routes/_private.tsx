@@ -28,7 +28,9 @@ function PrivateLayout() {
       <div className="relative flex h-screen w-full">
         <AppSidebar />
         <SidebarInset>
-          <Outlet />
+          <main className="md:p-2.5 md:pl-1">
+            <Outlet />
+          </main>
         </SidebarInset>
       </div>
     </SidebarProvider>
