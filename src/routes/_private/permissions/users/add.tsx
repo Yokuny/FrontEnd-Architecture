@@ -1,5 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { ChevronLeft } from 'lucide-react';
 import { FormattedMessage } from 'react-intl';
+import { AutoBreadcrumbs } from '@/components/auto-breadcrumbs';
 import { CustomerSelect, EnterpriseWithSetupSelect, LanguageFormSelect, RoleSelect, TypeCredentialsSelect, UserTypeSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,9 +13,13 @@ import { useUserForm } from './@hooks/use-user-form';
 
 export const Route = createFileRoute('/_private/permissions/users/add')({
   component: AddUserPage,
+  beforeLoad: () => ({
+    title: 'add.user',
+  }),
 });
 
 function AddUserPage() {
+  const router = useRouter();
   const { form, onSubmit, isPending } = useUserForm();
 
   const idEnterprise = form.watch('idEnterprise');
@@ -41,10 +47,18 @@ function AddUserPage() {
   return (
     <Card>
       <form onSubmit={onSubmit}>
-        <CardHeader>
-          <CardTitle>
-            <FormattedMessage id="add.user" />
-          </CardTitle>
+        <CardHeader className="gap-4">
+          <div className="flex flex-col gap-4">
+            <AutoBreadcrumbs />
+            <div className="flex items-center gap-4">
+              <Button type="button" variant="outline" size="icon" className="h-9 w-9 shrink-0 rounded-full" onClick={() => router.history.back()}>
+                <ChevronLeft className="size-5" />
+              </Button>
+              <CardTitle className="text-2xl font-bold">
+                <FormattedMessage id="add.user" />
+              </CardTitle>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

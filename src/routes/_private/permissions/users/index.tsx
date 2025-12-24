@@ -1,7 +1,8 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Filter, Plus, Shield } from 'lucide-react';
+import { createFileRoute, useNavigate, useRouter } from '@tanstack/react-router';
+import { ChevronLeft, Filter, Plus, Shield } from 'lucide-react';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { AutoBreadcrumbs } from '@/components/auto-breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useUsers } from '@/hooks/use-users-api';
@@ -9,10 +10,14 @@ import { UserCard } from './@components/user-card';
 
 export const Route = createFileRoute('/_private/permissions/users/')({
   component: ListUsersPage,
+  beforeLoad: () => ({
+    title: 'users.permissions',
+  }),
 });
 
 function ListUsersPage() {
   const navigate = useNavigate();
+  const router = useRouter();
   const [page, _setPage] = useState(1);
   const [pageSize, _setPageSize] = useState(10);
 
@@ -29,28 +34,37 @@ function ListUsersPage() {
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>
-            <FormattedMessage id="users.permissions" />
-          </CardTitle>
-          <div className="flex gap-2">
-            <Button variant="outline">
-              <Filter className="size-4" />
-              <FormattedMessage id="filter" />
-            </Button>
-            {hasPermissionAdd && (
-              <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
-                <Plus className="size-4" />
-                <FormattedMessage id="add.user" />
+      <CardHeader className="gap-4">
+        <div className="flex flex-col gap-4">
+          <AutoBreadcrumbs />
+
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <Button variant="outline" size="icon" className="shrink-0 rounded-full" onClick={() => router.history.back()}>
+                <ChevronLeft className="size-5" />
               </Button>
-            )}
-            {hasPermissionPermissions && (
-              <Button onClick={() => navigate({ to: '/permissions/users/permissions/add' })}>
-                <Shield className="size-4" />
-                <FormattedMessage id="new.permission" />
+              <CardTitle className="text-2xl font-bold">
+                <FormattedMessage id="users.permissions" />
+              </CardTitle>
+            </div>
+            <div className="flex gap-2">
+              <Button variant="outline">
+                <Filter className="size-4" />
+                <FormattedMessage id="filter" />
               </Button>
-            )}
+              {hasPermissionAdd && (
+                <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
+                  <Plus className="size-4" />
+                  <FormattedMessage id="add.user" />
+                </Button>
+              )}
+              {hasPermissionPermissions && (
+                <Button onClick={() => navigate({ to: '/permissions/users/permissions/add' })}>
+                  <Shield className="size-4" />
+                  <FormattedMessage id="new.permission" />
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </CardHeader>
