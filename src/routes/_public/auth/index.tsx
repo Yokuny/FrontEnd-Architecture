@@ -3,7 +3,7 @@ import { Loader2 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type ReCAPTCHA from 'react-google-recaptcha';
 import { useTranslation } from 'react-i18next';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/use-auth';
 import { useLogin, useLoginSSO, useVerifyEmail } from '@/hooks/use-auth-api';
 import { AuthLayout } from '@/routes/_public/auth/@components/AuthLayout';
@@ -132,10 +132,10 @@ function LoginPage() {
   return (
     <AuthLayout>
       <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
-        <CardHeader className="text-center">
+        <div className="p-6 text-center space-y-1 flex flex-col">
           <CardTitle className="text-2xl font-bold tracking-tight text-white">{t('login.title')}</CardTitle>
           <CardDescription className="text-zinc-400">{t('login.subtitle')}</CardDescription>
-        </CardHeader>
+        </div>
         <CardContent className="space-y-6 pt-2">{renderStep()}</CardContent>
       </Card>
 

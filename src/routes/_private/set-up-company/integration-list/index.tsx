@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -68,9 +68,7 @@ function IntegrationListPage() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>{t('integration')} AIS</CardTitle>
-      </CardHeader>
+      <CardHeader title={`${t('integration')} AIS`} />
       <CardContent>
         {isLoading ? (
           <div className="space-y-4">

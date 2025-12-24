@@ -26,7 +26,12 @@ export function AutoBreadcrumbs() {
       if (title) {
         title = t(title);
       } else {
-        title = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+        const translatedSegment = t(segment);
+        if (translatedSegment !== segment) {
+          title = translatedSegment;
+        } else {
+          title = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+        }
       }
 
       crumbs.push({

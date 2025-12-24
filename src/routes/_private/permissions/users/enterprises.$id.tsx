@@ -4,7 +4,7 @@ import { Building2, Edit, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { api } from '@/lib/api/client';
 
 export const Route = createFileRoute('/_private/permissions/users/enterprises/$id')({
@@ -45,17 +45,18 @@ function ListUserEnterprisesPage() {
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
+      <CardHeader
+        title={
+          <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5" />
             {t('permission.enterprises')}
-          </CardTitle>
-          <Button onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { idRef: id } })}>
-            <Plus className="mr-2 h-4 w-4" />
-            {t('new.permission')}
-          </Button>
-        </div>
+          </div>
+        }
+      >
+        <Button onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { idRef: id } })}>
+          <Plus className="mr-2 h-4 w-4" />
+          {t('new.permission')}
+        </Button>
       </CardHeader>
       <CardContent>
         {isLoading ? (

@@ -3,7 +3,7 @@ import { Edit2, MessageCircle, Monitor, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { EnterpriseSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -24,9 +24,7 @@ function AddRolePage() {
   return (
     <Card>
       <form onSubmit={onSubmit}>
-        <CardHeader>
-          <CardTitle>{t('new.role')}</CardTitle>
-        </CardHeader>
+        <CardHeader title={t('new.role')} />
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">

@@ -15,7 +15,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -52,9 +52,7 @@ function AddPermissionPage() {
   return (
     <Card>
       <form onSubmit={onSubmit}>
-        <CardHeader>
-          <CardTitle>{t(id ? 'edit.user.permission' : 'add.user.permission')}</CardTitle>
-        </CardHeader>
+        <CardHeader title={t(id ? 'edit.user.permission' : 'add.user.permission')} />
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Enterprise */}
@@ -66,7 +64,7 @@ function AddPermissionPage() {
                 onChange={(val) => form.setValue('idEnterprise', val || '')}
                 disabled={!!id}
               />
-              {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{form.formState.errors.idEnterprise.message}</p>}
+              {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{t(form.formState.errors.idEnterprise.message)}</p>}
             </div>
 
             {/* User */}
@@ -77,7 +75,7 @@ function AddPermissionPage() {
               ) : (
                 <UserSelect idEnterprise={idEnterprise} value={form.watch('idUser')} onChange={(val) => form.setValue('idUser', (val as string) || '')} disabled={!!id} />
               )}
-              {form.formState.errors.idUser && <p className="text-sm text-destructive">{form.formState.errors.idUser.message}</p>}
+              {form.formState.errors.idUser && <p className="text-sm text-destructive">{t(form.formState.errors.idUser.message)}</p>}
             </div>
 
             {/* Roles */}

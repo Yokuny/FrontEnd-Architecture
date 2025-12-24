@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import { EnterpriseSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -48,9 +48,7 @@ function SetupEmailPage() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>{t('setup.email')}</CardTitle>
-      </CardHeader>
+      <CardHeader title={t('setup.email')} />
       <form onSubmit={onSubmit}>
         <CardContent>
           {!idEnterpriseQuery && (

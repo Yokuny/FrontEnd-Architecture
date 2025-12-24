@@ -3,10 +3,10 @@ import { z } from 'zod';
 // User schema
 export const userSchema = z.object({
   id: z.string().optional(),
-  name: z.string().min(1, 'Name is required').max(150),
-  email: z.string().email('Invalid email').optional().or(z.literal('')),
+  name: z.string().min(1, 'name.required').max(150),
+  email: z.string().email('email.invalid').optional().or(z.literal('')),
   phone: z.string().optional().or(z.literal('')),
-  idEnterprise: z.string().min(1, 'Enterprise is required'),
+  idEnterprise: z.string().min(1, 'enterprise.required'),
   language: z.string().nullable().optional().or(z.literal('')),
   isUser: z.boolean().default(true),
   isOnlyContact: z.boolean().default(false),
@@ -61,8 +61,8 @@ export interface Role {
 // User permission schema
 export const userPermissionSchema = z.object({
   id: z.string().optional(),
-  idUser: z.string().min(1, 'User is required'),
-  idEnterprise: z.string().min(1, 'Enterprise is required'),
+  idUser: z.string().min(1, 'user.required'),
+  idEnterprise: z.string().min(1, 'enterprise.required'),
   roles: z.array(z.string()).default([]),
   isUserCustomer: z.boolean().default(false),
   customers: z.array(z.string()).default([]),
@@ -72,8 +72,8 @@ export type UserPermission = z.infer<typeof userPermissionSchema>;
 
 // Password update schema
 export const passwordUpdateSchema = z.object({
-  idUser: z.string().min(1, 'User is required'),
-  newPassword: z.string().min(6, 'Password must be at least 6 characters'),
+  idUser: z.string().min(1, 'user.required'),
+  newPassword: z.string().min(6, 'password.must.be.at.least.6.characters'),
 });
 
 export type PasswordUpdate = z.infer<typeof passwordUpdateSchema>;

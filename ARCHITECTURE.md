@@ -110,6 +110,48 @@ Preciso de useUserForm() para gerenciar formulário de usuário?
 
 > **REGRA GERAL**: Toda página começa com um `Card`. Se dentro dela você precisar exibir dados repetíveis ou blocos de informação (como métricas), use o componente `Item`.
 
+#### 🏛️ Cabeçalho de Página (`CardHeader`)
+
+O componente `CardHeader` foi padronizado para ser o cabeçalho oficial de todas as páginas do sistema. Ele é **altamente opinativo** para garantir consistência visual e funcional.
+
+**Props Principais:**
+- `title`: (ReactNode) O título principal da página. Recomenda-se o uso de `t('chave')`.
+- `children`: (ReactNode) Elementos de ação (Botões, Filtros) que serão posicionados automaticamente à direita.
+
+**Exemplo de Implementação:**
+
+```tsx
+import { Filter, Plus } from 'lucide-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+
+export function MinhaPagina() {
+  const { t } = useTranslation();
+
+  return (
+    <Card>
+      <CardHeader title={t('meu.modulo.titulo')}>
+        {/* As ações passam como children e ficam à direita */}
+        <div className="flex items-center gap-2">
+          <Button variant="outline">
+            <Filter className="size-4" />
+            {t('filter')}
+          </Button>
+          <Button onClick={() => navigate({ to: '/add' })}>
+            <Plus className="size-4" />
+            {t('btn.novo')}
+          </Button>
+        </div>
+      </CardHeader>
+      
+      <CardContent>
+        {/* Conteúdo da página */}
+      </CardContent>
+    </Card>
+  );
+}
+```
+
 #### 📚 Exemplos de Uso do `Item`:
 Para ver como implementar cards informativos de forma correta, consulte:
 - [`stats-01.tsx`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/components/stats-01.tsx) - Grid de estatísticas sem bordas internas.
@@ -279,22 +321,41 @@ export function useUserForm(initialData?: UserFormData) {
 
 ## 🌍 Internacionalização (i18n)
 
-### Arquivos de Tradução
-- [`src/lib/translations/en.json`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/lib/translations/en.json)
-- [`src/lib/translations/es.json`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/lib/translations/es.json)
-- [`src/lib/translations/pt.json`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/lib/translations/pt.json)
+### Configuração e Arquivos
+- **Configuração**: [`src/config/i18n.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/config/i18n.ts)
+- **Dicionários**: [`src/config/translations/`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/config/translations/)
+  - `pt.json` (Base / Default)
+  - `en.json`
+  - `es.json`
 
-### Uso
+### Ferramentas de Produtividade (OBRIGATÓRIO)
+Utilizamos o **Inlang (Sherlock)** para gerenciar traduções diretamente no VS Code.
+- **Hover**: Passe o mouse sobre uma chave `t("key")` para ver a tradução.
+- **Extração**: Selecione um texto hardcoded e use `Cmd + .` para extrair para uma chave i18n automaticamente.
+- **Lint**: Alertas automáticos para chaves faltando ou traduções idênticas.
+
+### Uso no Código
 
 ```tsx
-// No JSX
-<FormattedMessage id="save" defaultMessage="Salvar" />
+import { useTranslation } from 'react-i18next';
 
-// Em código (placeholders, toasts)
-const intl = useIntl();
-toast.success(intl.formatMessage({ id: 'success.save' }));
+function MyComponent() {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      {/* No JSX */}
+      <h1>{t('welcome.title')}</h1>
+      
+      {/* Com Variáveis (Use chaves simples { }) */}
+      <p>{t('welcome.message', { name: 'User' })}</p>
+      
+      {/* Em Atributos/Placeholders */}
+      <Input placeholder={t('login.email.placeholder')} />
+    </div>
+  );
+}
 ```
-
 ---
 
 ## 📋 Checklist de Migração de Página Legada
@@ -318,7 +379,7 @@ toast.success(intl.formatMessage({ id: 'success.save' }));
 - [ ] Schemas Zod em `@interface/`
 - [ ] Hook de formulário em `@hooks/` (se necessário)
 - [ ] Página com componentes Shadcn UI
-- [ ] Adicionar ou buscar as traduções em `translations/*.json`
+- [ ] Adicionar ou buscar as traduções em `src/config/translations/*.json`
 
 ### 5. Conversões Obrigatórias
 

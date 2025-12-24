@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Field } from '@/components/ui/field';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -44,13 +44,13 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
 
   return (
     <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
-      <CardHeader className="text-center">
+      <div className="p-6 text-center space-y-1 flex flex-col">
         <div className="mx-auto mb-6 bg-linear-to-br from-amber-500/20 to-amber-500/5 p-4 rounded-2xl w-fit backdrop-blur-sm border border-amber-500/20 shadow-lg shadow-amber-500/10">
           <Shield className="h-12 w-12 text-amber-500" />
         </div>
         <CardTitle className="text-2xl font-bold tracking-tight text-white">{t('unlock.code.title')}</CardTitle>
         <CardDescription className="text-zinc-400">{t('unlock.code.subtitle', { destination })}</CardDescription>
-      </CardHeader>
+      </div>
 
       <CardContent className="space-y-6 pt-2">
         <Form {...form}>

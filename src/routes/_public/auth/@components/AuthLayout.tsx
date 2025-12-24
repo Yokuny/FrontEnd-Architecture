@@ -16,7 +16,6 @@ export function AuthLayout({ children }: { children?: React.ReactNode }) {
             backgroundImage: `url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0')`,
           }}
         />
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent" />
       </div>
 
       {/* Language Switcher */}

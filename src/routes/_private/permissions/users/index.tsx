@@ -1,15 +1,20 @@
-import { createFileRoute, useNavigate, useRouter } from '@tanstack/react-router';
-import { ChevronLeft, Filter, Plus, Shield } from 'lucide-react';
-import { useState } from 'react';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { Filter, Plus, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { AutoBreadcrumbs } from '@/components/auto-breadcrumbs';
+import { z } from 'zod';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useUsers } from '@/hooks/use-users-api';
 import { UserCard } from './@components/user-card';
 
+const userSearchSchema = z.object({
+  page: z.number().optional().default(1),
+  pageSize: z.number().optional().default(10),
+});
+
 export const Route = createFileRoute('/_private/permissions/users/')({
   component: ListUsersPage,
+  validateSearch: (search) => userSearchSchema.parse(search),
   beforeLoad: () => ({
     title: 'users.permissions',
   }),
@@ -18,9 +23,7 @@ export const Route = createFileRoute('/_private/permissions/users/')({
 function ListUsersPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const router = useRouter();
-  const [page, _setPage] = useState(1);
-  const [pageSize, _setPageSize] = useState(10);
+  const { page, pageSize } = Route.useSearch();
 
   // TODO: Get from permissions/menu state
   const hasPermissionAdd = true;
@@ -35,36 +38,24 @@ function ListUsersPage() {
 
   return (
     <Card>
-      <CardHeader className="gap-4">
-        <div className="flex flex-col gap-4">
-          <AutoBreadcrumbs />
-
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="icon" className="shrink-0 rounded-full" onClick={() => router.history.back()}>
-                <ChevronLeft className="size-5" />
-              </Button>
-              <CardTitle className="text-2xl font-bold">{t('users.permissions')}</CardTitle>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline">
-                <Filter className="size-4" />
-                {t('filter')}
-              </Button>
-              {hasPermissionAdd && (
-                <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
-                  <Plus className="size-4" />
-                  {t('add.user')}
-                </Button>
-              )}
-              {hasPermissionPermissions && (
-                <Button onClick={() => navigate({ to: '/permissions/users/permissions/add' })}>
-                  <Shield className="size-4" />
-                  {t('new.permission')}
-                </Button>
-              )}
-            </div>
-          </div>
+      <CardHeader title={t('users.permissions')}>
+        <div className="flex items-center gap-2">
+          <Button variant="outline">
+            <Filter className="size-4" />
+            {t('filter')}
+          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
+              <Plus className="size-4" />
+              {t('add.user')}
+            </Button>
+          )}
+          {hasPermissionPermissions && (
+            <Button onClick={() => navigate({ to: '/permissions/users/permissions/add' })}>
+              <Shield className="size-4" />
+              {t('new.permission')}
+            </Button>
+          )}
         </div>
       </CardHeader>
       <CardContent>
@@ -87,7 +78,7 @@ function ListUsersPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">{t('no.users.found')}</div>
+          <div className="text-center py-12 text-muted-foreground">{t('not.found')}</div>
         )}
       </CardContent>
     </Card>

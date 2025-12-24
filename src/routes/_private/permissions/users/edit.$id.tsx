@@ -14,7 +14,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -47,16 +47,14 @@ function EditUserPage() {
   return (
     <Card>
       <form onSubmit={onSubmit}>
-        <CardHeader>
-          <CardTitle>{t('edit.user')}</CardTitle>
-        </CardHeader>
+        <CardHeader title={t('edit.user')} />
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Name */}
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="name">{t('account.name')} *</Label>
-              <Input id="name" {...form.register('name')} placeholder="Nome" maxLength={150} disabled={isDisabled} />
-              {form.formState.errors.name && <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>}
+              <Input id="name" {...form.register('name')} placeholder={t('account.name.placeholder')} maxLength={150} disabled={isDisabled} />
+              {form.formState.errors.name && <p className="text-sm text-destructive">{t(form.formState.errors.name.message)}</p>}
             </div>
 
             {/* Is System User */}
@@ -72,8 +70,8 @@ function EditUserPage() {
               <Label htmlFor="email">
                 {t('login.email')} {!isOnlyContact && '*'}
               </Label>
-              <Input id="email" type="email" {...form.register('email')} placeholder="Email" disabled={isDisabled} />
-              {form.formState.errors.email && <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>}
+              <Input id="email" type="email" {...form.register('email')} placeholder={t('login.email.placeholder')} disabled={isDisabled} />
+              {form.formState.errors.email && <p className="text-sm text-destructive">{t(form.formState.errors.email.message)}</p>}
             </div>
 
             {/* Phone */}

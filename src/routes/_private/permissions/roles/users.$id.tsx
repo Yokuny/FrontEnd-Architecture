@@ -1,5 +1,5 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { ArrowLeft, Trash2, UserPlus, Users } from 'lucide-react';
+import { createFileRoute } from '@tanstack/react-router';
+import { Trash2, UserPlus, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
@@ -17,7 +17,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useRole, useRolesApi, useRoleUsers } from '@/hooks/use-roles-api';
 
 export const Route = createFileRoute('/_private/permissions/roles/users/$id')({
@@ -26,7 +26,6 @@ export const Route = createFileRoute('/_private/permissions/roles/users/$id')({
 
 function RoleUsersPage() {
   const { id } = Route.useParams();
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const { removeUserFromRole } = useRolesApi();
 
@@ -50,24 +49,20 @@ function RoleUsersPage() {
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate({ to: '/permissions/roles' })}>
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <div>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                {t('role.users')}
-              </CardTitle>
-              {role && <p className="text-sm text-muted-foreground mt-1">{role.description}</p>}
-            </div>
+      <CardHeader
+        title={
+          <div className="flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            {t('role.users')}
           </div>
+        }
+      >
+        <div className="flex flex-col items-end gap-1">
           <Button onClick={() => toast.info(t('feature.coming.soon'))}>
             <UserPlus className="mr-2 h-4 w-4" />
             {t('role.user.permission')}
           </Button>
+          {role && <p className="text-sm text-muted-foreground">{role.description}</p>}
         </div>
       </CardHeader>
       <CardContent>

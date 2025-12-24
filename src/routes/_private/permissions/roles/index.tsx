@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useRolesAll } from '@/hooks/use-roles-api';
 import { RoleCard } from './@components/role-card';
 
@@ -21,16 +21,13 @@ function ListRolesPage() {
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>{t('role')}</CardTitle>
-          {hasPermissionAdd && (
-            <Button onClick={() => navigate({ to: '/permissions/roles/add' })}>
-              <Plus className="mr-2 h-4 w-4" />
-              {t('new.role')}
-            </Button>
-          )}
-        </div>
+      <CardHeader title={t('role')}>
+        {hasPermissionAdd && (
+          <Button onClick={() => navigate({ to: '/permissions/roles/add' })}>
+            <Plus className="mr-2 h-4 w-4" />
+            {t('new.role')}
+          </Button>
+        )}
       </CardHeader>
       <CardContent>
         {isLoading ? (

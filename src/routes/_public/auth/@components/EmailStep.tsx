@@ -40,13 +40,7 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
               <FormLabel className="text-zinc-300 font-medium">{t('login.email')}</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Input
-                    {...field}
-                    type="email"
-                    placeholder={t('login.email.placeholder')}
-                    className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
-                    autoFocus
-                  />
+                  <Input {...field} type="email" placeholder={t('login.email.placeholder')} autoFocus />
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
                     <Mail className="h-5 w-5 text-zinc-500" />
                   </div>

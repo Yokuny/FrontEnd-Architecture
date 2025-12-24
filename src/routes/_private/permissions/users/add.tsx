@@ -1,10 +1,8 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ChevronLeft } from 'lucide-react';
+import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { AutoBreadcrumbs } from '@/components/auto-breadcrumbs';
 import { CustomerSelect, EnterpriseWithSetupSelect, LanguageFormSelect, RoleSelect, TypeCredentialsSelect, UserTypeSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,7 +18,6 @@ export const Route = createFileRoute('/_private/permissions/users/add')({
 
 function AddUserPage() {
   const { t } = useTranslation();
-  const router = useRouter();
   const { form, onSubmit, isPending } = useUserForm();
 
   const idEnterprise = form.watch('idEnterprise');
@@ -48,30 +45,20 @@ function AddUserPage() {
   return (
     <Card>
       <form onSubmit={onSubmit}>
-        <CardHeader className="gap-4">
-          <div className="flex flex-col gap-4">
-            <AutoBreadcrumbs />
-            <div className="flex items-center gap-4">
-              <Button type="button" variant="outline" size="icon" className="h-9 w-9 shrink-0 rounded-full" onClick={() => router.history.back()}>
-                <ChevronLeft className="size-5" />
-              </Button>
-              <CardTitle className="text-2xl font-bold">{t('add.user')}</CardTitle>
-            </div>
-          </div>
-        </CardHeader>
+        <CardHeader title={t('add.user')} />
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Enterprise */}
             <div className="space-y-2 md:col-span-2">
               <EnterpriseWithSetupSelect mode="single" value={idEnterprise} onChange={handleEnterpriseChange} />
-              {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{form.formState.errors.idEnterprise.message}</p>}
+              {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{t(form.formState.errors.idEnterprise.message)}</p>}
             </div>
 
             {/* Name */}
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="name">{t('account.name')} *</Label>
-              <Input id="name" {...form.register('name')} placeholder="Nome" maxLength={150} />
-              {form.formState.errors.name && <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>}
+              <Input id="name" {...form.register('name')} placeholder={t('account.name.placeholder')} maxLength={150} />
+              {form.formState.errors.name && <p className="text-sm text-destructive">{t(form.formState.errors.name.message)}</p>}
             </div>
 
             {/* Is System User */}
@@ -87,8 +74,8 @@ function AddUserPage() {
               <Label htmlFor="email">
                 {t('login.email')} {isUser && '*'}
               </Label>
-              <Input id="email" type="email" {...form.register('email')} placeholder="Email" />
-              {form.formState.errors.email && <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>}
+              <Input id="email" type="email" {...form.register('email')} placeholder={t('login.email.placeholder')} />
+              {form.formState.errors.email && <p className="text-sm text-destructive">{t(form.formState.errors.email.message)}</p>}
             </div>
 
             {/* Phone */}

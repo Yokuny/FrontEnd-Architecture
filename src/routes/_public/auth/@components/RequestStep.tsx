@@ -6,7 +6,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Field } from '@/components/ui/field';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -49,10 +49,10 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
 
   return (
     <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
-      <CardHeader className="text-center">
+      <div className="p-6 text-center space-y-1 flex flex-col">
         <CardTitle className="text-2xl font-bold tracking-tight text-white">{t('request.password')}</CardTitle>
         <CardDescription className="text-zinc-400">{t('request.password.instructions')}</CardDescription>
-      </CardHeader>
+      </div>
 
       <CardContent className="space-y-6 pt-2">
         <Form {...form}>
