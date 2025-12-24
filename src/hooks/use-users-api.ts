@@ -61,6 +61,10 @@ async function updatePassword(data: PasswordUpdate): Promise<void> {
   await api.put('/user/password/update', data);
 }
 
+async function sendPasswordResetEmail(id: string): Promise<void> {
+  await api.post(`/user/password/reset?id=${id}`);
+}
+
 async function addUserPermission(permission: UserPermission): Promise<UserPermission> {
   const response = await api.post<UserPermission>('/user/enterprise', permission);
   return response.data;
@@ -157,6 +161,10 @@ export function useUsersApi() {
     mutationFn: updatePassword,
   });
 
+  const sendPasswordResetEmailMutation = useMutation({
+    mutationFn: sendPasswordResetEmail,
+  });
+
   const addPermissionMutation = useMutation({
     mutationFn: addUserPermission,
     onSuccess: () => {
@@ -185,6 +193,7 @@ export function useUsersApi() {
     disableUser: disableUserMutation,
     enableUser: enableUserMutation,
     updatePassword: updatePasswordMutation,
+    sendPasswordResetEmail: sendPasswordResetEmailMutation,
     addPermission: addPermissionMutation,
     updatePermission: updatePermissionMutation,
     deletePermission: deletePermissionMutation,

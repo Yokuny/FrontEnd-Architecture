@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Loader2 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type ReCAPTCHA from 'react-google-recaptcha';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/use-auth';
 import { useLogin, useLoginSSO, useVerifyEmail } from '@/hooks/use-auth-api';
@@ -26,6 +26,7 @@ export const Route = createFileRoute('/_public/auth/')({
 // ============================================================================
 
 function LoginPage() {
+  const { t } = useTranslation();
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const [step, setStep] = useState<LoginStep>('email');
@@ -132,12 +133,8 @@ function LoginPage() {
     <AuthLayout>
       <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold tracking-tight text-white">
-            <FormattedMessage id="login.title" defaultMessage="Welcome Back" />
-          </CardTitle>
-          <CardDescription className="text-zinc-400">
-            <FormattedMessage id="login.subtitle" defaultMessage="Sign in to your account" />
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold tracking-tight text-white">{t('login.title')}</CardTitle>
+          <CardDescription className="text-zinc-400">{t('login.subtitle')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6 pt-2">{renderStep()}</CardContent>
       </Card>

@@ -1,12 +1,12 @@
 import { Link, useMatches } from '@tanstack/react-router';
 import { Home } from 'lucide-react';
 import { Fragment, useMemo } from 'react';
-import { useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 
 export function AutoBreadcrumbs() {
   const matches = useMatches();
-  const { formatMessage } = useIntl();
+  const { t } = useTranslation();
 
   const breadcrumbs = useMemo(() => {
     const lastMatch = matches[matches.length - 1];
@@ -24,11 +24,7 @@ export function AutoBreadcrumbs() {
       let title = (match?.context as any)?.title;
 
       if (title) {
-        try {
-          title = formatMessage({ id: title, defaultMessage: title });
-        } catch {
-          // Use translation key if format fails
-        }
+        title = t(title);
       } else {
         title = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
       }
@@ -40,7 +36,7 @@ export function AutoBreadcrumbs() {
     }
 
     return crumbs;
-  }, [matches, formatMessage]);
+  }, [matches, t]);
 
   // Se tiver mais que 3 segmentos após a Home, colapsamos
   const shouldCollapse = breadcrumbs.length > 3;

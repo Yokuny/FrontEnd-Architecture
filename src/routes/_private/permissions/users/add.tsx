@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ChevronLeft } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { AutoBreadcrumbs } from '@/components/auto-breadcrumbs';
 import { CustomerSelect, EnterpriseWithSetupSelect, LanguageFormSelect, RoleSelect, TypeCredentialsSelect, UserTypeSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,7 @@ export const Route = createFileRoute('/_private/permissions/users/add')({
 });
 
 function AddUserPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { form, onSubmit, isPending } = useUserForm();
 
@@ -54,9 +55,7 @@ function AddUserPage() {
               <Button type="button" variant="outline" size="icon" className="h-9 w-9 shrink-0 rounded-full" onClick={() => router.history.back()}>
                 <ChevronLeft className="size-5" />
               </Button>
-              <CardTitle className="text-2xl font-bold">
-                <FormattedMessage id="add.user" />
-              </CardTitle>
+              <CardTitle className="text-2xl font-bold">{t('add.user')}</CardTitle>
             </div>
           </div>
         </CardHeader>
@@ -70,9 +69,7 @@ function AddUserPage() {
 
             {/* Name */}
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="name">
-                <FormattedMessage id="account.name" /> *
-              </Label>
+              <Label htmlFor="name">{t('account.name')} *</Label>
               <Input id="name" {...form.register('name')} placeholder="Nome" maxLength={150} />
               {form.formState.errors.name && <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>}
             </div>
@@ -81,14 +78,14 @@ function AddUserPage() {
             <div className="flex items-center space-x-2">
               <Checkbox id="isUser" checked={isUser} onCheckedChange={(checked) => form.setValue('isUser', !!checked)} />
               <Label htmlFor="isUser" className="cursor-pointer">
-                <FormattedMessage id="user.system" />
+                {t('user.system')}
               </Label>
             </div>
 
             {/* Email */}
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="email">
-                <FormattedMessage id="login.email" /> {isUser && '*'}
+                {t('login.email')} {isUser && '*'}
               </Label>
               <Input id="email" type="email" {...form.register('email')} placeholder="Email" />
               {form.formState.errors.email && <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>}
@@ -125,7 +122,7 @@ function AddUserPage() {
               <div className="flex items-center space-x-2 md:col-span-2">
                 <Checkbox id="isSentMessageWelcome" checked={form.watch('isSentMessageWelcome')} onCheckedChange={(checked) => form.setValue('isSentMessageWelcome', !!checked)} />
                 <Label htmlFor="isSentMessageWelcome" className="cursor-pointer">
-                  <FormattedMessage id="sent.message.welcome" /> (WhatsApp)
+                  {t('sent.message.welcome')} (WhatsApp)
                 </Label>
               </div>
             )}
@@ -134,7 +131,7 @@ function AddUserPage() {
             <div className="flex items-center space-x-2 md:col-span-2">
               <Checkbox id="isUserCustomer" checked={isUserCustomer} onCheckedChange={(checked) => form.setValue('isUserCustomer', !!checked)} />
               <Label htmlFor="isUserCustomer" className="cursor-pointer">
-                <FormattedMessage id="user.customer" />
+                {t('user.customer')}
               </Label>
             </div>
 
@@ -148,7 +145,7 @@ function AddUserPage() {
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isPending}>
-            {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+            {isPending ? t('saving') : t('save')}
           </Button>
         </CardFooter>
       </form>

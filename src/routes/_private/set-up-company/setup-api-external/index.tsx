@@ -1,7 +1,7 @@
 import { createFileRoute, useSearch } from '@tanstack/react-router';
 import { Eye, EyeOff, Save } from 'lucide-react';
 import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { EnterpriseSelect } from '@/components/selects';
@@ -21,6 +21,7 @@ export const Route = createFileRoute('/_private/set-up-company/setup-api-externa
 });
 
 function SetupApiExternalPage() {
+  const { t } = useTranslation();
   const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/setup-api-external/' });
   const [showKey, setShowKey] = useState(false);
   const [selectedEnterprise, setSelectedEnterprise] = useState<string | undefined>(idEnterpriseQuery);
@@ -49,20 +50,14 @@ function SetupApiExternalPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          <FormattedMessage id="setup.api.external" defaultMessage="Configuração de API Externa" />
-        </CardTitle>
+        <CardTitle>{t('setup.api.external')}</CardTitle>
       </CardHeader>
       <form onSubmit={onSubmit}>
         <CardContent>
           {!idEnterpriseQuery && (
             <div className="space-y-2">
               <EnterpriseSelect mode="single" value={selectedEnterprise} onChange={handleEnterpriseChange} />
-              {errors.idEnterprise && (
-                <p className="text-sm text-destructive">
-                  <FormattedMessage id={errors.idEnterprise.message} />
-                </p>
-              )}
+              {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message || '')}</p>}
             </div>
           )}
 
@@ -74,17 +69,13 @@ function SetupApiExternalPage() {
                 {showKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {errors.windyKey && (
-              <p className="text-sm text-destructive">
-                <FormattedMessage id={errors.windyKey.message} />
-              </p>
-            )}
+            {errors.windyKey && <p className="text-sm text-destructive">{t(errors.windyKey.message || '')}</p>}
           </div>
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isLoading || isPending || isKeyMasked}>
             <Save className="mr-2 h-4 w-4" />
-            <FormattedMessage id="save" defaultMessage="Salvar" />
+            {t('save')}
           </Button>
         </CardFooter>
       </form>

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Building2, Edit, Plus } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,6 +38,7 @@ function useUserEnterprises(userId: string) {
 }
 
 function ListUserEnterprisesPage() {
+  const { t } = useTranslation();
   const { id } = Route.useParams();
   const navigate = useNavigate();
   const { data: enterprises, isLoading } = useUserEnterprises(id);
@@ -48,11 +49,11 @@ function ListUserEnterprisesPage() {
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Building2 className="h-5 w-5" />
-            <FormattedMessage id="permission.enterprises" defaultMessage="Permissões por Empresa" />
+            {t('permission.enterprises')}
           </CardTitle>
           <Button onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { idRef: id } })}>
             <Plus className="mr-2 h-4 w-4" />
-            <FormattedMessage id="new.permission" defaultMessage="Nova Permissão" />
+            {t('new.permission')}
           </Button>
         </div>
       </CardHeader>
@@ -83,15 +84,13 @@ function ListUserEnterprisesPage() {
                 </div>
                 <Button variant="outline" onClick={() => navigate({ to: '/permissions/users/permissions/add', search: { id: item.id } })}>
                   <Edit className="mr-2 h-3 w-3" />
-                  <FormattedMessage id="edit" defaultMessage="Editar" />
+                  {t('edit')}
                 </Button>
               </div>
             ))}
           </div>
         ) : (
-          <div className="text-center py-8 text-muted-foreground">
-            <FormattedMessage id="no.permissions.found" defaultMessage="Nenhuma permissão encontrada." />
-          </div>
+          <div className="text-center py-8 text-muted-foreground">{t('no.permissions.found')}</div>
         )}
       </CardContent>
     </Card>

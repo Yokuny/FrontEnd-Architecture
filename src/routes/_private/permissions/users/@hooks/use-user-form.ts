@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useUser, useUsersApi } from '@/hooks/use-users-api';
 import { userSchema } from '../@interface/user';
@@ -18,7 +18,7 @@ export interface UseUserFormReturn {
 
 export function useUserForm(id?: string): UseUserFormReturn {
   const navigate = useNavigate();
-  const intl = useIntl();
+  const { t } = useTranslation();
   const { createUser, updateUser, deleteUser, disableUser, enableUser } = useUsersApi();
 
   const { data: user, isLoading: isLoadingUser } = useUser(id || '');
@@ -48,14 +48,14 @@ export function useUserForm(id?: string): UseUserFormReturn {
     try {
       if (id) {
         await updateUser.mutateAsync({ ...data, id });
-        toast.success(intl.formatMessage({ id: 'save.successfull' }));
+        toast.success(t('save.successfull'));
       } else {
         await createUser.mutateAsync(data);
-        toast.success(intl.formatMessage({ id: 'save.successfull' }));
+        toast.success(t('save.successfull'));
       }
       navigate({ to: '/permissions/users' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
+      toast.error(t('error.save'));
     }
   };
 
@@ -63,10 +63,10 @@ export function useUserForm(id?: string): UseUserFormReturn {
     if (!id) return;
     try {
       await deleteUser.mutateAsync(id);
-      toast.success(intl.formatMessage({ id: 'delete.successfull' }));
+      toast.success(t('delete.successfull'));
       navigate({ to: '/permissions/users' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.delete' }));
+      toast.error(t('error.delete'));
     }
   };
 
@@ -76,14 +76,14 @@ export function useUserForm(id?: string): UseUserFormReturn {
       const isDisabled = !!user?.disabledAt;
       if (isDisabled) {
         await enableUser.mutateAsync(id);
-        toast.success(intl.formatMessage({ id: 'user.enabled' }));
+        toast.success(t('user.enabled'));
       } else {
         await disableUser.mutateAsync({ id, reason: 'Disabled by admin' });
-        toast.success(intl.formatMessage({ id: 'user.disabled' }));
+        toast.success(t('user.disabled'));
       }
       navigate({ to: '/permissions/users' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error' }));
+      toast.error(t('error'));
     }
   };
 

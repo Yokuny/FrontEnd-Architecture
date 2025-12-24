@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Edit2, MessageCircle, Monitor, Settings } from 'lucide-react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { EnterpriseSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,16 +18,14 @@ export const Route = createFileRoute('/_private/permissions/roles/add')({
 });
 
 function AddRolePage() {
-  const intl = useIntl();
+  const { t } = useTranslation();
   const { form, onSubmit, isPending } = useRoleForm();
 
   return (
     <Card>
       <form onSubmit={onSubmit}>
         <CardHeader>
-          <CardTitle>
-            <FormattedMessage id="new.role" />
-          </CardTitle>
+          <CardTitle>{t('new.role')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -37,10 +35,8 @@ function AddRolePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">
-                <FormattedMessage id="description" /> *
-              </Label>
-              <Input id="description" {...form.register('description')} placeholder={intl.formatMessage({ id: 'message.description.placeholder' })} maxLength={150} />
+              <Label htmlFor="description">{t('description')} *</Label>
+              <Input id="description" {...form.register('description')} placeholder={t('message.description.placeholder')} maxLength={150} />
               {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
             </div>
           </div>
@@ -49,11 +45,11 @@ function AddRolePage() {
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="pages" className="gap-2">
                 <Monitor className="h-4 w-4" />
-                <FormattedMessage id="pages" />
+                {t('pages')}
               </TabsTrigger>
               <TabsTrigger value="machines" className="gap-2">
                 <Settings className="h-4 w-4" />
-                <FormattedMessage id="machines" />
+                {t('machines')}
               </TabsTrigger>
               <TabsTrigger value="chatbot" className="gap-2">
                 <MessageCircle className="h-4 w-4" />
@@ -61,7 +57,7 @@ function AddRolePage() {
               </TabsTrigger>
               <TabsTrigger value="permissions" className="gap-2">
                 <Edit2 className="h-4 w-4" />
-                <FormattedMessage id="edit.role" />
+                {t('edit.role')}
               </TabsTrigger>
             </TabsList>
 
@@ -84,7 +80,7 @@ function AddRolePage() {
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isPending}>
-            {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+            {isPending ? t('saving') : t('save')}
           </Button>
         </CardFooter>
       </form>

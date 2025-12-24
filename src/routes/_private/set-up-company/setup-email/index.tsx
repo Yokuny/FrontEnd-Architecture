@@ -1,7 +1,7 @@
 import { createFileRoute, useSearch } from '@tanstack/react-router';
 import { Eye, EyeOff, Save } from 'lucide-react';
 import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { EnterpriseSelect } from '@/components/selects';
@@ -22,6 +22,7 @@ export const Route = createFileRoute('/_private/set-up-company/setup-email/')({
 });
 
 function SetupEmailPage() {
+  const { t } = useTranslation();
   const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/setup-email/' });
   const [showPass, setShowPass] = useState(false);
   const [selectedEnterprise, setSelectedEnterprise] = useState<string | undefined>(idEnterpriseQuery);
@@ -48,20 +49,14 @@ function SetupEmailPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          <FormattedMessage id="setup.email" defaultMessage="Configuração de Email" />
-        </CardTitle>
+        <CardTitle>{t('setup.email')}</CardTitle>
       </CardHeader>
       <form onSubmit={onSubmit}>
         <CardContent>
           {!idEnterpriseQuery && (
             <div className="space-y-2">
               <EnterpriseSelect mode="single" value={selectedEnterprise} onChange={handleEnterpriseChange} />
-              {errors.idEnterprise && (
-                <p className="text-sm text-destructive">
-                  <FormattedMessage id={errors.idEnterprise.message} />
-                </p>
-              )}
+              {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message || '')}</p>}
             </div>
           )}
 
@@ -69,22 +64,14 @@ function SetupEmailPage() {
             <div className="space-y-2">
               <Label htmlFor="host">Host *</Label>
               <Input id="host" type="text" {...register('host')} placeholder="smtp.example.com" disabled={isLoading || isPending} />
-              {errors.host && (
-                <p className="text-sm text-destructive">
-                  <FormattedMessage id={errors.host.message} />
-                </p>
-              )}
+              {errors.host && <p className="text-sm text-destructive">{t(errors.host.message || '')}</p>}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="port">Port *</Label>
                 <Input id="port" type="number" {...register('port')} placeholder="587" disabled={isLoading || isPending} />
-                {errors.port && (
-                  <p className="text-sm text-destructive">
-                    <FormattedMessage id={errors.port.message} />
-                  </p>
-                )}
+                {errors.port && <p className="text-sm text-destructive">{t(errors.port.message || '')}</p>}
               </div>
 
               <div className="flex items-center justify-center pt-6">
@@ -107,11 +94,7 @@ function SetupEmailPage() {
             <div className="space-y-2">
               <Label htmlFor="email">Email *</Label>
               <Input id="email" type="email" {...register('email')} placeholder="noreply@example.com" disabled={isLoading || isPending} />
-              {errors.email && (
-                <p className="text-sm text-destructive">
-                  <FormattedMessage id={errors.email.message} />
-                </p>
-              )}
+              {errors.email && <p className="text-sm text-destructive">{t(errors.email.message || '')}</p>}
             </div>
 
             <div className="space-y-2">
@@ -122,18 +105,14 @@ function SetupEmailPage() {
                   {showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-sm text-destructive">
-                  <FormattedMessage id={errors.password.message} />
-                </p>
-              )}
+              {errors.password && <p className="text-sm text-destructive">{t(errors.password.message || '')}</p>}
             </div>
           </div>
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isLoading || isPending}>
             <Save className="mr-2 h-4 w-4" />
-            <FormattedMessage id="save" defaultMessage="Salvar" />
+            {t('save')}
           </Button>
         </CardFooter>
       </form>

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 
 import { CustomerSelect, EnterpriseSelect, RoleSelect, UserSelect } from '@/components/selects';
 import {
@@ -29,7 +29,7 @@ export const Route = createFileRoute('/_private/permissions/users/permissions/ad
 });
 
 function AddPermissionPage() {
-  const intl = useIntl();
+  const { t } = useTranslation();
   const search = Route.useSearch();
   const { id, idRef } = search;
 
@@ -43,9 +43,7 @@ function AddPermissionPage() {
     return (
       <Card>
         <CardContent className="p-12">
-          <div className="text-center text-muted-foreground">
-            <FormattedMessage id="loading" defaultMessage="Loading..." />
-          </div>
+          <div className="text-center text-muted-foreground">{t('loading')}</div>
         </CardContent>
       </Card>
     );
@@ -55,9 +53,7 @@ function AddPermissionPage() {
     <Card>
       <form onSubmit={onSubmit}>
         <CardHeader>
-          <CardTitle>
-            <FormattedMessage id={id ? 'edit.user.permission' : 'add.user.permission'} />
-          </CardTitle>
+          <CardTitle>{t(id ? 'edit.user.permission' : 'add.user.permission')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -65,7 +61,7 @@ function AddPermissionPage() {
             <div className="space-y-2">
               <EnterpriseSelect
                 mode="single"
-                label={`${intl.formatMessage({ id: 'enterprise' })} *`}
+                label={`${t('enterprise')} *`}
                 value={form.watch('idEnterprise')}
                 onChange={(val) => form.setValue('idEnterprise', val || '')}
                 disabled={!!id}
@@ -75,9 +71,7 @@ function AddPermissionPage() {
 
             {/* User */}
             <div className="space-y-2">
-              <Label>
-                <FormattedMessage id="username" /> *
-              </Label>
+              <Label>{t('username')} *</Label>
               {idRef ? (
                 <Input value={isLoadingUserRef ? '...' : userRefData?.name || idRef} disabled className="bg-muted" />
               ) : (
@@ -88,14 +82,14 @@ function AddPermissionPage() {
 
             {/* Roles */}
             <div className="space-y-2 md:col-span-2">
-              <RoleSelect mode="multi" label={intl.formatMessage({ id: 'role' })} value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals as string[])} />
+              <RoleSelect mode="multi" label={t('role')} value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals as string[])} />
             </div>
 
             {/* Is Customer User */}
             <div className="flex items-center space-x-2 md:col-span-2">
               <Checkbox id="isUserCustomer" checked={isUserCustomer} onCheckedChange={(checked) => form.setValue('isUserCustomer', !!checked)} />
               <Label htmlFor="isUserCustomer" className="cursor-pointer">
-                <FormattedMessage id="user.customer" />
+                {t('user.customer')}
               </Label>
             </div>
 
@@ -105,7 +99,7 @@ function AddPermissionPage() {
                 <CustomerSelect
                   mode="multi"
                   idEnterprise={idEnterprise}
-                  label={intl.formatMessage({ id: 'customer' })}
+                  label={t('customer')}
                   value={form.watch('customers')}
                   onChange={(vals) => form.setValue('customers', vals)}
                 />
@@ -120,24 +114,18 @@ function AddPermissionPage() {
                 <AlertDialogTrigger asChild>
                   <Button type="button" variant="destructive">
                     <Trash2 className="mr-2 h-4 w-4" />
-                    <FormattedMessage id="delete" />
+                    {t('delete')}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      <FormattedMessage id="delete.confirmation" />
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      <FormattedMessage id="delete.message.default" />
-                    </AlertDialogDescription>
+                    <AlertDialogTitle>{t('delete.confirmation')}</AlertDialogTitle>
+                    <AlertDialogDescription>{t('delete.message.default')}</AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>
-                      <FormattedMessage id="cancel" />
-                    </AlertDialogCancel>
+                    <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                     <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
-                      <FormattedMessage id="confirm" />
+                      {t('confirm')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -145,7 +133,7 @@ function AddPermissionPage() {
             )}
           </div>
           <Button type="submit" disabled={isPending}>
-            {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+            {isPending ? t('saving') : t('save')}
           </Button>
         </CardFooter>
       </form>

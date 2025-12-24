@@ -4,7 +4,7 @@ import { ArrowLeft, Loader2, Mail } from 'lucide-react';
 import { useRef } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field } from '@/components/ui/field';
@@ -18,7 +18,7 @@ interface RequestStepProps {
 }
 
 export function RequestStep({ onSuccess }: RequestStepProps) {
-  const intl = useIntl();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
@@ -50,12 +50,8 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
   return (
     <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold tracking-tight text-white">
-          <FormattedMessage id="request.password" defaultMessage="Reset Password" />
-        </CardTitle>
-        <CardDescription className="text-zinc-400">
-          <FormattedMessage id="request.password.instructions" defaultMessage="Enter your email to receive a reset code" />
-        </CardDescription>
+        <CardTitle className="text-2xl font-bold tracking-tight text-white">{t('request.password')}</CardTitle>
+        <CardDescription className="text-zinc-400">{t('request.password.instructions')}</CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-6 pt-2">
@@ -66,16 +62,14 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-zinc-300 font-medium">
-                    <FormattedMessage id="login.email" defaultMessage="Email" />
-                  </FormLabel>
+                  <FormLabel className="text-zinc-300 font-medium">{t('login.email')}</FormLabel>
                   <FormControl>
                     <Field>
                       <div className="relative">
                         <Input
                           {...field}
                           type="email"
-                          placeholder={intl.formatMessage({ id: 'login.email.placeholder', defaultMessage: 'Enter your email' })}
+                          placeholder={t('login.email.placeholder')}
                           className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                           autoFocus
                         />
@@ -98,16 +92,16 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full h-12 font-semibold text-base bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full h-12 font-semibold text-base bg-linear-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
               size="lg"
             >
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  <FormattedMessage id="sending" defaultMessage="Sending..." />
+                  {t('sending')}
                 </>
               ) : (
-                <FormattedMessage id="continue" defaultMessage="Continue" />
+                t('continue')
               )}
             </Button>
           </form>
@@ -116,7 +110,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
         <div className="text-center">
           <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })}>
             <ArrowLeft className="h-4 w-4" />
-            <FormattedMessage id="back.login" defaultMessage="Back to Login" />
+            {t('back.login')}
           </Button>
         </div>
       </CardContent>

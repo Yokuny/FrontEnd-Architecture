@@ -1,5 +1,5 @@
 import type { UseFormReturn } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { MachineByEnterpriseSelect, SensorByAssetsSelect } from '@/components/selects';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -10,6 +10,7 @@ interface AssetsPermissionsProps {
 }
 
 export function AssetsPermissions({ form }: AssetsPermissionsProps) {
+  const { t } = useTranslation();
   const allMachines = form.watch('allMachines');
   const allSensors = form.watch('allSensors');
   const idEnterprise = form.watch('idEnterprise');
@@ -20,37 +21,27 @@ export function AssetsPermissions({ form }: AssetsPermissionsProps) {
     <div className="space-y-6">
       {/* Machines Section */}
       <div className="space-y-4">
-        <h3 className="font-semibold">
-          <FormattedMessage id="permissions.machine" />
-        </h3>
+        <h3 className="font-semibold">{t('permissions.machine')}</h3>
         <div className="flex items-center space-x-2">
           <Checkbox id="allMachines" checked={allMachines} onCheckedChange={(checked) => form.setValue('allMachines', !!checked)} />
           <Label htmlFor="allMachines" className="cursor-pointer">
-            <FormattedMessage id="all.machines" />
+            {t('all.machines')}
           </Label>
         </div>
         {!allMachines && (
           <div className="space-y-2">
-            <MachineByEnterpriseSelect
-              mode="multi"
-              idEnterprise={idEnterprise}
-              value={idMachines}
-              onChange={(vals) => form.setValue('idMachines', vals)}
-              label={undefined} // Using internal label or FormattedMessage
-            />
+            <MachineByEnterpriseSelect mode="multi" idEnterprise={idEnterprise} value={idMachines} onChange={(vals) => form.setValue('idMachines', vals)} label={undefined} />
           </div>
         )}
       </div>
 
       {/* Sensors Section */}
       <div className="space-y-4">
-        <h3 className="font-semibold">
-          <FormattedMessage id="permissions.sensors" />
-        </h3>
+        <h3 className="font-semibold">{t('permissions.sensors')}</h3>
         <div className="flex items-center space-x-2">
           <Checkbox id="allSensors" checked={allSensors} onCheckedChange={(checked) => form.setValue('allSensors', !!checked)} />
           <Label htmlFor="allSensors" className="cursor-pointer">
-            <FormattedMessage id="all.sensors" />
+            {t('all.sensors')}
           </Label>
         </div>
         {!allSensors && (

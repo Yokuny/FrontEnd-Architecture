@@ -4,7 +4,7 @@ import { ArrowLeft, Eye, EyeOff, Loader2, Mail, User } from 'lucide-react';
 import { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -31,7 +31,7 @@ export const Route = createFileRoute('/_public/auth/register')({
 // ============================================================================
 
 function RegisterPage() {
-  const intl = useIntl();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const search = useSearch({ from: '/_public/auth/register' }) as { id?: string; enterprise?: string };
   const recaptchaRef = useRef<ReCAPTCHA>(null);
@@ -74,12 +74,8 @@ function RegisterPage() {
     <AuthLayout>
       <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold tracking-tight text-white">
-            <FormattedMessage id="new.account" defaultMessage="Create Account" />
-          </CardTitle>
-          <CardDescription className="text-zinc-400">
-            <FormattedMessage id="new.account.subtitle" defaultMessage="Sign up to get started" />
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold tracking-tight text-white">{t('new.account')}</CardTitle>
+          <CardDescription className="text-zinc-400">{t('new.account.subtitle')}</CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-6 pt-2">
@@ -91,16 +87,14 @@ function RegisterPage() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-zinc-300 font-medium">
-                      <FormattedMessage id="account.name" defaultMessage="Full Name" />
-                    </FormLabel>
+                    <FormLabel className="text-zinc-300 font-medium">{t('account.name')}</FormLabel>
                     <FormControl>
                       <Field>
                         <div className="relative">
                           <Input
                             {...field}
                             type="text"
-                            placeholder={intl.formatMessage({ id: 'account.name.placeholder', defaultMessage: 'Enter your full name' })}
+                            placeholder={t('account.name.placeholder')}
                             className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                             autoFocus
                           />
@@ -121,16 +115,14 @@ function RegisterPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-zinc-300 font-medium">
-                      <FormattedMessage id="login.email" defaultMessage="Email" />
-                    </FormLabel>
+                    <FormLabel className="text-zinc-300 font-medium">{t('login.email')}</FormLabel>
                     <FormControl>
                       <Field>
                         <div className="relative">
                           <Input
                             {...field}
                             type="email"
-                            placeholder={intl.formatMessage({ id: 'login.email.placeholder', defaultMessage: 'Enter your email' })}
+                            placeholder={t('login.email.placeholder')}
                             className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                           />
                           <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -151,16 +143,14 @@ function RegisterPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-zinc-300 font-medium">
-                        <FormattedMessage id="login.password" defaultMessage="Password" />
-                      </FormLabel>
+                      <FormLabel className="text-zinc-300 font-medium">{t('login.password')}</FormLabel>
                       <FormControl>
                         <Field>
                           <div className="relative">
                             <Input
                               {...field}
                               type={showPassword ? 'text' : 'password'}
-                              placeholder={intl.formatMessage({ id: 'login.password.placeholder', defaultMessage: 'Enter password' })}
+                              placeholder={t('login.password.placeholder')}
                               className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                             />
                             <Button
@@ -186,16 +176,14 @@ function RegisterPage() {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-zinc-300 font-medium">
-                        <FormattedMessage id="account.confirm.password" defaultMessage="Confirm Password" />
-                      </FormLabel>
+                      <FormLabel className="text-zinc-300 font-medium">{t('account.confirm.password')}</FormLabel>
                       <FormControl>
                         <Field>
                           <div className="relative">
                             <Input
                               {...field}
                               type={showConfirmPassword ? 'text' : 'password'}
-                              placeholder={intl.formatMessage({ id: 'account.confirm.password.placeholder', defaultMessage: 'Re-enter password' })}
+                              placeholder={t('account.confirm.password.placeholder')}
                               className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                             />
                             <Button
@@ -219,9 +207,7 @@ function RegisterPage() {
               {/* Enterprise (if from invitation) */}
               {search.enterprise && search.id && (
                 <Field>
-                  <FieldLabel className="text-zinc-300 font-medium">
-                    <FormattedMessage id="enterprise" defaultMessage="Enterprise" />
-                  </FieldLabel>
+                  <FieldLabel className="text-zinc-300 font-medium">{t('enterprise')}</FieldLabel>
                   <Input type="text" value={search.enterprise} disabled className="h-12 bg-white/5 border-white/10 text-white opacity-60" />
                 </Field>
               )}
@@ -237,13 +223,13 @@ function RegisterPage() {
                     </FormControl>
                     <div className="space-y-1">
                       <Label htmlFor="termsAccepted" className="block text-sm text-zinc-300 font-normal cursor-pointer leading-relaxed">
-                        <FormattedMessage id="accept.terms" defaultMessage="I accept the" />{' '}
+                        {t('accept.terms')}{' '}
                         <a href="/terms" target="_blank" className="text-blue-400 hover:text-blue-300 underline" rel="noopener">
-                          <FormattedMessage id="terms" defaultMessage="Terms of Service" />
+                          {t('terms')}
                         </a>{' '}
-                        <FormattedMessage id="accept.policy" defaultMessage="and" />{' '}
+                        {t('accept.policy')}{' '}
                         <a href="/policy" target="_blank" className="text-blue-400 hover:text-blue-300 underline" rel="noopener">
-                          <FormattedMessage id="policy" defaultMessage="Privacy Policy" />
+                          {t('policy')}
                         </a>
                         .
                       </Label>
@@ -264,10 +250,10 @@ function RegisterPage() {
                 {isPending ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    <FormattedMessage id="creating" defaultMessage="Creating..." />
+                    {t('creating')}
                   </>
                 ) : (
-                  <FormattedMessage id="save" defaultMessage="Create Account" />
+                  t('save')
                 )}
               </Button>
             </form>
@@ -277,7 +263,7 @@ function RegisterPage() {
           <div className="text-center">
             <Button type="button" variant="ghost" onClick={() => navigate({ to: '/auth' })}>
               <ArrowLeft className="h-4 w-4" />
-              <FormattedMessage id="back.login" defaultMessage="Back to Login" />
+              {t('back.login')}
             </Button>
           </div>
         </CardContent>

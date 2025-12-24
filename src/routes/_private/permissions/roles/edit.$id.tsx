@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Edit2, MessageCircle, Monitor, Settings, Trash2 } from 'lucide-react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { EnterpriseSelect } from '@/components/selects';
 import {
   AlertDialog,
@@ -30,16 +30,14 @@ export const Route = createFileRoute('/_private/permissions/roles/edit/$id')({
 
 function EditRolePage() {
   const { id } = Route.useParams();
-  const intl = useIntl();
+  const { t } = useTranslation();
   const { form, onSubmit, handleDelete, isLoading, isPending } = useRoleForm(id);
 
   if (isLoading) {
     return (
       <Card>
         <CardContent className="p-12">
-          <div className="text-center text-muted-foreground">
-            <FormattedMessage id="loading" defaultMessage="Loading..." />
-          </div>
+          <div className="text-center text-muted-foreground">{t('loading')}</div>
         </CardContent>
       </Card>
     );
@@ -49,9 +47,7 @@ function EditRolePage() {
     <Card>
       <form onSubmit={onSubmit}>
         <CardHeader>
-          <CardTitle>
-            <FormattedMessage id="edit.role" />
-          </CardTitle>
+          <CardTitle>{t('edit.role')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -61,10 +57,8 @@ function EditRolePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">
-                <FormattedMessage id="description" /> *
-              </Label>
-              <Input id="description" {...form.register('description')} placeholder={intl.formatMessage({ id: 'message.description.placeholder' })} maxLength={150} />
+              <Label htmlFor="description">{t('description')} *</Label>
+              <Input id="description" {...form.register('description')} placeholder={t('message.description.placeholder')} maxLength={150} />
               {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
             </div>
           </div>
@@ -73,11 +67,11 @@ function EditRolePage() {
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="pages" className="gap-2">
                 <Monitor className="h-4 w-4" />
-                <FormattedMessage id="pages" />
+                {t('pages')}
               </TabsTrigger>
               <TabsTrigger value="machines" className="gap-2">
                 <Settings className="h-4 w-4" />
-                <FormattedMessage id="machines" />
+                {t('machines')}
               </TabsTrigger>
               <TabsTrigger value="chatbot" className="gap-2">
                 <MessageCircle className="h-4 w-4" />
@@ -85,7 +79,7 @@ function EditRolePage() {
               </TabsTrigger>
               <TabsTrigger value="permissions" className="gap-2">
                 <Edit2 className="h-4 w-4" />
-                <FormattedMessage id="edit.role" />
+                {t('edit.role')}
               </TabsTrigger>
             </TabsList>
 
@@ -111,31 +105,25 @@ function EditRolePage() {
             <AlertDialogTrigger asChild>
               <Button type="button" variant="destructive">
                 <Trash2 className="mr-2 h-4 w-4" />
-                <FormattedMessage id="delete" />
+                {t('delete')}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>
-                  <FormattedMessage id="delete.confirmation" />
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  <FormattedMessage id="delete.message.default" />
-                </AlertDialogDescription>
+                <AlertDialogTitle>{t('delete.confirmation')}</AlertDialogTitle>
+                <AlertDialogDescription>{t('delete.message.default')}</AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>
-                  <FormattedMessage id="cancel" />
-                </AlertDialogCancel>
+                <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                 <AlertDialogAction onClick={() => handleDelete()} className="bg-destructive text-destructive-foreground">
-                  <FormattedMessage id="delete" />
+                  {t('delete')}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
 
           <Button type="submit" disabled={isPending}>
-            {isPending ? <FormattedMessage id="saving" /> : <FormattedMessage id="save" />}
+            {isPending ? t('saving') : t('save')}
           </Button>
         </CardFooter>
       </form>

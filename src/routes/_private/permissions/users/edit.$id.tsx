@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { LanguageFormSelect, TypeCredentialsSelect, UserTypeSelect } from '@/components/selects';
 import {
   AlertDialog,
@@ -25,6 +25,7 @@ export const Route = createFileRoute('/_private/permissions/users/edit/$id')({
 });
 
 function EditUserPage() {
+  const { t } = useTranslation();
   const { id } = Route.useParams();
   const { form, onSubmit, handleDelete, handleDisable, isLoading, isPending } = useUserForm(id);
 
@@ -37,9 +38,7 @@ function EditUserPage() {
     return (
       <Card>
         <CardContent className="p-12">
-          <div className="text-center text-muted-foreground">
-            <FormattedMessage id="loading" defaultMessage="Loading..." />
-          </div>
+          <div className="text-center text-muted-foreground">{t('loading')}</div>
         </CardContent>
       </Card>
     );
@@ -49,17 +48,13 @@ function EditUserPage() {
     <Card>
       <form onSubmit={onSubmit}>
         <CardHeader>
-          <CardTitle>
-            <FormattedMessage id="edit.user" />
-          </CardTitle>
+          <CardTitle>{t('edit.user')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Name */}
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="name">
-                <FormattedMessage id="account.name" /> *
-              </Label>
+              <Label htmlFor="name">{t('account.name')} *</Label>
               <Input id="name" {...form.register('name')} placeholder="Nome" maxLength={150} disabled={isDisabled} />
               {form.formState.errors.name && <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>}
             </div>
@@ -68,14 +63,14 @@ function EditUserPage() {
             <div className="flex items-center space-x-2">
               <Checkbox id="isOnlyContact" checked={!isOnlyContact} onCheckedChange={(checked) => form.setValue('isOnlyContact', !checked)} disabled={isDisabled} />
               <Label htmlFor="isOnlyContact" className="cursor-pointer">
-                <FormattedMessage id="user.system" />
+                {t('user.system')}
               </Label>
             </div>
 
             {/* Email */}
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="email">
-                <FormattedMessage id="login.email" /> {!isOnlyContact && '*'}
+                {t('login.email')} {!isOnlyContact && '*'}
               </Label>
               <Input id="email" type="email" {...form.register('email')} placeholder="Email" disabled={isDisabled} />
               {form.formState.errors.email && <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>}
@@ -102,7 +97,7 @@ function EditUserPage() {
                   disabled={isDisabled}
                 />
                 <Label htmlFor="isSentMessageWelcome" className="cursor-pointer">
-                  <FormattedMessage id="sent.message.welcome" /> (WhatsApp)
+                  {t('sent.message.welcome')} (WhatsApp)
                 </Label>
               </div>
             )}
@@ -123,25 +118,17 @@ function EditUserPage() {
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button type="button" variant={isDisabled ? 'default' : 'secondary'}>
-                  <FormattedMessage id={isDisabled ? 'enable.user' : 'disable.user'} />
+                  {t(isDisabled ? 'enable.user' : 'disable.user')}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    <FormattedMessage id="confirmation" />
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    <FormattedMessage id={isDisabled ? 'enable.user.message' : 'disable.user.message'} />
-                  </AlertDialogDescription>
+                  <AlertDialogTitle>{t('confirmation')}</AlertDialogTitle>
+                  <AlertDialogDescription>{t(isDisabled ? 'enable.user.message' : 'disable.user.message')}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>
-                    <FormattedMessage id="cancel" />
-                  </AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDisable}>
-                    <FormattedMessage id="confirm" />
-                  </AlertDialogAction>
+                  <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDisable}>{t('confirm')}</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
@@ -150,24 +137,18 @@ function EditUserPage() {
               <AlertDialogTrigger asChild>
                 <Button type="button" variant="destructive">
                   <Trash2 className="mr-2 h-4 w-4" />
-                  <FormattedMessage id="delete" />
+                  {t('delete')}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    <FormattedMessage id="delete.confirmation" />
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    <FormattedMessage id="delete.message.default" />
-                  </AlertDialogDescription>
+                  <AlertDialogTitle>{t('delete.confirmation')}</AlertDialogTitle>
+                  <AlertDialogDescription>{t('delete.message.default')}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>
-                    <FormattedMessage id="cancel" />
-                  </AlertDialogCancel>
+                  <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                   <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
-                    <FormattedMessage id="delete" />
+                    {t('delete')}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -176,7 +157,7 @@ function EditUserPage() {
 
           {!isDisabled && (
             <Button type="submit" disabled={isPending}>
-              {isPending ? <FormattedMessage id="saving" defaultMessage="Salvando..." /> : <FormattedMessage id="save" />}
+              {isPending ? t('saving') : t('save')}
             </Button>
           )}
         </CardFooter>

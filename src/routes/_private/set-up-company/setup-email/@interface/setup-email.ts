@@ -6,7 +6,7 @@ export const emailConfigSchema = z.object({
   id: z.string().optional(),
   host: z.string().min(1, 'host.required'),
   port: z.coerce.number().min(1, 'port.required'),
-  secure: z.boolean().default(false),
+  secure: z.boolean(),
   email: z.string().email('email.invalid').min(1, 'email.required'),
   password: z.string().min(1, 'password.required'),
   accountname: z.string().optional(),

@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeft, ArrowRight, Mail, Shield } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field } from '@/components/ui/field';
@@ -16,6 +17,7 @@ interface SelectMethodStepProps {
 }
 
 export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStepProps) {
+  const { t } = useTranslation();
   const form = useForm<UnlockMethodFormValues>({
     resolver: zodResolver(unlockMethodSchema),
     defaultValues: {
@@ -26,13 +28,11 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
   return (
     <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
       <CardHeader className="text-center">
-        <div className="mx-auto mb-6 bg-gradient-to-br from-amber-500/20 to-amber-500/5 p-4 rounded-2xl w-fit backdrop-blur-sm border border-amber-500/20 shadow-lg shadow-amber-500/10">
+        <div className="mx-auto mb-6 bg-linear-to-br from-amber-500/20 to-amber-500/5 p-4 rounded-2xl w-fit backdrop-blur-sm border border-amber-500/20 shadow-lg shadow-amber-500/10">
           <Shield className="h-12 w-12 text-amber-500" />
         </div>
-        <CardTitle className="text-2xl font-bold tracking-tight text-white">Account Locked</CardTitle>
-        <CardDescription className="text-zinc-400">
-          Your account has been temporarily locked due to multiple failed login attempts. Choose a method to unlock your account.
-        </CardDescription>
+        <CardTitle className="text-2xl font-bold tracking-tight text-white">{t('unlock.title')}</CardTitle>
+        <CardDescription className="text-zinc-400">{t('unlock.subtitle')}</CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-6 pt-2">
@@ -43,7 +43,7 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
               name="method"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-zinc-300 font-medium">Unlock Method</FormLabel>
+                  <FormLabel className="text-zinc-300 font-medium">{t('unlock.method.label')}</FormLabel>
                   <FormControl>
                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="space-y-3">
                       {options.map((option) => (
@@ -59,7 +59,7 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
                                 {option.type === 'email' ? <Mail className="h-5 w-5" /> : <Shield className="h-5 w-5" />}
                               </div>
                               <div>
-                                <p className="text-white font-medium">{option.type === 'email' ? 'Email' : 'SMS'}</p>
+                                <p className="text-white font-medium">{option.type === 'email' ? t('email') : t('sms')}</p>
                                 <p className="text-zinc-500 text-sm">{option.destination}</p>
                               </div>
                             </div>
@@ -75,18 +75,18 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
 
             <Button
               type="submit"
-              className="w-full h-12 font-semibold text-base bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-600 shadow-lg shadow-amber-600/30 hover:shadow-amber-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full h-12 font-semibold text-base bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-600 shadow-lg shadow-amber-600/30 hover:shadow-amber-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
               size="lg"
             >
-              Send Unlock Code
+              {t('unlock.send-code')}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </form>
         </Form>
 
-        <Button variant="ghost" size="sm" onClick={onBack} className="w-full">
+        <Button variant="ghost" size="sm" onClick={onBack} className="w-full text-zinc-400 hover:text-white transition-colors">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Login
+          {t('back.login')}
         </Button>
       </CardContent>
     </Card>

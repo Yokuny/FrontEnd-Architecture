@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, useRouter } from '@tanstack/react-router';
 import { ChevronLeft, Filter, Plus, Shield } from 'lucide-react';
 import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { AutoBreadcrumbs } from '@/components/auto-breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,6 +16,7 @@ export const Route = createFileRoute('/_private/permissions/users/')({
 });
 
 function ListUsersPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const router = useRouter();
   const [page, _setPage] = useState(1);
@@ -43,25 +44,23 @@ function ListUsersPage() {
               <Button variant="outline" size="icon" className="shrink-0 rounded-full" onClick={() => router.history.back()}>
                 <ChevronLeft className="size-5" />
               </Button>
-              <CardTitle className="text-2xl font-bold">
-                <FormattedMessage id="users.permissions" />
-              </CardTitle>
+              <CardTitle className="text-2xl font-bold">{t('users.permissions')}</CardTitle>
             </div>
             <div className="flex gap-2">
               <Button variant="outline">
                 <Filter className="size-4" />
-                <FormattedMessage id="filter" />
+                {t('filter')}
               </Button>
               {hasPermissionAdd && (
                 <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
                   <Plus className="size-4" />
-                  <FormattedMessage id="add.user" />
+                  {t('add.user')}
                 </Button>
               )}
               {hasPermissionPermissions && (
                 <Button onClick={() => navigate({ to: '/permissions/users/permissions/add' })}>
                   <Shield className="size-4" />
-                  <FormattedMessage id="new.permission" />
+                  {t('new.permission')}
                 </Button>
               )}
             </div>
@@ -88,9 +87,7 @@ function ListUsersPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">
-            <FormattedMessage id="no.users.found" />
-          </div>
+          <div className="text-center py-12 text-muted-foreground">{t('no.users.found')}</div>
         )}
       </CardContent>
     </Card>

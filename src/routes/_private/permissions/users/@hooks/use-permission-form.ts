@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useUserPermission, useUsersApi } from '@/hooks/use-users-api';
 import { userPermissionSchema } from '../@interface/user';
@@ -18,7 +18,7 @@ export interface UsePermissionFormReturn {
 
 export function usePermissionForm(id?: string, idRef?: string): UsePermissionFormReturn {
   const navigate = useNavigate();
-  const intl = useIntl();
+  const { t } = useTranslation();
   const { addPermission, updatePermission, deletePermission } = useUsersApi();
 
   const { data: permissionData, isLoading: isLoadingPermission } = useUserPermission(id || '');
@@ -51,14 +51,14 @@ export function usePermissionForm(id?: string, idRef?: string): UsePermissionFor
     try {
       if (id) {
         await updatePermission.mutateAsync(data);
-        toast.success(intl.formatMessage({ id: 'save.successfull' }));
+        toast.success(t('save.successfull'));
       } else {
         await addPermission.mutateAsync(data);
-        toast.success(intl.formatMessage({ id: 'save.successfull' }));
+        toast.success(t('save.successfull'));
       }
       navigate({ to: '/permissions/users' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
+      toast.error(t('error.save'));
     }
   };
 
@@ -66,10 +66,10 @@ export function usePermissionForm(id?: string, idRef?: string): UsePermissionFor
     if (!id) return;
     try {
       await deletePermission.mutateAsync(id);
-      toast.success(intl.formatMessage({ id: 'delete.successfull' }));
+      toast.success(t('delete.successfull'));
       navigate({ to: '/permissions/users' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.delete' }));
+      toast.error(t('error.delete'));
     }
   };
 

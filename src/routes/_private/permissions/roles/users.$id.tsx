@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { ArrowLeft, Trash2, UserPlus, Users } from 'lucide-react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
 import {
@@ -27,7 +27,7 @@ export const Route = createFileRoute('/_private/permissions/roles/users/$id')({
 function RoleUsersPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
-  const intl = useIntl();
+  const { t } = useTranslation();
   const { removeUserFromRole } = useRolesApi();
 
   // Get enterprise from localStorage (same as legacy)
@@ -39,10 +39,10 @@ function RoleUsersPage() {
   const handleRemoveUser = async (idUser: string) => {
     try {
       await removeUserFromRole.mutateAsync({ idUser, idRole: id, idEnterprise });
-      toast.success(intl.formatMessage({ id: 'success.remove' }));
+      toast.success(t('success.remove'));
       refetch();
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.remove' }));
+      toast.error(t('error.remove'));
     }
   };
 
@@ -59,14 +59,14 @@ function RoleUsersPage() {
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5" />
-                <FormattedMessage id="role.users" defaultMessage="Usuários do Perfil" />
+                {t('role.users')}
               </CardTitle>
               {role && <p className="text-sm text-muted-foreground mt-1">{role.description}</p>}
             </div>
           </div>
-          <Button onClick={() => toast.info(intl.formatMessage({ id: 'feature.coming.soon', defaultMessage: 'Em breve...' }))}>
+          <Button onClick={() => toast.info(t('feature.coming.soon'))}>
             <UserPlus className="mr-2 h-4 w-4" />
-            <FormattedMessage id="role.user.permission" defaultMessage="Adicionar Usuário" />
+            {t('role.user.permission')}
           </Button>
         </div>
       </CardHeader>
@@ -100,11 +100,7 @@ function RoleUsersPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    {user.isUserSystem && (
-                      <Badge variant="secondary">
-                        <FormattedMessage id="user.system" defaultMessage="Usuário Sistema" />
-                      </Badge>
-                    )}
+                    {user.isUserSystem && <Badge variant="secondary">{t('user.system')}</Badge>}
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
@@ -113,19 +109,13 @@ function RoleUsersPage() {
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            <FormattedMessage id="remove.role.confirmation.user" defaultMessage="Remover usuário do perfil?" />
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            <FormattedMessage id="remove.role.message" defaultMessage="O usuário perderá as permissões deste perfil." />
-                          </AlertDialogDescription>
+                          <AlertDialogTitle>{t('remove.role.confirmation.user')}</AlertDialogTitle>
+                          <AlertDialogDescription>{t('remove.role.message')}</AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>
-                            <FormattedMessage id="cancel" defaultMessage="Cancelar" />
-                          </AlertDialogCancel>
+                          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                           <AlertDialogAction onClick={() => handleRemoveUser(user.idUser)} className="bg-destructive text-destructive-foreground">
-                            <FormattedMessage id="remove" defaultMessage="Remover" />
+                            {t('remove')}
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
@@ -136,9 +126,7 @@ function RoleUsersPage() {
             })}
           </div>
         ) : (
-          <div className="text-center py-8 text-muted-foreground">
-            <FormattedMessage id="no.users.found" defaultMessage="Nenhum usuário encontrado." />
-          </div>
+          <div className="text-center py-8 text-muted-foreground">{t('no.users.found')}</div>
         )}
       </CardContent>
     </Card>

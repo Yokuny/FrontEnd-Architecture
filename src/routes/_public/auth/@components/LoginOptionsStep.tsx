@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -20,7 +20,7 @@ interface LoginOptionsStepProps {
 }
 
 export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword, onPasswordLogin, onSSOLogin, onBack }: LoginOptionsStepProps) {
-  const intl = useIntl();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const hasPassword = loginOptions.some((opt) => opt.isPassword);
@@ -33,11 +33,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
 
   return (
     <div className="space-y-5">
-      {hasPassword && ssoOption && (
-        <p className="text-center text-sm text-zinc-400">
-          <FormattedMessage id="login.with" defaultMessage="Sign in with" />
-        </p>
-      )}
+      {hasPassword && ssoOption && <p className="text-center text-sm text-zinc-400">{t('login.with')}</p>}
 
       {ssoOption && <SSOButton onSuccess={onSSOLogin} />}
 
@@ -47,9 +43,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
             <span className="w-full border-t border-white/10" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-black/40 px-2 text-zinc-500">
-              <FormattedMessage id="condition.or" defaultMessage="Or" />
-            </span>
+            <span className="bg-black/40 px-2 text-zinc-500">{t('condition.or')}</span>
           </div>
         </div>
       )}
@@ -62,15 +56,13 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-zinc-300 font-medium">
-                    <FormattedMessage id="login.password" defaultMessage="Password" />
-                  </FormLabel>
+                  <FormLabel className="text-zinc-300 font-medium">{t('login.password')}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
                         {...field}
                         type={showPassword ? 'text' : 'password'}
-                        placeholder={intl.formatMessage({ id: 'login.password.placeholder', defaultMessage: 'Enter your password' })}
+                        placeholder={t('login.password.placeholder')}
                         className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
                         autoFocus
                       />
@@ -92,10 +84,10 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
 
             <Button
               type="submit"
-              className="w-full h-12 font-semibold text-base bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-600 shadow-lg shadow-green-600/30 hover:shadow-green-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full h-12 font-semibold text-base bg-linear-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-600 shadow-lg shadow-green-600/30 hover:shadow-green-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
               size="lg"
             >
-              <FormattedMessage id="login.button-text" defaultMessage="Sign In" />
+              {t('login.button-text')}
             </Button>
           </form>
         </Form>
@@ -104,7 +96,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
       <div className="flex items-center justify-between text-sm">
         <Button type="button" variant="ghost" onClick={onBack} className="text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          <FormattedMessage id="back" defaultMessage="Back" />
+          {t('back')}
         </Button>
 
         {hasPassword && (
@@ -114,7 +106,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
             onClick={() => navigate({ to: '/auth/reset-password' })}
             className="h-auto p-0 text-blue-400 hover:text-blue-300 transition-colors font-medium decoration-transparent hover:no-underline"
           >
-            <FormattedMessage id="lost.password" defaultMessage="Forgot password?" />
+            {t('lost.password')}
           </Button>
         )}
       </div>

@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { type EmailConfigFormData, emailConfigSchema } from '../@interface/setup-email';
 import { useSetupEnterprise, useSetupEnterpriseApi } from './use-setup-enterprise-api';
@@ -13,12 +13,12 @@ interface UseEmailConfigFormOptions {
 
 export function useEmailConfigForm({ idEnterprise }: UseEmailConfigFormOptions) {
   const navigate = useNavigate();
-  const intl = useIntl();
+  const { t } = useTranslation();
   const { data: setupData, isLoading: isLoadingData } = useSetupEnterprise(idEnterprise);
   const { saveSetupEnterprise } = useSetupEnterpriseApi();
 
   const form = useForm<EmailConfigFormData>({
-    resolver: zodResolver(emailConfigSchema),
+    resolver: zodResolver(emailConfigSchema) as any,
     defaultValues: {
       idEnterprise: idEnterprise || '',
       id: '',
@@ -70,10 +70,10 @@ export function useEmailConfigForm({ idEnterprise }: UseEmailConfigFormOptions) 
           },
         },
       });
-      toast.success(intl.formatMessage({ id: 'success.save' }));
+      toast.success(t('success.save'));
       navigate({ to: '..' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
+      toast.error(t('error.save'));
     }
   });
 

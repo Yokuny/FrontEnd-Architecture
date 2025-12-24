@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Edit, MoreVertical, Shield, Users } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Status, StatusIndicator, StatusLabel } from '@/components/kibo-ui/status';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -14,6 +14,7 @@ interface RoleCardProps {
 }
 
 export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: RoleCardProps) {
+  const { t } = useTranslation();
   const getVisibilityBadge = (visibility: string) => {
     const variants = {
       public: { status: 'online' as const, labelKey: 'visibility.public' },
@@ -26,9 +27,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
     return (
       <Status status={config.status} className="h-7">
         <StatusIndicator />
-        <StatusLabel className="text-foreground">
-          <FormattedMessage id={config.labelKey} />
-        </StatusLabel>
+        <StatusLabel className="text-foreground">{t(config.labelKey)}</StatusLabel>
       </Status>
     );
   };
@@ -52,9 +51,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="size-8">
                 <MoreVertical className="size-4" />
-                <span className="sr-only">
-                  <FormattedMessage id="actions" />
-                </span>
+                <span className="sr-only">{t('actions')}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -62,7 +59,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
                 <DropdownMenuItem asChild>
                   <Link to="/permissions/roles/edit/$id" params={{ id: role.id }}>
                     <Edit className="mr-2 size-4" />
-                    <FormattedMessage id="edit" />
+                    {t('edit')}
                   </Link>
                 </DropdownMenuItem>
               )}
@@ -70,7 +67,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
                 <DropdownMenuItem asChild>
                   <Link to="/permissions/roles/users/$id" params={{ id: role.id }}>
                     <Users className="mr-2 size-4" />
-                    <FormattedMessage id="users" />
+                    {t('users')}
                   </Link>
                 </DropdownMenuItem>
               )}

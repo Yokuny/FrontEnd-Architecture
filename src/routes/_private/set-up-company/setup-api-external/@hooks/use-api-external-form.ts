@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { type ApiExternalFormData, apiExternalSchema } from '../@interface/api-external';
 import { useSetupApiExternal, useSetupApiExternalApi } from './use-setup-api-external-api';
@@ -13,7 +13,7 @@ interface UseApiExternalFormOptions {
 
 export function useApiExternalForm({ idEnterprise }: UseApiExternalFormOptions) {
   const navigate = useNavigate();
-  const intl = useIntl();
+  const { t } = useTranslation();
   const { data: setupData, isLoading: isLoadingData } = useSetupApiExternal(idEnterprise);
   const { saveSetupApiExternal } = useSetupApiExternalApi();
 
@@ -47,7 +47,7 @@ export function useApiExternalForm({ idEnterprise }: UseApiExternalFormOptions) 
   const onSubmit = form.handleSubmit(async (data) => {
     // Validar se a key não é mascarada
     if (data.windyKey.includes('***')) {
-      toast.warning(intl.formatMessage({ id: 'api.key.required' }));
+      toast.warning(t('api.key.required'));
       return;
     }
 
@@ -57,10 +57,10 @@ export function useApiExternalForm({ idEnterprise }: UseApiExternalFormOptions) 
         id: data.id,
         windyKey: data.windyKey,
       });
-      toast.success(intl.formatMessage({ id: 'success.save' }));
+      toast.success(t('success.save'));
       navigate({ to: '..' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
+      toast.error(t('error.save'));
     }
   });
 

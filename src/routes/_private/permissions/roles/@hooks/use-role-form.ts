@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { type UseFormReturn, useForm } from 'react-hook-form';
-import { useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useRole, useRolesApi } from '@/hooks/use-roles-api';
 import { type RoleFormData, roleSchema } from '../@interface/role';
@@ -17,13 +17,13 @@ export interface UseRoleFormReturn {
 
 export function useRoleForm(id?: string): UseRoleFormReturn {
   const navigate = useNavigate();
-  const intl = useIntl();
+  const { t } = useTranslation();
   const { createRole, updateRole, deleteRole, deleteRoleWithUsers } = useRolesApi();
 
   const { data: role, isLoading: isLoadingRole } = useRole(id || '');
 
   const form = useForm<RoleFormData>({
-    resolver: zodResolver(roleSchema.omit({ id: true })),
+    resolver: zodResolver(roleSchema.omit({ id: true })) as any,
     values: role as RoleFormData | undefined,
     defaultValues: {
       description: '',
@@ -62,10 +62,10 @@ export function useRoleForm(id?: string): UseRoleFormReturn {
       } else {
         await createRole.mutateAsync(data);
       }
-      toast.success(intl.formatMessage({ id: 'save.successfull' }));
+      toast.success(t('save.successfull'));
       navigate({ to: '/permissions/roles' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
+      toast.error(t('error.save'));
     }
   };
 
@@ -79,10 +79,10 @@ export function useRoleForm(id?: string): UseRoleFormReturn {
       } else {
         await deleteRole.mutateAsync({ id, idEnterprise });
       }
-      toast.success(intl.formatMessage({ id: 'delete.successfull' }));
+      toast.success(t('delete.successfull'));
       navigate({ to: '/permissions/roles' });
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'role.request.error' }));
+      toast.error(t('role.request.error'));
     }
   };
 

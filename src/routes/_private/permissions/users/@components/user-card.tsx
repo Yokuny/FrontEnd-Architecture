@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Edit, Lock, MoreVertical, Shield } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Status, StatusIndicator, StatusLabel } from '@/components/kibo-ui/status';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -18,6 +18,7 @@ interface UserCardProps {
 }
 
 export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, hasPermissionPassword }: UserCardProps) {
+  const { t } = useTranslation();
   const isDisabled = !!user.disabledAt;
   const initials = user.name
     .split(' ')
@@ -59,9 +60,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
 
         <Status status={statusConfig.status} className="h-7">
           <StatusIndicator />
-          <StatusLabel className="text-foreground">
-            <FormattedMessage id={statusConfig.label} />
-          </StatusLabel>
+          <StatusLabel className="text-foreground">{t(statusConfig.label)}</StatusLabel>
         </Status>
 
         {(hasPermissionEdit || hasPermissionPermissions || hasPermissionPassword) && (
@@ -76,7 +75,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
                 <DropdownMenuItem asChild>
                   <Link to="/permissions/users/permissions/add" search={user.userEnterprise.length === 1 ? { id: user.userEnterprise[0].id } : { idRef: user.id }}>
                     <Shield className="mr-2 h-4 w-4" />
-                    <FormattedMessage id="permissions" />
+                    {t('permissions')}
                   </Link>
                 </DropdownMenuItem>
               )}
@@ -84,7 +83,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
                 <DropdownMenuItem asChild>
                   <Link to="/permissions/users/edit/$id" params={{ id: user.id }}>
                     <Edit className="mr-2 h-4 w-4" />
-                    <FormattedMessage id="edit" />
+                    {t('edit')}
                   </Link>
                 </DropdownMenuItem>
               )}
@@ -92,7 +91,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
                 <DropdownMenuItem asChild>
                   <Link to="/permissions/users/password/$id" params={{ id: user.id }}>
                     <Lock className="mr-2 h-4 w-4" />
-                    <FormattedMessage id="new.password" />
+                    {t('new.password')}
                   </Link>
                 </DropdownMenuItem>
               )}

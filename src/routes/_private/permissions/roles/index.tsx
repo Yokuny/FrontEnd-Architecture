@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRolesAll } from '@/hooks/use-roles-api';
@@ -11,6 +11,7 @@ export const Route = createFileRoute('/_private/permissions/roles/')({
 });
 
 function ListRolesPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: roles, isLoading } = useRolesAll();
 
@@ -22,13 +23,11 @@ function ListRolesPage() {
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>
-            <FormattedMessage id="role" />
-          </CardTitle>
+          <CardTitle>{t('role')}</CardTitle>
           {hasPermissionAdd && (
             <Button onClick={() => navigate({ to: '/permissions/roles/add' })}>
               <Plus className="mr-2 h-4 w-4" />
-              <FormattedMessage id="new.role" />
+              {t('new.role')}
             </Button>
           )}
         </div>
@@ -47,9 +46,7 @@ function ListRolesPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">
-            <FormattedMessage id="no.roles.found" />
-          </div>
+          <div className="text-center py-12 text-muted-foreground">{t('no.roles.found')}</div>
         )}
       </CardContent>
     </Card>

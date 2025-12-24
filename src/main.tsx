@@ -3,12 +3,12 @@ import { MsalProvider } from '@azure/msal-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
-import { StrictMode } from 'react';
+import { StrictMode, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { IntlProvider } from 'react-intl';
 import { Toaster } from 'sonner';
 // Import configurations and contexts
 import { msalConfig } from './config/authConfig';
+import i18n from './config/i18n'; // Importa a configuração do i18next
 // import { SocketProvider } from './config/SocketConfig.tsx';
 import { useLocale } from './hooks/use-locale';
 // Import the generated route tree
@@ -16,10 +16,6 @@ import { routeTree } from './routeTree.gen';
 
 import './styles.css';
 
-// Import translations
-import enText from './lib/translations/en.json';
-import esText from './lib/translations/es.json';
-import ptText from './lib/translations/pt.json';
 import reportWebVitals from './reportWebVitals.ts';
 
 // Create QueryClient instance
@@ -68,28 +64,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
-// Available messages by locale
-const messages: Record<string, Record<string, string>> = {
-  en: enText,
-  es: esText,
-  pt: ptText,
-};
-
 // App component with all providers
 function App() {
   // Use Zustand store for locale - this will automatically re-render when locale changes
   const locale = useLocale((state) => state.locale);
 
+  // Sync i18next with our locale store
+  useEffect(() => {
+    i18n.changeLanguage(locale);
+  }, [locale]);
+
   return (
     <MsalProvider instance={msalInstance}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <IntlProvider locale={locale} messages={messages[locale]} defaultLocale="en">
-            {/* <SocketProvider> */}
-            <RouterProvider router={router} />
-            <Toaster position="top-right" expand={false} richColors closeButton />
-            {/* </SocketProvider> */}
-          </IntlProvider>
+          {/* <SocketProvider> */}
+          <RouterProvider router={router} />
+          <Toaster position="top-right" expand={false} richColors closeButton />
+          {/* </SocketProvider> */}
         </ThemeProvider>
       </QueryClientProvider>
     </MsalProvider>

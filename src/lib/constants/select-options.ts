@@ -10,7 +10,7 @@ export const LANGUAGES: LanguageOption[] = [
   {
     value: 'pt',
     label: 'Português Brasil',
-    locale: 'pt-br',
+    locale: 'pt',
   },
   {
     value: 'en',

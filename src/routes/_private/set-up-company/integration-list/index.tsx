@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Save, WifiOff } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -22,7 +22,7 @@ export const Route = createFileRoute('/_private/set-up-company/integration-list/
 });
 
 function IntegrationListPage() {
-  const intl = useIntl();
+  const { t } = useTranslation();
 
   // Pegar idEnterprise do localStorage (mesmo padrão do legado com Redux)
   const idEnterprise = localStorage.getItem('id_enterprise_filter') || '';
@@ -60,18 +60,16 @@ function IntegrationListPage() {
 
     try {
       await saveMachineIntegrations.mutateAsync(payload);
-      toast.success(intl.formatMessage({ id: 'success.save' }));
+      toast.success(t('success.save'));
     } catch (_error) {
-      toast.error(intl.formatMessage({ id: 'error.save' }));
+      toast.error(t('error.save'));
     }
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          <FormattedMessage id="integration" defaultMessage="Integração" /> AIS
-        </CardTitle>
+        <CardTitle>{t('integration')} AIS</CardTitle>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -85,24 +83,12 @@ function IntegrationListPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[70px]">
-                    <FormattedMessage id="image" defaultMessage="Imagem" />
-                  </TableHead>
-                  <TableHead className="w-[250px]">
-                    <FormattedMessage id="name" defaultMessage="Nome" />
-                  </TableHead>
-                  <TableHead className="w-[160px] text-center">
-                    <FormattedMessage id="type" defaultMessage="Tipo" />
-                  </TableHead>
-                  <TableHead className="w-[120px] text-center">
-                    <FormattedMessage id="interval" defaultMessage="Intervalo" />
-                  </TableHead>
-                  <TableHead className="text-center">
-                    <FormattedMessage id="options" defaultMessage="Opções" />
-                  </TableHead>
-                  <TableHead className="w-[80px] text-center">
-                    <FormattedMessage id="active" defaultMessage="Ativo" />
-                  </TableHead>
+                  <TableHead className="w-[70px]">{t('image')}</TableHead>
+                  <TableHead className="w-[250px]">{t('name')}</TableHead>
+                  <TableHead className="w-[160px] text-center">{t('type')}</TableHead>
+                  <TableHead className="w-[120px] text-center">{t('interval')}</TableHead>
+                  <TableHead className="text-center">{t('options')}</TableHead>
+                  <TableHead className="w-[80px] text-center">{t('active')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -120,7 +106,7 @@ function IntegrationListPage() {
                         {item.disabled && (
                           <Badge variant="secondary" className="text-xs">
                             <WifiOff className="h-3 w-3 mr-1" />
-                            <FormattedMessage id="deactivate" defaultMessage="Desativado" />
+                            {t('deactivate')}
                           </Badge>
                         )}
                       </div>
@@ -128,21 +114,23 @@ function IntegrationListPage() {
                     <TableCell>
                       <Select value={item.type || ''} onValueChange={(value) => handleChange(index, 'type', value)} disabled={item.disabled}>
                         <SelectTrigger>
-                          <SelectValue placeholder={intl.formatMessage({ id: 'type' })} />
+                          <SelectValue placeholder={t('type')} />
                         </SelectTrigger>
                         <SelectContent>
-                          {INTEGRATION_OPTIONS.filter((opt) => !opt.disabled).map((opt) => (
-                            <SelectItem key={opt.value} value={opt.value}>
-                              {opt.label}
-                            </SelectItem>
-                          ))}
+                          {(INTEGRATION_OPTIONS as readonly any[])
+                            .filter((opt) => !opt.disabled)
+                            .map((opt) => (
+                              <SelectItem key={opt.value} value={opt.value}>
+                                {opt.label}
+                              </SelectItem>
+                            ))}
                         </SelectContent>
                       </Select>
                     </TableCell>
                     <TableCell>
                       <Select value={item.updateTime?.toString() || ''} onValueChange={(value) => handleChange(index, 'updateTime', parseInt(value, 10))} disabled={item.disabled}>
                         <SelectTrigger>
-                          <SelectValue placeholder={intl.formatMessage({ id: 'interval' })} />
+                          <SelectValue placeholder={t('interval')} />
                         </SelectTrigger>
                         <SelectContent>
                           {UPDATE_INTERVAL_OPTIONS.map((opt) => (
@@ -209,7 +197,7 @@ function IntegrationListPage() {
       <CardFooter>
         <Button onClick={handleSave} disabled={isLoading || saveMachineIntegrations.isPending}>
           <Save className="mr-2 h-4 w-4" />
-          <FormattedMessage id="save" defaultMessage="Salvar" />
+          {t('save')}
         </Button>
       </CardFooter>
     </Card>

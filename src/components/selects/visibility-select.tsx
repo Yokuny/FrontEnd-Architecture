@@ -1,5 +1,5 @@
 import type { UseQueryResult } from '@tanstack/react-query';
-import { useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { DataSelect } from '@/components/ui/data-select';
 import { VISIBILITY_OPTIONS, type VisibilityOption } from '@/lib/constants/select-options';
 
@@ -25,7 +25,7 @@ interface VisibilitySelectProps {
  * Follows the system select pattern with static options and i18n support.
  */
 export function VisibilitySelect({ mode, value, onChange, disabled, className, clearable = true }: VisibilitySelectProps) {
-  const intl = useIntl();
+  const { t } = useTranslation();
 
   // Simulation of query for static data as per SELECT_PATTERN.md
   const query = {
@@ -39,15 +39,15 @@ export function VisibilitySelect({ mode, value, onChange, disabled, className, c
   if (mode === 'single') {
     return (
       <DataSelect<VisibilityOption>
-        label={`${intl.formatMessage({ id: 'visible.placeholder' })} *`}
-        placeholder={intl.formatMessage({ id: 'visible.placeholder' })}
+        label={`${t('visible.placeholder')} *`}
+        placeholder={t('visible.placeholder')}
         value={value}
         onChange={(val) => onChange(val as string)}
         query={query}
         mapToOptions={(data) =>
           data.map((opt) => ({
             value: opt.value,
-            label: intl.formatMessage({ id: opt.labelKey }),
+            label: t(opt.labelKey),
           }))
         }
         disabled={disabled}

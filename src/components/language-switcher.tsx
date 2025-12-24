@@ -1,5 +1,5 @@
 import { Globe } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -9,6 +9,7 @@ import { LANGUAGE_NAMES, LANGUAGES } from '@/lib/constants/select-options';
 const availableLocales = LANGUAGES.map((l) => l.value);
 
 export function LanguageSwitcher() {
+  const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
 
   return (
@@ -16,9 +17,7 @@ export function LanguageSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative">
           <Globe className="size-5" />
-          <span className="sr-only">
-            <FormattedMessage id="login.language" defaultMessage="Change language" />
-          </span>
+          <span className="sr-only">{t('login.language')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

@@ -7,7 +7,7 @@ import { LanguageSwitcher } from '@/components/language-switcher';
  */
 export function AuthLayout({ children }: { children?: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-linear-to-br from-zinc-950 via-zinc-900 to-zinc-950">
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
         <div
@@ -16,7 +16,7 @@ export function AuthLayout({ children }: { children?: React.ReactNode }) {
             backgroundImage: `url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0')`,
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent" />
       </div>
 
       {/* Language Switcher */}

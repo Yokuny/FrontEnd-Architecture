@@ -1,14 +1,14 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useIntl } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { buildSidebarRoutes, type SidebarRoute } from '@/config/sidebarRoutes';
 import type { Route } from './nav-main';
 
 // Converter SidebarRoute para formato do nav-main.tsx
-function convertToNavRoutes(routes: SidebarRoute[], intl: ReturnType<typeof useIntl>): Route[] {
+function convertToNavRoutes(routes: SidebarRoute[], t: (key: string) => string): Route[] {
   return routes.map((route) => {
-    const title = intl.formatMessage({ id: route.labelKey, defaultMessage: route.labelKey });
+    const title = t(route.labelKey);
 
     return {
       id: route.id,
@@ -16,7 +16,7 @@ function convertToNavRoutes(routes: SidebarRoute[], intl: ReturnType<typeof useI
       icon: route.icon ? <route.icon className="size-4" /> : undefined,
       link: route.path,
       subs: route.children?.map((child) => ({
-        title: intl.formatMessage({ id: child.labelKey, defaultMessage: child.labelKey }),
+        title: t(child.labelKey),
         link: child.path,
         icon: child.icon ? <child.icon className="size-4" /> : undefined,
       })),
@@ -25,10 +25,10 @@ function convertToNavRoutes(routes: SidebarRoute[], intl: ReturnType<typeof useI
 }
 
 export function useDynamicRoutes(): Route[] {
-  const intl = useIntl();
+  const { t } = useTranslation();
 
   return useMemo(() => {
     const sidebarRoutes = buildSidebarRoutes();
-    return convertToNavRoutes(sidebarRoutes, intl);
-  }, [intl]);
+    return convertToNavRoutes(sidebarRoutes, t);
+  }, [t]);
 }
