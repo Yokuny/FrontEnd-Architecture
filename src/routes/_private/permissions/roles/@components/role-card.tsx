@@ -57,7 +57,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
             <DropdownMenuContent align="end">
               {hasPermissionEdit && (
                 <DropdownMenuItem asChild>
-                  <Link to="/permissions/roles/edit/$id" params={{ id: role.id }}>
+                  <Link to="/permissions/roles/edit" search={{ id: role.id }}>
                     <Edit className="mr-2 size-4" />
                     {t('edit')}
                   </Link>
@@ -65,7 +65,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
               )}
               {hasPermissionViewUsers && (
                 <DropdownMenuItem asChild>
-                  <Link to="/permissions/roles/users/$id" params={{ id: role.id }}>
+                  <Link to="/permissions/roles/users" search={{ id: role.id }}>
                     <Users className="mr-2 size-4" />
                     {t('users')}
                   </Link>

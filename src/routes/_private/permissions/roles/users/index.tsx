@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Trash2, UserPlus, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
+import { z } from 'zod';
 
 import {
   AlertDialog,
@@ -20,12 +21,17 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useRole, useRolesApi, useRoleUsers } from '@/hooks/use-roles-api';
 
-export const Route = createFileRoute('/_private/permissions/roles/users/$id')({
+const roleUsersSearchSchema = z.object({
+  id: z.string(),
+});
+
+export const Route = createFileRoute('/_private/permissions/roles/users/')({
   component: RoleUsersPage,
+  validateSearch: (search) => roleUsersSearchSchema.parse(search),
 });
 
 function RoleUsersPage() {
-  const { id } = Route.useParams();
+  const { id } = Route.useSearch();
   const { t } = useTranslation();
   const { removeUserFromRole } = useRolesApi();
 

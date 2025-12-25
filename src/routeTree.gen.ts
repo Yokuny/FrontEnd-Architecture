@@ -9,26 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
-import { Route as IndexRouteImport } from './routes/index';
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
-import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
-import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
-import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
-import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
-import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
-import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
-import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
-import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
+import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
 import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
-import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions.add';
-import { Route as PrivatePermissionsUsersPasswordIdRouteImport } from './routes/_private/permissions/users/password.$id';
-import { Route as PrivatePermissionsUsersEnterprisesIdRouteImport } from './routes/_private/permissions/users/enterprises.$id';
-import { Route as PrivatePermissionsUsersEditIdRouteImport } from './routes/_private/permissions/users/edit.$id';
-import { Route as PrivatePermissionsRolesUsersIdRouteImport } from './routes/_private/permissions/roles/users.$id';
-import { Route as PrivatePermissionsRolesEditIdRouteImport } from './routes/_private/permissions/roles/edit.$id';
+import { Route as PrivatePermissionsRolesEditIndexRouteImport } from './routes/_private/permissions/roles/edit/index';
+import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
+import { Route as PrivatePermissionsRolesUsersIndexRouteImport } from './routes/_private/permissions/roles/users/index';
+import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
+import { Route as PrivatePermissionsUsersEditIndexRouteImport } from './routes/_private/permissions/users/edit/index';
+import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
+import { Route as PrivatePermissionsUsersPasswordIndexRouteImport } from './routes/_private/permissions/users/password/index';
+import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
+import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
+import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
+import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
+import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
+import { Route as PublicRouteImport } from './routes/_public';
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
+import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
+import { Route as IndexRouteImport } from './routes/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -47,6 +48,17 @@ const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   id: '/auth/',
   path: '/auth/',
   getParentRoute: () => PublicRoute,
+} as any);
+const PrivateSetUpCompanyIndexRoute =
+  PrivateSetUpCompanyIndexRouteImport.update({
+    id: '/set-up-company/',
+    path: '/set-up-company/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivatePermissionsIndexRoute = PrivatePermissionsIndexRouteImport.update({
+  id: '/permissions/',
+  path: '/permissions/',
+  getParentRoute: () => PrivateRoute,
 } as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
   id: '/auth/unlock',
@@ -93,6 +105,12 @@ const PrivatePermissionsRolesIndexRoute =
     path: '/permissions/roles/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivatePermissionsUsersPermissionsAddRoute =
+  PrivatePermissionsUsersPermissionsAddRouteImport.update({
+    id: '/permissions/users/permissions-add',
+    path: '/permissions/users/permissions-add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivatePermissionsUsersAddRoute =
   PrivatePermissionsUsersAddRouteImport.update({
     id: '/permissions/users/add',
@@ -105,40 +123,28 @@ const PrivatePermissionsRolesAddRoute =
     path: '/permissions/roles/add',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivatePermissionsUsersPermissionsAddRoute =
-  PrivatePermissionsUsersPermissionsAddRouteImport.update({
-    id: '/permissions/users/permissions/add',
-    path: '/permissions/users/permissions/add',
+const PrivatePermissionsUsersPasswordIndexRoute =
+  PrivatePermissionsUsersPasswordIndexRouteImport.update({
+    id: '/permissions/users/password/',
+    path: '/permissions/users/password/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivatePermissionsUsersPasswordIdRoute =
-  PrivatePermissionsUsersPasswordIdRouteImport.update({
-    id: '/permissions/users/password/$id',
-    path: '/permissions/users/password/$id',
+const PrivatePermissionsUsersEditIndexRoute =
+  PrivatePermissionsUsersEditIndexRouteImport.update({
+    id: '/permissions/users/edit/',
+    path: '/permissions/users/edit/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivatePermissionsUsersEnterprisesIdRoute =
-  PrivatePermissionsUsersEnterprisesIdRouteImport.update({
-    id: '/permissions/users/enterprises/$id',
-    path: '/permissions/users/enterprises/$id',
+const PrivatePermissionsRolesUsersIndexRoute =
+  PrivatePermissionsRolesUsersIndexRouteImport.update({
+    id: '/permissions/roles/users/',
+    path: '/permissions/roles/users/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivatePermissionsUsersEditIdRoute =
-  PrivatePermissionsUsersEditIdRouteImport.update({
-    id: '/permissions/users/edit/$id',
-    path: '/permissions/users/edit/$id',
-    getParentRoute: () => PrivateRoute,
-  } as any);
-const PrivatePermissionsRolesUsersIdRoute =
-  PrivatePermissionsRolesUsersIdRouteImport.update({
-    id: '/permissions/roles/users/$id',
-    path: '/permissions/roles/users/$id',
-    getParentRoute: () => PrivateRoute,
-  } as any);
-const PrivatePermissionsRolesEditIdRoute =
-  PrivatePermissionsRolesEditIdRouteImport.update({
-    id: '/permissions/roles/edit/$id',
-    path: '/permissions/roles/edit/$id',
+const PrivatePermissionsRolesEditIndexRoute =
+  PrivatePermissionsRolesEditIndexRouteImport.update({
+    id: '/permissions/roles/edit/',
+    path: '/permissions/roles/edit/',
     getParentRoute: () => PrivateRoute,
   } as any);
 
@@ -147,40 +153,42 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/permissions': typeof PrivatePermissionsIndexRoute;
+  '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
+  '/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
-  '/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
-  '/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
-  '/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
-  '/permissions/users/enterprises/$id': typeof PrivatePermissionsUsersEnterprisesIdRoute;
-  '/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
-  '/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
+  '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
+  '/permissions/users/edit': typeof PrivatePermissionsUsersEditIndexRoute;
+  '/permissions/users/password': typeof PrivatePermissionsUsersPasswordIndexRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/permissions': typeof PrivatePermissionsIndexRoute;
+  '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
+  '/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
-  '/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
-  '/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
-  '/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
-  '/permissions/users/enterprises/$id': typeof PrivatePermissionsUsersEnterprisesIdRoute;
-  '/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
-  '/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
+  '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
+  '/permissions/users/edit': typeof PrivatePermissionsUsersEditIndexRoute;
+  '/permissions/users/password': typeof PrivatePermissionsUsersPasswordIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
@@ -190,20 +198,21 @@ export interface FileRoutesById {
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/_private/permissions/': typeof PrivatePermissionsIndexRoute;
+  '/_private/set-up-company/': typeof PrivateSetUpCompanyIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/_private/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
+  '/_private/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
   '/_private/permissions/roles/': typeof PrivatePermissionsRolesIndexRoute;
   '/_private/permissions/users/': typeof PrivatePermissionsUsersIndexRoute;
   '/_private/set-up-company/integration-list/': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/_private/set-up-company/setup-api-external/': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/_private/set-up-company/setup-email/': typeof PrivateSetUpCompanySetupEmailIndexRoute;
-  '/_private/permissions/roles/edit/$id': typeof PrivatePermissionsRolesEditIdRoute;
-  '/_private/permissions/roles/users/$id': typeof PrivatePermissionsRolesUsersIdRoute;
-  '/_private/permissions/users/edit/$id': typeof PrivatePermissionsUsersEditIdRoute;
-  '/_private/permissions/users/enterprises/$id': typeof PrivatePermissionsUsersEnterprisesIdRoute;
-  '/_private/permissions/users/password/$id': typeof PrivatePermissionsUsersPasswordIdRoute;
-  '/_private/permissions/users/permissions/add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/_private/permissions/roles/edit/': typeof PrivatePermissionsRolesEditIndexRoute;
+  '/_private/permissions/roles/users/': typeof PrivatePermissionsRolesUsersIndexRoute;
+  '/_private/permissions/users/edit/': typeof PrivatePermissionsUsersEditIndexRoute;
+  '/_private/permissions/users/password/': typeof PrivatePermissionsUsersPasswordIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
@@ -212,40 +221,42 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/permissions'
+    | '/set-up-company'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
+    | '/permissions/users/permissions-add'
     | '/permissions/roles'
     | '/permissions/users'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
     | '/set-up-company/setup-email'
-    | '/permissions/roles/edit/$id'
-    | '/permissions/roles/users/$id'
-    | '/permissions/users/edit/$id'
-    | '/permissions/users/enterprises/$id'
-    | '/permissions/users/password/$id'
-    | '/permissions/users/permissions/add';
+    | '/permissions/roles/edit'
+    | '/permissions/roles/users'
+    | '/permissions/users/edit'
+    | '/permissions/users/password';
   fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/permissions'
+    | '/set-up-company'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
+    | '/permissions/users/permissions-add'
     | '/permissions/roles'
     | '/permissions/users'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
     | '/set-up-company/setup-email'
-    | '/permissions/roles/edit/$id'
-    | '/permissions/roles/users/$id'
-    | '/permissions/users/edit/$id'
-    | '/permissions/users/enterprises/$id'
-    | '/permissions/users/password/$id'
-    | '/permissions/users/permissions/add';
+    | '/permissions/roles/edit'
+    | '/permissions/roles/users'
+    | '/permissions/users/edit'
+    | '/permissions/users/password';
   id:
     | '__root__'
     | '/'
@@ -254,20 +265,21 @@ export interface FileRouteTypes {
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
+    | '/_private/permissions/'
+    | '/_private/set-up-company/'
     | '/_public/auth/'
     | '/_private/permissions/roles/add'
     | '/_private/permissions/users/add'
+    | '/_private/permissions/users/permissions-add'
     | '/_private/permissions/roles/'
     | '/_private/permissions/users/'
     | '/_private/set-up-company/integration-list/'
     | '/_private/set-up-company/setup-api-external/'
     | '/_private/set-up-company/setup-email/'
-    | '/_private/permissions/roles/edit/$id'
-    | '/_private/permissions/roles/users/$id'
-    | '/_private/permissions/users/edit/$id'
-    | '/_private/permissions/users/enterprises/$id'
-    | '/_private/permissions/users/password/$id'
-    | '/_private/permissions/users/permissions/add';
+    | '/_private/permissions/roles/edit/'
+    | '/_private/permissions/roles/users/'
+    | '/_private/permissions/users/edit/'
+    | '/_private/permissions/users/password/';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
@@ -305,6 +317,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth';
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/set-up-company/': {
+      id: '/_private/set-up-company/';
+      path: '/set-up-company';
+      fullPath: '/set-up-company';
+      preLoaderRoute: typeof PrivateSetUpCompanyIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/permissions/': {
+      id: '/_private/permissions/';
+      path: '/permissions';
+      fullPath: '/permissions';
+      preLoaderRoute: typeof PrivatePermissionsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_public/auth/unlock': {
       id: '/_public/auth/unlock';
@@ -362,6 +388,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivatePermissionsRolesIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/permissions/users/permissions-add': {
+      id: '/_private/permissions/users/permissions-add';
+      path: '/permissions/users/permissions-add';
+      fullPath: '/permissions/users/permissions-add';
+      preLoaderRoute: typeof PrivatePermissionsUsersPermissionsAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/permissions/users/add': {
       id: '/_private/permissions/users/add';
       path: '/permissions/users/add';
@@ -376,70 +409,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivatePermissionsRolesAddRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/permissions/users/permissions/add': {
-      id: '/_private/permissions/users/permissions/add';
-      path: '/permissions/users/permissions/add';
-      fullPath: '/permissions/users/permissions/add';
-      preLoaderRoute: typeof PrivatePermissionsUsersPermissionsAddRouteImport;
+    '/_private/permissions/users/password/': {
+      id: '/_private/permissions/users/password/';
+      path: '/permissions/users/password';
+      fullPath: '/permissions/users/password';
+      preLoaderRoute: typeof PrivatePermissionsUsersPasswordIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/permissions/users/password/$id': {
-      id: '/_private/permissions/users/password/$id';
-      path: '/permissions/users/password/$id';
-      fullPath: '/permissions/users/password/$id';
-      preLoaderRoute: typeof PrivatePermissionsUsersPasswordIdRouteImport;
+    '/_private/permissions/users/edit/': {
+      id: '/_private/permissions/users/edit/';
+      path: '/permissions/users/edit';
+      fullPath: '/permissions/users/edit';
+      preLoaderRoute: typeof PrivatePermissionsUsersEditIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/permissions/users/enterprises/$id': {
-      id: '/_private/permissions/users/enterprises/$id';
-      path: '/permissions/users/enterprises/$id';
-      fullPath: '/permissions/users/enterprises/$id';
-      preLoaderRoute: typeof PrivatePermissionsUsersEnterprisesIdRouteImport;
+    '/_private/permissions/roles/users/': {
+      id: '/_private/permissions/roles/users/';
+      path: '/permissions/roles/users';
+      fullPath: '/permissions/roles/users';
+      preLoaderRoute: typeof PrivatePermissionsRolesUsersIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/permissions/users/edit/$id': {
-      id: '/_private/permissions/users/edit/$id';
-      path: '/permissions/users/edit/$id';
-      fullPath: '/permissions/users/edit/$id';
-      preLoaderRoute: typeof PrivatePermissionsUsersEditIdRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
-    '/_private/permissions/roles/users/$id': {
-      id: '/_private/permissions/roles/users/$id';
-      path: '/permissions/roles/users/$id';
-      fullPath: '/permissions/roles/users/$id';
-      preLoaderRoute: typeof PrivatePermissionsRolesUsersIdRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
-    '/_private/permissions/roles/edit/$id': {
-      id: '/_private/permissions/roles/edit/$id';
-      path: '/permissions/roles/edit/$id';
-      fullPath: '/permissions/roles/edit/$id';
-      preLoaderRoute: typeof PrivatePermissionsRolesEditIdRouteImport;
+    '/_private/permissions/roles/edit/': {
+      id: '/_private/permissions/roles/edit/';
+      path: '/permissions/roles/edit';
+      fullPath: '/permissions/roles/edit';
+      preLoaderRoute: typeof PrivatePermissionsRolesEditIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
   }
 }
 
 interface PrivateRouteChildren {
+  PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
+  PrivateSetUpCompanyIndexRoute: typeof PrivateSetUpCompanyIndexRoute;
   PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
   PrivatePermissionsUsersAddRoute: typeof PrivatePermissionsUsersAddRoute;
+  PrivatePermissionsUsersPermissionsAddRoute: typeof PrivatePermissionsUsersPermissionsAddRoute;
   PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
   PrivatePermissionsUsersIndexRoute: typeof PrivatePermissionsUsersIndexRoute;
   PrivateSetUpCompanyIntegrationListIndexRoute: typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   PrivateSetUpCompanySetupApiExternalIndexRoute: typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   PrivateSetUpCompanySetupEmailIndexRoute: typeof PrivateSetUpCompanySetupEmailIndexRoute;
-  PrivatePermissionsRolesEditIdRoute: typeof PrivatePermissionsRolesEditIdRoute;
-  PrivatePermissionsRolesUsersIdRoute: typeof PrivatePermissionsRolesUsersIdRoute;
-  PrivatePermissionsUsersEditIdRoute: typeof PrivatePermissionsUsersEditIdRoute;
-  PrivatePermissionsUsersEnterprisesIdRoute: typeof PrivatePermissionsUsersEnterprisesIdRoute;
-  PrivatePermissionsUsersPasswordIdRoute: typeof PrivatePermissionsUsersPasswordIdRoute;
-  PrivatePermissionsUsersPermissionsAddRoute: typeof PrivatePermissionsUsersPermissionsAddRoute;
+  PrivatePermissionsRolesEditIndexRoute: typeof PrivatePermissionsRolesEditIndexRoute;
+  PrivatePermissionsRolesUsersIndexRoute: typeof PrivatePermissionsRolesUsersIndexRoute;
+  PrivatePermissionsUsersEditIndexRoute: typeof PrivatePermissionsUsersEditIndexRoute;
+  PrivatePermissionsUsersPasswordIndexRoute: typeof PrivatePermissionsUsersPasswordIndexRoute;
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
+  PrivateSetUpCompanyIndexRoute: PrivateSetUpCompanyIndexRoute,
   PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
   PrivatePermissionsUsersAddRoute: PrivatePermissionsUsersAddRoute,
+  PrivatePermissionsUsersPermissionsAddRoute:
+    PrivatePermissionsUsersPermissionsAddRoute,
   PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,
   PrivatePermissionsUsersIndexRoute: PrivatePermissionsUsersIndexRoute,
   PrivateSetUpCompanyIntegrationListIndexRoute:
@@ -448,15 +472,12 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateSetUpCompanySetupApiExternalIndexRoute,
   PrivateSetUpCompanySetupEmailIndexRoute:
     PrivateSetUpCompanySetupEmailIndexRoute,
-  PrivatePermissionsRolesEditIdRoute: PrivatePermissionsRolesEditIdRoute,
-  PrivatePermissionsRolesUsersIdRoute: PrivatePermissionsRolesUsersIdRoute,
-  PrivatePermissionsUsersEditIdRoute: PrivatePermissionsUsersEditIdRoute,
-  PrivatePermissionsUsersEnterprisesIdRoute:
-    PrivatePermissionsUsersEnterprisesIdRoute,
-  PrivatePermissionsUsersPasswordIdRoute:
-    PrivatePermissionsUsersPasswordIdRoute,
-  PrivatePermissionsUsersPermissionsAddRoute:
-    PrivatePermissionsUsersPermissionsAddRoute,
+  PrivatePermissionsRolesEditIndexRoute: PrivatePermissionsRolesEditIndexRoute,
+  PrivatePermissionsRolesUsersIndexRoute:
+    PrivatePermissionsRolesUsersIndexRoute,
+  PrivatePermissionsUsersEditIndexRoute: PrivatePermissionsUsersEditIndexRoute,
+  PrivatePermissionsUsersPasswordIndexRoute:
+    PrivatePermissionsUsersPasswordIndexRoute,
 };
 
 const PrivateRouteWithChildren =

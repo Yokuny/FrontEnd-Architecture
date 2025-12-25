@@ -2,18 +2,24 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { ArrowLeft, CheckCircle2, RefreshCw, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useUsersApi } from '@/hooks/use-users-api';
 
-export const Route = createFileRoute('/_private/permissions/users/password/$id')({
+const updatePasswordSearchSchema = z.object({
+  id: z.string(),
+});
+
+export const Route = createFileRoute('/_private/permissions/users/password/')({
   component: UpdatePasswordPage,
+  validateSearch: (search) => updatePasswordSearchSchema.parse(search),
 });
 
 function UpdatePasswordPage() {
   const { t } = useTranslation();
-  const { id } = Route.useParams();
+  const { id } = Route.useSearch();
   const navigate = useNavigate();
   const { sendPasswordResetEmail } = useUsersApi();
 
@@ -61,7 +67,7 @@ function UpdatePasswordPage() {
                 <CheckCircle2 className="h-10 w-10 text-green-600" />
               </div>
               <p className="text-muted-foreground">{t('send.password.email')}</p>
-              <Button variant="ghost" onClick={() => navigate({ to: '/permissions/users' })}>
+              <Button variant="ghost" onClick={() => navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } })}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 {t('back')}
               </Button>

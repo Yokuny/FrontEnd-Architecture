@@ -73,7 +73,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
             <DropdownMenuContent align="end">
               {hasPermissionPermissions && user.userEnterprise && (
                 <DropdownMenuItem asChild>
-                  <Link to="/permissions/users/permissions/add" search={user.userEnterprise.length === 1 ? { id: user.userEnterprise[0].id } : { idRef: user.id }}>
+                  <Link to="/permissions/users/permissions-add" search={user.userEnterprise.length === 1 ? { id: user.userEnterprise[0].id } : { idRef: user.id }}>
                     <Shield className="mr-2 h-4 w-4" />
                     {t('permissions')}
                   </Link>
@@ -81,7 +81,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
               )}
               {hasPermissionEdit && (
                 <DropdownMenuItem asChild>
-                  <Link to="/permissions/users/edit/$id" params={{ id: user.id }}>
+                  <Link to="/permissions/users/edit" search={{ id: user.id }}>
                     <Edit className="mr-2 h-4 w-4" />
                     {t('edit')}
                   </Link>
@@ -89,7 +89,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
               )}
               {hasPermissionPassword && !user.isOnlyContact && (
                 <DropdownMenuItem asChild>
-                  <Link to="/permissions/users/password/$id" params={{ id: user.id }}>
+                  <Link to="/permissions/users/password" search={{ id: user.id }}>
                     <Lock className="mr-2 h-4 w-4" />
                     {t('new.password')}
                   </Link>

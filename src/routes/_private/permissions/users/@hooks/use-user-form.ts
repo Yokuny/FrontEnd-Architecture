@@ -53,7 +53,7 @@ export function useUserForm(id?: string): UseUserFormReturn {
         await createUser.mutateAsync(data);
         toast.success(t('save.successfull'));
       }
-      navigate({ to: '/permissions/users' });
+      navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
       toast.error(t('error.save'));
     }
@@ -64,7 +64,7 @@ export function useUserForm(id?: string): UseUserFormReturn {
     try {
       await deleteUser.mutateAsync(id);
       toast.success(t('delete.successfull'));
-      navigate({ to: '/permissions/users' });
+      navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
       toast.error(t('error.delete'));
     }
@@ -81,7 +81,7 @@ export function useUserForm(id?: string): UseUserFormReturn {
         await disableUser.mutateAsync({ id, reason: 'Disabled by admin' });
         toast.success(t('user.disabled'));
       }
-      navigate({ to: '/permissions/users' });
+      navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
       toast.error(t('error'));
     }

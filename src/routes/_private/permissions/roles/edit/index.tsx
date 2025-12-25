@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Edit2, MessageCircle, Monitor, Settings, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 import { EnterpriseSelect } from '@/components/selects';
 import {
   AlertDialog,
@@ -18,18 +19,23 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AssetsPermissions } from './@components/assets-permissions';
-import { ChatbotPermissions } from './@components/chatbot-permissions';
-import { PathsSelector } from './@components/paths-selector';
-import { VisibilitySettings } from './@components/visibility-settings';
-import { useRoleForm } from './@hooks/use-role-form';
+import { AssetsPermissions } from '../@components/assets-permissions';
+import { ChatbotPermissions } from '../@components/chatbot-permissions';
+import { PathsSelector } from '../@components/paths-selector';
+import { VisibilitySettings } from '../@components/visibility-settings';
+import { useRoleForm } from '../@hooks/use-role-form';
 
-export const Route = createFileRoute('/_private/permissions/roles/edit/$id')({
+const editRoleSearchSchema = z.object({
+  id: z.string(),
+});
+
+export const Route = createFileRoute('/_private/permissions/roles/edit/')({
   component: EditRolePage,
+  validateSearch: (search) => editRoleSearchSchema.parse(search),
 });
 
 function EditRolePage() {
-  const { id } = Route.useParams();
+  const { id } = Route.useSearch();
   const { t } = useTranslation();
   const { form, onSubmit, handleDelete, isLoading, isPending } = useRoleForm(id);
 

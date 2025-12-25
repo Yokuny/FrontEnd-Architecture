@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 import { LanguageFormSelect, TypeCredentialsSelect, UserTypeSelect } from '@/components/selects';
 import {
   AlertDialog,
@@ -18,15 +19,21 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUserForm } from './@hooks/use-user-form';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useUserForm } from '../@hooks/use-user-form';
 
-export const Route = createFileRoute('/_private/permissions/users/edit/$id')({
+const editUserSearchSchema = z.object({
+  id: z.string(),
+});
+
+export const Route = createFileRoute('/_private/permissions/users/edit/')({
   component: EditUserPage,
+  validateSearch: (search) => editUserSearchSchema.parse(search),
 });
 
 function EditUserPage() {
   const { t } = useTranslation();
-  const { id } = Route.useParams();
+  const { id } = Route.useSearch();
   const { form, onSubmit, handleDelete, handleDisable, isLoading, isPending } = useUserForm(id);
 
   const user = form.getValues();
@@ -37,8 +44,9 @@ function EditUserPage() {
   if (isLoading) {
     return (
       <Card>
+        <CardHeader title={t('edit.user')} />
         <CardContent className="p-12">
-          <div className="text-center text-muted-foreground">{t('loading')}</div>
+          <Skeleton className="h-48 w-full" />
         </CardContent>
       </Card>
     );

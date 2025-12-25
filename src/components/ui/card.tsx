@@ -1,5 +1,5 @@
 import { useRouter } from '@tanstack/react-router';
-import { ArrowLeft } from 'lucide-react';
+import { MoveLeft } from 'lucide-react';
 import type * as React from 'react';
 import { AutoBreadcrumbs } from '@/components/auto-breadcrumbs';
 import { Button } from '@/components/ui/button';
@@ -25,7 +25,7 @@ function CardHeader({ className, children, title, ...props }: CardHeaderProps) {
       <div className="flex items-start justify-between w-full">
         <div className="flex items-center gap-4">
           <Button variant="outline" size="icon" className="shrink-0 rounded-lg h-9 w-11" onClick={() => router.history.back()}>
-            <ArrowLeft className="size-4" />
+            <MoveLeft className="size-4" />
           </Button>
           <div className="flex flex-col gap-1">{title && <CardTitle>{title}</CardTitle>}</div>
         </div>

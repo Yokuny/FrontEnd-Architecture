@@ -51,7 +51,7 @@ function ListUsersPage() {
             </Button>
           )}
           {hasPermissionPermissions && (
-            <Button onClick={() => navigate({ to: '/permissions/users/permissions/add' })}>
+            <Button onClick={() => navigate({ to: '/permissions/users/permissions-add' })}>
               <Shield className="size-4" />
               {t('new.permission')}
             </Button>

@@ -56,7 +56,7 @@ export function PartByMachineSelect({
       label={label}
       placeholder={placeholder}
       value={value}
-      onChange={onChange}
+      onChange={(val) => onChange?.(val)}
       query={query}
       mapToOptions={mapPartsByMachineToOptions}
       disabled={disabled}

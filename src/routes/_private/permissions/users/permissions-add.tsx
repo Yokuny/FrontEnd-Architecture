@@ -19,11 +19,12 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useUser } from '@/hooks/use-users-api';
 import { usePermissionForm } from './@hooks/use-permission-form';
 import { userPermissionSearchSchema } from './@interface/user';
 
-export const Route = createFileRoute('/_private/permissions/users/permissions/add')({
+export const Route = createFileRoute('/_private/permissions/users/permissions-add')({
   component: AddPermissionPage,
   validateSearch: (search) => userPermissionSearchSchema.parse(search),
 });
@@ -42,8 +43,9 @@ function AddPermissionPage() {
   if (isLoading && id) {
     return (
       <Card>
+        <CardHeader title={t('edit.user')} />
         <CardContent className="p-12">
-          <div className="text-center text-muted-foreground">{t('loading')}</div>
+          <Skeleton className="h-48 w-full" />
         </CardContent>
       </Card>
     );

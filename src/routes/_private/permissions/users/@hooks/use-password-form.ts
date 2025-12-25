@@ -29,7 +29,7 @@ export function usePasswordForm(id: string): UsePasswordFormReturn {
     try {
       await updatePassword.mutateAsync(data);
       toast.success(t('password.updated'));
-      navigate({ to: '/permissions/users' });
+      navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
       toast.error(t('error.update.password'));
     }
