@@ -7,7 +7,11 @@ import { cn } from '@/lib/utils';
 
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div data-slot="card" className={cn('bg-sidebar text-card-foreground flex flex-col gap-6 rounded-lg md:border border-sidebar-border shadow-sm py-6', className)} {...props} />
+    <div
+      data-slot="card"
+      className={cn('bg-background text-card-foreground flex flex-col gap-6 rounded-lg md:border border-sidebar-border shadow-sm py-6', className)}
+      {...props}
+    />
   );
 }
 

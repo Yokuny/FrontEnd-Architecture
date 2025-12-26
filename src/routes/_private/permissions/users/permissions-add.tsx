@@ -20,6 +20,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { useUser } from '@/hooks/use-users-api';
 import { usePermissionForm } from './@hooks/use-permission-form';
 import { userPermissionSearchSchema } from './@interface/user';
@@ -43,9 +44,11 @@ function AddPermissionPage() {
   if (isLoading && id) {
     return (
       <Card>
-        <CardHeader title={t('edit.user')} />
+        <CardHeader title={t('edit.user.permission')} />
         <CardContent className="p-12">
-          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full flex items-center justify-center">
+            <Spinner />
+          </Skeleton>
         </CardContent>
       </Card>
     );

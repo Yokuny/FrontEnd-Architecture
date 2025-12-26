@@ -20,6 +20,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { useUserForm } from '../@hooks/use-user-form';
 
 const editUserSearchSchema = z.object({
@@ -46,7 +47,9 @@ function EditUserPage() {
       <Card>
         <CardHeader title={t('edit.user')} />
         <CardContent className="p-12">
-          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full flex items-center justify-center">
+            <Spinner />
+          </Skeleton>
         </CardContent>
       </Card>
     );

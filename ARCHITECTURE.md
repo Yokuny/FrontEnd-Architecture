@@ -110,6 +110,26 @@ src/routes/_private/embarcacoes/
   }
   ```
 
+  **Padrão de Loading de Página**:
+  
+  Quando os dados estão sendo carregados, exiba o shell da página com skeleton:
+
+  ```tsx
+  import { Card, CardContent, CardHeader } from '@/components/ui/card';
+  import { Skeleton } from '@/components/ui/skeleton';
+  import { Spinner } from '@/components/ui/spinner';
+
+  // Quando isLoading:
+  <Card>
+    <CardHeader title={t('edit.user')} />
+    <CardContent className="p-12">
+      <Skeleton className="h-48 w-full flex items-center justify-center">
+        <Spinner />
+      </Skeleton>
+    </CardContent>
+  </Card>
+  ```
+
   3. [`Select`](./src/components/selects/index.ts): Busque os seletores no diretório `@/components/selects`, como está é uma nova arquitetura os nomes podem variar, as operaçoes desses seletores estão presentes em [`@/hooks/`](./src/hooks/).
 
   Exemplo de conversão da antiga nomeclatura para a nova:

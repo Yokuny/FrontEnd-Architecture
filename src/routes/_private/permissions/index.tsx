@@ -32,7 +32,7 @@ function PermissionsHubPage() {
       <CardHeader title={t('permissions')} />
       <CardContent className="grid gap-4 md:grid-cols-2">
         {menuItems.map((item) => (
-          <Item key={item.to} variant="outline" className="bg-card hover:bg-muted/50 transition-colors cursor-pointer h-full" asChild>
+          <Item key={item.to} variant="outline" className="cursor-pointer h-full" asChild>
             <Link to={item.to} search={item.search}>
               <ItemMedia variant="icon">
                 <item.icon className="size-5" />

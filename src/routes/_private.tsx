@@ -1,4 +1,5 @@
-import { createFileRoute, Outlet, redirect, useRouterState } from '@tanstack/react-router';
+// import { createFileRoute, Outlet, redirect, useRouterState } from '@tanstack/react-router';
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 import { AppSidebar } from '@/components/sidebar-03/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { useAuth } from '@/hooks/use-auth';
@@ -15,24 +16,25 @@ import { useAuth } from '@/hooks/use-auth';
  */
 
 // Lista de rotas que devem ter layout fullscreen (sem sidebar visível por padrão)
-const FULLSCREEN_ROUTES = ['/fleet'];
+// const FULLSCREEN_ROUTES = ['/fleet'];
 
 function PrivateLayout() {
-  const router = useRouterState();
-  const currentPath = router.location.pathname;
+  // const router = useRouterState();
+  // const currentPath = router.location.pathname;
 
-  const isFullscreenRoute = FULLSCREEN_ROUTES.some((route) => currentPath.startsWith(route));
+  // const isFullscreenRoute = FULLSCREEN_ROUTES.some((route) => currentPath.startsWith(route));
 
   return (
-    <SidebarProvider defaultOpen={!isFullscreenRoute}>
-      <div className="relative flex h-screen w-full">
+    <SidebarProvider defaultOpen={false}>
+      <main className="relative flex bg-accent w-full">
+        {/* <AppSidebar hidden={isFullscreenRoute} /> */}
         <AppSidebar />
         <SidebarInset>
-          <main className="md:p-2.5 md:pl-1">
+          <div className="md:p-2.5 md:pl-1">
             <Outlet />
-          </main>
+          </div>
         </SidebarInset>
-      </div>
+      </main>
     </SidebarProvider>
   );
 }

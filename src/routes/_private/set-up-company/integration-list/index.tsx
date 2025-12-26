@@ -11,6 +11,8 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { INTEGRATION_OPTIONS, TYPES_WITH_IMO, TYPES_WITH_MMSI, UPDATE_INTERVAL_OPTIONS } from './@consts/integration-options';
@@ -71,11 +73,9 @@ function IntegrationListPage() {
       <CardHeader title={`${t('integration')} AIS`} />
       <CardContent>
         {isLoading ? (
-          <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <div key={`skeleton-${i}`} className="h-16 bg-muted animate-pulse rounded-lg" />
-            ))}
-          </div>
+          <Skeleton className="h-48 w-full flex items-center justify-center">
+            <Spinner />
+          </Skeleton>
         ) : (
           <div className="overflow-x-auto">
             <Table>

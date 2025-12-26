@@ -159,6 +159,26 @@ function PageTemplate() {
 5. Use `<CardFooter>` for form submit buttons
 6. Use `useTranslation` for any text
 
+### Loading State Pattern
+
+When data is being fetched, display the page shell with loading skeleton:
+
+```tsx
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
+
+// Inside component when isLoading:
+<Card>
+  <CardHeader title={t('module.title')} />
+  <CardContent className="p-12">
+    <Skeleton className="h-48 w-full flex items-center justify-center">
+      <Spinner />
+    </Skeleton>
+  </CardContent>
+</Card>
+```
+
 ---
 
 ## 5. LEGACY COMPONENT MAPPING

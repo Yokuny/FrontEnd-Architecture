@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { useUsers } from '@/hooks/use-users-api';
 import { UserCard } from './@components/user-card';
 
@@ -60,11 +62,9 @@ function ListUsersPage() {
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <div key={`skeleton-${i}`} className="h-24 bg-muted animate-pulse rounded-lg" />
-            ))}
-          </div>
+          <Skeleton className="h-48 w-full flex items-center justify-center">
+            <Spinner />
+          </Skeleton>
         ) : data && data.data.length > 0 ? (
           <div className="space-y-4">
             {data.data.map((user) => (

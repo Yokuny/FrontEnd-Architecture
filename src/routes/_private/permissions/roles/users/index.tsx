@@ -19,6 +19,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { useRole, useRolesApi, useRoleUsers } from '@/hooks/use-roles-api';
 
 const roleUsersSearchSchema = z.object({
@@ -73,11 +75,9 @@ function RoleUsersPage() {
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <div className="space-y-4">
-            {[...Array(3)].map((_, i) => (
-              <div key={`skeleton-${i}`} className="h-16 bg-muted animate-pulse rounded-lg" />
-            ))}
-          </div>
+          <Skeleton className="h-48 w-full flex items-center justify-center">
+            <Spinner />
+          </Skeleton>
         ) : users && users.length > 0 ? (
           <div className="space-y-3">
             {users.map((user) => {

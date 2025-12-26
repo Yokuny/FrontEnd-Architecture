@@ -18,6 +18,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AssetsPermissions } from '../@components/assets-permissions';
 import { ChatbotPermissions } from '../@components/chatbot-permissions';
@@ -42,8 +44,11 @@ function EditRolePage() {
   if (isLoading) {
     return (
       <Card>
+        <CardHeader title={t('edit.role')} />
         <CardContent className="p-12">
-          <div className="text-center text-muted-foreground">{t('loading')}</div>
+          <Skeleton className="h-48 w-full flex items-center justify-center">
+            <Spinner />
+          </Skeleton>
         </CardContent>
       </Card>
     );

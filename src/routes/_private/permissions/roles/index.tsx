@@ -3,6 +3,8 @@ import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { useRolesAll } from '@/hooks/use-roles-api';
 import { RoleCard } from './@components/role-card';
 
@@ -31,11 +33,9 @@ function ListRolesPage() {
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <div className="space-y-4">
-            {[...Array(3)].map((_, i) => (
-              <div key={`skeleton-${i}`} className="h-24 bg-muted animate-pulse rounded-lg" />
-            ))}
-          </div>
+          <Skeleton className="h-48 w-full flex items-center justify-center">
+            <Spinner />
+          </Skeleton>
         ) : roles && roles.length > 0 ? (
           <div className="space-y-4">
             {roles.map((role) => (

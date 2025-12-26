@@ -76,7 +76,7 @@ function extractRoutes(): string[] {
   // Extrair apenas primeiro nível de sub-rotas (2 segmentos)
   const filteredRoutes: string[] = [];
 
-  for (const [baseSegment, routes] of routeGroups) {
+  for (const [_baseSegment, routes] of routeGroups) {
     for (const route of routes) {
       const segments = route.split('/').filter(Boolean);
 
