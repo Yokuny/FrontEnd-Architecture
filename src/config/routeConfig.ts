@@ -35,8 +35,15 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
+  '/permissions',
   '/permissions/roles',
+  '/permissions/roles/edit',
+  '/permissions/roles/users',
   '/permissions/users',
+  '/permissions/users/edit',
+  '/permissions/users/password',
+  '/permissions/users/permissions-add',
+  '/set-up-company',
   '/set-up-company/integration-list',
   '/set-up-company/setup-api-external',
   '/set-up-company/setup-email',

@@ -9,27 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as PrivateRouteImport } from './routes/_private';
-import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
-import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
-import { Route as PrivatePermissionsRolesEditIndexRouteImport } from './routes/_private/permissions/roles/edit/index';
-import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
-import { Route as PrivatePermissionsRolesUsersIndexRouteImport } from './routes/_private/permissions/roles/users/index';
-import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
-import { Route as PrivatePermissionsUsersEditIndexRouteImport } from './routes/_private/permissions/users/edit/index';
-import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
-import { Route as PrivatePermissionsUsersPasswordIndexRouteImport } from './routes/_private/permissions/users/password/index';
-import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
-import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
-import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
-import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
-import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
 import { Route as PublicRouteImport } from './routes/_public';
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
-import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
-import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
+import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
+import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
+import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
+import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
+import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
+import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
+import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
+import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
+import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
+import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
+import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
+import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
+import { Route as PrivatePermissionsUsersPasswordIndexRouteImport } from './routes/_private/permissions/users/password/index';
+import { Route as PrivatePermissionsUsersEditIndexRouteImport } from './routes/_private/permissions/users/edit/index';
+import { Route as PrivatePermissionsRolesUsersIndexRouteImport } from './routes/_private/permissions/roles/users/index';
+import { Route as PrivatePermissionsRolesEditIndexRouteImport } from './routes/_private/permissions/roles/edit/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',

@@ -1,7 +1,7 @@
 /**
  * Script para extrair rotas do routeTree.gen.ts
  *
- * Uso: npx tsx src/config/extract-routes.ts
+ * Uso: npx tsx src/config/extractRoutes.ts
  *
  * Este script lê o arquivo routeTree.gen.ts e extrai as rotas privadas
  * para atualizar o MAIN_ROUTES em routeConfig.ts

@@ -39,13 +39,7 @@ export function SSOButton({ onSuccess }: SSOButtonProps) {
   };
 
   return (
-    <Button
-      type="button"
-      onClick={handleSSOLogin}
-      disabled={isLoading}
-      className="w-full h-12 font-semibold text-base bg-linear-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-      size="lg"
-    >
+    <Button type="button" onClick={handleSSOLogin} disabled={isLoading} variant="blue" className="w-full mt-4 font-semibold text-base" size="lg">
       {isLoading ? (
         <>
           <Loader2 className="mr-2 h-5 w-5 animate-spin" />

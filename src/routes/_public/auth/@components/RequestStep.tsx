@@ -6,8 +6,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
-import { Field } from '@/components/ui/field';
+import { FieldGroup } from '@/components/ui/field';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useRequestPasswordReset } from '@/hooks/use-auth-api';
@@ -48,72 +47,57 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
   };
 
   return (
-    <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
-      <div className="p-6 text-center space-y-1 flex flex-col">
-        <CardTitle className="text-2xl font-bold tracking-tight text-white">{t('request.password')}</CardTitle>
-        <CardDescription className="text-zinc-400">{t('request.password.instructions')}</CardDescription>
+    <FieldGroup className="flex flex-col gap-6">
+      <div className="flex flex-col items-center gap-1 text-center">
+        <h1 className="text-2xl font-bold">{t('request.password')}</h1>
+        <p className="text-muted-foreground text-sm text-balance">{t('request.password.instructions')}</p>
       </div>
 
-      <CardContent className="space-y-6 pt-2">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-zinc-300 font-medium">{t('login.email')}</FormLabel>
-                  <FormControl>
-                    <Field>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder={t('login.email.placeholder')}
-                          className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
-                          autoFocus
-                        />
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                          <Mail className="h-5 w-5 text-zinc-500" />
-                        </div>
-                      </div>
-                    </Field>
-                  </FormControl>
-                  <FormMessage className="text-red-400" />
-                </FormItem>
-              )}
-            />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-medium">{t('login.email')}</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input {...field} type="email" placeholder={t('login.email.placeholder')} autoFocus />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <Mail className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <div className="flex justify-center">
-              <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={handleRecaptchaChange} theme="dark" />
-            </div>
-            {form.formState.errors.reCaptcha && <p className="text-sm text-red-400 text-center">{form.formState.errors.reCaptcha.message}</p>}
+          <div className="flex justify-center">
+            <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={handleRecaptchaChange} theme="light" />
+          </div>
+          {form.formState.errors.reCaptcha && <p className="text-sm text-destructive text-center">{form.formState.errors.reCaptcha.message}</p>}
 
-            <Button
-              type="submit"
-              disabled={isPending}
-              className="w-full h-12 font-semibold text-base bg-linear-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-              size="lg"
-            >
-              {isPending ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  {t('sending')}
-                </>
-              ) : (
-                t('continue')
-              )}
-            </Button>
-          </form>
-        </Form>
-
-        <div className="text-center">
-          <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })}>
-            <ArrowLeft className="h-4 w-4" />
-            {t('back.login')}
+          <Button type="submit" variant="blue" disabled={isPending} className="w-full mt-4 font-semibold text-base" size="lg">
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                {t('sending')}
+              </>
+            ) : (
+              t('continue')
+            )}
           </Button>
-        </div>
-      </CardContent>
-    </Card>
+        </form>
+      </Form>
+
+      <div className="text-center">
+        <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })}>
+          <ArrowLeft className="h-4 w-4" />
+          {t('back.login')}
+        </Button>
+      </div>
+    </FieldGroup>
   );
 }

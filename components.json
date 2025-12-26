@@ -23,6 +23,8 @@
     "@shadcnblocks": "https://shadcnblocks.com/r/{name}.json",
     "@blocks": "https://blocks.so/r/{name}.json",
     "@shadcn-studio": "https://shadcnstudio.com/r/{name}.json",
-    "@ss-components": "https://shadcnstudio.com/r/components/{name}.json"
+    "@ss-components": "https://shadcnstudio.com/r/components/{name}.json",
+    "@paceui-ui": "https://paceui-ui.vercel.app/r/{name}.json",
+    "@magicui": "https://magicui.design/r/{name}.json"
   }
 }

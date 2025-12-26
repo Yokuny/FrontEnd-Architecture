@@ -18,17 +18,17 @@ export function RecaptchaStep({ email, recaptchaRef, onVerify, onBack, isLoading
   return (
     <div className="space-y-5">
       <Field>
-        <FieldLabel className="text-zinc-300 font-medium">{t('login.email')}</FieldLabel>
-        <Input type="email" value={email} disabled className="h-12 bg-white/5 border-white/10 text-white opacity-60" />
+        <FieldLabel className="font-medium">{t('login.email')}</FieldLabel>
+        <Input type="email" className="h-14" value={email} disabled />
       </Field>
 
       {isLoading ? (
         <div className="flex justify-center items-center py-8">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       ) : (
         <div className="flex justify-center">
-          <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={onVerify} theme="dark" />
+          <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={onVerify} theme="light" />
         </div>
       )}
 

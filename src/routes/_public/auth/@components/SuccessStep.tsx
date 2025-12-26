@@ -2,30 +2,26 @@ import { useNavigate } from '@tanstack/react-router';
 import { CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { FieldGroup } from '@/components/ui/field';
 
 export function SuccessStep() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
-    <Card className="border-0 shadow-2xl bg-black/40 backdrop-blur-xl text-white border-white/10 ring-1 ring-white/20">
-      <CardContent className="flex flex-col items-center justify-center py-12 space-y-6">
-        <div className="bg-linear-to-br from-green-500/20 to-green-500/5 p-6 rounded-full backdrop-blur-sm border border-green-500/20 shadow-lg shadow-green-500/10">
+    <FieldGroup className="flex flex-col gap-6">
+      <div className="flex flex-col items-center justify-center py-8 space-y-6">
+        <div className="bg-green-500/10 p-6 rounded-full border border-green-500/20">
           <CheckCircle2 className="h-16 w-16 text-green-500" />
         </div>
         <div className="text-center space-y-2">
-          <h2 className="text-2xl font-bold text-white">{t('email.recover.send')}</h2>
-          <p className="text-zinc-400">{t('email.send')}</p>
+          <h2 className="text-2xl font-bold">{t('email.recover.send')}</h2>
+          <p className="text-muted-foreground">{t('email.send')}</p>
         </div>
-        <Button
-          onClick={() => navigate({ to: '/auth' })}
-          className="w-full h-12 font-semibold text-base bg-linear-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-          size="lg"
-        >
+        <Button onClick={() => navigate({ to: '/auth' })} variant="blue" className="w-full mt-4 font-semibold text-base" size="lg">
           {t('back.login')}
         </Button>
-      </CardContent>
-    </Card>
+      </div>
+    </FieldGroup>
   );
 }

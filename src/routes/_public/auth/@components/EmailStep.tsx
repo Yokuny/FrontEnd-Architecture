@@ -31,34 +31,34 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-zinc-300 font-medium">{t('login.email')}</FormLabel>
+              <FormLabel className="font-medium">{t('login.email')}</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Input {...field} type="email" placeholder={t('login.email.placeholder')} autoFocus />
+                  <Input {...field} className="h-14" type="email" placeholder={t('login.email.placeholder')} autoFocus />
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                    <Mail className="h-5 w-5 text-zinc-500" />
+                    <Mail className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </div>
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
 
         <div className="flex items-center space-x-2">
-          <Checkbox id="remember" checked={rememberEmail} onCheckedChange={(checked: boolean | 'indeterminate') => onRememberChange(checked === true)} variant="blue" />
-          <Label htmlFor="remember" className="text-sm text-zinc-300 font-normal cursor-pointer">
+          <Checkbox id="remember" variant="blue" checked={rememberEmail} onCheckedChange={(checked: boolean | 'indeterminate') => onRememberChange(checked === true)} />
+          <Label htmlFor="remember" className="text-sm font-normal cursor-pointer">
             {t('remember.email')}
           </Label>
         </div>
 
-        <Button type="submit" variant="blue" className="w-full font-semibold text-base" size="lg">
+        <Button type="submit" variant="blue" className="w-full mt-4 font-semibold text-base" size="lg">
           {t('next')}
           <ArrowRight className="ml-2 h-5 w-5" />
         </Button>

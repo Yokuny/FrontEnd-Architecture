@@ -270,6 +270,20 @@ function Component() {
 2. **ALWAYS** add keys to all 3 translation files
 3. Use dot notation for keys: `module.section.label`
 
+### Translation Key Verification Process
+
+Before using any translation key, **ALWAYS**:
+
+1. **Search** in `src/config/translations/en.json` to verify the key exists:
+   ```bash
+   grep -n "key.name" src/config/translations/en.json
+   ```
+
+2. **If key does NOT exist**, add it, and its translation to ALL 3 files:
+   - `src/config/translations/en.json` (English)
+   - `src/config/translations/es.json` (Spanish)
+   - `src/config/translations/pt.json` (Portuguese - default)
+
 ---
 
 ## 8. API HOOK TEMPLATE
@@ -379,7 +393,7 @@ export function use{Feature}Form(initialData?: {Feature}FormData) {
 [ ] Check src/hooks/ for existing API hooks
 [ ] Create @hooks/ for route-specific logic
 [ ] Build page using Shell Pattern (Card → CardHeader → CardContent)
-[ ] Add translation keys to pt.json, en.json, es.json
+[ ] Verify translation keys in pt.json, en.json, es.json, add new keys or use existing keys
 [ ] Use ShadCN components from @/components/ui/
 [ ] Run pnpm check and pnpm format
 ```

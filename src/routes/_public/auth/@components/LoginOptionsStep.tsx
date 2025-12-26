@@ -33,17 +33,17 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
 
   return (
     <div className="space-y-5">
-      {hasPassword && ssoOption && <p className="text-center text-sm text-zinc-400">{t('login.with')}</p>}
+      {hasPassword && ssoOption && <p className="text-center text-sm text-muted-foreground">{t('login.with')}</p>}
 
       {ssoOption && <SSOButton onSuccess={onSSOLogin} />}
 
       {hasPassword && ssoOption && (
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-white/10" />
+            <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-black/40 px-2 text-zinc-500">{t('condition.or')}</span>
+            <span className="bg-background px-2 text-muted-foreground">{t('condition.or')}</span>
           </div>
         </div>
       )}
@@ -56,37 +56,27 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-zinc-300 font-medium">{t('login.password')}</FormLabel>
+                  <FormLabel className="font-medium">{t('login.password')}</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input
-                        {...field}
-                        type={showPassword ? 'text' : 'password'}
-                        placeholder={t('login.password.placeholder')}
-                        className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-500 hover:bg-white/10 hover:border-white/20 focus-visible:border-blue-500 focus-visible:ring-blue-500/30 transition-all duration-200 pr-12"
-                        autoFocus
-                      />
+                      <Input {...field} type={showPassword ? 'text' : 'password'} placeholder={t('login.password.placeholder')} className="pr-12 h-14" autoFocus />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
                         onClick={onTogglePassword}
-                        className="absolute right-1 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white hover:bg-transparent transition-colors"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                       >
                         {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                       </Button>
                     </div>
                   </FormControl>
-                  <FormMessage className="text-red-400" />
+                  <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button
-              type="submit"
-              className="w-full h-12 font-semibold text-base bg-linear-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-600 shadow-lg shadow-green-600/30 hover:shadow-green-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-              size="lg"
-            >
+            <Button type="submit" variant="green" className="w-full mt-4 font-semibold text-base" size="lg">
               {t('login.button-text')}
             </Button>
           </form>
@@ -94,18 +84,13 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
       )}
 
       <div className="flex items-center justify-between text-sm">
-        <Button type="button" variant="ghost" onClick={onBack} className="text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+        <Button type="button" variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground">
           <ArrowLeft className="mr-2 h-4 w-4" />
           {t('back')}
         </Button>
 
         {hasPassword && (
-          <Button
-            type="button"
-            variant="link"
-            onClick={() => navigate({ to: '/auth/reset-password' })}
-            className="h-auto p-0 text-blue-400 hover:text-blue-300 transition-colors font-medium decoration-transparent hover:no-underline"
-          >
+          <Button type="button" variant="link" onClick={() => navigate({ to: '/auth/reset-password' })} className="h-auto p-0 text-primary hover:text-primary/80 font-medium">
             {t('lost.password')}
           </Button>
         )}
