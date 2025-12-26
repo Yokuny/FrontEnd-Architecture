@@ -1,5 +1,9 @@
+import { Radar } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapSensorsByAssetsToOptions, type SensorByAsset, useSensorsByAssetsSelect } from '@/hooks/use-sensors-by-assets-api';
 
 /**
@@ -10,6 +14,7 @@ import { mapSensorsByAssetsToOptions, type SensorByAsset, useSensorsByAssetsSele
  */
 export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
   const { mode, idAssets, disabled = false, className, label, placeholder, clearable = true, idsNotAllowed = [] } = props;
+  const id = useId();
 
   const query = useSensorsByAssetsSelect(idAssets);
 
@@ -24,38 +29,56 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
   };
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Sensores por Ativos';
     return (
-      <DataMultiSelect<SensorByAsset, SensorByAsset>
-        label={label || 'Sensores por Ativos'}
-        placeholder={placeholder || 'Selecione os sensores...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Radar className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<SensorByAsset, SensorByAsset>
+          id={id}
+          placeholder={placeholder || 'Selecione os sensores...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query}
+          mapToOptions={filterOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar sensor..."
+          noOptionsMessage={noOptionsMessage}
+          noResultsMessage="Nenhum sensor encontrado."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Sensor por Ativos';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Radar className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<SensorByAsset, SensorByAsset>
+        id={id}
+        placeholder={placeholder || 'Selecione um sensor...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={filterOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar sensor..."
         noOptionsMessage={noOptionsMessage}
         noResultsMessage="Nenhum sensor encontrado."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<SensorByAsset, SensorByAsset>
-      label={label || 'Sensor por Ativos'}
-      placeholder={placeholder || 'Selecione um sensor...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query}
-      mapToOptions={filterOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar sensor..."
-      noOptionsMessage={noOptionsMessage}
-      noResultsMessage="Nenhum sensor encontrado."
-      className={className}
-    />
+    </div>
   );
 }
 

@@ -1,5 +1,9 @@
+import { Monitor } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapPlatformsToOptions, type Platform, usePlatformsSelect } from '@/hooks/use-platforms-api';
 
 /**
@@ -10,44 +14,63 @@ import { mapPlatformsToOptions, type Platform, usePlatformsSelect } from '@/hook
  */
 export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
+  const id = useId();
 
   const query = usePlatformsSelect(idEnterprise);
 
   const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhuma plataforma encontrada.';
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Plataformas';
     return (
-      <DataMultiSelect<Platform, Platform>
-        label={label || 'Plataformas'}
-        placeholder={placeholder || 'Selecione as plataformas...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Monitor className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<Platform, Platform>
+          id={id}
+          placeholder={placeholder || 'Selecione as plataformas...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query}
+          mapToOptions={mapPlatformsToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar plataforma..."
+          noOptionsMessage={noOptionsMessage}
+          noResultsMessage="Nenhuma plataforma encontrada."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Plataforma';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Monitor className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<Platform, Platform>
+        id={id}
+        placeholder={placeholder || 'Selecione uma plataforma...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapPlatformsToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar plataforma..."
         noOptionsMessage={noOptionsMessage}
         noResultsMessage="Nenhuma plataforma encontrada."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<Platform, Platform>
-      label={label || 'Plataforma'}
-      placeholder={placeholder || 'Selecione uma plataforma...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query}
-      mapToOptions={mapPlatformsToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar plataforma..."
-      noOptionsMessage={noOptionsMessage}
-      noResultsMessage="Nenhuma plataforma encontrada."
-      className={className}
-    />
+    </div>
   );
 }
 

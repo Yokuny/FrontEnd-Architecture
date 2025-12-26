@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { Star } from 'lucide-react';
+import { useEffect, useId, useState } from 'react';
 import { toast } from 'sonner';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import {
   mapUserEnterprisesPreferredToOptions,
   type UserEnterprisePreference,
@@ -10,6 +12,7 @@ import {
 
 export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps) {
   const { disabled = false, className, label } = props;
+  const id = useId();
   const query = useUserEnterprisesPreferredSelect();
   const updateMutation = useUpdateUserEnterprisePreferred();
 
@@ -45,21 +48,30 @@ export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps)
     }
   };
 
+  const displayLabel = label || 'Empresa Preferencial';
   return (
-    <DataSelect<UserEnterprisePreference>
-      label={label || 'Empresa Preferencial'}
-      placeholder="Selecione sua empresa..."
-      value={selectedValue}
-      onChange={handleChange}
-      query={query}
-      mapToOptions={mapUserEnterprisesPreferredToOptions}
-      disabled={disabled || updateMutation.isPending}
-      clearable={false}
-      searchPlaceholder="Buscar empresa..."
-      noOptionsMessage="Nenhuma empresa disponível."
-      noResultsMessage="Nenhuma empresa encontrada."
-      className={className}
-    />
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Star className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<UserEnterprisePreference>
+        id={id}
+        placeholder="Selecione sua empresa..."
+        value={selectedValue}
+        onChange={handleChange}
+        query={query}
+        mapToOptions={mapUserEnterprisesPreferredToOptions}
+        disabled={disabled || updateMutation.isPending}
+        clearable={false}
+        searchPlaceholder="Buscar empresa..."
+        noOptionsMessage="Nenhuma empresa disponível."
+        noResultsMessage="Nenhuma empresa encontrada."
+        className={className}
+      />
+    </div>
   );
 }
 

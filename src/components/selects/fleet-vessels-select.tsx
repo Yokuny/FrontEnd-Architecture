@@ -1,5 +1,8 @@
+import { Anchor } from 'lucide-react';
+import { useId } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { type FleetMachines, type FleetVesselItem, mapFleetVesselsToOptionsFlat, useFleetVesselsSelect } from '@/hooks/use-fleet-vessels-api';
 
 /**
@@ -11,43 +14,62 @@ import { type FleetMachines, type FleetVesselItem, mapFleetVesselsToOptionsFlat,
  */
 export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
   const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
+  const id = useId();
   const query = useFleetVesselsSelect(idEnterprise);
 
   const noOptionsMessage = !idEnterprise ? 'Selecione primeiro uma empresa.' : 'Nenhuma embarcação disponível.';
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Embarcações';
     return (
-      <DataMultiSelect<FleetMachines, FleetVesselItem>
-        label={label || 'Embarcações'}
-        placeholder={placeholder || 'Selecione as embarcações...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Anchor className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<FleetMachines, FleetVesselItem>
+          id={id}
+          placeholder={placeholder || 'Selecione as embarcações...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query}
+          mapToOptions={mapFleetVesselsToOptionsFlat}
+          disabled={disabled}
+          searchPlaceholder="Buscar embarcação..."
+          noOptionsMessage={noOptionsMessage}
+          noResultsMessage="Nenhuma embarcação encontrada."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Embarcação';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Anchor className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<FleetMachines, FleetVesselItem>
+        id={id}
+        placeholder={placeholder || 'Selecione uma embarcação...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapFleetVesselsToOptionsFlat}
         disabled={disabled}
+        clearable
         searchPlaceholder="Buscar embarcação..."
         noOptionsMessage={noOptionsMessage}
         noResultsMessage="Nenhuma embarcação encontrada."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<FleetMachines, FleetVesselItem>
-      label={label || 'Embarcação'}
-      placeholder={placeholder || 'Selecione uma embarcação...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query}
-      mapToOptions={mapFleetVesselsToOptionsFlat}
-      disabled={disabled}
-      clearable
-      searchPlaceholder="Buscar embarcação..."
-      noOptionsMessage={noOptionsMessage}
-      noResultsMessage="Nenhuma embarcação encontrada."
-      className={className}
-    />
+    </div>
   );
 }
 

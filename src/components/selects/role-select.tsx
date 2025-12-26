@@ -1,5 +1,9 @@
+import { Shield } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapRolesToOptions, type RoleListItem, useRolesSelect } from '@/hooks/use-roles-api';
 
 /**
@@ -10,42 +14,61 @@ import { mapRolesToOptions, type RoleListItem, useRolesSelect } from '@/hooks/us
  */
 export function RoleSelect(props: RoleSelectProps) {
   const { mode, isAll = false, params, disabled = false, className, label, placeholder, clearable = false } = props;
+  const id = useId();
 
   const query = useRolesSelect(isAll, params);
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Perfis';
     return (
-      <DataMultiSelect<RoleListItem, RoleListItem>
-        label={label || 'Perfis'}
-        placeholder={placeholder || 'Selecione os perfis...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Shield className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<RoleListItem, RoleListItem>
+          id={id}
+          placeholder={placeholder || 'Selecione os perfis...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as (string | number)[])}
+          query={query}
+          mapToOptions={mapRolesToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar perfil..."
+          noOptionsMessage="Nenhum perfil disponível."
+          noResultsMessage="Nenhum perfil encontrado."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Perfil';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Shield className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<RoleListItem, RoleListItem>
+        id={id}
+        placeholder={placeholder || 'Selecione um perfil...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as (string | number)[])}
+        onChange={props.onChange}
         query={query}
         mapToOptions={mapRolesToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar perfil..."
         noOptionsMessage="Nenhum perfil disponível."
         noResultsMessage="Nenhum perfil encontrado."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<RoleListItem, RoleListItem>
-      label={label || 'Perfil'}
-      placeholder={placeholder || 'Selecione um perfil...'}
-      value={props.value}
-      onChange={props.onChange}
-      query={query}
-      mapToOptions={mapRolesToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar perfil..."
-      noOptionsMessage="Nenhum perfil disponível."
-      noResultsMessage="Nenhum perfil encontrado."
-      className={className}
-    />
+    </div>
   );
 }
 

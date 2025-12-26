@@ -1,5 +1,9 @@
+import { Ruler } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapScalesToOptions, type Scale, useScalesSelect } from '@/hooks/use-scales-api';
 
 /**
@@ -10,42 +14,61 @@ import { mapScalesToOptions, type Scale, useScalesSelect } from '@/hooks/use-sca
  */
 export function ScaleSelect(props: ScaleSelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
+  const id = useId();
 
   const query = useScalesSelect();
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Escala';
     return (
-      <DataMultiSelect<Scale, Scale>
-        label={label || 'Escala'}
-        placeholder={placeholder || 'Selecione as escalas...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Ruler className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<Scale, Scale>
+          id={id}
+          placeholder={placeholder || 'Selecione as escalas...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query}
+          mapToOptions={mapScalesToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar escala..."
+          noOptionsMessage="Nenhuma escala disponível."
+          noResultsMessage="Nenhuma escala encontrada."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Escala';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Ruler className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<Scale, Scale>
+        id={id}
+        placeholder={placeholder || 'Selecione uma escala...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapScalesToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar escala..."
         noOptionsMessage="Nenhuma escala disponível."
         noResultsMessage="Nenhuma escala encontrada."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<Scale, Scale>
-      label={label || 'Escala'}
-      placeholder={placeholder || 'Selecione uma escala...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query}
-      mapToOptions={mapScalesToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar escala..."
-      noOptionsMessage="Nenhuma escala disponível."
-      noResultsMessage="Nenhuma escala encontrada."
-      className={className}
-    />
+    </div>
   );
 }
 

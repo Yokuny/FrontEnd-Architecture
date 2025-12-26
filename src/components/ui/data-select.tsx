@@ -1,10 +1,9 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
@@ -15,8 +14,8 @@ export interface DataSelectOption<T = unknown> {
 }
 
 interface DataSelectProps<TQuery = unknown, TMapped = TQuery> {
-  /** Label for the select field */
-  label?: string;
+  /** Optional id for external label association */
+  id?: string;
   /** Placeholder text when no value is selected */
   placeholder?: string;
   /** Currently selected value */
@@ -48,7 +47,7 @@ interface DataSelectProps<TQuery = unknown, TMapped = TQuery> {
 }
 
 export function DataSelect<TQuery = unknown, TMapped = TQuery>({
-  label,
+  id,
   placeholder = 'Select option...',
   value,
   onChange,
@@ -64,7 +63,6 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
   className,
   searchPlaceholder = 'Search...',
 }: DataSelectProps<TQuery, TMapped>) {
-  const id = useId();
   const [open, setOpen] = useState(false);
 
   const { data, isLoading, isError } = query;
@@ -104,8 +102,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
   const isDisabled = disabled || (oneBlocked && options.length === 1);
 
   return (
-    <div className={cn('w-full space-y-2', className)}>
-      {label && <Label htmlFor={id}>{label}</Label>}
+    <div className={cn('w-full', className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

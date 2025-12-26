@@ -1,5 +1,9 @@
+import { Flag } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { PRIORITY_OPTIONS, type PriorityOption } from '@/lib/constants/select-options';
 
 /**
@@ -10,6 +14,7 @@ import { PRIORITY_OPTIONS, type PriorityOption } from '@/lib/constants/select-op
  */
 export function PrioritySelect(props: PrioritySelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = false } = props;
+  const id = useId();
 
   // Simulated query object for static data
   const query = {
@@ -29,38 +34,56 @@ export function PrioritySelect(props: PrioritySelectProps) {
   };
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Prioridades';
     return (
-      <DataMultiSelect<PriorityOption, PriorityOption>
-        label={label || 'Prioridades'}
-        placeholder={placeholder || 'Selecione as prioridades...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Flag className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<PriorityOption, PriorityOption>
+          id={id}
+          placeholder={placeholder || 'Selecione as prioridades...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as number[])}
+          query={query as any}
+          mapToOptions={mapToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar prioridade..."
+          noOptionsMessage="Nenhuma prioridade disponível."
+          noResultsMessage="Nenhuma prioridade encontrada."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Prioridade';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Flag className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<PriorityOption, PriorityOption>
+        id={id}
+        placeholder={placeholder || 'Selecione uma prioridade...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as number[])}
+        onChange={(val) => props.onChange(val as number)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar prioridade..."
         noOptionsMessage="Nenhuma prioridade disponível."
         noResultsMessage="Nenhuma prioridade encontrada."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<PriorityOption, PriorityOption>
-      label={label || 'Prioridade'}
-      placeholder={placeholder || 'Selecione uma prioridade...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as number)}
-      query={query as any}
-      mapToOptions={mapToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar prioridade..."
-      noOptionsMessage="Nenhuma prioridade disponível."
-      noResultsMessage="Nenhuma prioridade encontrada."
-      className={className}
-    />
+    </div>
   );
 }
 

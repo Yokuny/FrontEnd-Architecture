@@ -1,5 +1,8 @@
+import { Radar } from 'lucide-react';
+import { useId } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapSensorsToOptions, useSensorsSelect } from '@/hooks/use-sensors-api';
 
 interface SensorSelectProps {
@@ -37,40 +40,57 @@ export function SensorSelect({
   clearable = true,
   className,
 }: SensorSelectProps) {
+  const id = useId();
   const query = useSensorsSelect();
 
   if (multi) {
     return (
-      <DataMultiSelect
-        label={label}
+      <div className="space-y-2">
+        {label && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Radar className="h-4 w-4" />
+            {label}
+          </Label>
+        )}
+        <DataMultiSelect
+          id={id}
+          placeholder={placeholder}
+          value={values}
+          onChange={(newValues) => onChangeMulti?.(newValues as string[])}
+          query={query}
+          mapToOptions={mapSensorsToOptions}
+          disabled={disabled}
+          className={className}
+          searchPlaceholder="Buscar sensor..."
+          noOptionsMessage="Nenhum sensor disponível."
+          noResultsMessage="Nenhum sensor encontrado."
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {label && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Radar className="h-4 w-4" />
+          {label}
+        </Label>
+      )}
+      <DataSelect
+        id={id}
         placeholder={placeholder}
-        value={values}
-        onChange={(newValues) => onChangeMulti?.(newValues as string[])}
+        value={value}
+        onChange={(newValue) => onChange?.(newValue as string | undefined)}
         query={query}
         mapToOptions={mapSensorsToOptions}
         disabled={disabled}
+        clearable={clearable}
         className={className}
         searchPlaceholder="Buscar sensor..."
         noOptionsMessage="Nenhum sensor disponível."
         noResultsMessage="Nenhum sensor encontrado."
       />
-    );
-  }
-
-  return (
-    <DataSelect
-      label={label}
-      placeholder={placeholder}
-      value={value}
-      onChange={(newValue) => onChange?.(newValue as string | undefined)}
-      query={query}
-      mapToOptions={mapSensorsToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      className={className}
-      searchPlaceholder="Buscar sensor..."
-      noOptionsMessage="Nenhum sensor disponível."
-      noResultsMessage="Nenhum sensor encontrado."
-    />
+    </div>
   );
 }

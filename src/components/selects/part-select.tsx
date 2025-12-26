@@ -1,5 +1,8 @@
+import { Settings } from 'lucide-react';
+import { useId } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapPartsToOptions, usePartsSelect } from '@/hooks/use-parts-api';
 
 interface PartSelectProps {
@@ -29,42 +32,59 @@ export function PartSelect({
   clearable = true,
   className,
 }: PartSelectProps) {
+  const id = useId();
   const query = usePartsSelect(idEnterprise);
 
   const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhuma peça disponível.';
 
   if (multi) {
     return (
-      <DataMultiSelect
-        label={label}
+      <div className="space-y-2">
+        {label && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            {label}
+          </Label>
+        )}
+        <DataMultiSelect
+          id={id}
+          placeholder={placeholder}
+          value={values}
+          onChange={(newValues) => onChangeMulti?.(newValues as string[])}
+          query={query}
+          mapToOptions={mapPartsToOptions}
+          disabled={disabled}
+          className={className}
+          searchPlaceholder="Buscar peça..."
+          noOptionsMessage={noOptionsMessage}
+          noResultsMessage="Nenhuma peça encontrada."
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {label && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Settings className="h-4 w-4" />
+          {label}
+        </Label>
+      )}
+      <DataSelect
+        id={id}
         placeholder={placeholder}
-        value={values}
-        onChange={(newValues) => onChangeMulti?.(newValues as string[])}
+        value={value}
+        onChange={(newValue) => onChange?.(newValue as string | undefined)}
         query={query}
         mapToOptions={mapPartsToOptions}
         disabled={disabled}
+        clearable={clearable}
         className={className}
         searchPlaceholder="Buscar peça..."
         noOptionsMessage={noOptionsMessage}
         noResultsMessage="Nenhuma peça encontrada."
       />
-    );
-  }
-
-  return (
-    <DataSelect
-      label={label}
-      placeholder={placeholder}
-      value={value}
-      onChange={(newValue) => onChange?.(newValue as string | undefined)}
-      query={query}
-      mapToOptions={mapPartsToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      className={className}
-      searchPlaceholder="Buscar peça..."
-      noOptionsMessage={noOptionsMessage}
-      noResultsMessage="Nenhuma peça encontrada."
-    />
+    </div>
   );
 }

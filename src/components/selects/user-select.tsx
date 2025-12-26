@@ -1,5 +1,8 @@
+import { Users } from 'lucide-react';
+import { useId } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapUsersToOptions, useUsersByEnterprise } from '@/hooks/use-users-select-api';
 
 interface UserSelectProps {
@@ -43,42 +46,59 @@ export function UserSelect({
   className,
   includeDetails = false,
 }: UserSelectProps) {
+  const id = useId();
   const query = useUsersByEnterprise(idEnterprise, includeDetails);
 
   const noOptionsMessage = !idEnterprise ? 'Please select an enterprise first.' : 'No users available.';
 
   if (multi) {
     return (
-      <DataMultiSelect
-        label={label}
+      <div className="space-y-2">
+        {label && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            {label}
+          </Label>
+        )}
+        <DataMultiSelect
+          id={id}
+          placeholder={placeholder}
+          value={values}
+          onChange={(newValues) => onChangeMulti?.(newValues)}
+          query={query}
+          mapToOptions={(users) => mapUsersToOptions(users, includeDetails)}
+          disabled={disabled}
+          className={className}
+          searchPlaceholder="Search users..."
+          noOptionsMessage={noOptionsMessage}
+          noResultsMessage="No users found."
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {label && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Users className="h-4 w-4" />
+          {label}
+        </Label>
+      )}
+      <DataSelect
+        id={id}
         placeholder={placeholder}
-        value={values}
-        onChange={(newValues) => onChangeMulti?.(newValues)}
+        value={value}
+        onChange={(newValue) => onChange?.(newValue)}
         query={query}
         mapToOptions={(users) => mapUsersToOptions(users, includeDetails)}
         disabled={disabled}
+        clearable={clearable}
         className={className}
         searchPlaceholder="Search users..."
         noOptionsMessage={noOptionsMessage}
         noResultsMessage="No users found."
       />
-    );
-  }
-
-  return (
-    <DataSelect
-      label={label}
-      placeholder={placeholder}
-      value={value}
-      onChange={(newValue) => onChange?.(newValue)}
-      query={query}
-      mapToOptions={(users) => mapUsersToOptions(users, includeDetails)}
-      disabled={disabled}
-      clearable={clearable}
-      className={className}
-      searchPlaceholder="Search users..."
-      noOptionsMessage={noOptionsMessage}
-      noResultsMessage="No users found."
-    />
+    </div>
   );
 }

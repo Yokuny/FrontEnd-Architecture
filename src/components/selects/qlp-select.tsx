@@ -1,5 +1,9 @@
+import { ClipboardList } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapQlpToOptions, type Qlp, useQlpSelect } from '@/hooks/use-qlp-api';
 
 /**
@@ -10,44 +14,63 @@ import { mapQlpToOptions, type Qlp, useQlpSelect } from '@/hooks/use-qlp-api';
  */
 export function QlpSelect(props: QlpSelectProps) {
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
+  const id = useId();
 
   const query = useQlpSelect(idEnterprise);
 
   const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum registro encontrado.';
 
   if (mode === 'multi') {
+    const displayLabel = label || 'QLP';
     return (
-      <DataMultiSelect<Qlp, Qlp>
-        label={label || 'QLP'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <ClipboardList className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<Qlp, Qlp>
+          id={id}
+          placeholder={placeholder || 'Selecione...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query}
+          mapToOptions={mapQlpToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar QLP..."
+          noOptionsMessage={noOptionsMessage}
+          noResultsMessage="Nenhum registro encontrado."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'QLP';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <ClipboardList className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<Qlp, Qlp>
+        id={id}
         placeholder={placeholder || 'Selecione...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapQlpToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar QLP..."
         noOptionsMessage={noOptionsMessage}
         noResultsMessage="Nenhum registro encontrado."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<Qlp, Qlp>
-      label={label || 'QLP'}
-      placeholder={placeholder || 'Selecione...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query}
-      mapToOptions={mapQlpToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar QLP..."
-      noOptionsMessage={noOptionsMessage}
-      noResultsMessage="Nenhum registro encontrado."
-      className={className}
-    />
+    </div>
   );
 }
 

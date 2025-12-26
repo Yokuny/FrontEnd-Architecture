@@ -1,5 +1,8 @@
+import { Users } from 'lucide-react';
+import { useId } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapUserSamePermissionToOptions, type UserSamePermission, useUserSamePermissionSelect } from '@/hooks/use-user-same-permission-api';
 
 /**
@@ -10,6 +13,7 @@ import { mapUserSamePermissionToOptions, type UserSamePermission, useUserSamePer
  */
 export function UserSamePermissionSelect(props: UserSamePermissionSelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = true, optionsDefault = [] } = props;
+  const id = useId();
 
   const query = useUserSamePermissionSelect();
 
@@ -19,38 +23,56 @@ export function UserSamePermissionSelect(props: UserSamePermissionSelectProps) {
   };
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Usuários';
     return (
-      <DataMultiSelect<UserSamePermission, UserSamePermission>
-        label={label || 'Usuários'}
-        placeholder={placeholder || 'Selecione os usuários...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<UserSamePermission, UserSamePermission>
+          id={id}
+          placeholder={placeholder || 'Selecione os usuários...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query}
+          mapToOptions={mapWithDefaults}
+          disabled={disabled}
+          searchPlaceholder="Buscar usuário..."
+          noOptionsMessage="Nenhum usuário disponível."
+          noResultsMessage="Nenhum usuário encontrado."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Usuário';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Users className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<UserSamePermission, UserSamePermission>
+        id={id}
+        placeholder={placeholder || 'Selecione um usuário...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapWithDefaults}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar usuário..."
         noOptionsMessage="Nenhum usuário disponível."
         noResultsMessage="Nenhum usuário encontrado."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<UserSamePermission, UserSamePermission>
-      label={label || 'Usuário'}
-      placeholder={placeholder || 'Selecione um usuário...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query}
-      mapToOptions={mapWithDefaults}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar usuário..."
-      noOptionsMessage="Nenhum usuário disponível."
-      noResultsMessage="Nenhum usuário encontrado."
-      className={className}
-    />
+    </div>
   );
 }
 

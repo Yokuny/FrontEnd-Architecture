@@ -1,5 +1,9 @@
+import { Microscope } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { VARIABLE_TYPES, type VariableTypeOption } from '@/lib/constants/select-options';
 
 /**
@@ -10,6 +14,7 @@ import { VARIABLE_TYPES, type VariableTypeOption } from '@/lib/constants/select-
  */
 export function TypeSensorSelect(props: TypeSensorSelectProps) {
   const { mode, disabled = false, className, label, placeholder } = props;
+  const id = useId();
 
   // Simulated query object
   const query = {
@@ -31,34 +36,52 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
   };
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Tipo de Variável';
     return (
-      <DataMultiSelect<VariableTypeOption, VariableTypeOption>
-        label={label || 'Tipo de Variável'}
-        placeholder={placeholder || 'Selecione os tipos...'}
-        value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
-        query={query as any}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        searchPlaceholder="Buscar tipo..."
-        className={className}
-      />
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Microscope className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<VariableTypeOption, VariableTypeOption>
+          id={id}
+          placeholder={placeholder || 'Selecione os tipos...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query as any}
+          mapToOptions={mapToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar tipo..."
+          className={className}
+        />
+      </div>
     );
   }
 
+  const displayLabel = label || 'Tipo de Variável';
   return (
-    <DataSelect<VariableTypeOption, VariableTypeOption>
-      label={label || 'Tipo de Variável'}
-      placeholder={placeholder || 'Selecione um tipo...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query as any}
-      mapToOptions={mapToOptions}
-      disabled={disabled}
-      clearable
-      searchPlaceholder="Buscar tipo..."
-      className={className}
-    />
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Microscope className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<VariableTypeOption, VariableTypeOption>
+        id={id}
+        placeholder={placeholder || 'Selecione um tipo...'}
+        value={props.value}
+        onChange={(val) => props.onChange(val as string)}
+        query={query as any}
+        mapToOptions={mapToOptions}
+        disabled={disabled}
+        clearable
+        searchPlaceholder="Buscar tipo..."
+        className={className}
+      />
+    </div>
   );
 }
 

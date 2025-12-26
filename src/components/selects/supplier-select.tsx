@@ -1,7 +1,9 @@
 import type { UseQueryResult } from '@tanstack/react-query';
-import { useState } from 'react';
+import { Filter, Truck } from 'lucide-react';
+import { useId, useState } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { type Supplier, useSuppliersSelect } from '@/hooks/use-suppliers-api';
 
 /**
@@ -13,6 +15,8 @@ import { type Supplier, useSuppliersSelect } from '@/hooks/use-suppliers-api';
  */
 export function SupplierSelect(props: SupplierSelectProps) {
   const { mode, oneBlocked = false, disabled = false, className, showActivityFilter = true, label, placeholder } = props;
+  const id = useId();
+  const activityId = useId();
 
   const query = useSuppliersSelect();
   const [activityFilter, setActivityFilter] = useState<string>();
@@ -46,11 +50,63 @@ export function SupplierSelect(props: SupplierSelectProps) {
   const activityFilterLabel = 'Filtrar pela atividade (Opcional)';
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Fornecedor';
     return (
       <div className={className}>
         {showActivityFilter && (
+          <div className="mb-4 space-y-2">
+            <Label htmlFor={activityId} className="flex items-center gap-2">
+              <Filter className="h-4 w-4" />
+              {activityFilterLabel}
+            </Label>
+            <DataSelect<string, string>
+              id={activityId}
+              placeholder="Selecione uma atividade..."
+              value={activityFilter}
+              onChange={(val) => setActivityFilter(val as string)}
+              query={activitiesQuery}
+              mapToOptions={(acts) => acts.map((a) => ({ value: a, label: a, data: a }))}
+              clearable
+              searchPlaceholder="Buscar atividade..."
+            />
+          </div>
+        )}
+
+        <div className="space-y-2">
+          {displayLabel && (
+            <Label htmlFor={id} className="flex items-center gap-2">
+              <Truck className="h-4 w-4" />
+              {displayLabel}
+            </Label>
+          )}
+          <DataMultiSelect<Supplier, Supplier>
+            id={id}
+            placeholder={placeholder || 'Selecione os fornecedores...'}
+            value={props.value}
+            onChange={(vals) => props.onChange(vals as string[])}
+            query={filteredQuery}
+            mapToOptions={mapSupplierToOptions}
+            disabled={disabled}
+            searchPlaceholder="Buscar fornecedor..."
+            noOptionsMessage="Nenhum fornecedor disponível."
+            noResultsMessage="Nenhum fornecedor encontrado."
+          />
+        </div>
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Fornecedor';
+  return (
+    <div className={className}>
+      {showActivityFilter && (
+        <div className="mb-4 space-y-2">
+          <Label htmlFor={activityId} className="flex items-center gap-2">
+            <Filter className="h-4 w-4" />
+            {activityFilterLabel}
+          </Label>
           <DataSelect<string, string>
-            label={activityFilterLabel}
+            id={activityId}
             placeholder="Selecione uma atividade..."
             value={activityFilter}
             onChange={(val) => setActivityFilter(val as string)}
@@ -58,56 +114,32 @@ export function SupplierSelect(props: SupplierSelectProps) {
             mapToOptions={(acts) => acts.map((a) => ({ value: a, label: a, data: a }))}
             clearable
             searchPlaceholder="Buscar atividade..."
-            className="mb-4"
           />
-        )}
+        </div>
+      )}
 
-        <DataMultiSelect<Supplier, Supplier>
-          label={label || 'Fornecedor'}
-          placeholder={placeholder || 'Selecione os fornecedores...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Truck className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataSelect<Supplier, Supplier>
+          id={id}
+          placeholder={placeholder || 'Selecione um fornecedor...'}
           value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
+          onChange={(val) => props.onChange(val as string)}
           query={filteredQuery}
           mapToOptions={mapSupplierToOptions}
+          oneBlocked={oneBlocked}
           disabled={disabled}
+          clearable={true}
           searchPlaceholder="Buscar fornecedor..."
           noOptionsMessage="Nenhum fornecedor disponível."
           noResultsMessage="Nenhum fornecedor encontrado."
         />
       </div>
-    );
-  }
-
-  return (
-    <div className={className}>
-      {showActivityFilter && (
-        <DataSelect<string, string>
-          label={activityFilterLabel}
-          placeholder="Selecione uma atividade..."
-          value={activityFilter}
-          onChange={(val) => setActivityFilter(val as string)}
-          query={activitiesQuery}
-          mapToOptions={(acts) => acts.map((a) => ({ value: a, label: a, data: a }))}
-          clearable
-          searchPlaceholder="Buscar atividade..."
-          className="mb-4"
-        />
-      )}
-
-      <DataSelect<Supplier, Supplier>
-        label={label || 'Fornecedor'}
-        placeholder={placeholder || 'Selecione um fornecedor...'}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={filteredQuery}
-        mapToOptions={mapSupplierToOptions}
-        oneBlocked={oneBlocked}
-        disabled={disabled}
-        clearable={true}
-        searchPlaceholder="Buscar fornecedor..."
-        noOptionsMessage="Nenhum fornecedor disponível."
-        noResultsMessage="Nenhum fornecedor encontrado."
-      />
     </div>
   );
 }

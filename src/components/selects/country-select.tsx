@@ -1,5 +1,8 @@
+import { Globe } from 'lucide-react';
+import { useId } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { COUNTRIES, type Country } from '@/lib/constants/countries';
 
 /**
@@ -10,6 +13,7 @@ import { COUNTRIES, type Country } from '@/lib/constants/countries';
  */
 export function CountrySelect(props: CountrySelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
+  const id = useId();
 
   // Simulated query object for static data
   const query = {
@@ -29,38 +33,56 @@ export function CountrySelect(props: CountrySelectProps) {
   };
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Países';
     return (
-      <DataMultiSelect<Country, Country>
-        label={label || 'Países'}
-        placeholder={placeholder || 'Selecione os países...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Globe className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<Country, Country>
+          id={id}
+          placeholder={placeholder || 'Selecione os países...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query as any}
+          mapToOptions={mapToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar país..."
+          noOptionsMessage="Nenhum país disponível."
+          noResultsMessage="Nenhum país encontrado."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'País';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Globe className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<Country, Country>
+        id={id}
+        placeholder={placeholder || 'Selecione um país...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar país..."
         noOptionsMessage="Nenhum país disponível."
         noResultsMessage="Nenhum país encontrado."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<Country, Country>
-      label={label || 'País'}
-      placeholder={placeholder || 'Selecione um país...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query as any}
-      mapToOptions={mapToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar país..."
-      noOptionsMessage="Nenhum país disponível."
-      noResultsMessage="Nenhum país encontrado."
-      className={className}
-    />
+    </div>
   );
 }
 

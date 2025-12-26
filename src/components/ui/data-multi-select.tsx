@@ -1,11 +1,10 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react';
-import { useId, useState } from 'react';
+import { useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
@@ -16,8 +15,8 @@ export interface DataMultiSelectOption<T = unknown> {
 }
 
 interface DataMultiSelectProps<TQuery = unknown, TMapped = TQuery> {
-  /** Label for the select field */
-  label?: string;
+  /** Optional id for external label association */
+  id?: string;
   /** Placeholder text when no values are selected */
   placeholder?: string;
   /** Currently selected values */
@@ -47,7 +46,7 @@ interface DataMultiSelectProps<TQuery = unknown, TMapped = TQuery> {
 }
 
 export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
-  label,
+  id,
   placeholder = 'Select options...',
   value = [],
   onChange,
@@ -62,7 +61,6 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
   searchPlaceholder = 'Search...',
   maxShownItems = 3,
 }: DataMultiSelectProps<TQuery, TMapped>) {
-  const id = useId();
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -98,8 +96,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
   const hiddenCount = selectedValues.length - visibleItems.length;
 
   return (
-    <div className={cn('w-full space-y-2', className)}>
-      {label && <Label htmlFor={id}>{label}</Label>}
+    <div className={cn('w-full', className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button id={id} variant="outline" role="combobox" aria-expanded={open} disabled={disabled || isLoading} className="w-full justify-between">

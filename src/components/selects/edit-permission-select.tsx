@@ -1,6 +1,9 @@
 import type { UseQueryResult } from '@tanstack/react-query';
+import { Edit } from 'lucide-react';
+import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { EDIT_PERMISSION_OPTIONS, type EditPermissionOption } from '@/lib/constants/select-options';
 
 interface EditPermissionSelectProps {
@@ -25,6 +28,7 @@ interface EditPermissionSelectProps {
  * Follows the system select pattern with static options and i18n support.
  */
 export function EditPermissionSelect({ mode, value, onChange, disabled, className, clearable = true }: EditPermissionSelectProps) {
+  const id = useId();
   const { t } = useTranslation();
 
   // Simulation of query for static data as per SELECT_PATTERN.md
@@ -37,23 +41,32 @@ export function EditPermissionSelect({ mode, value, onChange, disabled, classNam
   } as UseQueryResult<EditPermissionOption[], Error>;
 
   if (mode === 'single') {
+    const label = `${t('edit.who.placeholder')} *`;
     return (
-      <DataSelect<EditPermissionOption>
-        label={`${t('edit.who.placeholder')} *`}
-        placeholder={t('edit.who.placeholder')}
-        value={value}
-        onChange={(val) => onChange(val as string)}
-        query={query}
-        mapToOptions={(data) =>
-          data.map((opt) => ({
-            value: opt.value,
-            label: t(opt.labelKey),
-          }))
-        }
-        disabled={disabled}
-        className={className}
-        clearable={clearable}
-      />
+      <div className="space-y-2">
+        {label && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Edit className="h-4 w-4" />
+            {label}
+          </Label>
+        )}
+        <DataSelect<EditPermissionOption>
+          id={id}
+          placeholder={t('edit.who.placeholder')}
+          value={value}
+          onChange={(val) => onChange(val as string)}
+          query={query}
+          mapToOptions={(data) =>
+            data.map((opt) => ({
+              value: opt.value,
+              label: t(opt.labelKey),
+            }))
+          }
+          disabled={disabled}
+          className={className}
+          clearable={clearable}
+        />
+      </div>
     );
   }
 

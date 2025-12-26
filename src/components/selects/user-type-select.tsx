@@ -1,5 +1,8 @@
+import { UserCog } from 'lucide-react';
+import { useId } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { mapUserTypesToOptions, type UserType, useUserTypesSelect } from '@/hooks/use-user-types-api';
 
 /**
@@ -10,42 +13,61 @@ import { mapUserTypesToOptions, type UserType, useUserTypesSelect } from '@/hook
  */
 export function UserTypeSelect(props: UserTypeSelectProps) {
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
+  const id = useId();
 
   const query = useUserTypesSelect(idEnterprise);
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Tipos de Usuário';
     return (
-      <DataMultiSelect<UserType, UserType>
-        label={label || 'Tipos de Usuário'}
-        placeholder={placeholder || 'Selecione os tipos...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <UserCog className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<UserType, UserType>
+          id={id}
+          placeholder={placeholder || 'Selecione os tipos...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query}
+          mapToOptions={mapUserTypesToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar tipo..."
+          noOptionsMessage="Nenhum tipo disponível."
+          noResultsMessage="Nenhum tipo encontrado."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Tipo de Usuário';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <UserCog className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<UserType, UserType>
+        id={id}
+        placeholder={placeholder || 'Selecione um tipo...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapUserTypesToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar tipo..."
         noOptionsMessage="Nenhum tipo disponível."
         noResultsMessage="Nenhum tipo encontrado."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<UserType, UserType>
-      label={label || 'Tipo de Usuário'}
-      placeholder={placeholder || 'Selecione um tipo...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query}
-      mapToOptions={mapUserTypesToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar tipo..."
-      noOptionsMessage="Nenhum tipo disponível."
-      noResultsMessage="Nenhum tipo encontrado."
-      className={className}
-    />
+    </div>
   );
 }
 

@@ -1,5 +1,9 @@
+import { Eye } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { VIEW_OPTIONS, type ViewOption } from '@/lib/constants/select-options';
 
 /**
@@ -10,6 +14,7 @@ import { VIEW_OPTIONS, type ViewOption } from '@/lib/constants/select-options';
  */
 export function ViewSelect(props: ViewSelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = false } = props;
+  const id = useId();
 
   // Simulated query object for static data
   const query = {
@@ -29,38 +34,56 @@ export function ViewSelect(props: ViewSelectProps) {
   };
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Visualizações';
     return (
-      <DataMultiSelect<ViewOption, ViewOption>
-        label={label || 'Visualizações'}
-        placeholder={placeholder || 'Selecione as visualizações...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Eye className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<ViewOption, ViewOption>
+          id={id}
+          placeholder={placeholder || 'Selecione as visualizações...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query as any}
+          mapToOptions={mapToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar visualização..."
+          noOptionsMessage="Nenhuma visualização disponível."
+          noResultsMessage="Nenhuma visualização encontrada."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Visualização';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Eye className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<ViewOption, ViewOption>
+        id={id}
+        placeholder={placeholder || 'Selecione uma visualização...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar visualização..."
         noOptionsMessage="Nenhuma visualização disponível."
         noResultsMessage="Nenhuma visualização encontrada."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<ViewOption, ViewOption>
-      label={label || 'Visualização'}
-      placeholder={placeholder || 'Selecione uma visualização...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query as any}
-      mapToOptions={mapToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar visualização..."
-      noOptionsMessage="Nenhuma visualização disponível."
-      noResultsMessage="Nenhuma visualização encontrada."
-      className={className}
-    />
+    </div>
   );
 }
 

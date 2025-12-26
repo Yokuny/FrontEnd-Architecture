@@ -1,5 +1,9 @@
+import { ShieldAlert } from 'lucide-react';
+import { useId } from 'react';
+
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { SAFETY_AREAS, type SafetyAreaOption } from '@/lib/constants/select-options';
 
 /**
@@ -10,6 +14,7 @@ import { SAFETY_AREAS, type SafetyAreaOption } from '@/lib/constants/select-opti
  */
 export function SafetySelect(props: SafetySelectProps) {
   const { mode, disabled = false, className, label, placeholder } = props;
+  const id = useId();
 
   // Simulated query object
   const query = {
@@ -29,34 +34,52 @@ export function SafetySelect(props: SafetySelectProps) {
   };
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Área de Segurança';
     return (
-      <DataMultiSelect<SafetyAreaOption, SafetyAreaOption>
-        label={label || 'Área de Segurança'}
-        placeholder={placeholder || 'Selecione as áreas...'}
-        value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
-        query={query as any}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        searchPlaceholder="Buscar área..."
-        className={className}
-      />
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <ShieldAlert className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<SafetyAreaOption, SafetyAreaOption>
+          id={id}
+          placeholder={placeholder || 'Selecione as áreas...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query as any}
+          mapToOptions={mapToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar área..."
+          className={className}
+        />
+      </div>
     );
   }
 
+  const displayLabel = label || 'Área de Segurança';
   return (
-    <DataSelect<SafetyAreaOption, SafetyAreaOption>
-      label={label || 'Área de Segurança'}
-      placeholder={placeholder || 'Selecione uma área...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query as any}
-      mapToOptions={mapToOptions}
-      disabled={disabled}
-      clearable
-      searchPlaceholder="Buscar área..."
-      className={className}
-    />
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <ShieldAlert className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<SafetyAreaOption, SafetyAreaOption>
+        id={id}
+        placeholder={placeholder || 'Selecione uma área...'}
+        value={props.value}
+        onChange={(val) => props.onChange(val as string)}
+        query={query as any}
+        mapToOptions={mapToOptions}
+        disabled={disabled}
+        clearable
+        searchPlaceholder="Buscar área..."
+        className={className}
+      />
+    </div>
   );
 }
 

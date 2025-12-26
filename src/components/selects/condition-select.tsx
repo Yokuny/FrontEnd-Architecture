@@ -1,5 +1,8 @@
+import { Activity } from 'lucide-react';
+import { useId } from 'react';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
+import { Label } from '@/components/ui/label';
 import { CONDITION_OPTIONS, type ConditionOption } from '@/lib/constants/select-options';
 
 /**
@@ -10,6 +13,7 @@ import { CONDITION_OPTIONS, type ConditionOption } from '@/lib/constants/select-
  */
 export function ConditionSelect(props: ConditionSelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
+  const id = useId();
 
   // Simulated query object for static data
   const query = {
@@ -29,38 +33,56 @@ export function ConditionSelect(props: ConditionSelectProps) {
   };
 
   if (mode === 'multi') {
+    const displayLabel = label || 'Condições';
     return (
-      <DataMultiSelect<ConditionOption, ConditionOption>
-        label={label || 'Condições'}
-        placeholder={placeholder || 'Selecione as condições...'}
+      <div className="space-y-2">
+        {displayLabel && (
+          <Label htmlFor={id} className="flex items-center gap-2">
+            <Activity className="h-4 w-4" />
+            {displayLabel}
+          </Label>
+        )}
+        <DataMultiSelect<ConditionOption, ConditionOption>
+          id={id}
+          placeholder={placeholder || 'Selecione as condições...'}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+          query={query as any}
+          mapToOptions={mapToOptions}
+          disabled={disabled}
+          searchPlaceholder="Buscar condição..."
+          noOptionsMessage="Nenhuma condição disponível."
+          noResultsMessage="Nenhuma condição encontrada."
+          className={className}
+        />
+      </div>
+    );
+  }
+
+  const displayLabel = label || 'Condição';
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Activity className="h-4 w-4" />
+          {displayLabel}
+        </Label>
+      )}
+      <DataSelect<ConditionOption, ConditionOption>
+        id={id}
+        placeholder={placeholder || 'Selecione uma condição...'}
         value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
+        onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
+        clearable={clearable}
         searchPlaceholder="Buscar condição..."
         noOptionsMessage="Nenhuma condição disponível."
         noResultsMessage="Nenhuma condição encontrada."
         className={className}
       />
-    );
-  }
-
-  return (
-    <DataSelect<ConditionOption, ConditionOption>
-      label={label || 'Condição'}
-      placeholder={placeholder || 'Selecione uma condição...'}
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query as any}
-      mapToOptions={mapToOptions}
-      disabled={disabled}
-      clearable={clearable}
-      searchPlaceholder="Buscar condição..."
-      noOptionsMessage="Nenhuma condição disponível."
-      noResultsMessage="Nenhuma condição encontrada."
-      className={className}
-    />
+    </div>
   );
 }
 

@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { DataSelect } from '@/components/ui/data-select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { type Enterprise, useEnterprisesSelect } from '@/hooks/use-enterprises-api';
@@ -5,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
   const { value, onChange, className, theme = 'light' } = props;
+  const id = useId();
   const query = useEnterprisesSelect();
 
   const mapFilterToOptions = (enterprises: Enterprise[]) => {
@@ -40,6 +42,7 @@ export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
     <div className={cn('flex items-center gap-4', className)}>
       {logoSource && <img src={logoSource} alt={selectedEnterprise?.name || 'Logo'} className="max-h-10 max-w-[120px] object-contain hidden sm:block" />}
       <DataSelect<Enterprise>
+        id={id}
         query={query}
         mapToOptions={mapFilterToOptions}
         value={value}
