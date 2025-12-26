@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
 import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
 import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
+import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
@@ -23,6 +24,9 @@ import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './
 import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
 import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
 import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
+import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
+import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
+import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
 import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
 import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
 import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
@@ -58,6 +62,11 @@ const PrivateSetUpCompanyIndexRoute =
 const PrivatePermissionsIndexRoute = PrivatePermissionsIndexRouteImport.update({
   id: '/permissions/',
   path: '/permissions/',
+  getParentRoute: () => PrivateRoute,
+} as any);
+const PrivateMaintenanceIndexRoute = PrivateMaintenanceIndexRouteImport.update({
+  id: '/maintenance/',
+  path: '/maintenance/',
   getParentRoute: () => PrivateRoute,
 } as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
@@ -103,6 +112,24 @@ const PrivatePermissionsRolesIndexRoute =
   PrivatePermissionsRolesIndexRouteImport.update({
     id: '/permissions/roles/',
     path: '/permissions/roles/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateMaintenanceMonitoringWearIndexRoute =
+  PrivateMaintenanceMonitoringWearIndexRouteImport.update({
+    id: '/maintenance/monitoring-wear/',
+    path: '/maintenance/monitoring-wear/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateMaintenanceMonitoringPlansIndexRoute =
+  PrivateMaintenanceMonitoringPlansIndexRouteImport.update({
+    id: '/maintenance/monitoring-plans/',
+    path: '/maintenance/monitoring-plans/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateMaintenanceListOsDoneIndexRoute =
+  PrivateMaintenanceListOsDoneIndexRouteImport.update({
+    id: '/maintenance/list-os-done/',
+    path: '/maintenance/list-os-done/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivatePermissionsUsersPermissionsAddRoute =
@@ -153,12 +180,16 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
+  '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
+  '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
@@ -174,12 +205,16 @@ export interface FileRoutesByTo {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
+  '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
+  '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
@@ -198,12 +233,16 @@ export interface FileRoutesById {
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/_private/maintenance/': typeof PrivateMaintenanceIndexRoute;
   '/_private/permissions/': typeof PrivatePermissionsIndexRoute;
   '/_private/set-up-company/': typeof PrivateSetUpCompanyIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/_private/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/_private/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/_private/maintenance/list-os-done/': typeof PrivateMaintenanceListOsDoneIndexRoute;
+  '/_private/maintenance/monitoring-plans/': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
+  '/_private/maintenance/monitoring-wear/': typeof PrivateMaintenanceMonitoringWearIndexRoute;
   '/_private/permissions/roles/': typeof PrivatePermissionsRolesIndexRoute;
   '/_private/permissions/users/': typeof PrivatePermissionsUsersIndexRoute;
   '/_private/set-up-company/integration-list/': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
@@ -221,12 +260,16 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/maintenance'
     | '/permissions'
     | '/set-up-company'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
     | '/permissions/users/permissions-add'
+    | '/maintenance/list-os-done'
+    | '/maintenance/monitoring-plans'
+    | '/maintenance/monitoring-wear'
     | '/permissions/roles'
     | '/permissions/users'
     | '/set-up-company/integration-list'
@@ -242,12 +285,16 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/maintenance'
     | '/permissions'
     | '/set-up-company'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
     | '/permissions/users/permissions-add'
+    | '/maintenance/list-os-done'
+    | '/maintenance/monitoring-plans'
+    | '/maintenance/monitoring-wear'
     | '/permissions/roles'
     | '/permissions/users'
     | '/set-up-company/integration-list'
@@ -265,12 +312,16 @@ export interface FileRouteTypes {
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
+    | '/_private/maintenance/'
     | '/_private/permissions/'
     | '/_private/set-up-company/'
     | '/_public/auth/'
     | '/_private/permissions/roles/add'
     | '/_private/permissions/users/add'
     | '/_private/permissions/users/permissions-add'
+    | '/_private/maintenance/list-os-done/'
+    | '/_private/maintenance/monitoring-plans/'
+    | '/_private/maintenance/monitoring-wear/'
     | '/_private/permissions/roles/'
     | '/_private/permissions/users/'
     | '/_private/set-up-company/integration-list/'
@@ -332,6 +383,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivatePermissionsIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/maintenance/': {
+      id: '/_private/maintenance/';
+      path: '/maintenance';
+      fullPath: '/maintenance';
+      preLoaderRoute: typeof PrivateMaintenanceIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_public/auth/unlock': {
       id: '/_public/auth/unlock';
       path: '/auth/unlock';
@@ -388,6 +446,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivatePermissionsRolesIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/maintenance/monitoring-wear/': {
+      id: '/_private/maintenance/monitoring-wear/';
+      path: '/maintenance/monitoring-wear';
+      fullPath: '/maintenance/monitoring-wear';
+      preLoaderRoute: typeof PrivateMaintenanceMonitoringWearIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/maintenance/monitoring-plans/': {
+      id: '/_private/maintenance/monitoring-plans/';
+      path: '/maintenance/monitoring-plans';
+      fullPath: '/maintenance/monitoring-plans';
+      preLoaderRoute: typeof PrivateMaintenanceMonitoringPlansIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/maintenance/list-os-done/': {
+      id: '/_private/maintenance/list-os-done/';
+      path: '/maintenance/list-os-done';
+      fullPath: '/maintenance/list-os-done';
+      preLoaderRoute: typeof PrivateMaintenanceListOsDoneIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/permissions/users/permissions-add': {
       id: '/_private/permissions/users/permissions-add';
       path: '/permissions/users/permissions-add';
@@ -441,11 +520,15 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
+  PrivateMaintenanceIndexRoute: typeof PrivateMaintenanceIndexRoute;
   PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
   PrivateSetUpCompanyIndexRoute: typeof PrivateSetUpCompanyIndexRoute;
   PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
   PrivatePermissionsUsersAddRoute: typeof PrivatePermissionsUsersAddRoute;
   PrivatePermissionsUsersPermissionsAddRoute: typeof PrivatePermissionsUsersPermissionsAddRoute;
+  PrivateMaintenanceListOsDoneIndexRoute: typeof PrivateMaintenanceListOsDoneIndexRoute;
+  PrivateMaintenanceMonitoringPlansIndexRoute: typeof PrivateMaintenanceMonitoringPlansIndexRoute;
+  PrivateMaintenanceMonitoringWearIndexRoute: typeof PrivateMaintenanceMonitoringWearIndexRoute;
   PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
   PrivatePermissionsUsersIndexRoute: typeof PrivatePermissionsUsersIndexRoute;
   PrivateSetUpCompanyIntegrationListIndexRoute: typeof PrivateSetUpCompanyIntegrationListIndexRoute;
@@ -458,12 +541,19 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateMaintenanceIndexRoute: PrivateMaintenanceIndexRoute,
   PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
   PrivateSetUpCompanyIndexRoute: PrivateSetUpCompanyIndexRoute,
   PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
   PrivatePermissionsUsersAddRoute: PrivatePermissionsUsersAddRoute,
   PrivatePermissionsUsersPermissionsAddRoute:
     PrivatePermissionsUsersPermissionsAddRoute,
+  PrivateMaintenanceListOsDoneIndexRoute:
+    PrivateMaintenanceListOsDoneIndexRoute,
+  PrivateMaintenanceMonitoringPlansIndexRoute:
+    PrivateMaintenanceMonitoringPlansIndexRoute,
+  PrivateMaintenanceMonitoringWearIndexRoute:
+    PrivateMaintenanceMonitoringWearIndexRoute,
   PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,
   PrivatePermissionsUsersIndexRoute: PrivatePermissionsUsersIndexRoute,
   PrivateSetUpCompanyIntegrationListIndexRoute:

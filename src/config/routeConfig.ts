@@ -1,10 +1,11 @@
 import type { LucideIcon } from 'lucide-react';
-import { Building2, KeySquare, Mail, MonitorCog, Network, Shield, Users } from 'lucide-react';
+import { Activity, Building2, CalendarClock, CheckSquare, KeySquare, Mail, MonitorCog, Network, Shield, Users, Wrench } from 'lucide-react';
 
 // Mapeamento de ícones por segmento de rota
 export const ROUTE_ICONS: Record<string, LucideIcon> = {
   permissions: KeySquare,
   'set-up-company': MonitorCog,
+  maintenance: Wrench,
 };
 
 // Ícones para sub-rotas específicas
@@ -14,17 +15,24 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   'setup-email': Mail,
   'setup-api-external': Network,
   'integration-list': Building2,
+  'monitoring-plans': CalendarClock,
+  'monitoring-wear': Activity,
+  'list-os-done': CheckSquare,
 };
 
 // Chaves i18n para tradução de rotas
 export const ROUTE_LABELS: Record<string, string> = {
   permissions: 'permissions',
   'set-up-company': 'setup.company',
+  maintenance: 'maintenance',
   users: 'users',
   roles: 'role',
   'setup-email': 'setup.email',
   'setup-api-external': 'setup.api.external',
   'integration-list': 'integration',
+  'monitoring-plans': 'monitoring.plan.maintenance',
+  'monitoring-wear': 'monitoring.wear.part',
+  'list-os-done': 'done.os',
 };
 
 /**
@@ -35,6 +43,9 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
+  '/maintenance/list-os-done',
+  '/maintenance/monitoring-plans',
+  '/maintenance/monitoring-wear',
   '/permissions/roles',
   '/permissions/users',
   '/set-up-company/integration-list',
