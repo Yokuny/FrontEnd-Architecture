@@ -42,19 +42,19 @@ function AddRolePage() {
           <Tabs defaultValue="pages" className="w-full">
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="pages" className="gap-2">
-                <Monitor className="h-4 w-4" />
+                <Monitor className="size-4" />
                 {t('pages')}
               </TabsTrigger>
               <TabsTrigger value="machines" className="gap-2">
-                <Settings className="h-4 w-4" />
+                <Settings className="size-4" />
                 {t('machines')}
               </TabsTrigger>
               <TabsTrigger value="chatbot" className="gap-2">
-                <MessageCircle className="h-4 w-4" />
+                <MessageCircle className="size-4" />
                 Chatbot
               </TabsTrigger>
               <TabsTrigger value="permissions" className="gap-2">
-                <Edit2 className="h-4 w-4" />
+                <Edit2 className="size-4" />
                 {t('edit.role')}
               </TabsTrigger>
             </TabsList>

@@ -42,7 +42,7 @@ export function SensorByMachineSelect({
       <div className="space-y-2">
         {label && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Radar className="h-4 w-4" />
+            <Radar className="size-4" />
             {label}
           </Label>
         )}
@@ -67,7 +67,7 @@ export function SensorByMachineSelect({
     <div className="space-y-2">
       {label && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Radar className="h-4 w-4" />
+          <Radar className="size-4" />
           {label}
         </Label>
       )}

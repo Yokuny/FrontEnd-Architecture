@@ -18,7 +18,7 @@ export function ContractAssetEnterpriseSelect(props: ContractAssetEnterpriseSele
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
+            <FileText className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -44,7 +44,7 @@ export function ContractAssetEnterpriseSelect(props: ContractAssetEnterpriseSele
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <FileText className="h-4 w-4" />
+          <FileText className="size-4" />
           {displayLabel}
         </Label>
       )}

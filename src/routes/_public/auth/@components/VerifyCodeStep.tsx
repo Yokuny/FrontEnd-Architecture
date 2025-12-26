@@ -82,7 +82,7 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
 
       <div className="flex items-center justify-between text-sm">
         <Button variant="ghost" size="sm" onClick={onBack} className="text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="mr-2 h-4 w-4" />
+          <ArrowLeft className="mr-2 size-4" />
           {t('back')}
         </Button>
         <Button

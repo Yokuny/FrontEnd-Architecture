@@ -47,7 +47,7 @@ function RegisterPage() {
                     <div className="relative">
                       <Input {...field} className="h-14" type="text" placeholder={t('account.name.placeholder')} autoFocus />
                       <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        <User className="h-5 w-5 text-muted-foreground" />
+                        <User className="size-5 text-muted-foreground" />
                       </div>
                     </div>
                   </FormControl>
@@ -67,7 +67,7 @@ function RegisterPage() {
                     <div className="relative">
                       <Input {...field} className="h-14" type="email" placeholder={t('login.email.placeholder')} />
                       <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        <Mail className="h-5 w-5 text-muted-foreground" />
+                        <Mail className="size-5 text-muted-foreground" />
                       </div>
                     </div>
                   </FormControl>
@@ -94,7 +94,7 @@ function RegisterPage() {
                           onClick={onTogglePassword}
                           className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         >
-                          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                          {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                         </Button>
                       </div>
                     </FormControl>
@@ -120,7 +120,7 @@ function RegisterPage() {
                           onClick={onToggleConfirmPassword}
                           className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         >
-                          {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                          {showConfirmPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                         </Button>
                       </div>
                     </FormControl>
@@ -175,7 +175,7 @@ function RegisterPage() {
             <Button type="submit" variant="green" disabled={isPending} className="w-full mt-4 font-semibold text-base" size="lg">
               {isPending ? (
                 <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  <Loader2 className="mr-2 size-5 animate-spin" />
                   {t('creating')}
                 </>
               ) : (
@@ -188,7 +188,7 @@ function RegisterPage() {
         {/* Back to Login */}
         <div className="text-center">
           <Button type="button" variant="ghost" onClick={() => navigate({ to: '/auth' })}>
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="size-4" />
             {t('back.login')}
           </Button>
         </div>

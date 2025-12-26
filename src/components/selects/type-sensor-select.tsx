@@ -41,7 +41,7 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Microscope className="h-4 w-4" />
+            <Microscope className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -65,7 +65,7 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Microscope className="h-4 w-4" />
+          <Microscope className="size-4" />
           {displayLabel}
         </Label>
       )}

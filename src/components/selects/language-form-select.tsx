@@ -30,7 +30,7 @@ export function LanguageFormSelect(props: LanguageFormSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Languages className="h-4 w-4" />
+          <Languages className="size-4" />
           {displayLabel}
         </Label>
       )}

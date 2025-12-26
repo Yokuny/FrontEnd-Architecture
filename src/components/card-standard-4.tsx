@@ -27,15 +27,15 @@ const Example = () => (
     <CardFooter className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-2 rounded-full border px-4 py-2">
-          <Bed className="h-4 w-4" />
+          <Bed className="size-4" />
           <span className="font-medium text-sm">{beds}</span>
         </div>
         <div className="flex items-center gap-2 rounded-full border px-4 py-2">
-          <Bath className="h-4 w-4" />
+          <Bath className="size-4" />
           <span className="font-medium text-sm">{baths}</span>
         </div>
         <div className="flex items-center gap-2 rounded-full border px-4 py-2">
-          <Maximize className="h-4 w-4" />
+          <Maximize className="size-4" />
           <span className="font-medium text-sm">{area}m²</span>
         </div>
       </div>

@@ -24,7 +24,7 @@ export function ParamsSelect(props: ParamsSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <List className="h-4 w-4" />
+            <List className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -50,7 +50,7 @@ export function ParamsSelect(props: ParamsSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <List className="h-4 w-4" />
+          <List className="size-4" />
           {displayLabel}
         </Label>
       )}

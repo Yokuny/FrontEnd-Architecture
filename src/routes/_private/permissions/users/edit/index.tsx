@@ -142,7 +142,7 @@ function EditUserPage() {
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button type="button" variant="destructive">
-                  <Trash2 className="mr-2 h-4 w-4" />
+                  <Trash2 className="mr-2 size-4" />
                   {t('delete')}
                 </Button>
               </AlertDialogTrigger>

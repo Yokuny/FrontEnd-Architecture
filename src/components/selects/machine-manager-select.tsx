@@ -19,7 +19,7 @@ export function MachineManagerSelect(props: MachineManagerSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <UserCog className="h-4 w-4" />
+            <UserCog className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -45,7 +45,7 @@ export function MachineManagerSelect(props: MachineManagerSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <UserCog className="h-4 w-4" />
+          <UserCog className="size-4" />
           {displayLabel}
         </Label>
       )}

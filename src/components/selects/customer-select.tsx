@@ -18,7 +18,7 @@ export function CustomerSelect(props: CustomerSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Briefcase className="h-4 w-4" />
+            <Briefcase className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -44,7 +44,7 @@ export function CustomerSelect(props: CustomerSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Briefcase className="h-4 w-4" />
+          <Briefcase className="size-4" />
           {displayLabel}
         </Label>
       )}

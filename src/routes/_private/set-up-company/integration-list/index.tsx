@@ -103,7 +103,7 @@ function IntegrationListPage() {
                         <span className={item.disabled ? 'text-muted-foreground' : ''}>{item.name}</span>
                         {item.disabled && (
                           <Badge variant="secondary" className="text-xs">
-                            <WifiOff className="h-3 w-3 mr-1" />
+                            <WifiOff className="size-3 mr-1" />
                             {t('deactivate')}
                           </Badge>
                         )}
@@ -194,7 +194,7 @@ function IntegrationListPage() {
       </CardContent>
       <CardFooter>
         <Button onClick={handleSave} disabled={isLoading || saveMachineIntegrations.isPending}>
-          <Save className="mr-2 h-4 w-4" />
+          <Save className="mr-2 size-4" />
           {t('save')}
         </Button>
       </CardFooter>

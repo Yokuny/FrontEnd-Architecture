@@ -45,7 +45,7 @@ export function FasTypeSelect(props: FasTypeSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Info className="h-4 w-4" />
+            <Info className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -71,7 +71,7 @@ export function FasTypeSelect(props: FasTypeSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Info className="h-4 w-4" />
+          <Info className="size-4" />
           {displayLabel}
         </Label>
       )}

@@ -22,7 +22,7 @@ export function UnlockSuccessStep({ onContinue }: UnlockSuccessStepProps) {
         </div>
         <Button onClick={onContinue} variant="green" className="w-full mt-4 font-semibold text-base" size="lg">
           {t('unlock.continue')}
-          <ArrowRight className="ml-2 h-5 w-5" />
+          <ArrowRight className="ml-2 size-5" />
         </Button>
       </div>
     </FieldGroup>

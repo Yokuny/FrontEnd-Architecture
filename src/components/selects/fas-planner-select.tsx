@@ -18,7 +18,7 @@ export function FasPlannerSelect(props: FasPlannerSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
+            <Calendar className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -44,7 +44,7 @@ export function FasPlannerSelect(props: FasPlannerSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Calendar className="h-4 w-4" />
+          <Calendar className="size-4" />
           {displayLabel}
         </Label>
       )}

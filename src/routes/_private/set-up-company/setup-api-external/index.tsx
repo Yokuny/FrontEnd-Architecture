@@ -64,7 +64,7 @@ function SetupApiExternalPage() {
             <div className="relative">
               <Input id="windyKey" type={showKey ? 'text' : 'password'} {...register('windyKey')} placeholder="API KEY" disabled={isLoading || isPending} className="pr-10" />
               <button type="button" onClick={() => setShowKey(!showKey)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                {showKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showKey ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
               </button>
             </div>
             {errors.windyKey && <p className="text-sm text-destructive">{t(errors.windyKey.message || '')}</p>}
@@ -72,7 +72,7 @@ function SetupApiExternalPage() {
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isLoading || isPending || isKeyMasked}>
-            <Save className="mr-2 h-4 w-4" />
+            <Save className="mr-2 size-4" />
             {t('save')}
           </Button>
         </CardFooter>

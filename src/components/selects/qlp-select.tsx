@@ -26,7 +26,7 @@ export function QlpSelect(props: QlpSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <ClipboardList className="h-4 w-4" />
+            <ClipboardList className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -52,7 +52,7 @@ export function QlpSelect(props: QlpSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <ClipboardList className="h-4 w-4" />
+          <ClipboardList className="size-4" />
           {displayLabel}
         </Label>
       )}

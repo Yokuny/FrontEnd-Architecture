@@ -99,22 +99,22 @@ const columns: ColumnDef<Item>[] = [
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="h-8 w-8">
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
               <span className="sr-only">Open menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>
-              <Eye className="mr-2 h-4 w-4" />
+              <Eye className="mr-2 size-4" />
               View details
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Pencil className="mr-2 h-4 w-4" />
+              <Pencil className="mr-2 size-4" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive">
-              <Trash2 className="mr-2 h-4 w-4" />
+              <Trash2 className="mr-2 size-4" />
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -273,7 +273,7 @@ export default function Table05() {
         </p>
         <div className="flex items-center gap-1">
           <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="size-4" />
             <span className="sr-only">Previous page</span>
           </Button>
           {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
@@ -282,7 +282,7 @@ export default function Table05() {
             </Button>
           ))}
           <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="size-4" />
             <span className="sr-only">Next page</span>
           </Button>
         </div>

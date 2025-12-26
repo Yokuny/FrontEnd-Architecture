@@ -39,7 +39,7 @@ export function PrioritySelect(props: PrioritySelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Flag className="h-4 w-4" />
+            <Flag className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -65,7 +65,7 @@ export function PrioritySelect(props: PrioritySelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Flag className="h-4 w-4" />
+          <Flag className="size-4" />
           {displayLabel}
         </Label>
       )}

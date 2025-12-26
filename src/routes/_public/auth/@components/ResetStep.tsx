@@ -86,7 +86,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
-                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                     </Button>
                   </div>
                 </FormControl>
@@ -125,7 +125,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
-                      {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      {showConfirmPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                     </Button>
                   </div>
                 </FormControl>
@@ -143,7 +143,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
           <Button type="submit" variant="green" disabled={isPending} className="w-full mt-4 font-semibold text-base" size="lg">
             {isPending ? (
               <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <Loader2 className="mr-2 size-5 animate-spin" />
                 {t('resetting')}
               </>
             ) : (
@@ -155,7 +155,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
 
       <div className="text-center">
         <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })}>
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="size-4" />
           {t('back.login')}
         </Button>
       </div>

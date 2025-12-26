@@ -40,15 +40,15 @@ export function ThemeSwitcher() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => changeTheme('system')} className={theme === 'system' ? 'bg-accent' : ''}>
-          <Settings className="mr-2 h-4 w-4" />
+          <Settings className="mr-2 size-4" />
           System {theme === 'system' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => changeTheme('light')} className={theme === 'light' ? 'bg-accent' : ''}>
-          <Sun className="mr-2 h-4 w-4" />
+          <Sun className="mr-2 size-4" />
           Light {theme === 'light' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => changeTheme('dark')} className={theme === 'dark' ? 'bg-accent' : ''}>
-          <Moon className="mr-2 h-4 w-4" />
+          <Moon className="mr-2 size-4" />
           Dark {theme === 'dark' && '✓'}
         </DropdownMenuItem>
       </DropdownMenuContent>

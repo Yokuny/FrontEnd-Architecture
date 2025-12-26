@@ -56,7 +56,7 @@ export function UserSelect({
       <div className="space-y-2">
         {label && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Users className="h-4 w-4" />
+            <Users className="size-4" />
             {label}
           </Label>
         )}
@@ -81,7 +81,7 @@ export function UserSelect({
     <div className="space-y-2">
       {label && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Users className="h-4 w-4" />
+          <Users className="size-4" />
           {label}
         </Label>
       )}

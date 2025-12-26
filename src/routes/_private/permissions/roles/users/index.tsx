@@ -58,14 +58,14 @@ function RoleUsersPage() {
       <CardHeader
         title={
           <div className="flex items-center gap-2">
-            <Users className="h-5 w-5" />
+            <Users className="size-5" />
             {t('role.users')}
           </div>
         }
       >
         <div className="flex flex-col items-end gap-1">
           <Button onClick={() => toast.info(t('feature.coming.soon'))}>
-            <UserPlus className="mr-2 h-4 w-4" />
+            <UserPlus className="mr-2 size-4" />
             {t('role.user.permission')}
           </Button>
           {role && <p className="text-sm text-muted-foreground">{role.description}</p>}
@@ -105,7 +105,7 @@ function RoleUsersPage() {
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="size-4" />
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>

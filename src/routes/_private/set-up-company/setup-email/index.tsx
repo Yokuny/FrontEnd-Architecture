@@ -100,7 +100,7 @@ function SetupEmailPage() {
               <div className="relative">
                 <Input id="password" type={showPass ? 'text' : 'password'} {...register('password')} placeholder="••••••••" disabled={isLoading || isPending} className="pr-10" />
                 <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                  {showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPass ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               </div>
               {errors.password && <p className="text-sm text-destructive">{t(errors.password.message || '')}</p>}
@@ -109,7 +109,7 @@ function SetupEmailPage() {
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isLoading || isPending}>
-            <Save className="mr-2 h-4 w-4" />
+            <Save className="mr-2 size-4" />
             {t('save')}
           </Button>
         </CardFooter>

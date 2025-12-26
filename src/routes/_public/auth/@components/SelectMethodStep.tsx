@@ -50,7 +50,7 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
                         <Label htmlFor={option.type} className="flex-1 cursor-pointer font-normal">
                           <div className="flex items-center gap-4">
                             <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground group-hover:text-foreground transition-colors">
-                              {option.type === 'email' ? <Mail className="h-5 w-5" /> : <Shield className="h-5 w-5" />}
+                              {option.type === 'email' ? <Mail className="size-5" /> : <Shield className="size-5" />}
                             </div>
                             <div>
                               <p className="font-medium">{option.type === 'email' ? t('email') : t('sms')}</p>
@@ -69,13 +69,13 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
 
           <Button type="submit" variant="blue" className="w-full mt-4 font-semibold text-base" size="lg">
             {t('unlock.send-code')}
-            <ArrowRight className="ml-2 h-5 w-5" />
+            <ArrowRight className="ml-2 size-5" />
           </Button>
         </form>
       </Form>
 
       <Button variant="ghost" size="sm" onClick={onBack} className="w-full text-muted-foreground hover:text-foreground">
-        <ArrowLeft className="mr-2 h-4 w-4" />
+        <ArrowLeft className="mr-2 size-4" />
         {t('back.login')}
       </Button>
     </FieldGroup>

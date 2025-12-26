@@ -67,7 +67,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
                         onClick={onTogglePassword}
                         className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                       >
-                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                        {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                       </Button>
                     </div>
                   </FormControl>
@@ -85,7 +85,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
 
       <div className="flex items-center justify-between text-sm">
         <Button type="button" variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="mr-2 h-4 w-4" />
+          <ArrowLeft className="mr-2 size-4" />
           {t('back')}
         </Button>
 

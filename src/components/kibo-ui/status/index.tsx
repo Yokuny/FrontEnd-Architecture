@@ -13,7 +13,7 @@ export const Status = ({ className, status, ...props }: StatusProps) => (
 export type StatusIndicatorProps = HTMLAttributes<HTMLSpanElement>;
 
 export const StatusIndicator = ({ className, ...props }: StatusIndicatorProps) => (
-  <span className="relative flex h-2 w-2" {...props}>
+  <span className="relative flex size-2" {...props}>
     <span
       className={cn(
         'absolute inline-flex h-full w-full animate-ping rounded-full opacity-75',
@@ -25,7 +25,7 @@ export const StatusIndicator = ({ className, ...props }: StatusIndicatorProps) =
     />
     <span
       className={cn(
-        'relative inline-flex h-2 w-2 rounded-full',
+        'relative inline-flex size-2 rounded-full',
         'group-[.online]:bg-emerald-500',
         'group-[.offline]:bg-red-500',
         'group-[.maintenance]:bg-blue-500',

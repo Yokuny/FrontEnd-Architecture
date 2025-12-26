@@ -42,7 +42,7 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
                 <div className="relative">
                   <Input {...field} className="h-14" type="email" placeholder={t('login.email.placeholder')} autoFocus />
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                    <Mail className="h-5 w-5 text-muted-foreground" />
+                    <Mail className="size-5 text-muted-foreground" />
                   </div>
                 </div>
               </FormControl>
@@ -60,7 +60,7 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
 
         <Button type="submit" variant="blue" className="w-full mt-4 font-semibold text-base" size="lg">
           {t('next')}
-          <ArrowRight className="ml-2 h-5 w-5" />
+          <ArrowRight className="ml-2 size-5" />
         </Button>
       </form>
     </Form>

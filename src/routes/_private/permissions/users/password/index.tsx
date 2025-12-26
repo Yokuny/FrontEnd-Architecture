@@ -68,7 +68,7 @@ function UpdatePasswordPage() {
               </div>
               <p className="text-muted-foreground">{t('send.password.email')}</p>
               <Button variant="ghost" onClick={() => navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } })}>
-                <ArrowLeft className="mr-2 h-4 w-4" />
+                <ArrowLeft className="mr-2 size-4" />
                 {t('back')}
               </Button>
             </>
@@ -81,7 +81,7 @@ function UpdatePasswordPage() {
               </div>
               <p className="text-muted-foreground">{t('error.sent.email')}</p>
               <Button variant="outline" onClick={handleRetry}>
-                <RefreshCw className="mr-2 h-4 w-4" />
+                <RefreshCw className="mr-2 size-4" />
                 {t('try.again')}
               </Button>
             </>

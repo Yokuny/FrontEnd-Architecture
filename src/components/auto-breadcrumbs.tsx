@@ -52,7 +52,7 @@ export function AutoBreadcrumbs() {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link to="/">
-              <Home className="h-4 w-4" />
+              <Home className="size-4" />
               <span className="sr-only">Home</span>
             </Link>
           </BreadcrumbLink>

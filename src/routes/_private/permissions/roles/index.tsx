@@ -24,7 +24,7 @@ function ListRolesPage() {
       <CardHeader title={t('role')}>
         {hasPermissionAdd && (
           <Button onClick={() => navigate({ to: '/permissions/roles/add' })}>
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="mr-2 size-4" />
             {t('new.role')}
           </Button>
         )}

@@ -25,7 +25,7 @@ export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Anchor className="h-4 w-4" />
+            <Anchor className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -51,7 +51,7 @@ export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Anchor className="h-4 w-4" />
+          <Anchor className="size-4" />
           {displayLabel}
         </Label>
       )}

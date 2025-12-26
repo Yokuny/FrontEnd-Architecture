@@ -56,7 +56,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
         {showActivityFilter && (
           <div className="mb-4 space-y-2">
             <Label htmlFor={activityId} className="flex items-center gap-2">
-              <Filter className="h-4 w-4" />
+              <Filter className="size-4" />
               {activityFilterLabel}
             </Label>
             <DataSelect<string, string>
@@ -75,7 +75,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
         <div className="space-y-2">
           {displayLabel && (
             <Label htmlFor={id} className="flex items-center gap-2">
-              <Truck className="h-4 w-4" />
+              <Truck className="size-4" />
               {displayLabel}
             </Label>
           )}
@@ -102,7 +102,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
       {showActivityFilter && (
         <div className="mb-4 space-y-2">
           <Label htmlFor={activityId} className="flex items-center gap-2">
-            <Filter className="h-4 w-4" />
+            <Filter className="size-4" />
             {activityFilterLabel}
           </Label>
           <DataSelect<string, string>
@@ -121,7 +121,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Truck className="h-4 w-4" />
+            <Truck className="size-4" />
             {displayLabel}
           </Label>
         )}

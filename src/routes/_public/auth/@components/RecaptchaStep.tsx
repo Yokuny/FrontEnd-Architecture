@@ -33,7 +33,7 @@ export function RecaptchaStep({ email, recaptchaRef, onVerify, onBack, isLoading
       )}
 
       <Button type="button" variant="ghost" onClick={onBack} className="w-full">
-        <ArrowLeft className="mr-2 h-4 w-4" />
+        <ArrowLeft className="mr-2 size-4" />
         {t('back')}
       </Button>
     </div>

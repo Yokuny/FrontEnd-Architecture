@@ -65,7 +65,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
                   <div className="relative">
                     <Input {...field} type="email" placeholder={t('login.email.placeholder')} autoFocus />
                     <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                      <Mail className="h-5 w-5 text-muted-foreground" />
+                      <Mail className="size-5 text-muted-foreground" />
                     </div>
                   </div>
                 </FormControl>
@@ -82,7 +82,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
           <Button type="submit" variant="blue" disabled={isPending} className="w-full mt-4 font-semibold text-base" size="lg">
             {isPending ? (
               <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <Loader2 className="mr-2 size-5 animate-spin" />
                 {t('sending')}
               </>
             ) : (
@@ -94,7 +94,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
 
       <div className="text-center">
         <Button type="button" variant="ghost" size="sm" onClick={() => navigate({ to: '/auth' })}>
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="size-4" />
           {t('back.login')}
         </Button>
       </div>

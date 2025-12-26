@@ -45,7 +45,7 @@ export function VisibilitySelect({ mode, value, onChange, disabled, className, c
     return (
       <div className="space-y-2">
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Eye className="h-4 w-4" />
+          <Eye className="size-4" />
           {label}
         </Label>
         <DataSelect<VisibilityOption>

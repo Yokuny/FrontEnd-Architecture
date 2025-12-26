@@ -26,7 +26,7 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Monitor className="h-4 w-4" />
+            <Monitor className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -52,7 +52,7 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Monitor className="h-4 w-4" />
+          <Monitor className="size-4" />
           {displayLabel}
         </Label>
       )}

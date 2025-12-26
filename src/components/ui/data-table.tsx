@@ -161,7 +161,7 @@ export function DataTable<T extends Record<string, any>>({
           </div>
           {/* Pagination skeleton */}
           <div className="mt-6 flex justify-between items-center">
-            <Skeleton className="h-4 w-48" />
+            <Skeleton className="size-48" />
             <div className="flex gap-2">
               <Skeleton className="h-9 w-20" />
               <Skeleton className="h-9 w-9" />
@@ -181,7 +181,7 @@ export function DataTable<T extends Record<string, any>>({
         <CardHeader className="pb-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="relative w-full sm:w-auto sm:flex-1 sm:max-w-sm">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 size-4 text-muted-foreground z-10" />
               <Input
                 type="text"
                 placeholder={searchPlaceholder}
@@ -233,13 +233,13 @@ export function DataTable<T extends Record<string, any>>({
                           <div className="flex flex-col">
                             <ChevronUp
                               className={cn(
-                                'h-3 w-3',
+                                'size-3',
                                 sortConfig.key === column.key && sortConfig.direction === 'asc' ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground/70',
                               )}
                             />
                             <ChevronDown
                               className={cn(
-                                'h-3 w-3 -mt-1',
+                                'size-3 -mt-1',
                                 sortConfig.key === column.key && sortConfig.direction === 'desc' ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground/70',
                               )}
                             />
@@ -248,7 +248,7 @@ export function DataTable<T extends Record<string, any>>({
                       </div>
                       {column.filterable && (
                         <div className="relative">
-                          <Filter className="h-3 w-3 text-muted-foreground/50" />
+                          <Filter className="size-3 text-muted-foreground/50" />
                         </div>
                       )}
                     </div>
@@ -264,7 +264,7 @@ export function DataTable<T extends Record<string, any>>({
                         />
                         {columnFilters[String(column.key)] && (
                           <Button variant="ghost" size="icon" onClick={() => clearColumnFilter(String(column.key))} className="absolute right-0 top-0 h-8 w-8 hover:bg-transparent">
-                            <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                            <X className="size-3 text-muted-foreground hover:text-foreground" />
                           </Button>
                         )}
                       </div>

@@ -20,7 +20,7 @@ export function ModelMachineSelect(props: ModelMachineSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Cpu className="h-4 w-4" />
+            <Cpu className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -46,7 +46,7 @@ export function ModelMachineSelect(props: ModelMachineSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Cpu className="h-4 w-4" />
+          <Cpu className="size-4" />
           {displayLabel}
         </Label>
       )}

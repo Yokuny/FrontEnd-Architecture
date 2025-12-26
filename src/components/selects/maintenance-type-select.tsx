@@ -20,7 +20,7 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Settings2 className="h-4 w-4" />
+            <Settings2 className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -46,7 +46,7 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Settings2 className="h-4 w-4" />
+          <Settings2 className="size-4" />
           {displayLabel}
         </Label>
       )}

@@ -24,7 +24,7 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Wrench className="h-4 w-4" />
+            <Wrench className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -49,7 +49,7 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Wrench className="h-4 w-4" />
+          <Wrench className="size-4" />
           {displayLabel}
         </Label>
       )}

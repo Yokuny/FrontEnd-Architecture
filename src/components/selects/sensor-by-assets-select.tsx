@@ -34,7 +34,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Radar className="h-4 w-4" />
+            <Radar className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -60,7 +60,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Radar className="h-4 w-4" />
+          <Radar className="size-4" />
           {displayLabel}
         </Label>
       )}

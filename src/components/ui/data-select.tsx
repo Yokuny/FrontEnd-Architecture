@@ -114,7 +114,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
             className={cn('w-full justify-between', !selectedOption && 'text-muted-foreground')}
           >
             <span className="truncate">{isLoading ? 'Loading...' : selectedOption ? selectedOption.label : placeholder}</span>
-            <ChevronsUpDownIcon className="text-muted-foreground/80 ml-2 h-4 w-4 shrink-0" aria-hidden="true" />
+            <ChevronsUpDownIcon className="text-muted-foreground/80 ml-2 size-4 shrink-0" aria-hidden="true" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[--radix-popover-trigger-width] p-0">

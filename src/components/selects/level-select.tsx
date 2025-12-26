@@ -34,7 +34,7 @@ export function LevelSelect(props: LevelSelectProps) {
         value: opt.id,
         label: (
           <div className="flex items-center gap-2">
-            <Icon className="h-4 w-4" style={{ color: opt.color }} />
+            <Icon className="size-4" style={{ color: opt.color }} />
             <span>{opt.name}</span>
           </div>
         ) as unknown as string, // Cast to string because DataSelect expects string in label for standard usage,
@@ -50,7 +50,7 @@ export function LevelSelect(props: LevelSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <BarChart className="h-4 w-4" />
+            <BarChart className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -76,7 +76,7 @@ export function LevelSelect(props: LevelSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <BarChart className="h-4 w-4" />
+          <BarChart className="size-4" />
           {displayLabel}
         </Label>
       )}
