@@ -2,10 +2,12 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import EmptyStandard from '@/components/empty-standard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
+import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { FilterDialog } from './@components/filter-dialog';
 import { MonitoringPlanCard } from './@components/monitoring-plan-card';
 import { useMonitoringPlans } from './@hooks/use-monitoring-plans-api';
@@ -27,8 +29,7 @@ function MonitoringPlansPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = Route.useSearch();
 
-  // Pegar idEnterprise do localStorage (mesmo padrão do legado com Redux)
-  const idEnterprise = localStorage.getItem('id_enterprise_filter') || '';
+  const { idEnterprise } = useEnterpriseFilter();
 
   const [filter, setFilter] = useState<MonitoringFilter>({});
 
@@ -82,7 +83,7 @@ function MonitoringPlansPage() {
             )}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">{t('not.found')}</div>
+          <EmptyStandard />
         )}
       </CardContent>
     </Card>

@@ -4,6 +4,7 @@
  */
 
 import { toast } from 'sonner';
+import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 
 const baseURL = import.meta.env.VITE_URI_BASE || 'http://localhost:3001';
 const timeout = parseInt(import.meta.env.VITE_URI_TIMEOUT || '30000', 10);
@@ -29,9 +30,9 @@ interface ApiResponse<T = unknown> {
 function clearLocalStorage() {
   localStorage.removeItem('token');
   localStorage.removeItem('user');
-  localStorage.removeItem('id_enterprise_filter');
   localStorage.removeItem('typelog');
   localStorage.removeItem('map_show_name');
+  useEnterpriseFilter.getState().setIdEnterprise('');
 }
 
 /**
@@ -154,7 +155,7 @@ async function fetchWithTimeout<T>(url: string, init: RequestInit, options: ApiO
  */
 function createHeaders(options: ApiOptions): HeadersInit {
   const token = localStorage.getItem('token');
-  const enterprise = localStorage.getItem('id_enterprise_filter');
+  const enterprise = useEnterpriseFilter.getState().idEnterprise;
 
   return {
     'Content-Type': 'application/json',

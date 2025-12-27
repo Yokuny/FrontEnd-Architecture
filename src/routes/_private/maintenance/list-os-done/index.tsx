@@ -1,10 +1,17 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { Filter, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import EmptyStandard from '@/components/empty-standard';
+import { EnterpriseFilterSelect } from '@/components/selects/enterprise-filter-select';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
+import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { OsDoneItem } from './@components/os-done-item';
 import { useListOrderServiceDone } from './@hooks/use-list-os-done-api';
 
@@ -23,13 +30,9 @@ export const Route = createFileRoute('/_private/maintenance/list-os-done/')({
 
 function ListOsDonePage() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const searchParams = Route.useSearch() as ListOsDoneSearch;
-  const page = searchParams.page ?? 1;
-  const size = searchParams.size ?? 10;
-  const search = searchParams.search;
-
-  const idEnterprise = localStorage.getItem('id_enterprise_filter') || '';
+  const navigate = useNavigate({ from: Route.fullPath });
+  const { page, size, search } = Route.useSearch();
+  const { idEnterprise, setIdEnterprise } = useEnterpriseFilter();
 
   const { data, isLoading } = useListOrderServiceDone({
     page: page - 1,
@@ -38,13 +41,43 @@ function ListOsDonePage() {
     idEnterprise,
   });
 
-  const hasViewPermission = true;
-
   const totalItems = data?.pageInfo?.[0]?.count ?? 0;
+
+  // TODO: Buscar permissões reais do usuário
+  const hasViewPermission = true;
 
   return (
     <Card>
-      <CardHeader title={t('done.os')} />
+      <CardHeader title={t('done.os')}>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
+          <EnterpriseFilterSelect value={idEnterprise} onChange={(val) => setIdEnterprise(val || '')} className="w-full sm:w-[250px]" />
+
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="relative w-full sm:max-w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <Input
+                placeholder={t('search')}
+                className="pl-9 h-10"
+                defaultValue={search || ''}
+                onBlur={(e) => {
+                  if (e.target.value !== search) {
+                    navigate({ search: (prev: ListOsDoneSearch) => ({ ...prev, search: e.target.value || undefined, page: 1 }) });
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    navigate({ search: (prev: ListOsDoneSearch) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }) });
+                  }
+                }}
+              />
+            </div>
+
+            <Button variant="outline" size="icon" className="shrink-0">
+              <Filter className="size-4" />
+            </Button>
+          </div>
+        </div>
+      </CardHeader>
 
       <CardContent>
         {isLoading ? (
@@ -52,32 +85,91 @@ function ListOsDonePage() {
             <Spinner />
           </Skeleton>
         ) : data?.data && data.data.length > 0 ? (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {data.data.map((item) => (
               <OsDoneItem key={item.id} item={item} hasViewPermission={hasViewPermission} />
             ))}
 
-            {totalItems > size && (
-              <div className="flex justify-center gap-2 pt-4">
-                <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => navigate({ to: '.', search: { page: page - 1, size, search } as any })}>
-                  {t('previous')}
-                </Button>
-                <span className="flex items-center px-3 text-sm text-muted-foreground">
-                  {t('page')} {page} / {Math.ceil(totalItems / size)}
-                </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page >= Math.ceil(totalItems / size)}
-                  onClick={() => navigate({ to: '.', search: { page: page + 1, size, search } as any })}
-                >
-                  {t('next')}
-                </Button>
+            {totalItems > 0 && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t mt-6">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+                  <span>{t('show')}</span>
+                  <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev: ListOsDoneSearch) => ({ ...prev, size: Number(val), page: 1 }) })}>
+                    <SelectTrigger className="h-8 w-[70px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="5">5</SelectItem>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="20">20</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <span>{t('per.page')}</span>
+                  <span className="ml-4 tabular-nums">
+                    {t('total')}: {totalItems}
+                  </span>
+                </div>
+
+                <div className="order-1 sm:order-2">
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            if (page > 1) navigate({ search: (prev: ListOsDoneSearch) => ({ ...prev, page: page - 1 }) });
+                          }}
+                          aria-disabled={page <= 1}
+                          className={page <= 1 ? 'pointer-events-none opacity-50' : ''}
+                        />
+                      </PaginationItem>
+
+                      {/* Lógica simplificada de paginação numérica */}
+                      {Array.from({ length: Math.min(5, Math.ceil(totalItems / size)) }, (_, i) => {
+                        const pageNum = i + 1;
+                        return (
+                          <PaginationItem key={pageNum}>
+                            <PaginationLink
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                navigate({ search: (prev: ListOsDoneSearch) => ({ ...prev, page: pageNum }) });
+                              }}
+                              isActive={page === pageNum}
+                            >
+                              {pageNum}
+                            </PaginationLink>
+                          </PaginationItem>
+                        );
+                      })}
+
+                      {Math.ceil(totalItems / size) > 5 && (
+                        <PaginationItem>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      )}
+
+                      <PaginationItem>
+                        <PaginationNext
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            if (page < Math.ceil(totalItems / size)) navigate({ search: (prev: ListOsDoneSearch) => ({ ...prev, page: page + 1 }) });
+                          }}
+                          aria-disabled={page >= Math.ceil(totalItems / size)}
+                          className={page >= Math.ceil(totalItems / size) ? 'pointer-events-none opacity-50' : ''}
+                        />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
               </div>
             )}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">{t('not.found')}</div>
+          <EmptyStandard />
         )}
       </CardContent>
     </Card>

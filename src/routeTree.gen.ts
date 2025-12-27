@@ -34,6 +34,7 @@ import { Route as PrivatePermissionsUsersPasswordIndexRouteImport } from './rout
 import { Route as PrivatePermissionsUsersEditIndexRouteImport } from './routes/_private/permissions/users/edit/index';
 import { Route as PrivatePermissionsRolesUsersIndexRouteImport } from './routes/_private/permissions/roles/users/index';
 import { Route as PrivatePermissionsRolesEditIndexRouteImport } from './routes/_private/permissions/roles/edit/index';
+import { Route as PrivateMaintenanceListOsDoneViewIndexRouteImport } from './routes/_private/maintenance/list-os-done/view/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -174,6 +175,12 @@ const PrivatePermissionsRolesEditIndexRoute =
     path: '/permissions/roles/edit/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateMaintenanceListOsDoneViewIndexRoute =
+  PrivateMaintenanceListOsDoneViewIndexRouteImport.update({
+    id: '/maintenance/list-os-done/view/',
+    path: '/maintenance/list-os-done/view/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
@@ -195,6 +202,7 @@ export interface FileRoutesByFullPath {
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
+  '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
   '/permissions/users/edit': typeof PrivatePermissionsUsersEditIndexRoute;
@@ -220,6 +228,7 @@ export interface FileRoutesByTo {
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
+  '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
   '/permissions/users/edit': typeof PrivatePermissionsUsersEditIndexRoute;
@@ -248,6 +257,7 @@ export interface FileRoutesById {
   '/_private/set-up-company/integration-list/': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/_private/set-up-company/setup-api-external/': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/_private/set-up-company/setup-email/': typeof PrivateSetUpCompanySetupEmailIndexRoute;
+  '/_private/maintenance/list-os-done/view/': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/_private/permissions/roles/edit/': typeof PrivatePermissionsRolesEditIndexRoute;
   '/_private/permissions/roles/users/': typeof PrivatePermissionsRolesUsersIndexRoute;
   '/_private/permissions/users/edit/': typeof PrivatePermissionsUsersEditIndexRoute;
@@ -275,6 +285,7 @@ export interface FileRouteTypes {
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
     | '/set-up-company/setup-email'
+    | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
     | '/permissions/users/edit'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
     | '/set-up-company/setup-email'
+    | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
     | '/permissions/users/edit'
@@ -327,6 +339,7 @@ export interface FileRouteTypes {
     | '/_private/set-up-company/integration-list/'
     | '/_private/set-up-company/setup-api-external/'
     | '/_private/set-up-company/setup-email/'
+    | '/_private/maintenance/list-os-done/view/'
     | '/_private/permissions/roles/edit/'
     | '/_private/permissions/roles/users/'
     | '/_private/permissions/users/edit/'
@@ -516,6 +529,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivatePermissionsRolesEditIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/maintenance/list-os-done/view/': {
+      id: '/_private/maintenance/list-os-done/view/';
+      path: '/maintenance/list-os-done/view';
+      fullPath: '/maintenance/list-os-done/view';
+      preLoaderRoute: typeof PrivateMaintenanceListOsDoneViewIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
   }
 }
 
@@ -534,6 +554,7 @@ interface PrivateRouteChildren {
   PrivateSetUpCompanyIntegrationListIndexRoute: typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   PrivateSetUpCompanySetupApiExternalIndexRoute: typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   PrivateSetUpCompanySetupEmailIndexRoute: typeof PrivateSetUpCompanySetupEmailIndexRoute;
+  PrivateMaintenanceListOsDoneViewIndexRoute: typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   PrivatePermissionsRolesEditIndexRoute: typeof PrivatePermissionsRolesEditIndexRoute;
   PrivatePermissionsRolesUsersIndexRoute: typeof PrivatePermissionsRolesUsersIndexRoute;
   PrivatePermissionsUsersEditIndexRoute: typeof PrivatePermissionsUsersEditIndexRoute;
@@ -562,6 +583,8 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateSetUpCompanySetupApiExternalIndexRoute,
   PrivateSetUpCompanySetupEmailIndexRoute:
     PrivateSetUpCompanySetupEmailIndexRoute,
+  PrivateMaintenanceListOsDoneViewIndexRoute:
+    PrivateMaintenanceListOsDoneViewIndexRoute,
   PrivatePermissionsRolesEditIndexRoute: PrivatePermissionsRolesEditIndexRoute,
   PrivatePermissionsRolesUsersIndexRoute:
     PrivatePermissionsRolesUsersIndexRoute,

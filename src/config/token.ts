@@ -3,6 +3,7 @@
  */
 
 import { jwtDecode } from 'jwt-decode';
+import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 
 export interface DecodedToken {
   id: string;
@@ -60,9 +61,9 @@ export function setStoredToken(token: string): void {
 export function clearStoredToken(): void {
   localStorage.removeItem('token');
   localStorage.removeItem('user');
-  localStorage.removeItem('id_enterprise_filter');
   localStorage.removeItem('typelog');
   localStorage.removeItem('map_show_name');
+  useEnterpriseFilter.getState().setIdEnterprise('');
 }
 
 /**
@@ -81,7 +82,7 @@ export function saveUserData(user: DecodedToken, loginType: 'normal' | 'sso' = '
   localStorage.setItem('map_show_name', 'true');
 
   if (user.request) {
-    localStorage.setItem('id_enterprise_filter', user.request);
+    useEnterpriseFilter.getState().setIdEnterprise(user.request);
   }
 }
 

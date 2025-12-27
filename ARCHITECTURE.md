@@ -70,6 +70,7 @@ src/routes/_private/embarcacoes/
         ├── @interface/
         └── index.tsx          # < arquivo de contrução visual da subrota
 ```
+
 ### REGRA OBRIGATÓRIA: Usar os componentes ShadCN UI presentes em [`src/components/ui`](./src/components/ui)
 
 > **Padrão de criação de pagina**:
@@ -77,12 +78,10 @@ src/routes/_private/embarcacoes/
 
   2. [`CardHeader`](./src/components/ui/card.tsx): **OBRIGATÓRIO** O componente `CardHeader` é o cabeçalho oficial de todas as páginas dentro do aplicativo ([páginas autenticadas](./src/routes/_private)).
 
+  3. Evite estilização de componentes
+  
   Exemplo de uso:
   ```tsx
-  import { Filter, Plus } from 'lucide-react';
-  import { Card, CardContent, CardHeader } from '@/components/ui/card';
-  import { Button } from '@/components/ui/button';
-
   export function MinhaPagina() {
     const { t } = useTranslation();
 
@@ -109,6 +108,9 @@ src/routes/_private/embarcacoes/
     );
   }
   ```
+  **Padrão de resposta e resultados vazios / sem dados**:
+  
+  Usar o componente [`empty-standard.tsx`](./src/components/empty-standard.tsx)
 
   **Padrão de Loading de Página**:
   
@@ -163,10 +165,7 @@ src/routes/_private/embarcacoes/
   - [`stats-03.tsx`](./src/components/stats-03.tsx)
   - [`stats-09.tsx`](./src/components/stats-09.tsx)
 
-  Padrão para resultados vazios:
-  - [`empty-standard-5.tsx`](./src/components/empty-standard-5.tsx)
-
-  6. Textos traduzidos com [i18n](./src/config/i18n.ts): As traduções estão presentes e devem ser adicionadas nos 3 arquivos [`pt.json`](./src/config/translations/pt.json) (Default), [`en.json`](./src/config/translations/en.json) e [`es.json`](./src/config/translations/es.json)
+  6. Textos traduzidos com [i18n](./src/config/i18n.ts): Toda chave deve ser adicionada aos arquivos [`pt.json`](./src/config/translations/pt.json) (Default), [`en.json`](./src/config/translations/en.json) e [`es.json`](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave existe antes de usar**.
 
   Exemplo de uso:
   ```tsx
@@ -226,11 +225,6 @@ export const Route = createFileRoute("/_private/machine-list/")({
 // Dentro do componente:
 const { id, filter } = useSearch({ from: '/_private/machine-list/' });
 ```
-
-### Cliente de API
-
-- **Localização**: [`src/lib/api/client.ts`](./src/lib/api/client.ts)
-- **V2**: Use `{ isV2: true }` nas opções
 
 ### Padrão de Hook de API
 
@@ -331,8 +325,8 @@ Utilize **Tailwind CSS intellisense** para ter as classes disponíveis. Clique C
 - [ ] Usar componentes de `src/components/ui`
 - [ ] Schemas Zod em `@interface/`
 - [ ] Hook de formulário em `@hooks/` (se necessário)
-- [ ] Página com componentes Shadcn UI
-- [ ] Adicionar ou buscar as traduções em `src/config/translations/*.json`
+- [ ] Página com componentes Shadcn UI, e evitar estilização de componentes
+- [ ] Buscar, adicionar ou usar as traduções em `src/config/translations/*.json`
 
 ### 5. Conversões Obrigatórias
 

@@ -15,6 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { INTEGRATION_OPTIONS, TYPES_WITH_IMO, TYPES_WITH_MMSI, UPDATE_INTERVAL_OPTIONS } from './@consts/integration-options';
 import { useMachineIntegrations, useMachineIntegrationsApi } from './@hooks/use-machine-integrations-api';
 import type { MachineIntegration } from './@interface/machine-integration';
@@ -26,8 +27,7 @@ export const Route = createFileRoute('/_private/set-up-company/integration-list/
 function IntegrationListPage() {
   const { t } = useTranslation();
 
-  // Pegar idEnterprise do localStorage (mesmo padrão do legado com Redux)
-  const idEnterprise = localStorage.getItem('id_enterprise_filter') || '';
+  const { idEnterprise } = useEnterpriseFilter();
 
   const { data: machines, isLoading } = useMachineIntegrations(idEnterprise);
   const { saveMachineIntegrations } = useMachineIntegrationsApi();

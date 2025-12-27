@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { clearStoredToken, type DecodedToken, decodeToken, setStoredToken } from '@/config/token';
+import { useEnterpriseFilter } from './use-enterprises-api';
 
 interface LockedAccount {
   id: string;
@@ -30,7 +31,7 @@ export const useAuth = create<AuthStore>()(
         localStorage.setItem('map_show_name', 'true');
 
         if (user.request) {
-          localStorage.setItem('id_enterprise_filter', user.request);
+          useEnterpriseFilter.getState().setIdEnterprise(user.request);
         }
 
         set({

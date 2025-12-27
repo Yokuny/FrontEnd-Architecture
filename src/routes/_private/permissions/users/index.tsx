@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Filter, Plus, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import EmptyStandard from '@/components/empty-standard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -78,7 +79,7 @@ function ListUsersPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">{t('not.found')}</div>
+          <EmptyStandard />
         )}
       </CardContent>
     </Card>

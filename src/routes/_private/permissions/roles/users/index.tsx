@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
+import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { useRole, useRolesApi, useRoleUsers } from '@/hooks/use-roles-api';
 
 const roleUsersSearchSchema = z.object({
@@ -37,8 +38,7 @@ function RoleUsersPage() {
   const { t } = useTranslation();
   const { removeUserFromRole } = useRolesApi();
 
-  // Get enterprise from localStorage (same as legacy)
-  const idEnterprise = localStorage.getItem('id_enterprise_filter') || '';
+  const { idEnterprise } = useEnterpriseFilter();
 
   const { data: role, isLoading: isLoadingRole } = useRole(id);
   const { data: users, isLoading: isLoadingUsers, refetch } = useRoleUsers(id, idEnterprise);

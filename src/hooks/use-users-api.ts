@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { api } from '@/lib/api/client';
 import type { PasswordUpdate, User, UserListItem, UserPermission } from '@/routes/_private/permissions/users/@interface/user';
 
@@ -17,7 +18,7 @@ export const usersKeys = {
 // API functions
 async function fetchUsers(params?: Record<string, unknown>): Promise<{ data: UserListItem[]; pageInfo: { count: number }[] }> {
   // Garantir que temos o idEnterprise
-  const idEnterprise = (params?.idEnterprise as string) || localStorage.getItem('id_enterprise_filter') || '';
+  const idEnterprise = (params?.idEnterprise as string) || useEnterpriseFilter.getState().idEnterprise || '';
   const queryParams = { ...params, idEnterprise };
 
   const queryString = new URLSearchParams(queryParams as Record<string, string>).toString();

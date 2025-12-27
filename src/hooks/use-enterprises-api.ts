@@ -1,5 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { api } from '@/lib/api/client';
+
+export interface EnterpriseFilterStore {
+  idEnterprise: string;
+  setIdEnterprise: (id: string) => void;
+}
+
+export const useEnterpriseFilter = create<EnterpriseFilterStore>()(
+  persist(
+    (set) => ({
+      idEnterprise: '',
+      setIdEnterprise: (id) => set({ idEnterprise: id }),
+    }),
+    {
+      name: 'idEnterprise',
+    },
+  ),
+);
 
 // Types
 export interface Enterprise {

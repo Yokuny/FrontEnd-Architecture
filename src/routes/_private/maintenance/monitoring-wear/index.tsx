@@ -1,10 +1,14 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import EmptyStandard from '@/components/empty-standard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
+import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { MonitoringWearCard } from './@components/monitoring-wear-card';
 import { useMonitoringWear } from './@hooks/use-monitoring-wear-api';
 
@@ -13,6 +17,8 @@ const searchSchema = z.object({
   size: z.number().optional().default(10),
   search: z.string().optional(),
 });
+
+type SearchParams = z.infer<typeof searchSchema>;
 
 export const Route = createFileRoute('/_private/maintenance/monitoring-wear/')({
   component: MonitoringWearPage,
@@ -24,7 +30,7 @@ function MonitoringWearPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = Route.useSearch();
 
-  const idEnterprise = localStorage.getItem('id_enterprise_filter') || '';
+  const { idEnterprise } = useEnterpriseFilter();
 
   const { data, isLoading } = useMonitoringWear({
     page: page - 1,
@@ -37,7 +43,28 @@ function MonitoringWearPage() {
 
   return (
     <Card>
-      <CardHeader title={t('monitoring.wear.part')} />
+      <CardHeader title={t('monitoring.wear.part')}>
+        <div className="flex items-center gap-2">
+          <div className="relative w-full max-w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Input
+              placeholder={t('search')}
+              className="pl-9 h-9"
+              defaultValue={search || ''}
+              onBlur={(e: any) => {
+                if (e.target.value !== search) {
+                  navigate({ search: (prev: SearchParams) => ({ ...prev, search: e.target.value || undefined, page: 1 }) });
+                }
+              }}
+              onKeyDown={(e: any) => {
+                if (e.key === 'Enter') {
+                  navigate({ search: (prev: SearchParams) => ({ ...prev, search: e.target.value || undefined, page: 1 }) });
+                }
+              }}
+            />
+          </div>
+        </div>
+      </CardHeader>
 
       <CardContent>
         {isLoading ? (
@@ -65,7 +92,7 @@ function MonitoringWearPage() {
             )}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">{t('not.found')}</div>
+          <EmptyStandard />
         )}
       </CardContent>
     </Card>

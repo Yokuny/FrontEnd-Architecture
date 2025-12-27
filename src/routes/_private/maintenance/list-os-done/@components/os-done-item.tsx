@@ -1,8 +1,10 @@
+import { useNavigate } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { CheckCircle2, Eye, FileText, MoreVertical } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 import type { OrderServiceDone } from '../@interface/list-os-done.types';
 
 interface OsDoneItemProps {
@@ -12,49 +14,54 @@ interface OsDoneItemProps {
 
 export function OsDoneItem({ item, hasViewPermission }: OsDoneItemProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    // TODO: Implementar navegação para detalhes da OS quando a rota existir
-    console.log('Ver detalhes da OS:', item.id);
+    navigate({
+      to: '/maintenance/list-os-done/view',
+      search: { id: item.id },
+    } as any);
   };
 
   return (
-    <div className="flex items-center gap-4 p-4 border rounded-lg hover:bg-accent/50 transition-colors group">
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+    <Item variant="outline" className="group">
+      <ItemMedia variant="icon" className="bg-red-50 text-red-600 border-red-100 size-11 rounded-full">
         <FileText className="size-5" />
-      </div>
+      </ItemMedia>
 
-      <div className="flex-1 min-w-0">
-        <p className="font-medium text-sm sm:text-base truncate">
+      <ItemContent>
+        <ItemTitle className="text-base">
           {item.order} - {item.maintenancePlan?.description} - {item.machine?.name}
-        </p>
-        <p className="text-xs text-muted-foreground truncate">{item.enterprise?.name}</p>
-      </div>
+        </ItemTitle>
+        <ItemDescription>{item.enterprise?.name}</ItemDescription>
+      </ItemContent>
 
-      <div className="flex flex-col items-end gap-1 shrink-0">
-        <div className="flex items-center gap-1.5 text-green-600">
-          <CheckCircle2 className="size-4" />
-          <span className="text-[10px] font-medium leading-none">
+      <div className="flex flex-col items-end gap-1 px-4">
+        <div className="flex items-center gap-1.5 text-green-600 bg-green-50 px-2 py-1 rounded-md border border-green-100">
+          <CheckCircle2 className="size-3.5" />
+          <span className="text-[11px] font-bold uppercase tracking-tight">
             {t('done.at')} {item.doneAt ? format(new Date(item.doneAt), 'dd/MM/yyyy') : '-'}
           </span>
         </div>
       </div>
 
-      {hasViewPermission && (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="size-8">
-              <MoreVertical className="size-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={handleViewDetails}>
-              <Eye className="mr-2 size-4" />
-              {t('view.os')}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )}
-    </div>
+      <ItemActions>
+        {hasViewPermission && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="size-9 rounded-full group-hover:bg-primary/10 transition-colors">
+                <MoreVertical className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleViewDetails}>
+                <Eye className="mr-2 size-4" />
+                {t('view.os')}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+      </ItemActions>
+    </Item>
   );
 }

@@ -27,7 +27,7 @@ export function useMonitoringWear(params: { page: number; size: number; search?:
 
 export function useMonitoringWearDetails(idMachine: string) {
   return useQuery({
-    queryKey: monitoringWearKeys.details(idMachine),
+    queryKey: [...monitoringWearKeys.all, 'details', idMachine],
     queryFn: async () => {
       const response = await api.get<MonitoringWearPart[]>(`/wearstate/monitoring/machine?idMachine=${idMachine}`);
       return response.data;
