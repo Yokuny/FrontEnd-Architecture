@@ -153,7 +153,7 @@ export function EditEventScheduleDialog({
         {isFetching ? (
           <div className="flex flex-col items-center justify-center py-12 gap-4">
             <Loader2 className="size-8 animate-spin text-primary" />
-            <p className="text-sm text-muted-foreground">{t('loading.data')}</p>
+            <p className="text-sm text-muted-foreground">{t('loading')}</p>
           </div>
         ) : (
           <div className="grid gap-6 py-4">

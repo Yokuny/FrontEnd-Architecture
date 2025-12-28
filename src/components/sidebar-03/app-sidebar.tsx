@@ -1,11 +1,14 @@
 'use client';
 
 import { Airplay, Navigation, Ship } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import DashboardNavigation from '@/components/sidebar-03/nav-main';
-import { SettingsCard } from '@/components/sidebar-03/settings-card';
+import { NotificationsPopover } from '@/components/sidebar-03/nav-notifications';
 import { TeamSwitcher } from '@/components/sidebar-03/team-switcher';
 import { useDynamicRoutes } from '@/components/sidebar-03/use-dynamic-routes';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, useSidebar } from '@/components/ui/sidebar';
+import { SidebarTrigger } from '@/components/sidebar-trigger';
+import { ThemeSwitcher } from '@/components/theme-switcher';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 
 const sampleNotifications = [
@@ -39,21 +42,28 @@ const teams = [
 ];
 
 export function AppSidebar() {
-  const { state } = useSidebar();
+  const { state, setHovered } = useSidebar();
   const isCollapsed = state === 'collapsed';
 
   // Usar rotas dinâmicas baseadas em MAIN_ROUTES
   const dynamicRoutes = useDynamicRoutes();
 
   return (
-    <Sidebar variant="floating" collapsible="icon">
-      <SidebarHeader
-        className={cn(
-          'flex md:pt-3.5',
-          isCollapsed ? 'flex-row items-center justify-between gap-y-4 md:flex-col md:items-start md:justify-start' : 'flex-row items-center justify-between',
-        )}
-      >
-        <SettingsCard notifications={sampleNotifications} />
+    <Sidebar variant="floating" collapsible="icon" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className="transition-all duration-300 ease-in-out">
+      <SidebarHeader className="pt-3 items-center gap-2 px-2">
+        <div className={cn('flex items-center')}>
+          <div className={cn('flex items-center', isCollapsed && 'flex-col')}>
+            <SidebarTrigger />
+            <NotificationsPopover notifications={sampleNotifications} />
+          </div>
+          {!isCollapsed && (
+            <div className="flex items-center">
+              <LanguageSwitcher />
+              <ThemeSwitcher />
+            </div>
+          )}
+        </div>
+        <SidebarSeparator />
       </SidebarHeader>
       <SidebarContent className="gap-4 px-2 py-4">
         <DashboardNavigation routes={dynamicRoutes} />

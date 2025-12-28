@@ -38,27 +38,24 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton
                     className={cn(
-                      'flex w-full items-center rounded-lg px-2 transition-colors',
+                      'flex w-full items-center rounded-sm transition-colors',
                       isOpen ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
                       isCollapsed && 'justify-center',
                     )}
                   >
                     {route.icon}
-                    {!isCollapsed && <span className="ml-2 flex-1 text-sm font-medium">{route.title}</span>}
+                    {!isCollapsed && <span className="ml-2 flex-1 truncate text-sm font-medium">{route.title}</span>}
                     {!isCollapsed && hasSubRoutes && <span className="ml-auto">{isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}</span>}
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
 
                 {!isCollapsed && (
                   <CollapsibleContent>
-                    <SidebarMenuSub className="my-1 ml-3.5 ">
+                    <SidebarMenuSub>
                       {route.subs?.map((subRoute) => (
                         <SidebarMenuSubItem key={`${route.id}-${subRoute.title}`} className="h-auto">
-                          <SidebarMenuSubButton asChild>
-                            <Link
-                              to={subRoute.link}
-                              className="flex items-center rounded-md px-4 py-1.5 text-sm font-medium text-muted-foreground hover:bg-sidebar-muted hover:text-foreground"
-                            >
+                          <SidebarMenuSubButton size="sm" asChild>
+                            <Link to={subRoute.link} className="text-muted-foreground hover:bg-sidebar-muted hover:text-foreground">
                               {subRoute.title}
                             </Link>
                           </SidebarMenuSubButton>

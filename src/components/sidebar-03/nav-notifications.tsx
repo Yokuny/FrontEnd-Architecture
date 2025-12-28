@@ -1,9 +1,10 @@
 'use client';
 
-import { BellIcon } from 'lucide-react';
+import { MessageCircleWarning } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
 
 export type Notification = {
   id: string;
@@ -14,11 +15,13 @@ export type Notification = {
 };
 
 export function NotificationsPopover({ notifications }: { notifications: Notification[] }) {
+  const { state, setMenuOpen } = useSidebarToggle();
+
   return (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" aria-label="Open notifications">
-          <BellIcon className="size-5" />
+        <Button size="icon" variant="ghost" aria-label="Open notifications">
+          <MessageCircleWarning key={state} className="size-5 animate-swing text-muted-foreground" />
           <span className="sr-only">Open notifications</span>
         </Button>
       </DropdownMenuTrigger>
