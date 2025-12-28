@@ -537,6 +537,8 @@
   "example.request.machine": "Ejemplo de datos a enviar",
   "monitoring.plan.maintenance": "Vigilancia de planes de mantenimiento",
   "monitoring.plan.maintenance.description": "Vea y gestione la vigilancia de los planes de mantenimiento preventivo.",
+  "monitoring.plan.detail": "Detalles del Plan",
+  "click.to.edit": "Haga clic para editar",
   "observation": "Comentarios",
   "part": "Pieza",
   "action.by": "Hecho por",

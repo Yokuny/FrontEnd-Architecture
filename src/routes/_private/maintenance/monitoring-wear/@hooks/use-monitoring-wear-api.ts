@@ -18,7 +18,7 @@ export function useMonitoringWear(params: { page: number; size: number; search?:
       if (params.search) queryParams.append('search', params.search);
       if (params.idEnterprise) queryParams.append('idEnterprise', params.idEnterprise);
 
-      const response = await api.get<{ data: MonitoringWearMachine[]; pageInfo: [{ count: number }] }>('/wearstate/monitoring/list?' + queryParams.toString());
+      const response = await api.get<{ data: MonitoringWearMachine[]; pageInfo: [{ count: number }] }>(`/wearstate/monitoring/list?${queryParams.toString()}`);
       return response.data;
     },
     enabled: !!params.idEnterprise,

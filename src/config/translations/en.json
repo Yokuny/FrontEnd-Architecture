@@ -520,6 +520,8 @@
   "example.request.machine": "Data example to be sent",
   "monitoring.plan.maintenance": "Monitoring of maintenance plans",
   "monitoring.plan.maintenance.description": "View and manage the monitoring of preventive maintenance plans.",
+  "monitoring.plan.detail": "Plan Details",
+  "click.to.edit": "Click to edit",
   "observation": "Note",
   "part": "Part",
   "action.by": "Made by",

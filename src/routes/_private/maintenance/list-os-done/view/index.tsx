@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { CheckCircle2, FileText, Printer, XCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -57,15 +57,14 @@ function OsDetailsPage() {
         </Button>
       </CardHeader>
 
-      <CardContent className="space-y-10 lg:space-y-20 pb-20 max-w-5xl print:max-w-none ">
-        {/* Header Branding (Visible in Print) */}
+      <CardContent className="space-y-6 pb-20 max-w-5xl print:max-w-none">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pt-6">
           <div className="flex justify-between items-center w-full">
             <div className="flex items-center gap-3">
               <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                 <FileText className="size-6" />
               </div>
-              <span className="text-3xl font-semibold tracking-tighter">OS #{data.order}</span>
+              <span className="text-3xl font-semibold tracking-tighter">{data.order}</span>
             </div>
             <div className="flex items-start flex-col gap-1">
               <h2 className="text-2xl font-bold tracking-tight">{data.enterprise.name}</h2>
@@ -77,7 +76,7 @@ function OsDetailsPage() {
         </div>
 
         {/* Info Grid - Experience inspired */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-y py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-y py-6">
           <div className="px-0 md:pr-12 space-y-2 border-b md:border-b-0 md:border-r pb-8 md:pb-0">
             <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">{t('machine')}</span>
             <h3 className="text-3xl font-semibold tracking-tighter leading-tight">{data.machine.name}</h3>
@@ -136,7 +135,7 @@ function OsDetailsPage() {
               </li>
             ))}
             {data.services.length === 0 && (
-              <li className="py-12 border-none">
+              <li className="py-6 border-none">
                 <EmptyStandard />
               </li>
             )}
@@ -188,7 +187,7 @@ function OsDetailsPage() {
           }
 
           .min-h-screen { padding: 0 !important; }
-          .pb-20, .py-12, .pt-12 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+          .pb-20, .py-6, .pt-12 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
           .space-y-12 { margin-top: 0 !important; margin-bottom: 0 !important; }
           
           /* Forçar bordas e shadows para sumirem no Card */

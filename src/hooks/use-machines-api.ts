@@ -88,7 +88,7 @@ export function mapMachinesToOptions(machines: Machine[]) {
       label: `${machine.name} (${machine.id})`,
       data: machine,
     }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+    .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
 }
 
 export function mapMachinesToOptionsSimple(machines: Machine[]) {
@@ -98,5 +98,5 @@ export function mapMachinesToOptionsSimple(machines: Machine[]) {
       label: machine.name,
       data: machine,
     }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+    .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
 }

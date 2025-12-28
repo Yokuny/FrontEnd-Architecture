@@ -90,7 +90,7 @@ export function AdjustManualWear({ idMachine, idPart, idTypeService, idWearConfi
               type="number"
               min={0}
               value={newWear}
-              onChange={(e) => setNewWear(e.target.value === '' ? '' : parseInt(e.target.value))}
+              onChange={(e) => setNewWear(e.target.value === '' ? '' : parseInt(e.target.value, 10))}
               placeholder={t('wear.new')}
             />
           </div>

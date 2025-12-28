@@ -25,7 +25,7 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
   }
 
   return (
-    <div className="mt-4 border rounded-md overflow-hidden bg-background/50">
+    <div className="border rounded-md overflow-hidden bg-background/50">
       <Table>
         <TableHeader>
           <TableRow>

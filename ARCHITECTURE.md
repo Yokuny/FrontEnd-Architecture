@@ -25,7 +25,7 @@ Preciso de useMachineForm() para gerenciar formulário de máquina?
 
 | Hook comuns | Descrição |
 |-------------|-----------|
-| `use-enterprises-api.ts` | Hook comun para buscar idEnterprise da empresa do usuário logado |
+| `use-enterprises-api.ts` | Hook comun para buscar idEnterprise da empresa do usuário logado, **importante** usar `useEnterpriseFilter` para obter o idEnterprise, exemplo sempre quando aparecer id_enterprise_filter ou enterpriseFilter.enterprises, 
 | `use-machines-api.ts` | Hook comun para buscar valores de máquinas e embarcações |
 | `use-users-not-in-role.ts` | Hook comun para buscar usuários que não estão em um determinado perfil |
 | `use-roles-api.ts` | Hook comun para buscar as permissões do usuário logado |
@@ -78,7 +78,7 @@ src/routes/_private/embarcacoes/
 
   2. [`CardHeader`](./src/components/ui/card.tsx): **OBRIGATÓRIO** O componente `CardHeader` é o cabeçalho oficial de todas as páginas dentro do aplicativo ([páginas autenticadas](./src/routes/_private)).
 
-  3. Evite estilização de componentes
+  3. [`CardFooter`](./src/components/ui/card.tsx): **OBRIGATÓRIO** CardFooter deve conter paginação, botões de ação e etc.
   
   Exemplo de uso:
   ```tsx
@@ -104,6 +104,10 @@ src/routes/_private/embarcacoes/
         <CardContent>
           {/* Conteúdo da página */}
         </CardContent>
+        
+        <CardFooter>
+          {/* Ações e paginação */}
+        </CardFooter>
       </Card>
     );
   }
@@ -132,7 +136,7 @@ src/routes/_private/embarcacoes/
   </Card>
   ```
 
-  3. [`Select`](./src/components/selects/index.ts): Busque os seletores no diretório `@/components/selects`, como está é uma nova arquitetura os nomes podem variar, as operaçoes desses seletores estão presentes em [`@/hooks/`](./src/hooks/).
+  4. [`Select`](./src/components/selects/index.ts): Busque os seletores no diretório `@/components/selects`, como está é uma nova arquitetura os nomes podem variar, as operaçoes desses seletores estão presentes em [`@/hooks/`](./src/hooks/).
 
   Exemplo de conversão da antiga nomeclatura para a nova:
   | Nome Legado (SelectX) | Novo Nome (XSelect) |
@@ -155,8 +159,8 @@ src/routes/_private/embarcacoes/
   - [`stats-03.tsx`](./src/components/stats-03.tsx) - Cards de métricas com indicadores de variação.
   - [`stats-09.tsx`](./src/components/stats-09.tsx) - Cards de uso de recursos com barras de progresso.
 
-  5. [`Padrão de estilização`]:
-  
+  5. [`Padrão de estilização`]: **IMPORTANTE**: Os componentes já tem o padrão de estilização, evite estilização de componentes.
+
   Padrão de formulários:
   - [`form-advanced-7.tsx`](./src/components/form-advanced-7.tsx)
   - [`form-patterns-3.tsx`](./src/components/form-patterns-3.tsx)
@@ -165,7 +169,7 @@ src/routes/_private/embarcacoes/
   - [`stats-03.tsx`](./src/components/stats-03.tsx)
   - [`stats-09.tsx`](./src/components/stats-09.tsx)
 
-  6. Textos traduzidos com [i18n](./src/config/i18n.ts): Toda chave deve ser adicionada aos arquivos [`pt.json`](./src/config/translations/pt.json) (Default), [`en.json`](./src/config/translations/en.json) e [`es.json`](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave existe antes de usar**.
+  6. Textos traduzidos com [i18n](./src/config/i18n.ts): **IMPORTANTE**: Toda chave deve ser adicionada aos arquivos [`pt.json`](./src/config/translations/pt.json) (Default), [`en.json`](./src/config/translations/en.json) e [`es.json`](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave existe antes de usar**.
 
   Exemplo de uso:
   ```tsx

@@ -54,5 +54,5 @@ export function mapMaintenancePlansToOptions(plans: MaintenancePlan[]) {
       label: plan.description,
       data: plan,
     }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+    .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
 }

@@ -17,7 +17,7 @@ export function useListOrderServiceDone(params: { page: number; size: number; se
       if (params.search) queryParams.append('search', params.search);
       if (params.idEnterprise) queryParams.append('idEnterprise', params.idEnterprise);
 
-      const response = await api.get<ListOrderServiceDoneResponse>('/maintenancemachine/os/done/list?' + queryParams.toString());
+      const response = await api.get<ListOrderServiceDoneResponse>(`/maintenancemachine/os/done/list?${queryParams.toString()}`);
       return response.data;
     },
     enabled: !!params.idEnterprise,

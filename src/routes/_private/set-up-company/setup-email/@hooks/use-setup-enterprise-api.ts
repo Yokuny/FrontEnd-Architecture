@@ -28,7 +28,7 @@ async function saveSetupEnterprise(data: SetupEnterprisePayload): Promise<SetupE
 export function useSetupEnterprise(idEnterprise: string | undefined) {
   return useQuery({
     queryKey: setupEnterpriseKeys.detail(idEnterprise || ''),
-    queryFn: () => fetchSetupEnterprise(idEnterprise!),
+    queryFn: () => fetchSetupEnterprise(idEnterprise as string),
     enabled: !!idEnterprise,
   });
 }

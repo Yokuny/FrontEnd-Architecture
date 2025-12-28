@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import EmptyStandard from '@/components/empty-standard';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
@@ -44,25 +44,23 @@ function MonitoringWearPage() {
   return (
     <Card>
       <CardHeader title={t('monitoring.wear.part')}>
-        <div className="flex items-center gap-2">
-          <div className="relative w-full max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-            <Input
-              placeholder={t('search')}
-              className="pl-9 h-9"
-              defaultValue={search || ''}
-              onBlur={(e: any) => {
-                if (e.target.value !== search) {
-                  navigate({ search: (prev: SearchParams) => ({ ...prev, search: e.target.value || undefined, page: 1 }) });
-                }
-              }}
-              onKeyDown={(e: any) => {
-                if (e.key === 'Enter') {
-                  navigate({ search: (prev: SearchParams) => ({ ...prev, search: e.target.value || undefined, page: 1 }) });
-                }
-              }}
-            />
-          </div>
+        <div className="relative w-full max-w-64">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+          <Input
+            placeholder={t('search')}
+            className="pl-9"
+            defaultValue={search || ''}
+            onBlur={(e: any) => {
+              if (e.target.value !== search) {
+                navigate({ search: (prev: SearchParams) => ({ ...prev, search: e.target.value || undefined, page: 1 }) });
+              }
+            }}
+            onKeyDown={(e: any) => {
+              if (e.key === 'Enter') {
+                navigate({ search: (prev: SearchParams) => ({ ...prev, search: e.target.value || undefined, page: 1 }) });
+              }
+            }}
+          />
         </div>
       </CardHeader>
 
@@ -76,25 +74,25 @@ function MonitoringWearPage() {
             {data.data.map((item) => (
               <MonitoringWearCard key={item.machine.id} data={item} />
             ))}
-
-            {totalItems > size && (
-              <div className="flex justify-center gap-2 pt-4">
-                <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => navigate({ search: { page: page - 1, size, search } })}>
-                  {t('previous')}
-                </Button>
-                <span className="flex items-center px-3 text-sm text-muted-foreground">
-                  {t('page')} {page} / {Math.ceil(totalItems / size)}
-                </span>
-                <Button variant="outline" size="sm" disabled={page >= Math.ceil(totalItems / size)} onClick={() => navigate({ search: { page: page + 1, size, search } })}>
-                  {t('next')}
-                </Button>
-              </div>
-            )}
           </div>
         ) : (
           <EmptyStandard />
         )}
       </CardContent>
+
+      {totalItems > size && (
+        <CardFooter className="flex justify-center gap-2 border-t py-4">
+          <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => navigate({ search: { page: page - 1, size, search } })}>
+            {t('previous')}
+          </Button>
+          <span className="flex items-center px-3 text-sm text-muted-foreground">
+            {t('page')} {page} / {Math.ceil(totalItems / size)}
+          </span>
+          <Button variant="outline" size="sm" disabled={page >= Math.ceil(totalItems / size)} onClick={() => navigate({ search: { page: page + 1, size, search } })}>
+            {t('next')}
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 }

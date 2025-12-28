@@ -40,7 +40,7 @@ async function saveMachineIntegrations(data: MachineIntegrationPayload[]): Promi
 export function useMachineIntegrations(idEnterprise: string | undefined) {
   return useQuery({
     queryKey: machineIntegrationKeys.list(idEnterprise || ''),
-    queryFn: () => fetchMachineIntegrations(idEnterprise!),
+    queryFn: () => fetchMachineIntegrations(idEnterprise as string),
     enabled: !!idEnterprise,
   });
 }

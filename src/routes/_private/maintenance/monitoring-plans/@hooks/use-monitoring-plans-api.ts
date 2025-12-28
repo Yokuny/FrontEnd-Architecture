@@ -29,15 +29,21 @@ export function useMonitoringPlans(params: MonitoringFilterParams) {
       }
 
       if (params.idMachine?.length) {
-        params.idMachine.forEach((id) => queryParams.append('idMachine[]', id));
+        params.idMachine.forEach((id) => {
+          queryParams.append('idMachine[]', id);
+        });
       }
 
       if (params.idMaintenancePlan?.length) {
-        params.idMaintenancePlan.forEach((id) => queryParams.append('idMaintenancePlan[]', id));
+        params.idMaintenancePlan.forEach((id) => {
+          queryParams.append('idMaintenancePlan[]', id);
+        });
       }
 
       if (params.managers?.length) {
-        params.managers.forEach((id) => queryParams.append('managers[]', id));
+        params.managers.forEach((id) => {
+          queryParams.append('managers[]', id);
+        });
       }
 
       if (params.status) {

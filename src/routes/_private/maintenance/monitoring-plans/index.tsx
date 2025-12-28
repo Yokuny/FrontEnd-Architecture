@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import EmptyStandard from '@/components/empty-standard';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
@@ -44,10 +44,6 @@ function MonitoringPlansPage() {
     status: filter.status,
   });
 
-  const handleSelectItem = (_idMachine: string, _idMaintenancePlan: string, _dateWindowEnd: string) => {
-    // TODO: Abrir modal de edição do event-schedule (fase 2)
-  };
-
   const totalItems = data?.pageInfo?.[0]?.count ?? 0;
 
   return (
@@ -64,28 +60,27 @@ function MonitoringPlansPage() {
         ) : data?.data && data.data.length > 0 ? (
           <div className="space-y-4">
             {data.data.map((machine) => (
-              <MonitoringPlanCard key={machine.idMachine} machine={machine} onSelectItem={handleSelectItem} />
+              <MonitoringPlanCard key={machine.idMachine} machine={machine} />
             ))}
-
-            {/* Paginação simples */}
-            {totalItems > size && (
-              <div className="flex justify-center gap-2 pt-4">
-                <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => navigate({ search: { page: page - 1, size, search } })}>
-                  {t('previous')}
-                </Button>
-                <span className="flex items-center px-3 text-sm text-muted-foreground">
-                  {t('page')} {page} / {Math.ceil(totalItems / size)}
-                </span>
-                <Button variant="outline" size="sm" disabled={page >= Math.ceil(totalItems / size)} onClick={() => navigate({ search: { page: page + 1, size, search } })}>
-                  {t('next')}
-                </Button>
-              </div>
-            )}
           </div>
         ) : (
           <EmptyStandard />
         )}
       </CardContent>
+
+      {totalItems > size && (
+        <CardFooter className="flex justify-center gap-2 border-t py-4">
+          <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => navigate({ search: { page: page - 1, size, search } })}>
+            {t('previous')}
+          </Button>
+          <span className="flex items-center px-3 text-sm text-muted-foreground">
+            {t('page')} {page} / {Math.ceil(totalItems / size)}
+          </span>
+          <Button variant="outline" size="sm" disabled={page >= Math.ceil(totalItems / size)} onClick={() => navigate({ search: { page: page + 1, size, search } })}>
+            {t('next')}
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 }

@@ -13,6 +13,11 @@ export interface MonitoringPlanItem {
   observation: string | null;
   wearCurrent: number | null;
   wearLimit: number | null;
+  percentual: number;
+  daysLeft: number | null;
+  expired: boolean;
+  next: boolean;
+  warning: boolean;
 }
 
 export interface MonitoringMachine {

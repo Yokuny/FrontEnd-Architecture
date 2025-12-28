@@ -70,7 +70,7 @@ function extractRoutes(): string[] {
     if (!routeGroups.has(baseSegment)) {
       routeGroups.set(baseSegment, []);
     }
-    routeGroups.get(baseSegment)!.push(route);
+    routeGroups.get(baseSegment)?.push(route);
   }
 
   // Extrair apenas primeiro nível de sub-rotas (2 segmentos)

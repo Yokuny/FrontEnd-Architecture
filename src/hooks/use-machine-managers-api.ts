@@ -42,5 +42,5 @@ export function mapMachineManagersToOptions(managers: MachineManager[]) {
       label: manager,
       data: manager,
     }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+    .sort((a, b) => (a.label || '').localeCompare(b.label || ''));
 }

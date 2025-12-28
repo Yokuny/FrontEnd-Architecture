@@ -1,13 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
 import type { MonitoringMachine } from '../@interface/monitoring-plan.types';
 import { MonitoringPlanItem } from './monitoring-plan-item';
 
 interface MonitoringPlanCardProps {
   machine: MonitoringMachine;
-  onSelectItem: (idMachine: string, idMaintenancePlan: string, dateWindowEnd: string) => void;
 }
 
-export function MonitoringPlanCard({ machine, onSelectItem }: MonitoringPlanCardProps) {
+export function MonitoringPlanCard({ machine }: MonitoringPlanCardProps) {
   const initials = machine.name
     .split(' ')
     .map((n) => n[0])
@@ -15,32 +15,25 @@ export function MonitoringPlanCard({ machine, onSelectItem }: MonitoringPlanCard
     .toUpperCase()
     .slice(0, 2);
 
-  const handleItemClick = (planItem: { idMaintenancePlan: string; dateWindowEnd: string }) => {
-    onSelectItem(machine.idMachine, planItem.idMaintenancePlan, planItem.dateWindowEnd);
-  };
-
   return (
-    <div className="flex items-center justify-between p-4 border rounded-lg" style={{ borderLeft: '4px solid #1087DB' }}>
-      <div className="flex items-center gap-4">
-        <Avatar className="size-12">
+    <div className="rounded-lg border bg-card text-card-foreground overflow-hidden ">
+      <Item variant="default" className="bg-muted/10 border-b">
+        <Avatar className="size-14">
           <AvatarImage src={machine.image?.url} alt={machine.name} />
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
-        <div>
-          <p className="font-medium">{machine.name}</p>
-          <p className="text-sm text-muted-foreground">{machine.enterprise?.name}</p>
-        </div>
-      </div>
 
-      <div className="flex items-center gap-2 flex-wrap justify-end">
+        <ItemContent>
+          <ItemTitle className="text-base font-semibold tracking-tight">{machine.name}</ItemTitle>
+          <ItemDescription className="text-xs">{machine.enterprise?.name}</ItemDescription>
+        </ItemContent>
+      </Item>
+
+      <ItemGroup className="border-t p-4 space-y-2 ">
         {machine.monitoringPlan?.map((planItem, index) => (
-          <MonitoringPlanItem
-            key={`${planItem.idMaintenancePlan}-${index}`}
-            planItem={planItem}
-            onClick={() => handleItemClick({ idMaintenancePlan: planItem.idMaintenancePlan, dateWindowEnd: planItem.dateWindowEnd })}
-          />
+          <MonitoringPlanItem key={`${planItem.idMaintenancePlan}-${index}`} planItem={planItem} idMachine={machine.idMachine} />
         ))}
-      </div>
+      </ItemGroup>
     </div>
   );
 }

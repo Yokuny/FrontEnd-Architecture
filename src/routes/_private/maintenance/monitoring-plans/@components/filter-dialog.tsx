@@ -1,7 +1,7 @@
 import { Filter, X } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MachineSelect } from '@/components/selects';
+import { MachineManagerSelect, MachineSelect, MaintenancePlanSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
@@ -39,7 +39,7 @@ export function FilterDialog({ idEnterprise, filter, onFilterChange }: FilterDia
         <Button variant={hasActiveFilters ? 'default' : 'outline'}>
           <Filter className="size-4" />
           {t('filter')}
-          {hasActiveFilters && <span className="ml-1 size-2 rounded-full bg-white" />}
+          {hasActiveFilters && <span className="ml-1 size-2 rounded-full bg-green-500" />}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
@@ -77,6 +77,28 @@ export function FilterDialog({ idEnterprise, filter, onFilterChange }: FilterDia
               label={t('vessel')}
               value={localFilter.idMachine || []}
               onChange={(values) => setLocalFilter({ ...localFilter, idMachine: values })}
+            />
+          </div>
+
+          {/* Planos de Manutenção */}
+          <div className="space-y-2">
+            <MaintenancePlanSelect
+              mode="multi"
+              idEnterprise={idEnterprise}
+              label={t('maintenance.plan')}
+              value={localFilter.idMaintenancePlan || []}
+              onChange={(values) => setLocalFilter({ ...localFilter, idMaintenancePlan: values })}
+            />
+          </div>
+
+          {/* Gestores/Responsáveis */}
+          <div className="space-y-2">
+            <MachineManagerSelect
+              mode="multi"
+              idEnterprise={idEnterprise}
+              label={t('management.person')}
+              value={localFilter.managers || []}
+              onChange={(values) => setLocalFilter({ ...localFilter, managers: values })}
             />
           </div>
         </div>

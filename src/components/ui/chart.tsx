@@ -69,7 +69,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 
   return (
     <style
-      // biome-ignore lint: security/noDangerouslySetInnerHtml
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: This is required to inject dynamic CSS variables based on the chart configuration.
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
@@ -144,7 +144,7 @@ function ChartTooltipContent({
   const nestLabel = payload.length === 1 && indicator !== 'dot';
 
   return (
-    <div className={cn('border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl', className)}>
+    <div className={cn('border-border/50 bg-background grid min-w-32 items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl', className)}>
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
         {payload
@@ -233,7 +233,7 @@ function ChartLegendContent({
                 <itemConfig.icon />
               ) : (
                 <div
-                  className="size-2 shrink-0 rounded-[2px]"
+                  className="h-2 w-2 shrink-0 rounded-[2px]"
                   style={{
                     backgroundColor: item.color,
                   }}

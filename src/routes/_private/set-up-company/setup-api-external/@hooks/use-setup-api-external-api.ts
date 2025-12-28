@@ -28,7 +28,7 @@ async function saveSetupApiExternal(data: SetupApiExternalPayload): Promise<Setu
 export function useSetupApiExternal(idEnterprise: string | undefined) {
   return useQuery({
     queryKey: setupApiExternalKeys.detail(idEnterprise || ''),
-    queryFn: () => fetchSetupApiExternal(idEnterprise!),
+    queryFn: () => fetchSetupApiExternal(idEnterprise as string),
     enabled: !!idEnterprise,
   });
 }
