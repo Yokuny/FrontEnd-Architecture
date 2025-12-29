@@ -1,4 +1,4 @@
-// Previa em
+// Default form layout - Preview example em:
 // https://blocks.so/form-layout
 
 import { Button } from '@/components/ui/button';
