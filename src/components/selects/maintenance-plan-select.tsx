@@ -1,5 +1,6 @@
 import { ClipboardCheck } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
@@ -9,13 +10,14 @@ import { type MaintenancePlan, mapMaintenancePlansToOptions, useMaintenancePlans
 export function MaintenancePlanSelect(props: MaintenancePlanSelectProps) {
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
+  const { t } = useTranslation();
 
   const query = useMaintenancePlansSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum plano de manutenção disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Plano de Manutenção';
+    const displayLabel = label || t('maintenance.plan');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -26,22 +28,22 @@ export function MaintenancePlanSelect(props: MaintenancePlanSelectProps) {
         )}
         <DataMultiSelect<MaintenancePlan, MaintenancePlan>
           id={id}
-          placeholder={placeholder || 'Selecione os planos...'}
+          placeholder={placeholder || t('maintenance.plans.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapMaintenancePlansToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar plano..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum plano de manutenção encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Plano de Manutenção';
+  const displayLabel = label || t('maintenance.plan');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -52,16 +54,16 @@ export function MaintenancePlanSelect(props: MaintenancePlanSelectProps) {
       )}
       <DataSelect<MaintenancePlan, MaintenancePlan>
         id={id}
-        placeholder={placeholder || 'Selecione um plano...'}
+        placeholder={placeholder || t('maintenance.plan.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapMaintenancePlansToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar plano..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum plano de manutenção encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

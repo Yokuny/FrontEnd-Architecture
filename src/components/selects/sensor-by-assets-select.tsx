@@ -1,6 +1,6 @@
 import { Radar } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -9,16 +9,17 @@ import { mapSensorsByAssetsToOptions, type SensorByAsset, useSensorsByAssetsSele
 /**
  * SensorByAssetsSelect Component
  *
- * Fetches and displays sensors for a given list of asset IDs.
- * Follows the single/multi mode pattern and integrates with TanStack Query.
+ * Provides selection for sensors filtered by multiple asset IDs.
+ * Supports single and multi selection modes.
  */
 export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
+  const { t } = useTranslation();
   const { mode, idAssets, disabled = false, className, label, placeholder, clearable = true, idsNotAllowed = [] } = props;
   const id = useId();
 
   const query = useSensorsByAssetsSelect(idAssets);
 
-  const noOptionsMessage = !idAssets || idAssets.length === 0 ? 'Selecione pelo menos um ativo primeiro.' : 'Nenhum sensor encontrado.';
+  const noOptionsMessage = !idAssets || idAssets.length === 0 ? t('select.first.assets', { defaultValue: 'Selecione pelo menos um ativo primeiro.' }) : t('nooptions.message');
 
   const filterOptions = (sensors: SensorByAsset[]) => {
     const options = mapSensorsByAssetsToOptions(sensors);
@@ -29,7 +30,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
   };
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Sensores por Ativos';
+    const displayLabel = label || t('sensor.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -40,22 +41,22 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
         )}
         <DataMultiSelect<SensorByAsset, SensorByAsset>
           id={id}
-          placeholder={placeholder || 'Selecione os sensores...'}
+          placeholder={placeholder || t('sensor.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={filterOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar sensor..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum sensor encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Sensor por Ativos';
+  const displayLabel = label || t('sensor.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -66,16 +67,16 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
       )}
       <DataSelect<SensorByAsset, SensorByAsset>
         id={id}
-        placeholder={placeholder || 'Selecione um sensor...'}
+        placeholder={placeholder || t('sensor.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={filterOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar sensor..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum sensor encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

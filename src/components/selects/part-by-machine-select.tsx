@@ -1,27 +1,14 @@
 import { Settings } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapPartsByMachineToOptions, usePartsByMachineSelect } from '@/hooks/use-specialized-api';
 
-interface PartByMachineSelectProps {
-  label?: string;
-  placeholder?: string;
-  value?: string;
-  values?: string[];
-  onChange?: (value: string | number | undefined) => void;
-  onChangeMulti?: (values: string[]) => void;
-  idMachine?: string;
-  multi?: boolean;
-  disabled?: boolean;
-  clearable?: boolean;
-  className?: string;
-}
-
 export function PartByMachineSelect({
   label,
-  placeholder = 'Selecione uma peça...',
+  placeholder,
   value,
   values,
   onChange,
@@ -32,10 +19,11 @@ export function PartByMachineSelect({
   clearable = true,
   className,
 }: PartByMachineSelectProps) {
+  const { t } = useTranslation();
   const id = useId();
   const query = usePartsByMachineSelect(idMachine);
 
-  const noOptionsMessage = !idMachine ? 'Selecione uma máquina primeiro.' : 'Nenhuma peça disponível.';
+  const noOptionsMessage = !idMachine ? t('select.first.enterprise') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -48,16 +36,16 @@ export function PartByMachineSelect({
         )}
         <DataMultiSelect
           id={id}
-          placeholder={placeholder}
+          placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
           value={values}
           onChange={(newValues) => onChangeMulti?.(newValues as string[])}
           query={query}
           mapToOptions={mapPartsByMachineToOptions}
           disabled={disabled}
           className={className}
-          searchPlaceholder="Buscar peça..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhuma peça encontrada."
+          noResultsMessage={t('noresults.message')}
         />
       </div>
     );
@@ -73,7 +61,7 @@ export function PartByMachineSelect({
       )}
       <DataSelect
         id={id}
-        placeholder={placeholder}
+        placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
         value={value}
         onChange={(val) => onChange?.(val)}
         query={query}
@@ -81,10 +69,24 @@ export function PartByMachineSelect({
         disabled={disabled}
         clearable={clearable}
         className={className}
-        searchPlaceholder="Buscar peça..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhuma peça encontrada."
+        noResultsMessage={t('noresults.message')}
       />
     </div>
   );
+}
+
+interface PartByMachineSelectProps {
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  values?: string[];
+  onChange?: (value: string | number | undefined) => void;
+  onChangeMulti?: (values: string[]) => void;
+  idMachine?: string;
+  multi?: boolean;
+  disabled?: boolean;
+  clearable?: boolean;
+  className?: string;
 }

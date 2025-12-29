@@ -23,8 +23,8 @@ function AddRolePage() {
 
   return (
     <Card>
+      <CardHeader title={t('new.role')} />
       <form onSubmit={onSubmit}>
-        <CardHeader title={t('new.role')} />
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">

@@ -1,27 +1,21 @@
 import { Monitor } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapPlatformsToOptions, type Platform, usePlatformsSelect } from '@/hooks/use-platforms-api';
 
-/**
- * PlatformEnterpriseSelect Component
- *
- * Fetches and displays platforms filtered by enterprise ID.
- * Follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
+  const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
-
   const query = usePlatformsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhuma plataforma encontrada.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Plataformas';
+    const displayLabel = label || t('platforms.select.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -32,22 +26,22 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
         )}
         <DataMultiSelect<Platform, Platform>
           id={id}
-          placeholder={placeholder || 'Selecione as plataformas...'}
+          placeholder={placeholder || t('platforms.select.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapPlatformsToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar plataforma..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhuma plataforma encontrada."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Plataforma';
+  const displayLabel = label || t('platforms.select.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -58,16 +52,16 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
       )}
       <DataSelect<Platform, Platform>
         id={id}
-        placeholder={placeholder || 'Selecione uma plataforma...'}
+        placeholder={placeholder || t('platforms.select.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapPlatformsToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar plataforma..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhuma plataforma encontrada."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

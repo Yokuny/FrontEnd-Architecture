@@ -1,20 +1,21 @@
 import { Cpu } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Machine, mapMachinesToOptions, useMachinesByEnterpriseSelect } from '@/hooks/use-machines-api';
 
 export function MachineByEnterpriseSelect(props: MachineByEnterpriseSelectProps) {
-  const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
+  const { t } = useTranslation();
+  const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
   const id = useId();
-
   const query = useMachinesByEnterpriseSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhuma máquina disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Máquina por Empresa';
+    const displayLabel = label || t('machine.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -23,24 +24,24 @@ export function MachineByEnterpriseSelect(props: MachineByEnterpriseSelectProps)
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<Machine, Machine>
+        <DataMultiSelect<Machine>
           id={id}
-          placeholder={placeholder || 'Selecione as máquinas...'}
+          placeholder={placeholder || t('machine.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapMachinesToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar máquina..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhuma máquina encontrada."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Máquina por Empresa';
+  const displayLabel = label || t('machine.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -49,18 +50,18 @@ export function MachineByEnterpriseSelect(props: MachineByEnterpriseSelectProps)
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Machine, Machine>
+      <DataSelect<Machine>
         id={id}
-        placeholder={placeholder || 'Selecione uma máquina...'}
+        placeholder={placeholder || t('machine.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapMachinesToOptions}
         disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder="Buscar máquina..."
+        clearable
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhuma máquina encontrada."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>
@@ -73,7 +74,6 @@ interface MachineByEnterpriseSelectBaseProps {
   className?: string;
   label?: string;
   placeholder?: string;
-  clearable?: boolean;
 }
 
 interface MachineByEnterpriseSelectSingleProps extends MachineByEnterpriseSelectBaseProps {

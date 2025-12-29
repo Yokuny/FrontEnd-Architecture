@@ -76,17 +76,19 @@ async function removeUserFromRole(idUser: string, idRole: string, idEnterprise: 
 }
 
 // Hooks - Query hooks
-export function useRoles(params?: Record<string, unknown>) {
+export function useRoles(params?: Record<string, unknown>, enabled = true) {
   return useQuery({
     queryKey: rolesKeys.list(params),
     queryFn: () => fetchRoles(params),
+    enabled,
   });
 }
 
-export function useRolesAll() {
+export function useRolesAll(enabled = true) {
   return useQuery({
     queryKey: [...rolesKeys.all, 'all'],
     queryFn: fetchRolesAll,
+    enabled,
   });
 }
 
@@ -186,8 +188,8 @@ export function useRolesApi() {
 
 // Helper hook for select components
 export function useRolesSelect(isAll = false, params?: Record<string, unknown>) {
-  const allQuery = useRolesAll();
-  const filterQuery = useRoles(params);
+  const allQuery = useRolesAll(isAll);
+  const filterQuery = useRoles(params, !isAll);
   return isAll ? allQuery : filterQuery;
 }
 

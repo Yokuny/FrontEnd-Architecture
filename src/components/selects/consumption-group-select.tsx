@@ -1,19 +1,21 @@
 import { Layers } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type ConsumptionGroup, mapConsumptionGroupsToOptions, useConsumptionGroupsSelect } from '@/hooks/use-consumption-groups-api';
 
 export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
+  const { t } = useTranslation();
   const { mode, idEnterprise, oneBlocked = false, disabled = false, className, label } = props;
   const id = useId();
   const query = useConsumptionGroupsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione primeiro uma empresa.' : 'Nenhum grupo de consumo disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Grupo de Consumo';
+    const displayLabel = label || t('operation.consumptiongroup.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -24,22 +26,22 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
         )}
         <DataMultiSelect<ConsumptionGroup>
           id={id}
-          placeholder="Selecione os grupos..."
+          placeholder={t('operation.consumptiongroup.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapConsumptionGroupsToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar grupo..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum grupo encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Grupo de Consumo';
+  const displayLabel = label || t('operation.consumptiongroup.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -50,7 +52,7 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
       )}
       <DataSelect<ConsumptionGroup>
         id={id}
-        placeholder="Selecione um grupo..."
+        placeholder={t('operation.consumptiongroup.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
@@ -58,9 +60,9 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
         oneBlocked={oneBlocked}
         disabled={disabled}
         clearable={false}
-        searchPlaceholder="Buscar grupo..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum grupo encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

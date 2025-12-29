@@ -1,17 +1,19 @@
 import { ClipboardList } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Form, mapFormsToOptions, useFormsSelect } from '@/hooks/use-forms-api';
 
 export function FormSelect(props: FormSelectProps) {
+  const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
   const query = useFormsSelect(idEnterprise);
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Formulário';
+    const displayLabel = label || t('form');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -22,22 +24,22 @@ export function FormSelect(props: FormSelectProps) {
         )}
         <DataMultiSelect<Form, Form>
           id={id}
-          placeholder={placeholder || 'Selecione os formulários...'}
+          placeholder={placeholder || t('form')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapFormsToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar formulário..."
-          noOptionsMessage="Nenhum formulário disponível."
-          noResultsMessage="Nenhum formulário encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Formulário';
+  const displayLabel = label || t('form');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -48,16 +50,16 @@ export function FormSelect(props: FormSelectProps) {
       )}
       <DataSelect<Form, Form>
         id={id}
-        placeholder={placeholder || 'Selecione um formulário...'}
+        placeholder={placeholder || t('form')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapFormsToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar formulário..."
-        noOptionsMessage="Nenhum formulário disponível."
-        noResultsMessage="Nenhum formulário encontrado."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

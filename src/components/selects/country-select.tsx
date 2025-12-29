@@ -1,5 +1,6 @@
 import { Globe } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -12,6 +13,7 @@ import { COUNTRIES, type Country } from '@/lib/constants/countries';
  * Follows the single/multi mode pattern.
  */
 export function CountrySelect(props: CountrySelectProps) {
+  const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
@@ -33,7 +35,7 @@ export function CountrySelect(props: CountrySelectProps) {
   };
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Países';
+    const displayLabel = label || t('country');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -44,22 +46,22 @@ export function CountrySelect(props: CountrySelectProps) {
         )}
         <DataMultiSelect<Country, Country>
           id={id}
-          placeholder={placeholder || 'Selecione os países...'}
+          placeholder={placeholder || t('country')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query as any}
           mapToOptions={mapToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar país..."
-          noOptionsMessage="Nenhum país disponível."
-          noResultsMessage="Nenhum país encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'País';
+  const displayLabel = label || t('country');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -70,16 +72,16 @@ export function CountrySelect(props: CountrySelectProps) {
       )}
       <DataSelect<Country, Country>
         id={id}
-        placeholder={placeholder || 'Selecione um país...'}
+        placeholder={placeholder || t('country')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar país..."
-        noOptionsMessage="Nenhum país disponível."
-        noResultsMessage="Nenhum país encontrado."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

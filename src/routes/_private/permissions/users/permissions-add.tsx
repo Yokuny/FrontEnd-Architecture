@@ -56,8 +56,8 @@ function AddPermissionPage() {
 
   return (
     <Card>
+      <CardHeader title={t(id ? 'edit.user.permission' : 'add.user.permission')} />
       <form onSubmit={onSubmit}>
-        <CardHeader title={t(id ? 'edit.user.permission' : 'add.user.permission')} />
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Enterprise */}
@@ -85,7 +85,7 @@ function AddPermissionPage() {
 
             {/* Roles */}
             <div className="space-y-2 md:col-span-2">
-              <RoleSelect mode="multi" label={t('role')} value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals as string[])} />
+              <RoleSelect isAll mode="multi" label={t('role')} value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals as string[])} />
             </div>
 
             {/* Is Customer User */}

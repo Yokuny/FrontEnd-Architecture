@@ -1,27 +1,14 @@
 import { Settings } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapPartsToOptions, usePartsSelect } from '@/hooks/use-parts-api';
 
-interface PartSelectProps {
-  label?: string;
-  placeholder?: string;
-  value?: string;
-  values?: string[];
-  onChange?: (value: string | undefined) => void;
-  onChangeMulti?: (values: string[]) => void;
-  idEnterprise?: string;
-  multi?: boolean;
-  disabled?: boolean;
-  clearable?: boolean;
-  className?: string;
-}
-
 export function PartSelect({
   label,
-  placeholder = 'Selecione uma peça...',
+  placeholder,
   value,
   values,
   onChange,
@@ -32,10 +19,11 @@ export function PartSelect({
   clearable = true,
   className,
 }: PartSelectProps) {
+  const { t } = useTranslation();
   const id = useId();
   const query = usePartsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhuma peça disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -48,16 +36,16 @@ export function PartSelect({
         )}
         <DataMultiSelect
           id={id}
-          placeholder={placeholder}
+          placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
           value={values}
           onChange={(newValues) => onChangeMulti?.(newValues as string[])}
           query={query}
           mapToOptions={mapPartsToOptions}
           disabled={disabled}
           className={className}
-          searchPlaceholder="Buscar peça..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhuma peça encontrada."
+          noResultsMessage={t('noresults.message')}
         />
       </div>
     );
@@ -73,7 +61,7 @@ export function PartSelect({
       )}
       <DataSelect
         id={id}
-        placeholder={placeholder}
+        placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
         value={value}
         onChange={(newValue) => onChange?.(newValue as string | undefined)}
         query={query}
@@ -81,10 +69,24 @@ export function PartSelect({
         disabled={disabled}
         clearable={clearable}
         className={className}
-        searchPlaceholder="Buscar peça..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhuma peça encontrada."
+        noResultsMessage={t('noresults.message')}
       />
     </div>
   );
+}
+
+interface PartSelectProps {
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  values?: string[];
+  onChange?: (value: string | undefined) => void;
+  onChangeMulti?: (values: string[]) => void;
+  idEnterprise?: string;
+  multi?: boolean;
+  disabled?: boolean;
+  clearable?: boolean;
+  className?: string;
 }

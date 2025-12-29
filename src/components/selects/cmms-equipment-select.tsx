@@ -1,5 +1,6 @@
 import { Wrench } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -12,12 +13,13 @@ import { mapCmmsEquipmentToOptions, useCmmsEquipmentSelect } from '@/hooks/use-c
  * Follows the single/multi mode pattern and integrates with TanStack Query.
  */
 export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
+  const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
   const query = useCmmsEquipmentSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum equipamento encontrado.';
-  const displayLabel = label || (mode === 'multi' ? 'Equipamentos CMMS' : 'Equipamento CMMS');
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const displayLabel = label || t('equipment');
 
   if (mode === 'multi') {
     return (
@@ -30,15 +32,15 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
         )}
         <DataMultiSelect<string, string>
           id={id}
-          placeholder={placeholder || 'Selecione...'}
+          placeholder={placeholder || t('equipment')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapCmmsEquipmentToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar equipamento..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum equipamento encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
@@ -55,16 +57,16 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
       )}
       <DataSelect<string, string>
         id={id}
-        placeholder={placeholder || 'Selecione...'}
+        placeholder={placeholder || t('equipment')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapCmmsEquipmentToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar equipamento..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum equipamento encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

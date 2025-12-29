@@ -1,73 +1,67 @@
-import { ClipboardList } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { mapQlpToOptions, type Qlp, useQlpSelect } from '@/hooks/use-qlp-api';
+import { mapQlpsToOptions, type Qlp, useQlpsSelect } from '@/hooks/use-qlp-api';
 
-/**
- * QlpSelect Component
- *
- * Fetches and displays QLP (Quadro de Lotação de Pessoal) filtered by enterprise ID.
- * Follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function QlpSelect(props: QlpSelectProps) {
+  const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
+  const query = useQlpsSelect(idEnterprise);
 
-  const query = useQlpSelect(idEnterprise);
-
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum registro encontrado.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'QLP';
+    const displayLabel = label || t('qlp.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <ClipboardList className="size-4" />
+            <SlidersHorizontal className="size-4" />
             {displayLabel}
           </Label>
         )}
         <DataMultiSelect<Qlp, Qlp>
           id={id}
-          placeholder={placeholder || 'Selecione...'}
+          placeholder={placeholder || t('qlp.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
-          mapToOptions={mapQlpToOptions}
+          mapToOptions={mapQlpsToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar QLP..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum registro encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'QLP';
+  const displayLabel = label || t('qlp.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <ClipboardList className="size-4" />
+          <SlidersHorizontal className="size-4" />
           {displayLabel}
         </Label>
       )}
       <DataSelect<Qlp, Qlp>
         id={id}
-        placeholder={placeholder || 'Selecione...'}
+        placeholder={placeholder || t('qlp.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
-        mapToOptions={mapQlpToOptions}
+        mapToOptions={mapQlpsToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar QLP..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum registro encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Filter, Plus, Shield } from 'lucide-react';
+import { Plus, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import EmptyStandard from '@/components/empty-standard';
@@ -9,10 +9,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { useUsers } from '@/hooks/use-users-api';
 import { UserCard } from './@components/user-card';
+import { UserFilterDialog } from './@components/user-filter-dialog';
 
 const userSearchSchema = z.object({
   page: z.number().optional().default(1),
   pageSize: z.number().optional().default(10),
+  idRole: z.array(z.string()).optional(),
+  idTypeUser: z.array(z.string()).optional(),
 });
 
 export const Route = createFileRoute('/_private/permissions/users/')({
@@ -26,7 +29,8 @@ export const Route = createFileRoute('/_private/permissions/users/')({
 function ListUsersPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { page, pageSize } = Route.useSearch();
+  const search = Route.useSearch();
+  const { page, pageSize, idRole, idTypeUser } = search;
 
   // TODO: Get from permissions/menu state
   const hasPermissionAdd = true;
@@ -37,16 +41,38 @@ function ListUsersPage() {
   const { data, isLoading } = useUsers({
     page: page - 1,
     size: pageSize,
+    idRole,
+    idTypeUser,
   });
+
+  const handleFilter = (filters: { idRole?: string[]; idTypeUser?: string[] }) => {
+    navigate({
+      to: '.',
+      search: (prev: any) => ({
+        ...prev,
+        ...filters,
+        page: 1,
+      }),
+    });
+  };
+
+  const handleClear = () => {
+    navigate({
+      to: '.',
+      search: (prev: any) => ({
+        ...prev,
+        idRole: undefined,
+        idTypeUser: undefined,
+        page: 1,
+      }),
+    });
+  };
 
   return (
     <Card>
       <CardHeader title={t('users.permissions')}>
         <div className="flex items-center gap-2">
-          <Button variant="outline">
-            <Filter className="size-4" />
-            {t('filter')}
-          </Button>
+          <UserFilterDialog initialFilters={{ idRole, idTypeUser }} onFilter={handleFilter} onClear={handleClear} />
           {hasPermissionAdd && (
             <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
               <Plus className="size-4" />

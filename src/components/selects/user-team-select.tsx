@@ -1,26 +1,22 @@
 import { Users } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { mapUserTeamToOptions, type UserTeamMember, useUserTeamSelect } from '@/hooks/use-user-team-api';
+import type { UserTeamMember } from '@/hooks/use-user-team-api';
+import { mapUserTeamToOptions, useUserTeamSelect } from '@/hooks/use-user-team-api';
 
-/**
- * UserTeamSelect Component
- *
- * Fetches and displays users associated with a specific enterprise.
- * Follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function UserTeamSelect(props: UserTeamSelectProps) {
-  const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = false } = props;
+  const { t } = useTranslation();
+  const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
-
   const query = useUserTeamSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum usuário encontrado.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Usuários da Equipe';
+    const displayLabel = label || t('team');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -31,22 +27,22 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
         )}
         <DataMultiSelect<UserTeamMember, UserTeamMember>
           id={id}
-          placeholder={placeholder || 'Selecione os usuários...'}
+          placeholder={placeholder || t('team')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapUserTeamToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar usuário..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum usuário encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Usuário da Equipe';
+  const displayLabel = label || t('team');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -57,16 +53,16 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
       )}
       <DataSelect<UserTeamMember, UserTeamMember>
         id={id}
-        placeholder={placeholder || 'Selecione um usuário...'}
+        placeholder={placeholder || t('team')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapUserTeamToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar usuário..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum usuário encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

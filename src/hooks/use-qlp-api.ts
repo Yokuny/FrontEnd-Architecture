@@ -32,12 +32,12 @@ export function useQlpByEnterprise(idEnterprise: string | undefined) {
 }
 
 // Helper hook for select components
-export function useQlpSelect(idEnterprise: string | undefined) {
+export function useQlpsSelect(idEnterprise: string | undefined) {
   return useQlpByEnterprise(idEnterprise);
 }
 
 // Helper function to map QLP to select options
-export function mapQlpToOptions(qlps: Qlp[]) {
+export function mapQlpsToOptions(qlps: Qlp[]) {
   return qlps
     .map((qlp) => {
       let label = `${qlp.name} - ${qlp.month}`;

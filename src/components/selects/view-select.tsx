@@ -1,24 +1,25 @@
 import { Eye } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { VIEW_OPTIONS, type ViewOption } from '@/lib/constants/select-options';
 
-/**
- * ViewSelect Component
- *
- * Provides selection for system views (Operational, Financial).
- * Uses static data from central constants and supports single/multi modes.
- */
 export function ViewSelect(props: ViewSelectProps) {
-  const { mode, disabled = false, className, label, placeholder, clearable = false } = props;
+  const { t } = useTranslation();
+  const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Simulated query object for static data
+  // Mapping options to translated ones
+  const translatedOptions = VIEW_OPTIONS.map((opt) => ({
+    ...opt,
+    label: t(`view.${opt.value}`, { defaultValue: opt.label }),
+  }));
+
+  // Simulated query object
   const query = {
-    data: VIEW_OPTIONS,
+    data: translatedOptions,
     isLoading: false,
     isError: false,
     isSuccess: true,
@@ -34,7 +35,7 @@ export function ViewSelect(props: ViewSelectProps) {
   };
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Visualizações';
+    const displayLabel = label || t('view');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -45,22 +46,22 @@ export function ViewSelect(props: ViewSelectProps) {
         )}
         <DataMultiSelect<ViewOption, ViewOption>
           id={id}
-          placeholder={placeholder || 'Selecione as visualizações...'}
+          placeholder={placeholder || t('view')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query as any}
           mapToOptions={mapToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar visualização..."
-          noOptionsMessage="Nenhuma visualização disponível."
-          noResultsMessage="Nenhuma visualização encontrada."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Visualização';
+  const displayLabel = label || t('view');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -71,16 +72,16 @@ export function ViewSelect(props: ViewSelectProps) {
       )}
       <DataSelect<ViewOption, ViewOption>
         id={id}
-        placeholder={placeholder || 'Selecione uma visualização...'}
+        placeholder={placeholder || t('view')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar visualização..."
-        noOptionsMessage="Nenhuma visualização disponível."
-        noResultsMessage="Nenhuma visualização encontrada."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

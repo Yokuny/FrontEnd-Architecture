@@ -26,6 +26,7 @@ export { MachineSelect } from './machine-select';
 export { MaintenancePlanByMachineSelect } from './maintenance-plan-by-machine-select';
 export { MaintenancePlanSelect } from './maintenance-plan-select';
 export { MaintenanceTypeSelect } from './maintenance-type-select';
+export { ManagerPersonSelect } from './manager-person-select';
 export { ModelMachineSelect } from './model-machine-select';
 export { OperationsContractSelect } from './operations-contract-select';
 export { OsOptionSelect } from './os-option-select';

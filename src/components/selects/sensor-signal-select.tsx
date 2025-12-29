@@ -1,5 +1,6 @@
 import { Activity } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
@@ -15,15 +16,16 @@ import { mapSensorSignalsToOptions, type SensorSignal, useSensorSignalsSelect } 
 export function SensorSignalSelect(props: SensorSignalSelectProps) {
   const { mode, idMachine, idEnterprise, sensorId, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
+  const { t } = useTranslation();
 
   // Use either machine ID or enterprise ID as the primary filter ID
   const filterId = idMachine || idEnterprise;
   const query = useSensorSignalsSelect(filterId, sensorId);
 
-  const noOptionsMessage = !filterId ? 'Identificador não fornecido.' : !sensorId ? 'Selecione um sensor primeiro.' : 'Nenhum sinal encontrado.';
+  const noOptionsMessage = !filterId ? t('identifier.not.provided') : !sensorId ? t('select.sensor.first') : t('noresults.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Sinais';
+    const displayLabel = label || t('signals');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -34,22 +36,22 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
         )}
         <DataMultiSelect<SensorSignal, SensorSignal>
           id={id}
-          placeholder={placeholder || 'Selecione os sinais...'}
+          placeholder={placeholder || t('signals.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapSensorSignalsToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar sinal..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum sinal encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Sinal';
+  const displayLabel = label || t('signal');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -60,16 +62,16 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
       )}
       <DataSelect<SensorSignal, SensorSignal>
         id={id}
-        placeholder={placeholder || 'Selecione um sinal...'}
+        placeholder={placeholder || t('signal.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapSensorSignalsToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar sinal..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum sinal encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

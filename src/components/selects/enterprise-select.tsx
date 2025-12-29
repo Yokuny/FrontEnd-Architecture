@@ -1,17 +1,19 @@
 import { Building2 } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Enterprise, mapEnterprisesToOptions, useEnterprisesSelect } from '@/hooks/use-enterprises-api';
 
 export function EnterpriseSelect(props: EnterpriseSelectProps) {
+  const { t } = useTranslation();
   const { mode, oneBlocked = false, disabled = false, className, label, placeholder } = props;
   const id = useId();
   const query = useEnterprisesSelect();
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Empresa';
+    const displayLabel = label || t('machine.idEnterprise.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -22,22 +24,22 @@ export function EnterpriseSelect(props: EnterpriseSelectProps) {
         )}
         <DataMultiSelect<Enterprise>
           id={id}
-          placeholder={placeholder || 'Selecione as empresas...'}
+          placeholder={placeholder || t('machine.idEnterprise.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapEnterprisesToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar empresa..."
-          noOptionsMessage="Nenhuma empresa disponível."
-          noResultsMessage="Nenhuma empresa encontrada."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Empresa';
+  const displayLabel = label || t('machine.idEnterprise.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -48,7 +50,7 @@ export function EnterpriseSelect(props: EnterpriseSelectProps) {
       )}
       <DataSelect<Enterprise>
         id={id}
-        placeholder={placeholder || 'Selecione uma empresa...'}
+        placeholder={placeholder || t('machine.idEnterprise.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
@@ -56,9 +58,9 @@ export function EnterpriseSelect(props: EnterpriseSelectProps) {
         oneBlocked={oneBlocked}
         disabled={disabled}
         clearable={false}
-        searchPlaceholder="Buscar empresa..."
-        noOptionsMessage="Nenhuma empresa disponível."
-        noResultsMessage="Nenhuma empresa encontrada."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

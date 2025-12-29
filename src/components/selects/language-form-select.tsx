@@ -1,10 +1,12 @@
 import { Languages } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { LANGUAGES, type LanguageOption } from '@/lib/constants/select-options';
 
 export function LanguageFormSelect(props: LanguageFormSelectProps) {
+  const { t } = useTranslation();
   const { disabled = false, className, label, placeholder, value, onChange } = props;
   const id = useId();
 
@@ -25,7 +27,7 @@ export function LanguageFormSelect(props: LanguageFormSelectProps) {
     }));
   };
 
-  const displayLabel = label || 'Idioma';
+  const displayLabel = label || t('language');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -36,14 +38,16 @@ export function LanguageFormSelect(props: LanguageFormSelectProps) {
       )}
       <DataSelect<LanguageOption, LanguageOption>
         id={id}
-        placeholder={placeholder || 'Selecione o idioma...'}
+        placeholder={placeholder || t('language')}
         value={value}
         onChange={(val) => onChange?.(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
         clearable={false}
-        searchPlaceholder="Buscar idioma..."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

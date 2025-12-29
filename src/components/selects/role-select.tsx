@@ -1,5 +1,6 @@
 import { Shield } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
@@ -15,11 +16,13 @@ import { mapRolesToOptions, type RoleListItem, useRolesSelect } from '@/hooks/us
 export function RoleSelect(props: RoleSelectProps) {
   const { mode, isAll = false, params, disabled = false, className, label, placeholder, clearable = false } = props;
   const id = useId();
+  const { t } = useTranslation();
 
   const query = useRolesSelect(isAll, params);
 
+  const displayLabel = label || t('role');
+
   if (mode === 'multi') {
-    const displayLabel = label || 'Perfis';
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -30,22 +33,21 @@ export function RoleSelect(props: RoleSelectProps) {
         )}
         <DataMultiSelect<RoleListItem, RoleListItem>
           id={id}
-          placeholder={placeholder || 'Selecione os perfis...'}
+          placeholder={placeholder || t('roles.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as (string | number)[])}
           query={query}
           mapToOptions={mapRolesToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar perfil..."
-          noOptionsMessage="Nenhum perfil disponível."
-          noResultsMessage="Nenhum perfil encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Perfil';
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -56,16 +58,16 @@ export function RoleSelect(props: RoleSelectProps) {
       )}
       <DataSelect<RoleListItem, RoleListItem>
         id={id}
-        placeholder={placeholder || 'Selecione um perfil...'}
+        placeholder={placeholder || t('roles.placeholder')}
         value={props.value}
         onChange={props.onChange}
         query={query}
         mapToOptions={mapRolesToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar perfil..."
-        noOptionsMessage="Nenhum perfil disponível."
-        noResultsMessage="Nenhum perfil encontrado."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

@@ -1,27 +1,21 @@
 import { AlertCircle } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapTypeProblemsToOptions, type TypeProblem, useTypeProblemsSelect } from '@/hooks/use-type-problems-api';
 
-/**
- * TypeProblemSelect Component
- *
- * This component fetches and displays a list of problem types for a specific enterprise.
- * It follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function TypeProblemSelect(props: TypeProblemSelectProps) {
+  const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
-
   const query = useTypeProblemsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum tipo de problema disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Tipo de Problema';
+    const displayLabel = label || t('support.typeProblem.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -32,22 +26,22 @@ export function TypeProblemSelect(props: TypeProblemSelectProps) {
         )}
         <DataMultiSelect<TypeProblem, TypeProblem>
           id={id}
-          placeholder={placeholder || 'Selecione os tipos...'}
+          placeholder={placeholder || t('support.typeProblem.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapTypeProblemsToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar tipo..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum tipo encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Tipo de Problema';
+  const displayLabel = label || t('support.typeProblem.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -58,16 +52,16 @@ export function TypeProblemSelect(props: TypeProblemSelectProps) {
       )}
       <DataSelect<TypeProblem, TypeProblem>
         id={id}
-        placeholder={placeholder || 'Selecione um tipo...'}
+        placeholder={placeholder || t('support.typeProblem.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapTypeProblemsToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar tipo..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum tipo encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

@@ -1,4 +1,3 @@
-import type { UseQueryResult } from '@tanstack/react-query';
 import { Eye } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,67 +5,60 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { VISIBILITY_OPTIONS, type VisibilityOption } from '@/lib/constants/select-options';
 
-interface VisibilitySelectProps {
-  /** Mode of selection (only single supported for now based on legacy) */
-  mode: 'single';
-  /** Currently selected value */
-  value?: string;
-  /** Callback when selection changes */
-  onChange: (value: string | undefined) => void;
-  /** Whether the select is disabled */
-  disabled?: boolean;
-  /** Additional CSS classes */
-  className?: string;
-  /** Whether the select is clearable */
-  clearable?: boolean;
-}
-
-/**
- * VisibilitySelect Component
- *
- * Specialized select for role visibility settings (Public, Private, Limited).
- * Follows the system select pattern with static options and i18n support.
- */
-export function VisibilitySelect({ mode, value, onChange, disabled, className, clearable = true }: VisibilitySelectProps) {
-  const id = useId();
+export function VisibilitySelect(props: VisibilitySelectProps) {
   const { t } = useTranslation();
+  const { disabled = false, className, label, placeholder, value, onChange } = props;
+  const id = useId();
 
-  // Simulation of query for static data as per SELECT_PATTERN.md
+  // Simulated query object
   const query = {
     data: VISIBILITY_OPTIONS,
     isLoading: false,
     isError: false,
     isSuccess: true,
-    status: 'success',
-  } as UseQueryResult<VisibilityOption[], Error>;
+    status: 'success' as const,
+  };
 
-  if (mode === 'single') {
-    const label = `${t('visible.placeholder')} *`;
-    return (
-      <div className="space-y-2">
+  const mapToOptions = (options: VisibilityOption[]) => {
+    return options.map((opt) => ({
+      value: opt.value,
+      label: t(opt.labelKey),
+      data: opt,
+    }));
+  };
+
+  const displayLabel = label || t('visibility');
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
           <Eye className="size-4" />
-          {label}
+          {displayLabel}
         </Label>
-        <DataSelect<VisibilityOption>
-          id={id}
-          placeholder={t('visible.placeholder')}
-          value={value}
-          onChange={(val) => onChange(val as string)}
-          query={query}
-          mapToOptions={(data) =>
-            data.map((opt) => ({
-              value: opt.value,
-              label: t(opt.labelKey),
-            }))
-          }
-          disabled={disabled}
-          className={className}
-          clearable={clearable}
-        />
-      </div>
-    );
-  }
+      )}
+      <DataSelect<VisibilityOption, VisibilityOption>
+        id={id}
+        placeholder={placeholder || t('visibility')}
+        value={value}
+        onChange={(val) => onChange?.(val as string)}
+        query={query as any}
+        mapToOptions={mapToOptions}
+        disabled={disabled}
+        clearable={false}
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
+        className={className}
+      />
+    </div>
+  );
+}
 
-  return null;
+interface VisibilitySelectProps {
+  value?: string;
+  onChange?: (value: string | undefined) => void;
+  disabled?: boolean;
+  className?: string;
+  label?: string;
+  placeholder?: string;
 }

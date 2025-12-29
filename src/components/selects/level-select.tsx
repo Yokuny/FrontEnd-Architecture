@@ -1,97 +1,87 @@
-import { AlertTriangle, BarChart, Info, XCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { LEVEL_OPTIONS, type LevelOption } from '@/lib/constants/select-options';
+import { LEVEL_OPTIONS } from '@/lib/constants/select-options';
 
-/**
- * LevelSelect Component
- *
- * This component uses static data for notification levels (Critical, Warning, Info).
- * It simulates a TanStack Query result and follows the single/multi mode pattern.
- */
 export function LevelSelect(props: LevelSelectProps) {
-  const { mode, disabled = false, className, label, placeholder } = props;
+  const { t } = useTranslation();
+  const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
+
+  // Mapping options to translated ones
+  const translatedOptions = LEVEL_OPTIONS.map((opt) => ({
+    ...opt,
+    name: t(opt.id, { defaultValue: opt.name }),
+  }));
 
   // Simulated query object
   const query = {
-    data: LEVEL_OPTIONS,
+    data: translatedOptions,
     isLoading: false,
     isError: false,
     isSuccess: true,
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: LevelOption[]) => {
-    return options.map((opt) => {
-      let Icon = Info;
-      if (opt.id === 'critical') Icon = XCircle;
-      if (opt.id === 'warning') Icon = AlertTriangle;
-
-      return {
-        value: opt.id,
-        label: (
-          <div className="flex items-center gap-2">
-            <Icon className="size-4" style={{ color: opt.color }} />
-            <span>{opt.name}</span>
-          </div>
-        ) as unknown as string, // Cast to string because DataSelect expects string in label for standard usage,
-        // but React will render the JSX if passed.
-        data: opt,
-      };
-    });
+  const mapToOptions = (options: any[]) => {
+    return options.map((opt) => ({
+      value: opt.id,
+      label: opt.name,
+      data: opt,
+    }));
   };
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Nível';
+    const displayLabel = label || t('scale.level');
     return (
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <BarChart className="size-4" />
+            <AlertCircle className="size-4" />
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<LevelOption, LevelOption>
+        <DataMultiSelect
           id={id}
-          placeholder={placeholder || 'Selecione os níveis...'}
+          placeholder={placeholder || t('scale.level')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query as any}
           mapToOptions={mapToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar nível..."
-          noOptionsMessage="Nenhum nível disponível."
-          noResultsMessage="Nenhum nível encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Nível';
+  const displayLabel = label || t('scale.level');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <BarChart className="size-4" />
+          <AlertCircle className="size-4" />
           {displayLabel}
         </Label>
       )}
-      <DataSelect<LevelOption, LevelOption>
+      <DataSelect
         id={id}
-        placeholder={placeholder || 'Selecione um nível...'}
+        placeholder={placeholder || t('scale.level')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
-        clearable
-        searchPlaceholder="Buscar nível..."
-        noOptionsMessage="Nenhum nível disponível."
-        noResultsMessage="Nenhum nível encontrado."
+        clearable={clearable}
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>
@@ -99,10 +89,11 @@ export function LevelSelect(props: LevelSelectProps) {
 }
 
 interface LevelSelectBaseProps {
-  disabled?: boolean;
-  className?: string;
   label?: string;
   placeholder?: string;
+  disabled?: boolean;
+  className?: string;
+  clearable?: boolean;
 }
 
 interface LevelSelectSingleProps extends LevelSelectBaseProps {

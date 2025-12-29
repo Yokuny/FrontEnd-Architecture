@@ -1,40 +1,41 @@
 import { Map as MapIcon } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { FENCE_TYPES, type FenceTypeOption } from '@/lib/constants/select-options';
+import { FENCE_TYPES } from '@/lib/constants/select-options';
 
-/**
- * FenceTypeSelect Component
- *
- * This component uses static data from constants.
- */
 export function FenceTypeSelect(props: FenceTypeSelectProps) {
+  const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder } = props;
   const id = useId();
 
+  // Mapping options to translated ones
+  const translatedOptions = FENCE_TYPES.map((opt) => ({
+    ...opt,
+    name: t(opt.id, { defaultValue: opt.name }),
+  }));
+
   // Simulated query object
   const query = {
-    data: FENCE_TYPES,
+    data: translatedOptions,
     isLoading: false,
     isError: false,
     isSuccess: true,
     status: 'success' as const,
   };
 
-  const mapToOptions = (types: FenceTypeOption[]) => {
-    return types
-      .map((type) => ({
-        value: type.id,
-        label: type.name,
-        data: type,
-      }))
-      .sort((a, b) => a.label.localeCompare(b.label));
+  const mapToOptions = (options: any[]) => {
+    return options.map((opt) => ({
+      value: opt.id,
+      label: opt.name,
+      data: opt,
+    }));
   };
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Tipo de Cerca';
+    const displayLabel = label || t('type');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -43,24 +44,24 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<FenceTypeOption, FenceTypeOption>
+        <DataMultiSelect
           id={id}
-          placeholder={placeholder || 'Selecione os tipos...'}
+          placeholder={placeholder || t('type')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query as any}
           mapToOptions={mapToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar tipo..."
-          noOptionsMessage="Nenhum tipo disponível."
-          noResultsMessage="Nenhum tipo encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Tipo de Cerca';
+  const displayLabel = label || t('type');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -69,18 +70,18 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<FenceTypeOption, FenceTypeOption>
+      <DataSelect
         id={id}
-        placeholder={placeholder || 'Selecione um tipo...'}
+        placeholder={placeholder || t('type')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
         clearable
-        searchPlaceholder="Buscar tipo..."
-        noOptionsMessage="Nenhum tipo disponível."
-        noResultsMessage="Nenhum tipo encontrado."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

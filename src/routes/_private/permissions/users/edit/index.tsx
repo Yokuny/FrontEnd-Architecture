@@ -57,8 +57,8 @@ function EditUserPage() {
 
   return (
     <Card>
+      <CardHeader title={t('edit.user')} />
       <form onSubmit={onSubmit}>
-        <CardHeader title={t('edit.user')} />
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Name */}
@@ -126,7 +126,7 @@ function EditUserPage() {
           <div className="flex gap-2">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button type="button" variant={isDisabled ? 'default' : 'secondary'}>
+                <Button type="button" variant={isDisabled ? 'default' : 'destructive'}>
                   {t(isDisabled ? 'enable.user' : 'disable.user')}
                 </Button>
               </AlertDialogTrigger>

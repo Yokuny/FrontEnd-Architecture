@@ -44,8 +44,8 @@ function AddUserPage() {
 
   return (
     <Card>
+      <CardHeader title={t('add.user')} />
       <form onSubmit={onSubmit}>
-        <CardHeader title={t('add.user')} />
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Enterprise */}
@@ -91,7 +91,7 @@ function AddUserPage() {
 
             {/* Roles */}
             <div className="space-y-2 md:col-span-2">
-              <RoleSelect mode="multi" value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals)} />
+              <RoleSelect isAll mode="multi" value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals)} />
             </div>
 
             {/* User Types */}

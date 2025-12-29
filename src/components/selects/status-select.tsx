@@ -1,73 +1,80 @@
-import { CheckCircle2 } from 'lucide-react';
+import { Activity } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { mapStatusToOptions, useStatusSelect } from '@/hooks/use-status-api';
+import { useStatusSelect } from '@/hooks/use-status-api';
 
-/**
- * StatusSelect Component
- *
- * This component fetches and displays a list of status options for a specific enterprise.
- * It follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function StatusSelect(props: StatusSelectProps) {
-  const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
+  const { t } = useTranslation();
+  const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
   const id = useId();
-
   const query = useStatusSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum status disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+
+  const mapWithDefaults = (statuses: string[]) => {
+    const undefinedLabel = t('undefined', { defaultValue: 'Indefinido' });
+    const options = [
+      { value: 'empty', label: undefinedLabel, data: 'empty' },
+      ...statuses.map((status) => ({
+        value: status || undefinedLabel,
+        label: status || undefinedLabel,
+        data: status,
+      })),
+    ];
+    return options.sort((a, b) => a.label.localeCompare(b.label));
+  };
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Status';
+    const displayLabel = label || t('status.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <CheckCircle2 className="size-4" />
+            <Activity className="size-4" />
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<string, string>
+        <DataMultiSelect<any, any>
           id={id}
-          placeholder={placeholder || 'Selecione os status...'}
+          placeholder={placeholder || t('status.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
-          mapToOptions={mapStatusToOptions}
+          mapToOptions={mapWithDefaults}
           disabled={disabled}
-          searchPlaceholder="Buscar status..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum status encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Status';
+  const displayLabel = label || t('status.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <CheckCircle2 className="size-4" />
+          <Activity className="size-4" />
           {displayLabel}
         </Label>
       )}
-      <DataSelect<string, string>
+      <DataSelect<any, any>
         id={id}
-        placeholder={placeholder || 'Selecione um status...'}
+        placeholder={placeholder || t('status.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
-        mapToOptions={mapStatusToOptions}
+        mapToOptions={mapWithDefaults}
         disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder="Buscar status..."
+        clearable
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum status encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>
@@ -80,7 +87,6 @@ interface StatusSelectBaseProps {
   className?: string;
   label?: string;
   placeholder?: string;
-  clearable?: boolean;
 }
 
 interface StatusSelectSingleProps extends StatusSelectBaseProps {

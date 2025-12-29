@@ -1,24 +1,25 @@
-import { ShieldAlert } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { SAFETY_AREAS, type SafetyAreaOption } from '@/lib/constants/select-options';
 
-/**
- * SafetySelect Component
- *
- * This component provides options for safety areas (Invaded, Warn 1, Warn 2).
- * It follows the single/multi mode pattern and uses static data centralizing in constants.
- */
 export function SafetySelect(props: SafetySelectProps) {
-  const { mode, disabled = false, className, label, placeholder } = props;
+  const { t } = useTranslation();
+  const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
+
+  // Mapping options to translated ones
+  const translatedOptions = SAFETY_AREAS.map((opt) => ({
+    ...opt,
+    label: t(`safety.${opt.value}`, { defaultValue: opt.label }),
+  }));
 
   // Simulated query object
   const query = {
-    data: SAFETY_AREAS,
+    data: translatedOptions,
     isLoading: false,
     isError: false,
     isSuccess: true,
@@ -34,49 +35,53 @@ export function SafetySelect(props: SafetySelectProps) {
   };
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Área de Segurança';
+    const displayLabel = label || t('safety');
     return (
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <ShieldAlert className="size-4" />
+            <ShieldCheck className="size-4" />
             {displayLabel}
           </Label>
         )}
         <DataMultiSelect<SafetyAreaOption, SafetyAreaOption>
           id={id}
-          placeholder={placeholder || 'Selecione as áreas...'}
+          placeholder={placeholder || t('safety')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query as any}
           mapToOptions={mapToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar área..."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Área de Segurança';
+  const displayLabel = label || t('safety');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <ShieldAlert className="size-4" />
+          <ShieldCheck className="size-4" />
           {displayLabel}
         </Label>
       )}
       <DataSelect<SafetyAreaOption, SafetyAreaOption>
         id={id}
-        placeholder={placeholder || 'Selecione uma área...'}
+        placeholder={placeholder || t('safety')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
-        clearable
-        searchPlaceholder="Buscar área..."
+        clearable={clearable}
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>
@@ -84,10 +89,11 @@ export function SafetySelect(props: SafetySelectProps) {
 }
 
 interface SafetySelectBaseProps {
-  disabled?: boolean;
-  className?: string;
   label?: string;
   placeholder?: string;
+  disabled?: boolean;
+  className?: string;
+  clearable?: boolean;
 }
 
 interface SafetySelectSingleProps extends SafetySelectBaseProps {

@@ -1,27 +1,14 @@
 import { Radar } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapSensorsToOptions, useSensorsByMachineSelect } from '@/hooks/use-sensors-api';
 
-interface SensorByMachineSelectProps {
-  label?: string;
-  placeholder?: string;
-  value?: string;
-  values?: string[];
-  onChange?: (value: string | undefined) => void;
-  onChangeMulti?: (values: string[]) => void;
-  idMachine?: string;
-  multi?: boolean;
-  disabled?: boolean;
-  clearable?: boolean;
-  className?: string;
-}
-
 export function SensorByMachineSelect({
   label,
-  placeholder = 'Selecione um sensor...',
+  placeholder,
   value,
   values,
   onChange,
@@ -32,10 +19,11 @@ export function SensorByMachineSelect({
   clearable = true,
   className,
 }: SensorByMachineSelectProps) {
+  const { t } = useTranslation();
   const id = useId();
   const query = useSensorsByMachineSelect(idMachine);
 
-  const noOptionsMessage = !idMachine ? 'Selecione uma máquina primeiro.' : 'Nenhum sensor disponível.';
+  const noOptionsMessage = !idMachine ? t('select.first.machine', { defaultValue: 'Selecione uma máquina primeiro.' }) : t('nooptions.message');
 
   if (multi) {
     return (
@@ -48,16 +36,16 @@ export function SensorByMachineSelect({
         )}
         <DataMultiSelect
           id={id}
-          placeholder={placeholder}
+          placeholder={placeholder || t('sensor.placeholder')}
           value={values}
           onChange={(newValues) => onChangeMulti?.(newValues as string[])}
           query={query}
           mapToOptions={mapSensorsToOptions}
           disabled={disabled}
           className={className}
-          searchPlaceholder="Buscar sensor..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum sensor encontrado."
+          noResultsMessage={t('noresults.message')}
         />
       </div>
     );
@@ -73,7 +61,7 @@ export function SensorByMachineSelect({
       )}
       <DataSelect
         id={id}
-        placeholder={placeholder}
+        placeholder={placeholder || t('sensor.placeholder')}
         value={value}
         onChange={(newValue) => onChange?.(newValue as string | undefined)}
         query={query}
@@ -81,10 +69,24 @@ export function SensorByMachineSelect({
         disabled={disabled}
         clearable={clearable}
         className={className}
-        searchPlaceholder="Buscar sensor..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum sensor encontrado."
+        noResultsMessage={t('noresults.message')}
       />
     </div>
   );
+}
+
+interface SensorByMachineSelectProps {
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  values?: string[];
+  onChange?: (value: string | undefined) => void;
+  onChangeMulti?: (values: string[]) => void;
+  idMachine?: string;
+  multi?: boolean;
+  disabled?: boolean;
+  clearable?: boolean;
+  className?: string;
 }

@@ -1,16 +1,12 @@
-import { ClipboardList } from 'lucide-react';
+import { ClipboardCheck } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { OS_OPTIONS, type OsOption } from '@/lib/constants/select-options';
 
-/**
- * OsOptionSelect Component
- *
- * This component provides options for 'Sim', 'Não', and 'N/A',
- * typically used in Service Order (Ordem de Serviço - OS) forms.
- */
 export function OsOptionSelect(props: OsOptionSelectProps) {
+  const { t } = useTranslation();
   const { disabled = false, className, label, placeholder } = props;
   const id = useId();
 
@@ -31,25 +27,27 @@ export function OsOptionSelect(props: OsOptionSelectProps) {
     }));
   };
 
-  const displayLabel = label || 'Opção';
+  const displayLabel = label || t('select.option');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <ClipboardList className="size-4" />
+          <ClipboardCheck className="size-4" />
           {displayLabel}
         </Label>
       )}
       <DataSelect<OsOption, OsOption>
         id={id}
-        placeholder={placeholder || 'Selecione...'}
+        placeholder={placeholder || t('select.option')}
         value={props.value}
-        onChange={props.onChange}
+        onChange={(val) => props.onChange(val)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
         clearable={false}
-        searchPlaceholder="Buscar opção..."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

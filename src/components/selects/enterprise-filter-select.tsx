@@ -1,10 +1,12 @@
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataSelect } from '@/components/ui/data-select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { type Enterprise, useEnterprisesSelect } from '@/hooks/use-enterprises-api';
 import { cn } from '@/lib/utils';
 
 export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
+  const { t } = useTranslation();
   const { value, onChange, className, theme = 'light' } = props;
   const id = useId();
   const query = useEnterprisesSelect();
@@ -48,10 +50,10 @@ export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
         value={value}
         onChange={(val) => onChange?.(val as string)}
         className="min-w-[200px] md:min-w-[300px]"
-        placeholder="Selecionar Empresa"
-        searchPlaceholder="Buscar empresa..."
-        noOptionsMessage="Nenhuma empresa disponível."
-        noResultsMessage="Nenhuma empresa encontrada."
+        placeholder={t('enterprise')}
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
       />
     </div>
   );

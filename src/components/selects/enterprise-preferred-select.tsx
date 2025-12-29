@@ -1,5 +1,6 @@
 import { Star } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -11,6 +12,7 @@ import {
 } from '@/hooks/use-user-enterprises-api';
 
 export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps) {
+  const { t } = useTranslation();
   const { disabled = false, className, label } = props;
   const id = useId();
   const query = useUserEnterprisesPreferredSelect();
@@ -36,11 +38,11 @@ export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps)
     if (stringValue) {
       updateMutation.mutate(stringValue, {
         onSuccess: () => {
-          toast.success('Empresa preferencial atualizada!');
+          toast.success(t('enterprise.preferred.updated', { defaultValue: 'Empresa preferencial atualizada!' }));
           props.onChange?.(stringValue);
         },
         onError: () => {
-          toast.error('Falha ao atualizar empresa preferencial.');
+          toast.error(t('enterprise.preferred.failed', { defaultValue: 'Falha ao atualizar empresa preferencial.' }));
         },
       });
     } else {
@@ -48,7 +50,7 @@ export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps)
     }
   };
 
-  const displayLabel = label || 'Empresa Preferencial';
+  const displayLabel = label || t('machine.idEnterprise.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -59,16 +61,16 @@ export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps)
       )}
       <DataSelect<UserEnterprisePreference>
         id={id}
-        placeholder="Selecione sua empresa..."
+        placeholder={t('machine.idEnterprise.placeholder')}
         value={selectedValue}
         onChange={handleChange}
         query={query}
         mapToOptions={mapUserEnterprisesPreferredToOptions}
         disabled={disabled || updateMutation.isPending}
         clearable={false}
-        searchPlaceholder="Buscar empresa..."
-        noOptionsMessage="Nenhuma empresa disponível."
-        noResultsMessage="Nenhuma empresa encontrada."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

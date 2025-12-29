@@ -1,66 +1,67 @@
-import { UserCog } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { type MachineManager, mapMachineManagersToOptions, useMachineManagersSelect } from '@/hooks/use-machine-managers-api';
+import { mapMachineManagersToOptions, useMachineManagersSelect } from '@/hooks/use-machine-managers-api';
 
 export function MachineManagerSelect(props: MachineManagerSelectProps) {
-  const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = false } = props;
+  const { t } = useTranslation();
+  const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
-
   const query = useMachineManagersSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum gestor encontrado.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Gestor';
+    const displayLabel = label || t('management.person');
     return (
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <UserCog className="size-4" />
+            <UserRound className="size-4" />
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<MachineManager, MachineManager>
+        <DataMultiSelect<string, string>
           id={id}
-          placeholder={placeholder || 'Selecione os gestores...'}
+          placeholder={placeholder || t('management.person')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapMachineManagersToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar gestor..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum gestor encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Gestor';
+  const displayLabel = label || t('management.person');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <UserCog className="size-4" />
+          <UserRound className="size-4" />
           {displayLabel}
         </Label>
       )}
-      <DataSelect<MachineManager, MachineManager>
+      <DataSelect<string, string>
         id={id}
-        placeholder={placeholder || 'Selecione um gestor...'}
+        placeholder={placeholder || t('management.person')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapMachineManagersToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar gestor..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum gestor encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

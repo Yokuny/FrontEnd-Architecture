@@ -1,47 +1,30 @@
 import { Radar } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
+import type { Sensor } from '@/hooks/use-sensors-api';
 import { mapSensorsToOptions, useSensorsSelect } from '@/hooks/use-sensors-api';
-
-interface SensorSelectProps {
-  /** Label for the select field */
-  label?: string;
-  /** Placeholder text */
-  placeholder?: string;
-  /** Currently selected sensor ID (single select) */
-  value?: string;
-  /** Currently selected sensor IDs (multi select) */
-  values?: string[];
-  /** Callback when selection changes (single select) */
-  onChange?: (value: string | undefined) => void;
-  /** Callback when selection changes (multi select) */
-  onChangeMulti?: (values: string[]) => void;
-  /** Whether to allow multiple selections */
-  multi?: boolean;
-  /** Whether the select is disabled */
-  disabled?: boolean;
-  /** Whether single select can be cleared */
-  clearable?: boolean;
-  /** Additional CSS classes */
-  className?: string;
-}
 
 export function SensorSelect({
   label,
-  placeholder = 'Selecione um sensor...',
+  placeholder,
   value,
   values,
   onChange,
   onChangeMulti,
+  idEnterprise,
   multi = false,
   disabled = false,
   clearable = true,
   className,
 }: SensorSelectProps) {
+  const { t } = useTranslation();
   const id = useId();
   const query = useSensorsSelect();
+
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -52,18 +35,18 @@ export function SensorSelect({
             {label}
           </Label>
         )}
-        <DataMultiSelect
+        <DataMultiSelect<Sensor, Sensor>
           id={id}
-          placeholder={placeholder}
+          placeholder={placeholder || t('machine.sensors.placeholder')}
           value={values}
           onChange={(newValues) => onChangeMulti?.(newValues as string[])}
           query={query}
           mapToOptions={mapSensorsToOptions}
           disabled={disabled}
           className={className}
-          searchPlaceholder="Buscar sensor..."
-          noOptionsMessage="Nenhum sensor disponível."
-          noResultsMessage="Nenhum sensor encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={noOptionsMessage}
+          noResultsMessage={t('noresults.message')}
         />
       </div>
     );
@@ -77,9 +60,9 @@ export function SensorSelect({
           {label}
         </Label>
       )}
-      <DataSelect
+      <DataSelect<Sensor, Sensor>
         id={id}
-        placeholder={placeholder}
+        placeholder={placeholder || t('machine.sensors.placeholder')}
         value={value}
         onChange={(newValue) => onChange?.(newValue as string | undefined)}
         query={query}
@@ -87,10 +70,24 @@ export function SensorSelect({
         disabled={disabled}
         clearable={clearable}
         className={className}
-        searchPlaceholder="Buscar sensor..."
-        noOptionsMessage="Nenhum sensor disponível."
-        noResultsMessage="Nenhum sensor encontrado."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={noOptionsMessage}
+        noResultsMessage={t('noresults.message')}
       />
     </div>
   );
+}
+
+interface SensorSelectProps {
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  values?: string[];
+  onChange?: (value: string | undefined) => void;
+  onChangeMulti?: (values: string[]) => void;
+  idEnterprise?: string;
+  multi?: boolean;
+  disabled?: boolean;
+  clearable?: boolean;
+  className?: string;
 }

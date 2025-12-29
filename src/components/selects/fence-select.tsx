@@ -1,12 +1,14 @@
-import { Shield } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Fence, mapFencesToOptions, useFencesSelect } from '@/hooks/use-fences-api';
 
 export function FenceSelect(props: FenceSelectProps) {
-  const { mode, idEnterprise, notId, typeFence, disabled = false, className, label, placeholder } = props;
+  const { t } = useTranslation();
+  const { mode, idEnterprise, typeFence, notId, disabled = false, className, label, placeholder } = props;
   const id = useId();
 
   const query = useFencesSelect({
@@ -15,56 +17,56 @@ export function FenceSelect(props: FenceSelectProps) {
     typeFence,
   });
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione primeiro uma empresa.' : 'Nenhuma cerca disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Cerca';
+    const displayLabel = label || t('fence.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <Shield className="size-4" />
+            <MapPin className="size-4" />
             {displayLabel}
           </Label>
         )}
         <DataMultiSelect<Fence>
           id={id}
-          placeholder={placeholder || 'Selecione as cercas...'}
+          placeholder={placeholder || t('fence.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapFencesToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar cerca..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhuma cerca encontrada."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Cerca';
+  const displayLabel = label || t('fence.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <Shield className="size-4" />
+          <MapPin className="size-4" />
           {displayLabel}
         </Label>
       )}
       <DataSelect<Fence>
         id={id}
-        placeholder={placeholder || 'Selecione uma cerca...'}
+        placeholder={placeholder || t('fence.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapFencesToOptions}
         disabled={disabled}
         clearable
-        searchPlaceholder="Buscar cerca..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhuma cerca encontrada."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>
@@ -73,8 +75,8 @@ export function FenceSelect(props: FenceSelectProps) {
 
 interface FenceSelectBaseProps {
   idEnterprise?: string;
-  notId?: string[];
   typeFence?: string;
+  notId?: string[];
   disabled?: boolean;
   className?: string;
   label?: string;

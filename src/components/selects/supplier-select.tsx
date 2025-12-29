@@ -1,6 +1,7 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { Filter, Truck } from 'lucide-react';
 import { useId, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -14,6 +15,7 @@ import { type Supplier, useSuppliersSelect } from '@/hooks/use-suppliers-api';
  * Original logic for 'oneBlocked' and activity filtering is preserved.
  */
 export function SupplierSelect(props: SupplierSelectProps) {
+  const { t } = useTranslation();
   const { mode, oneBlocked = false, disabled = false, className, showActivityFilter = true, label, placeholder } = props;
   const id = useId();
   const activityId = useId();
@@ -47,10 +49,10 @@ export function SupplierSelect(props: SupplierSelectProps) {
     }));
   };
 
-  const activityFilterLabel = 'Filtrar pela atividade (Opcional)';
+  const activityFilterLabel = t('activity.filter', { defaultValue: 'Filtrar pela atividade (Opcional)' });
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Fornecedor';
+    const displayLabel = label || t('supplier');
     return (
       <div className={className}>
         {showActivityFilter && (
@@ -61,13 +63,13 @@ export function SupplierSelect(props: SupplierSelectProps) {
             </Label>
             <DataSelect<string, string>
               id={activityId}
-              placeholder="Selecione uma atividade..."
+              placeholder={t('select.activity', { defaultValue: 'Selecione uma atividade...' })}
               value={activityFilter}
               onChange={(val) => setActivityFilter(val as string)}
               query={activitiesQuery}
               mapToOptions={(acts) => acts.map((a) => ({ value: a, label: a, data: a }))}
               clearable
-              searchPlaceholder="Buscar atividade..."
+              searchPlaceholder={t('search.placeholder')}
             />
           </div>
         )}
@@ -81,22 +83,22 @@ export function SupplierSelect(props: SupplierSelectProps) {
           )}
           <DataMultiSelect<Supplier, Supplier>
             id={id}
-            placeholder={placeholder || 'Selecione os fornecedores...'}
+            placeholder={placeholder || t('supplier')}
             value={props.value}
             onChange={(vals) => props.onChange(vals as string[])}
             query={filteredQuery}
             mapToOptions={mapSupplierToOptions}
             disabled={disabled}
-            searchPlaceholder="Buscar fornecedor..."
-            noOptionsMessage="Nenhum fornecedor disponível."
-            noResultsMessage="Nenhum fornecedor encontrado."
+            searchPlaceholder={t('search.placeholder')}
+            noOptionsMessage={t('nooptions.message')}
+            noResultsMessage={t('noresults.message')}
           />
         </div>
       </div>
     );
   }
 
-  const displayLabel = label || 'Fornecedor';
+  const displayLabel = label || t('supplier');
   return (
     <div className={className}>
       {showActivityFilter && (
@@ -107,13 +109,13 @@ export function SupplierSelect(props: SupplierSelectProps) {
           </Label>
           <DataSelect<string, string>
             id={activityId}
-            placeholder="Selecione uma atividade..."
+            placeholder={t('select.activity', { defaultValue: 'Selecione uma atividade...' })}
             value={activityFilter}
             onChange={(val) => setActivityFilter(val as string)}
             query={activitiesQuery}
             mapToOptions={(acts) => acts.map((a) => ({ value: a, label: a, data: a }))}
             clearable
-            searchPlaceholder="Buscar atividade..."
+            searchPlaceholder={t('search.placeholder')}
           />
         </div>
       )}
@@ -127,7 +129,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
         )}
         <DataSelect<Supplier, Supplier>
           id={id}
-          placeholder={placeholder || 'Selecione um fornecedor...'}
+          placeholder={placeholder || t('supplier')}
           value={props.value}
           onChange={(val) => props.onChange(val as string)}
           query={filteredQuery}
@@ -135,9 +137,9 @@ export function SupplierSelect(props: SupplierSelectProps) {
           oneBlocked={oneBlocked}
           disabled={disabled}
           clearable={true}
-          searchPlaceholder="Buscar fornecedor..."
-          noOptionsMessage="Nenhum fornecedor disponível."
-          noResultsMessage="Nenhum fornecedor encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
         />
       </div>
     </div>

@@ -1,30 +1,19 @@
 import { Cpu } from 'lucide-react';
-import { useEffect, useId } from 'react';
+import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Machine, mapMachinesToOptions, useMachinesSelect } from '@/hooks/use-machines-api';
 
 export function MachineSelect(props: MachineSelectProps) {
-  const { mode, filterQuery = '', oneSelected = false, disabled = false, className, label, placeholder, clearable = true } = props;
+  const { t } = useTranslation();
+  const { mode, oneBlocked = false, disabled = false, className, label, placeholder } = props;
   const id = useId();
-
-  const query = useMachinesSelect(filterQuery);
-  const { data } = query;
-
-  // Auto-select single option when oneSelected is true
-  useEffect(() => {
-    if (oneSelected && data && data.length === 1 && mode === 'single' && !props.value) {
-      const options = mapMachinesToOptions(data);
-      props.onChange(options[0].value);
-    }
-  }, [data, oneSelected, mode, props]);
-
-  const hasOneData = oneSelected && data && data.length === 1;
-  const isDisabled = disabled || hasOneData;
+  const query = useMachinesSelect();
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Máquina';
+    const displayLabel = label || t('machine.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -33,24 +22,24 @@ export function MachineSelect(props: MachineSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<Machine, Machine>
+        <DataMultiSelect<Machine>
           id={id}
-          placeholder={placeholder || 'Selecione as máquinas...'}
+          placeholder={placeholder || t('machine.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapMachinesToOptions}
-          disabled={isDisabled}
-          searchPlaceholder="Buscar máquina..."
-          noOptionsMessage="Nenhuma máquina disponível."
-          noResultsMessage="Nenhuma máquina encontrada."
+          disabled={disabled}
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Máquina';
+  const displayLabel = label || t('machine.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -59,18 +48,19 @@ export function MachineSelect(props: MachineSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Machine, Machine>
+      <DataSelect<Machine>
         id={id}
-        placeholder={placeholder || 'Selecione uma máquina...'}
+        placeholder={placeholder || t('machine.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapMachinesToOptions}
-        disabled={isDisabled}
-        clearable={clearable && !hasOneData}
-        searchPlaceholder="Buscar máquina..."
-        noOptionsMessage="Nenhuma máquina disponível."
-        noResultsMessage="Nenhuma máquina encontrada."
+        oneBlocked={oneBlocked}
+        disabled={disabled}
+        clearable
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>
@@ -78,13 +68,11 @@ export function MachineSelect(props: MachineSelectProps) {
 }
 
 interface MachineSelectBaseProps {
-  filterQuery?: string;
-  oneSelected?: boolean;
+  oneBlocked?: boolean;
   disabled?: boolean;
   className?: string;
   label?: string;
   placeholder?: string;
-  clearable?: boolean;
 }
 
 interface MachineSelectSingleProps extends MachineSelectBaseProps {

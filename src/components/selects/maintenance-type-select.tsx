@@ -1,5 +1,6 @@
 import { Settings2 } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
@@ -9,13 +10,14 @@ import { mapMaintenanceTypesToOptions, useMaintenanceTypesSelect } from '@/hooks
 export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
+  const { t } = useTranslation();
 
   const query = useMaintenanceTypesSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione uma empresa primeiro.' : 'Nenhum tipo de manutenção disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Tipo de Manutenção';
+    const displayLabel = label || t('maintenance.type');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -26,22 +28,22 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
         )}
         <DataMultiSelect<string, string>
           id={id}
-          placeholder={placeholder || 'Selecione os tipos...'}
+          placeholder={placeholder || t('maintenance.types.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapMaintenanceTypesToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar tipo..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum tipo encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Tipo de Manutenção';
+  const displayLabel = label || t('maintenance.type');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -52,16 +54,16 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
       )}
       <DataSelect<string, string>
         id={id}
-        placeholder={placeholder || 'Selecione um tipo...'}
+        placeholder={placeholder || t('maintenance.type.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapMaintenanceTypesToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar tipo..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum tipo encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

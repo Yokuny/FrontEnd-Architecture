@@ -1,5 +1,6 @@
 import { Microscope } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
@@ -13,6 +14,7 @@ import { VARIABLE_TYPES, type VariableTypeOption } from '@/lib/constants/select-
  * It follows the single/multi mode pattern and uses static data centralizing in constants.
  */
 export function TypeSensorSelect(props: TypeSensorSelectProps) {
+  const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder } = props;
   const id = useId();
 
@@ -29,14 +31,14 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
     return options
       .map((opt) => ({
         value: opt.value,
-        label: opt.label,
+        label: opt.label, // These are technical terms (INT, DECIMAL), usually not translated but could be.
         data: opt,
       }))
       .sort((a, b) => a.label.localeCompare(b.label));
   };
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Tipo de Variável';
+    const displayLabel = label || t('variable.type');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -47,20 +49,22 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
         )}
         <DataMultiSelect<VariableTypeOption, VariableTypeOption>
           id={id}
-          placeholder={placeholder || 'Selecione os tipos...'}
+          placeholder={placeholder || t('variable.type')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query as any}
           mapToOptions={mapToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar tipo..."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Tipo de Variável';
+  const displayLabel = label || t('variable.type');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -71,14 +75,16 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
       )}
       <DataSelect<VariableTypeOption, VariableTypeOption>
         id={id}
-        placeholder={placeholder || 'Selecione um tipo...'}
+        placeholder={placeholder || t('variable.type')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
         clearable
-        searchPlaceholder="Buscar tipo..."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

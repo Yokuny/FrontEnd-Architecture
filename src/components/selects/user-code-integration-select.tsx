@@ -1,5 +1,6 @@
 import { UserRound } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
@@ -13,13 +14,14 @@ import { mapUserCodeIntegrationToOptions, type UserCodeIntegration, useUserCodeI
  * Follows the single/multi mode pattern and integrates with TanStack Query.
  */
 export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps) {
+  const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
   const query = useUserCodeIntegrationSelect();
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Integração de Usuários';
+    const displayLabel = label || t('user');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -30,22 +32,22 @@ export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps)
         )}
         <DataMultiSelect<UserCodeIntegration, UserCodeIntegration>
           id={id}
-          placeholder={placeholder || 'Selecione os usuários...'}
+          placeholder={placeholder || t('user')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapUserCodeIntegrationToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar usuário..."
-          noOptionsMessage="Nenhum usuário disponível."
-          noResultsMessage="Nenhum usuário encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Integração de Usuário';
+  const displayLabel = label || t('user');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -56,16 +58,16 @@ export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps)
       )}
       <DataSelect<UserCodeIntegration, UserCodeIntegration>
         id={id}
-        placeholder={placeholder || 'Selecione um usuário...'}
+        placeholder={placeholder || t('user')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapUserCodeIntegrationToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar usuário..."
-        noOptionsMessage="Nenhum usuário disponível."
-        noResultsMessage="Nenhum usuário encontrado."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

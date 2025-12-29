@@ -28,7 +28,7 @@ function CardHeader({ className, children, title, ...props }: CardHeaderProps) {
 
       <div className="flex items-start justify-between w-full">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" className="shrink-0 rounded-lg h-9 w-11" onClick={() => router.history.back()}>
+          <Button type="button" variant="outline" size="icon" className="shrink-0 rounded-lg h-9 w-11" onClick={() => router.history.back()}>
             <MoveLeft className="size-4" />
           </Button>
           <div className="flex flex-col gap-1">{title && <CardTitle>{title}</CardTitle>}</div>

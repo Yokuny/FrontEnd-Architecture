@@ -1,6 +1,6 @@
 import { Anchor } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -9,17 +9,18 @@ import { mapPortsToOptions, type Port, usePortsSelect } from '@/hooks/use-ports-
 /**
  * PortSelect Component
  *
- * This component fetches and displays a list of ports from the geofence API.
- * It follows the single/multi mode pattern and integrates with TanStack Query.
+ * Fetches and displays ports.
+ * Follows the single/multi mode pattern and integrates with TanStack Query.
  */
 export function PortSelect(props: PortSelectProps) {
+  const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
   const query = usePortsSelect();
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Porto';
+    const displayLabel = label || t('port.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -30,22 +31,22 @@ export function PortSelect(props: PortSelectProps) {
         )}
         <DataMultiSelect<Port, Port>
           id={id}
-          placeholder={placeholder || 'Selecione os portos...'}
+          placeholder={placeholder || t('port.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapPortsToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar porto..."
-          noOptionsMessage="Nenhum porto disponível."
-          noResultsMessage="Nenhum porto encontrado."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Porto';
+  const displayLabel = label || t('port.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -56,16 +57,16 @@ export function PortSelect(props: PortSelectProps) {
       )}
       <DataSelect<Port, Port>
         id={id}
-        placeholder={placeholder || 'Selecione um porto...'}
+        placeholder={placeholder || t('port.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapPortsToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar porto..."
-        noOptionsMessage="Nenhum porto disponível."
-        noResultsMessage="Nenhum porto encontrado."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

@@ -21,8 +21,23 @@ async function fetchUsers(params?: Record<string, unknown>): Promise<{ data: Use
   const idEnterprise = (params?.idEnterprise as string) || useEnterpriseFilter.getState().idEnterprise || '';
   const queryParams = { ...params, idEnterprise };
 
-  const queryString = new URLSearchParams(queryParams as Record<string, string>).toString();
-  const response = await api.get<{ data: UserListItem[]; pageInfo: { count: number }[] }>(`/user/enterprise/list?${queryString}`);
+  const searchParams = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(queryParams)) {
+    if (value === undefined || value === null || value === '') continue;
+
+    if (Array.isArray(value)) {
+      // Use bracket notation for arrays if required by the backend
+      const paramKey = key.endsWith('[]') ? key : `${key}[]`;
+      for (const item of value) {
+        searchParams.append(paramKey, String(item));
+      }
+    } else {
+      searchParams.append(key, String(value));
+    }
+  }
+
+  const response = await api.get<{ data: UserListItem[]; pageInfo: { count: number }[] }>(`/user/enterprise/list?${searchParams.toString()}`);
   return response.data;
 }
 

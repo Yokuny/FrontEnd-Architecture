@@ -1,4 +1,4 @@
-import { KeyRound as KeyRoundIcon } from 'lucide-react';
+import { KeySquare } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
@@ -7,11 +7,11 @@ import { Label } from '@/components/ui/label';
 import { CREDENTIALS_OPTIONS, type CredentialsOption } from '@/lib/constants/select-options';
 
 export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
+  const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder } = props;
   const id = useId();
-  const { t } = useTranslation();
 
-  // Simulated query for static options
+  // Simulated query object
   const query = {
     data: CREDENTIALS_OPTIONS,
     isLoading: false,
@@ -23,7 +23,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
   const mapToOptions = (options: CredentialsOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
-      label: opt.labelKey === 'SSO' ? 'SSO' : t(opt.labelKey),
+      label: t(opt.labelKey, { defaultValue: opt.labelKey }),
       data: opt,
     }));
   };
@@ -34,7 +34,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <KeyRoundIcon className="size-4" />
+            <KeySquare className="size-4" />
             {displayLabel}
           </Label>
         )}
@@ -46,6 +46,9 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
           query={query as any}
           mapToOptions={mapToOptions}
           disabled={disabled}
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={t('nooptions.message')}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
@@ -57,18 +60,22 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <KeyRoundIcon className="size-4" />
+          <KeySquare className="size-4" />
           {displayLabel}
         </Label>
       )}
       <DataSelect<CredentialsOption, CredentialsOption>
         id={id}
-        placeholder={placeholder || t('credentials.by')}
+        placeholder={placeholder || t('login.password')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
+        clearable={false}
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={t('nooptions.message')}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

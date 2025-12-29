@@ -1,73 +1,71 @@
-import { FileClock } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapOperationsByAssetToOptions, type OperationByAsset, useOperationsByAssetSelect } from '@/hooks/use-contract-assets-api';
 
-/**
- * OperationsContractSelect Component
- *
- * This component fetches operations associated with a specific machine and enterprise.
- * It follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function OperationsContractSelect(props: OperationsContractSelectProps) {
-  const { mode, idEnterprise, idMachine, disabled = false, className, label, placeholder, clearable = true } = props;
+  const { t } = useTranslation();
+  const { mode, idEnterprise, idMachine, disabled = false, className, label, placeholder } = props;
   const id = useId();
-
   const query = useOperationsByAssetSelect(idEnterprise, idMachine);
 
-  const noOptionsMessage = !idEnterprise || !idMachine ? 'Selecione a empresa e a máquina primeiro.' : 'Nenhuma operação disponível.';
+  const noOptionsMessage = !idEnterprise
+    ? t('select.first.enterprise')
+    : !idMachine
+      ? t('select.machine.first', { defaultValue: 'Selecione uma máquina primeiro.' })
+      : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Operação';
+    const displayLabel = label || t('machine.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
           <Label htmlFor={id} className="flex items-center gap-2">
-            <FileClock className="size-4" />
+            <FileText className="size-4" />
             {displayLabel}
           </Label>
         )}
         <DataMultiSelect<OperationByAsset, OperationByAsset>
           id={id}
-          placeholder={placeholder || 'Selecione as operações...'}
+          placeholder={placeholder || t('machine.placeholder')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapOperationsByAssetToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar operação..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhuma operação encontrada."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Operação';
+  const displayLabel = label || t('machine.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <FileClock className="size-4" />
+          <FileText className="size-4" />
           {displayLabel}
         </Label>
       )}
       <DataSelect<OperationByAsset, OperationByAsset>
         id={id}
-        placeholder={placeholder || 'Selecione uma operação...'}
+        placeholder={placeholder || t('machine.placeholder')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapOperationsByAssetToOptions}
         disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder="Buscar operação..."
+        clearable
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhuma operação encontrada."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>
@@ -81,7 +79,6 @@ interface OperationsContractSelectBaseProps {
   className?: string;
   label?: string;
   placeholder?: string;
-  clearable?: boolean;
 }
 
 interface OperationsContractSelectSingleProps extends OperationsContractSelectBaseProps {

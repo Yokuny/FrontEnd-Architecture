@@ -1,12 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api/client';
 
-// Types
-export interface Status {
-  value: string;
-  label: string;
-}
-
 // Query keys
 export const statusKeys = {
   all: ['status'] as const,
@@ -36,14 +30,14 @@ export function useStatusSelect(idEnterprise: string | undefined) {
   return useStatusByEnterprise(idEnterprise);
 }
 
-// Helper function to map status to select options
+/**
+ * Helper function to map basic status strings to select options.
+ * The component usually adds the "empty/undefined" option with translation.
+ */
 export function mapStatusToOptions(statuses: string[]) {
-  return [
-    { value: 'empty', label: 'Indefinido', data: 'empty' },
-    ...statuses.map((status) => ({
-      value: status || 'Indefinido',
-      label: status || 'Indefinido',
-      data: status,
-    })),
-  ].sort((a, b) => a.label.localeCompare(b.label));
+  return statuses.map((status) => ({
+    value: status,
+    label: status,
+    data: status,
+  }));
 }

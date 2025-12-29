@@ -1,19 +1,21 @@
 import { Briefcase } from 'lucide-react';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Customer, mapCustomersToOptions, useCustomersSelect } from '@/hooks/use-customers-api';
 
 export function CustomerSelect(props: CustomerSelectProps) {
+  const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
   const id = useId();
   const query = useCustomersSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? 'Selecione primeiro uma empresa.' : 'Nenhum cliente disponível.';
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || 'Cliente';
+    const displayLabel = label || t('customer');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -24,22 +26,22 @@ export function CustomerSelect(props: CustomerSelectProps) {
         )}
         <DataMultiSelect<Customer>
           id={id}
-          placeholder={placeholder || 'Selecione os clientes...'}
+          placeholder={placeholder || t('customer')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapCustomersToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar cliente..."
+          searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage="Nenhum cliente encontrado."
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Cliente';
+  const displayLabel = label || t('customer');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -50,16 +52,16 @@ export function CustomerSelect(props: CustomerSelectProps) {
       )}
       <DataSelect<Customer>
         id={id}
-        placeholder={placeholder || 'Selecione um cliente...'}
+        placeholder={placeholder || t('customer')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapCustomersToOptions}
         disabled={disabled}
         clearable={props.clearable ?? false}
-        searchPlaceholder="Buscar cliente..."
+        searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage="Nenhum cliente encontrado."
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>

@@ -1,25 +1,21 @@
 import { Ruler } from 'lucide-react';
 import { useId } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapScalesToOptions, type Scale, useScalesSelect } from '@/hooks/use-scales-api';
 
-/**
- * ScaleSelect Component
- *
- * This component fetches and displays a list of scales.
- * It follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function ScaleSelect(props: ScaleSelectProps) {
+  const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
-
   const query = useScalesSelect();
 
+  const noOptionsMessage = t('nooptions.message');
+
   if (mode === 'multi') {
-    const displayLabel = label || 'Escala';
+    const displayLabel = label || t('scale');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -30,22 +26,22 @@ export function ScaleSelect(props: ScaleSelectProps) {
         )}
         <DataMultiSelect<Scale, Scale>
           id={id}
-          placeholder={placeholder || 'Selecione as escalas...'}
+          placeholder={placeholder || t('scale')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
           mapToOptions={mapScalesToOptions}
           disabled={disabled}
-          searchPlaceholder="Buscar escala..."
-          noOptionsMessage="Nenhuma escala disponível."
-          noResultsMessage="Nenhuma escala encontrada."
+          searchPlaceholder={t('search.placeholder')}
+          noOptionsMessage={noOptionsMessage}
+          noResultsMessage={t('noresults.message')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || 'Escala';
+  const displayLabel = label || t('scale');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -56,16 +52,16 @@ export function ScaleSelect(props: ScaleSelectProps) {
       )}
       <DataSelect<Scale, Scale>
         id={id}
-        placeholder={placeholder || 'Selecione uma escala...'}
+        placeholder={placeholder || t('scale')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
         mapToOptions={mapScalesToOptions}
         disabled={disabled}
         clearable={clearable}
-        searchPlaceholder="Buscar escala..."
-        noOptionsMessage="Nenhuma escala disponível."
-        noResultsMessage="Nenhuma escala encontrada."
+        searchPlaceholder={t('search.placeholder')}
+        noOptionsMessage={noOptionsMessage}
+        noResultsMessage={t('noresults.message')}
         className={className}
       />
     </div>
