@@ -1,7 +1,7 @@
 'use client';
 
+import { Link } from '@tanstack/react-router';
 import { ExternalLink } from 'lucide-react';
-import Link from 'next/link';
 import { PolarAngleAxis, RadialBar, RadialBarChart } from 'recharts';
 import { Card, CardContent } from '@/components/ui/card';
 import { type ChartConfig, ChartContainer } from '@/components/ui/chart';
@@ -51,7 +51,7 @@ export default function Stats07() {
         <h2 className="text-xl font-medium text-foreground">Plan overview</h2>
         <p className="mt-1 text-sm leading-6 text-muted-foreground">
           You are currently on the <span className="font-medium text-foreground">starter plan</span>.{' '}
-          <Link href="#" className="inline-flex items-center gap-1 text-primary hover:underline hover:underline-offset-4">
+          <Link to="." className="inline-flex items-center gap-1 text-primary hover:underline hover:underline-offset-4">
             View other plans
             <ExternalLink className="size-4" aria-hidden={true} />
           </Link>

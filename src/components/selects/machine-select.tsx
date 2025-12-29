@@ -4,13 +4,17 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { type Machine, mapMachinesToOptions, useMachinesSelect } from '@/hooks/use-machines-api';
+import { type Machine, mapMachinesToOptions, useMachinesByEnterpriseSelect, useMachinesSelect } from '@/hooks/use-machines-api';
 
 export function MachineSelect(props: MachineSelectProps) {
   const { t } = useTranslation();
-  const { mode, oneBlocked = false, disabled = false, className, label, placeholder } = props;
+  const { mode, oneBlocked = false, disabled = false, className, label, placeholder, filterQuery, idEnterprise } = props;
   const id = useId();
-  const query = useMachinesSelect();
+
+  // Use idEnterprise specific hook if provided, otherwise generic filterQuery
+  const enterpriseQuery = useMachinesByEnterpriseSelect(idEnterprise);
+  const genericQuery = useMachinesSelect(filterQuery);
+  const query = idEnterprise ? enterpriseQuery : genericQuery;
 
   if (mode === 'multi') {
     const displayLabel = label || t('machine.placeholder');
@@ -73,6 +77,8 @@ interface MachineSelectBaseProps {
   className?: string;
   label?: string;
   placeholder?: string;
+  filterQuery?: string;
+  idEnterprise?: string;
 }
 
 interface MachineSelectSingleProps extends MachineSelectBaseProps {
