@@ -14,6 +14,7 @@ import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
 import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
+import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
 import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
 import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
@@ -22,11 +23,19 @@ import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/re
 import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
 import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
 import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
+import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
+import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_private/register/type-fuel/index';
+import { Route as PrivateRegisterSensorsIndexRouteImport } from './routes/_private/register/sensors/index';
+import { Route as PrivateRegisterPlatformIndexRouteImport } from './routes/_private/register/platform/index';
 import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
 import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
 import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
 import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
 import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
+import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
+import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
+import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
+import { Route as PrivateRegisterPlatformAddRouteImport } from './routes/_private/register/platform/add';
 import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
 import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
 import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
@@ -60,6 +69,11 @@ const PrivateSetUpCompanyIndexRoute =
     path: '/set-up-company/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateRegisterIndexRoute = PrivateRegisterIndexRouteImport.update({
+  id: '/register/',
+  path: '/register/',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PrivatePermissionsIndexRoute = PrivatePermissionsIndexRouteImport.update({
   id: '/permissions/',
   path: '/permissions/',
@@ -103,6 +117,30 @@ const PrivateSetUpCompanyIntegrationListIndexRoute =
     path: '/set-up-company/integration-list/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateRegisterUserTypeIndexRoute =
+  PrivateRegisterUserTypeIndexRouteImport.update({
+    id: '/register/user-type/',
+    path: '/register/user-type/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateRegisterTypeFuelIndexRoute =
+  PrivateRegisterTypeFuelIndexRouteImport.update({
+    id: '/register/type-fuel/',
+    path: '/register/type-fuel/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateRegisterSensorsIndexRoute =
+  PrivateRegisterSensorsIndexRouteImport.update({
+    id: '/register/sensors/',
+    path: '/register/sensors/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateRegisterPlatformIndexRoute =
+  PrivateRegisterPlatformIndexRouteImport.update({
+    id: '/register/platform/',
+    path: '/register/platform/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivatePermissionsUsersIndexRoute =
   PrivatePermissionsUsersIndexRouteImport.update({
     id: '/permissions/users/',
@@ -131,6 +169,30 @@ const PrivateMaintenanceListOsDoneIndexRoute =
   PrivateMaintenanceListOsDoneIndexRouteImport.update({
     id: '/maintenance/list-os-done/',
     path: '/maintenance/list-os-done/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateRegisterUserTypeAddRoute =
+  PrivateRegisterUserTypeAddRouteImport.update({
+    id: '/register/user-type/add',
+    path: '/register/user-type/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateRegisterTypeFuelAddRoute =
+  PrivateRegisterTypeFuelAddRouteImport.update({
+    id: '/register/type-fuel/add',
+    path: '/register/type-fuel/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateRegisterSensorsAddRoute =
+  PrivateRegisterSensorsAddRouteImport.update({
+    id: '/register/sensors/add',
+    path: '/register/sensors/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateRegisterPlatformAddRoute =
+  PrivateRegisterPlatformAddRouteImport.update({
+    id: '/register/platform/add',
+    path: '/register/platform/add',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivatePermissionsUsersPermissionsAddRoute =
@@ -189,16 +251,25 @@ export interface FileRoutesByFullPath {
   '/auth/unlock': typeof PublicAuthUnlockRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
+  '/register': typeof PrivateRegisterIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/register/platform/add': typeof PrivateRegisterPlatformAddRoute;
+  '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
+  '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
+  '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
+  '/register/platform': typeof PrivateRegisterPlatformIndexRoute;
+  '/register/sensors': typeof PrivateRegisterSensorsIndexRoute;
+  '/register/type-fuel': typeof PrivateRegisterTypeFuelIndexRoute;
+  '/register/user-type': typeof PrivateRegisterUserTypeIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
@@ -215,16 +286,25 @@ export interface FileRoutesByTo {
   '/auth/unlock': typeof PublicAuthUnlockRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
+  '/register': typeof PrivateRegisterIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/register/platform/add': typeof PrivateRegisterPlatformAddRoute;
+  '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
+  '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
+  '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
+  '/register/platform': typeof PrivateRegisterPlatformIndexRoute;
+  '/register/sensors': typeof PrivateRegisterSensorsIndexRoute;
+  '/register/type-fuel': typeof PrivateRegisterTypeFuelIndexRoute;
+  '/register/user-type': typeof PrivateRegisterUserTypeIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
@@ -244,16 +324,25 @@ export interface FileRoutesById {
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
   '/_private/maintenance/': typeof PrivateMaintenanceIndexRoute;
   '/_private/permissions/': typeof PrivatePermissionsIndexRoute;
+  '/_private/register/': typeof PrivateRegisterIndexRoute;
   '/_private/set-up-company/': typeof PrivateSetUpCompanyIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/_private/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
   '/_private/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
+  '/_private/register/platform/add': typeof PrivateRegisterPlatformAddRoute;
+  '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
+  '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
+  '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
   '/_private/maintenance/list-os-done/': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/_private/maintenance/monitoring-plans/': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/_private/maintenance/monitoring-wear/': typeof PrivateMaintenanceMonitoringWearIndexRoute;
   '/_private/permissions/roles/': typeof PrivatePermissionsRolesIndexRoute;
   '/_private/permissions/users/': typeof PrivatePermissionsUsersIndexRoute;
+  '/_private/register/platform/': typeof PrivateRegisterPlatformIndexRoute;
+  '/_private/register/sensors/': typeof PrivateRegisterSensorsIndexRoute;
+  '/_private/register/type-fuel/': typeof PrivateRegisterTypeFuelIndexRoute;
+  '/_private/register/user-type/': typeof PrivateRegisterUserTypeIndexRoute;
   '/_private/set-up-company/integration-list/': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/_private/set-up-company/setup-api-external/': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/_private/set-up-company/setup-email/': typeof PrivateSetUpCompanySetupEmailIndexRoute;
@@ -272,16 +361,25 @@ export interface FileRouteTypes {
     | '/auth/unlock'
     | '/maintenance'
     | '/permissions'
+    | '/register'
     | '/set-up-company'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
     | '/permissions/users/permissions-add'
+    | '/register/platform/add'
+    | '/register/sensors/add'
+    | '/register/type-fuel/add'
+    | '/register/user-type/add'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
     | '/permissions/roles'
     | '/permissions/users'
+    | '/register/platform'
+    | '/register/sensors'
+    | '/register/type-fuel'
+    | '/register/user-type'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
     | '/set-up-company/setup-email'
@@ -298,16 +396,25 @@ export interface FileRouteTypes {
     | '/auth/unlock'
     | '/maintenance'
     | '/permissions'
+    | '/register'
     | '/set-up-company'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
     | '/permissions/users/permissions-add'
+    | '/register/platform/add'
+    | '/register/sensors/add'
+    | '/register/type-fuel/add'
+    | '/register/user-type/add'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
     | '/permissions/roles'
     | '/permissions/users'
+    | '/register/platform'
+    | '/register/sensors'
+    | '/register/type-fuel'
+    | '/register/user-type'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
     | '/set-up-company/setup-email'
@@ -326,16 +433,25 @@ export interface FileRouteTypes {
     | '/_public/auth/unlock'
     | '/_private/maintenance/'
     | '/_private/permissions/'
+    | '/_private/register/'
     | '/_private/set-up-company/'
     | '/_public/auth/'
     | '/_private/permissions/roles/add'
     | '/_private/permissions/users/add'
     | '/_private/permissions/users/permissions-add'
+    | '/_private/register/platform/add'
+    | '/_private/register/sensors/add'
+    | '/_private/register/type-fuel/add'
+    | '/_private/register/user-type/add'
     | '/_private/maintenance/list-os-done/'
     | '/_private/maintenance/monitoring-plans/'
     | '/_private/maintenance/monitoring-wear/'
     | '/_private/permissions/roles/'
     | '/_private/permissions/users/'
+    | '/_private/register/platform/'
+    | '/_private/register/sensors/'
+    | '/_private/register/type-fuel/'
+    | '/_private/register/user-type/'
     | '/_private/set-up-company/integration-list/'
     | '/_private/set-up-company/setup-api-external/'
     | '/_private/set-up-company/setup-email/'
@@ -387,6 +503,13 @@ declare module '@tanstack/react-router' {
       path: '/set-up-company';
       fullPath: '/set-up-company';
       preLoaderRoute: typeof PrivateSetUpCompanyIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/': {
+      id: '/_private/register/';
+      path: '/register';
+      fullPath: '/register';
+      preLoaderRoute: typeof PrivateRegisterIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/permissions/': {
@@ -445,6 +568,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateSetUpCompanyIntegrationListIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/register/user-type/': {
+      id: '/_private/register/user-type/';
+      path: '/register/user-type';
+      fullPath: '/register/user-type';
+      preLoaderRoute: typeof PrivateRegisterUserTypeIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/type-fuel/': {
+      id: '/_private/register/type-fuel/';
+      path: '/register/type-fuel';
+      fullPath: '/register/type-fuel';
+      preLoaderRoute: typeof PrivateRegisterTypeFuelIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/sensors/': {
+      id: '/_private/register/sensors/';
+      path: '/register/sensors';
+      fullPath: '/register/sensors';
+      preLoaderRoute: typeof PrivateRegisterSensorsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/platform/': {
+      id: '/_private/register/platform/';
+      path: '/register/platform';
+      fullPath: '/register/platform';
+      preLoaderRoute: typeof PrivateRegisterPlatformIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/permissions/users/': {
       id: '/_private/permissions/users/';
       path: '/permissions/users';
@@ -478,6 +629,34 @@ declare module '@tanstack/react-router' {
       path: '/maintenance/list-os-done';
       fullPath: '/maintenance/list-os-done';
       preLoaderRoute: typeof PrivateMaintenanceListOsDoneIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/user-type/add': {
+      id: '/_private/register/user-type/add';
+      path: '/register/user-type/add';
+      fullPath: '/register/user-type/add';
+      preLoaderRoute: typeof PrivateRegisterUserTypeAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/type-fuel/add': {
+      id: '/_private/register/type-fuel/add';
+      path: '/register/type-fuel/add';
+      fullPath: '/register/type-fuel/add';
+      preLoaderRoute: typeof PrivateRegisterTypeFuelAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/sensors/add': {
+      id: '/_private/register/sensors/add';
+      path: '/register/sensors/add';
+      fullPath: '/register/sensors/add';
+      preLoaderRoute: typeof PrivateRegisterSensorsAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/platform/add': {
+      id: '/_private/register/platform/add';
+      path: '/register/platform/add';
+      fullPath: '/register/platform/add';
+      preLoaderRoute: typeof PrivateRegisterPlatformAddRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/permissions/users/permissions-add': {
@@ -542,15 +721,24 @@ declare module '@tanstack/react-router' {
 interface PrivateRouteChildren {
   PrivateMaintenanceIndexRoute: typeof PrivateMaintenanceIndexRoute;
   PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
+  PrivateRegisterIndexRoute: typeof PrivateRegisterIndexRoute;
   PrivateSetUpCompanyIndexRoute: typeof PrivateSetUpCompanyIndexRoute;
   PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
   PrivatePermissionsUsersAddRoute: typeof PrivatePermissionsUsersAddRoute;
   PrivatePermissionsUsersPermissionsAddRoute: typeof PrivatePermissionsUsersPermissionsAddRoute;
+  PrivateRegisterPlatformAddRoute: typeof PrivateRegisterPlatformAddRoute;
+  PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
+  PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
+  PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
   PrivateMaintenanceListOsDoneIndexRoute: typeof PrivateMaintenanceListOsDoneIndexRoute;
   PrivateMaintenanceMonitoringPlansIndexRoute: typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   PrivateMaintenanceMonitoringWearIndexRoute: typeof PrivateMaintenanceMonitoringWearIndexRoute;
   PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
   PrivatePermissionsUsersIndexRoute: typeof PrivatePermissionsUsersIndexRoute;
+  PrivateRegisterPlatformIndexRoute: typeof PrivateRegisterPlatformIndexRoute;
+  PrivateRegisterSensorsIndexRoute: typeof PrivateRegisterSensorsIndexRoute;
+  PrivateRegisterTypeFuelIndexRoute: typeof PrivateRegisterTypeFuelIndexRoute;
+  PrivateRegisterUserTypeIndexRoute: typeof PrivateRegisterUserTypeIndexRoute;
   PrivateSetUpCompanyIntegrationListIndexRoute: typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   PrivateSetUpCompanySetupApiExternalIndexRoute: typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   PrivateSetUpCompanySetupEmailIndexRoute: typeof PrivateSetUpCompanySetupEmailIndexRoute;
@@ -564,11 +752,16 @@ interface PrivateRouteChildren {
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateMaintenanceIndexRoute: PrivateMaintenanceIndexRoute,
   PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
+  PrivateRegisterIndexRoute: PrivateRegisterIndexRoute,
   PrivateSetUpCompanyIndexRoute: PrivateSetUpCompanyIndexRoute,
   PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
   PrivatePermissionsUsersAddRoute: PrivatePermissionsUsersAddRoute,
   PrivatePermissionsUsersPermissionsAddRoute:
     PrivatePermissionsUsersPermissionsAddRoute,
+  PrivateRegisterPlatformAddRoute: PrivateRegisterPlatformAddRoute,
+  PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
+  PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
+  PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
   PrivateMaintenanceListOsDoneIndexRoute:
     PrivateMaintenanceListOsDoneIndexRoute,
   PrivateMaintenanceMonitoringPlansIndexRoute:
@@ -577,6 +770,10 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateMaintenanceMonitoringWearIndexRoute,
   PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,
   PrivatePermissionsUsersIndexRoute: PrivatePermissionsUsersIndexRoute,
+  PrivateRegisterPlatformIndexRoute: PrivateRegisterPlatformIndexRoute,
+  PrivateRegisterSensorsIndexRoute: PrivateRegisterSensorsIndexRoute,
+  PrivateRegisterTypeFuelIndexRoute: PrivateRegisterTypeFuelIndexRoute,
+  PrivateRegisterUserTypeIndexRoute: PrivateRegisterUserTypeIndexRoute,
   PrivateSetUpCompanyIntegrationListIndexRoute:
     PrivateSetUpCompanyIntegrationListIndexRoute,
   PrivateSetUpCompanySetupApiExternalIndexRoute:

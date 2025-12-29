@@ -22,7 +22,7 @@ export function SensorSelect({
 }: SensorSelectProps) {
   const { t } = useTranslation();
   const id = useId();
-  const query = useSensorsSelect();
+  const query = useSensorsSelect(idEnterprise);
 
   const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
 

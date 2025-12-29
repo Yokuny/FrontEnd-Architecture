@@ -17,8 +17,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { useUser } from '@/hooks/use-users-api';
@@ -58,56 +59,88 @@ function AddPermissionPage() {
     <Card>
       <CardHeader title={t(id ? 'edit.user.permission' : 'add.user.permission')} />
       <form onSubmit={onSubmit}>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Enterprise */}
-            <div className="space-y-2">
-              <EnterpriseSelect
-                mode="single"
-                label={`${t('enterprise')} *`}
-                value={form.watch('idEnterprise')}
-                onChange={(val) => form.setValue('idEnterprise', val || '')}
-                disabled={!!id}
-              />
-              {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{t(form.formState.errors.idEnterprise.message)}</p>}
+        <CardContent className="space-y-12 py-10">
+          {/* Section 1: User Identification */}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+            <div>
+              <h2 className="font-semibold text-foreground">{t('identification')}</h2>
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('permissions.user.description')}</p>
             </div>
-
-            {/* User */}
-            <div className="space-y-2">
-              <Label>{t('username')} *</Label>
-              {idRef ? (
-                <Input value={isLoadingUserRef ? '...' : userRefData?.name || idRef} disabled className="bg-muted" />
-              ) : (
-                <UserSelect idEnterprise={idEnterprise} value={form.watch('idUser')} onChange={(val) => form.setValue('idUser', (val as string) || '')} disabled={!!id} />
-              )}
-              {form.formState.errors.idUser && <p className="text-sm text-destructive">{t(form.formState.errors.idUser.message)}</p>}
-            </div>
-
-            {/* Roles */}
-            <div className="space-y-2 md:col-span-2">
-              <RoleSelect isAll mode="multi" label={t('role')} value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals as string[])} />
-            </div>
-
-            {/* Is Customer User */}
-            <div className="flex items-center space-x-2 md:col-span-2">
-              <Checkbox id="isUserCustomer" checked={isUserCustomer} onCheckedChange={(checked) => form.setValue('isUserCustomer', !!checked)} />
-              <Label htmlFor="isUserCustomer" className="cursor-pointer">
-                {t('user.customer')}
-              </Label>
-            </div>
-
-            {/* Customers */}
-            {isUserCustomer && (
-              <div className="space-y-2 md:col-span-2">
-                <CustomerSelect
-                  mode="multi"
-                  idEnterprise={idEnterprise}
-                  label={t('customer')}
-                  value={form.watch('customers')}
-                  onChange={(vals) => form.setValue('customers', vals)}
-                />
+            <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
+              <div className="col-span-full sm:col-span-3">
+                <Field className="gap-2">
+                  <FieldLabel>{t('enterprise')} *</FieldLabel>
+                  <EnterpriseSelect
+                    mode="single"
+                    value={form.watch('idEnterprise')}
+                    onChange={(val) => form.setValue('idEnterprise', val || '')}
+                    disabled={!!id}
+                    placeholder={t('select.placeholder')}
+                  />
+                  {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{t(form.formState.errors.idEnterprise.message as string)}</p>}
+                </Field>
               </div>
-            )}
+
+              <div className="col-span-full sm:col-span-3">
+                <Field className="gap-2">
+                  <FieldLabel>{t('username')} *</FieldLabel>
+                  {idRef ? (
+                    <Input value={isLoadingUserRef ? '...' : userRefData?.name || idRef} disabled className="bg-muted" />
+                  ) : (
+                    <UserSelect
+                      idEnterprise={idEnterprise}
+                      value={form.watch('idUser')}
+                      onChange={(val) => form.setValue('idUser', (val as string) || '')}
+                      disabled={!!id}
+                      placeholder={t('select.placeholder')}
+                    />
+                  )}
+                  {form.formState.errors.idUser && <p className="text-sm text-destructive">{t(form.formState.errors.idUser.message as string)}</p>}
+                </Field>
+              </div>
+            </div>
+          </div>
+
+          <Separator />
+
+          {/* Section 2: Access Control */}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+            <div>
+              <h2 className="font-semibold text-foreground">{t('access_control')}</h2>
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('permissions.access.description')}</p>
+            </div>
+            <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
+              <div className="col-span-full">
+                <Field className="gap-2">
+                  <FieldLabel>{t('role')}</FieldLabel>
+                  <RoleSelect isAll mode="multi" value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals as string[])} placeholder={t('select.placeholder')} />
+                </Field>
+              </div>
+
+              <div className="col-span-full pt-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="isUserCustomer" checked={isUserCustomer} onCheckedChange={(checked) => form.setValue('isUserCustomer', !!checked)} />
+                  <FieldLabel htmlFor="isUserCustomer" className="cursor-pointer font-normal">
+                    {t('user.customer')}
+                  </FieldLabel>
+                </div>
+              </div>
+
+              {isUserCustomer && (
+                <div className="col-span-full mt-2">
+                  <Field className="gap-2">
+                    <FieldLabel>{t('customer')}</FieldLabel>
+                    <CustomerSelect
+                      mode="multi"
+                      idEnterprise={idEnterprise}
+                      value={form.watch('customers')}
+                      onChange={(vals) => form.setValue('customers', vals)}
+                      placeholder={t('select.placeholder')}
+                    />
+                  </Field>
+                </div>
+              )}
+            </div>
           </div>
         </CardContent>
         <CardFooter>
@@ -135,7 +168,7 @@ function AddPermissionPage() {
               </AlertDialog>
             )}
           </div>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending} className="min-w-[120px]">
             {isPending ? t('saving') : t('save')}
           </Button>
         </CardFooter>

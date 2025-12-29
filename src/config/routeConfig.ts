@@ -1,11 +1,12 @@
 import type { LucideIcon } from 'lucide-react';
-import { Activity, Building2, CalendarClock, CheckSquare, KeySquare, Mail, MonitorCog, Network, Shield, Users, Wrench } from 'lucide-react';
+import { Activity, Building2, CalendarClock, CheckSquare, KeySquare, Mail, MonitorCog, Network, NotebookPen, Shield, Users, Wrench } from 'lucide-react';
 
 // Mapeamento de ícones por segmento de rota
 export const ROUTE_ICONS: Record<string, LucideIcon> = {
   permissions: KeySquare,
   'set-up-company': MonitorCog,
   maintenance: Wrench,
+  register: NotebookPen,
 };
 
 // Ícones para sub-rotas específicas
@@ -18,6 +19,7 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   'monitoring-plans': CalendarClock,
   'monitoring-wear': Activity,
   'list-os-done': CheckSquare,
+  sensors: Activity,
 };
 
 // Chaves i18n para tradução de rotas
@@ -48,6 +50,10 @@ export const MAIN_ROUTES = [
   '/maintenance/monitoring-wear',
   '/permissions/roles',
   '/permissions/users',
+  '/register/platform',
+  '/register/sensors',
+  '/register/type-fuel',
+  '/register/user-type',
   '/set-up-company/integration-list',
   '/set-up-company/setup-api-external',
   '/set-up-company/setup-email',

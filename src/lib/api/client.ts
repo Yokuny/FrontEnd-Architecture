@@ -157,12 +157,22 @@ function createHeaders(options: ApiOptions): HeadersInit {
   const token = localStorage.getItem('token');
   const enterprise = useEnterpriseFilter.getState().idEnterprise;
 
-  return {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    token: token || '',
-    environment: enterprise || '',
-    ...(options.headers || {}),
   };
+
+  if (token) {
+    headers.token = token;
+  }
+
+  if (enterprise) {
+    headers.environment = enterprise;
+  }
+
+  return {
+    ...headers,
+    ...(options.headers || {}),
+  } as HeadersInit;
 }
 
 /**
