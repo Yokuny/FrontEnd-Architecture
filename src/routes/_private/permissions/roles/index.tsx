@@ -1,10 +1,9 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { useRolesAll } from '@/hooks/use-roles-api';
 import { RoleCard } from './@components/role-card';
 
@@ -33,9 +32,7 @@ function ListRolesPage() {
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         ) : roles && roles.length > 0 ? (
           <div className="space-y-4">
             {roles.map((role) => (

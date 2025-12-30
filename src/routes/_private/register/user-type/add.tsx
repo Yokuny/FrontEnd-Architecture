@@ -3,6 +3,7 @@ import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import DefaultLoading from '@/components/default-loading';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,7 +18,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { useUserType, useUserTypesApi } from '@/hooks/use-user-types-api';
 import { UserTypeForm } from './@components/user-type-form';
@@ -45,9 +45,7 @@ function UserTypeAddPage() {
       <Card>
         <CardHeader title={t('edit.type')} />
         <CardContent className="p-12">
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         </CardContent>
       </Card>
     );

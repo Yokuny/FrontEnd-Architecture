@@ -3,7 +3,7 @@ import { Save, WifiOff } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-
+import DefaultLoading from '@/components/default-loading';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -11,8 +11,6 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
@@ -73,9 +71,7 @@ function IntegrationListPage() {
       <CardHeader title={`${t('integration')} AIS`} />
       <CardContent>
         {isLoading ? (
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         ) : (
           <div className="overflow-x-auto">
             <Table>

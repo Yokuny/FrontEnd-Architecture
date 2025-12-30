@@ -2,12 +2,11 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import EmptyStandard from '@/components/default-empty-data';
+import EmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { MonitoringWearCard } from './@components/monitoring-wear-card';
 import { useMonitoringWear } from './@hooks/use-monitoring-wear-api';
@@ -66,9 +65,7 @@ function MonitoringWearPage() {
 
       <CardContent>
         {isLoading ? (
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         ) : data?.data && data.data.length > 0 ? (
           <div className="space-y-4">
             {data.data.map((item) => (
@@ -76,7 +73,7 @@ function MonitoringWearPage() {
             ))}
           </div>
         ) : (
-          <EmptyStandard />
+          <EmptyData />
         )}
       </CardContent>
 

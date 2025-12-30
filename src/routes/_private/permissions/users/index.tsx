@@ -2,11 +2,10 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Plus, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import EmptyStandard from '@/components/default-empty-data';
+import EmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { useUsers } from '@/hooks/use-users-api';
 import { UserCard } from './@components/user-card';
 import { UserFilterDialog } from './@components/user-filter-dialog';
@@ -89,9 +88,7 @@ function ListUsersPage() {
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         ) : data && data.data.length > 0 ? (
           <div className="space-y-4">
             {data.data.map((user) => (
@@ -105,7 +102,7 @@ function ListUsersPage() {
             ))}
           </div>
         ) : (
-          <EmptyStandard />
+          <EmptyData />
         )}
       </CardContent>
     </Card>

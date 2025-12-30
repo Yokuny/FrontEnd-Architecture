@@ -3,7 +3,8 @@ import { CloudUpload, Flashlight, MoreVertical, Plus, Search, Ship } from 'lucid
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import EmptyStandard from '@/components/default-empty-data';
+import EmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -11,8 +12,6 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { useSensors, useSensorsApi } from '@/hooks/use-sensors-api';
 
@@ -89,11 +88,9 @@ function SensorListPage() {
 
       <CardContent>
         {isLoading ? (
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         ) : sensors.length === 0 ? (
-          <EmptyStandard />
+          <EmptyData />
         ) : (
           <div className="grid gap-2">
             {sensors.map((item) => (

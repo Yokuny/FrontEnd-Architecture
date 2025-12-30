@@ -4,7 +4,7 @@ import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
 
-const EmptyStandard = () => {
+const EmptyData = () => {
   const { t } = useTranslation();
   return (
     <Empty className="border-2 bg-accent/5">
@@ -17,4 +17,4 @@ const EmptyStandard = () => {
   );
 };
 
-export default EmptyStandard;
+export default EmptyData;

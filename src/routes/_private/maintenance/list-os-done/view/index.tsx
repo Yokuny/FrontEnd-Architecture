@@ -2,12 +2,11 @@ import { createFileRoute } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { CheckCircle2, FileText, Printer, XCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import EmptyStandard from '@/components/default-empty-data';
+import EmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { useOsDetails } from './@hooks/use-os-details-api';
 import { osDetailsSearchSchema } from './@interface/os-details.types';
 
@@ -30,9 +29,7 @@ function OsDetailsPage() {
       <Card>
         <CardHeader title={t('done.os')} />
         <CardContent className="p-12">
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         </CardContent>
       </Card>
     );
@@ -43,7 +40,7 @@ function OsDetailsPage() {
       <Card>
         <CardHeader title={t('done.os')} />
         <CardContent className="p-12">
-          <EmptyStandard />
+          <EmptyData />
         </CardContent>
       </Card>
     );
@@ -136,7 +133,7 @@ function OsDetailsPage() {
             ))}
             {data.services.length === 0 && (
               <li className="py-6 border-none">
-                <EmptyStandard />
+                <EmptyData />
               </li>
             )}
           </ul>

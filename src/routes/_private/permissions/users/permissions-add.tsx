@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
+import DefaultLoading from '@/components/default-loading';
 import { CustomerSelect, EnterpriseSelect, RoleSelect, UserSelect } from '@/components/selects';
 import {
   AlertDialog,
@@ -20,8 +20,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { useUser } from '@/hooks/use-users-api';
 import { usePermissionForm } from './@hooks/use-permission-form';
 import { userPermissionSearchSchema } from './@interface/user';
@@ -47,9 +45,7 @@ function AddPermissionPage() {
       <Card>
         <CardHeader title={t('edit.user.permission')} />
         <CardContent className="p-12">
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         </CardContent>
       </Card>
     );

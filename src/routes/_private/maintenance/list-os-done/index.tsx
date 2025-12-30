@@ -2,13 +2,12 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import EmptyStandard from '@/components/default-empty-data';
+import EmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { OsDoneItem } from './@components/os-done-item';
 import { useListOrderServiceDone } from './@hooks/use-list-os-done-api';
@@ -69,9 +68,7 @@ function ListOsDonePage() {
 
       <CardContent>
         {isLoading ? (
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         ) : data?.data && data.data.length > 0 ? (
           <div className="space-y-3">
             {data.data.map((item) => (
@@ -79,7 +76,7 @@ function ListOsDonePage() {
             ))}
           </div>
         ) : (
-          <EmptyStandard />
+          <EmptyData />
         )}
       </CardContent>
 

@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Edit2, MessageCircle, Monitor, Settings, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import DefaultLoading from '@/components/default-loading';
 import { EnterpriseSelect } from '@/components/selects';
 import {
   AlertDialog,
@@ -18,8 +19,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AssetsPermissions } from '../@components/assets-permissions';
 import { ChatbotPermissions } from '../@components/chatbot-permissions';
@@ -46,9 +45,7 @@ function EditRolePage() {
       <Card>
         <CardHeader title={t('edit.role')} />
         <CardContent className="p-12">
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         </CardContent>
       </Card>
     );

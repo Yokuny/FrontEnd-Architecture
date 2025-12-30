@@ -114,27 +114,11 @@ src/routes/_private/embarcacoes/
   ```
   **Padrão de resposta e resultados vazios / sem dados**:
   
-  Usar o componente [`empty-standard.tsx`](./src/components/empty-standard.tsx)
+  Usar o componente [`default-empty-data.tsx`](./src/components/default-empty-data.tsx)
 
   **Padrão de Loading de Página**:
   
-  Quando os dados estão sendo carregados, exiba o shell da página com skeleton:
-
-  ```tsx
-  import { Card, CardContent, CardHeader } from '@/components/ui/card';
-  import { Skeleton } from '@/components/ui/skeleton';
-  import { Spinner } from '@/components/ui/spinner';
-
-  // Quando isLoading:
-  <Card>
-    <CardHeader title={t('edit.user')} />
-    <CardContent className="p-12">
-      <Skeleton className="h-48 w-full flex items-center justify-center">
-        <Spinner />
-      </Skeleton>
-    </CardContent>
-  </Card>
-  ```
+  Quando os dados estão sendo carregados, exiba o shell da página com skeleton [`DefaultLoading`](./src/components/default-loading.tsx)
 
   4. [`Select`](./src/components/selects/index.ts): Busque os seletores no diretório `@/components/selects`, como está é uma nova arquitetura os nomes podem variar, as operaçoes desses seletores estão presentes em [`@/hooks/`](./src/hooks/).
 
@@ -151,23 +135,24 @@ src/routes/_private/embarcacoes/
   | `SelectSupplier` | `SupplierSelect` |
   | `SelectLanguage` | `LanguageFormSelect` |
   
-  4. [`Item`](./src/components/ui/item.tsx): Use para criar **cards informativos**, listagens de dados, cartões de entidade ou estatísticas.
-  Toda página começa com um `Card`. Se dentro dela você precisar exibir dados repetíveis ou blocos de informação (como métricas), use o componente [`Item`](./src/components/ui/item.tsx).
-  
-  Exemplos com padrão do sistema:
-  - [`stats-01.tsx`](./src/components/stats-01.tsx) - Grid de estatísticas sem bordas internas.
-  - [`stats-03.tsx`](./src/components/stats-03.tsx) - Cards de métricas com indicadores de variação.
-  - [`stats-09.tsx`](./src/components/stats-09.tsx) - Cards de uso de recursos com barras de progresso.
+  4. [`Item`](./src/components/ui/item.tsx): Use para criar **cards informativos**, listagens de dados ou blocos de informação repetíveis dentro de um `Card`.
 
-  5. [`Padrão de estilização`]: **IMPORTANTE**: Os componentes já tem o padrão de estilização, evite estilização de componentes.
+  **Padrão de Exibição de Dados e Gráficos**:
+  Sempre use o padrão desses componentes para renderizar informações similares às que eles tratam:
+  - [`CardWithAreaGraph`](./src/components/card-with-area-graph.tsx): Card para dados com gráfico de área.
+  - [`CardWithProgressGraph`](./src/components/card-with-progress-graph.tsx): Card para exibir dados com gráficos de progresso.
+  - [`CardWithRadialGraph`](./src/components/card-with-radial-graph.tsx): Card para porcentagens e gráficos radiais.
 
-  Padrão de formulários:
-  - [`form-advanced-7.tsx`](./src/components/form-advanced-7.tsx)
-  - [`form-patterns-3.tsx`](./src/components/form-patterns-3.tsx)
+  **Padrão de Renderização de Números**:
+  - [`DefaultNumbersRender`](./src/components/default-numbers-render.tsx): O componente padrão para exibição formatada de números e KPIs.
 
-  Padrão de estatísticas:
-  - [`stats-03.tsx`](./src/components/stats-03.tsx)
-  - [`stats-09.tsx`](./src/components/stats-09.tsx)
+  **Padrão de Formulários**:
+  - [`DefaultFormLayout`](./src/components/default-form-layout.tsx): **IMPORTANTE**: Este é o padrão obrigatório para estruturar páginas de formulários.
+
+  **Padrão de Tabelas**:
+  - [`DefaultTable`](./src/components/default-table.tsx): Use este padrão para renderizar muitos dados organizados em tabelas com paginação e filtros.
+
+  5. [`Padrão de Estilização`]: **IMPORTANTE**: Os componentes já possuem estilização padrão. Evite adicionar estilos ad-hoc que fujam do design system estabelecido.
 
   6. Textos traduzidos com [i18n](./src/config/i18n.ts): **IMPORTANTE**: Toda chave deve ser adicionada aos arquivos [`pt.json`](./src/config/translations/pt.json) (Default), [`en.json`](./src/config/translations/en.json) e [`es.json`](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave existe antes de usar**.
 

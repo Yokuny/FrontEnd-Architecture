@@ -2,13 +2,12 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Droplet, MoreVertical, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-import EmptyStandard from '@/components/default-empty-data';
+import EmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { useFuelTypes, useFuelTypesApi } from '@/hooks/use-fuel-types-api';
 
@@ -41,9 +40,7 @@ function FuelTypeListPage() {
       <Card>
         <CardHeader title={t('types.fuel')} />
         <CardContent className="p-12">
-          <Skeleton className="h-48 w-full flex items-center justify-center">
-            <Spinner />
-          </Skeleton>
+          <DefaultLoading />
         </CardContent>
       </Card>
     );
@@ -60,7 +57,7 @@ function FuelTypeListPage() {
 
       <CardContent>
         {!fuelTypes?.length ? (
-          <EmptyStandard />
+          <EmptyData />
         ) : (
           <div className="grid gap-2">
             {fuelTypes.map((item) => (
