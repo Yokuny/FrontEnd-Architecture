@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { CheckCircle2, FileText, Printer, XCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import EmptyStandard from '@/components/empty-standard';
+import EmptyStandard from '@/components/default-empty-data';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
