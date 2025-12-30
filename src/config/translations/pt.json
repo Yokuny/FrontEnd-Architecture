@@ -717,6 +717,7 @@
   "editor.params": "Editar parâmetros",
   "params": "Parâmetros",
   "new.params": "Novo parâmetro",
+  "edit.params": "Editar parâmetro",
   "add.options": "Adicionar opção",
   "value": "Valor",
   "label": "Label",
@@ -2403,5 +2404,8 @@
   "auth.hero.description.short": "Monitoramento industrial IoT simplificado.",
   "auth.morphing.think": "Pense Mais",
   "auth.morphing.work": "Trabalhe Rápido",
-  "auth.morphing.achieve": "Conquiste Mais"
+  "auth.morphing.achieve": "Conquiste Mais",
+  "params.identification.description": "Informações básicas para identificar o parâmetro no sistema.",
+  "params.options.description": "Configure as opções disponíveis para este parâmetro.",
+  "no.options": "Nenhuma opção cadastrada."
 }
