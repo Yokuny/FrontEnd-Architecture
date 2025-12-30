@@ -50,6 +50,7 @@ export const MAIN_ROUTES = [
   '/maintenance/monitoring-wear',
   '/permissions/roles',
   '/permissions/users',
+  '/register/maintenance-plans',
   '/register/params',
   '/register/platform',
   '/register/sensors',

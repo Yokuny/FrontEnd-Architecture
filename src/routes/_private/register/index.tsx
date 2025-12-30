@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Activity, Droplet, Ship, Users } from 'lucide-react';
+import { Activity, Droplet, Settings, Ship, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
@@ -38,6 +38,12 @@ function RegisterHubPage() {
       description: t('platforms.description'),
       icon: Ship,
       to: '/register/platform' as const,
+    },
+    {
+      title: t('maintenance.plans'),
+      description: t('maintenance.plans.description'),
+      icon: Settings,
+      to: '/register/maintenance-plans' as const,
     },
   ];
 

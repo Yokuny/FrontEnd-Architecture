@@ -52,6 +52,8 @@ export { TypeCredentialsSelect } from './type-credentials-select';
 export { TypeMachineSelect } from './type-machine-select';
 export { TypeProblemSelect } from './type-problem-select';
 export { TypeSensorSelect } from './type-sensor-select';
+// TODO: DEPRECATED ??
+export { TypeServiceMaintenanceSelect } from './type-service-maintenance-select';
 export { UserCodeIntegrationSelect } from './user-code-integration-select';
 export { UserRoleSelect } from './user-role-select';
 export { UserSamePermissionSelect } from './user-same-permission-select';

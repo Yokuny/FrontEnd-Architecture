@@ -112,6 +112,9 @@ src/routes/_private/embarcacoes/
     );
   }
   ```
+  
+  **Padrão de Componentes**: Use [`Item`](./src/components/ui/item.tsx) para criar **cards informativos**, listagens de dados ou blocos de informação repetíveis ou paginas dentro de @Components ou envoltas por um componente `Card`.
+
   **Padrão de resposta e resultados vazios / sem dados**:
   
   Usar o componente [`default-empty-data.tsx`](./src/components/default-empty-data.tsx)
@@ -134,27 +137,25 @@ src/routes/_private/embarcacoes/
   | `SelectSensor` | `SensorSelect` |
   | `SelectSupplier` | `SupplierSelect` |
   | `SelectLanguage` | `LanguageFormSelect` |
-  
-  4. [`Item`](./src/components/ui/item.tsx): Use para criar **cards informativos**, listagens de dados ou blocos de informação repetíveis dentro de um `Card`.
 
-  **Padrão de Exibição de Dados e Gráficos**:
+  5. **Padrão de Formulários**: [`DefaultFormLayout`](./src/components/default-form-layout.tsx): **IMPORTANTE**: Este é o padrão obrigatório para estruturar páginas de formulários.
+
+  6. **Padrão de Exibição de Dados e Gráficos**:
   Sempre use o padrão desses componentes para renderizar informações similares às que eles tratam:
   - [`CardWithAreaGraph`](./src/components/card-with-area-graph.tsx): Card para dados com gráfico de área.
   - [`CardWithProgressGraph`](./src/components/card-with-progress-graph.tsx): Card para exibir dados com gráficos de progresso.
   - [`CardWithRadialGraph`](./src/components/card-with-radial-graph.tsx): Card para porcentagens e gráficos radiais.
 
-  **Padrão de Renderização de Números**:
+  7. **Padrão de Renderização de Números**:
   - [`DefaultNumbersRender`](./src/components/default-numbers-render.tsx): O componente padrão para exibição formatada de números e KPIs.
 
-  **Padrão de Formulários**:
-  - [`DefaultFormLayout`](./src/components/default-form-layout.tsx): **IMPORTANTE**: Este é o padrão obrigatório para estruturar páginas de formulários.
-
-  **Padrão de Tabelas**:
+  8. **Padrão de Tabelas**:
   - [`DefaultTable`](./src/components/default-table.tsx): Use este padrão para renderizar muitos dados organizados em tabelas com paginação e filtros.
 
-  5. [`Padrão de Estilização`]: **IMPORTANTE**: Os componentes já possuem estilização padrão. Evite adicionar estilos ad-hoc que fujam do design system estabelecido.
+  9. **Padrão de Estilização**:
+  - Os componentes já possuem estilização padrão. Evite adicionar estilos ad-hoc que fujam do design system estabelecido.
 
-  6. Textos traduzidos com [i18n](./src/config/i18n.ts): **IMPORTANTE**: Toda chave deve ser adicionada aos arquivos [`pt.json`](./src/config/translations/pt.json) (Default), [`en.json`](./src/config/translations/en.json) e [`es.json`](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave existe antes de usar**.
+  10. **Textos traduzidos com [i18n](./src/config/i18n.ts)**: **IMPORTANTE**: Toda chave deve ser adicionada aos arquivos [`pt.json`](./src/config/translations/pt.json) (Default), [`en.json`](./src/config/translations/en.json) e [`es.json`](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave existe antes de usar**.
 
   Exemplo de uso:
   ```tsx
