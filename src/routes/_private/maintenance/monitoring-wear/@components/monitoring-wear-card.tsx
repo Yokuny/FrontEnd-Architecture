@@ -22,18 +22,7 @@ export function MonitoringWearCard({ data }: MonitoringWearCardProps) {
 
   return (
     <Item variant="outline" className="flex-col items-stretch! overflow-hidden group/card">
-      <div
-        role="button"
-        tabIndex={0}
-        className="flex items-center justify-between cursor-pointer"
-        onClick={() => setIsExpanded(!isExpanded)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setIsExpanded(!isExpanded);
-          }
-        }}
-      >
+      <button type="button" className="flex items-center justify-between cursor-pointer w-full text-left" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="flex items-center gap-4">
           <Avatar className="size-12">
             <AvatarImage src={data.machine.image?.url} alt={data.machine.name} />
@@ -48,7 +37,7 @@ export function MonitoringWearCard({ data }: MonitoringWearCardProps) {
         <ItemActions className={cn('duration-500', isExpanded ? 'rotate-180' : '')}>
           <ChevronDown className="size-5" />
         </ItemActions>
-      </div>
+      </button>
 
       {isExpanded && <MonitoringWearDetails idMachine={data.machine.id} />}
     </Item>

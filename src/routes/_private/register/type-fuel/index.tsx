@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
@@ -102,8 +102,6 @@ function FuelTypeListPage() {
           </div>
         )}
       </CardContent>
-
-      <CardFooter>{/* Pagination space */}</CardFooter>
     </Card>
   );
 }

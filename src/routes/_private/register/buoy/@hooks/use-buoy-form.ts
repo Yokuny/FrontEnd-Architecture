@@ -53,7 +53,7 @@ export function useBuoyForm(initialData?: BuoyFormData) {
       await saveBuoy.mutateAsync(payload);
       toast.success(t('save.successfull'));
       navigate({ to: '/register/buoy', search: { page: 1, size: 10 } });
-    } catch (error) {
+    } catch (_error) {
       // API client handles error reporting
     }
   });

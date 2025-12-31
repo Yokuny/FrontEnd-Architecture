@@ -119,7 +119,7 @@ function EditUserPage() {
             </div>
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter layout="multi">
           <div className="flex gap-2">
             <AlertDialog>
               <AlertDialogTrigger asChild>

@@ -2439,5 +2439,10 @@
   "buoy.location.description": "Coordenadas geográficas da monoboia (Latitude e Longitude).",
   "buoy.radius.description": "Configurações de raio e delimitação para a monoboia.",
   "icon": "Ícone",
-  "model-machine": "Modelos de ativo"
+  "model-machine": "Modelos de ativo",
+  "general.information": "Informações gerais",
+  "sensor.function.general.desc": "Informações básicas sobre a função do sensor.",
+  "associations": "Associações",
+  "sensor.function.associations.desc": "Sensores e ativos associados a esta função.",
+  "btn.novo": "Novo"
 }

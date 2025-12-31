@@ -105,7 +105,7 @@ src/routes/_private/embarcacoes/
           {/* Conteúdo da página */}
         </CardContent>
         
-        <CardFooter>
+        <CardFooter layout="multi | single">
           {/* Ações e paginação */}
         </CardFooter>
       </Card>

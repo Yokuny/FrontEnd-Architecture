@@ -47,7 +47,7 @@ async function fetchPartsByMachine(idMachine: string): Promise<PartByMachine[]> 
 }
 
 async function fetchSensorsByEnterprise(idEnterprise: string): Promise<SensorByEnterprise[]> {
-  const response = await api.get<SensorByEnterprise[]>(`/sensor/enterprise?idEnterprise=${idEnterprise}`);
+  const response = await api.get<SensorByEnterprise[]>(`/sensor?idEnterprise=${idEnterprise}`);
   return response.data;
 }
 

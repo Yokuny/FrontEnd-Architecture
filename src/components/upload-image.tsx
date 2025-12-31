@@ -1,7 +1,6 @@
 import { ImagePlus } from 'lucide-react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export default function UploadImage({ value, onAddFile, maxSize, className, height }: UploadImageProps) {
@@ -20,9 +19,10 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
   };
 
   return (
-    <div
+    <button
+      type="button"
       className={cn(
-        'relative flex items-center justify-center border-2 border-dashed rounded-lg hover:bg-secondary transition-colors cursor-pointer overflow-hidden group',
+        'relative flex items-center justify-center border-2 border-dashed rounded-lg hover:bg-secondary transition-colors cursor-pointer overflow-hidden group w-full',
         className,
       )}
       style={{ height: height || 192 }}
@@ -34,9 +34,9 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
         <>
           <img src={value} alt="Preview" className="w-full h-full object-contain" />
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
+            <div className="flex items-center justify-center size-10 rounded-md text-white hover:bg-white/20">
               <ImagePlus className="size-6" />
-            </Button>
+            </div>
           </div>
         </>
       ) : (
@@ -45,7 +45,7 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
           <span className="text-xs text-center">{t('drag.image', 'Arraste uma imagem aqui ou clique para selecionar')}</span>
         </div>
       )}
-    </div>
+    </button>
   );
 }
 

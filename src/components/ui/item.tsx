@@ -3,8 +3,8 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
-function ItemGroup({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div role="list" data-slot="item-group" className={cn('group/item-group flex flex-col', className)} {...props} />;
+function ItemGroup({ className, ...props }: React.ComponentProps<'ul'>) {
+  return <ul data-slot="item-group" className={cn('group/item-group flex flex-col', className)} {...props} />;
 }
 
 function ItemSeparator({ className, ...props }: React.ComponentProps<typeof Separator>) {
@@ -38,8 +38,8 @@ function Item({
   size = 'default',
   asChild = false,
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof itemVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : 'div';
+}: React.ComponentProps<'li'> & VariantProps<typeof itemVariants> & { asChild?: boolean }) {
+  const Comp = asChild ? Slot : 'li';
   return <Comp data-slot="item" data-variant={variant} data-size={size} className={cn(itemVariants({ variant, size, className }))} {...props} />;
 }
 

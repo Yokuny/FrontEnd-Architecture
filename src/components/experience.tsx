@@ -48,8 +48,8 @@ const Experience = ({ className }: Experience1Props) => {
         </div>
 
         <ul>
-          {experience.map((exp, index) => (
-            <li key={index} className="flex flex-col justify-between border-b py-10 md:flex-row">
+          {experience.map((exp) => (
+            <li key={`${exp.company}-${exp.period}`} className="flex flex-col justify-between border-b py-10 md:flex-row">
               <div className="max-w-lg text-xl font-semibold tracking-tighter lg:w-1/3">{exp.period}</div>
               <div className="lg:w-1/3">
                 <h2 className="mb-4 text-2xl font-semibold tracking-tighter">{exp.title}</h2>

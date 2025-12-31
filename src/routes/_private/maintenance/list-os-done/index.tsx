@@ -81,7 +81,7 @@ function ListOsDonePage() {
       </CardContent>
 
       {totalItems > 0 && (
-        <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t py-6">
+        <CardFooter layout="multi">
           <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev: ListOsDoneSearch) => ({ ...prev, size: Number(val), page: 1 }) })}>

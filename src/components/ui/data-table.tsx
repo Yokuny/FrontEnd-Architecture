@@ -311,7 +311,7 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Pagination */}
       {showPagination && totalPages > 1 && (
-        <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 border-t border-border">
+        <CardFooter layout="multi">
           <Badge variant="outline" className="text-muted-foreground font-normal">
             Showing {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, sortedData.length)} of {sortedData.length}
           </Badge>

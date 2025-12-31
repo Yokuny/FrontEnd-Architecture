@@ -78,14 +78,14 @@ function MonitoringWearPage() {
       </CardContent>
 
       {totalItems > size && (
-        <CardFooter className="flex justify-center gap-2 border-t py-4">
-          <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => navigate({ search: { page: page - 1, size, search } })}>
+        <CardFooter layout="multi">
+          <Button variant="outline" disabled={page <= 1} onClick={() => navigate({ search: { page: page - 1, size, search } })}>
             {t('previous')}
           </Button>
           <span className="flex items-center px-3 text-sm text-muted-foreground">
             {t('page')} {page} / {Math.ceil(totalItems / size)}
           </span>
-          <Button variant="outline" size="sm" disabled={page >= Math.ceil(totalItems / size)} onClick={() => navigate({ search: { page: page + 1, size, search } })}>
+          <Button variant="outline" disabled={page >= Math.ceil(totalItems / size)} onClick={() => navigate({ search: { page: page + 1, size, search } })}>
             {t('next')}
           </Button>
         </CardFooter>

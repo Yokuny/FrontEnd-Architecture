@@ -1,5 +1,8 @@
 import React from 'react';
+import { FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field';
+import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 
 interface FormSection {
   title: string;
@@ -9,43 +12,37 @@ interface FormSection {
 
 interface DefaultFormLayoutProps {
   sections: FormSection[];
-  footer?: React.ReactNode;
+  layout?: 'horizontal' | 'vertical';
 }
 
-export default function DefaultFormLayout({ sections, footer }: DefaultFormLayoutProps) {
+export default function DefaultFormLayout({ sections, layout = 'horizontal' }: DefaultFormLayoutProps) {
   return (
     <div className="flex flex-col gap-8 p-6 md:p-10">
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+      <div className="flex flex-col gap-10">
         {sections.map((section, index) => (
           <React.Fragment key={section.title}>
-            <div className="md:col-span-1">
-              <h2 className="font-semibold text-foreground">{section.title}</h2>
-              {section.description && <p className="mt-1 text-sm leading-6 text-muted-foreground">{section.description}</p>}
-            </div>
-            <div className="sm:max-w-3xl md:col-span-2">
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-6">
-                {section.fields.map((field, fIndex) => (
-                  <div key={fIndex} className="col-span-full">
-                    {field}
-                  </div>
-                ))}
+            <FieldSet className={cn('block w-full border-none p-0', layout === 'horizontal' ? 'grid grid-cols-1 gap-10 md:grid-cols-3' : 'flex flex-col gap-6')}>
+              <ItemContent className="gap-1">
+                <FieldLegend variant="label" className="m-0 p-0">
+                  <ItemTitle className="text-lg font-semibold">{section.title}</ItemTitle>
+                </FieldLegend>
+                {section.description && <ItemDescription className="line-clamp-none">{section.description}</ItemDescription>}
+              </ItemContent>
+
+              <div className={cn(layout === 'horizontal' && 'md:col-span-2')}>
+                <FieldGroup className="grid grid-cols-1 gap-6 sm:grid-cols-6">
+                  {section.fields.map((field, fIndex) => (
+                    <div key={`${section.title}-field-${fIndex}`} className="col-span-full">
+                      {field}
+                    </div>
+                  ))}
+                </FieldGroup>
               </div>
-            </div>
-            {index < sections.length - 1 && (
-              <div className="col-span-full">
-                <Separator className="my-2" />
-              </div>
-            )}
+            </FieldSet>
+            {index < sections.length - 1 && <Separator className="my-2" />}
           </React.Fragment>
         ))}
       </div>
-
-      {footer && (
-        <>
-          <Separator className="my-4" />
-          <div className="flex items-center justify-end space-x-4">{footer}</div>
-        </>
-      )}
     </div>
   );
 }

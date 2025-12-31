@@ -244,7 +244,7 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
       {additionalFiles.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {additionalFiles.map((file, index) => (
-            <Item key={index} variant="outline" className="p-2 flex items-center gap-3">
+            <Item key={file.id || file.filename || file.name || index} variant="outline" className="p-2 flex items-center gap-3">
               <ItemMedia>
                 <FileIcon className="size-4" />
               </ItemMedia>
@@ -270,7 +270,7 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
             <ModelMachineForm attachmentFields={attachmentFields} />
           </CardContent>
 
-          <CardFooter className="flex justify-between items-center">
+          <CardFooter layout="multi">
             <div>
               {initialData && (
                 <AlertDialog>

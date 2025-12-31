@@ -60,8 +60,18 @@ function CardHeaderActions({ className, ...props }: React.ComponentProps<'div'>)
   return <div data-slot="card-header-actions" className={cn('flex items-center gap-2', className)} {...props} />;
 }
 
-function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div data-slot="card-footer" className={cn('flex items-center justify-end p-6 gap-2', className)} {...props} />;
+interface CardFooterProps extends React.ComponentProps<'div'> {
+  layout?: 'simple' | 'multi';
+}
+
+function CardFooter({ className, layout = 'simple', ...props }: CardFooterProps) {
+  return (
+    <div
+      data-slot="card-footer"
+      className={cn('flex p-6 gap-4', layout === 'simple' && 'items-center justify-end', layout === 'multi' && 'flex-col sm:flex-row items-center justify-between', className)}
+      {...props}
+    />
+  );
 }
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardAction, CardContent, CardHeaderActions };

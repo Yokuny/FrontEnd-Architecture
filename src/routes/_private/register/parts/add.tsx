@@ -96,7 +96,7 @@ function PartAddFormContent({ initialData }: { initialData?: any }) {
           <CardContent>
             <PartForm imagePreview={imagePreview} onChangeImage={onChangeImage} isEdit={!!initialData} />
           </CardContent>
-          <CardFooter className="flex justify-between items-center">
+          <CardFooter layout="multi">
             <div>
               {initialData && (
                 <AlertDialog>
