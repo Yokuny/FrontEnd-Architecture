@@ -237,14 +237,14 @@
   "until30days": "30 dias",
   "until3months": "3 meses",
   "until6months": "6 meses",
-  "part.name.label": "Peça/Material",
+  "part.name.label": "Nome da peça",
   "part.name.placeholder": "Descrição para a peça/material",
   "part.description.label": "Descrição",
   "part.sku.label": "SKU",
   "part.sku.placeholder": "Informe o SKU",
   "maintanceCycle.required": "Informe o ciclo de manutenção",
-  "part.edit": "Editar peça/material",
-  "part.new": "Nova peça/material",
+  "edit.part": "Editar peça",
+  "new.part": "Nova peça",
   "registerpart": "Cadastro de peça/materiais",
   "parts": "Peça/Materiais",
   "sku.required": "Informe o SKU",
@@ -2417,5 +2417,7 @@
   "maintenance.plan.wear.description": "Configure o limite de desgaste para acionar a manutenção.",
   "maintenance.plan.services.description": "Liste os grupos de serviços e peças que compõe este plano.",
   "type.maintenance.required": "Informe o tipo de manutenção",
-  "duration.required": "Informe a duração"
+  "duration.required": "Informe a duração",
+  "part.identification.description": "Informações básicas para identificar a peça ou material.",
+  "part.image.description": "Foto da peça ou material para facilitar a identificação."
 }

@@ -27,6 +27,7 @@ import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_priv
 import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_private/register/type-fuel/index';
 import { Route as PrivateRegisterSensorsIndexRouteImport } from './routes/_private/register/sensors/index';
 import { Route as PrivateRegisterPlatformIndexRouteImport } from './routes/_private/register/platform/index';
+import { Route as PrivateRegisterPartsIndexRouteImport } from './routes/_private/register/parts/index';
 import { Route as PrivateRegisterParamsIndexRouteImport } from './routes/_private/register/params/index';
 import { Route as PrivateRegisterMaintenancePlansIndexRouteImport } from './routes/_private/register/maintenance-plans/index';
 import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
@@ -38,6 +39,7 @@ import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_privat
 import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
 import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
 import { Route as PrivateRegisterPlatformAddRouteImport } from './routes/_private/register/platform/add';
+import { Route as PrivateRegisterPartsAddRouteImport } from './routes/_private/register/parts/add';
 import { Route as PrivateRegisterParamsAddRouteImport } from './routes/_private/register/params/add';
 import { Route as PrivateRegisterMaintenancePlansAddRouteImport } from './routes/_private/register/maintenance-plans/add';
 import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
@@ -145,6 +147,12 @@ const PrivateRegisterPlatformIndexRoute =
     path: '/register/platform/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateRegisterPartsIndexRoute =
+  PrivateRegisterPartsIndexRouteImport.update({
+    id: '/register/parts/',
+    path: '/register/parts/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateRegisterParamsIndexRoute =
   PrivateRegisterParamsIndexRouteImport.update({
     id: '/register/params/',
@@ -211,6 +219,11 @@ const PrivateRegisterPlatformAddRoute =
     path: '/register/platform/add',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateRegisterPartsAddRoute = PrivateRegisterPartsAddRouteImport.update({
+  id: '/register/parts/add',
+  path: '/register/parts/add',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PrivateRegisterParamsAddRoute =
   PrivateRegisterParamsAddRouteImport.update({
     id: '/register/params/add',
@@ -287,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
   '/register/maintenance-plans/add': typeof PrivateRegisterMaintenancePlansAddRoute;
   '/register/params/add': typeof PrivateRegisterParamsAddRoute;
+  '/register/parts/add': typeof PrivateRegisterPartsAddRoute;
   '/register/platform/add': typeof PrivateRegisterPlatformAddRoute;
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
@@ -298,6 +312,7 @@ export interface FileRoutesByFullPath {
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
   '/register/maintenance-plans': typeof PrivateRegisterMaintenancePlansIndexRoute;
   '/register/params': typeof PrivateRegisterParamsIndexRoute;
+  '/register/parts': typeof PrivateRegisterPartsIndexRoute;
   '/register/platform': typeof PrivateRegisterPlatformIndexRoute;
   '/register/sensors': typeof PrivateRegisterSensorsIndexRoute;
   '/register/type-fuel': typeof PrivateRegisterTypeFuelIndexRoute;
@@ -326,6 +341,7 @@ export interface FileRoutesByTo {
   '/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
   '/register/maintenance-plans/add': typeof PrivateRegisterMaintenancePlansAddRoute;
   '/register/params/add': typeof PrivateRegisterParamsAddRoute;
+  '/register/parts/add': typeof PrivateRegisterPartsAddRoute;
   '/register/platform/add': typeof PrivateRegisterPlatformAddRoute;
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
@@ -337,6 +353,7 @@ export interface FileRoutesByTo {
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
   '/register/maintenance-plans': typeof PrivateRegisterMaintenancePlansIndexRoute;
   '/register/params': typeof PrivateRegisterParamsIndexRoute;
+  '/register/parts': typeof PrivateRegisterPartsIndexRoute;
   '/register/platform': typeof PrivateRegisterPlatformIndexRoute;
   '/register/sensors': typeof PrivateRegisterSensorsIndexRoute;
   '/register/type-fuel': typeof PrivateRegisterTypeFuelIndexRoute;
@@ -368,6 +385,7 @@ export interface FileRoutesById {
   '/_private/permissions/users/permissions-add': typeof PrivatePermissionsUsersPermissionsAddRoute;
   '/_private/register/maintenance-plans/add': typeof PrivateRegisterMaintenancePlansAddRoute;
   '/_private/register/params/add': typeof PrivateRegisterParamsAddRoute;
+  '/_private/register/parts/add': typeof PrivateRegisterPartsAddRoute;
   '/_private/register/platform/add': typeof PrivateRegisterPlatformAddRoute;
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
@@ -379,6 +397,7 @@ export interface FileRoutesById {
   '/_private/permissions/users/': typeof PrivatePermissionsUsersIndexRoute;
   '/_private/register/maintenance-plans/': typeof PrivateRegisterMaintenancePlansIndexRoute;
   '/_private/register/params/': typeof PrivateRegisterParamsIndexRoute;
+  '/_private/register/parts/': typeof PrivateRegisterPartsIndexRoute;
   '/_private/register/platform/': typeof PrivateRegisterPlatformIndexRoute;
   '/_private/register/sensors/': typeof PrivateRegisterSensorsIndexRoute;
   '/_private/register/type-fuel/': typeof PrivateRegisterTypeFuelIndexRoute;
@@ -409,6 +428,7 @@ export interface FileRouteTypes {
     | '/permissions/users/permissions-add'
     | '/register/maintenance-plans/add'
     | '/register/params/add'
+    | '/register/parts/add'
     | '/register/platform/add'
     | '/register/sensors/add'
     | '/register/type-fuel/add'
@@ -420,6 +440,7 @@ export interface FileRouteTypes {
     | '/permissions/users'
     | '/register/maintenance-plans'
     | '/register/params'
+    | '/register/parts'
     | '/register/platform'
     | '/register/sensors'
     | '/register/type-fuel'
@@ -448,6 +469,7 @@ export interface FileRouteTypes {
     | '/permissions/users/permissions-add'
     | '/register/maintenance-plans/add'
     | '/register/params/add'
+    | '/register/parts/add'
     | '/register/platform/add'
     | '/register/sensors/add'
     | '/register/type-fuel/add'
@@ -459,6 +481,7 @@ export interface FileRouteTypes {
     | '/permissions/users'
     | '/register/maintenance-plans'
     | '/register/params'
+    | '/register/parts'
     | '/register/platform'
     | '/register/sensors'
     | '/register/type-fuel'
@@ -489,6 +512,7 @@ export interface FileRouteTypes {
     | '/_private/permissions/users/permissions-add'
     | '/_private/register/maintenance-plans/add'
     | '/_private/register/params/add'
+    | '/_private/register/parts/add'
     | '/_private/register/platform/add'
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
@@ -500,6 +524,7 @@ export interface FileRouteTypes {
     | '/_private/permissions/users/'
     | '/_private/register/maintenance-plans/'
     | '/_private/register/params/'
+    | '/_private/register/parts/'
     | '/_private/register/platform/'
     | '/_private/register/sensors/'
     | '/_private/register/type-fuel/'
@@ -648,6 +673,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateRegisterPlatformIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/register/parts/': {
+      id: '/_private/register/parts/';
+      path: '/register/parts';
+      fullPath: '/register/parts';
+      preLoaderRoute: typeof PrivateRegisterPartsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/register/params/': {
       id: '/_private/register/params/';
       path: '/register/params';
@@ -723,6 +755,13 @@ declare module '@tanstack/react-router' {
       path: '/register/platform/add';
       fullPath: '/register/platform/add';
       preLoaderRoute: typeof PrivateRegisterPlatformAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/register/parts/add': {
+      id: '/_private/register/parts/add';
+      path: '/register/parts/add';
+      fullPath: '/register/parts/add';
+      preLoaderRoute: typeof PrivateRegisterPartsAddRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/register/params/add': {
@@ -808,6 +847,7 @@ interface PrivateRouteChildren {
   PrivatePermissionsUsersPermissionsAddRoute: typeof PrivatePermissionsUsersPermissionsAddRoute;
   PrivateRegisterMaintenancePlansAddRoute: typeof PrivateRegisterMaintenancePlansAddRoute;
   PrivateRegisterParamsAddRoute: typeof PrivateRegisterParamsAddRoute;
+  PrivateRegisterPartsAddRoute: typeof PrivateRegisterPartsAddRoute;
   PrivateRegisterPlatformAddRoute: typeof PrivateRegisterPlatformAddRoute;
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
@@ -819,6 +859,7 @@ interface PrivateRouteChildren {
   PrivatePermissionsUsersIndexRoute: typeof PrivatePermissionsUsersIndexRoute;
   PrivateRegisterMaintenancePlansIndexRoute: typeof PrivateRegisterMaintenancePlansIndexRoute;
   PrivateRegisterParamsIndexRoute: typeof PrivateRegisterParamsIndexRoute;
+  PrivateRegisterPartsIndexRoute: typeof PrivateRegisterPartsIndexRoute;
   PrivateRegisterPlatformIndexRoute: typeof PrivateRegisterPlatformIndexRoute;
   PrivateRegisterSensorsIndexRoute: typeof PrivateRegisterSensorsIndexRoute;
   PrivateRegisterTypeFuelIndexRoute: typeof PrivateRegisterTypeFuelIndexRoute;
@@ -845,6 +886,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterMaintenancePlansAddRoute:
     PrivateRegisterMaintenancePlansAddRoute,
   PrivateRegisterParamsAddRoute: PrivateRegisterParamsAddRoute,
+  PrivateRegisterPartsAddRoute: PrivateRegisterPartsAddRoute,
   PrivateRegisterPlatformAddRoute: PrivateRegisterPlatformAddRoute,
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
@@ -860,6 +902,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterMaintenancePlansIndexRoute:
     PrivateRegisterMaintenancePlansIndexRoute,
   PrivateRegisterParamsIndexRoute: PrivateRegisterParamsIndexRoute,
+  PrivateRegisterPartsIndexRoute: PrivateRegisterPartsIndexRoute,
   PrivateRegisterPlatformIndexRoute: PrivateRegisterPlatformIndexRoute,
   PrivateRegisterSensorsIndexRoute: PrivateRegisterSensorsIndexRoute,
   PrivateRegisterTypeFuelIndexRoute: PrivateRegisterTypeFuelIndexRoute,
