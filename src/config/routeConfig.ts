@@ -52,6 +52,7 @@ export const MAIN_ROUTES = [
   '/permissions/users',
   '/register/buoy',
   '/register/maintenance-plans',
+  '/register/model-machine',
   '/register/params',
   '/register/parts',
   '/register/platform',

@@ -111,7 +111,7 @@ function BuoyAddFormContent({ initialData }: { initialData?: any }) {
           <CardContent>
             <BuoyForm isEdit={!!initialData} />
           </CardContent>
-          <CardFooter className="flex justify-between items-center bg-muted/5 border-t py-4 px-6 mt-4">
+          <CardFooter className="flex justify-between items-center">
             <div>
               {initialData && (
                 <AlertDialog>

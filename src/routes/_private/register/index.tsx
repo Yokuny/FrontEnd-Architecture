@@ -45,6 +45,12 @@ function RegisterHubPage() {
       icon: Settings,
       to: '/register/maintenance-plans' as const,
     },
+    {
+      title: t('models.machine'),
+      description: t('models.machine.description', 'Gerencie os modelos de ativos e suas especificações.'),
+      icon: Settings,
+      to: '/register/model-machine' as const,
+    },
   ];
 
   return (

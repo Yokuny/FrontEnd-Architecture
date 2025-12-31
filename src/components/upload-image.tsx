@@ -1,10 +1,10 @@
-import { ImagePlus, X } from 'lucide-react';
+import { ImagePlus } from 'lucide-react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export default function UploadImage({ value, onAddFile, maxSize, className }: UploadImageProps) {
+export default function UploadImage({ value, onAddFile, maxSize, className, height }: UploadImageProps) {
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -19,19 +19,13 @@ export default function UploadImage({ value, onAddFile, maxSize, className }: Up
     }
   };
 
-  const onRemove = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
   return (
     <div
       className={cn(
-        'relative flex items-center h-48 justify-center border-2 border-dashed rounded-lg hover:bg-secondary transition-colors cursor-pointer overflow-hidden group',
+        'relative flex items-center justify-center border-2 border-dashed rounded-lg hover:bg-secondary transition-colors cursor-pointer overflow-hidden group',
         className,
       )}
+      style={{ height: height || 192 }}
       onClick={() => fileInputRef.current?.click()}
     >
       <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
@@ -60,4 +54,5 @@ interface UploadImageProps {
   onAddFile: (file: File) => void;
   maxSize?: number;
   className?: string;
+  height?: number | string;
 }

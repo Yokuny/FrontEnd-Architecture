@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 import { api } from '@/lib/api/client';
 import type { Param } from '@/routes/_private/register/params/@interface/param';
+export type { Param };
 
 // Query keys
 export const paramsKeys = {
