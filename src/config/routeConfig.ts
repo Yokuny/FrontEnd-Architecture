@@ -48,7 +48,6 @@ export const MAIN_ROUTES = [
   '/maintenance/list-os-done',
   '/maintenance/monitoring-plans',
   '/maintenance/monitoring-wear',
-  '/permissions/layout-test',
   '/permissions/roles',
   '/permissions/users',
   '/register/buoy',

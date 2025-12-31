@@ -9,56 +9,55 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as PrivateRouteImport } from './routes/_private';
-import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
-import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
-import { Route as PrivateMaintenanceListOsDoneViewIndexRouteImport } from './routes/_private/maintenance/list-os-done/view/index';
-import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
-import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
-import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
-import { Route as PrivatePermissionsLayoutTestRouteImport } from './routes/_private/permissions/layout-test';
-import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
-import { Route as PrivatePermissionsRolesEditIndexRouteImport } from './routes/_private/permissions/roles/edit/index';
-import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
-import { Route as PrivatePermissionsRolesUsersIndexRouteImport } from './routes/_private/permissions/roles/users/index';
-import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
-import { Route as PrivatePermissionsUsersEditIndexRouteImport } from './routes/_private/permissions/users/edit/index';
-import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
-import { Route as PrivatePermissionsUsersPasswordIndexRouteImport } from './routes/_private/permissions/users/password/index';
-import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
-import { Route as PrivateRegisterBuoyAddRouteImport } from './routes/_private/register/buoy/add';
-import { Route as PrivateRegisterBuoyIndexRouteImport } from './routes/_private/register/buoy/index';
-import { Route as PrivateRegisterFormsAddRouteImport } from './routes/_private/register/forms/add';
-import { Route as PrivateRegisterFormsIndexRouteImport } from './routes/_private/register/forms/index';
-import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
-import { Route as PrivateRegisterMaintenancePlansAddRouteImport } from './routes/_private/register/maintenance-plans/add';
-import { Route as PrivateRegisterMaintenancePlansIndexRouteImport } from './routes/_private/register/maintenance-plans/index';
-import { Route as PrivateRegisterModelMachineAddRouteImport } from './routes/_private/register/model-machine/add';
-import { Route as PrivateRegisterModelMachineIndexRouteImport } from './routes/_private/register/model-machine/index';
-import { Route as PrivateRegisterParamsAddRouteImport } from './routes/_private/register/params/add';
-import { Route as PrivateRegisterParamsIndexRouteImport } from './routes/_private/register/params/index';
-import { Route as PrivateRegisterPartsAddRouteImport } from './routes/_private/register/parts/add';
-import { Route as PrivateRegisterPartsIndexRouteImport } from './routes/_private/register/parts/index';
-import { Route as PrivateRegisterPlatformAddRouteImport } from './routes/_private/register/platform/add';
-import { Route as PrivateRegisterPlatformIndexRouteImport } from './routes/_private/register/platform/index';
-import { Route as PrivateRegisterSensorFunctionsAddRouteImport } from './routes/_private/register/sensor-functions/add';
-import { Route as PrivateRegisterSensorFunctionsIndexRouteImport } from './routes/_private/register/sensor-functions/index';
-import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
-import { Route as PrivateRegisterSensorsIndexRouteImport } from './routes/_private/register/sensors/index';
-import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
-import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_private/register/type-fuel/index';
-import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
-import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
-import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
-import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
-import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
-import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
 import { Route as PublicRouteImport } from './routes/_public';
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
-import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
-import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
+import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
+import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
+import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
+import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
+import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
+import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
+import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
+import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
+import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
+import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
+import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_private/register/type-fuel/index';
+import { Route as PrivateRegisterSensorsIndexRouteImport } from './routes/_private/register/sensors/index';
+import { Route as PrivateRegisterSensorFunctionsIndexRouteImport } from './routes/_private/register/sensor-functions/index';
+import { Route as PrivateRegisterPlatformIndexRouteImport } from './routes/_private/register/platform/index';
+import { Route as PrivateRegisterPartsIndexRouteImport } from './routes/_private/register/parts/index';
+import { Route as PrivateRegisterParamsIndexRouteImport } from './routes/_private/register/params/index';
+import { Route as PrivateRegisterModelMachineIndexRouteImport } from './routes/_private/register/model-machine/index';
+import { Route as PrivateRegisterMaintenancePlansIndexRouteImport } from './routes/_private/register/maintenance-plans/index';
+import { Route as PrivateRegisterFormsIndexRouteImport } from './routes/_private/register/forms/index';
+import { Route as PrivateRegisterBuoyIndexRouteImport } from './routes/_private/register/buoy/index';
+import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
+import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
+import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
+import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
+import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
+import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
+import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
+import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
+import { Route as PrivateRegisterSensorFunctionsAddRouteImport } from './routes/_private/register/sensor-functions/add';
+import { Route as PrivateRegisterPlatformAddRouteImport } from './routes/_private/register/platform/add';
+import { Route as PrivateRegisterPartsAddRouteImport } from './routes/_private/register/parts/add';
+import { Route as PrivateRegisterParamsAddRouteImport } from './routes/_private/register/params/add';
+import { Route as PrivateRegisterModelMachineAddRouteImport } from './routes/_private/register/model-machine/add';
+import { Route as PrivateRegisterMaintenancePlansAddRouteImport } from './routes/_private/register/maintenance-plans/add';
+import { Route as PrivateRegisterFormsAddRouteImport } from './routes/_private/register/forms/add';
+import { Route as PrivateRegisterBuoyAddRouteImport } from './routes/_private/register/buoy/add';
+import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
+import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
+import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
+import { Route as PrivatePermissionsUsersPasswordIndexRouteImport } from './routes/_private/permissions/users/password/index';
+import { Route as PrivatePermissionsUsersEditIndexRouteImport } from './routes/_private/permissions/users/edit/index';
+import { Route as PrivatePermissionsRolesUsersIndexRouteImport } from './routes/_private/permissions/roles/users/index';
+import { Route as PrivatePermissionsRolesEditIndexRouteImport } from './routes/_private/permissions/roles/edit/index';
+import { Route as PrivateMaintenanceListOsDoneViewIndexRouteImport } from './routes/_private/maintenance/list-os-done/view/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -114,12 +113,6 @@ const PublicAuthRegisterRoute = PublicAuthRegisterRouteImport.update({
   path: '/auth/register',
   getParentRoute: () => PublicRoute,
 } as any);
-const PrivatePermissionsLayoutTestRoute =
-  PrivatePermissionsLayoutTestRouteImport.update({
-    id: '/permissions/layout-test',
-    path: '/permissions/layout-test',
-    getParentRoute: () => PrivateRoute,
-  } as any);
 const PrivateSetUpCompanySetupEmailIndexRoute =
   PrivateSetUpCompanySetupEmailIndexRouteImport.update({
     id: '/set-up-company/setup-email/',
@@ -348,7 +341,6 @@ const PrivateMaintenanceListOsDoneViewIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
-  '/permissions/layout-test': typeof PrivatePermissionsLayoutTestRoute;
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
@@ -398,7 +390,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
-  '/permissions/layout-test': typeof PrivatePermissionsLayoutTestRoute;
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
@@ -451,7 +442,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute;
   '/_private': typeof PrivateRouteWithChildren;
   '/_public': typeof PublicRouteWithChildren;
-  '/_private/permissions/layout-test': typeof PrivatePermissionsLayoutTestRoute;
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
@@ -503,7 +493,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
-    | '/permissions/layout-test'
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
@@ -553,7 +542,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
-    | '/permissions/layout-test'
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
@@ -605,7 +593,6 @@ export interface FileRouteTypes {
     | '/'
     | '/_private'
     | '/_public'
-    | '/_private/permissions/layout-test'
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
@@ -738,13 +725,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/register';
       preLoaderRoute: typeof PublicAuthRegisterRouteImport;
       parentRoute: typeof PublicRoute;
-    };
-    '/_private/permissions/layout-test': {
-      id: '/_private/permissions/layout-test';
-      path: '/permissions/layout-test';
-      fullPath: '/permissions/layout-test';
-      preLoaderRoute: typeof PrivatePermissionsLayoutTestRouteImport;
-      parentRoute: typeof PrivateRoute;
     };
     '/_private/set-up-company/setup-email/': {
       id: '/_private/set-up-company/setup-email/';
@@ -1016,7 +996,6 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
-  PrivatePermissionsLayoutTestRoute: typeof PrivatePermissionsLayoutTestRoute;
   PrivateMaintenanceIndexRoute: typeof PrivateMaintenanceIndexRoute;
   PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
   PrivateRegisterIndexRoute: typeof PrivateRegisterIndexRoute;
@@ -1062,7 +1041,6 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
-  PrivatePermissionsLayoutTestRoute: PrivatePermissionsLayoutTestRoute,
   PrivateMaintenanceIndexRoute: PrivateMaintenanceIndexRoute,
   PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
   PrivateRegisterIndexRoute: PrivateRegisterIndexRoute,
