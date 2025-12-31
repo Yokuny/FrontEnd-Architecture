@@ -1,4 +1,4 @@
-import { icons, Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TypeServiceMaintenanceSelect } from '@/components/selects';

@@ -1,59 +1,67 @@
-import { Moon, Settings, Sun } from 'lucide-react';
+import { Bubbles, Moon, Settings, Sun, SunDim, Sunset } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
 
-type Theme = 'light' | 'dark' | 'system';
-
 export function ThemeSwitcher() {
-  const { state: sidebarState, setMenuOpen } = useSidebarToggle();
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    return savedTheme || 'system';
-  });
+  const { setMenuOpen } = useSidebarToggle();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
+  // Avoid hydration mismatch
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
+    setMounted(true);
+  }, []);
 
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      root.classList.add(systemTheme);
-    } else {
-      root.classList.add(theme);
-    }
-  }, [theme]);
-
-  const changeTheme = (newTheme: Theme) => {
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-  };
+  if (!mounted) {
+    return (
+      <Button size="icon" variant="ghost">
+        <Sun className="size-5" />
+      </Button>
+    );
+  }
 
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="ghost" className="relative group">
-          <div key={sidebarState} className="animate-pop flex items-center justify-center text-muted-foreground">
-            <Sun className="size-5 scale-100 transition-all dark:scale-0" />
-            <Moon className="absolute size-5 scale-0 transition-all dark:scale-100" />
+          <div className="animate-pop flex items-center justify-center text-muted-foreground">
+            {theme === 'sunset' ? (
+              <SunDim className="size-5" />
+            ) : theme === 'ocean-blue' ? (
+              <Bubbles className="size-5" />
+            ) : resolvedTheme === 'dark' ? (
+              <Moon className="size-5" />
+            ) : (
+              <Sun className="size-5" />
+            )}
           </div>
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => changeTheme('system')} className={theme === 'system' ? 'bg-accent' : ''}>
+        <DropdownMenuItem onClick={() => setTheme('system')} className={theme === 'system' ? 'bg-accent font-medium' : ''}>
           <Settings className="mr-2 size-4" />
           System {theme === 'system' && '✓'}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeTheme('light')} className={theme === 'light' ? 'bg-accent' : ''}>
+        <DropdownMenuItem onClick={() => setTheme('light')} className={theme === 'light' ? 'bg-accent font-medium' : ''}>
           <Sun className="mr-2 size-4" />
           Light {theme === 'light' && '✓'}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeTheme('dark')} className={theme === 'dark' ? 'bg-accent' : ''}>
+        <DropdownMenuItem onClick={() => setTheme('sunset')} className={theme === 'sunset' ? 'bg-accent font-medium' : ''}>
+          <SunDim className="mr-2 size-4" />
+          Sunset {theme === 'sunset' && '✓'}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme('dark')} className={theme === 'dark' ? 'bg-accent font-medium' : ''}>
           <Moon className="mr-2 size-4" />
           Dark {theme === 'dark' && '✓'}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme('ocean-blue')} className={theme === 'ocean-blue' ? 'bg-accent font-medium' : ''}>
+          <Bubbles className="mr-2 size-4" />
+          Ocean Blue {theme === 'ocean-blue' && '✓'}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

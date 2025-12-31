@@ -1609,6 +1609,7 @@
   "fas.expense.amount": "Amount",
   "supplier.can.view": "Supplier can view",
   "select.option": "Select Value",
+  "select.placeholder": "Select...",
   "os": "Service Orders",
   "name.os.label": "OS Name",
   "service.date": "Service Date",

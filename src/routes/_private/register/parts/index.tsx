@@ -5,7 +5,6 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
-import { EnterpriseFilterSelect } from '@/components/selects';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';

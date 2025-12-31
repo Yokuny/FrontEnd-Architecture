@@ -1,14 +1,14 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Merriweather:wght@400;700&family=Ubuntu+Mono:wght@400;700&display=swap');
 
 @import 'tw-animate-css';
-
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark, [data-theme="dark"]));
+@custom-variant ocean-blue (&:is(.ocean-blue, [data-theme="ocean-blue"]));
+@custom-variant sunset (&:is(.sunset, [data-theme="sunset"]));
 
 body {
   @apply m-0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -18,7 +18,7 @@ code {
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-:root {
+:root, [data-theme="light"] {
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -54,7 +54,7 @@ code {
   --sidebar-ring: oklch(0.871 0.006 286.286);
 }
 
-.dark {
+.dark, [data-theme="dark"] {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.141 0.005 285.823);
@@ -88,6 +88,81 @@ code {
   --sidebar-border: oklch(0.274 0.006 286.033);
   --sidebar-ring: oklch(0.442 0.017 285.786);
 }
+
+
+.ocean-blue, [data-theme="ocean-blue"] {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card: #1e293b;
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+  --primary: #38bdf8;
+  --primary-foreground: #0f172a;
+  --secondary: #334155;
+  --secondary-foreground: #f1f5f9;
+  --muted: #0c4a6e;
+  --muted-foreground: #94a3b8;
+  --accent: #334155;
+  --accent-foreground: #f1f5f9;
+  --destructive: #f87171;
+  --destructive-foreground: #f1f5f9;
+  --border: #334155;
+  --input: #334155;
+  --ring: #38bdf8;
+  --chart-1: #38bdf8;
+  --chart-2: #34d399;
+  --chart-3: #fbbf24;
+  --chart-4: #f87171;
+  --chart-5: #334155;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #38bdf8;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: #334155;
+  --sidebar-ring: #38bdf8;
+}
+
+.sunset, [data-theme="sunset"] {
+  --background: oklch(0.99 0.01 67.74);
+  --foreground: oklch(0.34 0.01 7.89);
+  --card: oklch(1.00 0 0);
+  --card-foreground: oklch(0.34 0.01 7.89);
+  --popover: oklch(1.00 0 0);
+  --popover-foreground: oklch(0.34 0.01 7.89);
+  --primary: oklch(0.74 0.16 34.57);
+  --primary-foreground: oklch(1.00 0 0);
+  --secondary: oklch(0.96 0.02 28.97);
+  --secondary-foreground: oklch(0.56 0.13 32.65);
+  --muted: oklch(0.97 0.02 44.86);
+  --muted-foreground: oklch(0.49 0.05 27.86);
+  --accent: oklch(92.77% 0.01135 71.725);
+  --accent-foreground: oklch(0.34 0.01 7.89);
+  --destructive: oklch(0.61 0.21 22.21);
+  --border: oklch(0.93 0.04 40.57);
+  --input: oklch(0.93 0.04 40.57);
+  --ring: oklch(0.74 0.16 34.57);
+  --chart-1: oklch(0.74 0.16 34.57);
+  --chart-2: oklch(0.83 0.11 57.89);
+  --chart-3: oklch(0.88 0.08 56.41);
+  --chart-4: oklch(0.82 0.11 41.27);
+  --chart-5: oklch(0.64 0.13 32.06);
+  --sidebar: oklch(0.97 0.02 44.86);
+  --sidebar-foreground: oklch(0.34 0.01 7.89);
+  --sidebar-primary: oklch(0.74 0.16 34.57);
+  --sidebar-primary-foreground: oklch(1.00 0 0);
+  --sidebar-accent: oklch(0.83 0.11 57.89);
+  --sidebar-accent-foreground: oklch(0.34 0.01 7.89);
+  --sidebar-border: oklch(0.93 0.04 40.57);
+  --sidebar-ring: oklch(0.74 0.16 34.57);
+
+  --font-sans: Montserrat, sans-serif;
+  --font-serif: Merriweather, serif;
+  --font-mono: Ubuntu Mono, monospace;
+}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -126,6 +201,19 @@ code {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
 }
 
 @layer base {

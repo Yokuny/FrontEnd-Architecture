@@ -65,7 +65,6 @@ function AddPermissionPage() {
             <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
               <div className="col-span-full sm:col-span-3">
                 <Field className="gap-2">
-                  <FieldLabel>{t('enterprise')} *</FieldLabel>
                   <EnterpriseSelect
                     mode="single"
                     value={form.watch('idEnterprise')}

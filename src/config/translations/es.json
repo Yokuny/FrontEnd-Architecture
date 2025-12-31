@@ -1616,6 +1616,7 @@
   "fas.expense.amount": "Cantidad",
   "supplier.can.view": "El proveedor puede ver",
   "select.option": "Seleccione Valor",
+  "select.placeholder": "Seleccionar...",
   "os": "Ordenes de Servicio",
   "name.os.label": "Nombre de la Orden de Servicio",
   "service.date": "Fecha del Servicio",

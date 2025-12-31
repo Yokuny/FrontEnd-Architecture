@@ -77,7 +77,7 @@ function App() {
   return (
     <MsalProvider instance={msalInstance}>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange themes={['light', 'dark', 'ocean-blue', 'sunset']}>
           {/* <SocketProvider> */}
           <RouterProvider router={router} />
           <Toaster position="top-right" expand={false} richColors closeButton />
