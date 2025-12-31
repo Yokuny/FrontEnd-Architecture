@@ -1,5 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
+import Stats10 from '@/components/card-with-area-graph';
+import Stats09 from '@/components/card-with-progress-graph';
+import Stats07 from '@/components/card-with-radial-graph';
 import DefaultFormLayout from '@/components/default-form-layout';
+import Stats01 from '@/components/default-numbers-render';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -73,9 +77,10 @@ function LayoutTestPage() {
         <CardContent className="p-0">
           <Tabs defaultValue="horizontal">
             <div className="px-6 pt-6 md:px-10">
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="horizontal">Modo Horizontal</TabsTrigger>
                 <TabsTrigger value="vertical">Modo Vertical</TabsTrigger>
+                <TabsTrigger value="components">Componentes</TabsTrigger>
               </TabsList>
             </div>
 
@@ -85,6 +90,30 @@ function LayoutTestPage() {
 
             <TabsContent value="vertical">
               <DefaultFormLayout layout="vertical" sections={verticalSections} />
+            </TabsContent>
+
+            <TabsContent value="components" className="space-y-8 p-6 md:p-10">
+              <div className="grid grid-cols-1 gap-8">
+                <section>
+                  <h3 className="text-lg font-semibold mb-4 border-b pb-2">Números Padrão (Stats01)</h3>
+                  <Stats01 />
+                </section>
+
+                <section>
+                  <h3 className="text-lg font-semibold mb-4 border-b pb-2">Gráfico de Área (Stats10)</h3>
+                  <Stats10 />
+                </section>
+
+                <section>
+                  <h3 className="text-lg font-semibold mb-4 border-b pb-2">Gráfico de Progresso (Stats09)</h3>
+                  <Stats09 />
+                </section>
+
+                <section>
+                  <h3 className="text-lg font-semibold mb-4 border-b pb-2">Gráfico Radial (Stats07)</h3>
+                  <Stats07 />
+                </section>
+              </div>
             </TabsContent>
           </Tabs>
         </CardContent>

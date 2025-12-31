@@ -1,8 +1,8 @@
 'use client';
 
 import { Area, AreaChart, XAxis } from 'recharts';
-import { Card, CardContent } from '@/components/ui/card';
 import { ChartContainer } from '@/components/ui/chart';
+import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 
 const data = [
@@ -100,14 +100,6 @@ const data = [
 
 const summary = [
   {
-    name: 'Alpha Corp',
-    tickerSymbol: 'ACP',
-    value: '$168.59',
-    change: '+15.86',
-    percentageChange: '+10.4%',
-    changeType: 'positive',
-  },
-  {
     name: 'Beta Solutions',
     tickerSymbol: 'BTS',
     value: '$78.54',
@@ -127,68 +119,62 @@ const summary = [
 
 const sanitizeName = (name: string) => {
   return name
-    .replace(/\\s+/g, '-')
+    .replace(/\s+/g, '-')
     .replace(/[^a-zA-Z0-9-]/g, '_')
     .toLowerCase();
 };
 
 export default function Stats10() {
   return (
-    <div className="flex items-center justify-center p-10 w-full">
-      <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full">
-        {summary.map((item) => {
-          const sanitizedName = sanitizeName(item.name);
-          const gradientId = `gradient-${sanitizedName}`;
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full">
+      {summary.map((item) => {
+        const sanitizedName = sanitizeName(item.name);
+        const gradientId = `gradient-${sanitizedName}`;
 
-          const color = item.changeType === 'positive' ? 'hsl(142.1 76.2% 36.3%)' : 'hsl(0 72.2% 50.6%)';
+        const color = item.changeType === 'positive' ? 'hsl(142.1 76.2% 36.3%)' : 'hsl(0 72.2% 50.6%)';
 
-          return (
-            <Card key={item.name} className="p-0">
-              <CardContent className="p-4 pb-0">
-                <div>
-                  <dt className="text-sm font-medium text-foreground">
-                    {item.name} <span className="font-normal text-muted-foreground">({item.tickerSymbol})</span>
-                  </dt>
-                  <div className="flex items-baseline justify-between">
-                    <dd className={cn(item.changeType === 'positive' ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500', 'text-lg font-semibold')}>
-                      {item.value}
-                    </dd>
-                    <dd className="flex items-center space-x-1 text-sm">
-                      <span className="font-medium text-foreground">{item.change}</span>
-                      <span className={cn(item.changeType === 'positive' ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500')}>
-                        ({item.percentageChange})
-                      </span>
-                    </dd>
-                  </div>
-                </div>
+        return (
+          <Item key={item.name} variant="outline" className="flex-col items-stretch p-4 pb-0">
+            <ItemContent>
+              <ItemTitle>
+                {item.name} <span className="font-normal text-muted-foreground">({item.tickerSymbol})</span>
+              </ItemTitle>
+              <div className="flex items-baseline justify-between w-full">
+                <ItemTitle className={cn(item.changeType === 'positive' ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500', 'text-lg font-semibold')}>
+                  {item.value}
+                </ItemTitle>
+                <ItemDescription className="flex items-center space-x-1 text-sm">
+                  <span className="font-medium text-foreground">{item.change}</span>
+                  <span className={cn(item.changeType === 'positive' ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500')}>({item.percentageChange})</span>
+                </ItemDescription>
+              </div>
+            </ItemContent>
 
-                <div className="mt-2 h-16 overflow-hidden">
-                  <ChartContainer
-                    className="w-full h-full"
-                    config={{
-                      [item.name]: {
-                        label: item.name,
-                        color: color,
-                      },
-                    }}
-                  >
-                    <AreaChart data={data}>
-                      <defs>
-                        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor={color} stopOpacity={0.3} />
-                          <stop offset="95%" stopColor={color} stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
-                      <XAxis dataKey="date" hide={true} />
-                      <Area dataKey={item.name} stroke={color} fill={`url(#${gradientId})`} fillOpacity={0.4} strokeWidth={1.5} type="monotone" />
-                    </AreaChart>
-                  </ChartContainer>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </dl>
+            <div className="mt-2 h-16 overflow-hidden">
+              <ChartContainer
+                className="w-full h-full"
+                config={{
+                  [item.name]: {
+                    label: item.name,
+                    color: color,
+                  },
+                }}
+              >
+                <AreaChart data={data}>
+                  <defs>
+                    <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={color} stopOpacity={0.3} />
+                      <stop offset="95%" stopColor={color} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="date" hide={true} />
+                  <Area dataKey={item.name} stroke={color} fill={`url(#${gradientId})`} fillOpacity={0.4} strokeWidth={1.5} type="monotone" />
+                </AreaChart>
+              </ChartContainer>
+            </div>
+          </Item>
+        );
+      })}
     </div>
   );
 }
