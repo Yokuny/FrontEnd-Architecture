@@ -21,7 +21,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -31,6 +30,7 @@ import { type FormDetail, useForm as useFormQuery, useFormsApi } from '@/hooks/u
 import { FormFieldsList } from './@components/form-fields-list';
 import { FormOthersTab } from './@components/form-others-tab';
 import { FormPermissionsTab } from './@components/form-permissions-tab';
+import { FormPreviewModal } from './@components/form-preview-modal';
 import { useFormForm } from './@hooks/use-form-form';
 import type { FormFormData } from './@interface/form.schema';
 
@@ -171,7 +171,7 @@ function FormAddFormContent({ initialData, pendingData, formId }: FormAddFormCon
       <Card>
         <CardHeader title={t('config.form')}>
           {fields.length > 0 && (
-            <Button variant="outline" size="sm" onClick={() => setShowPreview(true)}>
+            <Button variant="outline" onClick={() => setShowPreview(true)}>
               <Eye className="size-4 mr-2" />
               Preview
             </Button>
@@ -305,26 +305,7 @@ function FormAddFormContent({ initialData, pendingData, formId }: FormAddFormCon
         </Form>
       </Card>
 
-      {/* Preview Modal */}
-      <Dialog open={showPreview} onOpenChange={setShowPreview}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
-          <DialogHeader>
-            <DialogTitle>Preview</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            {fields.length > 0 ? (
-              fields.map((field: { id: number; description: string; type: string; name?: string }, index: number) => (
-                <div key={field.id || `field-${index}`} className="p-4 border rounded-lg">
-                  <p className="font-medium">{field.description || field.name || `Campo ${index + 1}`}</p>
-                  <p className="text-sm text-muted-foreground">Tipo: {field.type}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-center text-muted-foreground py-8">{t('no.fields', 'Nenhum campo adicionado')}</p>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+      <FormPreviewModal open={showPreview} onOpenChange={setShowPreview} fields={fields} idEnterprise={form.watch('idEnterprise')} />
     </>
   );
 }

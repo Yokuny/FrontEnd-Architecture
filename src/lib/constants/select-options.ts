@@ -199,3 +199,19 @@ export const CREDENTIALS_OPTIONS: CredentialsOption[] = [
   { value: 'password', labelKey: 'login.password' },
   { value: 'sso', labelKey: 'SSO' },
 ];
+export interface FormTypeOption {
+  value: string;
+  labelKey: string;
+}
+
+export const FORM_TYPE_OPTIONS: FormTypeOption[] = [
+  { value: 'RVE', labelKey: 'RVE' },
+  { value: 'EVENT_REPORT', labelKey: 'Relatório de evento diário' },
+  { value: 'FILL_ONBOARD', labelKey: 'fill.onboard' },
+  { value: 'OTHER', labelKey: 'other' },
+  { value: 'NOON_REPORT', labelKey: 'Noon Report' },
+  { value: 'POLL', labelKey: 'polling' },
+  { value: 'RDO', labelKey: 'RDO' },
+  { value: 'EVENT', labelKey: 'event' },
+  { value: 'CMMS', labelKey: 'CMMS' },
+];

@@ -18,6 +18,7 @@ export { FenceTypeSelect } from './fence-type-select';
 export { FleetSelect } from './fleet-select';
 export { FleetVesselsSelect } from './fleet-vessels-select';
 export { FormSelect } from './form-select';
+export { FormTypeSelect } from './form-type-select';
 export { LanguageFormSelect } from './language-form-select';
 export { LevelSelect } from './level-select';
 export { MachineByEnterpriseSelect } from './machine-by-enterprise-select';

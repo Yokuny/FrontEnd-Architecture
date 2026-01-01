@@ -86,6 +86,7 @@
   "send.successfull": "Send with success",
   "machine.alarm.sensor.label": "Sensor",
   "nooptions.message": "No data",
+  "noresults.message": "No results found",
   "register": "Register",
   "machine.new": "New asset",
   "machine.id.required": "Asset identity is required",

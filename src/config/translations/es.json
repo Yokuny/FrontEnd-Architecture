@@ -88,6 +88,7 @@
   "send.successfull": "Enviado con éxito",
   "machine.alarm.sensor.label": "Sensor",
   "nooptions.message": "Nada encontrado",
+  "noresults.message": "No se encontraron resultados",
   "register": "Registro",
   "machine.new": "Nuevo activo",
   "machine.id.required": "Ingrese el identificador de el activo",

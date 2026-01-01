@@ -86,6 +86,7 @@
   "send.successfull": "Enviado com sucesso",
   "machine.alarm.sensor.label": "Sensor",
   "nooptions.message": "Nada encontrado",
+  "noresults.message": "Nenhum resultado encontrado",
   "register": "Cadastro",
   "save": "Salvar",
   "reset": "Resetar",
