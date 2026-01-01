@@ -176,7 +176,7 @@ function FormsListPage() {
 
       {total > 0 && (
         <CardFooter layout="multi">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">

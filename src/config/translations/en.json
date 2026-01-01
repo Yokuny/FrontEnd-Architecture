@@ -1426,7 +1426,7 @@
   "time.min.required": "Enter the time in minutes with a time greater than 0",
   "width.vessel": "Width",
   "view.route.playback": "View playback route (Beta)",
-  "contract": "Contracts",
+  "add": "Add",
   "editor.contract": "Edit Contracts",
   "contract.delete": "Remove Contract",
   "view.contract.add": "New Contract",
