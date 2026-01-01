@@ -2,7 +2,7 @@ import { Activity, Calendar, ClipboardList, Pencil, Plus, Trash2 } from 'lucide-
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import DefaultFormLayout from '@/components/default-form-layout';
+import DefaultFormLayout, { type FormSection } from '@/components/default-form-layout';
 import { EnterpriseSelect } from '@/components/selects/enterprise-select';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -18,10 +18,11 @@ export function ContractForm() {
   const { control, watch } = useFormContext<ContractFormData>();
   const competence = watch('competence');
 
-  const sections = [
+  const sections: FormSection[] = [
     {
       title: t('identification'),
       description: t('view.contract.general.description', 'Basic contract information.'),
+      layout: 'horizontal',
       fields: [
         <FormField
           key="idEnterprise"
@@ -118,6 +119,7 @@ export function ContractForm() {
     {
       title: t('details'),
       description: t('view.contract.details.description', 'Consumption groups, operations and extra events.'),
+      layout: 'vertical',
       fields: [
         <Tabs key="contract-tabs" defaultValue="consumption" className="w-full">
           <TabsList className="grid w-full grid-cols-3">
@@ -148,7 +150,7 @@ export function ContractForm() {
     },
   ];
 
-  return <DefaultFormLayout sections={sections} layout="vertical" />;
+  return <DefaultFormLayout sections={sections} />;
 }
 
 function GroupConsumptionTab() {

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=League+Spartan:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @custom-variant dark (&:is(.dark, [data-theme="dark"]));
@@ -146,6 +147,7 @@ code {
   --border: oklch(0.93 0.04 40.57);
   --input: oklch(0.93 0.04 40.57);
   --ring: oklch(0.74 0.16 34.57);
+  --radius: 0;
   --chart-1: oklch(0.74 0.16 34.57);
   --chart-2: oklch(0.83 0.11 57.89);
   --chart-3: oklch(0.88 0.08 56.41);
@@ -201,6 +203,7 @@ code {
   --color-sidebar-ring: var(--sidebar-ring);
 
   --font-sans: "Jost", var(--font-fallback-sans);
+  --font-bebas: "Bebas Neue", var(--font-fallback-sans);
   --font-mono: "League Spartan", var(--font-fallback-mono);
   --font-serif: var(--font-serif);
 
