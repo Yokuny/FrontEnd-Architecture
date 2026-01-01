@@ -24,13 +24,25 @@ export const useEnterpriseFilter = create<EnterpriseFilterStore>()(
 export interface Enterprise {
   id: string;
   name: string;
+  description?: string;
+  address?: string;
+  zipCode?: string;
+  number?: string;
+  district?: string;
+  complement?: string;
   city: string;
   state: string;
   country?: string;
+  coordinate?: {
+    latitude: number;
+    longitude: number;
+  };
   active?: boolean;
   ssoSetuped?: boolean;
   image?: { url: string };
-  imageDark?: { url: { url: string } | string }; // O formato pode variar na API antiga
+  imageDark?: { url: { url: string } | string };
+  logo?: string;
+  publicKey?: string;
 }
 
 export interface EnterpriseSelectOption {
@@ -38,11 +50,23 @@ export interface EnterpriseSelectOption {
   label: string;
 }
 
+export interface EnterpriseListParams {
+  page?: number;
+  size?: number;
+  search?: string;
+}
+
+export interface EnterpriseListResponse {
+  data: Enterprise[];
+  pageInfo: { count: number }[];
+}
+
 // Query keys
 export const enterprisesKeys = {
   all: ['enterprises'] as const,
   lists: () => [...enterprisesKeys.all, 'list'] as const,
   list: (filters?: Record<string, unknown>) => [...enterprisesKeys.lists(), filters] as const,
+  paginated: (params: EnterpriseListParams) => [...enterprisesKeys.lists(), 'paginated', params] as const,
   details: () => [...enterprisesKeys.all, 'detail'] as const,
   detail: (id: string) => [...enterprisesKeys.details(), id] as const,
   withSetup: () => [...enterprisesKeys.all, 'with-setup'] as const,
@@ -60,7 +84,17 @@ async function fetchEnterprisesWithSetup(): Promise<Enterprise[]> {
 }
 
 async function fetchEnterprise(id: string): Promise<Enterprise> {
-  const response = await api.get<Enterprise>(`/enterprise?id=${id}`);
+  const response = await api.get<Enterprise>(`/enterprise/find?id=${id}`);
+  return response.data;
+}
+
+async function fetchEnterprisesPaginated(params: EnterpriseListParams): Promise<EnterpriseListResponse> {
+  const searchParams = new URLSearchParams();
+  if (params.page !== undefined) searchParams.append('page', String(params.page));
+  if (params.size !== undefined) searchParams.append('size', String(params.size));
+  if (params.search) searchParams.append('search', params.search);
+
+  const response = await api.get<EnterpriseListResponse>(`/enterprise/my/list?${searchParams.toString()}`);
   return response.data;
 }
 
@@ -69,7 +103,7 @@ async function createEnterprise(enterprise: Partial<Enterprise>): Promise<Enterp
   return response.data;
 }
 
-async function updateEnterprise(enterprise: Enterprise): Promise<Enterprise> {
+async function updateEnterprise(enterprise: Partial<Enterprise> & { id: string }): Promise<Enterprise> {
   const response = await api.put<Enterprise>('/enterprise', enterprise);
   return response.data;
 }
@@ -78,11 +112,25 @@ async function deleteEnterprise(id: string): Promise<void> {
   await api.delete(`/enterprise?id=${id}`);
 }
 
+async function uploadEnterpriseImage(id: string, file: File, type?: 'dark'): Promise<void> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const url = type === 'dark' ? `/upload/enterprise?id=${id}&type=dark` : `/upload/enterprise?id=${id}`;
+  await api.post(url, formData);
+}
+
 // Hooks - Query hooks
 export function useEnterprises(params?: Record<string, unknown>) {
   return useQuery({
     queryKey: enterprisesKeys.list(params),
     queryFn: fetchEnterprises,
+  });
+}
+
+export function useEnterprisesPaginated(params: EnterpriseListParams) {
+  return useQuery({
+    queryKey: enterprisesKeys.paginated(params),
+    queryFn: () => fetchEnterprisesPaginated(params),
   });
 }
 
@@ -125,10 +173,20 @@ export function useEnterprisesApi() {
     },
   });
 
+  // Image upload mutation
+  const uploadImageMutation = useMutation({
+    mutationFn: ({ id, file, type }: { id: string; file: File; type?: 'dark' }) => uploadEnterpriseImage(id, file, type),
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: enterprisesKeys.detail(id) });
+      queryClient.invalidateQueries({ queryKey: enterprisesKeys.lists() });
+    },
+  });
+
   return {
     createEnterprise: createEnterpriseMutation,
     updateEnterprise: updateEnterpriseMutation,
     deleteEnterprise: deleteEnterpriseMutation,
+    uploadEnterpriseImage: uploadImageMutation,
   };
 }
 

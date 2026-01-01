@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Activity, Droplet, Settings, Ship, Users } from 'lucide-react';
+import { Activity, Building2, Droplet, Settings, Ship, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
@@ -15,6 +15,12 @@ function RegisterHubPage() {
   const { t } = useTranslation();
 
   const menuItems = [
+    {
+      title: t('enterprises'),
+      description: t('enterprises.description', 'Gerencie as empresas e organizações do sistema.'),
+      icon: Building2,
+      to: '/register/enterprises' as const,
+    },
     {
       title: t('types.user'),
       description: t('types.user.description'),
