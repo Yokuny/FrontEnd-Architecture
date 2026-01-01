@@ -57,6 +57,7 @@ export const MAIN_ROUTES = [
   '/register/customers',
   '/register/enterprises',
   '/register/forms',
+  '/register/geofences',
   '/register/maintenance-plans',
   '/register/model-machine',
   '/register/params',
