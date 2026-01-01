@@ -73,7 +73,7 @@ export function FilterDialog({ idEnterprise, filter, onFilterChange }: FilterDia
           <div className="space-y-2">
             <MachineSelect
               mode="multi"
-              filterQuery={idEnterprise ? `idEnterprise=${idEnterprise}` : ''}
+              idEnterprise={idEnterprise}
               label={t('vessel')}
               value={localFilter.idMachine || []}
               onChange={(values) => setLocalFilter({ ...localFilter, idMachine: values })}

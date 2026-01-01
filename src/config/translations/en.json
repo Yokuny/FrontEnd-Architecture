@@ -129,6 +129,9 @@
   "identification": "Identification",
   "configuration": "Configuration",
   "alarms": "Alerts",
+  "alerts": "Alerts",
+  "contracts": "Contracts",
+  "sensor-functions": "Sensor Functions",
   "machine.inactivate.title": "Deactivate",
   "machine.inactivate.label": "Tell the reason",
   "disable": "Deactivate",
@@ -1369,6 +1372,10 @@
   "customers": "Customers",
   "customer.delete": "Delete customer",
   "customer.link.voyage": "Customer linked with voyage",
+  "new.customer": "New customer",
+  "customer.general.desc": "Basic information to identify the customer in the system.",
+  "name.placeholder": "Enter the name",
+  "general.information": "General Information",
   "speed.avg.in.ocean": "Average speed (Ocean)",
   "show.date": "Display date",
   "stepline.style": "Step style",
@@ -2388,5 +2395,9 @@
   "auth.hero.description.short": "Industrial IoT monitoring made simple.",
   "auth.morphing.think": "Think Smarter",
   "auth.morphing.work": "Work Faster",
-  "auth.morphing.achieve": "Achieve More"
+  "auth.morphing.achieve": "Achieve More",
+  "alert.rules.config": "Alert Rules Configuration",
+  "who.receives": "Who Receives",
+  "visibility.settings": "Visibility Settings",
+  "select.enterprise.first": "Select an enterprise first"
 }

@@ -51,7 +51,7 @@ function EnterprisesListPage() {
     return (
       <Item key={item.id} variant="outline" className="flex items-center justify-between p-4 mb-2">
         <div className="flex items-center gap-4 flex-1">
-          <ItemMedia className="size-12 rounded-full overflow-hidden flex items-center justify-center bg-muted border">
+          <ItemMedia className="size-12 rounded-sm overflow-hidden flex items-center justify-center bg-muted border">
             {item.image?.url ? <img src={item.image.url} alt={item.name} className="size-full object-cover" /> : <Building2 className="size-6 text-muted-foreground" />}
           </ItemMedia>
           <ItemContent>

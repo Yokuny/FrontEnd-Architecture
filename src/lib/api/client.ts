@@ -186,16 +186,22 @@ function getBaseURL(options: ApiOptions): string {
  * API Client Class
  */
 class ApiClient {
-  async get<T = unknown>(url: string, options: ApiOptions = {}) {
-    const paramsQuery = url.split('?')[1];
-    let urlNormalized = url.split('?')[0];
+  async get<T = unknown>(url: string, options: ApiOptions & { params?: Record<string, any> } = {}) {
+    const urlNormalized = url.split('?')[0];
+    const existingParams = url.split('?')[1];
 
-    if (paramsQuery) {
-      const query = new URLSearchParams(paramsQuery);
-      urlNormalized += `?${query.toString()}`;
+    const query = new URLSearchParams(existingParams);
+
+    if (options.params) {
+      Object.keys(options.params).forEach((key) => {
+        if (options.params?.[key] !== undefined && options.params?.[key] !== null) {
+          query.append(key, String(options.params[key]));
+        }
+      });
     }
 
-    const fullUrl = `${getBaseURL(options)}${urlNormalized}`;
+    const queryString = query.toString();
+    const fullUrl = `${getBaseURL(options)}${urlNormalized}${queryString ? `?${queryString}` : ''}`;
 
     return fetchWithTimeout<T>(
       fullUrl,
@@ -268,8 +274,22 @@ class ApiClient {
     );
   }
 
-  async delete<T = unknown>(url: string, options: ApiOptions = {}) {
-    const fullUrl = `${getBaseURL(options)}${url}`;
+  async delete<T = unknown>(url: string, options: ApiOptions & { params?: Record<string, any> } = {}) {
+    const urlNormalized = url.split('?')[0];
+    const existingParams = url.split('?')[1];
+
+    const query = new URLSearchParams(existingParams);
+
+    if (options.params) {
+      Object.keys(options.params).forEach((key) => {
+        if (options.params?.[key] !== undefined && options.params?.[key] !== null) {
+          query.append(key, String(options.params[key]));
+        }
+      });
+    }
+
+    const queryString = query.toString();
+    const fullUrl = `${getBaseURL(options)}${urlNormalized}${queryString ? `?${queryString}` : ''}`;
 
     return fetchWithTimeout<T>(
       fullUrl,
