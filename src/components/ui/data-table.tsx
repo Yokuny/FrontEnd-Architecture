@@ -3,8 +3,8 @@ import type React from 'react';
 import { useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { ItemContent, ItemFooter, ItemHeader } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
@@ -140,8 +140,8 @@ export function DataTable<T extends Record<string, any>>({
 
   if (loading) {
     return (
-      <Card className={className}>
-        <CardContent className="p-6">
+      <div className={cn('bg-background text-card-foreground flex flex-col gap-6 rounded-lg md:border border-sidebar-border shadow-sm py-6', className)}>
+        <ItemContent className="p-6">
           {/* Search skeleton */}
           {searchable && <Skeleton className="mb-6 h-10 w-full sm:w-64" />}
           {/* Table skeleton */}
@@ -169,16 +169,22 @@ export function DataTable<T extends Record<string, any>>({
               <Skeleton className="h-9 w-16" />
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </ItemContent>
+      </div>
     );
   }
 
   return (
-    <Card className={cn(className, !bordered && 'border-0 shadow-none')}>
+    <div
+      className={cn(
+        'bg-background text-card-foreground flex flex-col gap-6 rounded-lg md:border border-sidebar-border shadow-sm py-6',
+        className,
+        !bordered && 'border-0 shadow-none',
+      )}
+    >
       {/* Search and Filters */}
       {searchable && (
-        <CardHeader className="pb-4">
+        <ItemHeader className="px-6 pb-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="relative w-full sm:w-auto sm:flex-1 sm:max-w-sm">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 size-4 text-muted-foreground z-10" />
@@ -194,11 +200,11 @@ export function DataTable<T extends Record<string, any>>({
               />
             </div>
           </div>
-        </CardHeader>
+        </ItemHeader>
       )}
 
       {/* Table */}
-      <CardContent className="p-0">
+      <ItemContent className="p-0">
         <div className="overflow-x-auto">
           <table className="w-full min-w-full">
             <thead className="bg-muted/30">
@@ -307,11 +313,11 @@ export function DataTable<T extends Record<string, any>>({
             </tbody>
           </table>
         </div>
-      </CardContent>
+      </ItemContent>
 
       {/* Pagination */}
       {showPagination && totalPages > 1 && (
-        <CardFooter layout="multi">
+        <ItemFooter className="px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <Badge variant="outline" className="text-muted-foreground font-normal">
             Showing {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, sortedData.length)} of {sortedData.length}
           </Badge>
@@ -362,8 +368,8 @@ export function DataTable<T extends Record<string, any>>({
               </PaginationItem>
             </PaginationContent>
           </Pagination>
-        </CardFooter>
+        </ItemFooter>
       )}
-    </Card>
+    </div>
   );
 }
