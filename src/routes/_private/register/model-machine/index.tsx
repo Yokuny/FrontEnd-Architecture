@@ -86,7 +86,7 @@ function ModelMachineListPage() {
           </div>
           <Button onClick={() => navigate({ to: '/register/model-machine/add' })}>
             <Plus className="size-4 mr-2" />
-            {t('new.model')}
+            {t('add')}
           </Button>
         </div>
       </CardHeader>
@@ -99,51 +99,70 @@ function ModelMachineListPage() {
         ) : (
           <ItemGroup>
             {models.map((item) => (
-              <Item key={item.id} variant="outline" className="relative overflow-hidden flex items-center justify-between p-4 mb-2">
-                <div className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-md" style={{ backgroundColor: item.color || 'var(--muted-foreground)' }} />
+              <Item
+                key={item.id}
+                variant="outline"
+                className="cursor-pointer"
+                onClick={() =>
+                  navigate({
+                    to: '/register/model-machine/add',
+                    search: { id: item.id },
+                  })
+                }
+              >
                 <div className="flex items-center gap-4 flex-1">
                   <ItemMedia variant="image">
                     {item.image?.url ? (
                       <img src={item.image.url} alt={item.description} className="size-full object-cover" />
                     ) : (
-                      <div className="size-full bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground">
-                        {item.description?.substring(0, 2).toUpperCase() || 'MM'}
+                      <div className="size-full bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground uppercase">
+                        {item.description?.substring(0, 2) || 'MM'}
                       </div>
                     )}
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
-                    <ItemDescription className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <ItemDescription>
                       {item.enterprise?.name || t('no.enterprise')} | {item.typeMachine}
                     </ItemDescription>
                   </ItemContent>
                 </div>
 
-                <div className="flex items-center justify-end flex-1">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreVertical className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() =>
-                          navigate({
-                            to: '/register/model-machine/add',
-                            search: { id: item.id },
-                          })
-                        }
-                      >
-                        <Pencil className="size-4 mr-2" />
-                        {t('edit')}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(item.id)}>
-                        <Trash2 className="size-4 mr-2" />
-                        {t('delete')}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                <div className="flex items-center gap-4">
+                  <div className="size-4 rounded-full border border-white/20" style={{ backgroundColor: item.color || 'var(--muted-foreground)' }} />
+                  <div className="flex items-center justify-end border-l pl-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate({
+                              to: '/register/model-machine/add',
+                              search: { id: item.id },
+                            });
+                          }}
+                        >
+                          <Pencil className="size-4 mr-2" />
+                          {t('edit')}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(item.id);
+                          }}
+                        >
+                          <Trash2 className="size-4 mr-2" />
+                          {t('delete')}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </Item>
             ))}

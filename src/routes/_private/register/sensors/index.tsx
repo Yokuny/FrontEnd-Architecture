@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
@@ -81,7 +81,7 @@ function SensorListPage() {
           </div>
           <Button onClick={() => navigate({ to: '/register/sensors/add' })}>
             <Plus className="size-4 mr-2" />
-            {t('sensor.new')}
+            {t('add')}
           </Button>
         </div>
       </CardHeader>
@@ -92,12 +92,21 @@ function SensorListPage() {
         ) : sensors.length === 0 ? (
           <EmptyData />
         ) : (
-          <div className="grid gap-2">
+          <ItemGroup>
             {sensors.map((item) => (
-              <Item key={item.id} variant="outline" className="flex items-center justify-between p-4">
+              <Item
+                key={item.id}
+                variant="outline"
+                onClick={() =>
+                  navigate({
+                    to: '/register/sensors/add',
+                    search: { id: item.id },
+                  })
+                }
+              >
                 <div className="flex items-center gap-4 flex-1">
-                  <ItemMedia className="size-10 rounded-full flex items-center justify-center bg-muted">
-                    <Flashlight className="size-5 text-success-500" />
+                  <ItemMedia variant="image">
+                    <Flashlight className="size-5" />
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.sensor}</ItemTitle>
@@ -105,46 +114,48 @@ function SensorListPage() {
                   </ItemContent>
                 </div>
 
-                <div className="flex items-center gap-8 flex-1 justify-center">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground whitespace-nowrap">
-                    <CloudUpload className="size-4" />
-                    <span>{item.sensorId}</span>
-                  </div>
-                  {item.machines && item.machines.length > 0 && (
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground max-w-[200px] truncate">
-                      <Ship className="size-4 shrink-0" />
-                      <span className="truncate">{item.machines.join(', ')}</span>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground whitespace-nowrap">
+                      <CloudUpload className="size-4" />
+                      <ItemDescription>{item.sensorId}</ItemDescription>
                     </div>
-                  )}
-                </div>
+                    {item.machines && item.machines.length > 0 && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground max-w-[200px] truncate">
+                        <Ship className="size-4 shrink-0" />
+                        <ItemDescription>{item.machines.join(', ')}</ItemDescription>
+                      </div>
+                    )}
+                  </div>
 
-                <div className="flex items-center justify-end flex-1">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreVertical className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() =>
-                          navigate({
-                            to: '/register/sensors/add',
-                            search: { id: item.id },
-                          })
-                        }
-                      >
-                        {t('edit')}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(item.id)}>
-                        {t('delete')}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <div className="flex items-center justify-end border-l pl-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() =>
+                            navigate({
+                              to: '/register/sensors/add',
+                              search: { id: item.id },
+                            })
+                          }
+                        >
+                          {t('edit')}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(item.id)}>
+                          {t('delete')}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </Item>
             ))}
-          </div>
+          </ItemGroup>
         )}
       </CardContent>
 

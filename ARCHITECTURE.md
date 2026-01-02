@@ -94,7 +94,7 @@ src/routes/_private/embarcacoes/
               <Filter className="size-4" />
               {t('filter')}
             </Button>
-            <Button onClick={() => navigate({ to: '/add' })}>
+            <Button onClick={() => navigate({ to: '/add' } satisfies { to: string })}>
               <Plus className="size-4" />
               {t('btn.novo')}
             </Button>

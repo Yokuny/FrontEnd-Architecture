@@ -8,21 +8,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCustomersPaginated } from '@/hooks/use-customers-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 
-const searchSchema = z.object({
-  page: z.number().default(1),
-  size: z.number().default(10),
+const customersSearchSchema = z.object({
+  page: z.number().optional().default(1),
+  size: z.number().optional().default(10),
   search: z.string().optional(),
 });
 
+type CustomersSearch = z.infer<typeof customersSearchSchema>;
+
 export const Route = createFileRoute('/_private/register/customers/')({
   component: CustomersListPage,
-  validateSearch: (search) => searchSchema.parse(search),
+  validateSearch: (search: Record<string, unknown>): CustomersSearch => customersSearchSchema.parse(search),
 });
 
 function CustomersListPage() {
@@ -37,23 +39,6 @@ function CustomersListPage() {
     search,
     idEnterprise: idEnterprise || undefined,
   });
-
-  const handlePageChange = (newPage: number) => {
-    navigate({
-      search: (prev) => ({ ...prev, page: newPage }),
-    });
-  };
-
-  if (isLoading) {
-    return (
-      <Card>
-        <CardHeader title={t('customers')} />
-        <CardContent>
-          <DefaultLoading />
-        </CardContent>
-      </Card>
-    );
-  }
 
   const customers = data?.data || [];
   const totalCount = data?.pageInfo?.[0]?.count || 0;
@@ -72,14 +57,14 @@ function CustomersListPage() {
               onBlur={(e) => {
                 if (e.target.value !== search) {
                   navigate({
-                    search: (prev) => ({ ...prev, search: e.target.value || undefined, page: 1 }),
+                    search: (prev: CustomersSearch) => ({ ...prev, search: e.target.value || undefined, page: 1 }),
                   });
                 }
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   navigate({
-                    search: (prev) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }),
+                    search: (prev: CustomersSearch) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }),
                   });
                 }
               }}
@@ -93,51 +78,59 @@ function CustomersListPage() {
       </CardHeader>
 
       <CardContent>
-        {customers.length === 0 ? (
+        {isLoading ? (
+          <DefaultLoading />
+        ) : customers.length === 0 ? (
           <DefaultEmptyData />
         ) : (
-          <div className="flex flex-col gap-2">
+          <ItemGroup>
             {customers.map((customer) => {
               return (
-                <Item key={customer.id} variant="outline" className="flex items-center justify-between p-4 mb-2 hover:bg-muted/50 transition-colors">
+                <Item
+                  key={customer.id}
+                  variant="outline"
+                  className="cursor-pointer"
+                  onClick={() => navigate({ to: '/register/customers/add', search: { id: customer.id } } as any)}
+                >
                   <div className="flex items-center gap-4 flex-1">
-                    <ItemMedia className="size-12 rounded-full overflow-hidden flex items-center justify-center bg-muted/30 border">
-                      <User className="size-6" />
+                    <ItemMedia variant="image">
+                      <User className="size-5" />
                     </ItemMedia>
                     <ItemContent>
-                      <ItemTitle className="text-base font-semibold line-clamp-1">{customer.name}</ItemTitle>
+                      <ItemTitle className="text-base">{customer.name}</ItemTitle>
                       {customer.enterprise && (
-                        <div className=" flex items-center gap-2">
+                        <div className="flex items-center gap-2">
                           <Building2 className="size-4 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground line-clamp-1">
+                          <ItemDescription>
                             {customer.code ? `${customer.code} / ` : ''}
                             {customer.enterprise.name}
-                          </span>
+                          </ItemDescription>
                         </div>
                       )}
                     </ItemContent>
                   </div>
 
-                  <div className="flex items-center gap-2 pl-4 border-l ml-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreVertical className="size-4" />
-                          <span className="sr-only">{t('actions')}</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate({ to: '/register/customers/add', search: { id: customer.id } } as any)}>
-                          <Pencil className="mr-2 size-4" />
-                          {t('edit')}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-end border-l pl-2">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                          <Button variant="ghost" size="icon">
+                            <MoreVertical className="size-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => navigate({ to: '/register/customers/add', search: { id: customer.id } } as any)}>
+                            <Pencil className="mr-2 size-4" />
+                            {t('edit')}
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
                 </Item>
               );
             })}
-          </div>
+          </ItemGroup>
         )}
       </CardContent>
 
@@ -168,9 +161,9 @@ function CustomersListPage() {
                 <PaginationItem>
                   <PaginationPrevious
                     href="#"
-                    onClick={(e: React.MouseEvent) => {
+                    onClick={(e) => {
                       e.preventDefault();
-                      if (page > 1) handlePageChange(page - 1);
+                      if (page > 1) navigate({ search: (prev: CustomersSearch) => ({ ...prev, page: page - 1 }) });
                     }}
                     aria-disabled={page <= 1}
                     className={page <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
@@ -183,9 +176,9 @@ function CustomersListPage() {
                     <PaginationItem key={pageNum}>
                       <PaginationLink
                         href="#"
-                        onClick={(e: React.MouseEvent) => {
+                        onClick={(e) => {
                           e.preventDefault();
-                          handlePageChange(pageNum);
+                          navigate({ search: (prev: CustomersSearch) => ({ ...prev, page: pageNum }) });
                         }}
                         isActive={page === pageNum}
                         className="cursor-pointer"
@@ -205,9 +198,9 @@ function CustomersListPage() {
                 <PaginationItem>
                   <PaginationNext
                     href="#"
-                    onClick={(e: React.MouseEvent) => {
+                    onClick={(e) => {
                       e.preventDefault();
-                      if (page < totalPages) handlePageChange(page + 1);
+                      if (page < totalPages) navigate({ search: (prev: CustomersSearch) => ({ ...prev, page: page + 1 }) });
                     }}
                     aria-disabled={page >= totalPages}
                     className={page >= totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}

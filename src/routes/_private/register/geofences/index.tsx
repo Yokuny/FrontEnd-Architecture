@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
@@ -87,7 +87,7 @@ function GeofenceListPage() {
           </div>
           <Button onClick={() => navigate({ to: '/register/geofences/add' })}>
             <Plus className="size-4 mr-2" />
-            {t('add.geofence')}
+            {t('add')}
           </Button>
         </div>
       </CardHeader>
@@ -98,7 +98,7 @@ function GeofenceListPage() {
         ) : geofences.length === 0 ? (
           <EmptyData />
         ) : (
-          <div className="grid gap-2">
+          <ItemGroup>
             {geofences.map((item) => {
               const config = GEOFENCE_TYPES_CONFIG[item.type.value as keyof typeof GEOFENCE_TYPES_CONFIG] || {
                 icon: Flag,
@@ -107,9 +107,19 @@ function GeofenceListPage() {
               const TypeIcon = config.icon;
 
               return (
-                <Item key={item.id} variant="outline" className="flex items-center justify-between p-4">
+                <Item
+                  key={item.id}
+                  variant="outline"
+                  className="cursor-pointer"
+                  onClick={() =>
+                    navigate({
+                      to: '/register/geofences/add',
+                      search: { id: item.id },
+                    })
+                  }
+                >
                   <div className="flex items-center gap-4 flex-1">
-                    <ItemMedia className="size-10 rounded-full flex items-center justify-center bg-muted">
+                    <ItemMedia variant="image">
                       <TypeIcon className={`size-5 ${config.color}`} />
                     </ItemMedia>
                     <ItemContent>
@@ -118,45 +128,52 @@ function GeofenceListPage() {
                     </ItemContent>
                   </div>
 
-                  <div className="flex items-center gap-8 flex-1 justify-center">
-                    <div className="flex flex-col text-sm text-muted-foreground">
-                      <span className="font-medium text-foreground">{item.type.label || t(item.type.value)}</span>
+                  <div className="flex items-center gap-4">
+                    <div className="flex flex-col text-sm text-muted-foreground items-end">
+                      <ItemDescription className="font-medium text-foreground">{item.type.label || t(item.type.value)}</ItemDescription>
                       {item.city && (
-                        <span>
+                        <ItemDescription>
                           {item.city} - {item.state}
-                        </span>
+                        </ItemDescription>
                       )}
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-end flex-1">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical className="size-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          onClick={() =>
-                            navigate({
-                              to: '/register/geofences/add',
-                              search: { id: item.id },
-                            })
-                          }
-                        >
-                          {t('edit')}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(item.id)}>
-                          {t('delete')}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center justify-end border-l pl-2">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                          <Button variant="ghost" size="icon">
+                            <MoreVertical className="size-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate({
+                                to: '/register/geofences/add',
+                                search: { id: item.id },
+                              });
+                            }}
+                          >
+                            {t('edit')}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="text-destructive"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(item.id);
+                            }}
+                          >
+                            {t('delete')}
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
                 </Item>
               );
             })}
-          </div>
+          </ItemGroup>
         )}
       </CardContent>
 

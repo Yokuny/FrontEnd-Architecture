@@ -36,6 +36,7 @@ import { Route as PrivateRegisterPartsIndexRouteImport } from './routes/_private
 import { Route as PrivateRegisterParamsIndexRouteImport } from './routes/_private/register/params/index';
 import { Route as PrivateRegisterModelMachineIndexRouteImport } from './routes/_private/register/model-machine/index';
 import { Route as PrivateRegisterMaintenancePlansIndexRouteImport } from './routes/_private/register/maintenance-plans/index';
+import { Route as PrivateRegisterMachinesIndexRouteImport } from './routes/_private/register/machines/index';
 import { Route as PrivateRegisterGeofencesIndexRouteImport } from './routes/_private/register/geofences/index';
 import { Route as PrivateRegisterFormsIndexRouteImport } from './routes/_private/register/forms/index';
 import { Route as PrivateRegisterEnterprisesIndexRouteImport } from './routes/_private/register/enterprises/index';
@@ -57,6 +58,7 @@ import { Route as PrivateRegisterPartsAddRouteImport } from './routes/_private/r
 import { Route as PrivateRegisterParamsAddRouteImport } from './routes/_private/register/params/add';
 import { Route as PrivateRegisterModelMachineAddRouteImport } from './routes/_private/register/model-machine/add';
 import { Route as PrivateRegisterMaintenancePlansAddRouteImport } from './routes/_private/register/maintenance-plans/add';
+import { Route as PrivateRegisterMachinesAddRouteImport } from './routes/_private/register/machines/add';
 import { Route as PrivateRegisterGeofencesAddRouteImport } from './routes/_private/register/geofences/add';
 import { Route as PrivateRegisterFormsAddRouteImport } from './routes/_private/register/forms/add';
 import { Route as PrivateRegisterEnterprisesAddRouteImport } from './routes/_private/register/enterprises/add';
@@ -223,6 +225,12 @@ const PrivateRegisterMaintenancePlansIndexRoute =
     path: '/register/maintenance-plans/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateRegisterMachinesIndexRoute =
+  PrivateRegisterMachinesIndexRouteImport.update({
+    id: '/register/machines/',
+    path: '/register/machines/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateRegisterGeofencesIndexRoute =
   PrivateRegisterGeofencesIndexRouteImport.update({
     id: '/register/geofences/',
@@ -348,6 +356,12 @@ const PrivateRegisterMaintenancePlansAddRoute =
     path: '/register/maintenance-plans/add',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateRegisterMachinesAddRoute =
+  PrivateRegisterMachinesAddRouteImport.update({
+    id: '/register/machines/add',
+    path: '/register/machines/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateRegisterGeofencesAddRoute =
   PrivateRegisterGeofencesAddRouteImport.update({
     id: '/register/geofences/add',
@@ -457,6 +471,7 @@ export interface FileRoutesByFullPath {
   '/register/enterprises/add': typeof PrivateRegisterEnterprisesAddRoute;
   '/register/forms/add': typeof PrivateRegisterFormsAddRoute;
   '/register/geofences/add': typeof PrivateRegisterGeofencesAddRoute;
+  '/register/machines/add': typeof PrivateRegisterMachinesAddRoute;
   '/register/maintenance-plans/add': typeof PrivateRegisterMaintenancePlansAddRoute;
   '/register/model-machine/add': typeof PrivateRegisterModelMachineAddRoute;
   '/register/params/add': typeof PrivateRegisterParamsAddRoute;
@@ -478,6 +493,7 @@ export interface FileRoutesByFullPath {
   '/register/enterprises': typeof PrivateRegisterEnterprisesIndexRoute;
   '/register/forms': typeof PrivateRegisterFormsIndexRoute;
   '/register/geofences': typeof PrivateRegisterGeofencesIndexRoute;
+  '/register/machines': typeof PrivateRegisterMachinesIndexRoute;
   '/register/maintenance-plans': typeof PrivateRegisterMaintenancePlansIndexRoute;
   '/register/model-machine': typeof PrivateRegisterModelMachineIndexRoute;
   '/register/params': typeof PrivateRegisterParamsIndexRoute;
@@ -520,6 +536,7 @@ export interface FileRoutesByTo {
   '/register/enterprises/add': typeof PrivateRegisterEnterprisesAddRoute;
   '/register/forms/add': typeof PrivateRegisterFormsAddRoute;
   '/register/geofences/add': typeof PrivateRegisterGeofencesAddRoute;
+  '/register/machines/add': typeof PrivateRegisterMachinesAddRoute;
   '/register/maintenance-plans/add': typeof PrivateRegisterMaintenancePlansAddRoute;
   '/register/model-machine/add': typeof PrivateRegisterModelMachineAddRoute;
   '/register/params/add': typeof PrivateRegisterParamsAddRoute;
@@ -541,6 +558,7 @@ export interface FileRoutesByTo {
   '/register/enterprises': typeof PrivateRegisterEnterprisesIndexRoute;
   '/register/forms': typeof PrivateRegisterFormsIndexRoute;
   '/register/geofences': typeof PrivateRegisterGeofencesIndexRoute;
+  '/register/machines': typeof PrivateRegisterMachinesIndexRoute;
   '/register/maintenance-plans': typeof PrivateRegisterMaintenancePlansIndexRoute;
   '/register/model-machine': typeof PrivateRegisterModelMachineIndexRoute;
   '/register/params': typeof PrivateRegisterParamsIndexRoute;
@@ -586,6 +604,7 @@ export interface FileRoutesById {
   '/_private/register/enterprises/add': typeof PrivateRegisterEnterprisesAddRoute;
   '/_private/register/forms/add': typeof PrivateRegisterFormsAddRoute;
   '/_private/register/geofences/add': typeof PrivateRegisterGeofencesAddRoute;
+  '/_private/register/machines/add': typeof PrivateRegisterMachinesAddRoute;
   '/_private/register/maintenance-plans/add': typeof PrivateRegisterMaintenancePlansAddRoute;
   '/_private/register/model-machine/add': typeof PrivateRegisterModelMachineAddRoute;
   '/_private/register/params/add': typeof PrivateRegisterParamsAddRoute;
@@ -607,6 +626,7 @@ export interface FileRoutesById {
   '/_private/register/enterprises/': typeof PrivateRegisterEnterprisesIndexRoute;
   '/_private/register/forms/': typeof PrivateRegisterFormsIndexRoute;
   '/_private/register/geofences/': typeof PrivateRegisterGeofencesIndexRoute;
+  '/_private/register/machines/': typeof PrivateRegisterMachinesIndexRoute;
   '/_private/register/maintenance-plans/': typeof PrivateRegisterMaintenancePlansIndexRoute;
   '/_private/register/model-machine/': typeof PrivateRegisterModelMachineIndexRoute;
   '/_private/register/params/': typeof PrivateRegisterParamsIndexRoute;
@@ -651,6 +671,7 @@ export interface FileRouteTypes {
     | '/register/enterprises/add'
     | '/register/forms/add'
     | '/register/geofences/add'
+    | '/register/machines/add'
     | '/register/maintenance-plans/add'
     | '/register/model-machine/add'
     | '/register/params/add'
@@ -672,6 +693,7 @@ export interface FileRouteTypes {
     | '/register/enterprises'
     | '/register/forms'
     | '/register/geofences'
+    | '/register/machines'
     | '/register/maintenance-plans'
     | '/register/model-machine'
     | '/register/params'
@@ -714,6 +736,7 @@ export interface FileRouteTypes {
     | '/register/enterprises/add'
     | '/register/forms/add'
     | '/register/geofences/add'
+    | '/register/machines/add'
     | '/register/maintenance-plans/add'
     | '/register/model-machine/add'
     | '/register/params/add'
@@ -735,6 +758,7 @@ export interface FileRouteTypes {
     | '/register/enterprises'
     | '/register/forms'
     | '/register/geofences'
+    | '/register/machines'
     | '/register/maintenance-plans'
     | '/register/model-machine'
     | '/register/params'
@@ -779,6 +803,7 @@ export interface FileRouteTypes {
     | '/_private/register/enterprises/add'
     | '/_private/register/forms/add'
     | '/_private/register/geofences/add'
+    | '/_private/register/machines/add'
     | '/_private/register/maintenance-plans/add'
     | '/_private/register/model-machine/add'
     | '/_private/register/params/add'
@@ -800,6 +825,7 @@ export interface FileRouteTypes {
     | '/_private/register/enterprises/'
     | '/_private/register/forms/'
     | '/_private/register/geofences/'
+    | '/_private/register/machines/'
     | '/_private/register/maintenance-plans/'
     | '/_private/register/model-machine/'
     | '/_private/register/params/'
@@ -1020,6 +1046,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateRegisterMaintenancePlansIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/register/machines/': {
+      id: '/_private/register/machines/';
+      path: '/register/machines';
+      fullPath: '/register/machines';
+      preLoaderRoute: typeof PrivateRegisterMachinesIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/register/geofences/': {
       id: '/_private/register/geofences/';
       path: '/register/geofences';
@@ -1167,6 +1200,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateRegisterMaintenancePlansAddRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/register/machines/add': {
+      id: '/_private/register/machines/add';
+      path: '/register/machines/add';
+      fullPath: '/register/machines/add';
+      preLoaderRoute: typeof PrivateRegisterMachinesAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/register/geofences/add': {
       id: '/_private/register/geofences/add';
       path: '/register/geofences/add';
@@ -1290,6 +1330,7 @@ interface PrivateRouteChildren {
   PrivateRegisterEnterprisesAddRoute: typeof PrivateRegisterEnterprisesAddRoute;
   PrivateRegisterFormsAddRoute: typeof PrivateRegisterFormsAddRoute;
   PrivateRegisterGeofencesAddRoute: typeof PrivateRegisterGeofencesAddRoute;
+  PrivateRegisterMachinesAddRoute: typeof PrivateRegisterMachinesAddRoute;
   PrivateRegisterMaintenancePlansAddRoute: typeof PrivateRegisterMaintenancePlansAddRoute;
   PrivateRegisterModelMachineAddRoute: typeof PrivateRegisterModelMachineAddRoute;
   PrivateRegisterParamsAddRoute: typeof PrivateRegisterParamsAddRoute;
@@ -1311,6 +1352,7 @@ interface PrivateRouteChildren {
   PrivateRegisterEnterprisesIndexRoute: typeof PrivateRegisterEnterprisesIndexRoute;
   PrivateRegisterFormsIndexRoute: typeof PrivateRegisterFormsIndexRoute;
   PrivateRegisterGeofencesIndexRoute: typeof PrivateRegisterGeofencesIndexRoute;
+  PrivateRegisterMachinesIndexRoute: typeof PrivateRegisterMachinesIndexRoute;
   PrivateRegisterMaintenancePlansIndexRoute: typeof PrivateRegisterMaintenancePlansIndexRoute;
   PrivateRegisterModelMachineIndexRoute: typeof PrivateRegisterModelMachineIndexRoute;
   PrivateRegisterParamsIndexRoute: typeof PrivateRegisterParamsIndexRoute;
@@ -1350,6 +1392,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterEnterprisesAddRoute: PrivateRegisterEnterprisesAddRoute,
   PrivateRegisterFormsAddRoute: PrivateRegisterFormsAddRoute,
   PrivateRegisterGeofencesAddRoute: PrivateRegisterGeofencesAddRoute,
+  PrivateRegisterMachinesAddRoute: PrivateRegisterMachinesAddRoute,
   PrivateRegisterMaintenancePlansAddRoute:
     PrivateRegisterMaintenancePlansAddRoute,
   PrivateRegisterModelMachineAddRoute: PrivateRegisterModelMachineAddRoute,
@@ -1376,6 +1419,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterEnterprisesIndexRoute: PrivateRegisterEnterprisesIndexRoute,
   PrivateRegisterFormsIndexRoute: PrivateRegisterFormsIndexRoute,
   PrivateRegisterGeofencesIndexRoute: PrivateRegisterGeofencesIndexRoute,
+  PrivateRegisterMachinesIndexRoute: PrivateRegisterMachinesIndexRoute,
   PrivateRegisterMaintenancePlansIndexRoute:
     PrivateRegisterMaintenancePlansIndexRoute,
   PrivateRegisterModelMachineIndexRoute: PrivateRegisterModelMachineIndexRoute,

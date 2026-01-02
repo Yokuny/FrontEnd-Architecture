@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { type Enterprise, useEnterprisesPaginated } from '@/hooks/use-enterprises-api';
@@ -49,68 +49,103 @@ function EnterprisesListPage() {
 
   const renderEnterpriseItem = (item: Enterprise) => {
     return (
-      <Item key={item.id} variant="outline" className="flex items-center justify-between p-4 mb-2">
+      <Item key={item.id} variant="outline" className="cursor-pointer" onClick={() => navigate({ to: '/register/enterprises/add', search: { id: item.id } })}>
         <div className="flex items-center gap-4 flex-1">
-          <ItemMedia className="size-12 rounded-sm overflow-hidden flex items-center justify-center bg-muted border">
-            {item.image?.url ? <img src={item.image.url} alt={item.name} className="size-full object-cover" /> : <Building2 className="size-6 text-muted-foreground" />}
+          <ItemMedia variant="image">
+            {item.image?.url ? <img src={item.image.url} alt={item.name} className="size-full object-cover" /> : <Building2 className="size-5" />}
           </ItemMedia>
           <ItemContent>
-            <ItemTitle className="text-base font-bold">{item.name}</ItemTitle>
-            <ItemDescription className="text-xs text-muted-foreground flex flex-wrap items-center gap-3 mt-1">
-              <span className="flex items-center gap-1">
-                <MapPin className="size-3" />
-                {item.city} - {item.state} {item.country && `/ ${item.country}`}
-              </span>
+            <ItemTitle className="text-base">{item.name}</ItemTitle>
+            <ItemDescription className="flex items-center gap-1">
+              <MapPin className="size-3" />
+              {item.city} - {item.state} {item.country && `/ ${item.country}`}
             </ItemDescription>
           </ItemContent>
         </div>
 
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <MoreVertical className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuItem onClick={() => navigate({ to: '/register/enterprises/add', search: { id: item.id } })}>
-                <Pencil className="size-4 mr-2" />
-                {t('edit')}
-              </DropdownMenuItem>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center justify-end border-l pl-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                <Button variant="ghost" size="icon">
+                  <MoreVertical className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({ to: '/register/enterprises/add', search: { id: item.id } });
+                  }}
+                >
+                  <Pencil className="size-4 mr-2" />
+                  {t('edit')}
+                </DropdownMenuItem>
 
-              <DropdownMenuItem onClick={() => navigate({ to: '/set-up-company/setup-email', search: { id: item.id } })}>
-                <Mail className="size-4 mr-2" />
-                {t('setup.email')}
-              </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({ to: '/set-up-company/setup-email', search: { id: item.id } });
+                  }}
+                >
+                  <Mail className="size-4 mr-2" />
+                  {t('setup.email')}
+                </DropdownMenuItem>
 
-              <DropdownMenuItem onClick={() => navigate({ to: '/set-up-company/setup-chatbot', search: { id: item.id } })}>
-                <MessageSquare className="size-4 mr-2" />
-                {t('setup.chatbot')}
-              </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({ to: '/set-up-company/setup-chatbot', search: { id: item.id } });
+                  }}
+                >
+                  <MessageSquare className="size-4 mr-2" />
+                  {t('setup.chatbot')}
+                </DropdownMenuItem>
 
-              <DropdownMenuItem onClick={() => navigate({ to: '/set-up-company/integration-list', search: { id: item.id } })}>
-                <Users className="size-4 mr-2" />
-                {t('usernames.external')}
-              </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({ to: '/set-up-company/integration-list', search: { id: item.id } });
+                  }}
+                >
+                  <Users className="size-4 mr-2" />
+                  {t('usernames.external')}
+                </DropdownMenuItem>
 
-              <DropdownMenuItem onClick={() => navigate({ to: '/set-up-company/setup-limits', search: { id: item.id } })}>
-                <Settings className="size-4 mr-2" />
-                {t('setup.limits')}
-              </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({ to: '/set-up-company/setup-limits', search: { id: item.id } });
+                  }}
+                >
+                  <Settings className="size-4 mr-2" />
+                  {t('setup.limits')}
+                </DropdownMenuItem>
 
-              <DropdownMenuItem onClick={() => navigate({ to: '/set-up-company/setup-sso', search: { id: item.id } })}>
-                <ShieldCheck className="size-4 mr-2" />
-                {t('setup.sso')}
-              </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({ to: '/set-up-company/setup-sso', search: { id: item.id } });
+                  }}
+                >
+                  <ShieldCheck className="size-4 mr-2" />
+                  {t('setup.sso')}
+                </DropdownMenuItem>
 
-              <DropdownMenuSeparator />
+                <DropdownMenuSeparator />
 
-              <DropdownMenuItem onClick={() => navigate({ to: '/set-up-company/setup-fleet', search: { id: item.id } })}>
-                <Settings className="size-4 mr-2" />
-                {t('setup')} Fleet
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({ to: '/set-up-company/setup-fleet', search: { id: item.id } });
+                  }}
+                >
+                  <Settings className="size-4 mr-2" />
+                  {t('setup')} Fleet
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </Item>
     );
@@ -129,14 +164,14 @@ function EnterprisesListPage() {
               onBlur={(e) => {
                 if (e.target.value !== search) {
                   navigate({
-                    search: (prev) => ({ ...prev, search: e.target.value || undefined, page: 1 }),
+                    search: (prev: EnterprisesSearch) => ({ ...prev, search: e.target.value || undefined, page: 1 }),
                   });
                 }
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   navigate({
-                    search: (prev) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }),
+                    search: (prev: EnterprisesSearch) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }),
                   });
                 }
               }}
@@ -145,14 +180,14 @@ function EnterprisesListPage() {
           {hasPermissionAdd && (
             <Button onClick={() => navigate({ to: '/register/enterprises/add' })}>
               <Plus className="size-4 mr-2" />
-              {t('enterprise.new')}
+              {t('add')}
             </Button>
           )}
         </div>
       </CardHeader>
 
       <CardContent>
-        {isLoading ? <DefaultLoading /> : enterprises.length === 0 ? <EmptyData /> : <div className="space-y-1">{enterprises.map((item) => renderEnterpriseItem(item))}</div>}
+        {isLoading ? <DefaultLoading /> : enterprises.length === 0 ? <EmptyData /> : <ItemGroup>{enterprises.map((item) => renderEnterpriseItem(item))}</ItemGroup>}
       </CardContent>
 
       {total > 0 && (

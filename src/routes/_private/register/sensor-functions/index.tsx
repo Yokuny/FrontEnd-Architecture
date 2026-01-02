@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
@@ -76,7 +76,7 @@ function SensorFunctionsListPage() {
           </div>
           <Button onClick={() => navigate({ to: '/register/sensor-functions/add' })} disabled={!idEnterprise}>
             <Plus className="size-4 mr-2" />
-            {t('btn.novo')}
+            {t('add')}
           </Button>
         </div>
       </CardHeader>
@@ -87,11 +87,21 @@ function SensorFunctionsListPage() {
         ) : sensorFunctions.length === 0 ? (
           <EmptyData />
         ) : (
-          <div className="grid gap-2">
+          <ItemGroup>
             {sensorFunctions.map((item) => (
-              <Item key={item.id || item._id} variant="outline" className={`flex items-center justify-between p-4 ${!item.enabled ? 'opacity-50 grayscale bg-muted/50' : ''}`}>
-                <div className="flex items-center gap-4 flex-2">
-                  <ItemMedia className="size-10 rounded-full flex items-center justify-center bg-muted">
+              <Item
+                key={item.id || item._id}
+                variant="outline"
+                className={`cursor-pointer ${!item.enabled ? 'opacity-50 grayscale bg-muted/50' : ''}`}
+                onClick={() =>
+                  navigate({
+                    to: '/register/sensor-functions/add',
+                    search: { id: item.id || item._id },
+                  })
+                }
+              >
+                <div className="flex items-center gap-4 flex-1">
+                  <ItemMedia variant="image">
                     <FunctionSquare className={`size-5 ${item.enabled ? 'text-primary' : 'text-muted-foreground'}`} />
                   </ItemMedia>
                   <ItemContent>
@@ -100,11 +110,11 @@ function SensorFunctionsListPage() {
                   </ItemContent>
                 </div>
 
-                <div className="flex items-center gap-4 flex-2 justify-center overflow-hidden">
+                <div className="hidden md:flex flex-1 items-center justify-center overflow-hidden">
                   {item.machines && item.machines.length > 0 && (
                     <div className="flex flex-wrap gap-1 justify-center max-h-[40px] overflow-y-auto">
                       {item.machines.map((machine, idx) => (
-                        <span key={machine.value || idx} className="text-xs bg-muted px-2 py-0.5 rounded-full whitespace-nowrap">
+                        <span key={machine.value || idx} className="text-[10px] bg-muted px-2 py-0.5 rounded-full whitespace-nowrap">
                           {machine.label}
                         </span>
                       ))}
@@ -112,31 +122,34 @@ function SensorFunctionsListPage() {
                   )}
                 </div>
 
-                <div className="flex items-center justify-end flex-1 gap-4">
+                <div className="flex items-center gap-4">
                   {!item.enabled && <span className="text-[10px] font-bold uppercase bg-muted-foreground text-white px-1.5 py-0.5 rounded">{t('deactivate')}</span>}
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreVertical className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() =>
-                          navigate({
-                            to: '/register/sensor-functions/add',
-                            search: { id: item.id || item._id },
-                          })
-                        }
-                      >
-                        {t('edit')}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <div className="flex items-center justify-end border-l pl-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate({
+                              to: '/register/sensor-functions/add',
+                              search: { id: item.id || item._id },
+                            });
+                          }}
+                        >
+                          {t('edit')}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </Item>
             ))}
-          </div>
+          </ItemGroup>
         )}
       </CardContent>
 

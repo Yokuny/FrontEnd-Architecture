@@ -4,7 +4,7 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 function ItemGroup({ className, ...props }: React.ComponentProps<'ul'>) {
-  return <ul data-slot="item-group" className={cn('group/item-group flex flex-col', className)} {...props} />;
+  return <ul data-slot="item-group" className={cn('group/item-group flex flex-col gap-2', className)} {...props} />;
 }
 
 function ItemSeparator({ className, ...props }: React.ComponentProps<typeof Separator>) {
@@ -50,7 +50,7 @@ const itemMediaVariants = cva(
       variant: {
         default: 'bg-transparent',
         icon: "size-8 [&_svg:not([class*='size-'])]:size-4",
-        image: 'size-10 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover',
+        image: 'border bg-muted size-10 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover',
       },
     },
     defaultVariants: {

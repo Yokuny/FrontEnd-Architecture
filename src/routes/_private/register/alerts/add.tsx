@@ -80,7 +80,7 @@ function AlertAddPage() {
             )}
 
             <div className="flex gap-2">
-              <Button type="button" variant="outline" onClick={() => navigate({ to: '/register/alerts', search: { page: 1, size: 10 } } as any)}>
+              <Button type="button" variant="outline" onClick={() => navigate({ to: '/register/alerts', search: { page: 1, size: 10 } })}>
                 {t('cancel')}
               </Button>
               <Button type="submit" disabled={isLoading}>

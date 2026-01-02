@@ -61,14 +61,24 @@ function FormsListPage() {
 
   const renderFormItem = (item: Form, isPending = false) => {
     return (
-      <Item key={item.id || item._id} variant="outline" className={`flex items-center justify-between p-4 mb-2 ${isPending ? 'opacity-70 bg-muted/30' : ''}`}>
+      <Item
+        key={item.id || item._id}
+        variant="outline"
+        className={`cursor-pointer ${isPending ? 'opacity-70 bg-muted/30' : ''}`}
+        onClick={() =>
+          navigate({
+            to: '/register/forms/add',
+            search: { id: item.id || item._id, pending: isPending ? 'true' : undefined },
+          })
+        }
+      >
         <div className="flex items-center gap-4 flex-1">
-          <ItemMedia className="size-10 rounded-full flex items-center justify-center bg-muted">
+          <ItemMedia variant="image">
             <FileText className={`size-5 ${isPending ? 'text-muted-foreground' : 'text-primary'}`} />
           </ItemMedia>
           <ItemContent>
             <ItemTitle className="text-base">{item.description}</ItemTitle>
-            <ItemDescription className="text-xs text-muted-foreground flex items-center gap-1">
+            <ItemDescription className="flex items-center gap-1">
               <User className="size-3" />
               {item.user?.name}
               {item.enterprise?.name && ` • ${item.enterprise.name}`}
@@ -76,7 +86,7 @@ function FormsListPage() {
           </ItemContent>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           {isPending && (
             <Badge variant="secondary" className="text-xs">
               {t('not.save')}
@@ -84,26 +94,29 @@ function FormsListPage() {
           )}
 
           {item.appliedPermissions?.canEdit && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <MoreVertical className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem
-                  onClick={() =>
-                    navigate({
-                      to: '/register/forms/add',
-                      search: { id: item.id || item._id, pending: isPending ? 'true' : undefined },
-                    })
-                  }
-                >
-                  <Pencil className="size-4 mr-2" />
-                  {t('edit')}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex items-center justify-end border-l pl-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                  <Button variant="ghost" size="icon">
+                    <MoreVertical className="size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate({
+                        to: '/register/forms/add',
+                        search: { id: item.id || item._id, pending: isPending ? 'true' : undefined },
+                      });
+                    }}
+                  >
+                    <Pencil className="size-4 mr-2" />
+                    {t('edit')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           )}
         </div>
       </Item>
@@ -123,14 +136,14 @@ function FormsListPage() {
               onBlur={(e) => {
                 if (e.target.value !== search) {
                   navigate({
-                    search: (prev) => ({ ...prev, search: e.target.value || undefined, page: 1 }),
+                    search: (prev: FormsSearch) => ({ ...prev, search: e.target.value || undefined, page: 1 }),
                   });
                 }
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   navigate({
-                    search: (prev) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }),
+                    search: (prev: FormsSearch) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }),
                   });
                 }
               }}
@@ -138,7 +151,7 @@ function FormsListPage() {
           </div>
           <Button onClick={() => navigate({ to: '/register/forms/add' })} disabled={!idEnterprise}>
             <Plus className="size-4 mr-2" />
-            {t('btn.novo')}
+            {t('add')}
           </Button>
         </div>
       </CardHeader>

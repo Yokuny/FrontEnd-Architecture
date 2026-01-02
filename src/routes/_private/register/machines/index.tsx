@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { MoreVertical, Package, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { createFileRoute } from '@tanstack/react-router';
+import { Anchor, Bell, Building2, CloudUpload, Flashlight, Map as MapIcon, MoreVertical, Navigation, Pencil, Plus, Search, Ship } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
 import { z } from 'zod';
-import EmptyData from '@/components/default-empty-data';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -14,54 +14,43 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } f
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
-import { useParts, usePartsApi } from '@/hooks/use-parts-api';
+import { useMachines } from '@/hooks/use-machines-api';
+import { IncludeVesselModal } from './@components/include-vessel-modal';
 
-const partsSearchSchema = z.object({
-  page: z.number().catch(1).optional().default(1),
-  size: z.number().catch(10).optional().default(10),
+const machinesSearchSchema = z.object({
+  page: z.number().optional().default(1),
+  size: z.number().optional().default(10),
   search: z.string().optional(),
 });
 
-type PartsSearch = z.infer<typeof partsSearchSchema>;
+type MachinesSearch = z.infer<typeof machinesSearchSchema>;
 
-export const Route = createFileRoute('/_private/register/parts/')({
-  component: PartsListPage,
-  validateSearch: (search: Record<string, unknown>): PartsSearch => partsSearchSchema.parse(search),
-  beforeLoad: () => ({
-    title: 'parts',
-  }),
+export const Route = createFileRoute('/_private/register/machines/')({
+  component: MachineListPage,
+  validateSearch: (search: Record<string, unknown>): MachinesSearch => machinesSearchSchema.parse(search),
 });
 
-function PartsListPage() {
+function MachineListPage() {
   const { t } = useTranslation();
-  const navigate = useNavigate({ from: Route.fullPath });
-  const { page, size, search } = useSearch({ from: '/_private/register/parts/' });
+  const navigate = Route.useNavigate();
+  const { page, size, search } = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
+  const [isIncludeVesselOpen, setIsIncludeVesselOpen] = useState(false);
 
-  const { data, isLoading } = useParts({
+  const { data, isLoading } = useMachines({
     idEnterprise,
+    search: search || undefined,
     page: page - 1,
-    size: size,
-    search: search,
+    size,
   });
-  const { deletePart } = usePartsApi();
 
-  const parts = data?.data || [];
-  const totalCount = data?.pageInfo?.[0]?.count || 0;
+  const machines = data?.data || [];
+  const totalCount = data?.totalCount || 0;
   const totalPages = Math.ceil(totalCount / size);
-
-  const handleDelete = async (id: string) => {
-    try {
-      await deletePart.mutateAsync(id);
-      toast.success(t('delete.successfull'));
-    } catch {
-      toast.error(t('error.delete'));
-    }
-  };
 
   return (
     <Card>
-      <CardHeader title={t('parts')}>
+      <CardHeader title={t('machines')}>
         <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
           <div className="relative w-full sm:max-w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
@@ -72,59 +61,89 @@ function PartsListPage() {
               onBlur={(e) => {
                 if (e.target.value !== search) {
                   navigate({
-                    search: (prev) => ({ ...prev, search: e.target.value || undefined, page: 1 }),
+                    search: (prev: MachinesSearch) => ({ ...prev, search: e.target.value || undefined, page: 1 }),
                   });
                 }
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   navigate({
-                    search: (prev) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }),
+                    search: (prev: MachinesSearch) => ({ ...prev, search: e.currentTarget.value || undefined, page: 1 }),
                   });
                 }
               }}
             />
           </div>
-          <Button onClick={() => navigate({ to: '/register/parts/add' })}>
-            <Plus className="size-4 mr-2" />
-            {t('add')}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={() => setIsIncludeVesselOpen(true)}>
+              <Anchor className="size-4 mr-2" />
+              {t('vessel.include')}
+            </Button>
+            <Button onClick={() => navigate({ to: '/register/machines/add' } as any)}>
+              <Plus className="size-4 mr-2" />
+              {t('add')}
+            </Button>
+          </div>
         </div>
       </CardHeader>
 
       <CardContent>
         {isLoading ? (
           <DefaultLoading />
-        ) : parts.length === 0 ? (
-          <EmptyData />
+        ) : !machines.length ? (
+          <DefaultEmptyData />
         ) : (
           <ItemGroup>
-            {parts.map((item) => (
-              <Item
-                key={item.id}
-                variant="outline"
-                className="cursor-pointer"
-                onClick={() =>
-                  navigate({
-                    to: '/register/parts/add',
-                    search: { id: item.id },
-                  })
-                }
-              >
+            {machines.map((machine) => (
+              <Item key={machine.id} variant="outline" className="cursor-pointer" onClick={() => navigate({ to: `/register/machines/add`, search: { id: machine._id } } as any)}>
                 <div className="flex items-center gap-4 flex-1">
                   <ItemMedia variant="image">
-                    <Avatar className="size-full">
-                      <AvatarImage src={item.image?.url} alt={item.name} />
-                      <AvatarFallback>
-                        <Package className="size-5" />
-                      </AvatarFallback>
-                    </Avatar>
+                    {machine.image?.url ? <img src={machine.image.url} alt={machine.name} className="size-full object-cover" /> : <Ship className="size-5" />}
                   </ItemMedia>
                   <ItemContent>
-                    <ItemTitle className="text-base">{item.name}</ItemTitle>
-                    <ItemDescription>
-                      SKU: {item.sku} • {item.enterprise?.name}
-                    </ItemDescription>
+                    <ItemTitle className="text-base">{machine.name}</ItemTitle>
+                    <div className="flex flex-col">
+                      <ItemDescription className="flex items-center gap-2">
+                        <Building2 className="size-4 text-muted-foreground shrink-0" />
+                        <span className="line-clamp-1">
+                          {machine.code || ''}
+                          {machine.code && machine.enterprise?.name ? ' / ' : ''}
+                          {machine.enterprise?.name || ''}
+                        </span>
+                      </ItemDescription>
+                      <div className="flex items-center gap-4 mt-1">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <CloudUpload className="size-3" />
+                          <ItemDescription className="tabular-nums">{machine.id}</ItemDescription>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          {machine.isInactive ? (
+                            <Badge variant="secondary" className="h-5 px-1.5 text-[10px] uppercase tracking-wider">
+                              {t('deactivate')}
+                            </Badge>
+                          ) : (
+                            <div className="flex items-center gap-3">
+                              {machine.isConfiguredFleet && (
+                                <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
+                                  <MapIcon className="size-3" />
+                                  <span>{t('show.in.fleet')}</span>
+                                </div>
+                              )}
+                              {machine.isConfiguredTravel && (
+                                <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
+                                  <Navigation className="size-3" />
+                                  <span>{t('setup.travel')}</span>
+                                </div>
+                              )}
+                              <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
+                                <Flashlight className="size-3" />
+                                <span>{`${machine.sensors || 0} ${t('sensors')}`}</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </ItemContent>
                 </div>
 
@@ -140,24 +159,19 @@ function PartsListPage() {
                         <DropdownMenuItem
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate({
-                              to: '/register/parts/add',
-                              search: { id: item.id },
-                            });
+                            navigate({ to: `/register/machines/add`, search: { id: machine._id } } as any);
                           }}
                         >
                           <Pencil className="size-4 mr-2" />
                           {t('edit')}
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="text-destructive"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(item.id);
-                          }}
-                        >
-                          <Trash2 className="size-4 mr-2" />
-                          {t('delete')}
+                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
+                          <Bell className="size-4 mr-2" />
+                          {t('editor.alarms.machine')}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
+                          <Flashlight className="size-4 mr-2" />
+                          {t('sensors')}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -198,7 +212,7 @@ function PartsListPage() {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      if (page > 1) navigate({ search: (prev) => ({ ...prev, page: page - 1 }) });
+                      if (page > 1) navigate({ search: (prev: MachinesSearch) => ({ ...prev, page: page - 1 }) });
                     }}
                     aria-disabled={page <= 1}
                     className={page <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
@@ -213,7 +227,7 @@ function PartsListPage() {
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
-                          navigate({ search: (prev) => ({ ...prev, page: pageNum }) });
+                          navigate({ search: (prev: MachinesSearch) => ({ ...prev, page: pageNum }) });
                         }}
                         isActive={page === pageNum}
                         className="cursor-pointer"
@@ -235,7 +249,7 @@ function PartsListPage() {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      if (page < totalPages) navigate({ search: (prev) => ({ ...prev, page: page + 1 }) });
+                      if (page < totalPages) navigate({ search: (prev: MachinesSearch) => ({ ...prev, page: page + 1 }) });
                     }}
                     aria-disabled={page >= totalPages}
                     className={page >= totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
@@ -246,6 +260,8 @@ function PartsListPage() {
           </div>
         </CardFooter>
       )}
+
+      <IncludeVesselModal isOpen={isIncludeVesselOpen} onClose={() => setIsIncludeVesselOpen(false)} idEnterprise={idEnterprise} />
     </Card>
   );
 }

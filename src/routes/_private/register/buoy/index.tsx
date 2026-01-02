@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useBuoys, useBuoysApi } from '@/hooks/use-buoys-api';
@@ -86,7 +86,7 @@ function BuoyListPage() {
           </div>
           <Button onClick={() => navigate({ to: '/register/buoy/add' })}>
             <Plus className="size-4 mr-2" />
-            {t('new.buoy')}
+            {t('add')}
           </Button>
         </div>
       </CardHeader>
@@ -97,51 +97,70 @@ function BuoyListPage() {
         ) : buoys.length === 0 ? (
           <EmptyData />
         ) : (
-          <ItemGroup>
+          <div className="grid gap-2">
             {buoys.map((item) => (
-              <Item key={item.id} variant="outline" className="flex items-center justify-between p-4 mb-2">
+              <Item
+                key={item.id}
+                variant="outline"
+                className="cursor-pointer"
+                onClick={() =>
+                  navigate({
+                    to: '/register/buoy/add',
+                    search: { id: item.id },
+                  })
+                }
+              >
                 <div className="flex items-center gap-4 flex-1">
-                  <ItemMedia variant="icon">
-                    <Radio className="size-5 text-blue-500" />
+                  <ItemMedia variant="image">
+                    <Radio className="size-5" />
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.name}</ItemTitle>
-                    <ItemDescription className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <ItemDescription className="flex items-center gap-1">
                       <MapPin className="size-3" />
                       {item.proximity}
                     </ItemDescription>
                   </ItemContent>
                 </div>
 
-                <div className="flex items-center justify-end flex-1">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreVertical className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() =>
-                          navigate({
-                            to: '/register/buoy/add',
-                            search: { id: item.id },
-                          })
-                        }
-                      >
-                        <Pencil className="size-4 mr-2" />
-                        {t('edit')}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(item.id)}>
-                        <Trash2 className="size-4 mr-2" />
-                        {t('delete')}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-end border-l pl-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
+                          <MoreVertical className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate({
+                              to: '/register/buoy/add',
+                              search: { id: item.id },
+                            });
+                          }}
+                        >
+                          <Pencil className="size-4 mr-2" />
+                          {t('edit')}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(item.id);
+                          }}
+                        >
+                          <Trash2 className="size-4 mr-2" />
+                          {t('delete')}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </Item>
             ))}
-          </ItemGroup>
+          </div>
         )}
       </CardContent>
 

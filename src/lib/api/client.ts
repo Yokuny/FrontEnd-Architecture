@@ -15,6 +15,7 @@ interface ApiOptions {
   headers?: Record<string, string>;
   responseType?: 'json' | 'blob' | 'text' | 'arraybuffer';
   isV2?: boolean;
+  method?: string;
 }
 
 interface ApiResponse<T = unknown> {
@@ -161,6 +162,11 @@ function createHeaders(options: ApiOptions): HeadersInit {
     'Content-Type': 'application/json',
   };
 
+  // Remove Content-Type for GET and DELETE as they usually don't have a body
+  if (options.method === 'GET' || options.method === 'DELETE') {
+    delete headers['Content-Type'];
+  }
+
   if (token) {
     headers.token = token;
   }
@@ -207,7 +213,7 @@ class ApiClient {
       fullUrl,
       {
         method: 'GET',
-        headers: createHeaders(options),
+        headers: createHeaders({ ...options, method: 'GET' }),
       },
       options,
     );
@@ -295,7 +301,7 @@ class ApiClient {
       fullUrl,
       {
         method: 'DELETE',
-        headers: createHeaders(options),
+        headers: createHeaders({ ...options, method: 'DELETE' }),
       },
       options,
     );

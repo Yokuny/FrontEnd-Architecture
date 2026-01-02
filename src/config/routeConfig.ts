@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Activity, Building2, CalendarClock, CheckSquare, KeySquare, Mail, MonitorCog, Network, NotebookPen, Shield, Users, Wrench } from 'lucide-react';
+import { Activity, Bell, Building2, CalendarClock, CheckSquare, FileText, KeySquare, Mail, MonitorCog, Network, NotebookPen, Shield, Users, Variable, Wrench } from 'lucide-react';
 
 // Mapeamento de ícones por segmento de rota
 export const ROUTE_ICONS: Record<string, LucideIcon> = {
@@ -21,6 +21,9 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   'list-os-done': CheckSquare,
   sensors: Activity,
   enterprises: Building2,
+  alerts: Bell,
+  contracts: FileText,
+  'sensor-functions': Variable,
 };
 
 // Chaves i18n para tradução de rotas
@@ -36,6 +39,9 @@ export const ROUTE_LABELS: Record<string, string> = {
   'monitoring-plans': 'monitoring.plan.maintenance',
   'monitoring-wear': 'monitoring.wear.part',
   'list-os-done': 'done.os',
+  alerts: 'alerts',
+  contracts: 'contracts',
+  'sensor-functions': 'sensor-functions',
 };
 
 /**
@@ -58,6 +64,7 @@ export const MAIN_ROUTES = [
   '/register/enterprises',
   '/register/forms',
   '/register/geofences',
+  '/register/machines',
   '/register/maintenance-plans',
   '/register/model-machine',
   '/register/params',

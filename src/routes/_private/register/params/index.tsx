@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
@@ -86,7 +86,7 @@ function ParamsListPage() {
           </div>
           <Button onClick={() => navigate({ to: '/register/params/add' })}>
             <Plus className="size-4 mr-2" />
-            {t('new.params')}
+            {t('add')}
           </Button>
         </div>
       </CardHeader>
@@ -97,46 +97,65 @@ function ParamsListPage() {
         ) : params.length === 0 ? (
           <EmptyData />
         ) : (
-          <div className="grid gap-2">
+          <ItemGroup>
             {params.map((item) => (
-              <Item key={item.id} variant="outline" className="flex items-center justify-between p-4">
+              <Item
+                key={item.id}
+                variant="outline"
+                className="cursor-pointer"
+                onClick={() =>
+                  navigate({
+                    to: '/register/params/add',
+                    search: { id: item.id },
+                  })
+                }
+              >
                 <div className="flex items-center gap-4 flex-1">
-                  <ItemMedia className="size-10 rounded-full flex items-center justify-center bg-muted">
-                    <List className="size-5 text-basic-600 dark:text-basic-400" />
+                  <ItemMedia variant="image">
+                    <List className="size-5" />
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
-                    <ItemDescription className="text-xs text-muted-foreground">{item.enterprise?.name}</ItemDescription>
+                    <ItemDescription>{item.enterprise?.name}</ItemDescription>
                   </ItemContent>
                 </div>
 
-                <div className="flex items-center justify-end flex-1">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreVertical className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        onClick={() =>
-                          navigate({
-                            to: '/register/params/add',
-                            search: { id: item.id },
-                          })
-                        }
-                      >
-                        {t('edit')}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(item.id)}>
-                        {t('delete')}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-end border-l pl-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate({
+                              to: '/register/params/add',
+                              search: { id: item.id },
+                            });
+                          }}
+                        >
+                          {t('edit')}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(item.id);
+                          }}
+                        >
+                          {t('delete')}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </Item>
             ))}
-          </div>
+          </ItemGroup>
         )}
       </CardContent>
 
