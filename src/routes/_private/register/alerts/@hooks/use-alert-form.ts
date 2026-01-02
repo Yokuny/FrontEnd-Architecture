@@ -1,22 +1,101 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-import { useAlert, useAlertsApi } from '@/hooks/use-alerts-api';
+import { useAlertsApi } from '@/hooks/use-alerts-api';
 import { type AlertFormData, alertFormSchema } from '../@interface/alert';
-import { Route } from '../add';
 
-export function useAlertForm() {
+/**
+ * Maps API data to Form data structure
+ */
+export function mapAlertToFormData(initialData: any, t: (key: string) => string, duplicate?: boolean): AlertFormData {
+  const isDuplicate = duplicate === true;
+
+  // Helper to map objects with 'id' or 'value' to simple strings
+  const mapToIds = (items: any[] | undefined | null) => {
+    if (!items) return [];
+    return items.map((item) => (typeof item === 'string' ? item : item.id || item.value || item.sensorId || item));
+  };
+
+  return {
+    ...initialData,
+    idEnterprise: initialData.idEnterprise || initialData.enterprise?.id || '',
+    id: isDuplicate ? undefined : initialData.id,
+    description: isDuplicate ? `${initialData.description || ''} (${t('copy')})` : initialData.description,
+    type: initialData.type as any,
+    idsMinMax: mapToIds(initialData.idsMinMax),
+    idMachines: mapToIds(initialData.idMachines),
+    users: mapToIds(initialData.users),
+    scales: mapToIds(initialData.scales),
+    sendBy: initialData.sendBy || [],
+    allMachines: initialData.allMachines || false,
+
+    rule: initialData.rule
+      ? {
+          ...initialData.rule,
+          inMinutes: initialData.rule.inMinutes ?? null,
+          then: initialData.rule.then
+            ? {
+                ...initialData.rule.then,
+                message: isDuplicate && initialData.rule.then.message ? `${initialData.rule.then.message} (${t('copy')})` : initialData.rule.then.message,
+                level: initialData.rule.then.level || '',
+              }
+            : undefined,
+          and: initialData.rule.and?.map((and: any) => ({
+            or: and.or?.map((or: any) => ({
+              ...or,
+              sensor: typeof or.sensor === 'object' ? or.sensor?.value || or.sensor?.id || or.sensor : or.sensor,
+            })),
+          })),
+        }
+      : undefined,
+
+    events: initialData.events
+      ? {
+          ...initialData.events,
+          description: isDuplicate && initialData.events.description ? `${initialData.events.description} (${t('copy')})` : initialData.events.description,
+          startInsideInPlatformArea: initialData.events.startInsideInPlatformArea
+            ? {
+                ...initialData.events.startInsideInPlatformArea,
+                idMachines: mapToIds(initialData.events.startInsideInPlatformArea.idMachines || (initialData as any).machines),
+                idPlatforms: mapToIds(initialData.events.startInsideInPlatformArea.idPlatforms || (initialData as any).platforms),
+              }
+            : null,
+          inOutGeofence: initialData.events.inOutGeofence
+            ? {
+                ...initialData.events.inOutGeofence,
+                idMachines: mapToIds(initialData.events.inOutGeofence.idMachines || (initialData as any).machinesInOutGeofence),
+                idGeofences: mapToIds(initialData.events.inOutGeofence.idGeofences || (initialData as any).geofences),
+              }
+            : null,
+          lostConnectionSensor: initialData.events.lostConnectionSensor
+            ? {
+                ...initialData.events.lostConnectionSensor,
+                idMachine:
+                  typeof initialData.events.lostConnectionSensor.idMachine === 'object'
+                    ? (initialData.events.lostConnectionSensor.idMachine as any)?.value || (initialData.events.lostConnectionSensor.idMachine as any)?.id
+                    : initialData.events.lostConnectionSensor.idMachine || (initialData as any).machineLostConnectionSensor?.id,
+                idSensors: mapToIds(initialData.events.lostConnectionSensor.idSensors || (initialData as any).sensorsLostConnectionSensor),
+              }
+            : null,
+          statusDistancePort: initialData.events.statusDistancePort
+            ? {
+                ...initialData.events.statusDistancePort,
+                idMachines: mapToIds(initialData.events.statusDistancePort.idMachines || (initialData as any).machinesStatusDistancePort),
+              }
+            : null,
+        }
+      : undefined,
+  };
+}
+
+export function useAlertForm(initialData?: AlertFormData) {
   const { t } = useTranslation();
-  const navigate = Route.useNavigate();
-  const { id, duplicate } = Route.useSearch();
-  const { createUpdate, remove } = useAlertsApi();
-
-  const { data: initialData, isLoading: isLoadingData } = useAlert(id || null);
+  const { createUpdate } = useAlertsApi();
 
   const form = useForm<AlertFormData>({
-    resolver: zodResolver(alertFormSchema),
+    resolver: zodResolver(alertFormSchema) as any,
+    values: initialData,
     defaultValues: {
       type: 'conditional',
       visibility: 'private',
@@ -25,87 +104,84 @@ export function useAlertForm() {
       users: [],
       scales: [],
       idMachines: [],
-      // rule: { and: [{ or: [{}] }] }, // Initial rule structure
+      idsMinMax: [],
       events: {
         description: '',
       },
+      allMachines: false,
     },
   });
 
-  useEffect(() => {
-    if (initialData) {
-      const isDuplicate = duplicate === 'true';
-
-      const formData: AlertFormData = {
-        ...initialData,
-        idEnterprise: initialData.idEnterprise || initialData.enterprise?.id || '',
-        id: isDuplicate ? undefined : initialData.id,
-        description: isDuplicate ? `${initialData.description || ''} (${t('copy')})` : initialData.description,
-        type: initialData.type as any, // Cast if enum mismatch
-        idsMinMax: initialData.idsMinMax || [],
-        idMachines: initialData.idMachines || [],
-        users: initialData.users || [],
-        scales: initialData.scales || [],
-        sendBy: initialData.sendBy || [],
-
-        // Handle rule duplication for message
-        rule: initialData.rule
-          ? {
-              ...initialData.rule,
-              then: initialData.rule.then
-                ? {
-                    ...initialData.rule.then,
-                    message: isDuplicate && initialData.rule.then.message ? `${initialData.rule.then.message} (${t('copy')})` : initialData.rule.then.message,
-                  }
-                : undefined,
-            }
-          : undefined,
-
-        events: initialData.events
-          ? {
-              ...initialData.events,
-              description: isDuplicate && initialData.events.description ? `${initialData.events.description} (${t('copy')})` : initialData.events.description,
-            }
-          : undefined,
-      };
-
-      form.reset(formData);
+  const validateForm = (data: AlertFormData): boolean => {
+    if (!data.idEnterprise) {
+      toast.warning(t('enterprise.required'));
+      return false;
     }
-  }, [initialData, form, duplicate, t]);
 
-  const onSubmit = async (data: AlertFormData) => {
-    try {
-      if (!data.idEnterprise) {
-        toast.error(t('enterprise.required'));
-        return;
+    if (data.type === 'conditional') {
+      if (data.rule?.inMinutes !== undefined && data.rule?.inMinutes !== null) {
+        if (data.rule.inMinutes < 0 || data.rule.inMinutes > 1440) {
+          toast.warning(t('hours.outside.limit'));
+          return false;
+        }
       }
-
-      await createUpdate.mutateAsync(data);
-      toast.success(t('save.successfull'));
-      navigate({ to: '/register/alerts', search: { page: 1, size: 10 } } as any);
-    } catch (error) {
-      console.error(error);
-      toast.error(t('error.save'));
+      if (!data.rule?.then?.message) {
+        toast.warning(t('message.required'));
+        return false;
+      }
+      if (!data.rule?.and?.length) {
+        toast.warning(t('rule.less.one.required'));
+        return false;
+      }
     }
+
+    if (data.type === 'min-max') {
+      if (!data.idsMinMax?.length) {
+        toast.warning(t('vessels.required.at.least.one'));
+        return false;
+      }
+      if (!data.description?.trim()) {
+        toast.warning(t('description.required'));
+        return false;
+      }
+    }
+
+    if (data.type === 'event') {
+      const e = data.events;
+      if (!e?.startInsideInPlatformArea && !e?.inOutGeofence && !e?.lostConnectionSensor && !e?.statusDistancePort) {
+        toast.warning(t('events.required.at.least.one'));
+        return false;
+      }
+      if (!e?.description?.trim()) {
+        toast.warning(t('description.required'));
+        return false;
+      }
+    }
+
+    return true;
   };
 
-  const handleDelete = async () => {
-    if (!id) return;
-    try {
-      await remove.mutateAsync(id);
-      toast.success(t('delete.successfull'));
-      navigate({ to: '/register/alerts', search: { page: 1, size: 10 } } as any);
-    } catch (error) {
-      console.error(error);
-      toast.error(t('error.delete'));
+  const onSubmit = async () => {
+    const data = form.getValues();
+    if (!validateForm(data)) {
+      throw new Error('Validation failed');
     }
+
+    // Final mapping before save to ensure only necessary data for the current type is sent
+    const payload: any = {
+      ...data,
+      usersPermissionView: data.visibility === 'limited' ? data.usersPermissionView : [],
+      rule: data.type === 'event' ? null : data.rule,
+      events: data.type === 'event' ? data.events : null,
+      idsMinMax: data.type === 'min-max' ? data.idsMinMax : [],
+    };
+
+    return createUpdate.mutateAsync(payload);
   };
 
   return {
     form,
     onSubmit,
-    handleDelete,
-    isLoading: isLoadingData || createUpdate.isPending || remove.isPending,
-    isEditing: !!id && !duplicate,
+    isPending: createUpdate.isPending,
   };
 }

@@ -60,7 +60,7 @@ function AddPermissionPage() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             <div>
               <h2 className="font-semibold text-foreground">{t('identification')}</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('permissions.user.description')}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{t('permissions.user.description')}</p>
             </div>
             <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
               <div className="col-span-full sm:col-span-3">
@@ -102,7 +102,7 @@ function AddPermissionPage() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             <div>
               <h2 className="font-semibold text-foreground">{t('access_control')}</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('permissions.access.description')}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{t('permissions.access.description')}</p>
             </div>
             <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
               <div className="col-span-full">

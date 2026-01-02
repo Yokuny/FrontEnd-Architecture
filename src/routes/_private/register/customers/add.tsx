@@ -42,30 +42,31 @@ function CustomerAddPage() {
   return (
     <Card>
       <CardHeader title={t('customer')} />
-      <CardContent className="p-0">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardContent>
             <CustomerForm />
-          </form>
-        </Form>
-      </CardContent>
-      <CardFooter layout="multi">
-        <div>
-          {id && (
-            <Button variant="destructive" type="button" onClick={() => onDelete(id)} disabled={form.formState.isSubmitting}>
-              {t('delete')}
-            </Button>
-          )}
-        </div>
-        <div className="flex gap-2">
-          <Button type="button" onClick={() => navigate({ to: '/register/customers' } as any)}>
-            {t('cancel')}
-          </Button>
-          <Button onClick={form.handleSubmit(onSubmit)} disabled={form.formState.isSubmitting}>
-            {t('save')}
-          </Button>
-        </div>
-      </CardFooter>
+          </CardContent>
+
+          <CardFooter layout="multi">
+            <div>
+              {id && (
+                <Button variant="destructive" type="button" onClick={() => onDelete(id)} disabled={form.formState.isSubmitting}>
+                  {t('delete')}
+                </Button>
+              )}
+            </div>
+            <div className="flex gap-2">
+              <Button type="button" onClick={() => navigate({ to: '/register/customers' } as any)}>
+                {t('cancel')}
+              </Button>
+              <Button onClick={form.handleSubmit(onSubmit)} disabled={form.formState.isSubmitting}>
+                {t('save')}
+              </Button>
+            </div>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   );
 }

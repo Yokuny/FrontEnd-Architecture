@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -61,23 +62,28 @@ function PlatformAddFormContent({ initialData }: { initialData?: any }) {
   const navigate = useNavigate();
   const { deletePlatform } = usePlatformsApi();
 
-  const { form, onSubmit, isPending } = usePlatformForm({
-    id: initialData?.id,
-    idEnterprise: initialData?.enterprise?.id,
-    name: initialData?.name,
-    code: initialData?.code,
-    acronym: initialData?.acronym,
-    basin: initialData?.basin,
-    type: initialData?.type,
-    modelType: initialData?.modelType,
-    operator: initialData?.operator,
-    imo: initialData?.imo,
-    mmsi: initialData?.mmsi,
-    latitude: initialData?.location?.coordinates?.[0],
-    longitude: initialData?.location?.coordinates?.[1],
-    radius: initialData?.radius,
-    ais: initialData?.ais,
-  });
+  const formData = useMemo(() => {
+    if (!initialData) return undefined;
+    return {
+      id: initialData.id,
+      idEnterprise: initialData.enterprise?.id,
+      name: initialData.name,
+      code: initialData.code,
+      acronym: initialData.acronym,
+      basin: initialData.basin,
+      type: initialData.type,
+      modelType: initialData.modelType,
+      operator: initialData.operator,
+      imo: initialData.imo,
+      mmsi: initialData.mmsi,
+      latitude: initialData.location?.coordinates?.[0],
+      longitude: initialData.location?.coordinates?.[1],
+      radius: initialData.radius,
+      ais: initialData.ais,
+    };
+  }, [initialData]);
+
+  const { form, onSubmit, isPending } = usePlatformForm(formData);
 
   const handleDelete = async () => {
     if (!initialData?.id) return;

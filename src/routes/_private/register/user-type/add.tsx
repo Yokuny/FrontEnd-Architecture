@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -58,12 +59,18 @@ function UserTypeAddFormContent({ initialData }: { initialData?: any }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { deleteUserType } = useUserTypesApi();
-  const { form, onSubmit, isPending } = useUserTypeForm({
-    id: initialData?.id,
-    description: initialData?.description,
-    idEnterprise: initialData?.enterprise?.id,
-    color: initialData?.color,
-  });
+
+  const formData = useMemo(() => {
+    if (!initialData) return undefined;
+    return {
+      id: initialData.id,
+      description: initialData.description,
+      idEnterprise: initialData.enterprise?.id,
+      color: initialData.color,
+    };
+  }, [initialData]);
+
+  const { form, onSubmit, isPending } = useUserTypeForm(formData);
 
   const handleDelete = async () => {
     if (!initialData?.id) return;

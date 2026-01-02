@@ -9,6 +9,7 @@ export function useFormForm(initialData?: Partial<FormFormData>) {
   const isChanged = useRef(false);
 
   const form = useForm<FormFormData>({
+    values: initialData as FormFormData,
     defaultValues: {
       id: initialData?.id || '',
       idEnterprise: initialData?.idEnterprise || '',

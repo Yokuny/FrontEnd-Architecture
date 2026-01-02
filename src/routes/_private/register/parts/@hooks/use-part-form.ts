@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -16,6 +16,7 @@ export function usePartForm(initialData?: PartFormData, initialImage?: any) {
 
   const form = useForm<PartFormData>({
     resolver: zodResolver(partSchema) as any,
+    values: initialData,
     defaultValues: initialData || {
       name: '',
       sku: '',
@@ -23,6 +24,13 @@ export function usePartForm(initialData?: PartFormData, initialImage?: any) {
       idEnterprise: '',
     },
   });
+
+  useEffect(() => {
+    if (initialImage?.url) {
+      setImage(initialImage.url);
+      setImagePreview(initialImage.url);
+    }
+  }, [initialImage]);
 
   const onChangeImage = (file: File) => {
     setImage(file);

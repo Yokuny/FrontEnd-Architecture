@@ -13,6 +13,7 @@ export function usePlatformForm(initialData?: Partial<PlatformFormData>) {
 
   const form = useForm<PlatformFormData>({
     resolver: zodResolver(platformSchema) as any,
+    values: initialData as PlatformFormData,
     defaultValues: {
       id: initialData?.id,
       idEnterprise: initialData?.idEnterprise || '',

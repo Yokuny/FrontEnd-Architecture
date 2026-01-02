@@ -23,6 +23,11 @@ async function fetchAlerts(params: AlertsSearchParams): Promise<AlertsListRespon
   return data;
 }
 
+async function fetchMinMaxVessels(idEnterprise: string): Promise<any[]> {
+  const { data } = await api.get(`/sensorminmax/filled/${idEnterprise}`);
+  return data as any[];
+}
+
 async function fetchAlert(id: string): Promise<AlertRule> {
   const { data } = await api.get<AlertRule>(`/alertrule`, { params: { id } });
   return data;
@@ -75,4 +80,12 @@ export function useAlertsApi() {
     createUpdate,
     remove,
   };
+}
+
+export function useMinMaxVessels(idEnterprise: string | undefined) {
+  return useQuery({
+    queryKey: ['min-max-vessels', idEnterprise],
+    queryFn: () => fetchMinMaxVessels(idEnterprise || ''),
+    enabled: !!idEnterprise,
+  });
 }

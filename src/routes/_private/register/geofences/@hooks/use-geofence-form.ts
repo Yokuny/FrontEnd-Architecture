@@ -8,6 +8,7 @@ export function useGeofenceForm(initialData?: Partial<GeofenceFormData>) {
 
   const form = useForm<GeofenceFormData>({
     resolver: zodResolver(geofenceFormSchema) as any,
+    values: initialData as GeofenceFormData,
     defaultValues: {
       color: '#3366FF',
       initializeTravel: false,

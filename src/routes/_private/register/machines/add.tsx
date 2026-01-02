@@ -76,42 +76,42 @@ function MachineAddPage() {
   return (
     <Card>
       <CardHeader title={isEdit ? t('machine.edit') : t('machine.new')} />
-      <CardContent>
-        <Form {...form}>
-          <form id="machine-form" onSubmit={handleSave}>
+      <Form {...form}>
+        <form id="machine-form" onSubmit={handleSave}>
+          <CardContent>
             <MachineForm isEdit={isEdit} />
-          </form>
-        </Form>
-      </CardContent>
-      <CardFooter layout="multi">
-        {isEdit && (
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline" className={machine?.isInactive ? 'text-primary' : 'text-destructive'}>
-                {machine?.isInactive ? t('activate') : t('deactivate')}
+          </CardContent>
+          <CardFooter layout="multi">
+            {isEdit && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" className={machine?.isInactive ? 'text-primary' : 'text-destructive'}>
+                    {machine?.isInactive ? t('activate') : t('deactivate')}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>{machine?.isInactive ? t('activate.machine') : t('deactivate.machine')}</AlertDialogTitle>
+                    <AlertDialogDescription>{machine?.isInactive ? t('activate.machine.description') : t('deactivate.machine.description')}</AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleToggleStatus}>{t('confirm')}</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
+            <div className="flex items-center gap-2 ml-auto">
+              <Button type="button" onClick={() => navigate({ to: '/register/machines' } satisfies { to: string })}>
+                {t('cancel')}
               </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>{machine?.isInactive ? t('activate.machine') : t('deactivate.machine')}</AlertDialogTitle>
-                <AlertDialogDescription>{machine?.isInactive ? t('activate.machine.description') : t('deactivate.machine.description')}</AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
-                <AlertDialogAction onClick={handleToggleStatus}>{t('confirm')}</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        )}
-        <div className="flex items-center gap-2 ml-auto">
-          <Button type="button" onClick={() => navigate({ to: '/register/machines' } satisfies { to: string })}>
-            {t('cancel')}
-          </Button>
-          <Button type="submit" form="machine-form" disabled={isPending}>
-            {t('save')}
-          </Button>
-        </div>
-      </CardFooter>
+              <Button type="submit" form="machine-form" disabled={isPending}>
+                {t('save')}
+              </Button>
+            </div>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   );
 }

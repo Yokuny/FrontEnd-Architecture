@@ -110,6 +110,7 @@ function UserTypeListPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
+                  <ItemDescription>{item.color}</ItemDescription>
                   <div className="size-4 rounded-full border border-white/20" style={{ backgroundColor: item.color }} />
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>

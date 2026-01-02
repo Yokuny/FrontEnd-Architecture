@@ -25,58 +25,53 @@ export function RuleConfig() {
   });
 
   return (
-    <div className="space-y-4">
-      <Card>
-        <CardContent className="pt-6 grid gap-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              control={control}
-              name="rule.then.message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('message')} *</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder={t('message')} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-6 border-b">
+        <FormField
+          control={control}
+          name="rule.then.message"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('message')} *</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder={t('message')} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={control}
-                name="rule.then.level" // Note: Schema might need current 'level' field
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('scale.level')} *</FormLabel>
-                    <FormControl>
-                      {/* Assuming LevelSelect handles value mapping */}
-                      <LevelSelect mode="single" value={field.value} onChange={field.onChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={control}
-                name="rule.inMinutes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('condition.how.long')}</FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} placeholder={t('minutes')} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={control}
+            name="rule.then.level"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('scale.level')} *</FormLabel>
+                <FormControl>
+                  <LevelSelect mode="single" value={field.value} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={control}
+            name="rule.inMinutes"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('condition.how.long')}</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} value={field.value || ''} onChange={(e) => field.onChange(e.target.valueAsNumber)} placeholder={t('minutes')} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+      </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 pt-4">
         {andFields.map((field, index) => (
           <RuleGroup key={field.id} andIndex={index} idEnterprise={idEnterprise} onRemove={() => removeAnd(index)} canRemove={andFields.length > 1} />
         ))}
@@ -99,11 +94,11 @@ function RuleGroup({ andIndex, idEnterprise, onRemove, canRemove }: { andIndex: 
     remove: removeOr,
   } = useFieldArray({
     control,
-    name: `rule.and.${andIndex}.or` as any, // Recursive type issue with helper, casting to any
+    name: `rule.and.${andIndex}.or` as any,
   });
 
   return (
-    <Card className="relative group">
+    <Card className="relative group overflow-hidden border-muted-foreground/20">
       {canRemove && (
         <Button
           type="button"
@@ -123,7 +118,7 @@ function RuleGroup({ andIndex, idEnterprise, onRemove, canRemove }: { andIndex: 
                 <span className="bg-muted px-2 py-1 text-xs rounded uppercase font-bold text-muted-foreground">{t('condition.or')}</span>
               </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end bg-muted/20 p-4 rounded-lg border">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end bg-accent/30 p-4 rounded-lg border border-accent">
               <div className="md:col-span-4">
                 <FormField
                   control={control}
@@ -132,13 +127,9 @@ function RuleGroup({ andIndex, idEnterprise, onRemove, canRemove }: { andIndex: 
                     <FormItem>
                       <FormLabel>{t('sensor')} *</FormLabel>
                       <FormControl>
-                        {/* Legacy maps object { value, label } to sensor field? Or just value ID?
-                                 Schema says Record<any>. Legacy passes object. 
-                                 SensorByEnterpriseSelect usually returns ID string.
-                                 Let's assume ID. */}
                         <SensorByEnterpriseSelect
                           idEnterprise={idEnterprise}
-                          value={field.value?.value || field.value} // Handle both obj and string if legacy data exists
+                          value={field.value?.value || field.value}
                           onChange={(val) => field.onChange(val)}
                           placeholder="sensor"
                         />

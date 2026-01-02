@@ -110,7 +110,7 @@ function FuelTypeListPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <ItemTitle className="tabular-nums text-lg">{item.code}</ItemTitle>
+                  <ItemDescription>{item.code}</ItemDescription>
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>

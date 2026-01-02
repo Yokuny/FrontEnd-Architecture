@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -14,6 +13,7 @@ export function useContractForm(initialData?: any) {
 
   const form = useForm<ContractFormData>({
     resolver: zodResolver(contractSchema) as any,
+    values: initialData,
     defaultValues: {
       idEnterprise: '',
       description: '',
@@ -25,22 +25,6 @@ export function useContractForm(initialData?: any) {
       ...initialData,
     },
   });
-
-  // Reset form when initialData changes (e.g. after fetching existing contract)
-  useEffect(() => {
-    if (initialData) {
-      form.reset({
-        idEnterprise: '',
-        description: '',
-        customer: '',
-        competence: 'eof',
-        groupConsumption: [],
-        operations: [],
-        events: [],
-        ...initialData,
-      });
-    }
-  }, [initialData, form]);
 
   const onSubmit = form.handleSubmit(async (values) => {
     try {

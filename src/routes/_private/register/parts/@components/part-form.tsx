@@ -33,7 +33,6 @@ export function PartForm({ imagePreview, onChangeImage, isEdit }: PartFormProps)
               render={({ field }) => (
                 <FormItem>
                   <Field className="gap-2">
-                    <FieldLabel>{t('enterprise')} *</FieldLabel>
                     <FormControl>
                       <EnterpriseSelect value={field.value} onChange={field.onChange} disabled={isEdit} mode="single" />
                     </FormControl>

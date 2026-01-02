@@ -1,13 +1,11 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Eye, FileText, Settings, Shield, Trash2 } from 'lucide-react';
+import { Eye, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
-import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
-import { EnterpriseSelect } from '@/components/selects/enterprise-select';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,15 +19,10 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Field, FieldLabel } from '@/components/ui/field';
-import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { type FormDetail, useForm as useFormQuery, useFormsApi } from '@/hooks/use-forms-api';
-import { FormFieldsList } from './@components/form-fields-list';
-import { FormOthersTab } from './@components/form-others-tab';
-import { FormPermissionsTab } from './@components/form-permissions-tab';
+import { FormForm } from './@components/form-form';
 import { FormPreviewModal } from './@components/form-preview-modal';
 import { useFormForm } from './@hooks/use-form-form';
 import type { FormFormData } from './@interface/form.schema';
@@ -180,90 +173,8 @@ function FormAddFormContent({ initialData, pendingData, formId }: FormAddFormCon
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSave)}>
-            <CardContent className="p-0">
-              <DefaultFormLayout
-                sections={[
-                  {
-                    title: t('identification'),
-                    description: t('form.identification.description', 'Identificação básica do formulário'),
-                    fields: [
-                      <FormField
-                        key="idEnterprise"
-                        control={form.control}
-                        name="idEnterprise"
-                        render={({ field }) => (
-                          <FormItem>
-                            <Field className="gap-2">
-                              <FieldLabel>{t('enterprise')}</FieldLabel>
-                              <EnterpriseSelect
-                                mode="single"
-                                value={field.value}
-                                onChange={(val: string | undefined) => {
-                                  field.onChange(val || '');
-                                  markAsChanged();
-                                }}
-                              />
-                            </Field>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />,
-                      <FormField
-                        key="description"
-                        control={form.control}
-                        name="description"
-                        render={({ field }) => (
-                          <FormItem>
-                            <Field className="gap-2">
-                              <FieldLabel>{t('description')}</FieldLabel>
-                              <Input
-                                {...field}
-                                placeholder={t('description')}
-                                onChange={(e) => {
-                                  field.onChange(e);
-                                  markAsChanged();
-                                }}
-                              />
-                            </Field>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />,
-                    ],
-                  },
-                ]}
-              />
-
-              <div className="px-6 pb-6 md:px-10 md:pb-10">
-                <Tabs defaultValue="form" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="form" className="flex items-center gap-2">
-                      <FileText className="size-4" />
-                      {t('form')}
-                    </TabsTrigger>
-                    <TabsTrigger value="others" className="flex items-center gap-2">
-                      <Settings className="size-4" />
-                      {t('other')}
-                    </TabsTrigger>
-                    <TabsTrigger value="permissions" className="flex items-center gap-2">
-                      <Shield className="size-4" />
-                      {t('permissions')}
-                    </TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent value="form" className="mt-6">
-                    <FormFieldsList form={form} idEnterprise={form.watch('idEnterprise')} markAsChanged={markAsChanged} />
-                  </TabsContent>
-
-                  <TabsContent value="others" className="mt-6">
-                    <FormOthersTab form={form} idEnterprise={form.watch('idEnterprise')} markAsChanged={markAsChanged} />
-                  </TabsContent>
-
-                  <TabsContent value="permissions" className="mt-6">
-                    <FormPermissionsTab form={form} idEnterprise={form.watch('idEnterprise')} markAsChanged={markAsChanged} />
-                  </TabsContent>
-                </Tabs>
-              </div>
+            <CardContent>
+              <FormForm markAsChanged={markAsChanged} />
             </CardContent>
 
             <CardFooter layout="multi">

@@ -266,7 +266,7 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
       <CardHeader title={initialData ? t('edit.model') : t('new.model')} />
       <Form {...form}>
         <form onSubmit={handleSave}>
-          <CardContent className="p-0">
+          <CardContent>
             <ModelMachineForm attachmentFields={attachmentFields} />
           </CardContent>
 

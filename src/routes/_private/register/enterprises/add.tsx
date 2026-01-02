@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -40,6 +41,17 @@ function EnterpriseAddPage() {
   const { id } = Route.useSearch();
   const { data: enterprise, isLoading } = useEnterprise(id || '');
 
+  const formData: any = React.useMemo(() => {
+    if (!enterprise) return undefined;
+    return {
+      ...enterprise,
+      lat: enterprise.coordinate?.latitude,
+      lon: enterprise.coordinate?.longitude,
+      imagePreview: enterprise.logo || enterprise.image?.url,
+      imagePreviewDark: typeof enterprise.imageDark?.url === 'string' ? enterprise.imageDark.url : (enterprise.imageDark?.url as any)?.url || (enterprise.imageDark as any),
+    };
+  }, [enterprise]);
+
   if (id && isLoading) {
     return (
       <Card>
@@ -50,16 +62,6 @@ function EnterpriseAddPage() {
       </Card>
     );
   }
-
-  const formData: any = enterprise
-    ? {
-        ...enterprise,
-        lat: enterprise.coordinate?.latitude,
-        lon: enterprise.coordinate?.longitude,
-        imagePreview: enterprise.logo || enterprise.image?.url,
-        imagePreviewDark: typeof enterprise.imageDark?.url === 'string' ? enterprise.imageDark.url : (enterprise.imageDark?.url as any)?.url || (enterprise.imageDark as any),
-      }
-    : undefined;
 
   return <EnterpriseAddFormContent initialData={formData} />;
 }
@@ -87,7 +89,7 @@ function EnterpriseAddFormContent({ initialData }: { initialData?: any }) {
 
       <Form {...form}>
         <form onSubmit={onSubmit}>
-          <CardContent className="p-0">
+          <CardContent>
             <EnterpriseForm />
           </CardContent>
 

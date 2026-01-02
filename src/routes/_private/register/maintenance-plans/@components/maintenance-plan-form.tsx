@@ -1,10 +1,11 @@
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import DefaultFormLayout from '@/components/default-form-layout';
 import { EnterpriseSelect } from '@/components/selects/enterprise-select';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
 import type { MaintenancePlanFormData } from '../@interface/maintenance-plan';
 import { PartsCycleField } from './parts-cycle-field';
 import { ServicesGroupedField } from './services-grouped-field';
@@ -33,138 +34,132 @@ export function MaintenancePlanForm() {
     { value: 'ODOMETER', label: t('odometer') },
   ];
 
-  return (
-    <div className="space-y-8 pb-10">
-      {/* Identification Section */}
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-        <div>
-          <h2 className="font-semibold text-foreground">{t('identification')}</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('maintenance.plan.identification.description')}</p>
-        </div>
-        <div className="md:col-span-2">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
-            <div className="col-span-full">
-              <FormField
-                control={control}
-                name="idEnterprise"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('enterprise')} *</FormLabel>
+  const sections = [
+    {
+      title: t('identification'),
+      description: t('maintenance.plan.identification.description'),
+      fields: [
+        <FormField
+          key="idEnterprise"
+          control={control}
+          name="idEnterprise"
+          render={({ field }) => (
+            <FormItem>
+              <Field className="gap-2">
+                <FieldLabel>{t('enterprise')} *</FieldLabel>
+                <FormControl>
+                  <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
+                </FormControl>
+              </Field>
+              <FormMessage />
+            </FormItem>
+          )}
+        />,
+        <FormField
+          key="description"
+          control={control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <Field className="gap-2">
+                <FieldLabel>{t('description')} *</FieldLabel>
+                <FormControl>
+                  <Input {...field} placeholder={t('maintenance.description.placeholder')} maxLength={150} />
+                </FormControl>
+              </Field>
+              <FormMessage />
+            </FormItem>
+          )}
+        />,
+        <div key="row-duration-notice-type" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <FormField
+            control={control}
+            name="durationDays"
+            render={({ field }) => (
+              <FormItem>
+                <Field className="gap-2">
+                  <FieldLabel>{`${t('duration')} (${t('days')}) *`}</FieldLabel>
+                  <FormControl>
+                    <Input {...field} type="number" min={0} />
+                  </FormControl>
+                </Field>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={control}
+            name="daysNotice"
+            render={({ field }) => (
+              <FormItem>
+                <Field className="gap-2">
+                  <FieldLabel>{`${t('days.notice')} *`}</FieldLabel>
+                  <FormControl>
+                    <Input {...field} type="number" min={0} />
+                  </FormControl>
+                </Field>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={control}
+            name="typeMaintenance"
+            render={({ field }) => (
+              <FormItem>
+                <Field className="gap-2">
+                  <FieldLabel>{t('type.maintenance')} *</FieldLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
-                      <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
+                      <SelectTrigger>
+                        <SelectValue placeholder={t('type.maintenance')} />
+                      </SelectTrigger>
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="col-span-full">
-              <FormField
-                control={control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('description')} *</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder={t('maintenance.description.placeholder')} maxLength={150} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <FormField
-                control={control}
-                name="durationDays"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{`${t('duration')} (${t('days')}) *`}</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="number" min={0} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <FormField
-                control={control}
-                name="daysNotice"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{`${t('days.notice')} *`}</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="number" min={0} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <FormField
-                control={control}
-                name="typeMaintenance"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('type.maintenance')} *</FormLabel>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={t('type.maintenance')} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {typeMaintenanceOptions.map((opt) => (
-                          <SelectItem key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Separator />
-
-      {/* Configuration Section (Conditional) */}
-      {(typeMaintenance === 'date' || typeMaintenance === 'dateOrWear') && (
-        <>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-            <div>
-              <h2 className="font-semibold text-foreground">{t('time.cycle')}</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('maintenance.plan.cycle.description')}</p>
-            </div>
-            <div className="md:col-span-2">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <SelectContent>
+                      {typeMaintenanceOptions.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>,
+      ],
+    },
+    ...(typeMaintenance === 'date' || typeMaintenance === 'dateOrWear'
+      ? [
+          {
+            title: t('time.cycle'),
+            description: t('maintenance.plan.cycle.description'),
+            fields: [
+              <div key="row-cycle" className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={control}
                   name="maintanceCycle.value"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('time.cycle')} *</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="number" min={0} />
-                      </FormControl>
+                      <Field className="gap-2">
+                        <FieldLabel>{t('time.cycle')} *</FieldLabel>
+                        <FormControl>
+                          <Input {...field} type="number" min={0} />
+                        </FormControl>
+                      </Field>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <div className="sm:col-span-3">
-                  <FormField
-                    control={control}
-                    name="maintanceCycle.unity"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('unity.cycle')} *</FormLabel>
+                <FormField
+                  control={control}
+                  name="maintanceCycle.unity"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Field className="gap-2">
+                        <FieldLabel>{t('unity.cycle')} *</FieldLabel>
                         <Select value={field.value} onValueChange={field.onChange}>
                           <FormControl>
                             <SelectTrigger>
@@ -179,47 +174,45 @@ export function MaintenancePlanForm() {
                             ))}
                           </SelectContent>
                         </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <Separator />
-        </>
-      )}
-
-      {(typeMaintenance === 'wear' || typeMaintenance === 'dateOrWear') && (
-        <>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-            <div>
-              <h2 className="font-semibold text-foreground">{t('wear')}</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('maintenance.plan.wear.description')}</p>
-            </div>
-            <div className="md:col-span-2">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      </Field>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>,
+            ],
+          },
+        ]
+      : []),
+    ...(typeMaintenance === 'wear' || typeMaintenance === 'dateOrWear'
+      ? [
+          {
+            title: t('wear'),
+            description: t('maintenance.plan.wear.description'),
+            fields: [
+              <div key="row-wear" className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={control}
                   name="maintanceWear.value"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('value')} *</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="number" min={0} />
-                      </FormControl>
+                      <Field className="gap-2">
+                        <FieldLabel>{t('value')} *</FieldLabel>
+                        <FormControl>
+                          <Input {...field} type="number" min={0} />
+                        </FormControl>
+                      </Field>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <div className="sm:col-span-3">
-                  <FormField
-                    control={control}
-                    name="maintanceWear.type"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t('type.wear.sensor')} *</FormLabel>
+                <FormField
+                  control={control}
+                  name="maintanceWear.type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Field className="gap-2">
+                        <FieldLabel>{t('type.wear.sensor')} *</FieldLabel>
                         <Select value={field.value} onValueChange={field.onChange}>
                           <FormControl>
                             <SelectTrigger>
@@ -234,40 +227,27 @@ export function MaintenancePlanForm() {
                             ))}
                           </SelectContent>
                         </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <Separator />
-        </>
-      )}
+                      </Field>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>,
+            ],
+          },
+        ]
+      : []),
+    {
+      title: t('services'),
+      description: t('maintenance.plan.services.description'),
+      fields: [<ServicesGroupedField key="services" />],
+    },
+    {
+      title: t('parts'),
+      description: t('maintenance.plan.services.description'),
+      fields: [<PartsCycleField key="parts" />],
+    },
+  ];
 
-      {/* Services Section */}
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-        <div>
-          <h2 className="font-semibold text-foreground">{t('services')}</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('maintenance.plan.services.description')}</p>
-        </div>
-        <div className="md:col-span-2">
-          <ServicesGroupedField />
-        </div>
-      </div>
-
-      <Separator />
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6">
-        <div className="md:col-span-1">
-          <h3 className="text-lg font-medium">{t('parts')}</h3>
-          <p className="text-sm text-muted-foreground">{t('maintenance.plan.services.description')}</p>
-        </div>
-        <div className="md:col-span-3">
-          <PartsCycleField />
-        </div>
-      </div>
-    </div>
-  );
+  return <DefaultFormLayout sections={sections} />;
 }

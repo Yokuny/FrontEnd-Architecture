@@ -12,6 +12,7 @@ export function useMaintenancePlanForm(initialData?: Partial<MaintenancePlanForm
 
   const form = useForm<MaintenancePlanFormData>({
     resolver: zodResolver(maintenancePlanFormSchema) as any,
+    values: initialData as MaintenancePlanFormData,
     defaultValues: {
       id: initialData?.id,
       idEnterprise: initialData?.idEnterprise || '',

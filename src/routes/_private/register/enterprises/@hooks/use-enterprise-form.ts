@@ -14,6 +14,7 @@ export function useEnterpriseForm(initialData?: EnterpriseFormData) {
 
   const form = useForm<EnterpriseFormData>({
     resolver: zodResolver(enterpriseSchema) as any,
+    values: initialData,
     defaultValues: {
       name: '',
       description: '',
@@ -28,15 +29,6 @@ export function useEnterpriseForm(initialData?: EnterpriseFormData) {
       active: true,
     },
   });
-
-  const { reset } = form;
-
-  // Update form values when initialData is loaded
-  React.useEffect(() => {
-    if (initialData) {
-      reset(initialData);
-    }
-  }, [initialData, reset]);
 
   // CEP lookup logic
   const zipCode = form.watch('zipCode');

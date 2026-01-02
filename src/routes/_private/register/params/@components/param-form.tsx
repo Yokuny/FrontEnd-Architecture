@@ -2,13 +2,13 @@ import { Edit2, PlusCircle, Trash2 } from 'lucide-react';
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import DefaultFormLayout from '@/components/default-form-layout';
 import { EnterpriseSelect } from '@/components/selects/enterprise-select';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { ParamFormData, ParamOption } from '../@interface/param';
 import ItemParamsModal from './item-params-modal';
@@ -48,83 +48,71 @@ export function ParamForm() {
     { value: 'OTHER', label: t('other') },
   ];
 
-  return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-        <div>
-          <h2 className="font-semibold text-foreground">{t('identification')}</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('params.identification.description')}</p>
-        </div>
-        <div className="md:col-span-2">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
-            <div className="col-span-full">
-              <FormField
-                control={control}
-                name="idEnterprise"
-                render={({ field }) => (
-                  <FormItem>
-                    <Field className="gap-2">
-                      <FieldLabel>{t('enterprise')}</FieldLabel>
-                      <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
-                    </Field>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="col-span-full">
-              <FormField
-                control={control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <Field className="gap-2">
-                      <FieldLabel>{t('description')}</FieldLabel>
-                      <Input {...field} placeholder={t('description.placeholder')} maxLength={150} />
-                    </Field>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="col-span-full">
-              <FormField
-                control={control}
-                name="type"
-                render={({ field }) => (
-                  <FormItem>
-                    <Field className="gap-2">
-                      <FieldLabel>{t('type')}</FieldLabel>
-                      <Select value={field.value} onValueChange={field.onChange}>
-                        <SelectTrigger>
-                          <SelectValue placeholder={t('type')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {typeOptions.map((opt) => (
-                            <SelectItem key={opt.value} value={opt.value}>
-                              {opt.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </Field>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Separator />
-
-      <div className="space-y-4">
-        <div>
-          <h2 className="font-semibold text-foreground">{t('options')}</h2>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('params.options.description')}</p>
-        </div>
-        <div className="space-y-4">
+  const sections = [
+    {
+      title: t('identification'),
+      description: t('params.identification.description'),
+      fields: [
+        <FormField
+          key="idEnterprise"
+          control={control}
+          name="idEnterprise"
+          render={({ field }) => (
+            <FormItem>
+              <Field className="gap-2">
+                <FieldLabel>{t('enterprise')}</FieldLabel>
+                <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
+              </Field>
+              <FormMessage />
+            </FormItem>
+          )}
+        />,
+        <FormField
+          key="description"
+          control={control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <Field className="gap-2">
+                <FieldLabel>{t('description')}</FieldLabel>
+                <Input {...field} placeholder={t('description.placeholder')} maxLength={150} />
+              </Field>
+              <FormMessage />
+            </FormItem>
+          )}
+        />,
+        <FormField
+          key="type"
+          control={control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <Field className="gap-2">
+                <FieldLabel>{t('type')}</FieldLabel>
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t('type')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {typeOptions.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+              <FormMessage />
+            </FormItem>
+          )}
+        />,
+      ],
+    },
+    {
+      title: t('options'),
+      description: t('params.options.description'),
+      fields: [
+        <div key="options-table" className="space-y-4">
           <Table>
             <TableHeader>
               <TableRow>
@@ -165,8 +153,14 @@ export function ParamForm() {
               {t('add.options')}
             </Button>
           </div>
-        </div>
-      </div>
+        </div>,
+      ],
+    },
+  ];
+
+  return (
+    <>
+      <DefaultFormLayout sections={sections} />
 
       <ItemParamsModal
         show={showModal}
@@ -174,6 +168,6 @@ export function ParamForm() {
         onSave={handleSaveOption}
         dataInitial={editingIndex !== null ? (fields[editingIndex] as any) : undefined}
       />
-    </div>
+    </>
   );
 }

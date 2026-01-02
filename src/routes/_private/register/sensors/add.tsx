@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -58,17 +59,23 @@ function SensorAddFormContent({ initialData }: { initialData?: any }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { deleteSensor } = useSensorsApi();
-  const { form, onSubmit, isPending } = useSensorForm({
-    id: initialData?.id,
-    sensorId: initialData?.sensorId,
-    idEnterprise: initialData?.enterprise?.id,
-    sensor: initialData?.sensor,
-    description: initialData?.description,
-    type: initialData?.type,
-    unit: initialData?.unit,
-    valueMin: initialData?.valueMin,
-    valueMax: initialData?.valueMax,
-  });
+
+  const formData = useMemo(() => {
+    if (!initialData) return undefined;
+    return {
+      id: initialData.id,
+      sensorId: initialData.sensorId,
+      idEnterprise: initialData.enterprise?.id,
+      sensor: initialData.sensor,
+      description: initialData.description,
+      type: initialData.type,
+      unit: initialData.unit,
+      valueMin: initialData.valueMin,
+      valueMax: initialData.valueMax,
+    };
+  }, [initialData]);
+
+  const { form, onSubmit, isPending } = useSensorForm(formData);
 
   const handleDelete = async () => {
     if (!initialData?.id) return;

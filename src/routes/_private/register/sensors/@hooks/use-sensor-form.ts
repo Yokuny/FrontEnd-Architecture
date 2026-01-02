@@ -13,6 +13,7 @@ export function useSensorForm(initialData?: Partial<SensorFormData>) {
 
   const form = useForm<SensorFormData>({
     resolver: zodResolver(sensorSchema) as any,
+    values: initialData as SensorFormData,
     defaultValues: {
       id: initialData?.id,
       idEnterprise: initialData?.idEnterprise || '',

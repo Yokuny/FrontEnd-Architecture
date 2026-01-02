@@ -122,13 +122,12 @@ function PartsListPage() {
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.name}</ItemTitle>
-                    <ItemDescription>
-                      SKU: {item.sku} • {item.enterprise?.name}
-                    </ItemDescription>
+                    <ItemDescription>SKU: {item.sku}</ItemDescription>
                   </ItemContent>
                 </div>
 
                 <div className="flex items-center gap-4">
+                  <ItemDescription>{item.enterprise?.name}</ItemDescription>
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>

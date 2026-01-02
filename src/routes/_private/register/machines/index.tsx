@@ -95,56 +95,55 @@ function MachineListPage() {
         ) : (
           <ItemGroup>
             {machines.map((machine) => (
-              <Item key={machine.id} variant="outline" className="cursor-pointer" onClick={() => navigate({ to: `/register/machines/add`, search: { id: machine._id } } as any)}>
+              <Item key={machine.id} variant="outline" className="cursor-pointer" onClick={() => navigate({ to: `/register/machines/add`, search: { id: machine._id } })}>
                 <div className="flex items-center gap-4 flex-1">
                   <ItemMedia variant="image">
                     {machine.image?.url ? <img src={machine.image.url} alt={machine.name} className="size-full object-cover" /> : <Ship className="size-5" />}
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{machine.name}</ItemTitle>
-                    <div className="flex flex-col">
-                      <ItemDescription className="flex items-center gap-2">
-                        <Building2 className="size-4 text-muted-foreground shrink-0" />
-                        <span className="line-clamp-1">
-                          {machine.code || ''}
-                          {machine.code && machine.enterprise?.name ? ' / ' : ''}
-                          {machine.enterprise?.name || ''}
-                        </span>
-                      </ItemDescription>
-                      <div className="flex items-center gap-4 mt-1">
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <CloudUpload className="size-3" />
-                          <ItemDescription className="tabular-nums">{machine.id}</ItemDescription>
-                        </div>
-                        <div className="flex items-center gap-4">
-                          {machine.isInactive ? (
-                            <Badge variant="secondary" className="h-5 px-1.5 text-[10px] uppercase tracking-wider">
-                              {t('deactivate')}
-                            </Badge>
-                          ) : (
-                            <div className="flex items-center gap-3">
-                              {machine.isConfiguredFleet && (
-                                <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
-                                  <MapIcon className="size-3" />
-                                  <span>{t('show.in.fleet')}</span>
-                                </div>
-                              )}
-                              {machine.isConfiguredTravel && (
-                                <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
-                                  <Navigation className="size-3" />
-                                  <span>{t('setup.travel')}</span>
-                                </div>
-                              )}
-                              <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
-                                <Flashlight className="size-3" />
-                                <span>{`${machine.sensors || 0} ${t('sensors')}`}</span>
-                              </div>
-                            </div>
-                          )}
+                    <ItemDescription className="flex items-center gap-2">
+                      <Building2 className="size-4 text-muted-foreground shrink-0" />
+                      <span className="line-clamp-1">
+                        {machine.code || ''}
+                        {machine.code && machine.enterprise?.name ? ' / ' : ''}
+                        {machine.enterprise?.name || ''}
+                      </span>
+                    </ItemDescription>
+                  </ItemContent>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <CloudUpload className="size-3" />
+                    <ItemDescription className="tabular-nums">{machine.id}</ItemDescription>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    {machine.isInactive ? (
+                      <Badge variant="secondary" className="h-5 px-1.5 text-xs uppercase tracking-wider">
+                        {t('deactivate')}
+                      </Badge>
+                    ) : (
+                      <div className="flex items-center gap-3">
+                        {machine.isConfiguredFleet && (
+                          <div className="flex items-center gap-1 text-xs text-muted-foreground uppercase tracking-wider font-medium">
+                            <MapIcon className="size-3" />
+                            <span>{t('show.in.fleet')}</span>
+                          </div>
+                        )}
+                        {machine.isConfiguredTravel && (
+                          <div className="flex items-center gap-1 text-xs text-muted-foreground uppercase tracking-wider font-medium">
+                            <Navigation className="size-3" />
+                            <span>{t('setup.travel')}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground uppercase tracking-wider font-medium">
+                          <Flashlight className="size-3" />
+                          <span>{`${machine.sensors || 0} ${t('sensors')}`}</span>
                         </div>
                       </div>
-                    </div>
-                  </ItemContent>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-4">

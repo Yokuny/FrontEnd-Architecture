@@ -11,6 +11,13 @@ export function useModelMachineForm(initialData?: ModelMachineFormData, options?
 
   const form = useForm<ModelMachineFormData>({
     resolver: zodResolver(modelMachineSchema),
+    values: initialData
+      ? {
+          ...initialData,
+          color: initialData.color || '#ff3d71',
+          typeMachine: (initialData.typeMachine as any) || 'ship',
+        }
+      : undefined,
     defaultValues: initialData || {
       idEnterprise: '',
       description: '',

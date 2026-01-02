@@ -14,21 +14,14 @@ export function useSensorFunctionForm(idEnterprise: string, initialData?: any) {
 
   const form = useForm<SensorFunctionFormData>({
     resolver: zodResolver(sensorFunctionSchema),
-    defaultValues: initialData
-      ? {
-          description: initialData.description || '',
-          algorithm: initialData.algorithm || '',
-          idSensor: initialData.idSensor || '',
-          idMachines: initialData.idMachines || [],
-          enabled: initialData.enabled ?? true,
-        }
-      : {
-          description: '',
-          algorithm: '',
-          idSensor: '',
-          idMachines: [],
-          enabled: true,
-        },
+    values: initialData,
+    defaultValues: {
+      description: '',
+      algorithm: '',
+      idSensor: '',
+      idMachines: [],
+      enabled: true,
+    },
   });
 
   const onSubmit = form.handleSubmit(async (data) => {

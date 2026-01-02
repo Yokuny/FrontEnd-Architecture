@@ -13,6 +13,7 @@ export function useUserTypeForm(initialData?: Partial<UserTypeFormData>) {
 
   const form = useForm<UserTypeFormData>({
     resolver: zodResolver(userTypeSchema),
+    values: initialData as UserTypeFormData,
     defaultValues: {
       id: initialData?.id,
       description: initialData?.description || '',

@@ -14,7 +14,8 @@ export function useBuoyForm(initialData?: BuoyFormData) {
 
   const form = useForm<BuoyFormData>({
     resolver: zodResolver(buoySchema) as any,
-    defaultValues: initialData || {
+    values: initialData,
+    defaultValues: {
       name: '',
       proximity: '',
       idEnterprise: '',

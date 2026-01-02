@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -59,24 +60,29 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
   const navigate = useNavigate();
   const { deleteGeofence } = useGeofencesApi();
 
-  const { form, onSubmit, isPending } = useGeofenceForm({
-    id: initialData?.id,
-    idEnterprise: initialData?.idEnterprise,
-    type: initialData?.type,
-    code: initialData?.code,
-    description: initialData?.description,
-    city: initialData?.city,
-    state: initialData?.state,
-    country: initialData?.country,
-    timezone: initialData?.timezone,
-    color: initialData?.color,
-    idFence: initialData?.idFence,
-    link: initialData?.link,
-    initializeTravel: !!initialData?.initializeTravel,
-    finalizeTravel: !!initialData?.finalizeTravel,
-    nearestPort: !!initialData?.nearestPort,
-    location: initialData?.location,
-  });
+  const formData = useMemo(() => {
+    if (!initialData) return undefined;
+    return {
+      id: initialData.id,
+      idEnterprise: initialData.idEnterprise,
+      type: initialData.type,
+      code: initialData.code,
+      description: initialData.description,
+      city: initialData.city,
+      state: initialData.state,
+      country: initialData.country,
+      timezone: initialData.timezone,
+      color: initialData.color,
+      idFence: initialData.idFence,
+      link: initialData.link,
+      initializeTravel: !!initialData.initializeTravel,
+      finalizeTravel: !!initialData.finalizeTravel,
+      nearestPort: !!initialData.nearestPort,
+      location: initialData.location,
+    };
+  }, [initialData]);
+
+  const { form, onSubmit, isPending } = useGeofenceForm(formData);
 
   const handleDelete = async () => {
     if (!initialData?.id) return;

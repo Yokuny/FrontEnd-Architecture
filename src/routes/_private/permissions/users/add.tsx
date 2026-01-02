@@ -52,12 +52,11 @@ function AddUserPage() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             <div>
               <h2 className="font-semibold text-foreground">{t('user_profile')}</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('users.profile.description')}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{t('users.profile.description')}</p>
             </div>
             <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
               <div className="col-span-full">
                 <Field className="gap-2">
-                  <FieldLabel>{t('enterprise')} *</FieldLabel>
                   <EnterpriseWithSetupSelect mode="single" value={idEnterprise} onChange={handleEnterpriseChange} placeholder={t('select.placeholder')} />
                   {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{t(form.formState.errors.idEnterprise.message as string)}</p>}
                 </Field>
@@ -111,7 +110,7 @@ function AddUserPage() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             <div>
               <h2 className="font-semibold text-foreground">{t('permissions_access')}</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('users.access.description')}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{t('users.access.description')}</p>
             </div>
             <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
               <div className="col-span-full sm:col-span-3">
@@ -151,7 +150,7 @@ function AddUserPage() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             <div>
               <h2 className="font-semibold text-foreground">{t('preferences_config')}</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">{t('users.preferences.description')}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{t('users.preferences.description')}</p>
             </div>
             <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
               {phone && (

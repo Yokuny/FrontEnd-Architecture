@@ -97,6 +97,7 @@ function SensorListPage() {
               <Item
                 key={item.id}
                 variant="outline"
+                className="cursor-pointer"
                 onClick={() =>
                   navigate({
                     to: '/register/sensors/add',

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -110,20 +111,20 @@ function SensorFunctionsListPage() {
                   </ItemContent>
                 </div>
 
-                <div className="hidden md:flex flex-1 items-center justify-center overflow-hidden">
+                <div className="hidden md:flex items-center justify-center overflow-hidden">
                   {item.machines && item.machines.length > 0 && (
                     <div className="flex flex-wrap gap-1 justify-center max-h-[40px] overflow-y-auto">
                       {item.machines.map((machine, idx) => (
-                        <span key={machine.value || idx} className="text-[10px] bg-muted px-2 py-0.5 rounded-full whitespace-nowrap">
+                        <Badge key={machine.value || idx} variant="outline">
                           {machine.label}
-                        </span>
+                        </Badge>
                       ))}
                     </div>
                   )}
                 </div>
 
                 <div className="flex items-center gap-4">
-                  {!item.enabled && <span className="text-[10px] font-bold uppercase bg-muted-foreground text-white px-1.5 py-0.5 rounded">{t('deactivate')}</span>}
+                  {!item.enabled && <Badge>{t('deactivate')}</Badge>}
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>

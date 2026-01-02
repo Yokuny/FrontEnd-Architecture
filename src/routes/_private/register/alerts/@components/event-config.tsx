@@ -5,7 +5,6 @@ import { FenceSelect } from '@/components/selects/fence-select';
 import { MachineSelect } from '@/components/selects/machine-select';
 import { PlatformEnterpriseSelect } from '@/components/selects/platform-enterprise-select';
 import { SensorByMachineSelect } from '@/components/selects/sensor-by-machine-select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -26,23 +25,22 @@ export function EventConfig() {
     setValue(`events.${section}`, current ? null : {});
   };
 
-  const lostConnectionMachineId = watch('events.lostConnectionSensor.machine');
+  const lostConnectionMachineId = watch('events.lostConnectionSensor.idMachine');
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* 1. In/Out Geofence */}
-      <Card className={cn(events?.inOutGeofence ? 'border-primary' : '')}>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-base font-medium flex items-center gap-2">
+      <div className={cn('rounded-lg border p-4 space-y-4 transition-colors', events?.inOutGeofence ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-medium">
             <MapPin className="size-4 text-purple-500" />
             {t('in.out.geofence')}
-          </CardTitle>
+          </div>
           <Switch checked={!!events?.inOutGeofence} onCheckedChange={() => toggleSection('inOutGeofence')} />
-        </CardHeader>
+        </div>
         {!!events?.inOutGeofence && (
-          <CardContent className="grid gap-4 pt-4">
+          <div className="grid gap-4 pt-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Vessels */}
               <div className="space-y-2">
                 <FormField
                   control={control}
@@ -59,7 +57,7 @@ export function EventConfig() {
                 {!watch('events.inOutGeofence.allMachines') && (
                   <FormField
                     control={control}
-                    name="events.inOutGeofence.machines"
+                    name="events.inOutGeofence.idMachines"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
@@ -67,7 +65,7 @@ export function EventConfig() {
                             mode="multi"
                             idEnterprise={idEnterprise}
                             value={field.value}
-                            onChange={(val) => field.onChange(val)} // Ensure array
+                            onChange={(val) => field.onChange(val)}
                             placeholder={t('vessels.select.placeholder')}
                           />
                         </FormControl>
@@ -78,7 +76,6 @@ export function EventConfig() {
                 )}
               </div>
 
-              {/* Geofences */}
               <div className="space-y-2">
                 <FormField
                   control={control}
@@ -95,7 +92,7 @@ export function EventConfig() {
                 {!watch('events.inOutGeofence.allGeofences') && (
                   <FormField
                     control={control}
-                    name="events.inOutGeofence.geofences"
+                    name="events.inOutGeofence.idGeofences"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
@@ -109,7 +106,7 @@ export function EventConfig() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4 mt-2">
               <FormField
                 control={control}
                 name="events.inOutGeofence.alertEntering"
@@ -147,23 +144,22 @@ export function EventConfig() {
                 )}
               />
             </div>
-          </CardContent>
+          </div>
         )}
-      </Card>
+      </div>
 
       {/* 2. Platform Proximity */}
-      <Card className={cn(events?.startInsideInPlatformArea ? 'border-primary' : '')}>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-base font-medium flex items-center gap-2">
+      <div className={cn('rounded-lg border p-4 space-y-4 transition-colors', events?.startInsideInPlatformArea ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-medium">
             <Monitor className="size-4 text-blue-500" />
             {t('platform.proximity')}
-          </CardTitle>
+          </div>
           <Switch checked={!!events?.startInsideInPlatformArea} onCheckedChange={() => toggleSection('startInsideInPlatformArea')} />
-        </CardHeader>
+        </div>
         {!!events?.startInsideInPlatformArea && (
-          <CardContent className="grid gap-4 pt-4">
+          <div className="grid gap-4 pt-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Vessels */}
               <div className="space-y-2">
                 <FormField
                   control={control}
@@ -180,7 +176,7 @@ export function EventConfig() {
                 {!watch('events.startInsideInPlatformArea.allMachines') && (
                   <FormField
                     control={control}
-                    name="events.startInsideInPlatformArea.machines"
+                    name="events.startInsideInPlatformArea.idMachines"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
@@ -199,7 +195,6 @@ export function EventConfig() {
                 )}
               </div>
 
-              {/* Platforms */}
               <div className="space-y-2">
                 <FormField
                   control={control}
@@ -216,7 +211,7 @@ export function EventConfig() {
                 {!watch('events.startInsideInPlatformArea.allPlatforms') && (
                   <FormField
                     control={control}
-                    name="events.startInsideInPlatformArea.platforms"
+                    name="events.startInsideInPlatformArea.idPlatforms"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
@@ -235,26 +230,25 @@ export function EventConfig() {
                 )}
               </div>
             </div>
-          </CardContent>
+          </div>
         )}
-      </Card>
+      </div>
 
       {/* 3. Lost Connection */}
-      <Card className={cn(events?.lostConnectionSensor ? 'border-primary' : '')}>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-base font-medium flex items-center gap-2">
+      <div className={cn('rounded-lg border p-4 space-y-4 transition-colors', events?.lostConnectionSensor ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-medium">
             <WifiOff className="size-4 text-red-500" />
             {t('lostconnection')}
-          </CardTitle>
+          </div>
           <Switch checked={!!events?.lostConnectionSensor} onCheckedChange={() => toggleSection('lostConnectionSensor')} />
-        </CardHeader>
+        </div>
         {!!events?.lostConnectionSensor && (
-          <CardContent className="grid gap-4 pt-4">
+          <div className="grid gap-4 pt-2">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Machine (Single) */}
               <FormField
                 control={control}
-                name="events.lostConnectionSensor.machine"
+                name="events.lostConnectionSensor.idMachine"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t('machine')}</FormLabel>
@@ -266,10 +260,9 @@ export function EventConfig() {
                 )}
               />
 
-              {/* Sensors (Multi) */}
               <FormField
                 control={control}
-                name="events.lostConnectionSensor.sensors"
+                name="events.lostConnectionSensor.idSensors"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t('sensors')}</FormLabel>
@@ -281,7 +274,6 @@ export function EventConfig() {
                 )}
               />
 
-              {/* Time */}
               <FormField
                 control={control}
                 name="events.lostConnectionSensor.timeMinutes"
@@ -299,23 +291,22 @@ export function EventConfig() {
                 )}
               />
             </div>
-          </CardContent>
+          </div>
         )}
-      </Card>
+      </div>
 
       {/* 4. Status Distance Port */}
-      <Card className={cn(events?.statusDistancePort ? 'border-primary' : '')}>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-base font-medium flex items-center gap-2">
+      <div className={cn('rounded-lg border p-4 space-y-4 transition-colors', events?.statusDistancePort ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-medium">
             <ArrowUpRight className="size-4 text-orange-500" />
             {t('status.distance.port')}
-          </CardTitle>
+          </div>
           <Switch checked={!!events?.statusDistancePort} onCheckedChange={() => toggleSection('statusDistancePort')} />
-        </CardHeader>
+        </div>
         {!!events?.statusDistancePort && (
-          <CardContent className="grid gap-4 pt-4">
+          <div className="grid gap-4 pt-2">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {/* Vessels */}
               <div className="space-y-2 lg:col-span-3">
                 <FormField
                   control={control}
@@ -332,7 +323,7 @@ export function EventConfig() {
                 {!watch('events.statusDistancePort.allMachines') && (
                   <FormField
                     control={control}
-                    name="events.statusDistancePort.machines"
+                    name="events.statusDistancePort.idMachines"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
@@ -345,7 +336,6 @@ export function EventConfig() {
                 )}
               </div>
 
-              {/* Status */}
               <FormField
                 control={control}
                 name="events.statusDistancePort.status"
@@ -359,7 +349,6 @@ export function EventConfig() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {/* Legacy ListType mapping */}
                         <SelectItem value="dp">DP</SelectItem>
                         <SelectItem value="standby">{t('stand.by')}</SelectItem>
                         <SelectItem value="standbyready">{t('stand.by.ready')}</SelectItem>
@@ -377,7 +366,6 @@ export function EventConfig() {
                 )}
               />
 
-              {/* Distance */}
               <FormField
                 control={control}
                 name="events.statusDistancePort.distance"
@@ -392,28 +380,25 @@ export function EventConfig() {
                 )}
               />
             </div>
-          </CardContent>
+          </div>
         )}
-      </Card>
+      </div>
 
-      {/* Common Description */}
-      <Card>
-        <CardContent className="pt-6">
-          <FormField
-            control={control}
-            name="events.description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('description')} *</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder={t('message.description.placeholder')} maxLength={150} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </CardContent>
-      </Card>
+      <div className="pt-4 border-t">
+        <FormField
+          control={control}
+          name="events.description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('description')} *</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder={t('message.description.placeholder')} maxLength={150} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
     </div>
   );
 }

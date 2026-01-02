@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -61,18 +62,23 @@ function MaintenancePlanAddFormContent({ initialData }: { initialData?: any }) {
   const navigate = useNavigate();
   const { deleteMaintenancePlan } = useMaintenancePlansApi();
 
-  const { form, onSubmit, isPending } = useMaintenancePlanForm({
-    id: initialData?.id,
-    idEnterprise: initialData?.idEnterprise || initialData?.enterprise?.id || '',
-    description: initialData?.description || '',
-    typeMaintenance: initialData?.typeMaintenance || '',
-    daysNotice: initialData?.daysNotice ?? 0,
-    durationDays: initialData?.durationDays ?? 0,
-    maintanceCycle: initialData?.maintanceCycle,
-    maintanceWear: initialData?.maintanceWear,
-    servicesGrouped: initialData?.servicesGrouped || [],
-    partsCycle: initialData?.partsCycle || [],
-  });
+  const formData = useMemo(() => {
+    if (!initialData) return undefined;
+    return {
+      id: initialData.id,
+      idEnterprise: initialData.idEnterprise || initialData.enterprise?.id || '',
+      description: initialData.description || '',
+      typeMaintenance: initialData.typeMaintenance || '',
+      daysNotice: initialData.daysNotice ?? 0,
+      durationDays: initialData.durationDays ?? 0,
+      maintanceCycle: initialData.maintanceCycle,
+      maintanceWear: initialData.maintanceWear,
+      servicesGrouped: initialData.servicesGrouped || [],
+      partsCycle: initialData.partsCycle || [],
+    };
+  }, [initialData]);
+
+  const { form, onSubmit, isPending } = useMaintenancePlanForm(formData);
 
   const handleDelete = async () => {
     if (!initialData?.id) return;

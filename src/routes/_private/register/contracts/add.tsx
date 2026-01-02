@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Trash2 } from 'lucide-react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -40,6 +41,17 @@ function ContractAddPage() {
 
   const { data: contract, isLoading } = useContract(id || '');
 
+  // Prepare initial data
+  const initialData = React.useMemo(() => {
+    if (!contract) return undefined;
+    return {
+      ...contract,
+      idEnterprise: contract.idEnterprise || contract.enterprise?.id,
+      id: isDuplicate ? undefined : contract.id,
+      description: isDuplicate ? `${contract.description} (${t('copy', 'Copy')})` : contract.description,
+    };
+  }, [contract, isDuplicate, t]);
+
   if (id && isLoading) {
     return (
       <Card>
@@ -50,16 +62,6 @@ function ContractAddPage() {
       </Card>
     );
   }
-
-  // Prepare initial data
-  const initialData = contract
-    ? {
-        ...contract,
-        idEnterprise: contract.idEnterprise || contract.enterprise?.id,
-        id: isDuplicate ? undefined : contract.id,
-        description: isDuplicate ? `${contract.description} (${t('copy', 'Copy')})` : contract.description,
-      }
-    : undefined;
 
   return <ContractFormContent initialData={initialData} id={id} isDuplicate={isDuplicate} />;
 }
@@ -87,7 +89,7 @@ function ContractFormContent({ initialData, id, isDuplicate }: { initialData?: a
 
       <Form {...form}>
         <form onSubmit={onSubmit}>
-          <CardContent className="p-0">
+          <CardContent>
             <ContractForm />
           </CardContent>
 

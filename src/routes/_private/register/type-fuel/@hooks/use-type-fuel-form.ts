@@ -13,6 +13,7 @@ export function useTypeFuelForm(initialData?: Partial<TypeFuelFormData>) {
 
   const form = useForm<TypeFuelFormData>({
     resolver: zodResolver(typeFuelSchema) as any,
+    values: initialData as TypeFuelFormData,
     defaultValues: {
       id: initialData?.id,
       idEnterprise: initialData?.idEnterprise || '',
