@@ -1,0 +1,1 @@
+export const REMEMBER_EMAIL_KEY = 'loginRememberEmail';
