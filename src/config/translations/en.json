@@ -2419,5 +2419,17 @@
   "auth.morphing.think": "Think Smarter",
   "auth.morphing.work": "Work Faster",
   "auth.morphing.achieve": "Achieve More",
-  "select.enterprise.first": "Select an enterprise first"
+  "select.enterprise.first": "Select an enterprise first",
+  "setup.email.identification.description": "Select the enterprise to configure email.",
+  "setup.email.connection": "Connection",
+  "setup.email.connection.description": "Configure SMTP server connection information.",
+  "setup.email.authentication": "Authentication",
+  "setup.email.authentication.description": "Configure access credentials for sending emails.",
+  "setup.api.external.identification.description": "Select the enterprise to configure external APIs.",
+  "setup.api.external.credentials": "Credentials",
+  "setup.api.external.credentials.description": "Configure access keys for external APIs.",
+  "integration.description": "View and manage the list of available integrations.",
+  "setup.email.description": "Configure company email sending parameters.",
+  "setup.api.external.description": "Configure external API credentials and access.",
+  "enterprise.placeholder": "Select enterprise"
 }

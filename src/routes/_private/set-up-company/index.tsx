@@ -6,6 +6,9 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/comp
 
 export const Route = createFileRoute('/_private/set-up-company/')({
   component: SetupCompanyHubPage,
+  beforeLoad: () => ({
+    title: 'setup.company',
+  }),
 });
 
 function SetupCompanyHubPage() {

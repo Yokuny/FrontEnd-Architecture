@@ -2422,5 +2422,17 @@
   "auth.hero.description.short": "Monitoreo industrial IoT simplificado.",
   "auth.morphing.think": "Piensa Más",
   "auth.morphing.work": "Trabaja Rápido",
-  "auth.morphing.achieve": "Logra Más"
+  "auth.morphing.achieve": "Logra Más",
+  "setup.email.identification.description": "Seleccione la empresa para configurar el correo electrónico.",
+  "setup.email.connection": "Conexión",
+  "setup.email.connection.description": "Configure la información de conexión del servidor SMTP.",
+  "setup.email.authentication": "Autenticación",
+  "setup.email.authentication.description": "Configure las credenciales de acceso para enviar correos electrónicos.",
+  "setup.api.external.identification.description": "Seleccione la empresa para configurar las API externas.",
+  "setup.api.external.credentials": "Credenciales",
+  "setup.api.external.credentials.description": "Configure las claves de acceso para las API externas.",
+  "integration.description": "Visualice y gestione la lista de integraciones disponibles.",
+  "setup.email.description": "Configure los parámetros de envío de correo electrónico de la empresa.",
+  "setup.api.external.description": "Configure las credenciales y accesos de las API externas.",
+  "enterprise.placeholder": "Seleccione la empresa"
 }

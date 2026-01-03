@@ -2477,5 +2477,17 @@
   "sensor.function.general.desc": "Informações básicas sobre a função do sensor.",
   "associations": "Associações",
   "sensor.function.associations.desc": "Sensores e ativos associados a esta função.",
-  "btn.novo": "Novo"
+  "btn.novo": "Novo",
+  "setup.email.identification.description": "Selecione a empresa para configurar o e-mail.",
+  "setup.email.connection": "Conexão",
+  "setup.email.connection.description": "Configure as informações de conexão do servidor SMTP.",
+  "setup.email.authentication": "Autenticação",
+  "setup.email.authentication.description": "Configure as credenciais de acesso para envio de e-mail.",
+  "setup.api.external.identification.description": "Selecione a empresa para configurar as APIs externas.",
+  "setup.api.external.credentials": "Credenciais",
+  "setup.api.external.credentials.description": "Configure as chaves de acesso para APIs externas.",
+  "integration.description": "Visualize e gerencie a lista de integrações disponíveis.",
+  "setup.email.description": "Configure os parâmetros de envio de e-mail da empresa.",
+  "setup.api.external.description": "Configure as credenciais e acessos de APIs externas.",
+  "enterprise.placeholder": "Selecione a empresa"
 }

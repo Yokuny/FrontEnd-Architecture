@@ -76,11 +76,7 @@ export const MAIN_ROUTES = [
   '/register/user-type',
   '/set-up-company/integration-list',
   '/set-up-company/setup-api-external',
-  '/set-up-company/setup-chatbot',
   '/set-up-company/setup-email',
-  '/set-up-company/setup-fleet',
-  '/set-up-company/setup-limits',
-  '/set-up-company/setup-sso',
 ] as const;
 
 export type MainRoute = (typeof MAIN_ROUTES)[number];

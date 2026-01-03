@@ -20,11 +20,7 @@ import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/m
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
-import { Route as PrivateSetUpCompanySetupSsoIndexRouteImport } from './routes/_private/set-up-company/setup-sso/index';
-import { Route as PrivateSetUpCompanySetupLimitsIndexRouteImport } from './routes/_private/set-up-company/setup-limits/index';
-import { Route as PrivateSetUpCompanySetupFleetIndexRouteImport } from './routes/_private/set-up-company/setup-fleet/index';
 import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
-import { Route as PrivateSetUpCompanySetupChatbotIndexRouteImport } from './routes/_private/set-up-company/setup-chatbot/index';
 import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
 import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
 import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
@@ -129,34 +125,10 @@ const PublicAuthRegisterRoute = PublicAuthRegisterRouteImport.update({
   path: '/auth/register',
   getParentRoute: () => PublicRoute,
 } as any);
-const PrivateSetUpCompanySetupSsoIndexRoute =
-  PrivateSetUpCompanySetupSsoIndexRouteImport.update({
-    id: '/set-up-company/setup-sso/',
-    path: '/set-up-company/setup-sso/',
-    getParentRoute: () => PrivateRoute,
-  } as any);
-const PrivateSetUpCompanySetupLimitsIndexRoute =
-  PrivateSetUpCompanySetupLimitsIndexRouteImport.update({
-    id: '/set-up-company/setup-limits/',
-    path: '/set-up-company/setup-limits/',
-    getParentRoute: () => PrivateRoute,
-  } as any);
-const PrivateSetUpCompanySetupFleetIndexRoute =
-  PrivateSetUpCompanySetupFleetIndexRouteImport.update({
-    id: '/set-up-company/setup-fleet/',
-    path: '/set-up-company/setup-fleet/',
-    getParentRoute: () => PrivateRoute,
-  } as any);
 const PrivateSetUpCompanySetupEmailIndexRoute =
   PrivateSetUpCompanySetupEmailIndexRouteImport.update({
     id: '/set-up-company/setup-email/',
     path: '/set-up-company/setup-email/',
-    getParentRoute: () => PrivateRoute,
-  } as any);
-const PrivateSetUpCompanySetupChatbotIndexRoute =
-  PrivateSetUpCompanySetupChatbotIndexRouteImport.update({
-    id: '/set-up-company/setup-chatbot/',
-    path: '/set-up-company/setup-chatbot/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateSetUpCompanySetupApiExternalIndexRoute =
@@ -505,11 +477,7 @@ export interface FileRoutesByFullPath {
   '/register/user-type': typeof PrivateRegisterUserTypeIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
-  '/set-up-company/setup-chatbot': typeof PrivateSetUpCompanySetupChatbotIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
-  '/set-up-company/setup-fleet': typeof PrivateSetUpCompanySetupFleetIndexRoute;
-  '/set-up-company/setup-limits': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
-  '/set-up-company/setup-sso': typeof PrivateSetUpCompanySetupSsoIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -570,11 +538,7 @@ export interface FileRoutesByTo {
   '/register/user-type': typeof PrivateRegisterUserTypeIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
-  '/set-up-company/setup-chatbot': typeof PrivateSetUpCompanySetupChatbotIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
-  '/set-up-company/setup-fleet': typeof PrivateSetUpCompanySetupFleetIndexRoute;
-  '/set-up-company/setup-limits': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
-  '/set-up-company/setup-sso': typeof PrivateSetUpCompanySetupSsoIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -638,11 +602,7 @@ export interface FileRoutesById {
   '/_private/register/user-type/': typeof PrivateRegisterUserTypeIndexRoute;
   '/_private/set-up-company/integration-list/': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/_private/set-up-company/setup-api-external/': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
-  '/_private/set-up-company/setup-chatbot/': typeof PrivateSetUpCompanySetupChatbotIndexRoute;
   '/_private/set-up-company/setup-email/': typeof PrivateSetUpCompanySetupEmailIndexRoute;
-  '/_private/set-up-company/setup-fleet/': typeof PrivateSetUpCompanySetupFleetIndexRoute;
-  '/_private/set-up-company/setup-limits/': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
-  '/_private/set-up-company/setup-sso/': typeof PrivateSetUpCompanySetupSsoIndexRoute;
   '/_private/maintenance/list-os-done/view/': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/_private/permissions/roles/edit/': typeof PrivatePermissionsRolesEditIndexRoute;
   '/_private/permissions/roles/users/': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -705,11 +665,7 @@ export interface FileRouteTypes {
     | '/register/user-type'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
-    | '/set-up-company/setup-chatbot'
     | '/set-up-company/setup-email'
-    | '/set-up-company/setup-fleet'
-    | '/set-up-company/setup-limits'
-    | '/set-up-company/setup-sso'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -770,11 +726,7 @@ export interface FileRouteTypes {
     | '/register/user-type'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
-    | '/set-up-company/setup-chatbot'
     | '/set-up-company/setup-email'
-    | '/set-up-company/setup-fleet'
-    | '/set-up-company/setup-limits'
-    | '/set-up-company/setup-sso'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -837,11 +789,7 @@ export interface FileRouteTypes {
     | '/_private/register/user-type/'
     | '/_private/set-up-company/integration-list/'
     | '/_private/set-up-company/setup-api-external/'
-    | '/_private/set-up-company/setup-chatbot/'
     | '/_private/set-up-company/setup-email/'
-    | '/_private/set-up-company/setup-fleet/'
-    | '/_private/set-up-company/setup-limits/'
-    | '/_private/set-up-company/setup-sso/'
     | '/_private/maintenance/list-os-done/view/'
     | '/_private/permissions/roles/edit/'
     | '/_private/permissions/roles/users/'
@@ -934,39 +882,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthRegisterRouteImport;
       parentRoute: typeof PublicRoute;
     };
-    '/_private/set-up-company/setup-sso/': {
-      id: '/_private/set-up-company/setup-sso/';
-      path: '/set-up-company/setup-sso';
-      fullPath: '/set-up-company/setup-sso';
-      preLoaderRoute: typeof PrivateSetUpCompanySetupSsoIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
-    '/_private/set-up-company/setup-limits/': {
-      id: '/_private/set-up-company/setup-limits/';
-      path: '/set-up-company/setup-limits';
-      fullPath: '/set-up-company/setup-limits';
-      preLoaderRoute: typeof PrivateSetUpCompanySetupLimitsIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
-    '/_private/set-up-company/setup-fleet/': {
-      id: '/_private/set-up-company/setup-fleet/';
-      path: '/set-up-company/setup-fleet';
-      fullPath: '/set-up-company/setup-fleet';
-      preLoaderRoute: typeof PrivateSetUpCompanySetupFleetIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
     '/_private/set-up-company/setup-email/': {
       id: '/_private/set-up-company/setup-email/';
       path: '/set-up-company/setup-email';
       fullPath: '/set-up-company/setup-email';
       preLoaderRoute: typeof PrivateSetUpCompanySetupEmailIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
-    '/_private/set-up-company/setup-chatbot/': {
-      id: '/_private/set-up-company/setup-chatbot/';
-      path: '/set-up-company/setup-chatbot';
-      fullPath: '/set-up-company/setup-chatbot';
-      preLoaderRoute: typeof PrivateSetUpCompanySetupChatbotIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/set-up-company/setup-api-external/': {
@@ -1364,11 +1284,7 @@ interface PrivateRouteChildren {
   PrivateRegisterUserTypeIndexRoute: typeof PrivateRegisterUserTypeIndexRoute;
   PrivateSetUpCompanyIntegrationListIndexRoute: typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   PrivateSetUpCompanySetupApiExternalIndexRoute: typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
-  PrivateSetUpCompanySetupChatbotIndexRoute: typeof PrivateSetUpCompanySetupChatbotIndexRoute;
   PrivateSetUpCompanySetupEmailIndexRoute: typeof PrivateSetUpCompanySetupEmailIndexRoute;
-  PrivateSetUpCompanySetupFleetIndexRoute: typeof PrivateSetUpCompanySetupFleetIndexRoute;
-  PrivateSetUpCompanySetupLimitsIndexRoute: typeof PrivateSetUpCompanySetupLimitsIndexRoute;
-  PrivateSetUpCompanySetupSsoIndexRoute: typeof PrivateSetUpCompanySetupSsoIndexRoute;
   PrivateMaintenanceListOsDoneViewIndexRoute: typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   PrivatePermissionsRolesEditIndexRoute: typeof PrivatePermissionsRolesEditIndexRoute;
   PrivatePermissionsRolesUsersIndexRoute: typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -1435,15 +1351,8 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateSetUpCompanyIntegrationListIndexRoute,
   PrivateSetUpCompanySetupApiExternalIndexRoute:
     PrivateSetUpCompanySetupApiExternalIndexRoute,
-  PrivateSetUpCompanySetupChatbotIndexRoute:
-    PrivateSetUpCompanySetupChatbotIndexRoute,
   PrivateSetUpCompanySetupEmailIndexRoute:
     PrivateSetUpCompanySetupEmailIndexRoute,
-  PrivateSetUpCompanySetupFleetIndexRoute:
-    PrivateSetUpCompanySetupFleetIndexRoute,
-  PrivateSetUpCompanySetupLimitsIndexRoute:
-    PrivateSetUpCompanySetupLimitsIndexRoute,
-  PrivateSetUpCompanySetupSsoIndexRoute: PrivateSetUpCompanySetupSsoIndexRoute,
   PrivateMaintenanceListOsDoneViewIndexRoute:
     PrivateMaintenanceListOsDoneViewIndexRoute,
   PrivatePermissionsRolesEditIndexRoute: PrivatePermissionsRolesEditIndexRoute,
