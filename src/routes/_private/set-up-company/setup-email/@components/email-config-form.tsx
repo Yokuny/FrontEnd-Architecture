@@ -10,7 +10,7 @@ import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/f
 import { Input } from '@/components/ui/input';
 import type { EmailConfigFormData } from '../@interface/setup-email';
 
-export function EmailConfigForm({ showEnterpriseSelect }: { showEnterpriseSelect: boolean }) {
+export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled: boolean }) {
   const { t } = useTranslation();
   const [showPass, setShowPass] = useState(false);
   const {
@@ -24,28 +24,24 @@ export function EmailConfigForm({ showEnterpriseSelect }: { showEnterpriseSelect
   const secureValue = watch('secure');
 
   const sections = [
-    ...(showEnterpriseSelect
-      ? [
-          {
-            title: t('identification'),
-            description: t('setup.email.identification.description', { defaultValue: 'Selecione a empresa para configurar o e-mail.' }),
-            fields: [
-              <Field key="idEnterprise" className="gap-2">
-                <FormControl>
-                  <EnterpriseSelect
-                    mode="single"
-                    value={watch('idEnterprise')}
-                    onChange={(val) => setValue('idEnterprise', val || '')}
-                    placeholder={t('enterprise.placeholder')}
-                    disabled={isLoading || isPending}
-                  />
-                </FormControl>
-                {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
-              </Field>,
-            ],
-          },
-        ]
-      : []),
+    {
+      title: t('identification'),
+      description: t('setup.email.identification.description', { defaultValue: 'Selecione a empresa para configurar o e-mail.' }),
+      fields: [
+        <Field key="idEnterprise" className="gap-2">
+          <FormControl>
+            <EnterpriseSelect
+              mode="single"
+              value={watch('idEnterprise')}
+              onChange={(val) => setValue('idEnterprise', val || '')}
+              placeholder={t('enterprise.placeholder')}
+              disabled={isLoading || isPending || !!isEnterpriseDisabled}
+            />
+          </FormControl>
+          {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
+        </Field>,
+      ],
+    },
     {
       title: t('setup.email.connection'),
       description: t('setup.email.connection.description', { defaultValue: 'Configure as informações de conexão do servidor SMTP.' }),

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Building2, Mail, MapPin, MessageSquare, MoreVertical, Pencil, Plus, Search, Settings, ShieldCheck, Users } from 'lucide-react';
+import { Building2, Mail, MapPin, MessageSquare, MoreVertical, Pencil, Plus, Search, Settings, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import EmptyData from '@/components/default-empty-data';
@@ -105,7 +105,7 @@ function EnterprisesListPage() {
                 <DropdownMenuItem
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate({ to: '/set-up-company/integration-list', search: { id: item.id } });
+                    navigate({ to: '/set-up-company/external-users', search: { id: item.id } });
                   }}
                 >
                   <Users className="size-4 mr-2" />
@@ -120,16 +120,6 @@ function EnterprisesListPage() {
                 >
                   <Settings className="size-4 mr-2" />
                   {t('setup.limits')}
-                </DropdownMenuItem>
-
-                <DropdownMenuItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate({ to: '/set-up-company/setup-sso', search: { id: item.id } });
-                  }}
-                >
-                  <ShieldCheck className="size-4 mr-2" />
-                  {t('setup.sso')}
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />

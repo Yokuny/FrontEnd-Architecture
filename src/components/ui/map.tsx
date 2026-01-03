@@ -59,7 +59,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 // import dynamic from "next/dynamic"
-import { createContext, type ReactNode, type Ref, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, type ReactNode, type Ref, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import * as ReactLeaflet from 'react-leaflet';
 import {
@@ -166,7 +166,7 @@ function MapTileLayer({
         attribution: resolvedAttribution,
       });
     }
-  }, [context, name, url, attribution]);
+  }, [context, name, resolvedUrl, resolvedAttribution]);
 
   if (context && context.selectedTileLayer !== name) {
     return null;
@@ -527,7 +527,7 @@ function MapLocateControl({
   const [isLocating, setIsLocating] = useDebounceLoadingState(200);
   const [position, setPosition] = useState<LatLngExpression | null>(null);
 
-  function startLocating() {
+  const startLocating = useCallback(() => {
     setIsLocating(true);
     map.locate({ setView: true, maxZoom: map.getMaxZoom(), watch });
     map.on('locationfound', (location: LocationEvent) => {
@@ -540,15 +540,15 @@ function MapLocateControl({
       setIsLocating(false);
       onLocationError?.(error);
     });
-  }
+  }, [map, watch, onLocationFound, onLocationError, setIsLocating]);
 
-  function stopLocating() {
+  const stopLocating = useCallback(() => {
     map.stopLocate();
     map.off('locationfound');
     map.off('locationerror');
     setPosition(null);
     setIsLocating(false);
-  }
+  }, [map, setIsLocating]);
 
   useEffect(() => {
     return () => stopLocating();
@@ -619,6 +619,7 @@ function MapDrawControl({
     setActiveMode(null);
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Leaflet event listeners management
   useEffect(() => {
     if (!L || !LeafletDraw) return;
 
@@ -862,8 +863,9 @@ function MapDrawActionButton<T extends EditToolbar.Edit | EditToolbar.Delete>({
   const map = useMap();
   const { featureGroup, activeMode, setActiveMode } = drawContext;
   const isActive = activeMode === drawAction;
-  const hasFeatures = featureGroup?.getLayers().length ?? 0 > 0;
+  const hasFeatures = (featureGroup?.getLayers().length ?? 0) > 0;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Ref management for Leaflet controls
   useEffect(() => {
     if (!L || !featureGroup || !isActive) {
       controlRef.current?.disable?.();

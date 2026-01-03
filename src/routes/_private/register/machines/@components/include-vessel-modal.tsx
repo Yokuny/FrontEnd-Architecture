@@ -84,7 +84,7 @@ export function IncludeVesselModal({ isOpen, onClose, idEnterprise }: IncludeVes
               <Clock className="size-4" />
               {t('interval')} *
             </Label>
-            <Select value={data.interval.toString()} onValueChange={(val) => setData({ ...data, interval: Number.parseInt(val) })}>
+            <Select value={data.interval.toString()} onValueChange={(val) => setData({ ...data, interval: Number.parseInt(val, 10) })}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>

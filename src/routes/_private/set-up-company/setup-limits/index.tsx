@@ -8,37 +8,37 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-import { EmailConfigForm } from './@components/email-config-form';
-import { useEmailConfigForm } from './@hooks/use-email-config-form';
+import { SetupLimitsForm } from './@components/setup-limits-form';
+import { useSetupLimitsForm } from './@hooks/use-setup-limits-form';
 
 const searchSchema = z.object({
   id: z.string().optional(),
 });
 
-export const Route = createFileRoute('/_private/set-up-company/setup-email/')({
-  component: SetupEmailPage,
+export const Route = createFileRoute('/_private/set-up-company/setup-limits/')({
+  component: SetupLimitsPage,
   validateSearch: searchSchema,
   beforeLoad: () => ({
-    title: 'setup.email',
+    title: 'setup.limits',
   }),
 });
 
-function SetupEmailPage() {
-  const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/setup-email/' });
+function SetupLimitsPage() {
+  const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/setup-limits/' });
 
-  return <SetupEmailFormContent idEnterprise={idEnterpriseQuery} />;
+  return <SetupLimitsFormContent idEnterprise={idEnterpriseQuery} />;
 }
 
-function SetupEmailFormContent({ idEnterprise }: { idEnterprise?: string }) {
+function SetupLimitsFormContent({ idEnterprise }: { idEnterprise?: string }) {
   const { t } = useTranslation();
-  const { form, onSubmit, isLoading, isPending } = useEmailConfigForm({
+  const { form, onSubmit, isLoading, isPending } = useSetupLimitsForm({
     idEnterprise,
   });
 
   if (isLoading) {
     return (
       <Card>
-        <CardHeader title={t('setup.email')} />
+        <CardHeader title={t('setup.limits')} />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -48,11 +48,11 @@ function SetupEmailFormContent({ idEnterprise }: { idEnterprise?: string }) {
 
   return (
     <Card>
-      <CardHeader title={t('setup.email')} />
+      <CardHeader title={t('setup.limits')} />
       <Form {...form}>
         <form onSubmit={onSubmit}>
           <CardContent>
-            <EmailConfigForm isEnterpriseDisabled={!!idEnterprise} />
+            <SetupLimitsForm isEnterpriseDisabled={!!idEnterprise} />
           </CardContent>
           <CardFooter>
             <Button type="submit" disabled={isPending || isLoading} className="min-w-[120px]">

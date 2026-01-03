@@ -8,37 +8,37 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-import { EmailConfigForm } from './@components/email-config-form';
-import { useEmailConfigForm } from './@hooks/use-email-config-form';
+import { SetupFleetForm } from './@components/setup-fleet-form';
+import { useSetupFleetForm } from './@hooks/use-setup-fleet-form';
 
 const searchSchema = z.object({
   id: z.string().optional(),
 });
 
-export const Route = createFileRoute('/_private/set-up-company/setup-email/')({
-  component: SetupEmailPage,
+export const Route = createFileRoute('/_private/set-up-company/setup-fleet/')({
+  component: SetupFleetPage,
   validateSearch: searchSchema,
   beforeLoad: () => ({
-    title: 'setup.email',
+    title: 'setup.fleet',
   }),
 });
 
-function SetupEmailPage() {
-  const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/setup-email/' });
+function SetupFleetPage() {
+  const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/setup-fleet/' });
 
-  return <SetupEmailFormContent idEnterprise={idEnterpriseQuery} />;
+  return <SetupFleetFormContent idEnterprise={idEnterpriseQuery} />;
 }
 
-function SetupEmailFormContent({ idEnterprise }: { idEnterprise?: string }) {
+function SetupFleetFormContent({ idEnterprise }: { idEnterprise?: string }) {
   const { t } = useTranslation();
-  const { form, onSubmit, isLoading, isPending } = useEmailConfigForm({
+  const { form, onSubmit, isLoading, isPending } = useSetupFleetForm({
     idEnterprise,
   });
 
   if (isLoading) {
     return (
       <Card>
-        <CardHeader title={t('setup.email')} />
+        <CardHeader title={`${t('setup')} Fleet`} />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -48,11 +48,11 @@ function SetupEmailFormContent({ idEnterprise }: { idEnterprise?: string }) {
 
   return (
     <Card>
-      <CardHeader title={t('setup.email')} />
+      <CardHeader title={`${t('setup')} Fleet`} />
       <Form {...form}>
         <form onSubmit={onSubmit}>
           <CardContent>
-            <EmailConfigForm isEnterpriseDisabled={!!idEnterprise} />
+            <SetupFleetForm isEnterpriseDisabled={!!idEnterprise} />
           </CardContent>
           <CardFooter>
             <Button type="submit" disabled={isPending || isLoading} className="min-w-[120px]">

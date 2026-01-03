@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Building, Building2, MoreVertical, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { Building2, MoreVertical, Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
