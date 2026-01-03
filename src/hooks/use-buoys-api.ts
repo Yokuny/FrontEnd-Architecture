@@ -39,8 +39,9 @@ async function fetchBuoysList(params: { idEnterprise?: string; page?: number; si
 }
 
 async function fetchBuoyById(id: string): Promise<Buoy> {
-  const response = await api.get<Buoy>(`/buoy/find?id=${id}`);
-  return response.data;
+  const response = await api.get<any>(`/buoy/${id}`);
+  // Handle both { data: buoy } and direct buoy object
+  return response.data?.data || response.data;
 }
 
 // Hooks
@@ -68,10 +69,12 @@ export function useBuoysApi() {
 
   const saveBuoy = useMutation({
     mutationFn: async (data: any) => {
-      if (data.id) {
-        return api.put(`/buoy/update?id=${data.id}`, data);
+      const { id, _id, ...payload } = data;
+      const targetId = _id || id;
+      if (targetId) {
+        return api.put(`/buoy/${targetId}`, payload);
       }
-      return api.post('/buoy', data);
+      return api.post('/buoy', payload);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: buoyKeys.all });
@@ -80,7 +83,8 @@ export function useBuoysApi() {
 
   const deleteBuoy = useMutation({
     mutationFn: async (id: string) => {
-      await api.delete(`/buoy?id=${id}`, { responseType: 'text' });
+      // Prioritize Mongo ID if it looks like one, or use whatever id is provided
+      await api.delete(`/buoy/${id}`, { responseType: 'text' });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: buoyKeys.all });

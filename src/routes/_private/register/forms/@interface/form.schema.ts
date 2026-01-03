@@ -24,6 +24,7 @@ export const formFieldSchema: z.ZodType<any> = z.lazy(() =>
 // Main Form Schema
 export const formSchema = z.object({
   id: z.string().optional(),
+  _id: z.string().optional(),
   idEnterprise: z.string().min(1, 'enterprise.required'),
   description: z.string().min(1, 'description.required'),
   typeForm: z.string().optional().nullable(),

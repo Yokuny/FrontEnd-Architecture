@@ -155,7 +155,10 @@ export function ContractForm() {
 
 function GroupConsumptionTab() {
   const { t } = useTranslation();
-  const { control } = useFormContext<ContractFormData>();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<ContractFormData>();
   const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'groupConsumption',
@@ -206,23 +209,30 @@ function GroupConsumptionTab() {
                 </TableCell>
               </TableRow>
             ) : (
-              fields.map((field, index) => (
-                <TableRow key={field.id}>
-                  <TableCell className="font-medium">{field.code}</TableCell>
-                  <TableCell>{field.description}</TableCell>
-                  <TableCell className="text-right">{field.consumption.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-center gap-2">
-                      <Button type="button" variant="ghost" size="icon" onClick={() => handleOpenEdit(index)}>
-                        <Pencil className="size-4" />
-                      </Button>
-                      <Button type="button" variant="ghost" size="icon" className="text-destructive" onClick={() => remove(index)}>
-                        <Trash2 className="size-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
+              fields.map((field, index) => {
+                const itemErrors = errors.groupConsumption?.[index];
+                const hasError = !!itemErrors;
+                return (
+                  <TableRow key={field.id} className={hasError ? 'border-destructive/50 bg-destructive/5' : ''}>
+                    <TableCell className="font-medium">
+                      {field.code}
+                      {hasError && <p className="text-[10px] text-destructive">{t('invalid.data')}</p>}
+                    </TableCell>
+                    <TableCell>{field.description}</TableCell>
+                    <TableCell className="text-right">{field.consumption.toLocaleString()}</TableCell>
+                    <TableCell className="text-center">
+                      <div className="flex justify-center gap-2">
+                        <Button type="button" variant="ghost" size="icon" onClick={() => handleOpenEdit(index)}>
+                          <Pencil className="size-4" />
+                        </Button>
+                        <Button type="button" variant="ghost" size="icon" className="text-destructive" onClick={() => remove(index)}>
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>
@@ -242,11 +252,11 @@ function GroupConsumptionTab() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <FormLabel>{t('code')}</FormLabel>
+              <FormLabel>{t('code')} *</FormLabel>
               <Input value={tempData.code} onChange={(e) => setTempData({ ...tempData, code: e.target.value })} />
             </div>
             <div className="grid gap-2">
-              <FormLabel>{t('description')}</FormLabel>
+              <FormLabel>{t('description')} *</FormLabel>
               <Input value={tempData.description} onChange={(e) => setTempData({ ...tempData, description: e.target.value })} />
             </div>
             <div className="grid gap-2">
@@ -255,7 +265,9 @@ function GroupConsumptionTab() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleSave}>{t('save')}</Button>
+            <Button onClick={handleSave} disabled={!tempData.code || !tempData.description}>
+              {t('save')}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -265,7 +277,11 @@ function GroupConsumptionTab() {
 
 function OperationsTab() {
   const { t } = useTranslation();
-  const { control, watch } = useFormContext<ContractFormData>();
+  const {
+    control,
+    watch,
+    formState: { errors },
+  } = useFormContext<ContractFormData>();
   const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'operations',
@@ -319,24 +335,31 @@ function OperationsTab() {
                 </TableCell>
               </TableRow>
             ) : (
-              fields.map((field, index) => (
-                <TableRow key={field.id}>
-                  <TableCell className="font-medium">{field.idOperation}</TableCell>
-                  <TableCell>{field.name}</TableCell>
-                  <TableCell>{field.description}</TableCell>
-                  <TableCell className="text-center">{field.idGroupConsumption}</TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-center gap-2">
-                      <Button type="button" variant="ghost" size="icon" onClick={() => handleOpenEdit(index)}>
-                        <Pencil className="size-4" />
-                      </Button>
-                      <Button type="button" variant="ghost" size="icon" className="text-destructive" onClick={() => remove(index)}>
-                        <Trash2 className="size-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
+              fields.map((field, index) => {
+                const itemErrors = errors.operations?.[index];
+                const hasError = !!itemErrors;
+                return (
+                  <TableRow key={field.id} className={hasError ? 'border-destructive/50 bg-destructive/5' : ''}>
+                    <TableCell className="font-medium">
+                      {field.idOperation}
+                      {hasError && <p className="text-[10px] text-destructive">{t('invalid.data')}</p>}
+                    </TableCell>
+                    <TableCell>{field.name}</TableCell>
+                    <TableCell>{field.description}</TableCell>
+                    <TableCell className="text-center">{field.idGroupConsumption}</TableCell>
+                    <TableCell className="text-center">
+                      <div className="flex justify-center gap-2">
+                        <Button type="button" variant="ghost" size="icon" onClick={() => handleOpenEdit(index)}>
+                          <Pencil className="size-4" />
+                        </Button>
+                        <Button type="button" variant="ghost" size="icon" className="text-destructive" onClick={() => remove(index)}>
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>
@@ -356,11 +379,11 @@ function OperationsTab() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <FormLabel>{t('code')}</FormLabel>
+              <FormLabel>{t('code')} *</FormLabel>
               <Input value={tempData.idOperation} onChange={(e) => setTempData({ ...tempData, idOperation: e.target.value })} />
             </div>
             <div className="grid gap-2">
-              <FormLabel>{t('name')}</FormLabel>
+              <FormLabel>{t('name')} *</FormLabel>
               <Input value={tempData.name} onChange={(e) => setTempData({ ...tempData, name: e.target.value })} />
             </div>
             <div className="grid gap-2">
@@ -368,7 +391,7 @@ function OperationsTab() {
               <Input value={tempData.description} onChange={(e) => setTempData({ ...tempData, description: e.target.value })} />
             </div>
             <div className="grid gap-2">
-              <FormLabel>{t('group.consumption')}</FormLabel>
+              <FormLabel>{t('group.consumption')} *</FormLabel>
               <Select onValueChange={(v) => setTempData({ ...tempData, idGroupConsumption: v })} value={tempData.idGroupConsumption}>
                 <SelectTrigger>
                   <SelectValue placeholder={t('group.consumption')} />
@@ -384,7 +407,9 @@ function OperationsTab() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleSave}>{t('save')}</Button>
+            <Button onClick={handleSave} disabled={!tempData.idOperation || !tempData.name || !tempData.idGroupConsumption}>
+              {t('save')}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -394,7 +419,10 @@ function OperationsTab() {
 
 function EventsTab() {
   const { t } = useTranslation();
-  const { control } = useFormContext<ContractFormData>();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<ContractFormData>();
   const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'events',
@@ -444,22 +472,29 @@ function EventsTab() {
                 </TableCell>
               </TableRow>
             ) : (
-              fields.map((field, index) => (
-                <TableRow key={field.id}>
-                  <TableCell className="font-medium">{field.description}</TableCell>
-                  <TableCell className="text-right">{field.factor}%</TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-center gap-2">
-                      <Button type="button" variant="ghost" size="icon" onClick={() => handleOpenEdit(index)}>
-                        <Pencil className="size-4" />
-                      </Button>
-                      <Button type="button" variant="ghost" size="icon" className="text-destructive" onClick={() => remove(index)}>
-                        <Trash2 className="size-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
+              fields.map((field, index) => {
+                const itemErrors = errors.events?.[index];
+                const hasError = !!itemErrors;
+                return (
+                  <TableRow key={field.id} className={hasError ? 'border-destructive/50 bg-destructive/5' : ''}>
+                    <TableCell className="font-medium">
+                      {field.description}
+                      {hasError && <p className="text-[10px] text-destructive">{t('invalid.data')}</p>}
+                    </TableCell>
+                    <TableCell className="text-right">{field.factor}%</TableCell>
+                    <TableCell className="text-center">
+                      <div className="flex justify-center gap-2">
+                        <Button type="button" variant="ghost" size="icon" onClick={() => handleOpenEdit(index)}>
+                          <Pencil className="size-4" />
+                        </Button>
+                        <Button type="button" variant="ghost" size="icon" className="text-destructive" onClick={() => remove(index)}>
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>
@@ -479,7 +514,7 @@ function EventsTab() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <FormLabel>{t('description')}</FormLabel>
+              <FormLabel>{t('description')} *</FormLabel>
               <Input value={tempData.description} onChange={(e) => setTempData({ ...tempData, description: e.target.value })} />
             </div>
             <div className="grid gap-2">
@@ -488,7 +523,9 @@ function EventsTab() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleSave}>{t('save')}</Button>
+            <Button onClick={handleSave} disabled={!tempData.description}>
+              {t('save')}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

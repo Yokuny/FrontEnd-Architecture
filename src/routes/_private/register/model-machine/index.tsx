@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { MoreVertical, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { Building, Building2, MoreVertical, Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -122,13 +122,14 @@ function ModelMachineListPage() {
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
-                    <ItemDescription>
-                      {item.enterprise?.name || t('no.enterprise')} | {item.typeMachine}
+                    <ItemDescription className="flex items-center gap-2">
+                      <Building2 className="size-3" /> {item.enterprise?.name || t('no.enterprise')}
                     </ItemDescription>
                   </ItemContent>
                 </div>
 
                 <div className="flex items-center gap-4">
+                  <ItemDescription>{item.color}</ItemDescription>
                   <div className="size-4 rounded-full border border-white/20" style={{ backgroundColor: item.color || 'var(--muted-foreground)' }} />
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>

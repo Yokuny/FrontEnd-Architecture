@@ -125,6 +125,8 @@ src/routes/_private/embarcacoes/
 
   4. [`Select`](./src/components/selects/index.ts): Busque os seletores no diretório `@/components/selects`, como está é uma nova arquitetura os nomes podem variar, as operaçoes desses seletores estão presentes em [`@/hooks/`](./src/hooks/).
 
+  **Importante**: Ao criar usar qualquer select, eles já contem Label, não é necessário adicionar Label ao importar o select.
+
   Exemplo de conversão da antiga nomeclatura para a nova:
   | Nome Legado (SelectX) | Novo Nome (XSelect) |
   | :--- | :--- |

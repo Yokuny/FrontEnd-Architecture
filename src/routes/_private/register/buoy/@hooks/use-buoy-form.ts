@@ -44,6 +44,7 @@ export function useBuoyForm(initialData?: BuoyFormData) {
 
       const payload = {
         id: values.id,
+        _id: values._id,
         name: values.name,
         proximity: values.proximity,
         idEnterprise: values.idEnterprise,

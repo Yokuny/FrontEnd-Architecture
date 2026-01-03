@@ -45,12 +45,7 @@ export function MaintenancePlanForm() {
           name="idEnterprise"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FieldLabel>{t('enterprise')} *</FieldLabel>
-                <FormControl>
-                  <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
-                </FormControl>
-              </Field>
+              <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
               <FormMessage />
             </FormItem>
           )}

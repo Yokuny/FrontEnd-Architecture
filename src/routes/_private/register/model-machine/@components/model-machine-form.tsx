@@ -46,11 +46,7 @@ export function ModelMachineForm({ attachmentFields }: ModelMachineFormProps) {
           name="idEnterprise"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FormControl>
-                  <EnterpriseSelect value={field.value} onChange={field.onChange} mode="single" />
-                </FormControl>
-              </Field>
+              <EnterpriseSelect value={field.value} onChange={field.onChange} mode="single" />
               <FormMessage />
             </FormItem>
           )}

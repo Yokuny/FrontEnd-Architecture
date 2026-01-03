@@ -60,11 +60,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
           name="idEnterprise"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FormControl>
-                  <EnterpriseSelect value={field.value} onChange={field.onChange} mode="single" />
-                </FormControl>
-              </Field>
+              <EnterpriseSelect value={field.value} onChange={field.onChange} mode="single" />
               <FormMessage />
             </FormItem>
           )}
@@ -85,7 +81,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
               </FormItem>
             )}
           />
-          <div className="md:col-span-2">
+          <div className="md:col-span-2" key="name-col">
             <FormField
               control={form.control}
               name="name"
@@ -109,19 +105,15 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
           name="sensors"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FieldLabel>{t('sensors')}</FieldLabel>
-                <FormControl>
-                  <SensorByEnterpriseSelect
-                    idEnterprise={idEnterprise}
-                    values={field.value?.map((s) => s.value)}
-                    onChangeMulti={(values) => {
-                      field.onChange(values.map((v) => ({ value: v, label: v })));
-                    }}
-                    multi
-                  />
-                </FormControl>
-              </Field>
+              <SensorByEnterpriseSelect
+                label={t('sensors')}
+                idEnterprise={idEnterprise}
+                values={field.value?.map((s) => s.value)}
+                onChangeMulti={(values) => {
+                  field.onChange(values.map((v) => ({ value: v, label: v })));
+                }}
+                multi
+              />
               <FormMessage />
             </FormItem>
           )}
@@ -142,17 +134,13 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
               </FormItem>
             )}
           />
-          <div className="md:col-span-2">
+          <div className="md:col-span-2" key="model-col">
             <FormField
               control={form.control}
               name="idModel"
               render={({ field }) => (
                 <FormItem>
-                  <Field className="gap-2">
-                    <FormControl>
-                      <ModelMachineSelect idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} mode="single" />
-                    </FormControl>
-                  </Field>
+                  <ModelMachineSelect idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} mode="single" />
                   <FormMessage />
                 </FormItem>
               )}
@@ -165,11 +153,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
           name="idFleet"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FormControl>
-                  <FleetSelect idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} mode="single" />
-                </FormControl>
-              </Field>
+              <FleetSelect idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} mode="single" />
               <FormMessage />
             </FormItem>
           )}
@@ -280,11 +264,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
             name="dataSheet.flag"
             render={({ field }) => (
               <FormItem>
-                <Field className="gap-2">
-                  <FormControl>
-                    <CountrySelect value={field.value} onChange={field.onChange} mode="single" />
-                  </FormControl>
-                </Field>
+                <CountrySelect value={field.value} onChange={field.onChange} mode="single" />
                 <FormMessage />
               </FormItem>
             )}
@@ -457,7 +437,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
                       </FormItem>
                     )}
                   />
-                  <div className="flex items-end gap-2">
+                  <div className="flex items-end gap-2" key={`contact-phone-${index}`}>
                     <FormField
                       control={form.control}
                       name={`contacts.${index}.phone`}
@@ -512,7 +492,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
                       </FormItem>
                     )}
                   />
-                  <div className="md:col-span-2 flex items-end gap-2">
+                  <div className="md:col-span-2 flex items-end gap-2" key={`camera-link-${index}`}>
                     <FormField
                       control={form.control}
                       name={`cameras.${index}.link`}
@@ -553,12 +533,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
           name="parts"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FieldLabel>{t('parts')}</FieldLabel>
-                <FormControl>
-                  <PartSelect idEnterprise={idEnterprise} values={field.value} onChangeMulti={field.onChange} multi />
-                </FormControl>
-              </Field>
+              <PartSelect label={t('parts')} idEnterprise={idEnterprise} values={field.value} onChangeMulti={field.onChange} multi />
               <FormMessage />
             </FormItem>
           )}
@@ -569,11 +544,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
           name="maintenancePlans"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FormControl>
-                  <MaintenancePlanSelect idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} mode="multi" />
-                </FormControl>
-              </Field>
+              <MaintenancePlanSelect idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} mode="multi" />
               <FormMessage />
             </FormItem>
           )}

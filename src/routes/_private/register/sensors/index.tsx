@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { CloudUpload, Flashlight, MoreVertical, Plus, Search, Ship } from 'lucide-react';
+import { Building2, CloudUpload, Flashlight, MoreVertical, Plus, Search, Ship } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -111,19 +111,22 @@ function SensorListPage() {
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.sensor}</ItemTitle>
-                    <ItemDescription>{item.enterprise?.name}</ItemDescription>
+                    <ItemDescription className="flex items-center gap-2">
+                      <Building2 className="size-3" />
+                      {item.enterprise?.name}
+                    </ItemDescription>
                   </ItemContent>
                 </div>
 
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground whitespace-nowrap">
-                      <CloudUpload className="size-4" />
+                      <CloudUpload className="size-3" />
                       <ItemDescription>{item.sensorId}</ItemDescription>
                     </div>
                     {item.machines && item.machines.length > 0 && (
                       <div className="flex items-center gap-2 text-sm text-muted-foreground max-w-[200px] truncate">
-                        <Ship className="size-4 shrink-0" />
+                        <Ship className="size-3 shrink-0" />
                         <ItemDescription>{item.machines.join(', ')}</ItemDescription>
                       </div>
                     )}
@@ -133,7 +136,7 @@ function SensorListPage() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon">
-                          <MoreVertical className="size-4" />
+                          <MoreVertical className="size-3" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">

@@ -103,12 +103,9 @@ function MachineListPage() {
                   <ItemContent>
                     <ItemTitle className="text-base">{machine.name}</ItemTitle>
                     <ItemDescription className="flex items-center gap-2">
-                      <Building2 className="size-4 text-muted-foreground shrink-0" />
-                      <span className="line-clamp-1">
-                        {machine.code || ''}
-                        {machine.code && machine.enterprise?.name ? ' / ' : ''}
-                        {machine.enterprise?.name || ''}
-                      </span>
+                      <Building2 className="size-3 text-muted-foreground shrink-0" />
+                      {machine.enterprise?.name || ''}
+                      {machine.code && ` / ${machine.code}`}
                     </ItemDescription>
                   </ItemContent>
                 </div>

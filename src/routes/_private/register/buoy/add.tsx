@@ -23,7 +23,6 @@ import { Spinner } from '@/components/ui/spinner';
 import { useBuoy, useBuoysApi } from '@/hooks/use-buoys-api';
 import { BuoyForm } from './@components/buoy-form';
 import { useBuoyForm } from './@hooks/use-buoy-form';
-import type { BuoyFormData } from './@interface/buoy';
 
 const searchSchema = z.object({
   id: z.string().optional(),
@@ -61,41 +60,61 @@ function BuoyAddFormContent({ initialData }: { initialData?: any }) {
   const navigate = useNavigate();
   const { deleteBuoy } = useBuoysApi();
 
-  const formData: BuoyFormData | undefined = React.useMemo(() => {
+  const formData = React.useMemo(() => {
     if (!initialData) return undefined;
 
-    // Handle data transformation from legacy API structure
-    let coordinates = [0, 0];
-    let delimitations = [];
+    // Handle case where data might be nested (though the hook now handles this, being defensive)
+    const raw = initialData.data || initialData;
 
-    if (initialData.location?.type === 'Polygon' || Array.isArray(initialData.location)) {
-      const locs = Array.isArray(initialData.location) ? initialData.location : [initialData.location];
-      coordinates = [locs[0].geometry.coordinates[1], locs[0].geometry.coordinates[0]];
-      delimitations = locs.map((l: any) => ({
-        idDelimitation: l.idDelimitation,
-        name: l.name,
-        radius: l.properties.radius,
-        color: l.color || '#3b82f6',
-      }));
+    let latitude = 0;
+    let longitude = 0;
+    let delimitations: any[] = [];
+
+    const loc = raw.location;
+
+    if (loc) {
+      if (Array.isArray(loc) && loc.length > 0) {
+        latitude = loc[0].geometry?.coordinates?.[1] || 0;
+        longitude = loc[0].geometry?.coordinates?.[0] || 0;
+        delimitations = loc.map((l: any, index: number) => ({
+          idDelimitation: l.idDelimitation || raw.location[index]?.idDelimitation || undefined,
+          name: l.name || '',
+          radius: l.properties?.radius || 0,
+          color: l.color || '#3b82f6',
+        }));
+      } else if (loc.geometry?.coordinates) {
+        latitude = loc.geometry.coordinates[1] || 0;
+        longitude = loc.geometry.coordinates[0] || 0;
+        delimitations = [
+          {
+            idDelimitation: loc.idDelimitation || undefined,
+            name: loc.name || '',
+            radius: loc.properties?.radius || 0,
+            color: raw.color || loc.color || '#3b82f6',
+          },
+        ];
+      }
     }
 
     return {
-      id: initialData.id,
-      name: initialData.name,
-      proximity: initialData.proximity,
-      idEnterprise: initialData.idEnterprise,
-      latitude: coordinates[0],
-      longitude: coordinates[1],
+      id: raw.id,
+      _id: raw._id,
+      name: raw.name || '',
+      proximity: raw.proximity || '',
+      idEnterprise: raw.idEnterprise || raw.enterprise?.id || '',
+      latitude,
+      longitude,
       delimitations: delimitations.length > 0 ? delimitations : [{ name: '', radius: 0, color: '#3b82f6' }],
     };
   }, [initialData]);
 
-  const { form, onSubmit, isPending } = useBuoyForm(formData);
+  const { form, onSubmit, isPending } = useBuoyForm(formData as any);
 
   const handleDelete = async () => {
-    if (!initialData?.id) return;
+    const buoyId = initialData?.id || initialData?._id;
+    if (!buoyId) return;
     try {
-      await deleteBuoy.mutateAsync(initialData.id);
+      await deleteBuoy.mutateAsync(buoyId);
       toast.success(t('delete.successfull'));
       navigate({ to: '/register/buoy', search: { page: 1, size: 10 } });
     } catch {

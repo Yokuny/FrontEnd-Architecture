@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { MoreVertical, Package, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { Building2, MoreVertical, Package, Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -127,7 +127,9 @@ function PartsListPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <ItemDescription>{item.enterprise?.name}</ItemDescription>
+                  <ItemDescription className="flex items-center gap-2">
+                    <Building2 className="size-4" /> {item.enterprise?.name}
+                  </ItemDescription>
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>

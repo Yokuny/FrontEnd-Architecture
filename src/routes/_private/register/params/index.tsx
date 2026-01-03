@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { List, MoreVertical, Plus, Search } from 'lucide-react';
+import { Building2, List, MoreVertical, Plus, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -116,7 +116,9 @@ function ParamsListPage() {
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
-                    <ItemDescription>{item.enterprise?.name}</ItemDescription>
+                    <ItemDescription className="flex items-center gap-2">
+                      <Building2 className="size-3" /> {item.enterprise?.name}
+                    </ItemDescription>
                   </ItemContent>
                 </div>
 

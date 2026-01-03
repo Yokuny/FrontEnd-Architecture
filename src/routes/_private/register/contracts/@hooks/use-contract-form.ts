@@ -26,19 +26,29 @@ export function useContractForm(initialData?: any) {
     },
   });
 
-  const onSubmit = form.handleSubmit(async (values) => {
-    try {
-      if (values.id) {
-        await updateContract.mutateAsync(values as any);
-      } else {
-        await createContract.mutateAsync(values as any);
+  const onSubmit = form.handleSubmit(
+    async (values) => {
+      try {
+        if (values.id) {
+          await updateContract.mutateAsync(values as any);
+        } else {
+          await createContract.mutateAsync(values as any);
+        }
+        toast.success(t('save.successfull'));
+        navigate({ to: '/register/contracts' as any, search: { page: 1, size: 10 } as any });
+      } catch {
+        // Error handled by API client
       }
-      toast.success(t('save.successfull'));
-      navigate({ to: '/register/contracts' as any, search: { page: 1, size: 10 } as any });
-    } catch {
-      // Error handled by API client
-    }
-  });
+    },
+    (errors) => {
+      toast.error(t('error.form.validation', 'Please check the required fields.'));
+      if (Object.keys(errors).length > 0) {
+        // Safe way to notify about nested errors without console.error for lint
+        const firstErrorField = Object.keys(errors)[0];
+        toast.error(`${t('field.error')}: ${firstErrorField}`);
+      }
+    },
+  );
 
   return {
     form,

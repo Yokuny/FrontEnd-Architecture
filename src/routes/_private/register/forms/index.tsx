@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { FileText, MoreVertical, Pencil, Plus, Search, User } from 'lucide-react';
+import { Building2, FileText, MoreVertical, Pencil, Plus, Search, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import EmptyData from '@/components/default-empty-data';
@@ -64,13 +64,14 @@ function FormsListPage() {
       <Item
         key={item.id || item._id}
         variant="outline"
-        className={`cursor-pointer ${isPending ? 'opacity-70 bg-muted/30' : ''}`}
-        onClick={() =>
+        className={` ${item.appliedPermissions?.canEdit ? 'cursor-pointer' : 'cursor-not-allowed'} ${isPending ? 'opacity-70 bg-muted/30' : ''}`}
+        onClick={() => {
+          if (!item.appliedPermissions?.canEdit) return;
           navigate({
             to: '/register/forms/add',
             search: { id: item.id || item._id, pending: isPending ? 'true' : undefined },
-          })
-        }
+          });
+        }}
       >
         <div className="flex items-center gap-4 flex-1">
           <ItemMedia variant="image">
@@ -81,7 +82,6 @@ function FormsListPage() {
             <ItemDescription className="flex items-center gap-1">
               <User className="size-3" />
               {item.user?.name}
-              {item.enterprise?.name && ` • ${item.enterprise.name}`}
             </ItemDescription>
           </ItemContent>
         </div>
@@ -93,31 +93,34 @@ function FormsListPage() {
             </Badge>
           )}
 
-          {item.appliedPermissions?.canEdit && (
-            <div className="flex items-center justify-end border-l pl-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                  <Button variant="ghost" size="icon">
-                    <MoreVertical className="size-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate({
-                        to: '/register/forms/add',
-                        search: { id: item.id || item._id, pending: isPending ? 'true' : undefined },
-                      });
-                    }}
-                  >
-                    <Pencil className="size-4 mr-2" />
-                    {t('edit')}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+          {item.enterprise?.name && (
+            <ItemDescription className="flex items-center gap-2">
+              <Building2 className="size-3" /> {item.enterprise.name}
+            </ItemDescription>
           )}
+          <div className="flex items-center justify-end border-l pl-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                <Button disabled={!item.appliedPermissions?.canEdit} variant="ghost" size="icon">
+                  <MoreVertical className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate({
+                      to: '/register/forms/add',
+                      search: { id: item.id || item._id, pending: isPending ? 'true' : undefined },
+                    });
+                  }}
+                >
+                  <Pencil className="size-4 mr-2" />
+                  {t('edit')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </Item>
     );

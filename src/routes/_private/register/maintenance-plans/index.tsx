@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Edit2, MoreVertical, Plus, Search, Settings, Trash2 } from 'lucide-react';
+import { Building2, Edit2, MoreVertical, Plus, Search, Settings, Trash2 } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -139,7 +139,9 @@ function MaintenancePlansListPage() {
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
-                    <ItemDescription>{item.enterprise?.name}</ItemDescription>
+                    <ItemDescription className="flex items-center gap-2">
+                      <Building2 className="size-3" /> {item.enterprise?.name}
+                    </ItemDescription>
                   </ItemContent>
                 </div>
 
