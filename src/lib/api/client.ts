@@ -4,7 +4,8 @@
  */
 
 import { toast } from 'sonner';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useAuth } from '@/hooks/use-auth';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 
 const baseURL = import.meta.env.VITE_URI_BASE || 'http://localhost:3001';
 const timeout = parseInt(import.meta.env.VITE_URI_TIMEOUT || '30000', 10);
@@ -29,11 +30,7 @@ interface ApiResponse<T = unknown> {
  * Clear localStorage and redirect to login
  */
 function clearLocalStorage() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  localStorage.removeItem('typelog');
-  localStorage.removeItem('map_show_name');
-  useEnterpriseFilter.getState().setIdEnterprise('');
+  useAuth.getState().clearAuth();
 }
 
 /**
@@ -155,7 +152,7 @@ async function fetchWithTimeout<T>(url: string, init: RequestInit, options: ApiO
  * Create request headers
  */
 function createHeaders(options: ApiOptions): HeadersInit {
-  const token = localStorage.getItem('token');
+  const token = useAuth.getState().token;
   const enterprise = useEnterpriseFilter.getState().idEnterprise;
 
   const headers: Record<string, string> = {

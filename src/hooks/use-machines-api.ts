@@ -118,7 +118,10 @@ export function useMachinesByEnterprise(idEnterprise: string | undefined) {
 export function useMachine(id: string | null) {
   return useQuery({
     queryKey: machinesKeys.detail(id || ''),
-    queryFn: () => fetchMachine(id!),
+    queryFn: () => {
+      if (!id) throw new Error('Machine ID is required');
+      return fetchMachine(id);
+    },
     enabled: !!id,
   });
 }

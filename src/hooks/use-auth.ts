@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { clearStoredToken, type DecodedToken, decodeToken, setStoredToken } from '@/config/token';
-import { useEnterpriseFilter } from './use-enterprises-api';
+import { type DecodedToken, decodeToken } from '@/config/token';
+import { useEnterpriseFilter } from './use-enterprise-filter';
 
 interface LockedAccount {
   id: string;
@@ -17,18 +17,13 @@ export const useAuth = create<AuthStore>()(
       isLoading: false,
       locked: null,
       rememberEmail: false,
+      rememberedEmail: null,
+      loginType: null,
+      mapShowName: false,
 
       setAuth: (token: string, loginType: 'normal' | 'sso' = 'normal') => {
         const user = decodeToken(token);
-        if (!user) {
-          return;
-        }
-
-        // Save to localStorage
-        setStoredToken(token);
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('typelog', loginType);
-        localStorage.setItem('map_show_name', 'true');
+        if (!user) return;
 
         if (user.request) {
           useEnterpriseFilter.getState().setIdEnterprise(user.request);
@@ -38,16 +33,19 @@ export const useAuth = create<AuthStore>()(
           isAuthenticated: true,
           user,
           token,
+          loginType,
+          mapShowName: true,
           locked: null,
         });
       },
 
       clearAuth: () => {
-        clearStoredToken();
+        useEnterpriseFilter.getState().setIdEnterprise('');
         set({
           isAuthenticated: false,
           user: null,
           token: null,
+          loginType: null,
           locked: null,
         });
       },
@@ -58,36 +56,29 @@ export const useAuth = create<AuthStore>()(
 
       clearLocked: () => set({ locked: null }),
 
-      setRememberEmail: (remember: boolean) => set({ rememberEmail: remember }),
+      setRememberEmail: (remember: boolean) =>
+        set((state) => ({
+          rememberEmail: remember,
+          rememberedEmail: remember ? state.rememberedEmail : null,
+        })),
 
-      // Initialize from localStorage on mount
-      hydrate: () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-          const user = decodeToken(token);
-          if (user) {
-            set({
-              isAuthenticated: true,
-              user,
-              token,
-            });
-          }
-        }
-      },
+      setRememberedEmail: (email: string | null) => set({ rememberedEmail: email }),
     }),
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
-        // Only persist these fields
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        token: state.token,
         rememberEmail: state.rememberEmail,
+        rememberedEmail: state.rememberedEmail,
+        loginType: state.loginType,
+        mapShowName: state.mapShowName,
       }),
     },
   ),
 );
-
-// Hydrate on app start
-useAuth.getState().hydrate();
 
 type AuthStore = {
   isAuthenticated: boolean;
@@ -96,11 +87,14 @@ type AuthStore = {
   isLoading: boolean;
   locked: LockedAccount | null;
   rememberEmail: boolean;
+  rememberedEmail: string | null;
+  loginType: 'normal' | 'sso' | null;
+  mapShowName: boolean;
   setAuth: (token: string, loginType?: 'normal' | 'sso') => void;
   clearAuth: () => void;
   setLoading: (isLoading: boolean) => void;
   setLocked: (locked: LockedAccount) => void;
   clearLocked: () => void;
   setRememberEmail: (remember: boolean) => void;
-  hydrate: () => void;
+  setRememberedEmail: (email: string | null) => void;
 };

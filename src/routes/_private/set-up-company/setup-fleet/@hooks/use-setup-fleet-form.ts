@@ -52,7 +52,7 @@ export function useSetupFleetForm({ idEnterprise }: UseSetupFleetFormOptions) {
         idEnterprise: data.idEnterprise,
         id: data.id,
         fleet: {
-          center: data.latitude || data.longitude ? [Number.parseFloat(data.latitude), Number.parseFloat(data.longitude)] : null,
+          center: data.latitude && data.longitude ? [Number.parseFloat(data.latitude), Number.parseFloat(data.longitude)] : null,
           zoom: data.zoom || 0,
         },
       });

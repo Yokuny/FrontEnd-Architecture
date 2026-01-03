@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { RoleSelect, UserTypeSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 
 interface UserFilterDialogProps {
   initialFilters: {

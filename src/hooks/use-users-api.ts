@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { api } from '@/lib/api/client';
 import type { PasswordUpdate, User, UserListItem, UserPermission } from '@/routes/_private/permissions/users/@interface/user';
 

@@ -20,7 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { usePlatform, usePlatformsApi } from '@/hooks/use-platforms-api';
 import { PlatformForm } from './@components/platform-form';
 import { usePlatformForm } from './@hooks/use-platform-form';

@@ -148,10 +148,10 @@ export function FormOthersTab({ form, idEnterprise, markAsChanged }: FormOthersT
                         </div>
 
                         <div className="flex flex-wrap gap-2">
-                          {emails.map((e, i) => (
-                            <Badge key={`${e}-${i}`} variant="secondary" className="flex items-center gap-1">
+                          {emails.map((e, _i) => (
+                            <Badge key={e} variant="secondary" className="flex items-center gap-1">
                               {e}
-                              <X className="size-3 cursor-pointer" onClick={() => removeEmail(i)} />
+                              <X className="size-3 cursor-pointer" onClick={() => removeEmail(_i)} />
                             </Badge>
                           ))}
                         </div>

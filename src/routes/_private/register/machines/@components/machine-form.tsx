@@ -437,7 +437,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
                       </FormItem>
                     )}
                   />
-                  <div className="flex items-end gap-2" key={`contact-phone-${index}`}>
+                  <div className="flex items-end gap-2" key={`contact-phone-${field.id}`}>
                     <FormField
                       control={form.control}
                       name={`contacts.${index}.phone`}
@@ -492,7 +492,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
                       </FormItem>
                     )}
                   />
-                  <div className="md:col-span-2 flex items-end gap-2" key={`camera-link-${index}`}>
+                  <div className="md:col-span-2 flex items-end gap-2" key={`camera-link-${field.id}`}>
                     <FormField
                       control={form.control}
                       name={`cameras.${index}.link`}

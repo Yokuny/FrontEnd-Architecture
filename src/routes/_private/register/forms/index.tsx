@@ -12,7 +12,8 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useAuth } from '@/hooks/use-auth';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { type Form, useFormsPaginated } from '@/hooks/use-forms-api';
 
 const formsSearchSchema = z.object({
@@ -53,7 +54,7 @@ function FormsListPage() {
 
   // Get pending forms from localStorage
   const pendingForms: PendingForm[] = JSON.parse(localStorage.getItem('forms') || '[]');
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const user = useAuth.getState().user || { id: '', name: '' };
 
   const forms = data?.data || [];
   const total = data?.pageInfo?.count || 0;

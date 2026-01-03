@@ -2,47 +2,36 @@ import { useRef, useState } from 'react';
 import type ReCAPTCHA from 'react-google-recaptcha';
 import { useAuth } from '@/hooks/use-auth';
 import { useLogin, useLoginSSO, useVerifyEmail } from '@/hooks/use-auth-api';
-import { REMEMBER_EMAIL_KEY } from '@/routes/_public/auth/@consts/login.consts';
 import type { LoginOption, LoginStep, PasswordFormValues } from '@/routes/_public/auth/@interface/login.types';
 
 export function useLoginForm() {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
+  const { rememberEmail, setRememberEmail, rememberedEmail, setRememberedEmail, isLoading } = useAuth();
+
   const [step, setStep] = useState<LoginStep>('email');
-  const [email, setEmail] = useState(() => {
-    const saved = localStorage.getItem(REMEMBER_EMAIL_KEY);
-    return saved || '';
-  });
+  const [email, setEmail] = useState(rememberedEmail || '');
   const [loginOptions, setLoginOptions] = useState<LoginOption[]>([]);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { rememberEmail, setRememberEmail, isLoading } = useAuth();
   const { mutate: verifyEmail, isPending: isVerifying } = useVerifyEmail();
   const { mutate: login } = useLogin();
   const { mutate: loginSSO } = useLoginSSO();
-
-  // Initialize remember email state
-  useState(() => {
-    const saved = localStorage.getItem(REMEMBER_EMAIL_KEY);
-    if (saved) {
-      setRememberEmail(true);
-    }
-  });
 
   // Save/remove remembered email
   const updateRememberEmail = (remember: boolean) => {
     setRememberEmail(remember);
     if (remember && email) {
-      localStorage.setItem(REMEMBER_EMAIL_KEY, email);
-    } else if (!remember) {
-      localStorage.removeItem(REMEMBER_EMAIL_KEY);
+      setRememberedEmail(email);
+    } else {
+      setRememberedEmail(null);
     }
   };
 
   const handleEmailChange = (newEmail: string) => {
     setEmail(newEmail);
     if (rememberEmail) {
-      localStorage.setItem(REMEMBER_EMAIL_KEY, newEmail);
+      setRememberedEmail(newEmail);
     }
   };
 

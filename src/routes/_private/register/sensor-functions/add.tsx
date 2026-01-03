@@ -6,7 +6,7 @@ import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useSensorFunction } from '@/hooks/use-sensor-functions-api';
 import { SensorFunctionForm } from './@components/sensor-function-form';
 import { replacePlaceholdersWithArray } from './@consts/sensor-function-utils';
