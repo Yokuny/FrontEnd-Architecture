@@ -8,6 +8,7 @@ import {
   FileText,
   KeySquare,
   Mail,
+  MapIcon,
   MapPin,
   MessageSquare,
   MonitorCog,
@@ -26,6 +27,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   'set-up-company': MonitorCog,
   maintenance: Wrench,
   register: NotebookPen,
+  'fleet-manager': MapIcon,
 };
 
 // Ícones para sub-rotas específicas
@@ -69,6 +71,7 @@ export const ROUTE_LABELS: Record<string, string> = {
   'setup-chatbot': 'setup.chatbot',
   'setup-fleet': 'setup.fleet',
   'setup-limits': 'setup.limits',
+  'fleet-manager': 'fleet.manager',
 };
 
 /**
@@ -79,6 +82,7 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
+  '/fleet-manager',
   '/maintenance/list-os-done',
   '/maintenance/monitoring-plans',
   '/maintenance/monitoring-wear',

@@ -271,6 +271,10 @@ code {
   --shadow-2xl: var(--shadow-2xl);
 }
 
+@utility no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

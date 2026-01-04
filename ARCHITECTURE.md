@@ -115,7 +115,9 @@ src/routes/_private/embarcacoes/
   }
   ```
   
-  **Padrão de Componentes**: Use [`Item`](./src/components/ui/item.tsx) para criar **cards informativos**, listagens de dados ou blocos de informação repetíveis ou paginas dentro de @Components ou envoltas por um componente `Card`.
+  **Padrão de Componentes**:
+  - arquivos de **PÁGINA** (contém `createFileRoute`): **DEVEM** obrigatoriamente iniciar com `<Card>` seguido de `<CardHeader>` como estrutura principal.
+  - arquivos de **COMPONENTE** (não contém `createFileRoute`, ex: em `@components/`): **NÃO DEVEM** usar `<Card>`. Devem usar no máximo os componentes de [`Item`](./src/components/ui/item.tsx) para criar listagens de dados ou blocos de informação.
 
   **Padrão de resposta e resultados vazios / sem dados**:
   

@@ -17,6 +17,7 @@ import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/
 import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
 import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
 import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
+import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/fleet-manager/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
@@ -114,6 +115,12 @@ const PrivateMaintenanceIndexRoute = PrivateMaintenanceIndexRouteImport.update({
   path: '/maintenance/',
   getParentRoute: () => PrivateRoute,
 } as any);
+const PrivateFleetManagerIndexRoute =
+  PrivateFleetManagerIndexRouteImport.update({
+    id: '/fleet-manager/',
+    path: '/fleet-manager/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
   id: '/auth/unlock',
   path: '/auth/unlock',
@@ -456,6 +463,7 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/register': typeof PrivateRegisterIndexRoute;
@@ -521,6 +529,7 @@ export interface FileRoutesByTo {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/register': typeof PrivateRegisterIndexRoute;
@@ -589,6 +598,7 @@ export interface FileRoutesById {
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/_private/fleet-manager/': typeof PrivateFleetManagerIndexRoute;
   '/_private/maintenance/': typeof PrivateMaintenanceIndexRoute;
   '/_private/permissions/': typeof PrivatePermissionsIndexRoute;
   '/_private/register/': typeof PrivateRegisterIndexRoute;
@@ -656,6 +666,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/fleet-manager'
     | '/maintenance'
     | '/permissions'
     | '/register'
@@ -721,6 +732,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/fleet-manager'
     | '/maintenance'
     | '/permissions'
     | '/register'
@@ -788,6 +800,7 @@ export interface FileRouteTypes {
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
+    | '/_private/fleet-manager/'
     | '/_private/maintenance/'
     | '/_private/permissions/'
     | '/_private/register/'
@@ -911,6 +924,13 @@ declare module '@tanstack/react-router' {
       path: '/maintenance';
       fullPath: '/maintenance';
       preLoaderRoute: typeof PrivateMaintenanceIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/fleet-manager/': {
+      id: '/_private/fleet-manager/';
+      path: '/fleet-manager';
+      fullPath: '/fleet-manager';
+      preLoaderRoute: typeof PrivateFleetManagerIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_public/auth/unlock': {
@@ -1316,6 +1336,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
+  PrivateFleetManagerIndexRoute: typeof PrivateFleetManagerIndexRoute;
   PrivateMaintenanceIndexRoute: typeof PrivateMaintenanceIndexRoute;
   PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
   PrivateRegisterIndexRoute: typeof PrivateRegisterIndexRoute;
@@ -1377,6 +1398,7 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateFleetManagerIndexRoute: PrivateFleetManagerIndexRoute,
   PrivateMaintenanceIndexRoute: PrivateMaintenanceIndexRoute,
   PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
   PrivateRegisterIndexRoute: PrivateRegisterIndexRoute,

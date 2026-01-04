@@ -73,19 +73,24 @@ function extractRoutes(): string[] {
     routeGroups.get(baseSegment)?.push(route);
   }
 
-  // Extrair apenas primeiro nível de sub-rotas (2 segmentos)
+  // Extrair rotas válidas para a sidebar
   const filteredRoutes: string[] = [];
 
-  for (const [_baseSegment, routes] of routeGroups) {
+  for (const [baseSegment, routes] of routeGroups) {
+    // Se a rota base é a única no grupo, incluí-la (ex: /fleet-manager)
+    if (routes.length === 1 && routes[0] === `/${baseSegment}`) {
+      filteredRoutes.push(routes[0]);
+      continue;
+    }
+
+    // Se houver mais rotas, incluir apenas as de primeiro nível (ex: /permissions/users)
     for (const route of routes) {
       const segments = route.split('/').filter(Boolean);
 
-      // Apenas primeiro nível de sub-rotas (ex: /permissions/users) - 2 segmentos
+      // Apenas primeiro nível de sub-rotas (2 segmentos)
       if (segments.length === 2) {
         filteredRoutes.push(route);
       }
-
-      // Ignora rotas base (1 segmento) e rotas com 3+ segmentos
     }
   }
 
