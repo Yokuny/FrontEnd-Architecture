@@ -29,7 +29,7 @@ export function SidebarTrigger() {
           }}
           className="flex items-center justify-center h-full w-full"
         >
-          <Icon className="size-5 text-muted-foreground" />
+          <Icon className="size-5" />
         </motion.div>
       </AnimatePresence>
       <span className="sr-only">Toggle Sidebar</span>

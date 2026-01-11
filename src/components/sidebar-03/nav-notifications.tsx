@@ -21,7 +21,7 @@ export function NotificationsPopover({ notifications }: { notifications: Notific
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="ghost" aria-label="Open notifications">
-          <MessageCircleWarning key={state} className="size-5 animate-swing text-muted-foreground" />
+          <MessageCircleWarning key={state} className="size-5 animate-swing" />
           <span className="sr-only">Open notifications</span>
         </Button>
       </DropdownMenuTrigger>

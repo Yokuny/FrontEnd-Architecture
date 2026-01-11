@@ -39,7 +39,7 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                   <SidebarMenuButton
                     className={cn(
                       'flex w-full items-center rounded-sm transition-colors',
-                      isOpen ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
+                      isOpen ? 'bg-sidebar-muted' : 'hover:bg-sidebar-muted hover:text-muted-foreground',
                       isCollapsed && 'justify-center',
                     )}
                   >
