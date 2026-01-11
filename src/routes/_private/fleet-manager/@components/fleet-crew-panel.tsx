@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { Calendar, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import DefaultLoading from '@/components/default-loading';
-import { Item, ItemDescription, ItemMedia } from '@/components/ui/item';
+import { Item, ItemDescription } from '@/components/ui/item';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useFleetCrew } from '../@hooks/use-fleet-api';
@@ -25,9 +25,7 @@ export function FleetCrewPanel() {
         </div>
       ) : !crewData?.people || crewData.people.length === 0 ? (
         <Item className="py-12 flex flex-col text-center">
-          <ItemMedia>
-            <Users className="size-8 opacity-20" />
-          </ItemMedia>
+          <Users className="size-8 opacity-20" />
           <ItemDescription className="font-medium">{t('crew.empty')}</ItemDescription>
         </Item>
       ) : (

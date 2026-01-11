@@ -2516,5 +2516,10 @@
   "setup.chatbot.description": "Configure o chatbot e mensagens de boas-vindas.",
   "setup.limits.description": "Configure limites de contatos, usuários e APIs.",
   "setup.fleet.description": "Configure o centro e zoom inicial do mapa da frota.",
-  "usernames.external.description": "Gerencie usuários externos e tokens de integração."
+  "usernames.external.description": "Gerencie usuários externos e tokens de integração.",
+  "current.travel": "Viagem atual",
+  "no.events.recorded": "Nenhum evento registrado",
+  "analytics": "Analíticos",
+  "hr": "h",
+  "hrs": "h"
 }
