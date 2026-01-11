@@ -1,8 +1,11 @@
 import cryptoJs from 'crypto-js';
 import { jwtDecode } from 'jwt-decode';
+import { Menu } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { DEFAULT_MAP_CENTER, DEFAULT_MAP_ZOOM } from '../@consts/fleet-manager';
 import { useMapApiConfig } from '../@hooks/use-fleet-api';
+import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
 
 const DECRYPT_KEY = 'zdY';
 
@@ -12,6 +15,7 @@ interface FleetWindMapProps {
 
 export function FleetWindMap({ idEnterprise: _idEnterprise }: FleetWindMapProps) {
   const { data: config } = useMapApiConfig();
+  const { toggleFleetbar } = useFleetManagerStore();
   const [isReady, setIsReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -91,6 +95,17 @@ export function FleetWindMap({ idEnterprise: _idEnterprise }: FleetWindMapProps)
         }}
       />
       <div id="windy" ref={containerRef} className="size-full" />
+
+      {/* UI Triggers Overlays */}
+      <div className="absolute inset-0 pointer-events-none z-1000">
+        {/* Top Left Buttons */}
+        <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-auto">
+          <Button variant="secondary" size="icon" className="shadow-md bg-background/95 backdrop-blur-sm border-primary/10" onClick={toggleFleetbar}>
+            <Menu className="size-4" />
+          </Button>
+        </div>
+      </div>
+
       {!isReady && (
         <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
           <div className="flex flex-col items-center gap-3">

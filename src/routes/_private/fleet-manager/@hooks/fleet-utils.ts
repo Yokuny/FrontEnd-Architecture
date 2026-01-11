@@ -35,5 +35,5 @@ export function calculateCIIReference(typeVessel: string, dwt: number, grossTonn
   const reference = getReferenceAC(typeVessel, dwt, grossTonnage);
   if (!reference || !reference.capacity || !Number.isFinite(reference.capacity)) return null;
 
-  return reference.a * Math.pow(reference.capacity, reference.c * -1);
+  return reference.a * reference.capacity ** (reference.c * -1);
 }

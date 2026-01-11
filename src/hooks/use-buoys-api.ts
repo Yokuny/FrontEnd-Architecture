@@ -96,3 +96,31 @@ export function useBuoysApi() {
     deleteBuoy,
   };
 }
+
+export function useBuoysMap({ idEnterprise }: { idEnterprise?: string }) {
+  return useQuery({
+    queryKey: [...buoyKeys.all, 'map-list', idEnterprise],
+    queryFn: async () => {
+      const response = await api.get<any[]>(`/buoy/maplist${idEnterprise ? `?idEnterprise=${idEnterprise}` : ''}`);
+      return response.data;
+    },
+    enabled: !!idEnterprise,
+  });
+}
+
+export function useVesselsNear(buoysData: any[], enabled: boolean) {
+  return useQuery({
+    queryKey: ['buoys', 'vessels-near', buoysData?.length],
+    queryFn: async () => {
+      const near = buoysData?.map((x) => ({
+        latitude: x.location[0].geometry.coordinates[1],
+        longitude: x.location[0].geometry.coordinates[0],
+        radius: x.location[0].properties.radius + 1000,
+        lookbackMinutes: 60,
+      }));
+      const response = await api.post<any[]>(`/integrationthird/vesselsnear`, near);
+      return response.data;
+    },
+    enabled: enabled && !!buoysData?.length,
+  });
+}

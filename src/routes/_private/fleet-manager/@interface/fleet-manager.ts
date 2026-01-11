@@ -1,22 +1,47 @@
 export interface FleetManagerState {
-  activeTab: 'assets' | 'voyages';
   selectedMachineId: string | null;
   selectedVoyageId: string | null;
-  selectedPanel: 'details' | 'crew' | 'consume' | 'info' | 'measure' | null;
-  searchText: string;
+  selectedPanel: 'details' | 'crew' | 'consume' | 'info' | 'measure' | 'search' | 'options' | null;
   showNames: boolean;
   showCodes: boolean;
   showGeofences: boolean;
   mapTheme: 'default' | 'smoothdark' | 'earth' | 'rivers' | 'simple' | 'premium';
-  mapTech: 'standard' | 'windy';
+
   showPlatforms: boolean;
   showBouys: boolean;
   showVesselsNearBouys: boolean;
-  showMeasureLine: boolean;
   unitMeasureLine: 'nm' | 'm';
   pointsMeasureLine: any[];
   isShowPredicateRoute: boolean;
-  isSidebarOpen: boolean;
+  isFleetbarOpen: boolean;
+
+  // Nautical Charts
+  nauticalChart: 'none' | 'navtor' | 'cmap' | 'cmap_relief' | 'cmap_dark' | 'nav';
+
+  // Fleet Indicators
+  isNavigationIndicator: boolean;
+  isOperationIndicator: boolean;
+  showNameFence: boolean;
+
+  // Legacy Redux states
+  statusMachine: any[];
+  operationMachines: any[];
+  lastMarker: any;
+  vesselsInFence: any[];
+  travelDetailsSelected: any;
+  machineConsumptionSelected: any;
+  machineCrewSelected: any;
+  machineInfoSelected: any;
+  machineContactSelected: any;
+  machineCamerasSelected: any;
+  assetVoyageSelected: any;
+  routeHistory: any[];
+  eventsStatusHistory: any[];
+  routeConsumption: any[];
+  routeConsumptionSensors: any;
+  routeIntegration: any[];
+  vesselIntegration: any;
+  isLoadingRouteIntegration: boolean;
 
   // Playback Context
   playback: {
@@ -31,24 +56,48 @@ export interface FleetManagerState {
   };
 
   // Actions
-  setActiveTab: (tab: 'assets' | 'voyages') => void;
   setSelectedMachineId: (id: string | null) => void;
   setSelectedVoyageId: (id: string | null) => void;
   setSelectedPanel: (panel: FleetManagerState['selectedPanel']) => void;
-  setSearchText: (text: string) => void;
   toggleShowNames: () => void;
   toggleShowCodes: () => void;
   toggleShowGeofences: () => void;
   setMapTheme: (theme: FleetManagerState['mapTheme']) => void;
-  setMapTech: (tech: FleetManagerState['mapTech']) => void;
+
   setShowPlatforms: (show: boolean) => void;
   setShowBouys: (show: boolean) => void;
   setShowVesselsNearBouys: (show: boolean) => void;
-  setShowMeasureLine: (show: boolean) => void;
   setUnitMeasureLine: (unit: FleetManagerState['unitMeasureLine']) => void;
   setPointsMeasureLine: (points: any[]) => void;
   setIsShowPredicateRoute: (show: boolean) => void;
-  toggleSidebar: () => void;
+  toggleFleetbar: () => void;
+
+  // Nautical Actions
+  setNauticalChart: (chart: FleetManagerState['nauticalChart']) => void;
+
+  // Fleet Indicator Actions
+  setIsNavigationIndicator: (show: boolean) => void;
+  setIsOperationIndicator: (show: boolean) => void;
+  setShowNameFence: (show: boolean) => void;
+
+  // Legacy Actions
+  setStatusMachine: (status: any[]) => void;
+  setOperationMachines: (operations: any[]) => void;
+  setLastMarker: (marker: any) => void;
+  setVesselsInFence: (vessels: any[]) => void;
+  setTravelDetailsSelected: (travel: any) => void;
+  setMachineConsumptionSelected: (consumption: any) => void;
+  setMachineCrewSelected: (crew: any) => void;
+  setMachineInfoSelected: (info: any) => void;
+  setMachineContactSelected: (contact: any) => void;
+  setMachineCamerasSelected: (cameras: any) => void;
+  setAssetVoyageSelected: (voyage: any) => void;
+  setRouteHistory: (history: any[]) => void;
+  setEventsStatusConsume: (events: any[]) => void;
+  setRouteConsumption: (route: any[]) => void;
+  setRouteConsumptionSensors: (sensors: any) => void;
+  setRouteIntegration: (data: { routeIntegration: any[]; vesselIntegration: any }) => void;
+  setIsLoadingRouteIntegration: (loading: boolean) => void;
 
   // Playback Actions
   setPlaybackActive: (active: boolean, type: 'route' | 'region' | null) => void;

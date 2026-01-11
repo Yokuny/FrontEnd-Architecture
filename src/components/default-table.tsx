@@ -19,7 +19,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { cn } from '@/lib/utils';
 
 type Status = 'completed' | 'pending' | 'processing' | 'cancelled';
 
@@ -53,7 +52,7 @@ const statusConfig: Record<Status, { label: string; className: string }> = {
 function StatusBadge({ status }: { status: Status }) {
   const config = statusConfig[status];
   return (
-    <Badge variant="outline" className={cn('border-0', config.className)}>
+    <Badge variant="outline" className={config.className}>
       {config.label}
     </Badge>
   );

@@ -3,9 +3,12 @@ import { Gauge, Pause, Play, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Item, ItemContent } from '@/components/ui/item';
 import { Slider } from '@/components/ui/slider';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
 
 export function PlaybackTimeline() {
+  const isMobile = useIsMobile();
   const { playback, togglePlaybackPlay, setPlaybackTime, setPlaybackSpeed, setPlaybackActive } = useFleetManagerStore();
   const { isPlaying, speed, currentTime, startTime, endTime, isActive } = playback;
 
@@ -31,7 +34,7 @@ export function PlaybackTimeline() {
   };
 
   return (
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 z-50 pointer-events-auto">
+    <div className={cn('z-50 pointer-events-auto', isMobile ? 'relative w-full px-4 pb-4 mt-auto' : 'absolute bottom-6 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4')}>
       <Item className="bg-background/80 backdrop-blur-md border-primary/20 shadow-2xl p-4 gap-4 flex items-center">
         <Button variant="default" size="icon" className="shrink-0 size-10 rounded-full shadow-lg" onClick={handleTogglePlay}>
           {isPlaying ? <Pause className="size-5" /> : <Play className="size-5 fill-current" />}

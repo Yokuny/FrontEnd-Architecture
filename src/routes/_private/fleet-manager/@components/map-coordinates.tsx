@@ -19,7 +19,7 @@ class Dms {
     const absDD = Math.abs(this._dd);
     const degrees = truncate(absDD);
     const minutes = truncate((absDD - degrees) * 60);
-    const seconds = (absDD - degrees - minutes / 60) * Math.pow(60, 2);
+    const seconds = (absDD - degrees - minutes / 60) * 60 ** 2;
     return [degrees, minutes, seconds, this._hemisphere];
   }
 

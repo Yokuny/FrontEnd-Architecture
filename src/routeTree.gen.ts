@@ -50,6 +50,8 @@ import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_priv
 import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
 import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
 import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
+import { Route as PrivateFleetManagerWindIndexRouteImport } from './routes/_private/fleet-manager/wind/index';
+import { Route as PrivateFleetManagerFleetIndexRouteImport } from './routes/_private/fleet-manager/fleet/index';
 import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
 import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
 import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
@@ -310,6 +312,18 @@ const PrivateMaintenanceListOsDoneIndexRoute =
     path: '/maintenance/list-os-done/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateFleetManagerWindIndexRoute =
+  PrivateFleetManagerWindIndexRouteImport.update({
+    id: '/fleet-manager/wind/',
+    path: '/fleet-manager/wind/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateFleetManagerFleetIndexRoute =
+  PrivateFleetManagerFleetIndexRouteImport.update({
+    id: '/fleet-manager/fleet/',
+    path: '/fleet-manager/fleet/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateRegisterUserTypeAddRoute =
   PrivateRegisterUserTypeAddRouteImport.update({
     id: '/register/user-type/add',
@@ -489,6 +503,8 @@ export interface FileRoutesByFullPath {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/fleet-manager/fleet': typeof PrivateFleetManagerFleetIndexRoute;
+  '/fleet-manager/wind': typeof PrivateFleetManagerWindIndexRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -555,6 +571,8 @@ export interface FileRoutesByTo {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/fleet-manager/fleet': typeof PrivateFleetManagerFleetIndexRoute;
+  '/fleet-manager/wind': typeof PrivateFleetManagerWindIndexRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -624,6 +642,8 @@ export interface FileRoutesById {
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/_private/fleet-manager/fleet/': typeof PrivateFleetManagerFleetIndexRoute;
+  '/_private/fleet-manager/wind/': typeof PrivateFleetManagerWindIndexRoute;
   '/_private/maintenance/list-os-done/': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/_private/maintenance/monitoring-plans/': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/_private/maintenance/monitoring-wear/': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -692,6 +712,8 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/fleet-manager/fleet'
+    | '/fleet-manager/wind'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
@@ -758,6 +780,8 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/fleet-manager/fleet'
+    | '/fleet-manager/wind'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
@@ -826,6 +850,8 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
     | '/_private/register/user-type/add'
+    | '/_private/fleet-manager/fleet/'
+    | '/_private/fleet-manager/wind/'
     | '/_private/maintenance/list-os-done/'
     | '/_private/maintenance/monitoring-plans/'
     | '/_private/maintenance/monitoring-wear/'
@@ -1157,6 +1183,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateMaintenanceListOsDoneIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/fleet-manager/wind/': {
+      id: '/_private/fleet-manager/wind/';
+      path: '/fleet-manager/wind';
+      fullPath: '/fleet-manager/wind';
+      preLoaderRoute: typeof PrivateFleetManagerWindIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/fleet-manager/fleet/': {
+      id: '/_private/fleet-manager/fleet/';
+      path: '/fleet-manager/fleet';
+      fullPath: '/fleet-manager/fleet';
+      preLoaderRoute: typeof PrivateFleetManagerFleetIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/register/user-type/add': {
       id: '/_private/register/user-type/add';
       path: '/register/user-type/add';
@@ -1361,6 +1401,8 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
+  PrivateFleetManagerFleetIndexRoute: typeof PrivateFleetManagerFleetIndexRoute;
+  PrivateFleetManagerWindIndexRoute: typeof PrivateFleetManagerWindIndexRoute;
   PrivateMaintenanceListOsDoneIndexRoute: typeof PrivateMaintenanceListOsDoneIndexRoute;
   PrivateMaintenanceMonitoringPlansIndexRoute: typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   PrivateMaintenanceMonitoringWearIndexRoute: typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -1426,6 +1468,8 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
   PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
+  PrivateFleetManagerFleetIndexRoute: PrivateFleetManagerFleetIndexRoute,
+  PrivateFleetManagerWindIndexRoute: PrivateFleetManagerWindIndexRoute,
   PrivateMaintenanceListOsDoneIndexRoute:
     PrivateMaintenanceListOsDoneIndexRoute,
   PrivateMaintenanceMonitoringPlansIndexRoute:

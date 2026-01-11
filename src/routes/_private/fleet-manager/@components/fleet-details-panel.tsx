@@ -1,212 +1,347 @@
-import { format } from 'date-fns';
-import { Calendar, Clock, MapPin, Navigation2, Ship, X } from 'lucide-react';
+import { format, formatISO, intervalToDuration, subHours } from 'date-fns';
+import { Activity, Anchor, Calendar, Clock, Compass, Flag, Gauge, ListTree, Locate, MapPin, Navigation2, Ship, TrendingUp, Waves } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import DefaultLoading from '@/components/default-loading';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Item, ItemActions, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Item, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { useMachineDetails, useVoyageDetails } from '../@hooks/use-fleet-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useMachineDetails, useMachineTimeline, useSpeedHistory, useVoyageAnalytics, useVoyageDetails, useVoyageTimeline } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
+import type { FleetVoyage, MachineDetailsResponse, SpeedHistoryResponse, TimelineEvent } from '../@interface/fleet-api';
+import { Proximity } from './proximity';
 
 export function FleetDetailsPanel() {
+  const { selectedMachineId, selectedVoyageId } = useFleetManagerStore();
+  const { idEnterprise } = useEnterpriseFilter();
+
+  // Machine Data
+  const { data: machineData, isLoading: isLoadingMachine } = useMachineDetails(selectedMachineId);
+  const speedHistoryMin = formatISO(subHours(new Date(), 12));
+  const speedHistoryMax = formatISO(new Date());
+  const { data: speedHistory, isLoading: isLoadingSpeedHistory } = useSpeedHistory(selectedMachineId ?? undefined, speedHistoryMin, speedHistoryMax);
+  const { data: machineTimeline, isLoading: isLoadingMachineTimeline } = useMachineTimeline(selectedMachineId ?? undefined, idEnterprise);
+
+  // Voyage Data
+  const { data: voyageData, isLoading: isLoadingVoyage } = useVoyageDetails(selectedVoyageId);
+  const { data: analyticsData, isLoading: isLoadingAnalytics } = useVoyageAnalytics(voyageData?.machine?.id, voyageData?.dateTimeStart, selectedVoyageId ?? undefined);
+  const { data: timelineData, isLoading: isLoadingTimeline } = useVoyageTimeline(
+    voyageData?.machine?.id,
+    selectedVoyageId ?? undefined,
+    voyageData?.dateTimeStart,
+    voyageData?.dateTimeEnd,
+  );
+
+  // Loading Logic: Wait for all data related to the current selection
+  const isMachineLoading = !!selectedMachineId && (isLoadingMachine || isLoadingSpeedHistory || isLoadingMachineTimeline);
+  const isVoyageLoading = !!selectedVoyageId && (isLoadingVoyage || isLoadingAnalytics || isLoadingTimeline);
+
+  if (isMachineLoading || isVoyageLoading) {
+    return (
+      <ItemGroup className="p-4">
+        <DefaultLoading />
+      </ItemGroup>
+    );
+  }
+
+  if (selectedMachineId && machineData) {
+    return <MachineDetailsView data={machineData} speedHistory={speedHistory} timeline={machineTimeline?.data || []} />;
+  }
+
+  if (selectedVoyageId && voyageData) {
+    return <VoyageDetailsView data={voyageData} analytics={analyticsData?.data || (voyageData as any)?.analytics?.data} timeline={timelineData || []} />;
+  }
+
+  return null;
+}
+
+/**
+ * Machine Details View
+ */
+function MachineDetailsView({ data, speedHistory, timeline }: { data: MachineDetailsResponse; speedHistory: SpeedHistoryResponse | undefined; timeline: TimelineEvent[] }) {
   const { t } = useTranslation();
-  const { selectedMachineId, setSelectedMachineId, selectedVoyageId, setSelectedVoyageId, selectedPanel, setSelectedPanel } = useFleetManagerStore();
+  const { selectedPanel, setSelectedPanel } = useFleetManagerStore();
 
-  const { data: machineData, isLoading: isLoadingMachine } = useMachineDetails(selectedMachineId) as any;
-  const { data: voyageData, isLoading: isLoadingVoyage } = useVoyageDetails(selectedVoyageId) as any;
-
-  const onClose = () => {
-    setSelectedMachineId(null);
-    setSelectedVoyageId(null);
-  };
-
-  const isLoading = isLoadingMachine || isLoadingVoyage;
-  const data = machineData || voyageData;
-
-  if (!data && !isLoading) return null;
+  const chartData = Array.isArray(speedHistory) ? speedHistory.map((p) => ({ time: p[0] * 1000, speed: p[1] })) : [];
 
   return (
-    <ItemGroup className="absolute top-4 right-4 bottom-4 w-96 z-10 flex flex-col shadow-2xl bg-background/95 backdrop-blur-md border border-primary/10 rounded-xl overflow-hidden transition-all duration-300 animate-in slide-in-from-right-4 pointer-events-auto">
-      <Item size="sm" className="p-4 border-b border-primary/10 rounded-none bg-primary/5">
-        <ItemHeader>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">{selectedMachineId ? <Ship className="size-5 text-primary" /> : <Navigation2 className="size-5 text-primary" />}</div>
-            <div>
-              <ItemTitle className="text-sm font-bold tracking-tight">{selectedMachineId ? machineData?.machine?.name || t('vessel') : voyageData?.code || t('travel')}</ItemTitle>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold">{selectedMachineId ? t('active.owner') : t('travel.history')}</p>
+    <ItemGroup className="p-4 gap-6">
+      <div className="space-y-4">
+        <ItemContent className="space-y-2">
+          <div className="flex items-center justify-between">
+            <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('last.positions')}</ItemTitle>
+            {data?.data?.position && (
+              <div className="flex items-center gap-1.5 text-xs text-primary font-medium">
+                <Locate className="size-3 animate-pulse" />
+                <Proximity latitude={data.data.position[0]} longitude={data.data.position[1]} />
+              </div>
+            )}
+          </div>
+          <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2">
+              <MapPin className="size-3" />
+              {data?.data?.position ? `${data.data.position[0].toFixed(6)}, ${data.data.position[1].toFixed(6)}` : '-'}
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="size-3" />
+              <span>{data?.data?.lastUpdate ? format(new Date(data.data.lastUpdate), 'dd MM yy - HH:mm') : '-'}</span>
             </div>
           </div>
-          <ItemActions>
-            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={onClose}>
-              <X className="size-4" />
+        </ItemContent>
+
+        <Separator />
+
+        <ItemContent className="flex-row justify-evenly">
+          <DetailGridItem label={t('status')} icon={Activity} value={data?.data?.status || 'N/A'} />
+          <DetailGridItem label={t('speed')} icon={Gauge} value={data?.data?.speed !== undefined ? `${data.data.speed.toFixed(1)} kn` : '0 kn'} />
+          <DetailGridItem label={t('course')} icon={Compass} value={data?.data?.course !== undefined ? `${data.data.course.toFixed(1)}°` : '0°'} />
+          {data?.data?.destiny && <DetailGridItem label={`${t('destiny.port')} AIS`} icon={Anchor} value={data.data.destiny} />}
+          {data?.data?.eta && <DetailGridItem label="ETA AIS" icon={Clock} value={format(new Date(data.data.eta), 'dd MMM, HH:mm')} />}
+          {data?.data?.draught !== undefined && <DetailGridItem label={t('draught', 'Draught')} icon={Waves} value={`${data.data.draught} m`} />}
+        </ItemContent>
+
+        {data?.travel && (
+          <Item className="flex-col items-stretch space-y-3 pt-2">
+            <ItemHeader className="text-muted-foreground gap-2">
+              <Navigation2 className="size-3" />
+              <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('current.travel')}</ItemTitle>
+            </ItemHeader>
+            <ItemContent className="bg-accent/30 p-3 rounded-lg border border-primary/5 space-y-2">
+              <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{data.travel.code}</ItemTitle>
+              <div className="flex justify-between text-xs items-center">
+                <div className="flex flex-col">
+                  <span className="text-muted-foreground text-[10px]">{t('source')}</span>
+                  <span className="font-medium">{data.travel.portPointStart?.code || '-'}</span>
+                </div>
+                <div className="h-[2px] flex-1 bg-primary/20 mx-3 relative">
+                  <div className="absolute -top-1 left-0 size-2 rounded-full bg-primary/40" />
+                  <div className="absolute -top-1 right-0 size-2 rounded-full border-2 border-primary/20 bg-background" />
+                </div>
+                <div className="flex flex-col text-right">
+                  <span className="text-muted-foreground text-[10px]">{t('destiny.port')}</span>
+                  <span className="font-medium">{data.travel.portPointEnd?.code || '-'}</span>
+                </div>
+              </div>
+            </ItemContent>
+          </Item>
+        )}
+
+        <Separator />
+
+        <ItemContent>
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp className="size-3 text-primary" />
+            <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('speed.history')}</ItemTitle>
+          </div>
+          <div className="h-32 w-full bg-accent rounded-lg border">
+            {chartData.length === 0 ? (
+              <div className="w-full h-full flex items-center justify-center text-muted-foreground underline decoration-dotted">{t('no.data')}</div>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData}>
+                  <defs>
+                    <linearGradient id="speedGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload?.[0]) {
+                        return (
+                          <div className="bg-background border rounded-lg p-2 shadow-lg text-[10px]">
+                            <div className="font-bold">{format(new Date(payload[0].payload.time), 'HH:mm')}</div>
+                            <div className="text-primary font-bold">{payload[0].value} kn</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <XAxis dataKey="time" hide />
+                  <YAxis hide domain={[0, 'auto']} />
+                  <Area type="monotone" dataKey="speed" stroke="hsl(var(--primary))" fill="url(#speedGradient)" strokeWidth={2} />
+                </AreaChart>
+              </ResponsiveContainer>
+            )}
+          </div>
+        </ItemContent>
+
+        <Separator />
+
+        <ItemContent className="space-y-4">
+          <div className="flex items-center gap-2">
+            <ListTree className="size-3 text-primary" />
+            <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('timeline')}</ItemTitle>
+          </div>
+          <div className="space-y-3 relative pl-4 before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-px before:bg-border">
+            {timeline.length === 0 ? (
+              <div className="text-xs text-muted-foreground italic pl-4">{t('no.events.recorded')}</div>
+            ) : (
+              timeline.slice(0, 5).map((event) => (
+                <div key={event.id} className="relative flex items-start gap-4 group">
+                  <div className="absolute -left-px mt-1.5 size-2 rounded-full border-2 border-background bg-primary ring-4 ring-background z-10" />
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-[10px] text-muted-foreground font-medium">{format(new Date(event.date), 'dd MMM, HH:mm')}</span>
+                    <span className="text-xs font-semibold group-hover:text-primary transition-colors">{event.data?.status || event.type}</span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </ItemContent>
+
+        <div className="grid grid-cols-3 gap-2 pt-2">
+          {['info', 'crew', 'consume'].map((panel) => (
+            <Button
+              key={panel}
+              variant={selectedPanel === panel ? 'default' : 'secondary'}
+              size="sm"
+              className="text-[10px] font-bold uppercase h-9 shadow-sm"
+              onClick={() => setSelectedPanel(panel as any)}
+            >
+              {t(panel)}
             </Button>
-          </ItemActions>
-        </ItemHeader>
-      </Item>
-
-      <ScrollArea className="flex-1 no-scrollbar">
-        <div className="p-4 space-y-6">
-          {isLoading ? (
-            <DefaultLoading />
-          ) : selectedMachineId ? (
-            /* Machine Details */
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <DetailGridItem
-                  label={t('status')}
-                  value={
-                    <Badge variant={machineData?.status === 'OPERATING' ? 'default' : 'secondary'} className="text-[10px] h-5">
-                      {machineData?.status || 'N/A'}
-                    </Badge>
-                  }
-                />
-                <DetailGridItem label={t('id')} value={machineData?.machine?.id} />
-                <DetailGridItem label={t('speed')} value={machineData?.lastPosition?.speed ? `${machineData.lastPosition.speed} kn` : '0 kn'} />
-                <DetailGridItem label={t('course')} value={machineData?.lastPosition?.course ? `${machineData.lastPosition.course}°` : '0°'} />
-              </div>
-
-              <Separator className="bg-primary/5" />
-
-              <div className="space-y-3">
-                <h4 className="text-[11px] font-bold text-muted-foreground uppercase flex items-center gap-2">
-                  <MapPin className="size-3" /> {t('last.position')}
-                </h4>
-                <p className="text-xs font-medium bg-accent/50 p-2 rounded-md border border-primary/5">
-                  {machineData?.lastPosition?.lat?.toFixed(6)}, {machineData?.lastPosition?.lon?.toFixed(6)}
-                </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Clock className="size-3" />
-                  <span>{machineData?.lastPosition?.timestamp ? format(new Date(machineData.lastPosition.timestamp * 1000), 'dd/MM/yy HH:mm:ss') : '-'}</span>
-                </div>
-              </div>
-
-              {machineData?.travel && (
-                <div className="space-y-3 pt-2">
-                  <h4 className="text-[11px] font-bold text-muted-foreground uppercase flex items-center gap-2">
-                    <Navigation2 className="size-3" /> {t('current.travel')}
-                  </h4>
-                  <div className="bg-accent/30 p-3 rounded-lg border border-primary/5 space-y-2">
-                    <div className="text-sm font-bold">{machineData.travel.code}</div>
-                    <div className="flex justify-between text-xs items-center">
-                      <div className="flex flex-col">
-                        <span className="text-muted-foreground text-[10px]">{t('source')}</span>
-                        <span className="font-medium">{machineData.travel.portPointStart?.code || '-'}</span>
-                      </div>
-                      <div className="h-[2px] flex-1 bg-primary/20 mx-3 relative">
-                        <div className="absolute -top-1 left-0 size-2 rounded-full bg-primary/40" />
-                        <div className="absolute -top-1 right-0 size-2 rounded-full border-2 border-primary/20 bg-background" />
-                      </div>
-                      <div className="flex flex-col text-right">
-                        <span className="text-muted-foreground text-[10px]">{t('destiny.port')}</span>
-                        <span className="font-medium">{machineData.travel.portPointEnd?.code || '-'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <Separator className="bg-primary/5" />
-
-              <div className="grid grid-cols-3 gap-2 pt-2">
-                <Button
-                  variant={selectedPanel === 'info' ? 'default' : 'secondary'}
-                  size="sm"
-                  className="text-[10px] font-bold uppercase h-9 shadow-sm"
-                  onClick={() => setSelectedPanel('info')}
-                >
-                  {t('info')}
-                </Button>
-                <Button
-                  variant={selectedPanel === 'crew' ? 'default' : 'secondary'}
-                  size="sm"
-                  className="text-[10px] font-bold uppercase h-9 shadow-sm"
-                  onClick={() => setSelectedPanel('crew')}
-                >
-                  {t('crew')}
-                </Button>
-                <Button
-                  variant={selectedPanel === 'consume' ? 'default' : 'secondary'}
-                  size="sm"
-                  className="text-[10px] font-bold uppercase h-9 shadow-sm"
-                  onClick={() => setSelectedPanel('consume')}
-                >
-                  {t('consume')}
-                </Button>
-              </div>
-            </div>
-          ) : (
-            /* Voyage Details */
-            <div className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-accent rounded-md">
-                    <Calendar className="size-4 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-[10px] text-muted-foreground uppercase">{t('departure')}</p>
-                    <p className="text-sm font-semibold">{voyageData?.dateTimeStart ? format(new Date(voyageData.dateTimeStart), 'dd MMM yyyy, HH:mm') : '-'}</p>
-                  </div>
-                </div>
-                {voyageData?.dateTimeEnd && (
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-accent rounded-md">
-                      <Clock className="size-4 text-green-600" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-[10px] text-muted-foreground uppercase">{t('arrival')}</p>
-                      <p className="text-sm font-semibold">{voyageData?.dateTimeEnd ? format(new Date(voyageData.dateTimeEnd), 'dd MMM yyyy, HH:mm') : '-'}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <Separator className="bg-primary/5" />
-
-              <div className="space-y-4">
-                <DetailGridItem label={t('vessel')} value={<span className="font-bold text-primary">{voyageData?.machine?.name}</span>} />
-
-                <div className="grid grid-cols-1 gap-3">
-                  <div className="p-3 bg-accent/30 rounded-lg border border-primary/5 space-y-3">
-                    <div className="flex gap-4">
-                      <div className="flex flex-col gap-1 items-center">
-                        <div className="size-2 rounded-full bg-primary" />
-                        <div className="w-px h-8 bg-border" />
-                        <div className="size-2 rounded-full border border-primary bg-background" />
-                      </div>
-                      <div className="flex flex-col gap-2 flex-1">
-                        <div className="flex flex-col">
-                          <span className="text-[10px] text-muted-foreground uppercase tracking-tight">{t('source')}</span>
-                          <span className="text-sm font-medium">
-                            {voyageData?.portPointStart?.code} - {voyageData?.portPointStart?.description}
-                          </span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[10px] text-muted-foreground uppercase tracking-tight">{t('destiny.port')}</span>
-                          <span className="text-sm font-medium">
-                            {voyageData?.portPointEnd?.code || voyageData?.portPointDestiny?.code} -{' '}
-                            {voyageData?.portPointEnd?.description || voyageData?.portPointDestiny?.description}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          ))}
         </div>
-      </ScrollArea>
+      </div>
     </ItemGroup>
   );
 }
 
-function DetailGridItem({ label, value }: { label: string; value: React.ReactNode }) {
+/**
+ * Voyage Details View
+ */
+function VoyageDetailsView({ data, analytics, timeline }: { data: FleetVoyage; analytics: any[]; timeline: TimelineEvent[] }) {
+  const { t } = useTranslation();
+
+  const formatDuration = (start: string, end?: string) => {
+    if (!start) return '-';
+    const duration = intervalToDuration({ start: new Date(start), end: end ? new Date(end) : new Date() });
+    const parts = [];
+    if (duration.days) parts.push(`${duration.days} ${t(duration.days === 1 ? 'day' : 'days')}`);
+    if (duration.hours) parts.push(`${duration.hours} ${t(duration.hours === 1 ? 'hr' : 'hrs')}`);
+    if (duration.minutes) parts.push(`${duration.minutes} min`);
+    return parts.join(', ') || '0 min';
+  };
+
   return (
-    <div className="space-y-1">
-      <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{label}</p>
-      <div className="text-xs font-semibold">{value}</div>
+    <ItemGroup className="p-4 gap-6">
+      <div className="space-y-4">
+        <ItemTitle className="text-lg font-bold text-primary">{data.code}</ItemTitle>
+
+        <div className="grid grid-cols-2 gap-3">
+          <DetailItemCard label={t('departure')} icon={Calendar} value={data.dateTimeStart ? format(new Date(data.dateTimeStart), 'dd MMM, HH:mm') : '-'} />
+          <DetailItemCard label="ETA" icon={Flag} value={data.metadata?.eta ? format(new Date(data.metadata.eta), 'dd MMM, HH:mm') : '-'} />
+          {data.dateTimeEnd && (
+            <>
+              <DetailItemCard label={t('arrival')} icon={Clock} value={format(new Date(data.dateTimeEnd), 'dd MMM, HH:mm')} color="text-green-600" />
+              <DetailItemCard label={t('duration')} icon={Clock} value={formatDuration(data.dateTimeStart, data.dateTimeEnd)} color="text-blue-600" />
+            </>
+          )}
+        </div>
+
+        <Separator />
+
+        <div className="flex flex-col gap-4">
+          <DetailGridItem label={t('vessel')} icon={Ship} value={<span className="font-bold text-primary">{data.machine?.name}</span>} />
+          <ItemContent className="p-3 bg-accent/30 rounded-lg border border-primary/5">
+            <div className="flex gap-4">
+              <div className="flex flex-col gap-1 items-center">
+                <div className="size-2 rounded-full bg-primary" />
+                <div className="w-px h-8 bg-border" />
+                <div className="size-2 rounded-full border border-primary bg-background" />
+              </div>
+              <div className="flex-1 flex flex-col gap-2">
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-muted-foreground uppercase">{t('source')}</span>
+                  <span className="text-sm font-medium">
+                    {data.portPointStart?.code} - {data.portPointStart?.description}
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-muted-foreground uppercase">{t('destiny.port')}</span>
+                  <span className="text-sm font-medium">
+                    {data.portPointEnd?.code || data.portPointDestiny?.code} - {data.portPointEnd?.description || data.portPointDestiny?.description}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </ItemContent>
+        </div>
+
+        {analytics?.length > 0 && (
+          <>
+            <Separator />
+            <div className="flex items-center gap-2 mb-2">
+              <TrendingUp className="size-3 text-primary" />
+              <Label className="text-[10px] text-muted-foreground uppercase font-bold">{t('analytics')}</Label>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {analytics.map((a: any, i: number) => (
+                <div key={i} className="p-2 rounded-md bg-accent/20 border border-primary/5">
+                  <p className="text-[10px] text-muted-foreground uppercase font-bold truncate">{a.description}</p>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-sm font-bold">{a.value}</span>
+                    <span className="text-[10px] text-muted-foreground">{a.unit}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {timeline?.length > 0 && (
+          <>
+            <Separator />
+            <div className="flex items-center gap-2 mb-4">
+              <ListTree className="size-3 text-primary" />
+              <Label className="text-[10px] text-muted-foreground uppercase font-bold">{t('timeline')}</Label>
+            </div>
+            <div className="space-y-4 ml-2 border-l-2 border-primary/10 pl-4 relative">
+              {timeline.map((event, i) => (
+                <div key={i} className="relative">
+                  <div className="absolute -left-[21px] top-1 size-2 rounded-full bg-primary" />
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-[10px] text-muted-foreground uppercase font-bold">{event.type}</span>
+                    <span className="text-xs font-medium">{event.data?.status || event.geofence?.description || event.type}</span>
+                    <span className="text-[10px] text-muted-foreground">{event.date ? format(new Date(event.date), 'dd MMM, HH:mm') : '-'}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </ItemGroup>
+  );
+}
+
+/**
+ * Shared Helper Components
+ */
+function DetailGridItem({ label, value, icon: Icon }: { label: string; value: React.ReactNode; icon?: any }) {
+  return (
+    <div className="space-y-1 flex flex-col items-center flex-1">
+      <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight text-center">{label}</ItemTitle>
+      <div className="text-xs font-semibold flex items-center gap-1.5">
+        {Icon && <Icon className="size-3 text-muted-foreground shrink-0" />}
+        <div className="truncate text-center">{value}</div>
+      </div>
     </div>
+  );
+}
+
+function DetailItemCard({ label, icon: Icon, value, color }: { label: string; icon: any; value: string; color?: string }) {
+  return (
+    <Item className="flex-col items-start p-3 bg-accent/30 rounded-lg border border-primary/5 space-y-1">
+      <div className="flex items-center gap-2">
+        <Icon className={`size-3 text-primary ${color}`} />
+        <span className="text-[10px] text-muted-foreground uppercase font-bold">{label}</span>
+      </div>
+      <p className="text-sm font-semibold">{value}</p>
+    </Item>
   );
 }

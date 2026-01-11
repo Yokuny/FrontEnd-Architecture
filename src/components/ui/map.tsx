@@ -99,7 +99,7 @@ function MapRoot({
   center: LatLngExpression;
   ref?: Ref<LeafletMap>;
 }) {
-  return <LeafletMapContainer zoom={zoom} attributionControl={false} zoomControl={false} className={cn('z-50 size-full min-h-96 flex-1 rounded-md', className)} {...props} />;
+  return <LeafletMapContainer zoom={zoom} attributionControl={false} zoomControl={false} className={cn('size-full min-h-96 flex-1', className)} {...props} />;
 }
 
 interface MapTileLayerOption {
@@ -313,15 +313,7 @@ function MapLayersControl({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          type="button"
-          variant="secondary"
-          size="icon-sm"
-          aria-label="Select layers"
-          title="Select layers"
-          className={cn('absolute top-1 right-1 z-1000 border', className)}
-          {...props}
-        >
+        <Button type="button" size="icon" aria-label="Select layers" title="Select layers" className={cn('absolute top-4 right-4 z-1000 border', className)} {...props}>
           <LayersIcon />
         </Button>
       </DropdownMenuTrigger>
@@ -1097,4 +1089,5 @@ export {
   MapZoomControl,
   useLeaflet,
   useMapDrawContext,
+  useMapLayersContext,
 };
