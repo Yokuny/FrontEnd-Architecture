@@ -17,16 +17,17 @@ import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/
 import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
 import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
 import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
+import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/fleet-manager/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
-import { Route as PrivateSetUpCompanySetupSsoIndexRouteImport } from './routes/_private/set-up-company/setup-sso/index';
 import { Route as PrivateSetUpCompanySetupLimitsIndexRouteImport } from './routes/_private/set-up-company/setup-limits/index';
 import { Route as PrivateSetUpCompanySetupFleetIndexRouteImport } from './routes/_private/set-up-company/setup-fleet/index';
 import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
 import { Route as PrivateSetUpCompanySetupChatbotIndexRouteImport } from './routes/_private/set-up-company/setup-chatbot/index';
 import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
 import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
+import { Route as PrivateSetUpCompanyExternalUsersIndexRouteImport } from './routes/_private/set-up-company/external-users/index';
 import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
 import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_private/register/type-fuel/index';
 import { Route as PrivateRegisterSensorsIndexRouteImport } from './routes/_private/register/sensors/index';
@@ -49,6 +50,8 @@ import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_priv
 import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
 import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
 import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
+import { Route as PrivateFleetManagerWindIndexRouteImport } from './routes/_private/fleet-manager/wind/index';
+import { Route as PrivateFleetManagerFleetIndexRouteImport } from './routes/_private/fleet-manager/fleet/index';
 import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
 import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
 import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
@@ -114,6 +117,12 @@ const PrivateMaintenanceIndexRoute = PrivateMaintenanceIndexRouteImport.update({
   path: '/maintenance/',
   getParentRoute: () => PrivateRoute,
 } as any);
+const PrivateFleetManagerIndexRoute =
+  PrivateFleetManagerIndexRouteImport.update({
+    id: '/fleet-manager/',
+    path: '/fleet-manager/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
   id: '/auth/unlock',
   path: '/auth/unlock',
@@ -129,12 +138,6 @@ const PublicAuthRegisterRoute = PublicAuthRegisterRouteImport.update({
   path: '/auth/register',
   getParentRoute: () => PublicRoute,
 } as any);
-const PrivateSetUpCompanySetupSsoIndexRoute =
-  PrivateSetUpCompanySetupSsoIndexRouteImport.update({
-    id: '/set-up-company/setup-sso/',
-    path: '/set-up-company/setup-sso/',
-    getParentRoute: () => PrivateRoute,
-  } as any);
 const PrivateSetUpCompanySetupLimitsIndexRoute =
   PrivateSetUpCompanySetupLimitsIndexRouteImport.update({
     id: '/set-up-company/setup-limits/',
@@ -169,6 +172,12 @@ const PrivateSetUpCompanyIntegrationListIndexRoute =
   PrivateSetUpCompanyIntegrationListIndexRouteImport.update({
     id: '/set-up-company/integration-list/',
     path: '/set-up-company/integration-list/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateSetUpCompanyExternalUsersIndexRoute =
+  PrivateSetUpCompanyExternalUsersIndexRouteImport.update({
+    id: '/set-up-company/external-users/',
+    path: '/set-up-company/external-users/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateRegisterUserTypeIndexRoute =
@@ -301,6 +310,18 @@ const PrivateMaintenanceListOsDoneIndexRoute =
   PrivateMaintenanceListOsDoneIndexRouteImport.update({
     id: '/maintenance/list-os-done/',
     path: '/maintenance/list-os-done/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateFleetManagerWindIndexRoute =
+  PrivateFleetManagerWindIndexRouteImport.update({
+    id: '/fleet-manager/wind/',
+    path: '/fleet-manager/wind/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateFleetManagerFleetIndexRoute =
+  PrivateFleetManagerFleetIndexRouteImport.update({
+    id: '/fleet-manager/fleet/',
+    path: '/fleet-manager/fleet/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateRegisterUserTypeAddRoute =
@@ -456,6 +477,7 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/register': typeof PrivateRegisterIndexRoute;
@@ -481,6 +503,8 @@ export interface FileRoutesByFullPath {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/fleet-manager/fleet': typeof PrivateFleetManagerFleetIndexRoute;
+  '/fleet-manager/wind': typeof PrivateFleetManagerWindIndexRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -503,13 +527,13 @@ export interface FileRoutesByFullPath {
   '/register/sensors': typeof PrivateRegisterSensorsIndexRoute;
   '/register/type-fuel': typeof PrivateRegisterTypeFuelIndexRoute;
   '/register/user-type': typeof PrivateRegisterUserTypeIndexRoute;
+  '/set-up-company/external-users': typeof PrivateSetUpCompanyExternalUsersIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/set-up-company/setup-chatbot': typeof PrivateSetUpCompanySetupChatbotIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/set-up-company/setup-fleet': typeof PrivateSetUpCompanySetupFleetIndexRoute;
   '/set-up-company/setup-limits': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
-  '/set-up-company/setup-sso': typeof PrivateSetUpCompanySetupSsoIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -521,6 +545,7 @@ export interface FileRoutesByTo {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/register': typeof PrivateRegisterIndexRoute;
@@ -546,6 +571,8 @@ export interface FileRoutesByTo {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/fleet-manager/fleet': typeof PrivateFleetManagerFleetIndexRoute;
+  '/fleet-manager/wind': typeof PrivateFleetManagerWindIndexRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -568,13 +595,13 @@ export interface FileRoutesByTo {
   '/register/sensors': typeof PrivateRegisterSensorsIndexRoute;
   '/register/type-fuel': typeof PrivateRegisterTypeFuelIndexRoute;
   '/register/user-type': typeof PrivateRegisterUserTypeIndexRoute;
+  '/set-up-company/external-users': typeof PrivateSetUpCompanyExternalUsersIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/set-up-company/setup-chatbot': typeof PrivateSetUpCompanySetupChatbotIndexRoute;
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/set-up-company/setup-fleet': typeof PrivateSetUpCompanySetupFleetIndexRoute;
   '/set-up-company/setup-limits': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
-  '/set-up-company/setup-sso': typeof PrivateSetUpCompanySetupSsoIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -589,6 +616,7 @@ export interface FileRoutesById {
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/_private/fleet-manager/': typeof PrivateFleetManagerIndexRoute;
   '/_private/maintenance/': typeof PrivateMaintenanceIndexRoute;
   '/_private/permissions/': typeof PrivatePermissionsIndexRoute;
   '/_private/register/': typeof PrivateRegisterIndexRoute;
@@ -614,6 +642,8 @@ export interface FileRoutesById {
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/_private/fleet-manager/fleet/': typeof PrivateFleetManagerFleetIndexRoute;
+  '/_private/fleet-manager/wind/': typeof PrivateFleetManagerWindIndexRoute;
   '/_private/maintenance/list-os-done/': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/_private/maintenance/monitoring-plans/': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/_private/maintenance/monitoring-wear/': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -636,13 +666,13 @@ export interface FileRoutesById {
   '/_private/register/sensors/': typeof PrivateRegisterSensorsIndexRoute;
   '/_private/register/type-fuel/': typeof PrivateRegisterTypeFuelIndexRoute;
   '/_private/register/user-type/': typeof PrivateRegisterUserTypeIndexRoute;
+  '/_private/set-up-company/external-users/': typeof PrivateSetUpCompanyExternalUsersIndexRoute;
   '/_private/set-up-company/integration-list/': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/_private/set-up-company/setup-api-external/': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   '/_private/set-up-company/setup-chatbot/': typeof PrivateSetUpCompanySetupChatbotIndexRoute;
   '/_private/set-up-company/setup-email/': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/_private/set-up-company/setup-fleet/': typeof PrivateSetUpCompanySetupFleetIndexRoute;
   '/_private/set-up-company/setup-limits/': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
-  '/_private/set-up-company/setup-sso/': typeof PrivateSetUpCompanySetupSsoIndexRoute;
   '/_private/maintenance/list-os-done/view/': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/_private/permissions/roles/edit/': typeof PrivatePermissionsRolesEditIndexRoute;
   '/_private/permissions/roles/users/': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -656,6 +686,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/fleet-manager'
     | '/maintenance'
     | '/permissions'
     | '/register'
@@ -681,6 +712,8 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/fleet-manager/fleet'
+    | '/fleet-manager/wind'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
@@ -703,13 +736,13 @@ export interface FileRouteTypes {
     | '/register/sensors'
     | '/register/type-fuel'
     | '/register/user-type'
+    | '/set-up-company/external-users'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
     | '/set-up-company/setup-chatbot'
     | '/set-up-company/setup-email'
     | '/set-up-company/setup-fleet'
     | '/set-up-company/setup-limits'
-    | '/set-up-company/setup-sso'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -721,6 +754,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/fleet-manager'
     | '/maintenance'
     | '/permissions'
     | '/register'
@@ -746,6 +780,8 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/fleet-manager/fleet'
+    | '/fleet-manager/wind'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
@@ -768,13 +804,13 @@ export interface FileRouteTypes {
     | '/register/sensors'
     | '/register/type-fuel'
     | '/register/user-type'
+    | '/set-up-company/external-users'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
     | '/set-up-company/setup-chatbot'
     | '/set-up-company/setup-email'
     | '/set-up-company/setup-fleet'
     | '/set-up-company/setup-limits'
-    | '/set-up-company/setup-sso'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -788,6 +824,7 @@ export interface FileRouteTypes {
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
+    | '/_private/fleet-manager/'
     | '/_private/maintenance/'
     | '/_private/permissions/'
     | '/_private/register/'
@@ -813,6 +850,8 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
     | '/_private/register/user-type/add'
+    | '/_private/fleet-manager/fleet/'
+    | '/_private/fleet-manager/wind/'
     | '/_private/maintenance/list-os-done/'
     | '/_private/maintenance/monitoring-plans/'
     | '/_private/maintenance/monitoring-wear/'
@@ -835,13 +874,13 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/'
     | '/_private/register/type-fuel/'
     | '/_private/register/user-type/'
+    | '/_private/set-up-company/external-users/'
     | '/_private/set-up-company/integration-list/'
     | '/_private/set-up-company/setup-api-external/'
     | '/_private/set-up-company/setup-chatbot/'
     | '/_private/set-up-company/setup-email/'
     | '/_private/set-up-company/setup-fleet/'
     | '/_private/set-up-company/setup-limits/'
-    | '/_private/set-up-company/setup-sso/'
     | '/_private/maintenance/list-os-done/view/'
     | '/_private/permissions/roles/edit/'
     | '/_private/permissions/roles/users/'
@@ -913,6 +952,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateMaintenanceIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/fleet-manager/': {
+      id: '/_private/fleet-manager/';
+      path: '/fleet-manager';
+      fullPath: '/fleet-manager';
+      preLoaderRoute: typeof PrivateFleetManagerIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_public/auth/unlock': {
       id: '/_public/auth/unlock';
       path: '/auth/unlock';
@@ -933,13 +979,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/register';
       preLoaderRoute: typeof PublicAuthRegisterRouteImport;
       parentRoute: typeof PublicRoute;
-    };
-    '/_private/set-up-company/setup-sso/': {
-      id: '/_private/set-up-company/setup-sso/';
-      path: '/set-up-company/setup-sso';
-      fullPath: '/set-up-company/setup-sso';
-      preLoaderRoute: typeof PrivateSetUpCompanySetupSsoIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
     };
     '/_private/set-up-company/setup-limits/': {
       id: '/_private/set-up-company/setup-limits/';
@@ -981,6 +1020,13 @@ declare module '@tanstack/react-router' {
       path: '/set-up-company/integration-list';
       fullPath: '/set-up-company/integration-list';
       preLoaderRoute: typeof PrivateSetUpCompanyIntegrationListIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/set-up-company/external-users/': {
+      id: '/_private/set-up-company/external-users/';
+      path: '/set-up-company/external-users';
+      fullPath: '/set-up-company/external-users';
+      preLoaderRoute: typeof PrivateSetUpCompanyExternalUsersIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/register/user-type/': {
@@ -1135,6 +1181,20 @@ declare module '@tanstack/react-router' {
       path: '/maintenance/list-os-done';
       fullPath: '/maintenance/list-os-done';
       preLoaderRoute: typeof PrivateMaintenanceListOsDoneIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/fleet-manager/wind/': {
+      id: '/_private/fleet-manager/wind/';
+      path: '/fleet-manager/wind';
+      fullPath: '/fleet-manager/wind';
+      preLoaderRoute: typeof PrivateFleetManagerWindIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/fleet-manager/fleet/': {
+      id: '/_private/fleet-manager/fleet/';
+      path: '/fleet-manager/fleet';
+      fullPath: '/fleet-manager/fleet';
+      preLoaderRoute: typeof PrivateFleetManagerFleetIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/register/user-type/add': {
@@ -1316,6 +1376,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
+  PrivateFleetManagerIndexRoute: typeof PrivateFleetManagerIndexRoute;
   PrivateMaintenanceIndexRoute: typeof PrivateMaintenanceIndexRoute;
   PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
   PrivateRegisterIndexRoute: typeof PrivateRegisterIndexRoute;
@@ -1340,6 +1401,8 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
+  PrivateFleetManagerFleetIndexRoute: typeof PrivateFleetManagerFleetIndexRoute;
+  PrivateFleetManagerWindIndexRoute: typeof PrivateFleetManagerWindIndexRoute;
   PrivateMaintenanceListOsDoneIndexRoute: typeof PrivateMaintenanceListOsDoneIndexRoute;
   PrivateMaintenanceMonitoringPlansIndexRoute: typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   PrivateMaintenanceMonitoringWearIndexRoute: typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -1362,13 +1425,13 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsIndexRoute: typeof PrivateRegisterSensorsIndexRoute;
   PrivateRegisterTypeFuelIndexRoute: typeof PrivateRegisterTypeFuelIndexRoute;
   PrivateRegisterUserTypeIndexRoute: typeof PrivateRegisterUserTypeIndexRoute;
+  PrivateSetUpCompanyExternalUsersIndexRoute: typeof PrivateSetUpCompanyExternalUsersIndexRoute;
   PrivateSetUpCompanyIntegrationListIndexRoute: typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   PrivateSetUpCompanySetupApiExternalIndexRoute: typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
   PrivateSetUpCompanySetupChatbotIndexRoute: typeof PrivateSetUpCompanySetupChatbotIndexRoute;
   PrivateSetUpCompanySetupEmailIndexRoute: typeof PrivateSetUpCompanySetupEmailIndexRoute;
   PrivateSetUpCompanySetupFleetIndexRoute: typeof PrivateSetUpCompanySetupFleetIndexRoute;
   PrivateSetUpCompanySetupLimitsIndexRoute: typeof PrivateSetUpCompanySetupLimitsIndexRoute;
-  PrivateSetUpCompanySetupSsoIndexRoute: typeof PrivateSetUpCompanySetupSsoIndexRoute;
   PrivateMaintenanceListOsDoneViewIndexRoute: typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   PrivatePermissionsRolesEditIndexRoute: typeof PrivatePermissionsRolesEditIndexRoute;
   PrivatePermissionsRolesUsersIndexRoute: typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -1377,6 +1440,7 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateFleetManagerIndexRoute: PrivateFleetManagerIndexRoute,
   PrivateMaintenanceIndexRoute: PrivateMaintenanceIndexRoute,
   PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
   PrivateRegisterIndexRoute: PrivateRegisterIndexRoute,
@@ -1404,6 +1468,8 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
   PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
+  PrivateFleetManagerFleetIndexRoute: PrivateFleetManagerFleetIndexRoute,
+  PrivateFleetManagerWindIndexRoute: PrivateFleetManagerWindIndexRoute,
   PrivateMaintenanceListOsDoneIndexRoute:
     PrivateMaintenanceListOsDoneIndexRoute,
   PrivateMaintenanceMonitoringPlansIndexRoute:
@@ -1431,6 +1497,8 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsIndexRoute: PrivateRegisterSensorsIndexRoute,
   PrivateRegisterTypeFuelIndexRoute: PrivateRegisterTypeFuelIndexRoute,
   PrivateRegisterUserTypeIndexRoute: PrivateRegisterUserTypeIndexRoute,
+  PrivateSetUpCompanyExternalUsersIndexRoute:
+    PrivateSetUpCompanyExternalUsersIndexRoute,
   PrivateSetUpCompanyIntegrationListIndexRoute:
     PrivateSetUpCompanyIntegrationListIndexRoute,
   PrivateSetUpCompanySetupApiExternalIndexRoute:
@@ -1443,7 +1511,6 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateSetUpCompanySetupFleetIndexRoute,
   PrivateSetUpCompanySetupLimitsIndexRoute:
     PrivateSetUpCompanySetupLimitsIndexRoute,
-  PrivateSetUpCompanySetupSsoIndexRoute: PrivateSetUpCompanySetupSsoIndexRoute,
   PrivateMaintenanceListOsDoneViewIndexRoute:
     PrivateMaintenanceListOsDoneViewIndexRoute,
   PrivatePermissionsRolesEditIndexRoute: PrivatePermissionsRolesEditIndexRoute,

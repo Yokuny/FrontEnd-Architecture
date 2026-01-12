@@ -9,6 +9,7 @@ export const delimitationSchema = z.object({
 
 export const buoySchema = z.object({
   id: z.string().optional(),
+  _id: z.string().optional(),
   name: z.string().min(1, 'required'),
   proximity: z.string().min(1, 'required'),
   idEnterprise: z.string().min(1, 'enterprise.required'),

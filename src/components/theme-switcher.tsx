@@ -28,7 +28,7 @@ export function ThemeSwitcher() {
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="ghost" className="relative group">
-          <div className="animate-pop flex items-center justify-center text-muted-foreground">
+          <div className="animate-pop flex items-center justify-center">
             {theme === 'sunset' ? (
               <SunDim className="size-5" />
             ) : theme === 'ocean-blue' ? (

@@ -34,6 +34,7 @@ export function mapAlertToFormData(initialData: any, t: (key: string) => string,
       ? {
           ...initialData.rule,
           inMinutes: initialData.rule.inMinutes ?? null,
+          // biome-ignore lint/suspicious/noThenProperty: Legacy API structure requires 'then'
           then: initialData.rule.then
             ? {
                 ...initialData.rule.then,

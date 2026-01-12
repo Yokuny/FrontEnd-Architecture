@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { MoreVertical, Package, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { Building2, MoreVertical, Package, Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useParts, usePartsApi } from '@/hooks/use-parts-api';
 
 const partsSearchSchema = z.object({
@@ -127,7 +127,9 @@ function PartsListPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <ItemDescription>{item.enterprise?.name}</ItemDescription>
+                  <ItemDescription className="flex items-center gap-2">
+                    <Building2 className="size-4" /> {item.enterprise?.name}
+                  </ItemDescription>
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>

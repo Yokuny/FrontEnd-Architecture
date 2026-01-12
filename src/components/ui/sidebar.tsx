@@ -23,12 +23,7 @@ function SidebarProvider({
 }: React.ComponentProps<'div'> & {
   defaultOpen?: boolean;
 }) {
-  const { setOpen, toggle } = useSidebarToggle();
-
-  // Set initial state based on defaultOpen prop
-  React.useEffect(() => {
-    setOpen(defaultOpen);
-  }, [defaultOpen, setOpen]);
+  const { toggle } = useSidebarToggle();
 
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {

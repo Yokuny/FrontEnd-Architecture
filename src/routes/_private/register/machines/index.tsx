@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useMachines } from '@/hooks/use-machines-api';
 import { IncludeVesselModal } from './@components/include-vessel-modal';
 
@@ -103,12 +103,9 @@ function MachineListPage() {
                   <ItemContent>
                     <ItemTitle className="text-base">{machine.name}</ItemTitle>
                     <ItemDescription className="flex items-center gap-2">
-                      <Building2 className="size-4 text-muted-foreground shrink-0" />
-                      <span className="line-clamp-1">
-                        {machine.code || ''}
-                        {machine.code && machine.enterprise?.name ? ' / ' : ''}
-                        {machine.enterprise?.name || ''}
-                      </span>
+                      <Building2 className="size-3 text-muted-foreground shrink-0" />
+                      {machine.enterprise?.name || ''}
+                      {machine.code && ` / ${machine.code}`}
                     </ItemDescription>
                   </ItemContent>
                 </div>

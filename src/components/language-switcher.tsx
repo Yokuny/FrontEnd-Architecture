@@ -18,7 +18,7 @@ export function LanguageSwitcher() {
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="ghost" className="relative">
-          <Languages className="size-5 text-muted-foreground" />
+          <Languages className="size-5" />
           <span className="sr-only">{t('login.language')}</span>
         </Button>
       </DropdownMenuTrigger>

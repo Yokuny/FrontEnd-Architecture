@@ -80,7 +80,7 @@ function App() {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange themes={['light', 'dark', 'ocean-blue', 'sunset']}>
           {/* <SocketProvider> */}
           <RouterProvider router={router} />
-          <Toaster position="top-right" expand={false} richColors closeButton />
+          <Toaster position="bottom-left" expand={false} richColors closeButton />
           {/* </SocketProvider> */}
         </ThemeProvider>
       </QueryClientProvider>

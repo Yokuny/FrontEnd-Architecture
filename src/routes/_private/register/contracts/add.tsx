@@ -72,6 +72,11 @@ function ContractFormContent({ initialData, id, isDuplicate }: { initialData?: a
   const { deleteContract } = useContractsApi();
   const { form, onSubmit, isPending } = useContractForm(initialData);
 
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(e);
+  };
+
   const handleDelete = async () => {
     if (!id) return;
     try {
@@ -88,7 +93,7 @@ function ContractFormContent({ initialData, id, isDuplicate }: { initialData?: a
       <CardHeader title={initialData?.id && !isDuplicate ? t('view.contract.edit') : t('view.contract.add')} />
 
       <Form {...form}>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSave}>
           <CardContent>
             <ContractForm />
           </CardContent>

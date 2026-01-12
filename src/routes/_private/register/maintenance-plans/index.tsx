@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Edit2, MoreVertical, Plus, Search, Settings, Trash2 } from 'lucide-react';
+import { Building2, Edit2, MoreVertical, Plus, Search, Settings, Trash2 } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useMaintenancePlans, useMaintenancePlansApi } from '@/hooks/use-maintenance-plans-api';
 
 const maintenancePlansSearchSchema = z.object({
@@ -139,7 +139,9 @@ function MaintenancePlansListPage() {
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
-                    <ItemDescription>{item.enterprise?.name}</ItemDescription>
+                    <ItemDescription className="flex items-center gap-2">
+                      <Building2 className="size-3" /> {item.enterprise?.name}
+                    </ItemDescription>
                   </ItemContent>
                 </div>
 

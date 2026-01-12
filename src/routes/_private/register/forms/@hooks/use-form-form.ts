@@ -12,6 +12,7 @@ export function useFormForm(initialData?: Partial<FormFormData>) {
     values: initialData as FormFormData,
     defaultValues: {
       id: initialData?.id || '',
+      _id: initialData?._id || '',
       idEnterprise: initialData?.idEnterprise || '',
       description: initialData?.description || '',
       typeForm: initialData?.typeForm || '',
@@ -72,8 +73,9 @@ export function useFormForm(initialData?: Partial<FormFormData>) {
   const onSubmit = form.handleSubmit(async (data) => {
     if (!validateForm(data)) return;
 
-    const saveData = {
+    const saveData: any = {
       id: data.id,
+      _id: data._id || undefined,
       idEnterprise: data.idEnterprise,
       description: data.description,
       typeForm: data.typeForm || undefined,
@@ -115,7 +117,7 @@ export function useFormForm(initialData?: Partial<FormFormData>) {
       },
     };
 
-    if (initialData?.id) {
+    if (data._id) {
       await updateForm.mutateAsync(saveData);
     } else {
       await createForm.mutateAsync(saveData);

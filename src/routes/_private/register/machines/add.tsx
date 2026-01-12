@@ -33,7 +33,7 @@ function MachineAddPage() {
   const { data: machine, isLoading } = useMachine(search.id || '');
   const { activateMachine, deactivateMachine } = useMachinesApi();
 
-  const { form, onSubmit, isPending } = useMachineForm(machine);
+  const { form, onSubmit, isPending } = useMachineForm(machine, search.id);
 
   const handleToggleStatus = async () => {
     if (!search.id) return;

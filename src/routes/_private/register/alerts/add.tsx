@@ -77,7 +77,7 @@ function AlertAddFormContent({ initialData }: { initialData?: any }) {
       await onSubmit();
       toast.success(t('save.successfull'));
       navigate({ to: '/register/alerts', search: { page: 1, size: 10 } } as any);
-    } catch (error) {
+    } catch (_error) {
       // Error handled by hook or API
     }
   };

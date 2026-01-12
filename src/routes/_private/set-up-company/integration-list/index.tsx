@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { INTEGRATION_OPTIONS, TYPES_WITH_IMO, TYPES_WITH_MMSI, UPDATE_INTERVAL_OPTIONS } from './@consts/integration-options';
 import { useMachineIntegrations, useMachineIntegrationsApi } from './@hooks/use-machine-integrations-api';
 import type { MachineIntegration } from './@interface/machine-integration';

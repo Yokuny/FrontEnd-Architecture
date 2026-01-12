@@ -7,7 +7,7 @@ import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { MonitoringWearCard } from './@components/monitoring-wear-card';
 import { useMonitoringWear } from './@hooks/use-monitoring-wear-api';
 

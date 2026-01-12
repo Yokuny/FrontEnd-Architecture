@@ -1,15 +1,14 @@
 import { createFileRoute, useSearch } from '@tanstack/react-router';
-import { Eye, EyeOff, Save } from 'lucide-react';
-import { useState } from 'react';
+import { Save } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { EnterpriseSelect } from '@/components/selects';
+import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Form } from '@/components/ui/form';
+import { Spinner } from '@/components/ui/spinner';
+import { EmailConfigForm } from './@components/email-config-form';
 import { useEmailConfigForm } from './@hooks/use-email-config-form';
 
 const searchSchema = z.object({
@@ -19,101 +18,50 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/set-up-company/setup-email/')({
   component: SetupEmailPage,
   validateSearch: searchSchema,
+  beforeLoad: () => ({
+    title: 'setup.email',
+  }),
 });
 
 function SetupEmailPage() {
-  const { t } = useTranslation();
   const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/setup-email/' });
-  const [showPass, setShowPass] = useState(false);
-  const [selectedEnterprise, setSelectedEnterprise] = useState<string | undefined>(idEnterpriseQuery);
 
+  return <SetupEmailFormContent idEnterprise={idEnterpriseQuery} />;
+}
+
+function SetupEmailFormContent({ idEnterprise }: { idEnterprise?: string }) {
+  const { t } = useTranslation();
   const { form, onSubmit, isLoading, isPending } = useEmailConfigForm({
-    idEnterprise: selectedEnterprise,
+    idEnterprise,
   });
 
-  const {
-    register,
-    formState: { errors },
-    setValue,
-    watch,
-  } = form;
-  const secureValue = watch('secure');
-
-  const handleEnterpriseChange = (value: string | undefined) => {
-    setSelectedEnterprise(value);
-    if (value) {
-      setValue('idEnterprise', value);
-    }
-  };
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader title={t('setup.email')} />
+        <CardContent className="p-12">
+          <DefaultLoading />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>
       <CardHeader title={t('setup.email')} />
-      <form onSubmit={onSubmit}>
-        <CardContent>
-          {!idEnterpriseQuery && (
-            <div className="space-y-2">
-              <EnterpriseSelect mode="single" value={selectedEnterprise} onChange={handleEnterpriseChange} />
-              {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message || '')}</p>}
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="host">Host *</Label>
-              <Input id="host" type="text" {...register('host')} placeholder="smtp.example.com" disabled={isLoading || isPending} />
-              {errors.host && <p className="text-sm text-destructive">{t(errors.host.message || '')}</p>}
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="port">Port *</Label>
-                <Input id="port" type="number" {...register('port')} placeholder="587" disabled={isLoading || isPending} />
-                {errors.port && <p className="text-sm text-destructive">{t(errors.port.message || '')}</p>}
-              </div>
-
-              <div className="flex items-center justify-center pt-6">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="secure" checked={secureValue} onCheckedChange={(checked) => setValue('secure', !!checked)} disabled={isLoading || isPending} variant="blue" />
-                  <Label htmlFor="secure" className="text-sm">
-                    Secure (SSL/TLS)
-                  </Label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="accountname">Account Name</Label>
-            <Input id="accountname" type="text" {...register('accountname')} placeholder="My Company" disabled={isLoading || isPending} />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
-              <Input id="email" type="email" {...register('email')} placeholder="noreply@example.com" disabled={isLoading || isPending} />
-              {errors.email && <p className="text-sm text-destructive">{t(errors.email.message || '')}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password *</Label>
-              <div className="relative">
-                <Input id="password" type={showPass ? 'text' : 'password'} {...register('password')} placeholder="••••••••" disabled={isLoading || isPending} className="pr-10" />
-                <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
-                  {showPass ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-                </button>
-              </div>
-              {errors.password && <p className="text-sm text-destructive">{t(errors.password.message || '')}</p>}
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button type="submit" disabled={isLoading || isPending}>
-            <Save className="mr-2 size-4" />
-            {t('save')}
-          </Button>
-        </CardFooter>
-      </form>
+      <Form {...form}>
+        <form onSubmit={onSubmit}>
+          <CardContent>
+            <EmailConfigForm isEnterpriseDisabled={!!idEnterprise} />
+          </CardContent>
+          <CardFooter>
+            <Button type="submit" disabled={isPending || isLoading} className="min-w-[120px]">
+              {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
+              {t('save')}
+            </Button>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   );
 }

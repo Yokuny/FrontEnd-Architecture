@@ -59,10 +59,7 @@ export function ParamForm() {
           name="idEnterprise"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FieldLabel>{t('enterprise')}</FieldLabel>
-                <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
-              </Field>
+              <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
               <FormMessage />
             </FormItem>
           )}

@@ -3,7 +3,6 @@
  */
 
 import { jwtDecode } from 'jwt-decode';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
 
 export interface DecodedToken {
   id: string;
@@ -38,62 +37,5 @@ export function isTokenValid(token: string): boolean {
     return decoded.exp > now;
   } catch {
     return false;
-  }
-}
-
-/**
- * Get stored token from localStorage
- */
-export function getStoredToken(): string | null {
-  return localStorage.getItem('token');
-}
-
-/**
- * Save token to localStorage
- */
-export function setStoredToken(token: string): void {
-  localStorage.setItem('token', token);
-}
-
-/**
- * Remove token from localStorage
- */
-export function clearStoredToken(): void {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  localStorage.removeItem('typelog');
-  localStorage.removeItem('map_show_name');
-  useEnterpriseFilter.getState().setIdEnterprise('');
-}
-
-/**
- * Get user from token
- */
-export function getUserFromToken(token: string): DecodedToken | null {
-  return decodeToken(token);
-}
-
-/**
- * Save user data to localStorage
- */
-export function saveUserData(user: DecodedToken, loginType: 'normal' | 'sso' = 'normal'): void {
-  localStorage.setItem('user', JSON.stringify(user));
-  localStorage.setItem('typelog', loginType);
-  localStorage.setItem('map_show_name', 'true');
-
-  if (user.request) {
-    useEnterpriseFilter.getState().setIdEnterprise(user.request);
-  }
-}
-
-/**
- * Get user data from localStorage
- */
-export function getUserData(): DecodedToken | null {
-  try {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
-  } catch {
-    return null;
   }
 }

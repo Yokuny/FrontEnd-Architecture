@@ -14,13 +14,14 @@ type SidebarToggleStore = {
   setHovered: (hovered: boolean) => void;
   setMenuOpen: (open: boolean) => void;
   toggle: () => void;
-  // Computed state
   state: 'expanded' | 'collapsed';
 };
 
+const computeState = (isOpen: boolean, isHovered: boolean, isMenuOpen: boolean): 'expanded' | 'collapsed' => (isOpen || isHovered || isMenuOpen ? 'expanded' : 'collapsed');
+
 export const useSidebarToggle = create<SidebarToggleStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       isOpen: true,
       isMobileOpen: false,
       isHovered: false,
@@ -28,7 +29,10 @@ export const useSidebarToggle = create<SidebarToggleStore>()(
       state: 'expanded',
 
       setOpen: (open: boolean) => {
-        set({ isOpen: open, state: open ? 'expanded' : 'collapsed' });
+        set((state) => ({
+          isOpen: open,
+          state: computeState(open, state.isHovered, state.isMenuOpen),
+        }));
       },
 
       setMobileOpen: (open: boolean) => {
@@ -36,27 +40,26 @@ export const useSidebarToggle = create<SidebarToggleStore>()(
       },
 
       setHovered: (hovered: boolean) => {
-        const { isOpen, isMenuOpen } = get();
-        set({
+        set((state) => ({
           isHovered: hovered,
-          state: isOpen || hovered || isMenuOpen ? 'expanded' : 'collapsed',
-        });
+          state: computeState(state.isOpen, hovered, state.isMenuOpen),
+        }));
       },
 
       setMenuOpen: (open: boolean) => {
-        const { isOpen, isHovered } = get();
-        set({
+        set((state) => ({
           isMenuOpen: open,
-          state: isOpen || isHovered || open ? 'expanded' : 'collapsed',
-        });
+          state: computeState(state.isOpen, state.isHovered, open),
+        }));
       },
 
       toggle: () => {
-        const { isOpen } = get();
-        const newOpen = !isOpen;
-        set({
-          isOpen: newOpen,
-          state: newOpen ? 'expanded' : 'collapsed',
+        set((state) => {
+          const newOpen = !state.isOpen;
+          return {
+            isOpen: newOpen,
+            state: computeState(newOpen, state.isHovered, state.isMenuOpen),
+          };
         });
       },
     }),
@@ -65,8 +68,12 @@ export const useSidebarToggle = create<SidebarToggleStore>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         isOpen: state.isOpen,
-        state: state.state,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.state = computeState(state.isOpen, state.isHovered, state.isMenuOpen);
+        }
+      },
     },
   ),
 );

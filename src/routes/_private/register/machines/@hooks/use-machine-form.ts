@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import { type Machine, useMachinesApi } from '@/hooks/use-machines-api';
 import { type MachineFormData, machineFormSchema } from '../@interface/machine.interface';
 
-function mapMachineToFormData(machine: Machine): MachineFormData {
+function mapMachineToFormData(machine: Machine, _id?: string): MachineFormData {
   return {
     id: machine.id,
-    _id: machine._id,
+    _id: machine._id || _id,
     name: machine.name,
     code: machine.code || '',
     mmsi: machine.mmsi || '',
@@ -43,10 +43,10 @@ function mapFormDataToMachine(data: MachineFormData): Partial<Machine> {
   } as Partial<Machine>;
 }
 
-export function useMachineForm(initialData?: Machine) {
+export function useMachineForm(initialData?: Machine, initialId?: string) {
   const { createMachine, updateMachine } = useMachinesApi();
 
-  const values = initialData ? mapMachineToFormData(initialData) : undefined;
+  const values = initialData ? mapMachineToFormData(initialData, initialId) : undefined;
 
   const form = useForm<MachineFormData>({
     resolver: zodResolver(machineFormSchema) as any,
@@ -63,8 +63,8 @@ export function useMachineForm(initialData?: Machine) {
 
   const onSubmit = form.handleSubmit(async (data) => {
     const payload = mapFormDataToMachine(data);
-    if (initialData?._id) {
-      return await updateMachine.mutateAsync({ ...payload, _id: initialData._id } as any);
+    if (data._id) {
+      return await updateMachine.mutateAsync(payload as any);
     } else {
       return await createMachine.mutateAsync(payload);
     }

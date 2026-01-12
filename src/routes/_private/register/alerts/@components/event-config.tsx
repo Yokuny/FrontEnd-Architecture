@@ -20,9 +20,9 @@ export function EventConfig() {
   const events = watch('events');
 
   // Helper to toggle sections
-  const toggleSection = (section: keyof NonNullable<AlertFormData['events']>) => {
+  const toggleSection = (section: Exclude<keyof NonNullable<AlertFormData['events']>, 'description'>) => {
     const current = events?.[section];
-    setValue(`events.${section}`, current ? null : {});
+    setValue(`events.${section}` as any, (current ? null : {}) as any);
   };
 
   const lostConnectionMachineId = watch('events.lostConnectionSensor.idMachine');

@@ -18,12 +18,7 @@ const SENSOR_TYPES = [
 
 export function SensorForm({ isEdit }: { isEdit?: boolean }) {
   const { t } = useTranslation();
-  const {
-    control,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useFormContext<SensorFormData>();
+  const { control, watch } = useFormContext<SensorFormData>();
 
   const sensorType = watch('type');
 
@@ -32,17 +27,17 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
       title: t('identification'),
       description: t('sensors.identification.description'),
       fields: [
-        <Field key="idEnterprise" className="gap-2">
-          <FormControl>
-            <EnterpriseSelect
-              mode="single"
-              value={watch('idEnterprise')}
-              onChange={(val) => setValue('idEnterprise', val || '')}
-              placeholder={t('machine.idEnterprise.placeholder')}
-            />
-          </FormControl>
-          {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
-        </Field>,
+        <FormField
+          key="idEnterprise"
+          control={control}
+          name="idEnterprise"
+          render={({ field }) => (
+            <FormItem>
+              <EnterpriseSelect mode="single" value={field.value} onChange={(val) => field.onChange(val || '')} />
+              <FormMessage />
+            </FormItem>
+          )}
+        />,
         <div key="row-sensor" className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={control}

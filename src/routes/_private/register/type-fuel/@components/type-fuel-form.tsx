@@ -9,29 +9,24 @@ import type { TypeFuelFormData } from '../@interface/type-fuel.schema';
 
 export function TypeFuelForm() {
   const { t } = useTranslation();
-  const {
-    control,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useFormContext<TypeFuelFormData>();
+  const { control } = useFormContext<TypeFuelFormData>();
 
   const sections = [
     {
       title: t('identification'),
       description: t('fuel.identification.description'),
       fields: [
-        <Field key="idEnterprise" className="gap-2">
-          <FormControl>
-            <EnterpriseSelect
-              mode="single"
-              value={watch('idEnterprise')}
-              onChange={(val) => setValue('idEnterprise', val || '')}
-              placeholder={t('machine.idEnterprise.placeholder')}
-            />
-          </FormControl>
-          {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
-        </Field>,
+        <FormField
+          key="idEnterprise"
+          control={control}
+          name="idEnterprise"
+          render={({ field }) => (
+            <FormItem>
+              <EnterpriseSelect mode="single" value={field.value} onChange={(val) => field.onChange(val || '')} />
+              <FormMessage />
+            </FormItem>
+          )}
+        />,
         <div key="row-code-desc" className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={control}

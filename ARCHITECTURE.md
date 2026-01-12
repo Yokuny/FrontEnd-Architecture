@@ -25,10 +25,12 @@ Preciso de useMachineForm() para gerenciar formulário de máquina?
 
 | Hook comuns | Descrição |
 |-------------|-----------|
-| `use-enterprises-api.ts` | Hook comun para buscar idEnterprise da empresa do usuário logado, **importante** usar `useEnterpriseFilter` para obter o idEnterprise, exemplo sempre quando aparecer id_enterprise_filter ou enterpriseFilter.enterprises, 
-| `use-machines-api.ts` | Hook comun para buscar valores de máquinas e embarcações |
-| `use-users-not-in-role.ts` | Hook comun para buscar usuários que não estão em um determinado perfil |
-| `use-roles-api.ts` | Hook comun para buscar as permissões do usuário logado |
+| `use-enterprise-filter.ts` | Hook para obter o `idEnterprise` (empresa ativa) via `useEnterpriseFilter`. |
+| `use-enterprises-api.ts` | Hook comum para listar, criar, editar e excluir empresas. |
+| `use-machines-api.ts` | Hook comum para buscar valores de máquinas e embarcações. |
+| `use-users-not-in-role.ts` | Hook comum para buscar usuários que não estão em um determinado perfil. |
+| `use-roles-api.ts` | Hook comum para buscar as permissões do usuário logado. |
+| `use-auth.ts` | Gerenciamento de sessão, token e "Lembrar E-mail" via Zustand. |
 
 ### REGRA OBRIGATÓRIA: Pastas de rotas e organização de arquivos
 
@@ -113,7 +115,9 @@ src/routes/_private/embarcacoes/
   }
   ```
   
-  **Padrão de Componentes**: Use [`Item`](./src/components/ui/item.tsx) para criar **cards informativos**, listagens de dados ou blocos de informação repetíveis ou paginas dentro de @Components ou envoltas por um componente `Card`.
+  **Padrão de Componentes**:
+  - arquivos de **PÁGINA** (contém `createFileRoute`): **DEVEM** obrigatoriamente iniciar com `<Card>` seguido de `<CardHeader>` como estrutura principal.
+  - arquivos de **COMPONENTE** (não contém `createFileRoute`, ex: em `@components/`): **NÃO DEVEM** usar `<Card>`. Devem usar no máximo os componentes de [`Item`](./src/components/ui/item.tsx) para criar listagens de dados ou blocos de informação.
 
   **Padrão de resposta e resultados vazios / sem dados**:
   
@@ -124,6 +128,8 @@ src/routes/_private/embarcacoes/
   Quando os dados estão sendo carregados, exiba o shell da página com skeleton [`DefaultLoading`](./src/components/default-loading.tsx)
 
   4. [`Select`](./src/components/selects/index.ts): Busque os seletores no diretório `@/components/selects`, como está é uma nova arquitetura os nomes podem variar, as operaçoes desses seletores estão presentes em [`@/hooks/`](./src/hooks/).
+
+  **Importante**: Ao criar usar qualquer select, eles já contem Label, não é necessário adicionar Label ao importar o select.
 
   Exemplo de conversão da antiga nomeclatura para a nova:
   | Nome Legado (SelectX) | Novo Nome (XSelect) |

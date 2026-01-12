@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Droplet, MoreVertical, Plus, Search } from 'lucide-react';
+import { Building2, Droplet, MoreVertical, Plus, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useFuelTypes, useFuelTypesApi } from '@/hooks/use-fuel-types-api';
 
 const fuelTypesSearchSchema = z.object({
@@ -105,7 +105,9 @@ function FuelTypeListPage() {
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
-                    <ItemDescription>{item.enterprise?.name}</ItemDescription>
+                    <ItemDescription className="flex items-center gap-2">
+                      <Building2 className="size-3" /> {item.enterprise?.name}
+                    </ItemDescription>
                   </ItemContent>
                 </div>
 

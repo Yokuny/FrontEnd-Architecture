@@ -54,7 +54,10 @@ export function useAlertsPaginated(params: AlertsSearchParams) {
 export function useAlert(id: string | null) {
   return useQuery({
     queryKey: ['alert', id],
-    queryFn: () => fetchAlert(id!),
+    queryFn: () => {
+      if (!id) throw new Error('Alert ID is required');
+      return fetchAlert(id);
+    },
     enabled: !!id,
   });
 }

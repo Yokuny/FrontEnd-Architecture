@@ -1,65 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { api } from '@/lib/api/client';
-
-export interface EnterpriseFilterStore {
-  idEnterprise: string;
-  setIdEnterprise: (id: string) => void;
-}
-
-export const useEnterpriseFilter = create<EnterpriseFilterStore>()(
-  persist(
-    (set) => ({
-      idEnterprise: '',
-      setIdEnterprise: (id) => set({ idEnterprise: id }),
-    }),
-    {
-      name: 'idEnterprise',
-    },
-  ),
-);
-
-// Types
-export interface Enterprise {
-  id: string;
-  name: string;
-  description?: string;
-  address?: string;
-  zipCode?: string;
-  number?: string;
-  district?: string;
-  complement?: string;
-  city: string;
-  state: string;
-  country?: string;
-  coordinate?: {
-    latitude: number;
-    longitude: number;
-  };
-  active?: boolean;
-  ssoSetuped?: boolean;
-  image?: { url: string };
-  imageDark?: { url: { url: string } | string };
-  logo?: string;
-  publicKey?: string;
-}
-
-export interface EnterpriseSelectOption {
-  value: string;
-  label: string;
-}
-
-export interface EnterpriseListParams {
-  page?: number;
-  size?: number;
-  search?: string;
-}
-
-export interface EnterpriseListResponse {
-  data: Enterprise[];
-  pageInfo: { count: number }[];
-}
 
 // Query keys
 export const enterprisesKeys = {
@@ -211,4 +151,45 @@ export function mapEnterprisesToOptions(enterprises: Enterprise[]): { value: str
       data: enterprise,
     }))
     .sort((a, b) => a.label.localeCompare(b.label));
+}
+
+// Types
+export interface Enterprise {
+  id: string;
+  name: string;
+  description?: string;
+  address?: string;
+  zipCode?: string;
+  number?: string;
+  district?: string;
+  complement?: string;
+  city: string;
+  state: string;
+  country?: string;
+  coordinate?: {
+    latitude: number;
+    longitude: number;
+  };
+  active?: boolean;
+  ssoSetuped?: boolean;
+  image?: { url: string };
+  imageDark?: { url: { url: string } | string };
+  logo?: string;
+  publicKey?: string;
+}
+
+export interface EnterpriseSelectOption {
+  value: string;
+  label: string;
+}
+
+export interface EnterpriseListParams {
+  page?: number;
+  size?: number;
+  search?: string;
+}
+
+export interface EnterpriseListResponse {
+  data: Enterprise[];
+  pageInfo: { count: number }[];
 }

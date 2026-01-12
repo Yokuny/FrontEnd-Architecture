@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { MoreVertical, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { Building2, MoreVertical, Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useModelMachines, useModelMachinesApi } from '@/hooks/use-model-machines-api';
 
 const modelMachineSearchSchema = z.object({
@@ -122,13 +122,14 @@ function ModelMachineListPage() {
                   </ItemMedia>
                   <ItemContent>
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
-                    <ItemDescription>
-                      {item.enterprise?.name || t('no.enterprise')} | {item.typeMachine}
+                    <ItemDescription className="flex items-center gap-2">
+                      <Building2 className="size-3" /> {item.enterprise?.name || t('no.enterprise')}
                     </ItemDescription>
                   </ItemContent>
                 </div>
 
                 <div className="flex items-center gap-4">
+                  <ItemDescription>{item.color}</ItemDescription>
                   <div className="size-4 rounded-full border border-white/20" style={{ backgroundColor: item.color || 'var(--muted-foreground)' }} />
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>

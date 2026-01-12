@@ -28,17 +28,14 @@ export function FormForm({ markAsChanged }: { markAsChanged: () => void }) {
           name="idEnterprise"
           render={({ field }) => (
             <FormItem>
-              <Field className="gap-2">
-                <FieldLabel>{t('enterprise')}</FieldLabel>
-                <EnterpriseSelect
-                  mode="single"
-                  value={field.value}
-                  onChange={(val: string | undefined) => {
-                    field.onChange(val || '');
-                    markAsChanged();
-                  }}
-                />
-              </Field>
+              <EnterpriseSelect
+                mode="single"
+                value={field.value}
+                onChange={(val: string | undefined) => {
+                  field.onChange(val || '');
+                  markAsChanged();
+                }}
+              />
               <FormMessage />
             </FormItem>
           )}

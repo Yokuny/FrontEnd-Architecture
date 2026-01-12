@@ -162,3 +162,14 @@ export function mapPlatformsToOptions(platforms: Platform[]): { value: string; l
     }))
     .sort((a, b) => a.label.localeCompare(b.label));
 }
+
+export function usePlatformsMap({ idEnterprise }: { idEnterprise?: string }) {
+  return useQuery({
+    queryKey: [...platformsKeys.all, 'map-list', idEnterprise],
+    queryFn: async () => {
+      const response = await api.get<any[]>(`/platform/maplist${idEnterprise ? `?idEnterprise=${idEnterprise}` : ''}`);
+      return response.data;
+    },
+    enabled: !!idEnterprise,
+  });
+}

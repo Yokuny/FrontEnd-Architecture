@@ -101,6 +101,7 @@ function FormAddFormContent({ initialData, pendingData, formId }: FormAddFormCon
     if (initialData) {
       return {
         id: initialData.id,
+        _id: initialData._id,
         idEnterprise: initialData.enterprise?.id || '',
         description: initialData.description || '',
         typeForm: initialData.typeForm || '',

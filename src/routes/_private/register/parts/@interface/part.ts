@@ -2,9 +2,11 @@ import { z } from 'zod';
 
 export const partSchema = z.object({
   id: z.string().optional(),
-  idEnterprise: z.string({
-    required_error: 'enterprise.required',
-  }),
+  idEnterprise: z
+    .string({
+      required_error: 'enterprise.required',
+    })
+    .min(1, 'enterprise.required'),
   name: z
     .string({
       required_error: 'part.name.placeholder',

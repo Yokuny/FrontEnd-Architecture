@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRightFromLine, Pin, PinOff } from 'lucide-react';
+import { Maximize2, Pin, PinOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSidebar } from '@/hooks/use-sidebar-toggle';
 
@@ -9,7 +9,7 @@ export function SidebarTrigger() {
   const getIconData = () => {
     if (open) return { Icon: PinOff, key: 'pinoff' };
     if (isHovered) return { Icon: Pin, key: 'pin' };
-    return { Icon: ArrowRightFromLine, key: 'arrow' };
+    return { Icon: Maximize2, key: 'maximize' };
   };
 
   const { Icon, key } = getIconData();
@@ -29,7 +29,7 @@ export function SidebarTrigger() {
           }}
           className="flex items-center justify-center h-full w-full"
         >
-          <Icon className="size-5 text-muted-foreground" />
+          <Icon className="size-5" />
         </motion.div>
       </AnimatePresence>
       <span className="sr-only">Toggle Sidebar</span>

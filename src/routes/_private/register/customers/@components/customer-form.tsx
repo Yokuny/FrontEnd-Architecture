@@ -5,7 +5,7 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import { EnterpriseSelect } from '@/components/selects/enterprise-select';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import type { CustomerFormData } from '../@interface/customer';
 
 export function CustomerForm() {

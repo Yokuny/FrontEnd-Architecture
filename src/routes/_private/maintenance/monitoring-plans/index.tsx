@@ -6,7 +6,7 @@ import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { useEnterpriseFilter } from '@/hooks/use-enterprises-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { FilterDialog } from './@components/filter-dialog';
 import { MonitoringPlanCard } from './@components/monitoring-plan-card';
 import { useMonitoringPlans } from './@hooks/use-monitoring-plans-api';

@@ -1,5 +1,6 @@
 import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 import { io, type Socket } from 'socket.io-client';
+import { useAuth } from '@/hooks/use-auth';
 
 const baseUserURLSocket = import.meta.env.VITE_URI_SOCKET || '';
 
@@ -17,7 +18,7 @@ export function SocketProvider({ children }: SocketProviderProps) {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = useAuth.getState().token;
     if (!token) {
       return;
     }

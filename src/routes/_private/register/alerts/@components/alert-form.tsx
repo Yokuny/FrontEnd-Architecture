@@ -1,4 +1,4 @@
-import { Bell, Code, Eye, Settings, Shield, Users, Zap } from 'lucide-react';
+import { Settings, Shield, Users, Zap } from 'lucide-react';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -37,10 +37,7 @@ export function AlertForm() {
           name="idEnterprise"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('enterprise')} *</FormLabel>
-              <FormControl>
-                <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
-              </FormControl>
+              <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
               <FormMessage />
             </FormItem>
           )}
@@ -148,10 +145,7 @@ export function AlertForm() {
                             name="idMachines"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>{t('machines')}</FormLabel>
-                                <FormControl>
-                                  <MachineSelect mode="multi" idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} />
-                                </FormControl>
+                                <MachineSelect label={t('machines')} mode="multi" idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} />
                                 <FormMessage />
                               </FormItem>
                             )}
@@ -212,10 +206,14 @@ export function AlertForm() {
                         name="users"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>{t('users')}</FormLabel>
-                            <FormControl>
-                              <UserSelect multi idEnterprise={idEnterprise} values={field.value as any} onChangeMulti={field.onChange} placeholder={t('users.placeholder')} />
-                            </FormControl>
+                            <UserSelect
+                              multi
+                              label={t('users')}
+                              idEnterprise={idEnterprise}
+                              values={field.value as any}
+                              onChangeMulti={field.onChange}
+                              placeholder={t('users.placeholder')}
+                            />
                             <FormMessage />
                           </FormItem>
                         )}
@@ -226,10 +224,7 @@ export function AlertForm() {
                         name="scales"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>{t('scales')}</FormLabel>
-                            <FormControl>
-                              <ScaleSelect mode="multi" value={field.value} onChange={field.onChange} />
-                            </FormControl>
+                            <ScaleSelect label={t('scales')} mode="multi" value={field.value} onChange={field.onChange} />
                             <FormMessage />
                           </FormItem>
                         )}
@@ -277,8 +272,7 @@ export function AlertForm() {
                         name="edit"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>{t('who.edit')}</FormLabel>
-                            <EditPermissionSelect mode="single" value={field.value} onChange={field.onChange} />
+                            <EditPermissionSelect label={t('who.edit')} mode="single" value={field.value} onChange={field.onChange} />
                             <FormMessage />
                           </FormItem>
                         )}
@@ -290,8 +284,7 @@ export function AlertForm() {
                           name="usersPermissionView"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>{t('users.permission.view')}</FormLabel>
-                              <UserSelect multi idEnterprise={idEnterprise} values={field.value as any} onChangeMulti={field.onChange} />
+                              <UserSelect multi label={t('users.permission.view')} idEnterprise={idEnterprise} values={field.value as any} onChangeMulti={field.onChange} />
                               <FormMessage />
                             </FormItem>
                           )}

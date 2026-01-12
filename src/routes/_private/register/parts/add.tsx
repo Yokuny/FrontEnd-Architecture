@@ -68,7 +68,7 @@ function PartAddFormContent({ initialData }: { initialData?: any }) {
             id: initialData.id,
             name: initialData.name,
             sku: initialData.sku,
-            idEnterprise: initialData.idEnterprise || '',
+            idEnterprise: initialData.idEnterprise || initialData.enterprise?.id || '',
             description: initialData.description || '',
           }
         : undefined,

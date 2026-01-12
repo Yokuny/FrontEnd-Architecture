@@ -86,6 +86,7 @@ export interface FormListResponse {
 
 export interface FormSaveData {
   id?: string;
+  _id?: string;
   idEnterprise: string;
   description: string;
   fields: FormField[];
@@ -192,7 +193,7 @@ export function useFormsApi() {
   });
 
   const updateForm = useMutation({
-    mutationFn: (data: FormSaveData) => api.post('/form', data),
+    mutationFn: (data: FormSaveData) => api.put('/form', data),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: formsKeys.lists() });
       if (variables.id) {

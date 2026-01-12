@@ -35,11 +35,9 @@ export function BuoyForm({ isEdit }: BuoyFormProps) {
               name="idEnterprise"
               render={({ field }) => (
                 <FormItem>
-                  <Field className="gap-2">
-                    <FormControl>
-                      <EnterpriseSelect value={field.value} onChange={field.onChange} disabled={isEdit} mode="single" />
-                    </FormControl>
-                  </Field>
+                  <FormControl>
+                    <EnterpriseSelect value={field.value} onChange={field.onChange} disabled={isEdit} mode="single" />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
