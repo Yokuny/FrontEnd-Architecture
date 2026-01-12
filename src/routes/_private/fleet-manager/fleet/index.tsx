@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
-import { ButtonGroup, ButtonGroupSeparator } from '@/components/ui/button-group';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Map as BaseMap, MapLayers, MapMarker, MapTileLayer } from '@/components/ui/map';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -59,6 +59,7 @@ function FleetMapPage() {
     operationMachines,
     isFleetbarOpen,
     toggleFleetbar,
+    revertPanel,
     mapTheme,
   } = useFleetManagerStore();
 
@@ -125,7 +126,16 @@ function FleetMapPage() {
 
   return (
     <div className={cn('h-[calc(100dvh - 64px)] overflow-hidden', isMobile ? 'flex flex-col' : 'relative')}>
-      <BaseMap center={mapCenter} zoom={zoom} className={cn('text-foreground flex-1 min-h-0', isMobile ? 'h-[80dvh] relative shrink-0' : 'fixed inset-0 z-0')}>
+      <BaseMap
+        center={mapCenter}
+        zoom={zoom}
+        scrollWheelZoom
+        maxZoom={17}
+        minZoom={3}
+        worldCopyJump
+        doubleClickZoom={false}
+        className={cn('text-foreground flex-1 min-h-0', isMobile ? 'h-[80dvh] relative shrink-0' : 'fixed inset-0 z-0')}
+      >
         <MapLayers defaultTileLayer={mapTheme}>
           <MapTileLayer name="default" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <MapTileLayer name="smoothdark" url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
@@ -152,11 +162,14 @@ function FleetMapPage() {
                 position={position}
                 icon={
                   <div className={`flex flex-col items-center transition-transform ${isSelected ? 'scale-125 z-50' : ''}`}>
+                    {/* TODO: Espalhar o nome com linhas guias demonstrando o nome e o código */}
                     {(showNames || showCodes) && (
-                      <div className="bg-background/90 px-1.5 py-0.5 rounded border text-[10px] font-bold shadow-sm mb-1 whitespace-nowrap text-foreground">
+                      <div className="bg-background/80 p-0.5 px-1 border text-[10px] font-medium shadow-sm whitespace-nowrap">
                         {showNames && machine?.machine.name}
-                        {showNames && showCodes && ' - '}
-                        {showCodes && (machine?.machine.code || machine?.machine.id)}
+                        <span className="text-foreground font-light">
+                          {showNames && showCodes && ' - '}
+                          {showCodes && (machine?.machine.code || machine?.machine.id)}
+                        </span>
                       </div>
                     )}
                     <div className="p-0.5 transition-transform">
@@ -187,7 +200,10 @@ function FleetMapPage() {
                   </div>
                 }
                 eventHandlers={{
-                  click: () => setSelectedMachineId(idMachine),
+                  click: () => {
+                    setSelectedMachineId(idMachine);
+                    setSelectedPanel('summary');
+                  },
                 }}
               />
             );
@@ -200,7 +216,20 @@ function FleetMapPage() {
 
           <div className="absolute right-0 pointer-events-none flex flex-col p-4" style={{ zIndex: 1010 }}>
             <ButtonGroup orientation="vertical" className="pointer-events-auto border rounded-lg">
-              <Button title={t('menu')} size="icon-lg" className="border-accent" variant="default" onClick={toggleFleetbar}>
+              <Button
+                title={t('menu')}
+                size="icon-lg"
+                className="border-accent"
+                variant="default"
+                onClick={() => {
+                  if (isFleetbarOpen) {
+                    toggleFleetbar();
+                  } else {
+                    revertPanel();
+                    toggleFleetbar();
+                  }
+                }}
+              >
                 {isFleetbarOpen ? <InspectionPanel className="size-4" /> : <PanelLeftOpen className="size-4" />}
               </Button>
 
@@ -293,11 +322,10 @@ function FleetMapPage() {
             </ButtonGroup>
           </div>
 
-          <MapCoordinates />
-
           <RoutePlayback idMachine={selectedMachineId || ''} />
           <DataContainer idEnterprise={idEnterprise} />
         </MapLayers>
+        <MapCoordinates />
       </BaseMap>
     </div>
   );

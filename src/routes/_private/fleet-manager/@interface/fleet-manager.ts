@@ -1,7 +1,8 @@
 export interface FleetManagerState {
   selectedMachineId: string | null;
   selectedVoyageId: string | null;
-  selectedPanel: 'details' | 'crew' | 'consume' | 'info' | 'measure' | 'search' | 'options' | null;
+  selectedPanel: 'details' | 'voyage' | 'crew' | 'consume' | 'info' | 'measure' | 'search' | 'options' | 'summary' | 'cameras' | 'contacts' | 'last-voyage' | null;
+  previousPanel: FleetManagerState['selectedPanel'];
   showNames: boolean;
   showCodes: boolean;
   showGeofences: boolean;
@@ -23,25 +24,9 @@ export interface FleetManagerState {
   isOperationIndicator: boolean;
   showNameFence: boolean;
 
-  // Legacy Redux states
+  // Real-time Sync (from API/Sockets)
   statusMachine: any[];
   operationMachines: any[];
-  lastMarker: any;
-  vesselsInFence: any[];
-  travelDetailsSelected: any;
-  machineConsumptionSelected: any;
-  machineCrewSelected: any;
-  machineInfoSelected: any;
-  machineContactSelected: any;
-  machineCamerasSelected: any;
-  assetVoyageSelected: any;
-  routeHistory: any[];
-  eventsStatusHistory: any[];
-  routeConsumption: any[];
-  routeConsumptionSensors: any;
-  routeIntegration: any[];
-  vesselIntegration: any;
-  isLoadingRouteIntegration: boolean;
 
   // Playback Context
   playback: {
@@ -59,6 +44,8 @@ export interface FleetManagerState {
   setSelectedMachineId: (id: string | null) => void;
   setSelectedVoyageId: (id: string | null) => void;
   setSelectedPanel: (panel: FleetManagerState['selectedPanel']) => void;
+  revertPanel: () => void;
+  resetSelection: () => void;
   toggleShowNames: () => void;
   toggleShowCodes: () => void;
   toggleShowGeofences: () => void;
@@ -80,24 +67,9 @@ export interface FleetManagerState {
   setIsOperationIndicator: (show: boolean) => void;
   setShowNameFence: (show: boolean) => void;
 
-  // Legacy Actions
+  // Sync Actions
   setStatusMachine: (status: any[]) => void;
   setOperationMachines: (operations: any[]) => void;
-  setLastMarker: (marker: any) => void;
-  setVesselsInFence: (vessels: any[]) => void;
-  setTravelDetailsSelected: (travel: any) => void;
-  setMachineConsumptionSelected: (consumption: any) => void;
-  setMachineCrewSelected: (crew: any) => void;
-  setMachineInfoSelected: (info: any) => void;
-  setMachineContactSelected: (contact: any) => void;
-  setMachineCamerasSelected: (cameras: any) => void;
-  setAssetVoyageSelected: (voyage: any) => void;
-  setRouteHistory: (history: any[]) => void;
-  setEventsStatusConsume: (events: any[]) => void;
-  setRouteConsumption: (route: any[]) => void;
-  setRouteConsumptionSensors: (sensors: any) => void;
-  setRouteIntegration: (data: { routeIntegration: any[]; vesselIntegration: any }) => void;
-  setIsLoadingRouteIntegration: (loading: boolean) => void;
 
   // Playback Actions
   setPlaybackActive: (active: boolean, type: 'route' | 'region' | null) => void;

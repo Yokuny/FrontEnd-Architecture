@@ -4,20 +4,23 @@ import { Button } from '@/components/ui/button';
 import { Item, ItemActions, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
+import { FleetCamerasPanel } from './fleet-cameras-panel';
 import { FleetConsumePanel } from './fleet-consume-panel';
+import { FleetContactsPanel } from './fleet-contacts-panel';
 import { FleetCrewPanel } from './fleet-crew-panel';
-import { FleetDetailsPanel } from './fleet-details-panel';
 import { FleetInfoPanel } from './fleet-info-panel';
+import { FleetLastVoyagePanel } from './fleet-last-voyage-panel';
 import { FleetManagerPanel } from './fleet-manager-panel';
 import { FleetMeasurePanel } from './fleet-measure-panel';
+import { FleetNavigation } from './fleet-navigation';
 import { FleetOptionsPanel } from './fleet-options-panel';
+import { MachineDetailsPanel } from './machine-details-panel';
+import { MachineSummaryPanel } from './summary-panel';
+import { VoyageDetailsPanel } from './voyage-details-panel';
 
 export function Panel({ idEnterprise }: PanelContainerProps) {
   const { t } = useTranslation();
-  const { selectedPanel, selectedMachineId, selectedVoyageId, isFleetbarOpen, toggleFleetbar, setSelectedPanel, setSelectedMachineId, setSelectedVoyageId, setPointsMeasureLine } =
-    useFleetManagerStore();
-
-  const assetOrVoyageSelected = !!(selectedMachineId || selectedVoyageId);
+  const { selectedPanel, selectedMachineId, selectedVoyageId, isFleetbarOpen, toggleFleetbar, resetSelection, revertPanel } = useFleetManagerStore();
 
   // Only one panel should be active in the unified card
   // Priority: Explicitly selected panel > Sidebar Toggle
@@ -28,10 +31,7 @@ export function Panel({ idEnterprise }: PanelContainerProps) {
   }
 
   const handleClose = () => {
-    setSelectedPanel(null);
-    setSelectedMachineId(null);
-    setSelectedVoyageId(null);
-    setPointsMeasureLine([]);
+    resetSelection();
     if (isFleetbarOpen) toggleFleetbar();
   };
 
@@ -53,6 +53,16 @@ export function Panel({ idEnterprise }: PanelContainerProps) {
         return t('info');
       case 'measure':
         return t('measure');
+      case 'summary':
+        return t('summary', 'Resumo');
+      case 'cameras':
+        return t('camera');
+      case 'contacts':
+        return t('contacts');
+      case 'last-voyage':
+        return t('travel');
+      case 'voyage':
+        return t('travel');
       default:
         return '';
     }
@@ -64,8 +74,8 @@ export function Panel({ idEnterprise }: PanelContainerProps) {
         <ItemHeader>
           <ItemTitle className="font-semibold text-sm uppercase tracking-wider">{getTitle()}</ItemTitle>
           <ItemActions>
-            <Button variant="ghost" size="icon-sm" onClick={toggleFleetbar} title={isFleetbarOpen ? t('collapse') : t('expand')}>
-              {isFleetbarOpen ? <ChevronLeft className="size-4" /> : <ChevronRight className="size-4" />}
+            <Button variant="ghost" size="icon-sm" onClick={revertPanel} title={t('back')}>
+              <ChevronLeft className="size-4" />
             </Button>
             <Button variant="ghost" size="icon-sm" onClick={handleClose} title={t('close')}>
               <X className="size-4" />
@@ -74,17 +84,23 @@ export function Panel({ idEnterprise }: PanelContainerProps) {
         </ItemHeader>
       </Item>
 
-      <ScrollArea className="flex-1 w-full">
-        <div className="w-full h-full">
+      <div className="w-full h-full pb-20">
+        <ScrollArea className="flex-1 w-full h-full">
           {activeView === 'search' && <FleetManagerPanel idEnterprise={idEnterprise} />}
-          {activeView === 'crew' && selectedMachineId && <FleetCrewPanel />}
-          {activeView === 'details' && assetOrVoyageSelected && <FleetDetailsPanel />}
+          {activeView === 'summary' && selectedMachineId && <MachineSummaryPanel />}
+          {activeView === 'details' && selectedMachineId && <MachineDetailsPanel />}
+          {activeView === 'voyage' && selectedVoyageId && <VoyageDetailsPanel />}
+          {activeView === 'cameras' && selectedMachineId && <FleetCamerasPanel />}
+          {activeView === 'contacts' && selectedMachineId && <FleetContactsPanel />}
+          {activeView === 'last-voyage' && selectedMachineId && <FleetLastVoyagePanel />}
           {activeView === 'options' && <FleetOptionsPanel />}
           {activeView === 'measure' && <FleetMeasurePanel />}
+          {activeView === 'crew' && selectedMachineId && <FleetCrewPanel />}
           {activeView === 'consume' && selectedMachineId && <FleetConsumePanel />}
           {activeView === 'info' && selectedMachineId && <FleetInfoPanel />}
-        </div>
-      </ScrollArea>
+        </ScrollArea>
+        {selectedMachineId && activeView !== 'search' && activeView !== 'options' && activeView !== 'measure' && <FleetNavigation />}
+      </div>
     </ItemGroup>
   );
 }

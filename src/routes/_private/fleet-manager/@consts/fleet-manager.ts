@@ -34,8 +34,8 @@ export const TYPE_VESSEL = {
   CRUISE_PASSENGER_SHIP: 'CRUISE_PASSENGER_SHIP',
 } as const;
 
-export const DEFAULT_MAP_CENTER: [number, number] = [-23.5505, -46.6333]; // São Paulo
-export const DEFAULT_MAP_ZOOM = 4;
+export const DEFAULT_MAP_CENTER: [number, number] = [-18.171396, -38.537897];
+export const DEFAULT_MAP_ZOOM = 5;
 
 export const DEFAULT_MEASURE_SPEED = 10;
 export const METERS_IN_NAUTICAL_MILE = 1852;

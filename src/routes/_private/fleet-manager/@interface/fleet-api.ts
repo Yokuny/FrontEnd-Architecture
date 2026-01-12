@@ -160,6 +160,46 @@ export interface CrewMember {
   phone?: string;
   image?: { url: string };
   isOnlyContact?: boolean;
+  boarding?: string;
+  landing?: string;
+}
+
+export interface CrewResponse {
+  totalOnBoard: number;
+  people: CrewMember[];
+}
+
+export interface MachineContact {
+  name: string;
+  phone: string;
+}
+
+export interface MachineContactsResponse {
+  id: string;
+  name: string;
+  code: string;
+  contacts: MachineContact[];
+  dataSheet?: {
+    managementName?: string;
+    [key: string]: any;
+  };
+}
+
+export interface MachineCamera {
+  name: string;
+  link: string;
+}
+
+export interface LastVoyageResponse extends FleetVoyage {
+  itinerary: Array<{
+    where: string;
+    atd?: string;
+    load?: Array<{
+      description: string;
+      amount: number;
+      unit: string;
+    }>;
+  }>;
 }
 
 export interface MachineDatasheet {

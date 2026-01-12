@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api/client';
 import type {
-  CrewMember,
+  CrewResponse,
   FleetMachine,
   FleetVoyage,
   FleetVoyagesResponse,
+  LastVoyageResponse,
+  MachineCamera,
+  MachineContactsResponse,
   MachineDatasheet,
   MachineDetailsResponse,
   MachineTimelineResponse,
@@ -142,10 +145,46 @@ export function useFleetCrew(idMachine: string | null, idEnterprise?: string) {
     queryKey: ['fleet', 'crew', idMachine, idEnterprise],
     queryFn: async () => {
       if (!idMachine || !idEnterprise) return null;
-      const response = await api.get<CrewMember[]>(`/crew?idMachine=${idMachine}&idEnterprise=${idEnterprise}`);
+      const response = await api.get<CrewResponse>(`/crew?idMachine=${idMachine}&idEnterprise=${idEnterprise}`);
       return response.data;
     },
     enabled: !!idMachine && !!idEnterprise,
+  });
+}
+
+export function useMachineContacts(idMachine: string | null) {
+  return useQuery({
+    queryKey: ['fleet', 'contacts', idMachine],
+    queryFn: async () => {
+      if (!idMachine) return null;
+      const response = await api.get<MachineContactsResponse>(`/machine/contacts?id=${idMachine}`);
+      return response.data;
+    },
+    enabled: !!idMachine,
+  });
+}
+
+export function useMachineCameras(idMachine: string | null) {
+  return useQuery({
+    queryKey: ['fleet', 'cameras', idMachine],
+    queryFn: async () => {
+      if (!idMachine) return null;
+      const response = await api.get<MachineCamera[]>(`/machine/${idMachine}/cameras`);
+      return response.data;
+    },
+    enabled: !!idMachine,
+  });
+}
+
+export function useLastVoyage(idMachine: string | null) {
+  return useQuery({
+    queryKey: ['fleet', 'last-voyage', idMachine],
+    queryFn: async () => {
+      if (!idMachine) return null;
+      const response = await api.get<LastVoyageResponse>(`/travel/${idMachine}/last`);
+      return response.data;
+    },
+    enabled: !!idMachine,
   });
 }
 

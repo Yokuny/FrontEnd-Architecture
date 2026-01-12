@@ -20,7 +20,7 @@ interface FleetSidebarProps {
 export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
-  const { selectedMachineId, setSelectedMachineId, selectedVoyageId, setSelectedVoyageId } = useFleetManagerStore();
+  const { selectedMachineId, setSelectedMachineId, selectedVoyageId, setSelectedVoyageId, setSelectedPanel } = useFleetManagerStore();
 
   const { data: machines, isLoading: isLoadingMachines } = useFleetMachines({
     idEnterprise,
@@ -109,6 +109,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                     onClick={() => {
                       setSelectedVoyageId(null);
                       setSelectedMachineId(item.machine.id);
+                      setSelectedPanel('details');
                     }}
                   >
                     <ItemContent className="grow items-start gap-0">
@@ -204,8 +205,9 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                     variant="outline"
                     className={cn('w-full p-3 cursor-pointer hover:bg-accent', selectedVoyageId === item.id && 'bg-accent')}
                     onClick={() => {
-                      setSelectedMachineId(null);
+                      setSelectedMachineId(item.machine?.id || null);
                       setSelectedVoyageId(item.id);
+                      setSelectedPanel('voyage');
                     }}
                   >
                     <ItemContent className="grow items-start gap-0">

@@ -984,6 +984,7 @@
   "type": "Tipo",
   "maneuver": "Manobra",
   "vessel": "Embarcação",
+  "summary": "Resumo",
   "filter.advanced": "Filtro avançado",
   "filter.close": "Fechar filtro",
   "all": "Todos",
@@ -2521,5 +2522,8 @@
   "no.events.recorded": "Nenhum evento registrado",
   "analytics": "Analíticos",
   "hr": "h",
-  "hrs": "h"
+  "hrs": "h",
+  "no.itinerary": "Nenhum itinerário encontrado",
+  "voyage.details": "Detalhes da Viagem",
+  "no.contacts": "Nenhum contato encontrado"
 }

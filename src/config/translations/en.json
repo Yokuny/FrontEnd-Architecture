@@ -2477,6 +2477,10 @@
   "current.travel": "Current travel",
   "no.events.recorded": "No events recorded",
   "analytics": "Analytics",
+  "summary": "Summary",
   "hr": "hr",
-  "hrs": "hrs"
+  "hrs": "hrs",
+  "no.itinerary": "No itinerary found",
+  "voyage.details": "Voyage Details",
+  "no.contacts": "No contacts found"
 }

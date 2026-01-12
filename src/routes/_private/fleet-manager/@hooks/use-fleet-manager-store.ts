@@ -8,6 +8,7 @@ export const useFleetManagerStore = create<FleetManagerState>()(
       selectedMachineId: null,
       selectedVoyageId: null,
       selectedPanel: null,
+      previousPanel: null,
       showNames: true,
       showCodes: false,
       showGeofences: true,
@@ -26,25 +27,9 @@ export const useFleetManagerStore = create<FleetManagerState>()(
       isOperationIndicator: false,
       showNameFence: false,
 
-      // Legacy Redux states
+      // Sync States
       statusMachine: [],
       operationMachines: [],
-      lastMarker: null,
-      vesselsInFence: [],
-      travelDetailsSelected: null,
-      machineConsumptionSelected: null,
-      machineCrewSelected: null,
-      machineInfoSelected: null,
-      machineContactSelected: null,
-      machineCamerasSelected: null,
-      assetVoyageSelected: null,
-      routeHistory: [],
-      eventsStatusHistory: [],
-      routeConsumption: [],
-      routeConsumptionSensors: null,
-      routeIntegration: [],
-      vesselIntegration: null,
-      isLoadingRouteIntegration: false,
 
       playback: {
         isPlaying: false,
@@ -57,9 +42,25 @@ export const useFleetManagerStore = create<FleetManagerState>()(
         type: null,
       },
 
-      setSelectedMachineId: (id) => set({ selectedMachineId: id, selectedPanel: id ? 'details' : null }),
-      setSelectedVoyageId: (id) => set({ selectedVoyageId: id, selectedPanel: id ? 'details' : null }),
-      setSelectedPanel: (panel) => set({ selectedPanel: panel }),
+      setSelectedMachineId: (id) => set({ selectedMachineId: id }),
+      setSelectedVoyageId: (id) => set({ selectedVoyageId: id }),
+      setSelectedPanel: (panel) =>
+        set((state) => ({
+          previousPanel: state.selectedPanel,
+          selectedPanel: panel,
+        })),
+      revertPanel: () =>
+        set((state) => ({
+          selectedPanel: state.previousPanel,
+          previousPanel: null,
+        })),
+      resetSelection: () =>
+        set({
+          selectedMachineId: null,
+          selectedVoyageId: null,
+          selectedPanel: null,
+          previousPanel: null,
+        }),
       toggleShowNames: () => set((state) => ({ showNames: !state.showNames })),
       toggleShowCodes: () => set((state) => ({ showCodes: !state.showCodes })),
       toggleShowGeofences: () => set((state) => ({ showGeofences: !state.showGeofences })),
@@ -79,28 +80,9 @@ export const useFleetManagerStore = create<FleetManagerState>()(
       setIsOperationIndicator: (show) => set({ isOperationIndicator: show }),
       setShowNameFence: (show) => set({ showNameFence: show }),
 
-      // Legacy Actions
+      // Sync Actions
       setStatusMachine: (status) => set({ statusMachine: status }),
       setOperationMachines: (operations) => set({ operationMachines: operations }),
-      setLastMarker: (marker) => set({ lastMarker: marker }),
-      setVesselsInFence: (vessels) => set({ vesselsInFence: vessels }),
-      setTravelDetailsSelected: (travel) => set({ travelDetailsSelected: travel }),
-      setMachineConsumptionSelected: (consumption) => set({ machineConsumptionSelected: consumption }),
-      setMachineCrewSelected: (crew) => set({ machineCrewSelected: crew }),
-      setMachineInfoSelected: (info) => set({ machineInfoSelected: info }),
-      setMachineContactSelected: (contact) => set({ machineContactSelected: contact }),
-      setMachineCamerasSelected: (cameras) => set({ machineCamerasSelected: cameras }),
-      setAssetVoyageSelected: (voyage) => set({ assetVoyageSelected: voyage }),
-      setRouteHistory: (history) => set({ routeHistory: history }),
-      setEventsStatusConsume: (events) => set({ eventsStatusHistory: events }),
-      setRouteConsumption: (route) => set({ routeConsumption: route }),
-      setRouteConsumptionSensors: (sensors) => set({ routeConsumptionSensors: sensors }),
-      setRouteIntegration: (data) =>
-        set({
-          routeIntegration: data.routeIntegration,
-          vesselIntegration: data.vesselIntegration,
-        }),
-      setIsLoadingRouteIntegration: (loading) => set({ isLoadingRouteIntegration: loading }),
 
       setPlaybackActive: (active, type) =>
         set((state) => ({
