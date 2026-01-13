@@ -104,6 +104,7 @@
     "@types/uuid": "^11",
     "@vitejs/plugin-react": "^5",
     "jsdom": "^27",
+    "tsx": "^4",
     "typescript": "^5",
     "vite": "^7",
     "vitest": "^3",

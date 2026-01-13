@@ -30,11 +30,7 @@ export function ExtraLayers() {
           ?.filter((f) => f.location?.coordinates?.length)
           ?.map((f, i) => (
             <Polygon key={`fence-${i}`} color={f.color} positions={f.location.coordinates} weight={1} dashArray="5,5">
-              {showNameFence && (
-                <Tooltip permanent position={f.location.coordinates[0]}>
-                  {f.name}
-                </Tooltip>
-              )}
+              {showNameFence && <Tooltip permanent>{f.name}</Tooltip>}
               <Popup>{f.name}</Popup>
             </Polygon>
           ))}
@@ -51,11 +47,7 @@ export function ExtraLayers() {
               center={f.location.geometry?.coordinates || [0, 0]}
               radius={f.location.properties?.radius || 0}
             >
-              {showNameFence && (
-                <Tooltip permanent position={f.location.geometry?.coordinates || [0, 0]}>
-                  {f.name}
-                </Tooltip>
-              )}
+              {showNameFence && <Tooltip permanent>{f.name}</Tooltip>}
               <Popup>{f.name}</Popup>
             </Circle>
           ))}

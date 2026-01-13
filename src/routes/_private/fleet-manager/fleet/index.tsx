@@ -1,15 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Archive, BarChart3, Calculator, Contact2, InspectionPanel, Layers, PanelLeftOpen, Search, SendHorizontal, Zap } from 'lucide-react';
+import { SendHorizontal } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
 import { Map as BaseMap, MapLayers, MapMarker, MapTileLayer } from '@/components/ui/map';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { DataContainer } from '../@components/data-container';
+import { FleetActionButtons } from '../@components/fleet-action-buttons';
 import { FleetStatusSync } from '../@components/fleet-status-sync';
 import { MapCoordinates } from '../@components/map-coordinates';
 import { ExtraLayers } from '../@components/nautical/extra-layers';
@@ -41,25 +39,18 @@ export const Route = createFileRoute('/_private/fleet-manager/fleet/')({
 function FleetMapPage() {
   const { idEnterprise } = useEnterpriseFilter();
   const isMobile = useIsMobile();
-
-  const { t } = useTranslation();
   const {
     showNames,
     showCodes,
     selectedMachineId,
     setSelectedMachineId,
-    playback,
     setPlaybackActive,
     setPlaybackData,
-    selectedPanel,
     setSelectedPanel,
     isNavigationIndicator,
     isOperationIndicator,
     statusMachine,
     operationMachines,
-    isFleetbarOpen,
-    toggleFleetbar,
-    revertPanel,
     mapTheme,
   } = useFleetManagerStore();
 
@@ -151,6 +142,8 @@ function FleetMapPage() {
             attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>"
           />
           <MapTileLayer name="premium" url={`https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${import.meta.env.VITE_MAP_TILER}`} attribution="&copy; Maptiler" />
+          <NauticalLayers />
+          <ExtraLayers />
 
           {vesselMarkers.map((marker) => {
             const { machine, position, idMachine } = marker;
@@ -209,120 +202,11 @@ function FleetMapPage() {
             );
           })}
 
-          <NauticalLayers />
-          <ExtraLayers />
           <FleetStatusSync />
           <RegionPlayback />
-
-          <div className="absolute right-0 pointer-events-none flex flex-col p-4" style={{ zIndex: 1010 }}>
-            <ButtonGroup orientation="vertical" className="pointer-events-auto border rounded-lg">
-              <Button
-                title={t('menu')}
-                size="icon-lg"
-                className="border-accent"
-                variant="default"
-                onClick={() => {
-                  if (isFleetbarOpen) {
-                    toggleFleetbar();
-                  } else {
-                    revertPanel();
-                    toggleFleetbar();
-                  }
-                }}
-              >
-                {isFleetbarOpen ? <InspectionPanel className="size-4" /> : <PanelLeftOpen className="size-4" />}
-              </Button>
-
-              <Button
-                title={t('search')}
-                size="icon-lg"
-                className="border-accent"
-                variant={selectedPanel === 'search' ? 'secondary' : 'default'}
-                onClick={() => setSelectedPanel(selectedPanel === 'search' ? null : 'search')}
-              >
-                <Search className="size-4" />
-              </Button>
-
-              <Button
-                title={t('options')}
-                size="icon-lg"
-                className="border-accent"
-                variant={selectedPanel === 'options' ? 'secondary' : 'default'}
-                onClick={() => setSelectedPanel(selectedPanel === 'options' ? null : 'options')}
-              >
-                <Layers className="size-4" />
-              </Button>
-
-              <Button
-                title={t('measure')}
-                size="icon-lg"
-                className="border-accent"
-                variant={selectedPanel === 'measure' ? 'secondary' : 'default'}
-                onClick={() => {
-                  setSelectedPanel(selectedPanel === 'measure' ? null : 'measure');
-                }}
-              >
-                <Calculator className="size-4" />
-              </Button>
-
-              {selectedMachineId && (
-                <>
-                  <Button
-                    title={t('playback')}
-                    size="icon-lg"
-                    className="border-accent"
-                    variant={playback.isActive && playback.type === 'route' ? 'default' : 'secondary'}
-                    onClick={handleStartRoutePlayback}
-                    disabled={isLoadingHistory}
-                  >
-                    <Archive className="size-4" />
-                  </Button>
-
-                  <Button
-                    title={t('details')}
-                    size="icon-lg"
-                    className="border-accent"
-                    variant={selectedPanel === 'details' ? 'secondary' : 'default'}
-                    onClick={() => setSelectedPanel(selectedPanel === 'details' ? null : 'details')}
-                  >
-                    <BarChart3 className="size-4" />
-                  </Button>
-
-                  <Button
-                    title={t('crew')}
-                    size="icon-lg"
-                    className="border-accent"
-                    variant={selectedPanel === 'crew' ? 'secondary' : 'default'}
-                    onClick={() => setSelectedPanel(selectedPanel === 'crew' ? null : 'crew')}
-                  >
-                    <Contact2 className="size-4" />
-                  </Button>
-
-                  <Button
-                    title={t('consume')}
-                    size="icon-lg"
-                    className="border-accent"
-                    variant={selectedPanel === 'consume' ? 'secondary' : 'default'}
-                    onClick={() => setSelectedPanel(selectedPanel === 'consume' ? null : 'consume')}
-                  >
-                    <Zap className="size-4" />
-                  </Button>
-
-                  <Button
-                    title={t('info')}
-                    size="icon-lg"
-                    className="border-accent"
-                    variant={selectedPanel === 'info' ? 'secondary' : 'default'}
-                    onClick={() => setSelectedPanel(selectedPanel === 'info' ? null : 'info')}
-                  >
-                    <Archive className="size-4" />
-                  </Button>
-                </>
-              )}
-            </ButtonGroup>
-          </div>
-
           <RoutePlayback idMachine={selectedMachineId || ''} />
+
+          <FleetActionButtons isLoadingHistory={isLoadingHistory} onStartRoutePlayback={handleStartRoutePlayback} />
           <DataContainer idEnterprise={idEnterprise} />
         </MapLayers>
         <MapCoordinates />

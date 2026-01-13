@@ -22,8 +22,6 @@ export function Panel({ idEnterprise }: PanelContainerProps) {
   const { t } = useTranslation();
   const { selectedPanel, selectedMachineId, selectedVoyageId, isFleetbarOpen, toggleFleetbar, resetSelection, revertPanel } = useFleetManagerStore();
 
-  // Only one panel should be active in the unified card
-  // Priority: Explicitly selected panel > Sidebar Toggle
   let activeView = selectedPanel;
 
   if (!activeView) {

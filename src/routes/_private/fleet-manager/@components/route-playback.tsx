@@ -17,10 +17,7 @@ export function RoutePlayback({ idMachine: _idMachine }: RoutePlaybackProps) {
   useEffect(() => {
     if (!isActive || type !== 'route' || !historyData.length) return;
 
-    // historyData format: [timestamp, lat, lng, speed, course, ...]
-    // MarkerMotion needs: (L.LatLngExpression | number[])[]
     const path = historyData.map((item) => [item[1], item[2]]);
-
     const icon = L.divIcon({
       className: 'leaflet-div-icon-img',
       iconSize: [25, 25],
@@ -44,13 +41,12 @@ export function RoutePlayback({ idMachine: _idMachine }: RoutePlaybackProps) {
     mm.addTo(map);
 
     mm.on('motion.segment', (e: any) => {
-      // e.index is the index of the segment it just reached
       const timestamp = historyData[e.index][0] * 1000;
       setPlaybackTime(timestamp);
     });
 
     mm.on('motion.end', () => {
-      if (isPlaying) togglePlaybackPlay(); // Stop playing when end reached
+      togglePlaybackPlay();
     });
 
     setMarker(mm);
@@ -59,7 +55,7 @@ export function RoutePlayback({ idMachine: _idMachine }: RoutePlaybackProps) {
       mm.remove();
       setMarker(null);
     };
-  }, [isActive, type, historyData, map]);
+  }, [isActive, type, historyData, map, speed, setPlaybackTime, togglePlaybackPlay]);
 
   useEffect(() => {
     if (!marker) return;
@@ -74,7 +70,7 @@ export function RoutePlayback({ idMachine: _idMachine }: RoutePlaybackProps) {
 
   if (!isActive || type !== 'route' || !historyData.length) return null;
 
-  const polylinePath = historyData.map((item) => [item[1], item[2]] as [number, number]);
+  const polylinePath = historyData.filter((item) => item[1] != null && item[2] != null).map((item) => [item[1], item[2]] as [number, number]);
 
   return (
     <div>
