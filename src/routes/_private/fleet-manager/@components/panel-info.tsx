@@ -3,12 +3,12 @@ import { Anchor, Calendar, Flag, Globe, Ruler, Ship, Weight } from 'lucide-react
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
-import { ItemGroup, ItemHeader, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
 import { calculateCIIReference } from '../@hooks/fleet-utils';
 import { useMachineDatasheet } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
-import { DetailGridItem } from './detail-items';
+import { DetailGridItem } from './helpers/detail-items';
 
 export function FleetInfoPanel() {
   const { t } = useTranslation();
@@ -46,26 +46,22 @@ export function FleetInfoPanel() {
         {/* Basic Identification */}
         <div className="space-y-3">
           <ItemHeader className="text-primary font-bold uppercase tracking-wider gap-2">
-            <ItemMedia>
-              <Anchor className="size-3" />
-            </ItemMedia>
+            <Anchor className="size-3" />
             <ItemTitle className="text-[11px] font-mono">{t('identification')}</ItemTitle>
           </ItemHeader>
           <div className="grid grid-cols-3 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
-            <DetailGridItem label={t('name')} value={dsData?.name} icon={Ship} />
-            <DetailGridItem label={t('code')} value={dsData?.code} />
-            <DetailGridItem label="IMO" value={dsData?.dataSheet?.imo} />
-            <DetailGridItem label="MMSI" value={dsData?.dataSheet?.mmsi} />
-            <DetailGridItem label={t('type')} value={dsData?.modelMachine?.description} />
+            <DetailGridItem label={t('name')} value={dsData?.name || '-'} icon={Ship} />
+            <DetailGridItem label={t('code')} value={dsData?.code || '-'} />
+            <DetailGridItem label="IMO" value={dsData?.dataSheet?.imo || '-'} />
+            <DetailGridItem label="MMSI" value={dsData?.dataSheet?.mmsi || '-'} />
+            <DetailGridItem label={t('type')} value={dsData?.modelMachine?.description || '-'} />
           </div>
         </div>
 
         {/* Dimensions */}
         <div className="space-y-3">
           <ItemHeader className="text-primary font-bold uppercase tracking-wider gap-2">
-            <ItemMedia>
-              <Ruler className="size-3" />
-            </ItemMedia>
+            <Ruler className="size-3" />
             <ItemTitle className="text-[11px] font-mono">{t('dimensions')}</ItemTitle>
           </ItemHeader>
           <div className="grid grid-cols-2 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
@@ -77,9 +73,7 @@ export function FleetInfoPanel() {
         {/* Capacity */}
         <div className="space-y-3">
           <ItemHeader className="text-primary font-bold uppercase tracking-wider gap-2">
-            <ItemMedia>
-              <Weight className="size-3" />
-            </ItemMedia>
+            <Weight className="size-3" />
             <ItemTitle className="text-[11px] font-mono">{t('capacity')}</ItemTitle>
           </ItemHeader>
           <div className="grid grid-cols-2 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
@@ -94,14 +88,12 @@ export function FleetInfoPanel() {
         {/* Registration */}
         <div className="space-y-3">
           <ItemHeader className="text-primary font-bold uppercase tracking-wider gap-2">
-            <ItemMedia>
-              <Globe className="size-3" />
-            </ItemMedia>
+            <Globe className="size-3" />
             <ItemTitle className="text-[11px] font-mono">{t('registration')}</ItemTitle>
           </ItemHeader>
           <div className="grid grid-cols-3 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
-            <DetailGridItem label={t('year.build')} value={dsData?.dataSheet?.yearBuilt} icon={Calendar} />
-            <DetailGridItem label={t('flag')} value={dsData?.dataSheet?.flag} icon={Flag} />
+            <DetailGridItem label={t('year.build')} value={dsData?.dataSheet?.yearBuilt || '-'} icon={Calendar} />
+            <DetailGridItem label={t('flag')} value={dsData?.dataSheet?.flag || '-'} icon={Flag} />
             <DetailGridItem label={t('create.at')} value={dsData?.createAt ? format(new Date(dsData.createAt), 'dd MMM yyyy') : '-'} />
           </div>
         </div>

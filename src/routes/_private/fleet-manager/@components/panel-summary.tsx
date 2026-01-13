@@ -8,8 +8,8 @@ import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { getNavigationStatusColor, getOperationStatusColor } from '../@hooks/status-utils';
 import { useFleetMachines, useMachineDetails } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
-import { DetailGridItem } from './detail-items';
-import { Proximity } from './proximity';
+import { DetailGridItem } from './helpers/detail-items';
+import { Proximity } from './helpers/proximity';
 
 const locales: Record<string, any> = { pt: ptBR, en: enUS, es: es, 'pt-BR': ptBR };
 

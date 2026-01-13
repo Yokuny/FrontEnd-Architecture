@@ -5,7 +5,7 @@ import DefaultLoading from '@/components/default-loading';
 import { ItemContent, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { useMachineContacts } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
-import { DetailGridItem } from './detail-items';
+import { DetailGridItem } from './helpers/detail-items';
 
 export function FleetContactsPanel() {
   const { t } = useTranslation();

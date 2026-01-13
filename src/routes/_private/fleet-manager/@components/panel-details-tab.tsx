@@ -8,8 +8,8 @@ import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { cn } from '@/lib/utils';
 import { useMachineDetails, useMachineTimeline, useSpeedHistory } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
-import { DetailGridItem } from './detail-items';
-import { Proximity } from './proximity';
+import { DetailGridItem } from './helpers/detail-items';
+import { Proximity } from './helpers/proximity';
 
 export function MachineDetailsPanel() {
   const { t } = useTranslation();
@@ -151,16 +151,16 @@ export function MachineDetailsPanel() {
           <ListTree className="size-3 text-primary" />
           <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('timeline')}</ItemTitle>
         </div>
-        <div className="space-y-3 relative pl-4 before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-px before:bg-border">
+        <div className="space-y-3 relative pl-5 before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-px before:bg-border">
           {timeline.length === 0 ? (
-            <div className="text-xs text-muted-foreground italic pl-4">{t('no.events.recorded')}</div>
+            <div className="text-xs text-muted-foreground italic pl-5">{t('no.events.recorded')}</div>
           ) : (
             timeline.slice(0, 5).map((event: any) => (
               <div key={event.id} className="relative flex items-start gap-4 group">
-                <div className="absolute -left-px mt-1.5 size-2 rounded-full border-2 border-background bg-primary ring-4 ring-background z-10" />
-                <div className="flex flex-col gap-0.5">
+                <div className="absolute mt-1.5 size-1 bg-primary z-10" />
+                <div className="flex flex-col gap-0.5 pl-2">
                   <span className="text-[10px] text-muted-foreground font-medium">{format(new Date(event.date), 'dd MMM, HH:mm')}</span>
-                  <span className="text-xs font-semibold group-hover:text-primary transition-colors">{event.data?.status || event.type}</span>
+                  <ItemTitle className="text-xs">{event.data?.status || event.type}</ItemTitle>
                 </div>
               </div>
             ))

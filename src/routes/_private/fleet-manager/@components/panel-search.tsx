@@ -11,11 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { useFleetMachines, useFleetVoyages } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
-import { Proximity } from './proximity';
-
-interface FleetSidebarProps {
-  idEnterprise?: string;
-}
+import { Proximity } from './helpers/proximity';
 
 export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
   const { t } = useTranslation();
@@ -273,4 +269,8 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
       </Tabs>
     </ItemGroup>
   );
+}
+
+interface FleetSidebarProps {
+  idEnterprise?: string;
 }

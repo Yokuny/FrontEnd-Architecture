@@ -6,7 +6,7 @@ import { ItemContent, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { useVoyageAnalytics, useVoyageDetails, useVoyageTimeline } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
-import { DetailGridItem, DetailItemCard } from './detail-items';
+import { DetailGridItem, DetailItemCard } from './helpers/detail-items';
 
 export function VoyageDetailsPanel() {
   const { t } = useTranslation();

@@ -6,7 +6,7 @@ import DefaultLoading from '@/components/default-loading';
 import { ItemContent, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { useLastVoyage } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
-import { DetailGridItem } from './detail-items';
+import { DetailGridItem } from './helpers/detail-items';
 
 export function FleetLastVoyagePanel() {
   const { t } = useTranslation();
@@ -56,7 +56,7 @@ export function FleetLastVoyagePanel() {
             <div className="text-xs text-muted-foreground italic pl-4">{t('no.itinerary')}</div>
           ) : (
             data.itinerary.map((item: any, i: number) => (
-              <div key={i} className="relative flex flex-col gap-2 group">
+              <div key={item.where} className="relative flex flex-col gap-2 group">
                 <div className="absolute -left-[21px] mt-1.5 size-2.5 rounded-full border-2 border-background bg-primary ring-4 ring-background z-10" />
 
                 <div className="flex justify-between items-start w-full">
@@ -74,8 +74,8 @@ export function FleetLastVoyagePanel() {
 
                 {item.load && item.load.length > 0 && (
                   <div className="ml-0 p-2 rounded-lg bg-accent/30 border border-primary/5 grid grid-cols-2 gap-x-4 gap-y-1">
-                    {item.load.map((l: any, j: number) => (
-                      <div key={j} className="flex justify-between items-center text-[11px]">
+                    {item.load.map((l: any, _j: number) => (
+                      <div key={l.description} className="flex justify-between items-center text-[11px]">
                         <span className="text-muted-foreground truncate mr-2">{l.description}</span>
                         <span className="font-bold tabular-nums whitespace-nowrap">
                           {l.amount} {l.unit}

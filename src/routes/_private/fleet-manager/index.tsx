@@ -5,12 +5,12 @@ import { Map as BaseMap, MapLayers, MapTileLayer } from '@/components/ui/map';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { FleetActionButtons } from './@components/fleet-action-buttons';
 import { FleetStatusSync } from './@components/fleet-status-sync';
+import { ExtraLayers } from './@components/helpers/extra-layers';
+import { NauticalLayers } from './@components/helpers/nautical-layers';
 import { MapCoordinates } from './@components/map-coordinates';
-import { ExtraLayers } from './@components/nautical/extra-layers';
-import { NauticalLayers } from './@components/nautical/nautical-layers';
-import { MenuPanel } from './@components/panel';
+import { FleetActionButtons } from './@components/sidebar-buttons';
+import { MenuPanel } from './@components/sidebar-panel';
 import { VesselMarkers } from './@components/vessel-markers';
 import { DEFAULT_MAP_CENTER, DEFAULT_MAP_ZOOM } from './@consts/fleet-manager';
 import { useFleetMachines, useFleetPositions } from './@hooks/use-fleet-api';
@@ -83,12 +83,11 @@ function FleetMapPage() {
           <MapTileLayer name="premium" url={`https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${import.meta.env.VITE_MAP_TILER}`} attribution="&copy; Maptiler" />
           <NauticalLayers />
           <ExtraLayers />
+          <FleetStatusSync />
 
           <VesselMarkers />
           <FleetActionButtons />
           <MenuPanel idEnterprise={idEnterprise} />
-
-          <FleetStatusSync />
         </MapLayers>
         <MapCoordinates />
       </BaseMap>
