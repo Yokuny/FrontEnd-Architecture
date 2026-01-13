@@ -1,8 +1,10 @@
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ChevronLeft, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Item, ItemActions, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
 import { FleetCamerasPanel } from './fleet-cameras-panel';
 import { FleetConsumePanel } from './fleet-consume-panel';
@@ -18,22 +20,14 @@ import { MachineDetailsPanel } from './machine-details-panel';
 import { MachineSummaryPanel } from './summary-panel';
 import { VoyageDetailsPanel } from './voyage-details-panel';
 
-export function Panel({ idEnterprise }: PanelContainerProps) {
+export function MenuPanel({ idEnterprise }: PanelContainerProps) {
+  const isMobile = useIsMobile();
   const { t } = useTranslation();
   const { selectedPanel, selectedMachineId, selectedVoyageId, isFleetbarOpen, toggleFleetbar, resetSelection, revertPanel } = useFleetManagerStore();
 
-  let activeView = selectedPanel;
+  if (!isFleetbarOpen) return null;
 
-  if (!activeView) {
-    if (isFleetbarOpen) activeView = 'search';
-  }
-
-  const handleClose = () => {
-    resetSelection();
-    if (isFleetbarOpen) toggleFleetbar();
-  };
-
-  if (!activeView) return null;
+  const activeView = selectedPanel || 'search';
 
   const getTitle = () => {
     switch (activeView) {
@@ -52,7 +46,7 @@ export function Panel({ idEnterprise }: PanelContainerProps) {
       case 'measure':
         return t('measure');
       case 'summary':
-        return t('summary', 'Resumo');
+        return t('summary');
       case 'cameras':
         return t('camera');
       case 'contacts':
@@ -67,39 +61,51 @@ export function Panel({ idEnterprise }: PanelContainerProps) {
   };
 
   return (
-    <ItemGroup className="w-full h-full flex flex-col pointer-events-auto bg-background/95 backdrop-blur-md border border-primary/10 rounded-xl shadow-2xl overflow-hidden gap-0">
-      <Item size="sm" className="p-2 px-4 border-b bg-muted/30 shrink-0 rounded-none">
-        <ItemHeader>
-          <ItemTitle className="font-semibold text-sm uppercase tracking-wider">{getTitle()}</ItemTitle>
-          <ItemActions>
-            <Button variant="ghost" size="icon-sm" onClick={revertPanel} title={t('back')}>
-              <ChevronLeft className="size-4" />
-            </Button>
-            <Button variant="ghost" size="icon-sm" onClick={handleClose} title={t('close')}>
-              <X className="size-4" />
-            </Button>
-          </ItemActions>
-        </ItemHeader>
-      </Item>
+    <div className={cn('pointer-events-none z-1000', isMobile ? 'absolute inset-0 flex flex-col p-2 gap-2' : 'absolute inset-0 ml-13')}>
+      <div className={cn('pointer-events-none', isMobile ? 'flex-1 min-h-0' : 'absolute top-4 bottom-4 left-4 w-96')}>
+        <ItemGroup className="w-full h-full flex flex-col pointer-events-auto bg-background/95 backdrop-blur-md border border-primary/10 rounded-xl shadow-2xl overflow-hidden gap-0">
+          <Item size="sm" className="p-2 px-4 border-b bg-muted/30 shrink-0 rounded-none">
+            <ItemHeader>
+              <ItemTitle className="font-semibold text-sm uppercase tracking-wider">{getTitle()}</ItemTitle>
+              <ItemActions>
+                <Button variant="ghost" size="icon-sm" onClick={revertPanel} title={t('back')}>
+                  <ChevronLeft className="size-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  title={t('close')}
+                  onClick={() => {
+                    resetSelection();
+                    if (isFleetbarOpen) toggleFleetbar();
+                  }}
+                >
+                  <X className="size-4" />
+                </Button>
+              </ItemActions>
+            </ItemHeader>
+          </Item>
 
-      <div className="w-full h-full pb-20">
-        <ScrollArea className="flex-1 w-full h-full">
-          {activeView === 'search' && <FleetManagerPanel idEnterprise={idEnterprise} />}
-          {activeView === 'summary' && selectedMachineId && <MachineSummaryPanel />}
-          {activeView === 'details' && selectedMachineId && <MachineDetailsPanel />}
-          {activeView === 'voyage' && selectedVoyageId && <VoyageDetailsPanel />}
-          {activeView === 'cameras' && selectedMachineId && <FleetCamerasPanel />}
-          {activeView === 'contacts' && selectedMachineId && <FleetContactsPanel />}
-          {activeView === 'last-voyage' && selectedMachineId && <FleetLastVoyagePanel />}
-          {activeView === 'options' && <FleetOptionsPanel />}
-          {activeView === 'measure' && <FleetMeasurePanel />}
-          {activeView === 'crew' && selectedMachineId && <FleetCrewPanel />}
-          {activeView === 'consume' && selectedMachineId && <FleetConsumePanel />}
-          {activeView === 'info' && selectedMachineId && <FleetInfoPanel />}
-        </ScrollArea>
-        {selectedMachineId && activeView !== 'search' && activeView !== 'options' && activeView !== 'measure' && <FleetNavigation />}
+          <div className="w-full h-full pb-20">
+            <ScrollArea className="flex-1 w-full h-full">
+              {activeView === 'search' && <FleetManagerPanel idEnterprise={idEnterprise} />}
+              {activeView === 'summary' && selectedMachineId && <MachineSummaryPanel />}
+              {activeView === 'details' && selectedMachineId && <MachineDetailsPanel />}
+              {activeView === 'voyage' && selectedVoyageId && <VoyageDetailsPanel />}
+              {activeView === 'cameras' && selectedMachineId && <FleetCamerasPanel />}
+              {activeView === 'contacts' && selectedMachineId && <FleetContactsPanel />}
+              {activeView === 'last-voyage' && selectedMachineId && <FleetLastVoyagePanel />}
+              {activeView === 'options' && <FleetOptionsPanel />}
+              {activeView === 'measure' && <FleetMeasurePanel />}
+              {activeView === 'crew' && selectedMachineId && <FleetCrewPanel />}
+              {activeView === 'consume' && selectedMachineId && <FleetConsumePanel />}
+              {activeView === 'info' && selectedMachineId && <FleetInfoPanel />}
+            </ScrollArea>
+            {selectedMachineId && activeView !== 'search' && activeView !== 'options' && activeView !== 'measure' && <FleetNavigation />}
+          </div>
+        </ItemGroup>
       </div>
-    </ItemGroup>
+    </div>
   );
 }
 

@@ -82,8 +82,7 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
-  '/fleet-manager/fleet',
-  '/fleet-manager/wind',
+  '/fleet-manager',
   '/maintenance/list-os-done',
   '/maintenance/monitoring-plans',
   '/maintenance/monitoring-wear',

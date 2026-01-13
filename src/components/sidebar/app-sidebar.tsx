@@ -2,10 +2,10 @@
 
 import { Airplay, Navigation, Ship } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/language-switcher';
-import DashboardNavigation from '@/components/sidebar-03/nav-main';
-import { NotificationsPopover } from '@/components/sidebar-03/nav-notifications';
-import { TeamSwitcher } from '@/components/sidebar-03/team-switcher';
-import { useDynamicRoutes } from '@/components/sidebar-03/use-dynamic-routes';
+import AppNavigation from '@/components/sidebar/nav-main';
+import { NotificationsPopover } from '@/components/sidebar/nav-notifications';
+import { TeamSwitcher } from '@/components/sidebar/team-switcher';
+import { useDynamicRoutes } from '@/components/sidebar/use-dynamic-routes';
 import { SidebarTrigger } from '@/components/sidebar-trigger';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
@@ -66,7 +66,7 @@ export function AppSidebar() {
         <SidebarSeparator />
       </SidebarHeader>
       <SidebarContent className="gap-4 px-2 py-4">
-        <DashboardNavigation routes={dynamicRoutes} />
+        <AppNavigation routes={dynamicRoutes} />
       </SidebarContent>
       <SidebarFooter className="px-2">
         <TeamSwitcher teams={teams} />

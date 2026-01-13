@@ -1,4 +1,4 @@
-import { Archive, BarChart3, Calculator, Contact2, InspectionPanel, Layers, PanelLeftOpen, Search, Zap } from 'lucide-react';
+import { BarChart3, Calculator, Contact2, Info, InspectionPanel, Layers, PanelLeftOpen, Play, Search, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -6,7 +6,7 @@ import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
 
 export function FleetActionButtons({ isLoadingHistory, onStartRoutePlayback }: FleetActionButtonsProps) {
   const { t } = useTranslation();
-  const { selectedMachineId, playback, selectedPanel, setSelectedPanel, isFleetbarOpen, toggleFleetbar, revertPanel } = useFleetManagerStore();
+  const { selectedMachineId, playback, selectedPanel, setSelectedPanel, isFleetbarOpen, toggleFleetbar } = useFleetManagerStore();
 
   return (
     <div className="absolute right-0 pointer-events-none flex flex-col p-4" style={{ zIndex: 1010 }}>
@@ -17,12 +17,7 @@ export function FleetActionButtons({ isLoadingHistory, onStartRoutePlayback }: F
           className="border-accent"
           variant="default"
           onClick={() => {
-            if (isFleetbarOpen) {
-              toggleFleetbar();
-            } else {
-              revertPanel();
-              toggleFleetbar();
-            }
+            toggleFleetbar();
           }}
         >
           {isFleetbarOpen ? <InspectionPanel className="size-4" /> : <PanelLeftOpen className="size-4" />}
@@ -70,7 +65,7 @@ export function FleetActionButtons({ isLoadingHistory, onStartRoutePlayback }: F
               onClick={onStartRoutePlayback}
               disabled={isLoadingHistory}
             >
-              <Archive className="size-4" />
+              <Play className="size-4" />
             </Button>
 
             <Button
@@ -110,7 +105,7 @@ export function FleetActionButtons({ isLoadingHistory, onStartRoutePlayback }: F
               variant={selectedPanel === 'info' ? 'secondary' : 'default'}
               onClick={() => setSelectedPanel(selectedPanel === 'info' ? null : 'info')}
             >
-              <Archive className="size-4" />
+              <Info className="size-4" />
             </Button>
           </>
         )}

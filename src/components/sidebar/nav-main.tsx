@@ -20,7 +20,7 @@ export type Route = {
   }[];
 };
 
-export default function DashboardNavigation({ routes }: { routes: Route[] }) {
+export default function AppNavigation({ routes }: { routes: Route[] }) {
   const { state } = useSidebar();
   const isCollapsed = state === 'collapsed';
   const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
@@ -38,13 +38,13 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton
                     className={cn(
-                      'flex w-full items-center rounded-sm transition-colors',
+                      'flex w-full items-center transition-colors',
                       isOpen ? 'bg-sidebar-muted' : 'hover:bg-sidebar-muted hover:text-muted-foreground',
                       isCollapsed && 'justify-center',
                     )}
                   >
                     {route.icon}
-                    {!isCollapsed && <span className="ml-2 flex-1 truncate text-sm font-medium">{route.title}</span>}
+                    {!isCollapsed && <span className="ml-2 flex-1 truncate">{route.title}</span>}
                     {!isCollapsed && hasSubRoutes && <span className="ml-auto">{isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}</span>}
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
@@ -66,16 +66,10 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                 )}
               </Collapsible>
             ) : (
-              <SidebarMenuButton tooltip={route.title} asChild>
-                <Link
-                  to={route.link}
-                  className={cn(
-                    'flex items-center rounded-lg px-2 transition-colors text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
-                    isCollapsed && 'justify-center',
-                  )}
-                >
+              <SidebarMenuButton className={cn('hover:bg-sidebar-muted hover:text-muted-foreground', isCollapsed && 'justify-center')} tooltip={route.title} asChild>
+                <Link to={route.link} className={cn('flex items-center rounded-lg px-2', isCollapsed && 'justify-center')}>
                   {route.icon}
-                  {!isCollapsed && <span className="ml-2 text-sm font-medium">{route.title}</span>}
+                  {!isCollapsed && <span className="ml-2">{route.title}</span>}
                 </Link>
               </SidebarMenuButton>
             )}

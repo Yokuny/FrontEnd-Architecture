@@ -1,6 +1,6 @@
 // import { createFileRoute, Outlet, redirect, useRouterState } from '@tanstack/react-router';
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
-import { AppSidebar } from '@/components/sidebar-03/app-sidebar';
+import { AppSidebar } from '@/components/sidebar/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { useAuth } from '@/hooks/use-auth';
 

@@ -424,12 +424,6 @@ function MapTooltip({
   sideOffset?: number;
   ref?: Ref<Tooltip>;
 }) {
-  const ARROW_POSITION_CLASSES = {
-    top: 'bottom-0.5 left-1/2 -translate-x-1/2 translate-y-1/2',
-    bottom: 'top-0.5 left-1/2 -translate-x-1/2 -translate-y-1/2',
-    left: 'right-0.5 top-1/2 translate-x-1/2 -translate-y-1/2',
-    right: 'left-0.5 top-1/2 -translate-x-1/2 -translate-y-1/2',
-  };
   const DEFAULT_OFFSET = {
     top: [0, -sideOffset] satisfies PointExpression,
     bottom: [0, sideOffset] satisfies PointExpression,
@@ -450,7 +444,6 @@ function MapTooltip({
       {...props}
     >
       {children}
-      <div className={cn('bg-foreground fill-foreground absolute z-50 size-2.5 rotate-45 rounded-[2px]', ARROW_POSITION_CLASSES[side])} />
     </LeafletTooltip>
   );
 }
