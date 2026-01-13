@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { SendHorizontal } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { z } from 'zod';
-import { Map as BaseMap, MapLayers, MapMarker, MapTileLayer } from '@/components/ui/map';
+import { Map as BaseMap, MapLayers, MapTileLayer } from '@/components/ui/map';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -14,11 +13,10 @@ import { ExtraLayers } from '../@components/nautical/extra-layers';
 import { NauticalLayers } from '../@components/nautical/nautical-layers';
 import { RegionPlayback } from '../@components/region-playback';
 import { RoutePlayback } from '../@components/route-playback';
+import { VesselMarkers } from '../@components/vessel-markers';
 import { DEFAULT_MAP_CENTER, DEFAULT_MAP_ZOOM } from '../@consts/fleet-manager';
-import { getNavigationStatusColor, getOperationStatusColor } from '../@hooks/status-utils';
 import { useFleetHistory, useFleetMachines, useFleetPositions } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
-import type { FleetMachine } from '../@interface/fleet-api';
 
 const fleetManagerSearchSchema = z.object({
   idVoyage: z.string().optional(),
@@ -39,20 +37,7 @@ export const Route = createFileRoute('/_private/fleet-manager/fleet/')({
 function FleetMapPage() {
   const { idEnterprise } = useEnterpriseFilter();
   const isMobile = useIsMobile();
-  const {
-    showNames,
-    showCodes,
-    selectedMachineId,
-    setSelectedMachineId,
-    setPlaybackActive,
-    setPlaybackData,
-    setSelectedPanel,
-    isNavigationIndicator,
-    isOperationIndicator,
-    statusMachine,
-    operationMachines,
-    mapTheme,
-  } = useFleetManagerStore();
+  const { selectedMachineId, setPlaybackActive, setPlaybackData, mapTheme } = useFleetManagerStore();
 
   const { data: machines } = useFleetMachines({ idEnterprise });
   const machineIds = useMemo(() => machines?.map((m) => m.machine.id) || [], [machines]);
@@ -62,36 +47,6 @@ function FleetMapPage() {
     idMachine: selectedMachineId || undefined,
     hours: 24,
   });
-
-  const vesselMarkers = useMemo(() => {
-    const markersMap = new Map<string, { idMachine: string; position: [number, number]; machine: FleetMachine; heading: number }>();
-
-    machines?.forEach((m) => {
-      if (m.lastState?.coordinate) {
-        markersMap.set(m.machine.id, {
-          idMachine: m.machine.id,
-          position: m.lastState.coordinate,
-          machine: m,
-          heading: m.lastState.heading || m.lastState.course || 0,
-        });
-      }
-    });
-
-    positionsData?.positions.forEach((pos) => {
-      const machine = machines?.find((m) => m.machine.id === pos.idMachine);
-      const course = positionsData.courses?.find((c) => c.idMachine === pos.idMachine);
-      if (machine) {
-        markersMap.set(pos.idMachine, {
-          idMachine: pos.idMachine,
-          position: pos.position,
-          machine,
-          heading: course?.course ?? machine.lastState?.heading ?? machine.lastState?.course ?? 0,
-        });
-      }
-    });
-
-    return Array.from(markersMap.values());
-  }, [machines, positionsData]);
 
   const [mapCenter, setMapCenter] = useState<[number, number]>(DEFAULT_MAP_CENTER);
   const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
@@ -145,69 +100,14 @@ function FleetMapPage() {
           <NauticalLayers />
           <ExtraLayers />
 
-          {vesselMarkers.map((marker) => {
-            const { machine, position, idMachine } = marker;
-            const isSelected = selectedMachineId === idMachine;
-
-            return (
-              <MapMarker
-                key={idMachine}
-                position={position}
-                icon={
-                  <div className={`flex flex-col items-center transition-transform ${isSelected ? 'scale-125 z-50' : ''}`}>
-                    {/* TODO: Espalhar o nome com linhas guias demonstrando o nome e o código */}
-                    {(showNames || showCodes) && (
-                      <div className="bg-background/80 p-0.5 px-1 border text-[10px] font-medium shadow-sm whitespace-nowrap">
-                        {showNames && machine?.machine.name}
-                        <span className="text-foreground font-light">
-                          {showNames && showCodes && ' - '}
-                          {showCodes && (machine?.machine.code || machine?.machine.id)}
-                        </span>
-                      </div>
-                    )}
-                    <div className="p-0.5 transition-transform">
-                      {(() => {
-                        let dynamicColor = machine?.modelMachine?.color;
-
-                        if (isNavigationIndicator) {
-                          const status = statusMachine?.find((x) => x.idMachine === idMachine)?.statusNavigation || machine?.lastState?.statusNavigation;
-                          dynamicColor = getNavigationStatusColor(status) || dynamicColor;
-                        } else if (isOperationIndicator) {
-                          const opStatus = operationMachines?.find((o) => o?.machine?.id === idMachine)?.value;
-                          dynamicColor = getOperationStatusColor(opStatus) || dynamicColor;
-                        }
-
-                        return (
-                          <SendHorizontal
-                            className="size-6 drop-shadow-md transition-all"
-                            fill="currentColor"
-                            style={{
-                              color: dynamicColor,
-                              transform: `rotate(${marker.heading - 90}deg)`,
-                              filter: isSelected ? 'brightness(1.2) drop-shadow(0 0 4px currentColor)' : undefined,
-                            }}
-                          />
-                        );
-                      })()}
-                    </div>
-                  </div>
-                }
-                eventHandlers={{
-                  click: () => {
-                    setSelectedMachineId(idMachine);
-                    setSelectedPanel('summary');
-                  },
-                }}
-              />
-            );
-          })}
+          {/* Marcadores, Navios, Botões de ação a direita e Menu de informações */}
+          <VesselMarkers />
+          <FleetActionButtons isLoadingHistory={isLoadingHistory} onStartRoutePlayback={handleStartRoutePlayback} />
+          <DataContainer idEnterprise={idEnterprise} />
 
           <FleetStatusSync />
           <RegionPlayback />
           <RoutePlayback idMachine={selectedMachineId || ''} />
-
-          <FleetActionButtons isLoadingHistory={isLoadingHistory} onStartRoutePlayback={handleStartRoutePlayback} />
-          <DataContainer idEnterprise={idEnterprise} />
         </MapLayers>
         <MapCoordinates />
       </BaseMap>
