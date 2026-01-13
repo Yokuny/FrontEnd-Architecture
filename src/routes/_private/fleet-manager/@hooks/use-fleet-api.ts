@@ -244,39 +244,6 @@ export function useMapApiConfig() {
   });
 }
 
-export function useFleetHistory({ idMachine, min, max, hours, interval = 1 }: { idMachine?: string; min?: string; max?: string; hours?: number; interval?: number }) {
-  return useQuery({
-    queryKey: ['fleet', 'history', idMachine, min, max, hours, interval],
-    queryFn: async () => {
-      if (!idMachine) return [];
-      const query = new URLSearchParams();
-      query.set('idMachine', idMachine);
-      if (min) query.set('min', min);
-      if (max) query.set('max', max);
-      if (!min && !max) query.set('hours', (hours ?? 12).toString());
-      query.set('interval', interval.toString());
-
-      const response = await api.get<any[]>(`/sensorstate/fleet/historyposition/details?${query.toString()}`);
-      return response.data || [];
-    },
-    enabled: !!idMachine,
-  });
-}
-
-export function useRegionPlayback({ hours = 5, idEnterprise }: { hours?: number; idEnterprise?: string }) {
-  return useQuery({
-    queryKey: ['fleet', 'region-playback', hours, idEnterprise],
-    queryFn: async () => {
-      const query = new URLSearchParams();
-      query.set('hours', hours.toString());
-      if (idEnterprise) query.set('idEnterprise', idEnterprise);
-
-      const response = await api.get<any[]>(`/regiondata/playback?${query.toString()}`);
-      return (response.data || []).sort((a: any, b: any) => a[0] - b[0]);
-    },
-  });
-}
-
 export function useFleetStatus({ type, idEnterprise, enabled = true }: { type: 'navigation' | 'operation'; idEnterprise?: string; enabled?: boolean }) {
   return useQuery({
     queryKey: ['fleet', 'status', type, idEnterprise],

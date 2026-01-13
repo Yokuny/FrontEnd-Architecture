@@ -40,8 +40,3 @@ export const DEFAULT_MAP_ZOOM = 5;
 export const DEFAULT_MEASURE_SPEED = 10;
 export const METERS_IN_NAUTICAL_MILE = 1852;
 export const METERS_IN_KILOMETER = 1000;
-
-export const PLAYBACK_TYPES = {
-  REGION: 'region',
-  ROUTE: 'route',
-} as const;

@@ -11,11 +11,9 @@ import { MapCoordinates } from './@components/map-coordinates';
 import { ExtraLayers } from './@components/nautical/extra-layers';
 import { NauticalLayers } from './@components/nautical/nautical-layers';
 import { MenuPanel } from './@components/panel';
-import { RegionPlayback } from './@components/region-playback';
-import { RoutePlayback } from './@components/route-playback';
 import { VesselMarkers } from './@components/vessel-markers';
 import { DEFAULT_MAP_CENTER, DEFAULT_MAP_ZOOM } from './@consts/fleet-manager';
-import { useFleetHistory, useFleetMachines, useFleetPositions } from './@hooks/use-fleet-api';
+import { useFleetMachines, useFleetPositions } from './@hooks/use-fleet-api';
 import { useFleetManagerStore } from './@hooks/use-fleet-manager-store';
 
 const fleetManagerSearchSchema = z.object({
@@ -37,16 +35,11 @@ export const Route = createFileRoute('/_private/fleet-manager/')({
 function FleetMapPage() {
   const { idEnterprise } = useEnterpriseFilter();
   const isMobile = useIsMobile();
-  const { selectedMachineId, setPlaybackActive, setPlaybackData, mapTheme } = useFleetManagerStore();
+  const { selectedMachineId, mapTheme } = useFleetManagerStore();
 
   const { data: machines } = useFleetMachines({ idEnterprise });
   const machineIds = useMemo(() => machines?.map((m) => m.machine.id) || [], [machines]);
   const { data: positionsData } = useFleetPositions(machineIds, idEnterprise);
-
-  const { data: historyData, isLoading: isLoadingHistory } = useFleetHistory({
-    idMachine: selectedMachineId || undefined,
-    hours: 24,
-  });
 
   const [mapCenter, setMapCenter] = useState<[number, number]>(DEFAULT_MAP_CENTER);
   const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
@@ -60,15 +53,6 @@ function FleetMapPage() {
       }
     }
   }, [selectedMachineId, positionsData]);
-
-  const handleStartRoutePlayback = () => {
-    if (historyData?.length) {
-      const startTime = historyData[0][0] * 1000;
-      const endTime = historyData[historyData.length - 1][0] * 1000;
-      setPlaybackData(historyData, startTime, endTime);
-      setPlaybackActive(true, 'route');
-    }
-  };
 
   return (
     <div className={cn('h-[calc(100dvh - 64px)] overflow-hidden', isMobile ? 'flex flex-col' : 'relative')}>
@@ -100,14 +84,11 @@ function FleetMapPage() {
           <NauticalLayers />
           <ExtraLayers />
 
-          {/* Marcadores, Navios, Botões de ação a direita e Menu de informações */}
           <VesselMarkers />
-          <FleetActionButtons isLoadingHistory={isLoadingHistory} onStartRoutePlayback={handleStartRoutePlayback} />
+          <FleetActionButtons />
           <MenuPanel idEnterprise={idEnterprise} />
 
           <FleetStatusSync />
-          <RegionPlayback />
-          <RoutePlayback idMachine={selectedMachineId || ''} />
         </MapLayers>
         <MapCoordinates />
       </BaseMap>

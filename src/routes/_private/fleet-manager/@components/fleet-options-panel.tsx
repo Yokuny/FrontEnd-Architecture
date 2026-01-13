@@ -39,57 +39,6 @@ export function FleetOptionsPanel() {
 
   const layersContext = useMapLayersContext();
 
-  // const { data: regionData, isLoading: isLoadingRegion } = useRegionPlayback({ idEnterprise });
-
-  // const handleStartRegionPlayback = () => {
-  //   if (regionData?.length) {
-  //     const startTime = regionData[0][0] * 1000;
-  //     const endTime = regionData[regionData.length - 1][0] * 1000;
-  //     setPlaybackData(regionData, startTime, endTime);
-  //     setPlaybackActive(true, PLAYBACK_TYPES.REGION);
-  //   }
-  // };
-
-  // import { Slider } from '@/components/ui/slider';
-  // const playbackStartTime = playback.isActive ? playback.historyData?.[0]?.[0] * 1000 || 0 : 0;
-  // const playbackEndTime = playback.isActive ? playback.historyData?.[playback.historyData.length - 1]?.[0] * 1000 || 0 : 0;
-
-  // {playback.isActive && (
-  //         // TODO: move to playback panel
-  //   <div className="space-y-3 pt-4 border-t border-dashed">
-  //     <ItemHeader>
-  //       <ItemMedia>
-  //         <LucideRoute className="size-3.5" />
-  //       </ItemMedia>
-  //       <ItemTitle className="uppercase text-[10px] font-semibold tracking-wider">{t('playback')}</ItemTitle>
-  //     </ItemHeader>
-  //     <div className="px-1">
-  //       <Slider
-  //         value={[playback.currentTime]}
-  //         min={playbackStartTime}
-  //         max={playbackEndTime}
-  //         step={1000}
-  //         onValueChange={([val]: number[]) => setPlaybackTime(val)}
-  //         className="py-2 cursor-pointer"
-  //       />
-  //     </div>
-  //   </div>
-  // )}
-
-  // TOdo outro processo
-  // <div className="flex items-center space-x-2">
-  //   <Button
-  //     variant={playback.isActive && playback.type === PLAYBACK_TYPES.REGION ? 'default' : 'ghost'}
-  //     size="sm"
-  //     className="w-full justify-start h-8 px-2 text-xs"
-  //     onClick={handleStartRegionPlayback}
-  //     disabled={isLoadingRegion}
-  //   >
-  //     <LucideRoute className="size-3 mr-2" />
-  //     {t('region_playback')}
-  //   </Button>
-  // </div>
-
   const themes = [
     { value: MAP_THEMES.DEFAULT, label: t('default') },
     { value: MAP_THEMES.SMOOTH_DARK, label: t('smooth.dark') },
