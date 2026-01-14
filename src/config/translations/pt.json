@@ -1127,6 +1127,15 @@
   "weather.conditions": "Condições meteorológicas",
   "map.default": "Mapa padrão",
   "tracking.activity": "Estatísticas de acesso",
+  "accesses": "Acessos",
+  "paths": "Caminhos",
+  "users.actions": "Ações dos usuários",
+  "locations": "Localizações",
+  "actions.fleet": "Ações da frota",
+  "devices": "Dispositivos",
+  "users.whatsapp": "Usuários WhatsApp",
+  "user.rm.day": "RM por dia",
+  "users.rm": "Usuários RM",
   "statistics": "Estatísticas",
   "access": "Acessos",
   "period": "Período",
@@ -2547,5 +2556,7 @@
   "vessel.type.cruise_passenger_ship": "Navio de Cruzeiro",
   "select.vessel.type": "Selecione o tipo de embarcação",
   "results": "Resultados",
-  "enter.data.to.see.results": "Insira os dados para ver os resultados"
+  "enter.data.to.see.results": "Insira os dados para ver os resultados",
+  "actions.by.user": "Ações por usuário",
+  "showing.total.actions": "Exibindo o total de ações"
 }

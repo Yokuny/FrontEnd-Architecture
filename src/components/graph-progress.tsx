@@ -22,17 +22,17 @@ const data = [
   },
 ];
 
-export default function Stats09() {
+export function GraphProgress() {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 w-full">
+    <div className="flex flex-col gap-4">
       {data.map((item) => (
-        <Item key={item.name} variant="outline" className="py-4 bg-background">
+        <Item key={item.name} variant="outline">
           <ItemContent>
             <ItemDescription>{item.name}</ItemDescription>
             <ItemTitle className="text-2xl font-semibold break-all">{item.stat}</ItemTitle>
-            <Progress value={item.percentage} className="mt-6 h-2" />
+            <Progress value={item.percentage} className="h-6" />
             <div className="mt-2 flex items-center justify-between text-sm">
-              <span className="text-primary">{item.percentage}&#37;</span>
+              <span>{item.percentage}&#37;</span>
               <ItemDescription className="line-clamp-none">
                 {item.stat} of {item.limit}
               </ItemDescription>

@@ -9,6 +9,7 @@ import {
   FileText,
   Flame,
   KeySquare,
+  LayoutDashboard,
   Leaf,
   Mail,
   MapIcon,
@@ -20,6 +21,7 @@ import {
   Settings,
   Shield,
   Ship,
+  Timer,
   Users,
   Variable,
   Wrench,
@@ -33,6 +35,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   register: NotebookPen,
   'fleet-manager': MapIcon,
   esg: Leaf,
+  statistics: BarChart3,
 };
 
 // Ícones para sub-rotas específicas
@@ -58,6 +61,11 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   'cii-fleet': Ship,
   'simulator-cii': Activity,
   'consumption-co2': Flame,
+  'tracking-activity': Activity,
+  'time-operation': Timer,
+  'rve-dashboard': LayoutDashboard,
+  'kpis-cmms': BarChart3,
+  integration: Network,
 };
 
 // Chaves i18n para tradução de rotas
@@ -86,6 +94,12 @@ export const ROUTE_LABELS: Record<string, string> = {
   'cii-fleet': 'esg.fleet',
   'simulator-cii': 'simulator.cii',
   'consumption-co2': 'esg.co2',
+  statistics: 'statistics',
+  'tracking-activity': 'tracking.activity',
+  'time-operation': 'time.operation',
+  'rve-dashboard': 'RVE Dashboard',
+  'kpis-cmms': "KPI's CMMS",
+  integration: 'integration',
 };
 
 /**
@@ -130,6 +144,11 @@ export const MAIN_ROUTES = [
   '/set-up-company/setup-email',
   '/set-up-company/setup-fleet',
   '/set-up-company/setup-limits',
+  '/statistics/integration',
+  '/statistics/kpis-cmms',
+  '/statistics/rve-dashboard',
+  '/statistics/time-operation',
+  '/statistics/tracking-activity',
 ] as const;
 
 export type MainRoute = (typeof MAIN_ROUTES)[number];

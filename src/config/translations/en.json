@@ -2482,5 +2482,7 @@
   "hrs": "hrs",
   "no.itinerary": "No itinerary found",
   "voyage.details": "Voyage Details",
-  "no.contacts": "No contacts found"
+  "no.contacts": "No contacts found",
+  "actions.by.user": "Actions by user",
+  "showing.total.actions": "Showing total actions"
 }

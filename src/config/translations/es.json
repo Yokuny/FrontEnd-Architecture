@@ -2460,5 +2460,7 @@
   "no.events.recorded": "No hay eventos registrados",
   "analytics": "Analíticos",
   "hr": "hr",
-  "hrs": "hrs"
+  "hrs": "hrs",
+  "actions.by.user": "Acciones por usuario",
+  "showing.total.actions": "Mostrando el total de acciones"
 }
