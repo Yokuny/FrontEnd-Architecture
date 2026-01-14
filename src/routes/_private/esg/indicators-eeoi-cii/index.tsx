@@ -73,7 +73,7 @@ function IndicatorsEEOICIIPage() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
-                <Calendar mode="single" selected={dateMin} onSelect={(date) => setDateMin(date)} initialFocus />
+                <Calendar mode="single" captionLayout="dropdown-years" selected={dateMin} onSelect={(date) => setDateMin(date)} initialFocus />
               </PopoverContent>
             </Popover>
           </div>
@@ -88,7 +88,7 @@ function IndicatorsEEOICIIPage() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
-                <Calendar mode="single" selected={dateMax} onSelect={(date) => setDateMax(date)} initialFocus />
+                <Calendar mode="single" captionLayout="dropdown-years" selected={dateMax} onSelect={(date) => setDateMax(date)} initialFocus />
               </PopoverContent>
             </Popover>
           </div>

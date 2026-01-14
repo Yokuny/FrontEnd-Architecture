@@ -277,7 +277,7 @@ importers:
         specifier: ^27
         version: 27.3.0
       tsx:
-        specifier: ^4.21.0
+        specifier: ^4
         version: 4.21.0
       typescript:
         specifier: ^5

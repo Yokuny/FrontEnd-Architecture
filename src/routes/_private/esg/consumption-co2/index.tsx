@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { format } from 'date-fns';
-import { CalendarIcon, Search, Ship } from 'lucide-react';
+import { CalendarIcon, Cpu, Search } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultLoading from '@/components/default-loading';
@@ -95,11 +95,11 @@ function ConsumptionCO2Page() {
   return (
     <Card>
       <CardHeader title={t('esg.co2')} />
-      <CardContent className="flex flex-col gap-8">
-        <div className="flex flex-wrap items-end gap-6 p-6 border rounded-xl bg-secondary/20 shadow-sm backdrop-blur-sm">
-          <div className="flex flex-col gap-2 min-w-[280px]">
-            <Label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              <Ship className="size-4" />
+      <CardContent className="flex flex-col">
+        <div className="flex flex-wrap items-end gap-4 p-4 border rounded-lg bg-secondary">
+          <div className="flex flex-col gap-1.5 min-w-[280px]">
+            <Label className="flex items-center gap-2">
+              <Cpu className="size-4" />
               {t('machine.placeholder')}
             </Label>
             <DataMultiSelect
@@ -115,14 +115,13 @@ function ConsumptionCO2Page() {
                   }))
                   .sort((a, b) => a.label.localeCompare(b.label))
               }
-              maxShownItems={1}
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{t('unit')}</Label>
+          <div className="flex flex-col gap-1.5">
+            <Label>{t('unit')}</Label>
             <Select value={selectedUnit} onValueChange={setSelectedUnit}>
-              <SelectTrigger className="w-32 bg-background font-medium">
+              <SelectTrigger className="w-32 bg-background">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -135,13 +134,13 @@ function ConsumptionCO2Page() {
             </Select>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{t('date.start')}</Label>
+          <div className="flex flex-col gap-1.5">
+            <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('justify-start text-left font-medium w-44 bg-background', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
-                  {dateMin ? format(dateMin, 'dd/MM/yyyy') : <span>{t('date.start')}</span>}
+                <Button variant="outline" className={cn('justify-start text-left font-normal w-40 bg-background', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -158,13 +157,13 @@ function ConsumptionCO2Page() {
             </Popover>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{t('date.end')}</Label>
+          <div className="flex flex-col gap-1.5">
+            <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('justify-start text-left font-medium w-44 bg-background', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
-                  {dateMax ? format(dateMax, 'dd/MM/yyyy') : <span>{t('date.end')}</span>}
+                <Button variant="outline" className={cn('justify-start text-left font-normal w-40 bg-background', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -181,7 +180,7 @@ function ConsumptionCO2Page() {
             </Popover>
           </div>
 
-          <Button variant="default" className="gap-2 ml-auto shadow-md" onClick={handleSearch}>
+          <Button variant="outline" className="gap-2 bg-background ml-auto" onClick={handleSearch}>
             <Search className="size-4" />
             {t('search')}
           </Button>
@@ -190,9 +189,7 @@ function ConsumptionCO2Page() {
         {/* Results Area */}
         <div className="flex flex-col gap-6">
           {isLoading ? (
-            <div className="py-20">
-              <DefaultLoading />
-            </div>
+            <DefaultLoading />
           ) : (
             <>
               <ConsumptionCO2Table data={data || []} selectedUnit={appliedFilters.unit} />
