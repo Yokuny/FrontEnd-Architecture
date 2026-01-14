@@ -1,11 +1,13 @@
 import { ChevronDown, ChevronUp, Filter, Search, X } from 'lucide-react';
 import type React from 'react';
 import { useMemo, useState } from 'react';
-import { Badge } from '@/components/ui/badge';
+import { useTranslation } from 'react-i18next';
+import EmptyData from '@/components/default-empty-data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ItemContent, ItemFooter, ItemHeader } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
@@ -31,7 +33,6 @@ export type DataTableProps<T> = {
   bordered?: boolean;
   compact?: boolean;
   loading?: boolean;
-  emptyMessage?: string;
   onRowClick?: (row: T, index: number) => void;
 };
 
@@ -48,14 +49,15 @@ export function DataTable<T extends Record<string, any>>({
   bordered = true,
   compact = false,
   loading = false,
-  emptyMessage = 'No data available',
   onRowClick,
 }: DataTableProps<T>) {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [sortConfig, setSortConfig] = useState<{
     key: keyof T | null;
     direction: 'asc' | 'desc';
   }>({ key: null, direction: 'asc' });
+  const [pageSize, setPageSize] = useState(itemsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
 
@@ -109,11 +111,11 @@ export function DataTable<T extends Record<string, any>>({
   const paginatedData = useMemo(() => {
     if (!showPagination) return sortedData;
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return sortedData.slice(startIndex, startIndex + itemsPerPage);
-  }, [sortedData, currentPage, itemsPerPage, showPagination]);
+    const startIndex = (currentPage - 1) * pageSize;
+    return sortedData.slice(startIndex, startIndex + pageSize);
+  }, [sortedData, currentPage, pageSize, showPagination]);
 
-  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedData.length / pageSize);
 
   const handleSort = (key: keyof T) => {
     setSortConfig((current) => ({
@@ -184,8 +186,8 @@ export function DataTable<T extends Record<string, any>>({
     >
       {/* Search and Filters */}
       {searchable && (
-        <ItemHeader className="px-6 pb-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <ItemHeader className="px-6 justify-end">
+          <div className="flex flex-col sm:flex-row items-end sm:items-center gap-4">
             <div className="relative w-full sm:w-auto sm:flex-1 sm:max-w-sm">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 size-4 text-muted-foreground z-10" />
               <Input
@@ -282,11 +284,8 @@ export function DataTable<T extends Record<string, any>>({
             <tbody className="bg-card">
               {paginatedData.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length} className={cn('text-center text-muted-foreground bg-card', compact ? 'px-4 py-12' : 'px-6 py-16')}>
-                    <div className="flex flex-col items-center space-y-2">
-                      <div className="text-4xl">📊</div>
-                      <div className="font-medium">{emptyMessage}</div>
-                    </div>
+                  <td colSpan={columns.length} className="bg-card">
+                    <EmptyData />
                   </td>
                 </tr>
               ) : (
@@ -316,58 +315,81 @@ export function DataTable<T extends Record<string, any>>({
       </ItemContent>
 
       {/* Pagination */}
-      {showPagination && totalPages > 1 && (
-        <ItemFooter className="px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <Badge variant="outline" className="text-muted-foreground font-normal">
-            Showing {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, sortedData.length)} of {sortedData.length}
-          </Badge>
+      {showPagination && sortedData.length > 0 && (
+        <ItemFooter className="px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+            <span>{t('show')}</span>
+            <Select
+              value={String(pageSize)}
+              onValueChange={(val) => {
+                setPageSize(Number(val));
+                setCurrentPage(1);
+              }}
+            >
+              <SelectTrigger className="h-8 w-[70px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+              </SelectContent>
+            </Select>
+            <span>{t('per.page')}</span>
+            <span className="ml-4 tabular-nums">
+              {t('total')}: {sortedData.length}
+            </span>
+          </div>
 
-          <Pagination className="w-auto mx-0">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  className={cn(currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer')}
-                />
-              </PaginationItem>
-
-              {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
-                let pageNumber: number;
-                if (totalPages <= 5) {
-                  pageNumber = i + 1;
-                } else if (currentPage <= 3) {
-                  pageNumber = i + 1;
-                } else if (currentPage >= totalPages - 2) {
-                  pageNumber = totalPages - 4 + i;
-                } else {
-                  pageNumber = currentPage - 2 + i;
-                }
-
-                if (pageNumber < 1 || pageNumber > totalPages) return null;
-
-                return (
-                  <PaginationItem key={pageNumber}>
-                    <PaginationLink isActive={currentPage === pageNumber} onClick={() => setCurrentPage(pageNumber)} className="cursor-pointer">
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
-
-              {totalPages > 5 && currentPage < totalPages - 2 && (
+          <div className="order-1 sm:order-2">
+            <Pagination className="w-auto mx-0">
+              <PaginationContent>
                 <PaginationItem>
-                  <PaginationEllipsis />
+                  <PaginationPrevious
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    className={cn(currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer')}
+                  />
                 </PaginationItem>
-              )}
 
-              <PaginationItem>
-                <PaginationNext
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  className={cn(currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer')}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+                {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
+                  let pageNumber: number;
+                  if (totalPages <= 5) {
+                    pageNumber = i + 1;
+                  } else if (currentPage <= 3) {
+                    pageNumber = i + 1;
+                  } else if (currentPage >= totalPages - 2) {
+                    pageNumber = totalPages - 4 + i;
+                  } else {
+                    pageNumber = currentPage - 2 + i;
+                  }
+
+                  if (pageNumber < 1 || pageNumber > totalPages) return null;
+
+                  return (
+                    <PaginationItem key={pageNumber}>
+                      <PaginationLink isActive={currentPage === pageNumber} onClick={() => setCurrentPage(pageNumber)} className="cursor-pointer">
+                        {pageNumber}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+
+                {totalPages > 5 && currentPage < totalPages - 2 && (
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                )}
+
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    className={cn(currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer')}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
         </ItemFooter>
       )}
     </div>

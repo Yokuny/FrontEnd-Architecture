@@ -18,6 +18,7 @@ import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/regi
 import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
 import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
 import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/fleet-manager/index';
+import { Route as PrivateEsgIndexRouteImport } from './routes/_private/esg/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
@@ -50,6 +51,10 @@ import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_priv
 import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
 import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
 import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
+import { Route as PrivateEsgSimulatorCiiIndexRouteImport } from './routes/_private/esg/simulator-cii/index';
+import { Route as PrivateEsgIndicatorsEeoiCiiIndexRouteImport } from './routes/_private/esg/indicators-eeoi-cii/index';
+import { Route as PrivateEsgConsumptionCo2IndexRouteImport } from './routes/_private/esg/consumption-co2/index';
+import { Route as PrivateEsgCiiFleetIndexRouteImport } from './routes/_private/esg/cii-fleet/index';
 import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
 import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
 import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
@@ -121,6 +126,11 @@ const PrivateFleetManagerIndexRoute =
     path: '/fleet-manager/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateEsgIndexRoute = PrivateEsgIndexRouteImport.update({
+  id: '/esg/',
+  path: '/esg/',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
   id: '/auth/unlock',
   path: '/auth/unlock',
@@ -310,6 +320,29 @@ const PrivateMaintenanceListOsDoneIndexRoute =
     path: '/maintenance/list-os-done/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateEsgSimulatorCiiIndexRoute =
+  PrivateEsgSimulatorCiiIndexRouteImport.update({
+    id: '/esg/simulator-cii/',
+    path: '/esg/simulator-cii/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateEsgIndicatorsEeoiCiiIndexRoute =
+  PrivateEsgIndicatorsEeoiCiiIndexRouteImport.update({
+    id: '/esg/indicators-eeoi-cii/',
+    path: '/esg/indicators-eeoi-cii/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateEsgConsumptionCo2IndexRoute =
+  PrivateEsgConsumptionCo2IndexRouteImport.update({
+    id: '/esg/consumption-co2/',
+    path: '/esg/consumption-co2/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateEsgCiiFleetIndexRoute = PrivateEsgCiiFleetIndexRouteImport.update({
+  id: '/esg/cii-fleet/',
+  path: '/esg/cii-fleet/',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PrivateRegisterUserTypeAddRoute =
   PrivateRegisterUserTypeAddRouteImport.update({
     id: '/register/user-type/add',
@@ -463,6 +496,7 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/esg': typeof PrivateEsgIndexRoute;
   '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
@@ -489,6 +523,10 @@ export interface FileRoutesByFullPath {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/esg/cii-fleet': typeof PrivateEsgCiiFleetIndexRoute;
+  '/esg/consumption-co2': typeof PrivateEsgConsumptionCo2IndexRoute;
+  '/esg/indicators-eeoi-cii': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
+  '/esg/simulator-cii': typeof PrivateEsgSimulatorCiiIndexRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -529,6 +567,7 @@ export interface FileRoutesByTo {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/esg': typeof PrivateEsgIndexRoute;
   '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
@@ -555,6 +594,10 @@ export interface FileRoutesByTo {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/esg/cii-fleet': typeof PrivateEsgCiiFleetIndexRoute;
+  '/esg/consumption-co2': typeof PrivateEsgConsumptionCo2IndexRoute;
+  '/esg/indicators-eeoi-cii': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
+  '/esg/simulator-cii': typeof PrivateEsgSimulatorCiiIndexRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -598,6 +641,7 @@ export interface FileRoutesById {
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/_private/esg/': typeof PrivateEsgIndexRoute;
   '/_private/fleet-manager/': typeof PrivateFleetManagerIndexRoute;
   '/_private/maintenance/': typeof PrivateMaintenanceIndexRoute;
   '/_private/permissions/': typeof PrivatePermissionsIndexRoute;
@@ -624,6 +668,10 @@ export interface FileRoutesById {
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/_private/esg/cii-fleet/': typeof PrivateEsgCiiFleetIndexRoute;
+  '/_private/esg/consumption-co2/': typeof PrivateEsgConsumptionCo2IndexRoute;
+  '/_private/esg/indicators-eeoi-cii/': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
+  '/_private/esg/simulator-cii/': typeof PrivateEsgSimulatorCiiIndexRoute;
   '/_private/maintenance/list-os-done/': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/_private/maintenance/monitoring-plans/': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/_private/maintenance/monitoring-wear/': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -666,6 +714,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/esg'
     | '/fleet-manager'
     | '/maintenance'
     | '/permissions'
@@ -692,6 +741,10 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/esg/cii-fleet'
+    | '/esg/consumption-co2'
+    | '/esg/indicators-eeoi-cii'
+    | '/esg/simulator-cii'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
@@ -732,6 +785,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/esg'
     | '/fleet-manager'
     | '/maintenance'
     | '/permissions'
@@ -758,6 +812,10 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/esg/cii-fleet'
+    | '/esg/consumption-co2'
+    | '/esg/indicators-eeoi-cii'
+    | '/esg/simulator-cii'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
@@ -800,6 +858,7 @@ export interface FileRouteTypes {
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
+    | '/_private/esg/'
     | '/_private/fleet-manager/'
     | '/_private/maintenance/'
     | '/_private/permissions/'
@@ -826,6 +885,10 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
     | '/_private/register/user-type/add'
+    | '/_private/esg/cii-fleet/'
+    | '/_private/esg/consumption-co2/'
+    | '/_private/esg/indicators-eeoi-cii/'
+    | '/_private/esg/simulator-cii/'
     | '/_private/maintenance/list-os-done/'
     | '/_private/maintenance/monitoring-plans/'
     | '/_private/maintenance/monitoring-wear/'
@@ -931,6 +994,13 @@ declare module '@tanstack/react-router' {
       path: '/fleet-manager';
       fullPath: '/fleet-manager';
       preLoaderRoute: typeof PrivateFleetManagerIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/esg/': {
+      id: '/_private/esg/';
+      path: '/esg';
+      fullPath: '/esg';
+      preLoaderRoute: typeof PrivateEsgIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_public/auth/unlock': {
@@ -1157,6 +1227,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateMaintenanceListOsDoneIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/esg/simulator-cii/': {
+      id: '/_private/esg/simulator-cii/';
+      path: '/esg/simulator-cii';
+      fullPath: '/esg/simulator-cii';
+      preLoaderRoute: typeof PrivateEsgSimulatorCiiIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/esg/indicators-eeoi-cii/': {
+      id: '/_private/esg/indicators-eeoi-cii/';
+      path: '/esg/indicators-eeoi-cii';
+      fullPath: '/esg/indicators-eeoi-cii';
+      preLoaderRoute: typeof PrivateEsgIndicatorsEeoiCiiIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/esg/consumption-co2/': {
+      id: '/_private/esg/consumption-co2/';
+      path: '/esg/consumption-co2';
+      fullPath: '/esg/consumption-co2';
+      preLoaderRoute: typeof PrivateEsgConsumptionCo2IndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/esg/cii-fleet/': {
+      id: '/_private/esg/cii-fleet/';
+      path: '/esg/cii-fleet';
+      fullPath: '/esg/cii-fleet';
+      preLoaderRoute: typeof PrivateEsgCiiFleetIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/register/user-type/add': {
       id: '/_private/register/user-type/add';
       path: '/register/user-type/add';
@@ -1336,6 +1434,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
+  PrivateEsgIndexRoute: typeof PrivateEsgIndexRoute;
   PrivateFleetManagerIndexRoute: typeof PrivateFleetManagerIndexRoute;
   PrivateMaintenanceIndexRoute: typeof PrivateMaintenanceIndexRoute;
   PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
@@ -1361,6 +1460,10 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
+  PrivateEsgCiiFleetIndexRoute: typeof PrivateEsgCiiFleetIndexRoute;
+  PrivateEsgConsumptionCo2IndexRoute: typeof PrivateEsgConsumptionCo2IndexRoute;
+  PrivateEsgIndicatorsEeoiCiiIndexRoute: typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
+  PrivateEsgSimulatorCiiIndexRoute: typeof PrivateEsgSimulatorCiiIndexRoute;
   PrivateMaintenanceListOsDoneIndexRoute: typeof PrivateMaintenanceListOsDoneIndexRoute;
   PrivateMaintenanceMonitoringPlansIndexRoute: typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   PrivateMaintenanceMonitoringWearIndexRoute: typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -1398,6 +1501,7 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateEsgIndexRoute: PrivateEsgIndexRoute,
   PrivateFleetManagerIndexRoute: PrivateFleetManagerIndexRoute,
   PrivateMaintenanceIndexRoute: PrivateMaintenanceIndexRoute,
   PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
@@ -1426,6 +1530,10 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
   PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
+  PrivateEsgCiiFleetIndexRoute: PrivateEsgCiiFleetIndexRoute,
+  PrivateEsgConsumptionCo2IndexRoute: PrivateEsgConsumptionCo2IndexRoute,
+  PrivateEsgIndicatorsEeoiCiiIndexRoute: PrivateEsgIndicatorsEeoiCiiIndexRoute,
+  PrivateEsgSimulatorCiiIndexRoute: PrivateEsgSimulatorCiiIndexRoute,
   PrivateMaintenanceListOsDoneIndexRoute:
     PrivateMaintenanceListOsDoneIndexRoute,
   PrivateMaintenanceMonitoringPlansIndexRoute:

@@ -1,12 +1,15 @@
 import type { LucideIcon } from 'lucide-react';
 import {
   Activity,
+  BarChart3,
   Bell,
   Building2,
   CalendarClock,
   CheckSquare,
   FileText,
+  Flame,
   KeySquare,
+  Leaf,
   Mail,
   MapIcon,
   MapPin,
@@ -16,6 +19,7 @@ import {
   NotebookPen,
   Settings,
   Shield,
+  Ship,
   Users,
   Variable,
   Wrench,
@@ -28,6 +32,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   maintenance: Wrench,
   register: NotebookPen,
   'fleet-manager': MapIcon,
+  esg: Leaf,
 };
 
 // Ícones para sub-rotas específicas
@@ -49,6 +54,10 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   'setup-chatbot': MessageSquare,
   'setup-fleet': MapPin,
   'setup-limits': Settings,
+  'indicators-eeoi-cii': BarChart3,
+  'cii-fleet': Ship,
+  'simulator-cii': Activity,
+  'consumption-co2': Flame,
 };
 
 // Chaves i18n para tradução de rotas
@@ -72,6 +81,11 @@ export const ROUTE_LABELS: Record<string, string> = {
   'setup-fleet': 'setup.fleet',
   'setup-limits': 'setup.limits',
   'fleet-manager': 'fleet.manager',
+  esg: 'esg.upper',
+  'indicators-eeoi-cii': 'menu.eeoi.cii',
+  'cii-fleet': 'esg.fleet',
+  'simulator-cii': 'simulator.cii',
+  'consumption-co2': 'esg.co2',
 };
 
 /**
@@ -82,6 +96,10 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
+  '/esg/cii-fleet',
+  '/esg/consumption-co2',
+  '/esg/indicators-eeoi-cii',
+  '/esg/simulator-cii',
   '/fleet-manager',
   '/maintenance/list-os-done',
   '/maintenance/monitoring-plans',

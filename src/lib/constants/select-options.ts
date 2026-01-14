@@ -215,3 +215,23 @@ export const FORM_TYPE_OPTIONS: FormTypeOption[] = [
   { value: 'EVENT', labelKey: 'event' },
   { value: 'CMMS', labelKey: 'CMMS' },
 ];
+
+export interface VesselCiiTypeOption {
+  value: string;
+  label: string;
+}
+
+export const VESSEL_CII_TYPES: VesselCiiTypeOption[] = [
+  { value: 'BULK_CARRIER', label: 'Bulk Carrier' },
+  { value: 'GAS_CARRIER', label: 'Gas Carrier' },
+  { value: 'TANKER', label: 'Tanker' },
+  { value: 'CONTAINER_SHIP', label: 'Container ship' },
+  { value: 'GENERAL_CARGO_SHIP', label: 'General cargo ship' },
+  { value: 'REFRIGERATED_CARGO_CARRIER', label: 'Refrigerated cargo Carrier' },
+  { value: 'COMBINATION_CARRIER', label: 'Combination Carrier' },
+  { value: 'LNG_CARRIER', label: 'LNG Carrier' },
+  { value: 'RO_RO_CARGO_SHIP', label: 'Ro-ro cargo ship' },
+  { value: 'RO_RO_CARGO_SHIP_VC', label: 'Ro-ro cargo ship (VC)' },
+  { value: 'RO_RO_PASSENGER_SHIP', label: 'Ro-ro passenger ship' },
+  { value: 'CRUISE_PASSENGER_SHIP', label: 'Cruise passenger ship' },
+];

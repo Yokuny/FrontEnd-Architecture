@@ -197,8 +197,15 @@ class ApiClient {
 
     if (options.params) {
       Object.keys(options.params).forEach((key) => {
-        if (options.params?.[key] !== undefined && options.params?.[key] !== null) {
-          query.append(key, String(options.params[key]));
+        const value = (options.params as any)[key];
+        if (value !== undefined && value !== null) {
+          if (Array.isArray(value)) {
+            value.forEach((v) => {
+              query.append(key, String(v));
+            });
+          } else {
+            query.append(key, String(value));
+          }
         }
       });
     }
@@ -285,8 +292,15 @@ class ApiClient {
 
     if (options.params) {
       Object.keys(options.params).forEach((key) => {
-        if (options.params?.[key] !== undefined && options.params?.[key] !== null) {
-          query.append(key, String(options.params[key]));
+        const value = (options.params as any)[key];
+        if (value !== undefined && value !== null) {
+          if (Array.isArray(value)) {
+            value.forEach((v) => {
+              query.append(key, String(v));
+            });
+          } else {
+            query.append(key, String(value));
+          }
         }
       });
     }
