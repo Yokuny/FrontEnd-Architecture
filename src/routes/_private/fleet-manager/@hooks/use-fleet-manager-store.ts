@@ -31,23 +31,13 @@ export const useFleetManagerStore = create<FleetManagerState>()(
       statusMachine: [],
       operationMachines: [],
 
-      playback: {
-        isPlaying: false,
-        speed: 1,
-        currentTime: 0,
-        startTime: null,
-        endTime: null,
-        historyData: [],
-        isActive: false,
-        type: null,
-      },
-
       setSelectedMachineId: (id) => set({ selectedMachineId: id }),
       setSelectedVoyageId: (id) => set({ selectedVoyageId: id }),
       setSelectedPanel: (panel) =>
         set((state) => ({
           previousPanel: state.selectedPanel,
           selectedPanel: panel,
+          isFleetbarOpen: panel !== null ? true : state.isFleetbarOpen,
         })),
       revertPanel: () =>
         set((state) => ({
@@ -61,6 +51,7 @@ export const useFleetManagerStore = create<FleetManagerState>()(
           selectedPanel: null,
           previousPanel: null,
         }),
+      toggleFleetbar: () => set((state) => ({ isFleetbarOpen: !state.isFleetbarOpen })),
       toggleShowNames: () => set((state) => ({ showNames: !state.showNames })),
       toggleShowCodes: () => set((state) => ({ showCodes: !state.showCodes })),
       toggleShowGeofences: () => set((state) => ({ showGeofences: !state.showGeofences })),
@@ -72,7 +63,6 @@ export const useFleetManagerStore = create<FleetManagerState>()(
       setUnitMeasureLine: (unit) => set({ unitMeasureLine: unit }),
       setPointsMeasureLine: (points) => set({ pointsMeasureLine: points }),
       setIsShowPredicateRoute: (show) => set({ isShowPredicateRoute: show }),
-      toggleFleetbar: () => set((state) => ({ isFleetbarOpen: !state.isFleetbarOpen })),
 
       setNauticalChart: (chart: 'none' | 'navtor' | 'cmap' | 'cmap_relief' | 'cmap_dark' | 'nav') => set({ nauticalChart: chart }),
 
@@ -83,47 +73,6 @@ export const useFleetManagerStore = create<FleetManagerState>()(
       // Sync Actions
       setStatusMachine: (status) => set({ statusMachine: status }),
       setOperationMachines: (operations) => set({ operationMachines: operations }),
-
-      setPlaybackActive: (active, type) =>
-        set((state) => ({
-          playback: {
-            ...state.playback,
-            isActive: active,
-            type: active ? type : null,
-            isPlaying: active ? state.playback.isPlaying : false,
-          },
-        })),
-      togglePlaybackPlay: () =>
-        set((state) => ({
-          playback: {
-            ...state.playback,
-            isPlaying: !state.playback.isPlaying,
-          },
-        })),
-      setPlaybackSpeed: (speed) =>
-        set((state) => ({
-          playback: {
-            ...state.playback,
-            speed,
-          },
-        })),
-      setPlaybackTime: (time) =>
-        set((state) => ({
-          playback: {
-            ...state.playback,
-            currentTime: time,
-          },
-        })),
-      setPlaybackData: (data, startTime, endTime) =>
-        set((state) => ({
-          playback: {
-            ...state.playback,
-            historyData: data,
-            startTime,
-            endTime,
-            currentTime: startTime,
-          },
-        })),
 
       reset: () =>
         set({

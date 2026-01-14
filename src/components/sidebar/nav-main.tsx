@@ -1,0 +1,81 @@
+'use client';
+
+import { Link } from '@tanstack/react-router';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import type React from 'react';
+import { useState } from 'react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuItem as SidebarMenuSubItem, useSidebar } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
+
+export type Route = {
+  id: string;
+  title: string;
+  icon?: React.ReactNode;
+  link: string;
+  subs?: {
+    title: string;
+    link: string;
+    icon?: React.ReactNode;
+  }[];
+};
+
+export default function AppNavigation({ routes }: { routes: Route[] }) {
+  const { state } = useSidebar();
+  const isCollapsed = state === 'collapsed';
+  const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
+
+  return (
+    <SidebarMenu>
+      {routes.map((route) => {
+        const isOpen = !isCollapsed && openCollapsible === route.id;
+        const hasSubRoutes = !!route.subs?.length;
+
+        return (
+          <SidebarMenuItem key={route.id}>
+            {hasSubRoutes ? (
+              <Collapsible open={isOpen} onOpenChange={(open) => setOpenCollapsible(open ? route.id : null)} className="w-full">
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton
+                    className={cn(
+                      'flex w-full items-center transition-colors',
+                      isOpen ? 'bg-sidebar-muted' : 'hover:bg-sidebar-muted hover:text-muted-foreground',
+                      isCollapsed && 'justify-center',
+                    )}
+                  >
+                    {route.icon}
+                    {!isCollapsed && <span className="ml-2 flex-1 truncate">{route.title}</span>}
+                    {!isCollapsed && hasSubRoutes && <span className="ml-auto">{isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}</span>}
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+
+                {!isCollapsed && (
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {route.subs?.map((subRoute) => (
+                        <SidebarMenuSubItem key={`${route.id}-${subRoute.title}`} className="h-auto">
+                          <SidebarMenuSubButton size="sm" asChild>
+                            <Link to={subRoute.link} className="text-muted-foreground hover:bg-sidebar-muted hover:text-foreground">
+                              {subRoute.title}
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                )}
+              </Collapsible>
+            ) : (
+              <SidebarMenuButton className={cn('hover:bg-sidebar-muted hover:text-muted-foreground', isCollapsed && 'justify-center')} tooltip={route.title} asChild>
+                <Link to={route.link} className={cn('flex items-center rounded-lg px-2', isCollapsed && 'justify-center')}>
+                  {route.icon}
+                  {!isCollapsed && <span className="ml-2">{route.title}</span>}
+                </Link>
+              </SidebarMenuButton>
+            )}
+          </SidebarMenuItem>
+        );
+      })}
+    </SidebarMenu>
+  );
+}

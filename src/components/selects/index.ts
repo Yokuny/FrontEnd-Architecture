@@ -62,5 +62,6 @@ export { UserSamePermissionSelect } from './user-same-permission-select';
 export { UserSelect } from './user-select';
 export { UserTeamSelect } from './user-team-select';
 export { UserTypeSelect } from './user-type-select';
+export * from './vessel-cii-reference-select';
 export { ViewSelect } from './view-select';
 export { VisibilitySelect } from './visibility-select';

@@ -24,21 +24,9 @@ export interface FleetManagerState {
   isOperationIndicator: boolean;
   showNameFence: boolean;
 
-  // Real-time Sync (from API/Sockets)
+  // Sync States
   statusMachine: any[];
   operationMachines: any[];
-
-  // Playback Context
-  playback: {
-    isPlaying: boolean;
-    speed: number;
-    currentTime: number; // timestamp in ms
-    startTime: number | null;
-    endTime: number | null;
-    historyData: any[]; // [timestamp, lat, lng][]
-    isActive: boolean;
-    type: 'route' | 'region' | null;
-  };
 
   // Actions
   setSelectedMachineId: (id: string | null) => void;
@@ -70,13 +58,6 @@ export interface FleetManagerState {
   // Sync Actions
   setStatusMachine: (status: any[]) => void;
   setOperationMachines: (operations: any[]) => void;
-
-  // Playback Actions
-  setPlaybackActive: (active: boolean, type: 'route' | 'region' | null) => void;
-  togglePlaybackPlay: () => void;
-  setPlaybackSpeed: (speed: number) => void;
-  setPlaybackTime: (time: number) => void;
-  setPlaybackData: (data: any[], startTime: number, endTime: number) => void;
 
   reset: () => void;
 }
