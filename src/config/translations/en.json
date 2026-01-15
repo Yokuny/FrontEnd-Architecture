@@ -1159,7 +1159,7 @@
   "check.scale.typeproblem": "Scale linked to problem types: {0}",
   "add.integration": "Integration",
   "type.integration": "Integration type",
-  "access.day": "Day access",
+  "access.day": "Access per day",
   "interactions.whatsapp.day": "WhatsApp interactions day",
   "interactions": "Interactions",
   "unity.speed": "Speed unit",

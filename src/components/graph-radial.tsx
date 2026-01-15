@@ -7,7 +7,7 @@ import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/com
 
 export const description = 'A radial chart with a custom shape';
 
-const chartData = [{ browser: 'safari', visitors: 1260, fill: 'var(--color-safari)' }];
+const chartData = [{ browser: 'safari', visitors: 1260, fill: 'var(--color-hue-blue)' }];
 
 const chartConfig = {
   visitors: {
@@ -15,7 +15,7 @@ const chartConfig = {
   },
   safari: {
     label: 'Safari',
-    color: 'var(--chart-2)',
+    color: 'var(--color-hue-blue)',
   },
 } satisfies ChartConfig;
 

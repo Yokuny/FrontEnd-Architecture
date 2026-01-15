@@ -18,11 +18,11 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: 'var(--chart-1)',
+    color: 'var(--color-hue-blue)',
   },
   mobile: {
     label: 'Mobile',
-    color: 'var(--chart-3)',
+    color: 'var(--color-hue-orange)',
   },
 } satisfies ChartConfig;
 
@@ -46,8 +46,8 @@ export function GraphLines() {
             <CartesianGrid vertical={false} />
             <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => value.slice(0, 3)} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line dataKey="desktop" type="monotone" stroke="var(--color-desktop)" strokeWidth={2} dot={false} />
-            <Line dataKey="mobile" type="monotone" stroke="var(--color-mobile)" strokeWidth={2} dot={false} />
+            <Line dataKey="desktop" type="monotone" stroke="var(--color-hue-blue)" strokeWidth={2} dot={false} />
+            <Line dataKey="mobile" type="monotone" stroke="var(--color-hue-orange)" strokeWidth={2} dot={false} />
           </LineChart>
         </ChartContainer>
       </ItemContent>

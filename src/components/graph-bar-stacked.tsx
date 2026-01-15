@@ -18,11 +18,11 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: 'var(--chart-2)',
+    color: 'var(--color-hue-blue)',
   },
   mobile: {
     label: 'Mobile',
-    color: 'var(--chart-4)',
+    color: 'var(--color-hue-orange)',
   },
 } satisfies ChartConfig;
 
@@ -40,8 +40,8 @@ export function GraphBarStacked() {
             <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <ChartLegend content={<ChartLegendContent />} />
-            <Bar dataKey="desktop" stackId="a" fill="var(--color-desktop)" radius={[0, 0, 4, 4]} />
-            <Bar dataKey="mobile" stackId="a" fill="var(--color-mobile)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="desktop" stackId="a" fill="var(--color-hue-blue)" radius={[0, 0, 4, 4]} />
+            <Bar dataKey="mobile" stackId="a" fill="var(--color-hue-orange)" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ChartContainer>
       </ItemContent>

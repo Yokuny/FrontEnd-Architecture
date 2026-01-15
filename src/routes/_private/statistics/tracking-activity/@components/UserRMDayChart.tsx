@@ -5,7 +5,7 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTrackingUserRMDay } from '@/hooks/use-tracking-activity-api';
-import { CHART_COLORS, CHART_HEIGHT } from '../@consts';
+import { CHART_HEIGHT } from '../@consts';
 import type { TrackingFilters, UserRMDayData } from '../@interface';
 
 export function UserRMDayChart({ filters }: UserRMDayChartProps) {
@@ -30,11 +30,11 @@ export function UserRMDayChart({ filters }: UserRMDayChartProps) {
   const chartConfig = {
     accesses: {
       label: t('access.day'),
-      color: CHART_COLORS.chart3,
+      color: 'var(--color-hue-cyan)',
     },
     users: {
       label: t('users'),
-      color: CHART_COLORS.chart4,
+      color: 'var(--color-hue-violet)',
     },
   } satisfies ChartConfig;
 
@@ -48,8 +48,8 @@ export function UserRMDayChart({ filters }: UserRMDayChartProps) {
         <YAxis tickLine={false} axisLine={false} tickMargin={10} />
         <ChartTooltip content={<ChartTooltipContent />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey="accesses" fill="var(--color-accesses)" radius={[4, 4, 0, 0]} />
-        <Bar dataKey="users" fill="var(--color-users)" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="accesses" fill="var(--color-hue-cyan)" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="users" fill="var(--color-hue-violet)" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ChartContainer>
   );

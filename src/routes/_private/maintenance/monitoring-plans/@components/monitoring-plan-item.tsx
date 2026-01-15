@@ -19,11 +19,11 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
 
   // Color logic based on legacy ItemMonitoringPlan.jsx
   const getStatusColor = () => {
-    if (planItem.expired) return '#b91c1c'; // Danger 700
-    if (planItem.next) return '#ef4444'; // Danger 500
-    if (planItem.warning) return '#f59e0b'; // Warning 500
-    if (planItem.daysLeft) return '#22c55e'; // Success 500
-    return '#6b7280'; // Muted
+    if (planItem.expired) return 'var(--color-hue-red)';
+    if (planItem.next) return 'var(--color-hue-orange)';
+    if (planItem.warning) return 'var(--color-hue-amber)';
+    if (planItem.daysLeft) return 'var(--color-hue-green)';
+    return 'var(--color-ui-hard)';
   };
 
   const handleSuccess = () => {
@@ -46,13 +46,13 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
             <ItemTitle className="font-medium text-base">{planItem.description}</ItemTitle>
             <div className="flex gap-4 items-center">
               <div className="flex gap-1.5 shrink-0">
-                {planItem.expired && <Badge className="bg-red-700 hover:bg-red-700 text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('expired')}</Badge>}
+                {planItem.expired && <Badge className="bg-hue-red/80 hover:bg-hue-red text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('expired')}</Badge>}
                 {planItem.next && !planItem.expired && (
                   <Badge variant="destructive" className="text-[9px] px-1.5 h-4.5 uppercase font-bold">
                     {t('next')}
                   </Badge>
                 )}
-                {planItem.warning && <Badge className="bg-yellow-500 hover:bg-yellow-500 text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('next')}</Badge>}
+                {planItem.warning && <Badge className="bg-hue-amber/80 hover:bg-hue-amber text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('next')}</Badge>}
               </div>
 
               {planItem.daysLeft !== null && (
