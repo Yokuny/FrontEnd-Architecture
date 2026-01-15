@@ -113,15 +113,9 @@ function TrackingActivityPage() {
           </div>
         </div>
 
-        <ItemGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 items-start">
+        <ItemGroup>
           <AccessDayChart filters={appliedFilters} />
-
-          <Item className="flex-col">
-            <ItemTitle>{t('users')}</ItemTitle>
-            <ItemContent className="w-full">
-              <UserAccessDayChart filters={appliedFilters} />
-            </ItemContent>
-          </Item>
+          <UserAccessDayChart filters={appliedFilters} />
 
           <Item variant="outline" className="flex-col items-stretch">
             <ItemHeader>
