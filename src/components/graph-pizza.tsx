@@ -1,5 +1,7 @@
 'use client';
 
+// extraido de https://rosencharts.com/
+
 import * as React from 'react';
 import { Label, Pie, PieChart } from 'recharts';
 
@@ -51,7 +53,7 @@ export function GraphPizza() {
     <Item variant="outline" className="flex-col items-stretch">
       <ItemHeader className="items-center flex-col">
         <ItemTitle>Pie Chart - Donut with Text</ItemTitle>
-        <ItemDescription>January - June 2024</ItemDescription>
+        <ItemDescription>Description</ItemDescription>
       </ItemHeader>
       <ItemContent>
         <ChartContainer config={chartConfig} className="max-h-[300px]">

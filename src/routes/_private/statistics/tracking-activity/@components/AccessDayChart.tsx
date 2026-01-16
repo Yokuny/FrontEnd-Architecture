@@ -2,8 +2,9 @@ import { format, parseISO } from 'date-fns';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import DefaultEmptyData from '@/components/default-empty-data';
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTrackingAccessDay } from '@/hooks/use-tracking-activity-api';
 import { CHART_HEIGHT } from '../@consts';
@@ -53,16 +54,18 @@ export function AccessDayChart({ filters }: AccessDayChartProps) {
 
   const chartConfig = {
     system: {
-      label: t('system'),
+      label: `${totals.system} - ${t('system')}`,
       color: 'var(--color-hue-blue)',
     },
     whatsapp: {
-      label: 'WhatsApp',
+      label: `${totals.whatsapp} - WhatsApp`,
       color: 'var(--color-hue-green)',
     },
   } satisfies ChartConfig;
 
   if (isLoading) return <Skeleton className={`${CHART_HEIGHT} w-full`} />;
+
+  const isEmpty = !data || (data.acessDay.length === 0 && data.acessDayWhatsapp.length === 0);
 
   return (
     <Item variant="outline" className="flex-col items-stretch w-full">
@@ -71,33 +74,20 @@ export function AccessDayChart({ filters }: AccessDayChartProps) {
         <ItemDescription>{t('tracking.activity.description', 'Atividades de acesso ao sistema e aplicativos')}</ItemDescription>
       </ItemHeader>
       <ItemContent>
-        <ChartContainer config={chartConfig} className={`${CHART_HEIGHT} w-full`}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--border))" />
-            <XAxis dataKey="date" tickLine={false} tickMargin={10} axisLine={false} />
-            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-            <ChartLegend content={<ChartLegendContent />} />
-            <Bar dataKey="system" stackId="a" fill="var(--color-hue-blue)" radius={[0, 0, 4, 4]} />
-            <Bar dataKey="whatsapp" stackId="a" fill="var(--color-hue-green)" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ChartContainer>
-
-        <div className="flex gap-4 mt-8">
-          <div className="flex-1 rounded-xl border bg-card p-4 shadow-sm">
-            <div className="flex items-center gap-2">
-              <div className="size-2 rounded-full bg-hue-blue" />
-              <span className="text-xs font-medium text-muted-foreground uppercase">{t('system')}</span>
-            </div>
-            <div className="mt-1 text-2xl font-bold">{totals.system}</div>
-          </div>
-          <div className="flex-1 rounded-xl border bg-card p-4 shadow-sm">
-            <div className="flex items-center gap-2">
-              <div className="size-2 rounded-full bg-hue-green" />
-              <span className="text-xs font-medium text-muted-foreground uppercase">WhatsApp</span>
-            </div>
-            <div className="mt-1 text-2xl font-bold">{totals.whatsapp}</div>
-          </div>
-        </div>
+        {isEmpty ? (
+          <DefaultEmptyData />
+        ) : (
+          <ChartContainer config={chartConfig} className={`${CHART_HEIGHT} w-full`}>
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis dataKey="date" tickLine={false} tickMargin={10} axisLine={false} />
+              <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+              <ChartLegend content={<ChartLegendContent />} />
+              <Bar dataKey="system" stackId="a" fill="var(--color-hue-blue)" radius={[0, 0, 4, 4]} />
+              <Bar dataKey="whatsapp" stackId="a" fill="var(--color-hue-green)" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ChartContainer>
+        )}
       </ItemContent>
     </Item>
   );

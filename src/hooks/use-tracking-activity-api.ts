@@ -66,7 +66,7 @@ export function useTrackingActionsFleet(filters: TrackingFilters) {
   return useQuery({
     queryKey: [...trackingActivityKeys.dashboard(filters), 'actions-fleet'],
     queryFn: async () => {
-      const response = await api.get('/tracking/actionsfleet', { params: filters });
+      const response = await api.get('/tracking/fleet-details', { params: filters });
       return response.data;
     },
     enabled: !!filters.idEnterprise,
@@ -111,6 +111,17 @@ export function useTrackingUsersRM(filters: TrackingFilters) {
     queryKey: [...trackingActivityKeys.dashboard(filters), 'users-rm'],
     queryFn: async () => {
       const response = await api.get('/tracking/usersrm', { params: filters });
+      return response.data;
+    },
+    enabled: !!filters.idEnterprise,
+  });
+}
+
+export function useTrackingFleetMachineDetails(filters: TrackingFilters) {
+  return useQuery({
+    queryKey: [...trackingActivityKeys.dashboard(filters), 'fleet-machine-details'],
+    queryFn: async () => {
+      const response = await api.get('/tracking/fleet-machine-details', { params: filters });
       return response.data;
     },
     enabled: !!filters.idEnterprise,

@@ -3,10 +3,10 @@ import { Users } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-
+import DefaultEmptyData from '@/components/default-empty-data';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
-import { Item, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { ItemGroup } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
@@ -113,81 +113,42 @@ function TrackingActivityPage() {
           </div>
         </div>
 
-        <ItemGroup>
+        <ItemGroup className="gap-4">
           <AccessDayChart filters={appliedFilters} />
+
           <UserAccessDayChart filters={appliedFilters} />
 
-          <Item variant="outline" className="flex-col items-stretch">
-            <ItemHeader>
-              <ItemTitle>{t('paths')}</ItemTitle>
-            </ItemHeader>
-            <ItemContent>
-              <TrackingPathsChart filters={appliedFilters} />
-            </ItemContent>
-          </Item>
-
-          <Item variant="outline" className="flex-col items-stretch">
-            <ItemHeader>
-              <ItemTitle>{t('users.actions')}</ItemTitle>
-            </ItemHeader>
-            <UsersChart filters={appliedFilters} />
-          </Item>
-
-          <Item variant="outline" className="flex-col items-stretch">
-            <ItemHeader>
-              <ItemTitle>{t('locations')}</ItemTitle>
-            </ItemHeader>
-            <ItemContent>
-              <LocationsChart filters={appliedFilters} />
-            </ItemContent>
-          </Item>
-
-          <Item variant="outline" className="flex-col items-stretch">
-            <ItemHeader>
-              <ItemTitle>{t('actions.fleet')}</ItemTitle>
-            </ItemHeader>
-            <ItemContent>
-              <ActionsFleetChart filters={appliedFilters} />
-            </ItemContent>
-          </Item>
-
-          <Item variant="outline" className="flex-col items-stretch">
-            <ItemHeader>
-              <ItemTitle>{t('devices')}</ItemTitle>
-            </ItemHeader>
-            <ItemContent>
-              <DevicesChart filters={appliedFilters} />
-            </ItemContent>
-          </Item>
-
-          <Item variant="outline" className="flex-col items-stretch">
-            <ItemHeader>
-              <ItemTitle>{t('users.whatsapp')}</ItemTitle>
-            </ItemHeader>
-            <ItemContent>
+          <div className="flex w-full gap-4">
+            <div className="flex-1">
+              <UsersChart filters={appliedFilters} />
+            </div>
+            <div className="flex-1">
               <UsersWhatsappChart filters={appliedFilters} />
-            </ItemContent>
-          </Item>
+            </div>
+          </div>
+
+          <div className="flex w-full gap-4">
+            <div className="flex-1">
+              <TrackingPathsChart filters={appliedFilters} />
+            </div>
+            <div className="flex-1">
+              <ActionsFleetChart filters={appliedFilters} />
+            </div>
+          </div>
+
+          <div className="flex w-full gap-4">
+            <div className="flex-1">
+              <LocationsChart filters={appliedFilters} />
+            </div>
+            <div className="flex-1">
+              <DevicesChart filters={appliedFilters} />
+            </div>
+          </div>
 
           {idEnterprise === RM_ENTERPRISE_ID && (
             <>
-              <Item variant="outline" className="flex-col items-stretch col-span-2">
-                <ItemHeader>
-                  <ItemTitle>{t('user.rm.day')}</ItemTitle>
-                </ItemHeader>
-                <ItemContent>
-                  <UserRMDayChart filters={appliedFilters} />
-                </ItemContent>
-              </Item>
-
-              <Item variant="outline" className="flex-col items-stretch">
-                <ItemHeader>
-                  <ItemTitle>{t('users.rm')}</ItemTitle>
-                </ItemHeader>
-                <ItemContent>
-                  <UsersRMChart filters={appliedFilters} />
-                </ItemContent>
-              </Item>
+              <UserRMDayChart filters={appliedFilters} />
+              <UsersRMChart filters={appliedFilters} />
             </>
           )}
         </ItemGroup>

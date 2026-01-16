@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import DefaultEmptyData from '@/components/default-empty-data';
+import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useTrackingLocations } from '@/hooks/use-tracking-activity-api';
@@ -16,7 +18,9 @@ export function LocationsChart({ filters }: LocationsChartProps) {
     return data
       .filter((item) => item.location?.city || item.location?.state)
       .map((item) => ({
-        location: `${item.location?.city || '-'} (${item.location?.state || '-'})`,
+        city: item.location?.city || '-',
+        state: item.location?.state || '-',
+        countryCode: item.location?.country_code || '-',
         total: item.total,
       }))
       .sort((a, b) => b.total - a.total)
@@ -25,32 +29,46 @@ export function LocationsChart({ filters }: LocationsChartProps) {
 
   if (isLoading) return <Skeleton className={`${CHART_HEIGHT} w-full`} />;
 
+  const isEmpty = tableData.length === 0;
+
   return (
-    <div className={`${CHART_HEIGHT} w-full overflow-auto`}>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>{t('location')}</TableHead>
-            <TableHead className="text-right">{t('accesses')}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {tableData.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell className="font-medium">{item.location}</TableCell>
-              <TableCell className="text-right">{item.total}</TableCell>
-            </TableRow>
-          ))}
-          {tableData.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={2} className="text-center py-4 text-muted-foreground">
-                {t('no.data')}
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+    <Item variant="outline" className="flex-col items-stretch w-full">
+      <ItemHeader className="flex-col items-start gap-1">
+        <ItemTitle>{t('locations')}</ItemTitle>
+        <ItemDescription>{t('locations.description', 'Localizações de acesso ao sistema')}</ItemDescription>
+      </ItemHeader>
+      <ItemContent>
+        {isEmpty ? (
+          <DefaultEmptyData />
+        ) : (
+          <div className={`${CHART_HEIGHT} w-full overflow-auto`}>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t('location')}</TableHead>
+                  <TableHead className="text-right">{t('accesses')}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {tableData.map((item, index) => (
+                  <TableRow key={`${item.city}-${index}`}>
+                    <TableCell>
+                      <ItemTitle>{item.city}</ItemTitle>
+                      <ItemDescription>
+                        {item.state} - {item.countryCode}
+                      </ItemDescription>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <ItemDescription className="text-primary">{item.total}</ItemDescription>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </ItemContent>
+    </Item>
   );
 }
 

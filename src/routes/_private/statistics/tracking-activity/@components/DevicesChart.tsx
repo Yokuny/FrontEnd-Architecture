@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import DefaultEmptyData from '@/components/default-empty-data';
+import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useTrackingDevices } from '@/hooks/use-tracking-activity-api';
@@ -13,40 +15,58 @@ export function DevicesChart({ filters }: DevicesChartProps) {
 
   const tableData = useMemo(() => {
     if (!Array.isArray(data)) return [];
-    return data.map((item) => ({
-      name: item.device || (item.info ? `${item.info.osName || item.info.os || ''} ${item.info.browserName || ''}`.trim() : null) || t('unknown'),
-      value: item.total,
-    }));
-  }, [data, t]);
+    return data
+      .map((item) => ({
+        os: item.info?.osName || item.info?.os || '-',
+        osVersion: item.info?.osVersion || '',
+        browser: item.info?.browserName || '-',
+        total: item.total,
+      }))
+      .sort((a, b) => b.total - a.total);
+  }, [data]);
 
   if (isLoading) return <Skeleton className={`${CHART_HEIGHT} w-full`} />;
 
+  const isEmpty = tableData.length === 0;
+
   return (
-    <div className={`${CHART_HEIGHT} w-full overflow-auto`}>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>{t('device')}</TableHead>
-            <TableHead className="text-right">{t('total')}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {tableData.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell className="font-medium">{item.name}</TableCell>
-              <TableCell className="text-right">{item.value}</TableCell>
-            </TableRow>
-          ))}
-          {tableData.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={2} className="text-center py-4 text-muted-foreground">
-                {t('no.data')}
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+    <Item variant="outline" className="flex-col items-stretch w-full">
+      <ItemHeader className="flex-col items-start gap-1">
+        <ItemTitle>{t('devices')}</ItemTitle>
+        <ItemDescription>{t('devices.description', 'Dispositivos utilizados para acesso')}</ItemDescription>
+      </ItemHeader>
+      <ItemContent>
+        {isEmpty ? (
+          <DefaultEmptyData />
+        ) : (
+          <div className={`${CHART_HEIGHT} w-full overflow-auto`}>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t('device')}</TableHead>
+                  <TableHead className="text-right">{t('accesses')}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {tableData.map((item, index) => (
+                  <TableRow key={`${item.os}-${item.osVersion}-${index}`}>
+                    <TableCell>
+                      <ItemTitle>
+                        {item.os} {item.osVersion}
+                      </ItemTitle>
+                      <ItemDescription>{item.browser}</ItemDescription>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <ItemDescription className="text-primary">{item.total}</ItemDescription>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </ItemContent>
+    </Item>
   );
 }
 

@@ -1,53 +1,96 @@
-import { useMemo } from 'react';
+'use client';
+
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Cell, Pie, PieChart } from 'recharts';
+import { Label, Pie, PieChart } from 'recharts';
+import DefaultEmptyData from '@/components/default-empty-data';
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTrackingPaths } from '@/hooks/use-tracking-activity-api';
-import { CHART_HEIGHT, DEVICE_COLORS, TOP_BAR_LIMIT } from '../@consts';
+import { CHART_HEIGHT_LARGE, TOP_BAR_LIMIT } from '../@consts';
 import type { TrackingFilters, TrackingPathData } from '../@interface';
+
+const PATH_COLORS = ['var(--color-hue-blue)', 'var(--color-hue-violet)', 'var(--color-hue-emerald)', 'var(--color-hue-orange)', 'var(--color-hue-cyan)', 'var(--color-hue-pink)'];
 
 export function TrackingPathsChart({ filters }: TrackingPathsChartProps) {
   const { t } = useTranslation();
   const { data: rawData, isLoading } = useTrackingPaths(filters);
   const data = rawData as TrackingPathData[] | undefined;
 
-  const chartData = useMemo(() => {
-    if (!Array.isArray(data)) return [];
-    return data
-      .map((item) => ({
-        name: item.pathname || item.path || t('unknown'),
-        value: item.total,
-      }))
-      .sort((a, b) => b.value - a.value)
-      .slice(0, TOP_BAR_LIMIT);
-  }, [data, t]);
+  const { chartData, chartConfig, totalValue } = React.useMemo(() => {
+    if (!Array.isArray(data) || data.length === 0) {
+      return { chartData: [], chartConfig: {}, totalValue: 0 };
+    }
 
-  const chartConfig = useMemo(() => {
-    const config: ChartConfig = {};
-    chartData.forEach((item, index) => {
-      config[item.name] = {
-        label: item.name,
-        color: DEVICE_COLORS[index % DEVICE_COLORS.length],
+    const sortedData = [...data].sort((a, b) => b.total - a.total).slice(0, TOP_BAR_LIMIT);
+    const total = sortedData.reduce((acc, curr) => acc + curr.total, 0);
+
+    const config: ChartConfig = {
+      total: {
+        label: t('total'),
+      },
+    };
+
+    const formattedData = sortedData.map((item, index) => {
+      const key = `path_${index}`;
+      const name = item.pathname || item.path || t('unknown');
+      config[key] = {
+        label: name,
+        color: PATH_COLORS[index % PATH_COLORS.length],
+      };
+      return {
+        name,
+        value: item.total,
+        fill: PATH_COLORS[index % PATH_COLORS.length],
+        key,
       };
     });
-    return config;
-  }, [chartData]);
 
-  if (isLoading) return <Skeleton className={`${CHART_HEIGHT} w-full`} />;
+    return { chartData: formattedData, chartConfig: config, totalValue: total };
+  }, [data, t]);
+
+  if (isLoading) return <Skeleton className={`${CHART_HEIGHT_LARGE} w-full`} />;
+
+  const isEmpty = !data || data.length === 0;
 
   return (
-    <ChartContainer config={chartConfig} className={`${CHART_HEIGHT} w-full`}>
-      <PieChart>
-        <Pie data={chartData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
-          {chartData.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={DEVICE_COLORS[index % DEVICE_COLORS.length]} />
-          ))}
-        </Pie>
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <ChartLegend content={<ChartLegendContent />} />
-      </PieChart>
-    </ChartContainer>
+    <Item variant="outline" className="flex-col items-stretch w-full">
+      <ItemHeader className="items-center flex-col">
+        <ItemTitle>{t('paths')}</ItemTitle>
+        <ItemDescription>{t('paths.distribution.description', 'Distribuição de acesso por rotas do sistema')}</ItemDescription>
+      </ItemHeader>
+      <ItemContent>
+        {isEmpty ? (
+          <DefaultEmptyData />
+        ) : (
+          <ChartContainer config={chartConfig} className="spect-square max-h-[350px]">
+            <PieChart>
+              <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+              <Pie data={chartData} dataKey="value" nameKey="key" innerRadius={60} strokeWidth={5}>
+                <Label
+                  content={({ viewBox }) => {
+                    if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                      return (
+                        <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                          <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-3xl font-bold">
+                            {totalValue.toLocaleString()}
+                          </tspan>
+                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground uppercase text-[10px] font-bold">
+                            {t('total.accesses', 'Acessos')}
+                          </tspan>
+                        </text>
+                      );
+                    }
+                  }}
+                />
+              </Pie>
+              <ChartLegend content={<ChartLegendContent nameKey="key" />} className="-translate-y-2 flex-wrap gap-2 *:basis-1/6 *:justify-center" />
+            </PieChart>
+          </ChartContainer>
+        )}
+      </ItemContent>
+    </Item>
   );
 }
 
