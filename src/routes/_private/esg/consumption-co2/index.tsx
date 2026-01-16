@@ -4,10 +4,12 @@ import { CalendarIcon, Cpu, Search } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultLoading from '@/components/default-loading';
+import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enterprise-select';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
+import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -96,27 +98,8 @@ function ConsumptionCO2Page() {
     <Card>
       <CardHeader title={t('esg.co2')} />
       <CardContent className="flex flex-col">
-        <div className="flex flex-wrap items-end gap-4 p-4 border rounded-lg bg-secondary">
-          <div className="flex flex-col gap-1.5 min-w-[280px]">
-            <Label className="flex items-center gap-2">
-              <Cpu className="size-4" />
-              {t('machine.placeholder')}
-            </Label>
-            <DataMultiSelect
-              placeholder={t('machine.placeholder')}
-              query={machinesQuery}
-              value={selectedMachines}
-              onChange={(vals) => setSelectedMachines(vals as string[])}
-              mapToOptions={(items: any[]) =>
-                items
-                  .map(({ machine }: any) => ({
-                    value: String(machine.id),
-                    label: machine.name,
-                  }))
-                  .sort((a, b) => a.label.localeCompare(b.label))
-              }
-            />
-          </div>
+        <Item variant="outline" className="bg-secondary">
+          <MachineByEnterpriseSelect mode="multi" label={t('machines')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
 
           <div className="flex flex-col gap-1.5">
             <Label>{t('unit')}</Label>
@@ -184,7 +167,7 @@ function ConsumptionCO2Page() {
             <Search className="size-4" />
             {t('search')}
           </Button>
-        </div>
+        </Item>
 
         {/* Results Area */}
         <div className="flex flex-col gap-6">

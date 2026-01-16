@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
@@ -55,7 +56,7 @@ function IndicatorsEEOICIIPage() {
         </div>
       </CardHeader>
       <CardContent className="flex flex-col">
-        <div className="flex flex-wrap items-end gap-4 p-4 border rounded-lg bg-secondary">
+        <Item variant="outline" className="bg-secondary">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="search-input">{t('search.placeholder')}</Label>
             <Input id="search-input" placeholder={t('search.placeholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="w-48 bg-background" />
@@ -97,7 +98,7 @@ function IndicatorsEEOICIIPage() {
             <Search className="size-4" />
             {t('search')}
           </Button>
-        </div>
+        </Item>
 
         <div className="overflow-auto">
           {isLoading && <DefaultLoading />}

@@ -6,7 +6,7 @@ import { z } from 'zod';
 import DefaultEmptyData from '@/components/default-empty-data';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
-import { ItemGroup } from '@/components/ui/item';
+import { Item, ItemGroup } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
@@ -57,7 +57,7 @@ function TrackingActivityPage() {
     <Card>
       <CardHeader title={t('tracking.activity')} />
       <CardContent className="flex flex-col gap-6">
-        <div className="flex flex-wrap items-end gap-4 p-4 border rounded-lg bg-secondary/50">
+        <Item variant="outline" className="bg-secondary">
           <div className="flex flex-col gap-1.5 min-w-[300px]">
             <Label className="flex items-center gap-2">
               <Users className="size-4" />
@@ -111,7 +111,7 @@ function TrackingActivityPage() {
               </SelectContent>
             </Select>
           </div>
-        </div>
+        </Item>
 
         <ItemGroup className="gap-4">
           <AccessDayChart filters={appliedFilters} />

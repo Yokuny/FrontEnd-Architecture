@@ -26,6 +26,7 @@ Preciso de useMachineForm() para gerenciar formulário de máquina?
 | Hook comuns | Descrição |
 |-------------|-----------|
 | `use-enterprise-filter.ts` | Hook para obter o `idEnterprise` (empresa ativa) via `useEnterpriseFilter`. |
+| `use-machine-select.ts` | Hook para obter os ativos |
 | `use-enterprises-api.ts` | Hook comum para listar, criar, editar e excluir empresas. |
 | `use-machines-api.ts` | Hook comum para buscar valores de máquinas e embarcações. |
 | `use-users-not-in-role.ts` | Hook comum para buscar usuários que não estão em um determinado perfil. |
@@ -134,16 +135,10 @@ src/routes/_private/embarcacoes/
   Exemplo de conversão da antiga nomeclatura para a nova:
   | Nome Legado (SelectX) | Novo Nome (XSelect) |
   | :--- | :--- |
+  | `setSelectedMachines` | `MachineByEnterpriseSelect` |
   | `SelectEnterprise` | `EnterpriseSelect` |
-  | `SelectEnterpriseWithSetup` | `EnterpriseWithSetupSelect` |
-  | `SelectCustomer` | `CustomerSelect` |
-  | `SelectRole` | `RoleSelect` |
-  | `SelectUsers` | `UserSelect` |
-  | `SelectMachine` | `MachineSelect` |
-  | `SelectSensor` | `SensorSelect` |
-  | `SelectSupplier` | `SupplierSelect` |
-  | `SelectLanguage` | `LanguageFormSelect` |
-
+  | `SelectSensor` | `SensorByEnterpriseSelect` |
+  
   5. **Padrão de Formulários**: [`DefaultFormLayout`](./src/components/default-form-layout.tsx): **IMPORTANTE**: Este é o padrão obrigatório para estruturar páginas de formulários.
 
   6. **Padrão de Exibição de Dados e Gráficos**:

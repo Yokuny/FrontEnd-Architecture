@@ -68,7 +68,12 @@ function IntegrationListPage() {
 
   return (
     <Card>
-      <CardHeader title={`${t('integration')} AIS`} />
+      <CardHeader title={`${t('integration')} AIS`}>
+        <Button onClick={handleSave} disabled={isLoading || saveMachineIntegrations.isPending}>
+          <Save className="mr-2 size-4" />
+          {t('save')}
+        </Button>
+      </CardHeader>
       <CardContent>
         {isLoading ? (
           <DefaultLoading />
@@ -188,12 +193,6 @@ function IntegrationListPage() {
           </div>
         )}
       </CardContent>
-      <CardFooter>
-        <Button onClick={handleSave} disabled={isLoading || saveMachineIntegrations.isPending}>
-          <Save className="mr-2 size-4" />
-          {t('save')}
-        </Button>
-      </CardFooter>
     </Card>
   );
 }
