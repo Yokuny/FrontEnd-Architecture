@@ -1,162 +1,11 @@
-# Arquitetura do Projeto
+# Padrões e arquitetura do Projeto
 
-> Esta é a nova arquitetura do front-end utilizando **TanStack Router**, **Zustand**, **TanStack Query** e **ShadCN UI**
+- **Core**: `React`, `Vite` com `TanStack Router`, `TanStack Query` e `Zustand` (Estado Global).
 
----
+- **UI & Estilização**: `ShadCN UI` ( localizado em [***`src/components/ui`***](./src/components/ui) ).
+  - **Importante**: Evite tags HTML puras estilizadas ou estilizar os componentes `ShadCN`; utilize as propriedades padrão da biblioteca.
 
-### REGRA CRÍTICA: Estrutura e Padrão de uma Rota
-
-> **Importante**: As página e roteamento deve ser feito por **pasta**, e cada pasta de rota deve ter um arquivo `index.tsx` que irá conter a estrutura principal da página; não usar o caracter `.` para criar rotas alinhadas, isso irá quebrar a navegação via Breadcrumb e a navegação na Sidebar.
-
-### REGRA: Criação e uso de Hooks
-
-> **Importante**: Antes de criar qualquer hook de API ou estado global em `@hooks/`, verifique se já existe em [`src/hooks/`](./src/hooks/). A logica de criação está exemplificada abaixo:
-
-Preciso de useMachines() para listar máquinas?
-  └─ Já existe em src/hooks/use-machines-api.ts? 
-       ├─ SIM → import { useMachines } from '@/hooks/use-machines-api'
-       └─ NÃO → Criar em src/hooks/use-machines-api.ts (reutilizável)
-
-Preciso de useMachineForm() para gerenciar formulário de máquina?
-  └─ É específico da rota de edição de máquina?
-       ├─ SIM → Criar em @hooks/use-machine-form.ts
-       └─ NÃO → Avaliar se deve ir em src/hooks/
-
-
-| Hook comuns | Descrição |
-|-------------|-----------|
-| `use-enterprise-filter.ts` | Hook para obter o `idEnterprise` (empresa ativa) via `useEnterpriseFilter`. |
-| `use-machine-select.ts` | Hook para obter os ativos |
-| `use-enterprises-api.ts` | Hook comum para listar, criar, editar e excluir empresas. |
-| `use-machines-api.ts` | Hook comum para buscar valores de máquinas e embarcações. |
-| `use-users-not-in-role.ts` | Hook comum para buscar usuários que não estão em um determinado perfil. |
-| `use-roles-api.ts` | Hook comum para buscar as permissões do usuário logado. |
-| `use-auth.ts` | Gerenciamento de sessão, token e "Lembrar E-mail" via Zustand. |
-
-### REGRA OBRIGATÓRIA: Pastas de rotas e organização de arquivos
-
-> **Importante**: As subpastas `@hooks`, `@interface`, `@components` e `@consts` devem ser criadas na pasta da rota; Hooks e estados globais devem ser criados em `src/hooks/`. De resto segue a tabela de uso abaixo:
-
-| Pasta | Conteúdo | Quando Usar |
-|-------|----------|-------------|
-| `@components/` | Componentes React visuais | Componente usado APENAS nesta rota |
-| `@consts/` | Arrays, objetos, enums fixos | Valores que não mudam em runtime |
-| `@hooks/` | Hooks de API e lógica de formulário | Requisições específicas da rota |
-| `@interface/` | Types, Interfaces, Schemas Zod | Tipagens específicas da rota |
-
-```
-src/routes/_private/embarcacoes/
-├── index.tsx                  # < pagina inicial de embarcacoes
-│
-├── cadastro/                  # < subrota de cadastro de embarcacoes
-│   ├── @components/           # < componentes visuais EXCLUSIVOS desta página
-│   │   ├── FormularioDadosNavio.tsx
-│   │   └── TabelaEquipamentos.tsx
-│   ├── @consts/               # < constantes e valores fixos usados nesta rota
-│   │   └── tiposEmbarcacao.ts
-│   ├── @hooks/                # < hooks de api e logica local
-│   │   ├── useCadastroNavioQuery.ts
-│   │   └── useCadastroNavioMutation.ts
-│   ├── @interface/            # < types, interfaces e schemas zod usados nesta rota
-│   │   ├── embarcacao.types.ts
-│   │   └── embarcacao.schema.ts
-│   └── index.tsx              # < arquivo de contrução visual da rota
-│
-└── manutencoes/               # < pagina de manutençoes
-    ├── @components/
-    ├── @hooks/
-    ├── @interface/
-    ├── index.tsx              # < arquivo da rota principal
-    └── historico/             # < subrota
-        ├── @components/
-        ├── @hooks/
-        ├── @interface/
-        └── index.tsx          # < arquivo de contrução visual da subrota
-```
-
-### REGRA OBRIGATÓRIA: Usar os componentes ShadCN UI presentes em [`src/components/ui`](./src/components/ui)
-
-> **Padrão de criação de pagina**:
-  1. [`Card`](./src/components/ui/card.tsx): **OBRIGATÓRIO** para iniciar e envolver qualquer página (Shell/Wrapper de página). Use para construir a estrutura principal e inicial da página.
-
-  2. [`CardHeader`](./src/components/ui/card.tsx): **OBRIGATÓRIO** O componente `CardHeader` é o cabeçalho oficial de todas as páginas dentro do aplicativo ([páginas autenticadas](./src/routes/_private)).
-
-  3. [`CardFooter`](./src/components/ui/card.tsx): **OBRIGATÓRIO** CardFooter deve conter paginação, botões de ação e etc.
-  
-  Exemplo de uso:
-  ```tsx
-  export function MinhaPagina() {
-    const { t } = useTranslation();
-
-    return (
-      <Card>
-        <CardHeader title={t('meu.modulo.titulo')}>
-          {/* As ações passam como children e ficam à direita */}
-          <div className="flex items-center gap-2">
-            <Button variant="outline">
-              <Filter className="size-4" />
-              {t('filter')}
-            </Button>
-            <Button onClick={() => navigate({ to: '/add' } satisfies { to: string })}>
-              <Plus className="size-4" />
-              {t('btn.novo')}
-            </Button>
-          </div>
-        </CardHeader>
-        
-        <CardContent>
-          {/* Conteúdo da página */}
-        </CardContent>
-        
-        <CardFooter layout="multi | single">
-          {/* Ações e paginação */}
-        </CardFooter>
-      </Card>
-    );
-  }
-  ```
-  
-  **Padrão de Componentes**:
-  - arquivos de **PÁGINA** (contém `createFileRoute`): **DEVEM** obrigatoriamente iniciar com `<Card>` seguido de `<CardHeader>` como estrutura principal.
-  - arquivos de **COMPONENTE** (não contém `createFileRoute`, ex: em `@components/`): **NÃO DEVEM** usar `<Card>`. Devem usar no máximo os componentes de [`Item`](./src/components/ui/item.tsx) para criar listagens de dados ou blocos de informação.
-
-  **Padrão de resposta e resultados vazios / sem dados**:
-  
-  Usar o componente [`default-empty-data.tsx`](./src/components/default-empty-data.tsx)
-
-  **Padrão de Loading de Página**:
-  
-  Quando os dados estão sendo carregados, exiba o shell da página com skeleton [`DefaultLoading`](./src/components/default-loading.tsx)
-
-  4. [`Select`](./src/components/selects/index.ts): Busque os seletores no diretório `@/components/selects`, como está é uma nova arquitetura os nomes podem variar, as operaçoes desses seletores estão presentes em [`@/hooks/`](./src/hooks/).
-
-  **Importante**: Ao criar usar qualquer select, eles já contem Label, não é necessário adicionar Label ao importar o select.
-
-  Exemplo de conversão da antiga nomeclatura para a nova:
-  | Nome Legado (SelectX) | Novo Nome (XSelect) |
-  | :--- | :--- |
-  | `setSelectedMachines` | `MachineByEnterpriseSelect` |
-  | `SelectEnterprise` | `EnterpriseSelect` |
-  | `SelectSensor` | `SensorByEnterpriseSelect` |
-  
-  5. **Padrão de Formulários**: [`DefaultFormLayout`](./src/components/default-form-layout.tsx): **IMPORTANTE**: Este é o padrão obrigatório para estruturar páginas de formulários.
-
-  6. **Padrão de Exibição de Dados e Gráficos**:
-  Sempre use o padrão desses componentes para renderizar informações similares às que eles tratam:
-  - [`CardWithAreaGraph`](./src/components/card-with-area-graph.tsx): Card para dados com gráfico de área.
-  - [`CardWithProgressGraph`](./src/components/card-with-progress-graph.tsx): Card para exibir dados com gráficos de progresso.
-  - [`CardWithRadialGraph`](./src/components/card-with-radial-graph.tsx): Card para porcentagens e gráficos radiais.
-
-  7. **Padrão de Renderização de Números**:
-  - [`DefaultNumbersRender`](./src/components/default-numbers-render.tsx): O componente padrão para exibição formatada de números e KPIs.
-
-  8. **Padrão de Tabelas**:
-  - [`DefaultTable`](./src/components/default-table.tsx): Use este padrão para renderizar muitos dados organizados em tabelas com paginação e filtros.
-
-  9. **Padrão de Estilização**:
-  - Os componentes já possuem estilização padrão. Evite adicionar estilos ad-hoc que fujam do design system estabelecido.
-
-  10. **Textos traduzidos com [i18n](./src/config/i18n.ts)**: **IMPORTANTE**: Toda chave deve ser adicionada aos arquivos [`pt.json`](./src/config/translations/pt.json) (Default), [`en.json`](./src/config/translations/en.json) e [`es.json`](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave existe antes de usar**.
+- **Internacionalização** ( [***`i18n`***](./src/config/i18n.ts) ): **IMPORTANTE**: Toda chave deve ser adicionada aos arquivos [***`pt.json`***](./src/config/translations/pt.json) (Default), [***`en.json`***](./src/config/translations/en.json) e [***`es.json`***](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave exista ou que seja criada nos 3 arquivos**.
 
   Exemplo de uso:
   ```tsx
@@ -179,154 +28,297 @@ src/routes/_private/embarcacoes/
     );
   }
   ```
----
 
-### Como criar uma rota
+- **Roteamento**: As rotas são baseadas em **diretórios**. Cada pasta de rota deve conter obrigatoriamente um arquivo `index.tsx` com a estrutura principal. É proibido o uso do caractere `.` para criar rotas aninhadas. Isso garante a integridade funcional do `Breadcrumb` e da `Sidebar`.
 
-```tsx
-import { createFileRoute } from "@tanstack/react-router";
+- **Tratamento de data**: Exclusivamente por `date-fns`, utilizando sempre o formato `dd MM yy`.
 
-export const Route = createFileRoute("/_private/permissions/users/")({
-  component: ListUsersPage,
-});
+- **Gerenciamento de Estado**: Utilize **Zustand** para estados globais complexos. Não utilize `localStorage.setItem` diretamente. Utilize o middleware `persist` do Zustand para persistência de dados.
+
+- **Estados Vazios**: Caso não haja dados ou o retorno de filtros e buscas seja vazio (`data.length === 0`), utilize obrigatoriamente o componente [***`default-empty-data.tsx`***](./src/components/default-empty-data.tsx).
+
+- **Estado de Loading**: Em caso de requisições pendentes, utilize obrigatoriamente o componente de skeleton [***`DefaultLoading`***](./src/components/default-loading.tsx).
+
+- **Layout de Formulário:**: Utilize o componente [***`DefaultFormLayout`***](./src/components/default-form-layout.tsx) como padrão base para garantir a consistência visual em telas de cadastro ou edição.
+
+- **Modelos de Exibição de Dados (Gráficos, Tabelas e Números)**:
+Estes arquivos servem de modelos a serem seguidos e **não devem ser importados**.
+  - [***`GraphArea`***](./src/components/graph-area.tsx): Modelo para gráfico de área.
+  - [***`GraphBarStacked`*** ](./src/components/graph-bar-stacked.tsx): Modelo para gráfico de barras e barras sobrepostas.
+  - [***`GraphBreakParts`***](./src/components/graph-break-parts.tsx): Modelo para gráfico de treemap e distribuição de total.
+  - [***`GraphLines`***](./src/components/graph-lines.tsx): Modelo para gráfico de linhas.
+  - [***`GraphPizza`***](./src/components/graph-pizza.tsx): Modelo para gráfico de pizza.
+  - [***`GraphProgress`***](./src/components/graph-progress.tsx): Modelo para gráfico de progresso do total.
+  - [***`GraphRadial`***](./src/components/graph-radial.tsx): Modelo para gráfico radial.
+  - [***`DefaultNumbersRender`***](./src/components/default-numbers-render.tsx): Modelo para exibição de números e KPIs.
+  - [***`DefaultTable`***](./src/components/default-table.tsx): Modelo para tabelas com paginação e filtros.
+
+- **Hook de API (Padrão)**: Utilize o `TanStack Query` com chaves centralizadas.
+  ```tsx
+  // src/hooks/use-users-api.ts
+  import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+  import { api } from '@/lib/api/client';
+
+  // Query keys centralizadas
+  export const usersKeys = {
+    all: ['users'] as const,
+    lists: () => [...usersKeys.all, 'list'] as const,
+    detail: (id: string) => [...usersKeys.all, 'detail', id] as const,
+  };
+
+  // Hook de Query
+  export function useUsers() {
+    return useQuery({
+      queryKey: usersKeys.lists(),
+      queryFn: async () => {
+        const response = await api.get('/user/list');
+        return response.data;
+      },
+    });
+  }
+
+  // Hook de Mutations
+  export function useUsersApi() {
+    const queryClient = useQueryClient();
+    
+    const createUser = useMutation({
+      mutationFn: (data) => api.post('/user', data),
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: usersKeys.lists() }),
+    });
+    
+    return { createUser };
+  }
+  ```
+
+- **Hook de Formulário (Padrão)**: Utilize o `react-hook-form` com `zod` para validação.
+  ```tsx
+  // src/routes/_private/users/@hooks/use-user-form.ts
+  import { useForm } from 'react-hook-form';
+  import { zodResolver } from '@hookform/resolvers/zod';
+  import { useUsersApi } from '@/hooks/use-users-api';
+  import { userFormSchema, type UserFormData } from '../@interface/user';
+
+  export function useUserForm(initialData?: UserFormData) {
+    const { createUser, updateUser } = useUsersApi();
+    
+    const form = useForm<UserFormData>({
+      resolver: zodResolver(userFormSchema),
+      defaultValues: initialData,
+    });
+    
+    const onSubmit = form.handleSubmit(async (data) => {
+      if (initialData?.id) {
+        await updateUser.mutateAsync(data);
+      } else {
+        await createUser.mutateAsync(data);
+      }
+    });
+    
+    return { form, onSubmit, isPending: createUser.isPending || updateUser.isPending };
+  }
+  ```
+
+- **Criação e Reutilização de Hooks**:
+  **Antes de criar qualquer hook** na pasta `@hooks/` da rota, verifique se já existe na pasta de hooks compartilhados em [***`src/hooks/`***](./src/hooks/).
+
+
+  **Árvore de Decisão**:
+  ```markdown
+    Preciso de `useMachines()` para listar máquinas?
+      └─ Já existe em `src/hooks/use-machines-api.ts`? 
+          ├─ **SIM** → `import { useMachines } from '@/hooks/use-machines-api'`
+          └─ **NÃO** → Criar em `src/hooks/use-machines-api.ts` (reutilizável)
+
+    Preciso de `useMachineForm()` para gerenciar formulário de máquina?
+      └─ É específico da rota de edição de máquina?
+          ├─ **SIM** → Criar em `@hooks/use-machine-form.ts`
+          └─ **NÃO** → Avaliar se deve ir em `src/hooks/`
+  ```
+
+
+  **Hooks Globais Comuns (Top Usage)**:
+  | Hook | Descrição |
+  |---|---|
+  | `use-enterprise-filter.ts` | Obtém `idEnterprise` (empresa ativa) do filtro global. |
+  | `use-sensors-api.ts` | CRUD e listagem de sensores. |
+  | `use-users-api.ts` | Gestão de usuários do sistema. |
+  | `use-machines-api.ts` | Gestão de máquinas e embarcações. |
+  | `use-parts-api.ts` | Gestão de peças/parts. |
+  | `use-auth.ts` | Gestão de sessão, login e token. |
+  | `use-enterprises-api.ts` | CRUD de empresas. |
+  | `use-roles-api.ts` | Gestão de perfis de acesso. |
+  | `use-forms-api.ts` | Gestão de formulários dinâmicos. |
+
+
+
+
+### Criação de pagina:
+
+**1. Definição da Rota**
+
+  ```tsx
+  import { createFileRoute } from "@tanstack/react-router";
+
+  export const Route = createFileRoute("/_private/permissions/users/")({
+    component: ListUsersPage,
+  });
+  ```
+
+**Com validação de Search Params (Opcional):**
+
+  ```tsx
+  import { z } from 'zod';
+
+  const searchSchema = z.object({
+    id: z.string().optional(),
+    filter: z.string().optional(),
+  });
+
+  export const Route = createFileRoute("/_private/machine-list/")({
+    component: MachineListPage,
+    validateSearch: searchSchema,
+  });
+
+  // Dentro do componente:
+  const { id, filter } = useSearch({ from: '/_private/machine-list/' });
+  ```
+
+| Arquivo | Rota Gerada | Descrição / Regra |
+| :--- | :--- | :--- |
+| `index.tsx` | `/` | Define a página raiz do diretório. |
+| `add.tsx` | `/add` | Rota para criação de novos registros. |
+| `$id.tsx` | `/:id` | Rota dinâmica que recebe o ID como parâmetro. |
+| `edit.$id.tsx` | — | **NÃO UTILIZAR.** (Proibido o uso de `.` em arquivos). |
+
+
+**2. Estrutura da Página (Componente)**
+
+  - Páginas ( _definidas pelo uso de `createFileRoute`_ ): Devem obrigatoriamente iniciar com `<Card>` seguido de `<CardHeader>` como estrutura principal.
+
+  - Componentes Comuns: Não podem utilizar componentes de [~~`Card.tsx`~~](./src/components/ui/card.tsx). Devem utilizar exclusivamente as opções de [***`Item.tsx`***](./src/components/ui/item.tsx). Como por exemplo grande parte da tipografia deve ser feita por `<ItemTile>` e `<ItemDescription>`
+
+  1. [***`Card`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Atua como `Shell/Wrapper` principal de página. **Toda rota** deve ser encapsulada por este componente.
+
+  2. [***`CardHeader`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Cabeçalho padrão. Ele recebe como atributo `title` e parametro `children` para elementos de ação (botões, filtros, busca).
+
+  3. [***`CardFooter`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Deve conter a paginação e ações secundárias.
+  
+Exemplo:
+
+  ```tsx
+  import { useTranslation } from 'react-i18next';
+  import { createFileRoute, Link } from '@tanstack/react-router';
+
+  export const Route = createFileRoute('/_private/rota-da-pagina/')({
+    component: MinhaPagina,
+  });
+
+  export function MinhaPagina() {
+    const { t } = useTranslation();
+    const navigate = Route.useNavigate();
+
+    return (
+      <Card>
+        <CardHeader title={t('meu.modulo.titulo')}>
+          <div className="flex items-center gap-2">
+            <Button variant="outline">
+              <Filter className="size-4" />
+              {t('filter')}
+            </Button>
+            <Button onClick={() => {
+              navigate({ to: '/add' } satisfies { to: string })
+            }}>
+              <Plus className="size-4" />
+              {t('btn.novo')}
+            </Button>
+          </div>
+        </CardHeader>
+        
+        <CardContent>
+          <Item>
+            {/* Conteúdo da página */}
+          </Item>
+        </CardContent>
+        
+        <CardFooter layout="multi | single">
+          {/* Ações e paginação */}
+        </CardFooter>
+      </Card>
+    );
+  }
+  ```
+
+### Organização de Rotas e Pastas
+As subpastas `@hooks`, `@interface`, `@components` e `@consts` devem ser criadas na pasta da rota, elas seguem o seguinte proposito:
+
+| Pasta | Conteúdo | Quando Usar |
+|-------|----------|-------------|
+| `@components/` | Componentes React | Elementos visuais utilizados exclusivamente nesta rota. |
+| `@consts/` | Arrays, objetos, enums | Valores `hardcoded` ou que não mudam em runtime |
+| `@hooks/` | Hooks de API e lógica de formulário | Lógica de formulários (useForm) ou queries/mutations de API específicas. |
+| `@interface/` | Types, Interfaces, Schemas Zod | Tipagens TypeScript (Interfaces/Types) e Schemas de validação (Zod). |
+
+```markdown
+src/routes/_private/{module}/
+├── index.tsx                # `Página principal da rota`
+│
+├── {subroute}/              # `Outra pasta`
+│   ├── @components/         # `Componentes específicos da rota`
+│   │   └── {ComponentName}.tsx
+│   │
+│   ├── @consts/             # `Valores fixos, enums`
+│   │   └── {feature}.consts.ts
+│   │
+│   ├── @hooks/              # `Hooks específicos da rota`
+│   │   ├── use-{feature}-form.ts
+│   │   └── use-{feature}-api.ts
+│   │
+│   ├── @interface/          # `Tipos, Interfaces, Schemas Zod`
+│   │   ├── {feature}.types.ts
+│   │   └── {feature}.schema.ts
+│   │
+│   └── index.tsx            # `Página da subrota`
 ```
 
-| Arquivo | Rota Gerada |
-|---------|-------------|
-| `index.tsx` | Gera a pagina raiz |
-| `add.tsx` | Gera a pagina com rota /add |
-| `edit.$id.tsx` | NÃO DEVE SER USADO |
-| `$id.tsx` | Gera a pagina /:id e recebe o id como parametro |
 
-### Como adicionar Search Params com Validação
+ --------- 
 
-```tsx
-import { z } from 'zod';
+### Seletores de Dados (Selects)
+[***`src/components/selects`***](./src/components/selects)
+Os componentes de seleção de dados do sistema encapsulam a lógica de requisição a API, seu loading e tratamento de erro, já estão estilizados com label e icone seguindo o padrão do sistema.
 
-const searchSchema = z.object({
-  id: z.string().optional(),
-  filter: z.string().optional(),
-});
+**Mais usados:**
 
-export const Route = createFileRoute("/_private/machine-list/")({
-  component: MachineListPage,
-  validateSearch: searchSchema,
-});
+| Componente | Descrição |
+| :--- | :--- |
+| `EnterpriseSelect` | Seleção de empresas (Fundamental para filtros globais). |
+| `MachineByEnterpriseSelect` | Seleção de máquinas filtradas pela empresa selecionada. |
+| `SensorByEnterpriseSelect` | Seleção de sensores vinculados a uma empresa. |
+| `ConditionSelect` | Seleção de condições lógicas (Maior que, Igual a, etc.). |
+| `StatusSelect` | Seleção de status de operação ou registro. |
+| `CountrySelect` | Seleção de países. |
 
-// Dentro do componente:
-const { id, filter } = useSearch({ from: '/_private/machine-list/' });
-```
+*(Existem muitos outros seletores específicos no diretório, verifique antes de criar um novo)*
 
-### Padrão de Hook de API
+Recebem como props
+- `mode`: `'single' | 'multi'` (Define se é seleção única ou múltipla).
+- `value`: `string | string[]`
+- `onChange`: `(value) => void`
+- `label?`: `string` (Evitar o uso)
+- `placeholder?`: `string` (Evitar o uso)
+- `disabled?`: `boolean`
+- `clearable?`: `boolean`
 
-```tsx
-// src/hooks/use-users-api.ts
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { api } from '@/lib/api/client';
-
-// Query keys centralizadas
-export const usersKeys = {
-  all: ['users'] as const,
-  lists: () => [...usersKeys.all, 'list'] as const,
-  detail: (id: string) => [...usersKeys.all, 'detail', id] as const,
-};
-
-// Hook de Query
-export function useUsers() {
-  return useQuery({
-    queryKey: usersKeys.lists(),
-    queryFn: async () => {
-      const response = await api.get('/user/list');
-      return response.data;
-    },
-  });
-}
-
-// Hook de Mutations
-export function useUsersApi() {
-  const queryClient = useQueryClient();
-  
-  const createUser = useMutation({
-    mutationFn: (data) => api.post('/user', data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: usersKeys.lists() }),
-  });
-  
-  return { createUser };
-}
-```
-
-### Padrão de Hook de Formulário (em @hooks/)
-
-```tsx
-// src/routes/_private/users/@hooks/use-user-form.ts
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useUsersApi } from '@/hooks/use-users-api';
-import { userFormSchema, type UserFormData } from '../@interface/user';
-
-export function useUserForm(initialData?: UserFormData) {
-  const { createUser, updateUser } = useUsersApi();
-  
-  const form = useForm<UserFormData>({
-    resolver: zodResolver(userFormSchema),
-    defaultValues: initialData,
-  });
-  
-  const onSubmit = form.handleSubmit(async (data) => {
-    if (initialData?.id) {
-      await updateUser.mutateAsync(data);
-    } else {
-      await createUser.mutateAsync(data);
-    }
-  });
-  
-  return { form, onSubmit, isPending: createUser.isPending || updateUser.isPending };
-}
-```
-
-### Ferramentas de Produtividade (OBRIGATÓRIO)
-Utilizamos o **Inlang (Sherlock)** para gerenciar traduções diretamente no VS Code.
+### Ferramentas de Produtividade
+**Inlang (Sherlock)** para gerenciar traduções diretamente no `VS Code`.
 - **Hover**: Passe o mouse sobre uma chave `t("key")` para ver a tradução.
-- **Extração**: Selecione um texto hardcoded e use `Cmd + .` para extrair para uma chave i18n automaticamente.
+- **Extração**: Selecione um texto hardcoded e use `Cmd + .` para extrair para uma chave `i18n` automaticamente.
 - **Lint**: Alertas automáticos para chaves faltando ou traduções idênticas.
 
-Utilize o **Biome** para formatação de código. Antes de fazer commits rode `pnpm run format`.
+**Biome** para formatação de código. Antes de fazer commits rode `pnpm run format`.
 
-Utilize o **TypeScript** para tipagem de código. Antes de fazer commits rode `pnpm run check`.
+**TypeScript** para tipagem de código. Antes de fazer commits rode `pnpm run check`.
 
-Utilize **Tailwind CSS intellisense** para ter as classes disponíveis. Clique Ctrl + Espaço (Windows) ou Cmd + Espaço (Mac) para ver as opções disponíveis estando o cursor dentro de uma className="".
+**Tailwind CSS intellisense** para ter as classes disponíveis. Clique `Ctrl + Espaço` (Windows) ou `Cmd + Espaço` (Mac) para ver as opções disponíveis estando o cursor dentro de uma `className=""`.
 
-## 📋 Checklist de Migração de Página Legada
 
-### 1. Analisar Página Legada
-- [ ] Identificar componentes de seleção (`SelectX`)
-- [ ] Identificar chamadas de API (`Fetch.get/post`)
-- [ ] Identificar campos do formulário
-
-### 2. Verificar Hooks Existentes
-- [ ] Checar [`src/hooks/`](./src/hooks) para hooks de API existentes
-- [ ] Reutilizar se existir, criar se não
-
-### 3. Criar Estrutura
-- [ ] Criar pasta da rota em `src/routes/_private/`
-- [ ] Criar subpastas: `@components/`, `@hooks/`, `@interface/`, `@consts/`
-- [ ] Criar arquivo de rota (`index.tsx`, `add.tsx`, etc.)
-
-### 4. Implementar
-- [ ] Usar componentes de `src/components/ui`
-- [ ] Schemas Zod em `@interface/`
-- [ ] Hook de formulário em `@hooks/` (se necessário)
-- [ ] Página com componentes Shadcn UI, e evitar estilização de componentes
-- [ ] Buscar, adicionar ou usar as traduções em `src/config/translations/*.json`
-
-### 5. Conversões Obrigatórias
-
-| Legado | Novo |
-|--------|------|
-| `@paljs/ui` | `@/components/ui/*` |
-| `react-router-dom` | `@tanstack/react-router` |
-| `react-toastify` | `sonner` |
-| `Fetch.get/post` | `api.get/post` (de `@/lib/api/client`) |
-| `SelectX` | `XSelect` (de `@/components/selects`) |
-| `styled-components` | Tailwind CSS |
-| `window.location.search` | `useSearch` com Zod |
