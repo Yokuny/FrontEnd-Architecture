@@ -1,7 +1,7 @@
 'use client';
 
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
-import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 
 export const description = 'A multiple line chart';
@@ -18,11 +18,11 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: 'var(--color-hue-blue)',
+    color: getChartColor(0),
   },
   mobile: {
     label: 'Mobile',
-    color: 'var(--color-hue-orange)',
+    color: getChartColor(1),
   },
 } satisfies ChartConfig;
 
@@ -46,8 +46,8 @@ export function GraphLines() {
             <CartesianGrid vertical={false} />
             <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => value.slice(0, 3)} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line dataKey="desktop" type="monotone" stroke="var(--color-hue-blue)" strokeWidth={2} dot={false} />
-            <Line dataKey="mobile" type="monotone" stroke="var(--color-hue-orange)" strokeWidth={2} dot={false} />
+            <Line dataKey="desktop" type="monotone" stroke={getChartColor(0)} strokeWidth={2} dot={false} />
+            <Line dataKey="mobile" type="monotone" stroke={getChartColor(1)} strokeWidth={2} dot={false} />
           </LineChart>
         </ChartContainer>
       </ItemContent>

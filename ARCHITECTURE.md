@@ -4,12 +4,13 @@
 
 - **UI & Estilização**: `ShadCN UI` ( localizado em [***`src/components/ui`***](./src/components/ui) ).
   - **Importante**: Evite tags HTML puras estilizadas ou estilizar os componentes `ShadCN`; utilize as propriedades padrão da biblioteca.
+  - **Paleta de Gráficos**: Para manter a consistência em gráficos (Recharts, etc), utilize a função utilitária [***`getChartColor(index)`***](./src/components/ui/chart) Ela cicla entre as cores padrão do Tailwind (Sky, Blue, Indigo, Violet, Purple, Fuchsia, Pink, Rose, Red, Orange, Amber, Yellow, Lime, Green, Emerald, Teal, Cyan) e tons (400, 500, 600...) conforme o índice aumenta, use `index * 2` para ter maior variação das cores.
 
 - **Internacionalização** ( [***`i18n`***](./src/config/i18n.ts) ): **IMPORTANTE**: Toda chave deve ser adicionada aos arquivos [***`pt.json`***](./src/config/translations/pt.json) (Default), [***`en.json`***](./src/config/translations/en.json) e [***`es.json`***](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave exista ou que seja criada nos 3 arquivos**.
 
   Exemplo de uso:
   ```tsx
-  import { useTranslation } from 'react-i18next';
+  import { useTranslation } from 'react-i18nevxt';
 
   function MyComponent() {
     const { t } = useTranslation();
@@ -31,7 +32,7 @@
 
 - **Roteamento**: As rotas são baseadas em **diretórios**. Cada pasta de rota deve conter obrigatoriamente um arquivo `index.tsx` com a estrutura principal. É proibido o uso do caractere `.` para criar rotas aninhadas. Isso garante a integridade funcional do `Breadcrumb` e da `Sidebar`.
 
-- **Tratamento de data**: Exclusivamente por `date-fns`, utilizando sempre o formato `dd MM yy`.
+- **Tratamento de data**: Exclusivamente por `date-fns`, utilizando sempre o formato `dd MM yy` ou `dd MM yyyy HH:mm`.
 
 - **Gerenciamento de Estado**: Utilize **Zustand** para estados globais complexos. Não utilize `localStorage.setItem` diretamente. Utilize o middleware `persist` do Zustand para persistência de dados.
 
@@ -52,6 +53,11 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
   - [***`GraphRadial`***](./src/components/graph-radial.tsx): Modelo para gráfico radial.
   - [***`DefaultNumbersRender`***](./src/components/default-numbers-render.tsx): Modelo para exibição de números e KPIs.
   - [***`DefaultTable`***](./src/components/default-table.tsx): Modelo para tabelas com paginação e filtros.
+
+- **Dicas para Gráficos**:
+  - **NÃO use `mx-auto`** no `ChartContainer` (gera bugs no `ResponsiveContainer`).
+  - Use `getChartColor(index)` para mapear cores dinâmicas.
+  - Utilize `aspect-square` ou `max-h-[XXXpx]` para controlar o tamanho.
 
 - **Hook de API (Padrão)**: Utilize o `TanStack Query` com chaves centralizadas.
   ```tsx
@@ -195,13 +201,14 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
 
   - Páginas ( _definidas pelo uso de `createFileRoute`_ ): Devem obrigatoriamente iniciar com `<Card>` seguido de `<CardHeader>` como estrutura principal.
 
-  - Componentes Comuns: Não podem utilizar componentes de [~~`Card.tsx`~~](./src/components/ui/card.tsx). Devem utilizar exclusivamente as opções de [***`Item.tsx`***](./src/components/ui/item.tsx). Como por exemplo grande parte da tipografia deve ser feita por `<ItemTile>` e `<ItemDescription>`
+  - Componentes Comuns: Não podem utilizar componentes de [~~`Card.tsx`~~](./src/components/ui/card.tsx). Devem utilizar exclusivamente as opções de [***`Item.tsx`***](./src/components/ui/item.tsx).
+    - **Tipagem Padrão**: Toda tipagem de texto comum deve ser feita através dos componentes `<ItemTitle />` e `<ItemDescription />`.
 
   1. [***`Card`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Atua como `Shell/Wrapper` principal de página. **Toda rota** deve ser encapsulada por este componente.
 
   2. [***`CardHeader`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Cabeçalho padrão. Ele recebe como atributo `title` e parametro `children` para elementos de ação (botões, filtros, busca).
 
-  3. [***`CardFooter`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Deve conter a paginação e ações secundárias.
+  3. [***`ItemTitle` e `ItemDescription`***](./src/components/ui/item.tsx): Componentes padrão para títulos e descrições de itens. Devem ser usados em listas, tabelas e detalhes.
   
 Exemplo:
 

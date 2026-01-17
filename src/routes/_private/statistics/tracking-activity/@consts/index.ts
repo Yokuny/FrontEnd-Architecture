@@ -1,3 +1,5 @@
+import { getChartColor } from '@/components/ui/chart';
+
 export const RM_ENTERPRISE_ID = 'ce21881c-6c0d-41b4-ace2-b0d846398b84';
 
 export const DEFAULT_PERIOD_FILTER = 12;
@@ -15,15 +17,15 @@ export const PERIOD_OPTIONS = [
 ];
 
 export const CHART_COLORS = {
-  primary: 'hsl(var(--primary))',
-  chart1: 'hsl(var(--chart-1))',
-  chart2: 'hsl(var(--chart-2))',
-  chart3: 'hsl(var(--chart-3))',
-  chart4: 'hsl(var(--chart-4))',
-  chart5: 'hsl(var(--chart-5))',
+  primary: getChartColor(1), // Blue
+  chart1: getChartColor(1), // Blue
+  chart2: getChartColor(14), // Emerald
+  chart3: getChartColor(3), // Violet
+  chart4: getChartColor(10), // Amber
+  chart5: getChartColor(7), // Rose
 };
 
-export const DEVICE_COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))', 'hsl(var(--chart-5))'];
+export const DEVICE_COLORS = [getChartColor(1), getChartColor(14), getChartColor(3), getChartColor(10), getChartColor(7)];
 
 export const CHART_HEIGHT = 'h-[350px]';
 export const CHART_HEIGHT_LARGE = 'h-[400px]';

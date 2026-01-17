@@ -1,7 +1,7 @@
 'use client';
 
 import { Area, AreaChart, XAxis } from 'recharts';
-import { ChartContainer } from '@/components/ui/chart';
+import { ChartContainer, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemTitle } from '@/components/ui/item';
 
 const data = [
@@ -130,7 +130,7 @@ export function GraphArea() {
         const sanitizedName = sanitizeName(item.name);
         const gradientId = `gradient-${sanitizedName}`;
 
-        const color = item.changeType === 'positive' ? 'var(--positive)' : 'var(--destructive)';
+        const color = item.changeType === 'positive' ? getChartColor(1) : getChartColor(11);
 
         return (
           <Item key={item.name} variant="outline" className="flex-col items-stretch">
@@ -139,12 +139,12 @@ export function GraphArea() {
                 {item.name} <span className="font-normal text-muted-foreground">({item.tickerSymbol})</span>
               </ItemTitle>
               <div className="flex items-baseline justify-between w-full">
-                <ItemTitle className="text-lg font-semibold" style={{ color: item.changeType === 'positive' ? 'var(--positive)' : 'var(--destructive)' }}>
+                <ItemTitle className="text-lg font-semibold" style={{ color: color }}>
                   {item.value}
                 </ItemTitle>
                 <div className="flex items-center space-x-1 text-sm">
                   <span className="font-medium text-foreground">{item.change}</span>
-                  <span style={{ color: item.changeType === 'positive' ? 'var(--positive)' : 'var(--destructive)' }}>({item.percentageChange})</span>
+                  <span style={{ color: color }}>({item.percentageChange})</span>
                 </div>
               </div>
             </ItemContent>

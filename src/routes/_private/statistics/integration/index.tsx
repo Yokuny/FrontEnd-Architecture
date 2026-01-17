@@ -25,8 +25,8 @@ function FleetStatusListPage() {
 
   return (
     <Card>
-      <CardHeader title={t('status-fleet')} />
-      <CardContent className="flex flex-col gap-6">{isLoading ? <DefaultLoading /> : <FleetStatusTable data={data || []} />}</CardContent>
+      <CardHeader title={t('status.fleet')} />
+      <CardContent>{isLoading ? <DefaultLoading /> : <FleetStatusTable data={data || []} />}</CardContent>
     </Card>
   );
 }

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Pie, PieChart } from 'recharts';
 import DefaultEmpty from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
-import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Item, ItemContent, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { useTimeOperationDetails } from '@/hooks/use-statistics-api';
@@ -22,10 +22,10 @@ export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }
 
   const formatData = (seriesData: any[]) => {
     if (!seriesData) return [];
-    return seriesData.map((d) => ({
+    return seriesData.map((d, index) => ({
       name: d.name,
       value: d.y,
-      fill: d.color || 'var(--color-primary)',
+      fill: d.color || getChartColor(index),
     }));
   };
 

@@ -144,7 +144,7 @@ export function FormFieldEditorModal({ open, onOpenChange, field, onSave, idEnte
               </div>
               <div className="flex flex-wrap gap-2">
                 {(data.options || []).map((opt: string, i: number) => (
-                  <Badge key={`${opt}-${i}`} variant="secondary" className="flex items-center gap-1">
+                  <Badge key={`${i}-${opt}`} variant="secondary" className="flex items-center gap-1">
                     {opt}
                     <X className="size-3 cursor-pointer" onClick={() => removeOption(i)} />
                   </Badge>

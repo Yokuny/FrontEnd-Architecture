@@ -5,18 +5,23 @@
 import * as React from 'react';
 import { Label, Pie, PieChart } from 'recharts';
 
-import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 
 export const description = 'A donut chart with text and legend';
 
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-hue-red)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-hue-blue)' },
-  { browser: 'firefox', visitors: 287, fill: 'var(--color-hue-orange)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-hue-cyan)' },
-  { browser: 'other', visitors: 190, fill: 'var(--color-ui-hard)' },
+const data = [
+  { browser: 'chrome', visitors: 275 },
+  { browser: 'safari', visitors: 200 },
+  { browser: 'firefox', visitors: 287 },
+  { browser: 'edge', visitors: 173 },
+  { browser: 'other', visitors: 190 },
 ];
+
+const chartData = data.map((item, index) => ({
+  ...item,
+  fill: getChartColor(index),
+}));
 
 const chartConfig = {
   visitors: {
@@ -24,23 +29,23 @@ const chartConfig = {
   },
   chrome: {
     label: 'Chrome',
-    color: 'var(--color-hue-red)',
+    color: getChartColor(0),
   },
   safari: {
     label: 'Safari',
-    color: 'var(--color-hue-blue)',
+    color: getChartColor(1),
   },
   firefox: {
     label: 'Firefox',
-    color: 'var(--color-hue-orange)',
+    color: getChartColor(2),
   },
   edge: {
     label: 'Edge',
-    color: 'var(--color-hue-cyan)',
+    color: getChartColor(3),
   },
   other: {
     label: 'Other',
-    color: 'var(--color-ui-hard)',
+    color: getChartColor(4),
   },
 } satisfies ChartConfig;
 
@@ -56,7 +61,8 @@ export function GraphPizza() {
         <ItemDescription>Description</ItemDescription>
       </ItemHeader>
       <ItemContent>
-        <ChartContainer config={chartConfig} className="max-h-[300px]">
+        {/* IMPORTANT: Do not use 'mx-auto' in ChartContainer className as it breaks the ResponsiveContainer layout */}
+        <ChartContainer config={chartConfig} className="aspect-square max-h-[300px]">
           <PieChart>
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
             <Pie data={chartData} dataKey="visitors" nameKey="browser" innerRadius={60} strokeWidth={5}>

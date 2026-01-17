@@ -58,9 +58,29 @@ Antes de codar, mapeie os arquivos originais.
 | `<Button status="Danger">` | `<Button variant="destructive">` | `@/components/ui/button` |
 | `EvaIcon` (`flag`) | `Flag` (Lucide) | `import { Flag } from 'lucide-react'` |
 | `ListPaginated` | `<Item>` + `<Pagination>` | Ver `src/components/ui/item.tsx` |
-| `toastr.success` | `toast.success` | `sonner` |
+| `span.font-bold` | `<ItemTitle className="text-base">` | `@/components/ui/item` |
+| `span.text-[10px]` | `<ItemDescription className="text-xs">` | `@/components/ui/item` |
+| `div.flex.flex-col` | `<ItemContent>` | Vertical stack de textos |
+| `div.flex.justify-between` | `<ItemHeader>` / `<ItemFooter>` | Alinhamento horizontal de topo/base |
+| `div.flex.items-center.gap-2` | `<ItemActions>` | Alinhamento de botões/ações |
+| `div.icon-container` | `<ItemMedia variant="icon">` | Container de ícones |
 | `styled-components` | `className="flex gap-2 ..."` | Tailwind CSS |
 | `Modal` | `Dialog` | <Dialog > |
+| `status="Success"` | `emerald-500` / `green-500` | `getChartColor(14)` (Emerald 400) |
+| `status="Info"` | `blue-500` / `cyan-500` | `getChartColor(1)` (Blue 400) |
+| `status="Warning"` | `amber-500` / `orange-500` | `getChartColor(10)` (Amber 400) |
+| `status="Danger"` | `red-500` / `rose-500` | `getChartColor(8)` (Red 400) |
+
+### 🎨 Cores do Sistema (Tailwind Default Colors)
+*Utilizar classes padrão do Tailwind (ex: `text-blue-500`, `bg-emerald-600`)*
+
+Sempre converta cores fixas ou status do legado para cores padrão do Tailwind:
+- **Sucesso / Positivo**: `emerald` ou `green`.
+- **Informativo / Neutro**: `blue` ou `cyan`.
+- **Alerta / Atenção**: `amber` ou `orange`.
+- **Crítico / Perigo**: `red` ou `rose`.
+- **Especiais**: Utilize a paleta estendida (violet, pink, indigo, teal, lime, etc).
+- **Gráficos Dinâmicos**: Use `getChartColor(index)` de `@/components/ui/chart` para obter cores automáticas.
 
 ---
 
@@ -82,7 +102,7 @@ Antes de codar, mapeie os arquivos originais.
 - [ ] **Shell**: Estrutura `Card > CardHeader > CardContent`.
 - [ ] **Filtros**: Componentes de filtro atualizando a URL (`navigate({ search })`).
 - [ ] **Lista**: Mapear dados para componente `<Item>`.
-    - Usar `<ItemTitle>`, `<ItemDescription>`.
+    - Usar `<ItemTitle>`, `<ItemDescription>` para a tipagem de texto.
     - Adicionar Ações (Edit/Delete) em `<DropdownMenu>`.
 - [ ] **Form**: Layout responsivo com Tailwind (ex: `grid-cols-1 md:grid-cols-2`).
 

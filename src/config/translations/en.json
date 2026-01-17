@@ -1050,6 +1050,7 @@
   "setup.sensor.course": "Course sensor",
   "sensor.consume": "Consumption sensor",
   "fleet": "Fleet",
+  "status.fleet": "Fleet Status",
   "fleet.manager": "Fleet Manager",
   "fleet.map": "Fleet Map",
   "fleet.map.description": "Visualize your fleet in real time on the map.",

@@ -95,7 +95,7 @@ export function VoyageDetailsPanel() {
           </div>
           <div className="grid grid-cols-2 gap-2">
             {analytics.map((a: any, i: number) => (
-              <div key={i} className="p-2 rounded-md bg-accent/20 border border-primary/5">
+              <div key={`${a.id}-${i}`} className="p-2 rounded-md bg-accent/20 border border-primary/5">
                 <p className="text-[10px] text-muted-foreground uppercase font-bold truncate">{a.description}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-sm font-bold">{a.value}</span>
@@ -115,7 +115,7 @@ export function VoyageDetailsPanel() {
           </div>
           <div className="space-y-4 ml-2 border-l-2 border-primary/10 pl-4 relative">
             {timeline.map((event: any, i: number) => (
-              <div key={i} className="relative">
+              <div key={`${event.type}-${i}`} className="relative">
                 <div className="absolute -left-[21px] top-1 size-2 rounded-full bg-primary" />
                 <div className="flex flex-col gap-0.5">
                   <span className="text-[10px] text-muted-foreground uppercase font-bold">{event.type}</span>

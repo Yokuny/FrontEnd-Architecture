@@ -3,42 +3,43 @@
 // extraido de https://rosencharts.com/
 
 import { useMemo } from 'react';
+import { getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-const chartData = [
+const data = [
   {
     key: 'Utils',
     value: 17.1,
-    color: 'var(--color-hue-violet)',
   },
   {
     key: 'Tech',
     value: 14.3,
-    color: 'var(--color-hue-blue)',
   },
   {
     key: 'Energy',
     value: 27.1,
-    color: 'var(--color-hue-orange)',
   },
   {
     key: 'Cyclicals',
     value: 42.5,
-    color: 'var(--color-hue-cyan)',
   },
   {
     key: 'Fuel',
     value: 12.7,
-    color: 'var(--color-hue-amber)',
   },
 ];
+
+const chartData = data.map((item, index) => ({
+  ...item,
+  color: getChartColor(index),
+}));
 
 export function GraphBreakParts() {
   const barHeight = 60;
   const cornerRadius = 8;
 
-  const { processedData, totalValue } = useMemo(() => {
+  const { processedData } = useMemo(() => {
     const total = chartData.reduce((acc, d) => acc + d.value, 0);
     let cumulativeWidth = 0;
 
@@ -63,7 +64,7 @@ export function GraphBreakParts() {
       };
     });
 
-    return { processedData: data, totalValue: total };
+    return { processedData: data };
   }, []);
 
   return (

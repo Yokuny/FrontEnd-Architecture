@@ -56,7 +56,10 @@ export function FleetContactsPanel() {
             <div className="text-xs text-muted-foreground italic p-4 text-center">{t('no.contacts')}</div>
           ) : (
             data.contacts.map((contact: any, i: number) => (
-              <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-accent/30 border border-primary/5 group hover:bg-accent/50 transition-colors">
+              <div
+                key={`${contact.id}-${i}`}
+                className="flex items-center justify-between p-3 rounded-lg bg-accent/30 border border-primary/5 group hover:bg-accent/50 transition-colors"
+              >
                 <div className="flex flex-col">
                   <span className="text-xs font-bold">{contact.name}</span>
                   <span className="text-[10px] text-muted-foreground tabular-nums font-medium">{contact.phone || '-'}</span>

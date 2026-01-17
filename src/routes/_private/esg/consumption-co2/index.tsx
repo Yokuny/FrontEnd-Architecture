@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { format } from 'date-fns';
-import { CalendarIcon, Cpu, Search } from 'lucide-react';
+import { CalendarIcon, Search } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultLoading from '@/components/default-loading';
@@ -8,13 +8,13 @@ import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enter
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { DataMultiSelect } from '@/components/ui/data-multi-select';
+
 import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useConsumptionCO2, useConsumptionMachines } from '@/hooks/use-esg-api';
+import { useConsumptionCO2 } from '@/hooks/use-esg-api';
 import { cn } from '@/lib/utils';
 import { ConsumptionCO2Table } from './@components/ConsumptionCO2Table';
 import { ConsumptionCO2Totals } from './@components/ConsumptionCO2Totals';
@@ -37,9 +37,6 @@ function ConsumptionCO2Page() {
   const [dateMax, setDateMax] = useState<Date>(new Date());
   const [selectedUnit, setSelectedUnit] = useState('L');
   const [selectedMachines, setSelectedMachines] = useState<string[]>([]);
-
-  // Specialized machine query for consumption module (ensure correct IDs)
-  const machinesQuery = useConsumptionMachines(idEnterprise);
 
   // Use a state for applied filters to make search manual like legacy
   const [appliedFilters, setAppliedFilters] = useState<any>({

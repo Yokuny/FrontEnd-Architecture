@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface CMMSPieChartProps {
@@ -8,8 +7,6 @@ interface CMMSPieChartProps {
 }
 
 export function CMMSPieChart({ title, data, colors }: CMMSPieChartProps) {
-  const { t } = useTranslation();
-
   return (
     <div className="flex flex-col gap-4 items-center">
       <h3 className="text-sm font-bold text-center">{title}</h3>
@@ -18,7 +15,7 @@ export function CMMSPieChart({ title, data, colors }: CMMSPieChartProps) {
           <PieChart>
             <Pie data={data} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
               {data.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                <Cell key={`${index}-${data[index].name}`} fill={colors[index % colors.length]} />
               ))}
             </Pie>
             <Tooltip />

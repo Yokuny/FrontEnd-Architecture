@@ -69,7 +69,7 @@ export function FleetCamerasPanel() {
         <ItemContent className="grid grid-cols-2 gap-2 p-2 bg-accent/20 rounded-lg border border-primary/5">
           {validCameras.map((camera: any, index: number) => (
             <Button
-              key={camera.name + index}
+              key={`${camera.name}-${index}`}
               variant={activeCamera === index || (activeCamera === null && index === 0) ? 'default' : 'secondary'}
               onClick={() => setActiveCamera(index)}
               className="justify-start gap-2 h-10 px-3 uppercase text-[9px] font-bold tracking-tight"

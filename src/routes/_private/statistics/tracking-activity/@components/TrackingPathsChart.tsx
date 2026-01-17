@@ -4,14 +4,14 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Label, Pie, PieChart } from 'recharts';
 import DefaultEmptyData from '@/components/default-empty-data';
-import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTrackingPaths } from '@/hooks/use-tracking-activity-api';
 import { CHART_HEIGHT_LARGE, TOP_BAR_LIMIT } from '../@consts';
 import type { TrackingFilters, TrackingPathData } from '../@interface';
 
-const PATH_COLORS = ['var(--color-hue-blue)', 'var(--color-hue-violet)', 'var(--color-hue-emerald)', 'var(--color-hue-orange)', 'var(--color-hue-cyan)', 'var(--color-hue-pink)'];
+const PATH_COLORS = Array.from({ length: 10 }, (_, i) => getChartColor(i * 2));
 
 export function TrackingPathsChart({ filters }: TrackingPathsChartProps) {
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import DefaultEmptyData from '@/components/default-empty-data';
-import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTrackingUserAccessDay } from '@/hooks/use-tracking-activity-api';
@@ -54,11 +54,11 @@ export function UserAccessDayChart({ filters }: UserAccessDayChartProps) {
   const chartConfig = {
     system: {
       label: `${totals.system} - ${t('system')}`,
-      color: 'var(--color-hue-blue)',
+      color: getChartColor(0),
     },
     whatsapp: {
       label: `${totals.whatsapp} - WhatsApp`,
-      color: 'var(--color-hue-green)',
+      color: getChartColor(13),
     },
   } satisfies ChartConfig;
 
@@ -84,8 +84,8 @@ export function UserAccessDayChart({ filters }: UserAccessDayChartProps) {
               <ChartTooltip content={<ChartTooltipContent hideLabel />} />
               <ChartLegend content={<ChartLegendContent />} />
 
-              <Bar dataKey="system" stackId="a" fill="var(--color-hue-blue)" radius={[0, 0, 4, 4]} />
-              <Bar dataKey="whatsapp" stackId="a" fill="var(--color-hue-green)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="system" stackId="a" fill={getChartColor(0)} radius={[0, 0, 4, 4]} />
+              <Bar dataKey="whatsapp" stackId="a" fill={getChartColor(13)} radius={[4, 4, 0, 0]} />
             </BarChart>
           </ChartContainer>
         )}

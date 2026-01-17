@@ -98,33 +98,44 @@ code {
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.708 0 0);
-  /* Chart Colors (Default/Light) */
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
 
-  /* Espectro Universal (L C H) */
-  --hue-red: 0.60 0.20 25;
-  --hue-orange: 0.70 0.20 45;
-  --hue-amber: 0.80 0.15 75;
-  --hue-yellow: 0.85 0.15 95;
-  --hue-lime: 0.85 0.20 125;
-  --hue-green: 0.70 0.15 145;
-  --hue-emerald: 0.65 0.15 165;
-  --hue-teal: 0.65 0.12 195;
-  --hue-cyan: 0.70 0.12 220;
-  --hue-blue: 0.60 0.18 255;
-  --hue-indigo: 0.55 0.18 280;
-  --hue-violet: 0.60 0.20 300;
-  --hue-pink: 0.65 0.20 330;
-  --hue-rose: 0.60 0.20 0;
+  /* Chart Colors Safelist for dynamic var(--color-*) usage */
+  --color-sky-400: theme('colors.sky.400');
+  --color-blue-400: theme('colors.blue.400');
+  --color-indigo-400: theme('colors.indigo.400');
+  --color-violet-400: theme('colors.violet.400');
+  --color-purple-400: theme('colors.purple.400');
+  --color-fuchsia-400: theme('colors.fuchsia.400');
+  --color-pink-400: theme('colors.pink.400');
+  --color-rose-400: theme('colors.rose.400');
+  --color-red-400: theme('colors.red.400');
+  --color-orange-400: theme('colors.orange.400');
+  --color-amber-400: theme('colors.amber.400');
+  --color-yellow-400: theme('colors.yellow.400');
+  --color-lime-400: theme('colors.lime.400');
+  --color-green-400: theme('colors.green.400');
+  --color-emerald-400: theme('colors.emerald.400');
+  --color-teal-400: theme('colors.teal.400');
+  --color-cyan-400: theme('colors.cyan.400');
 
-  /* Neutros de Interface */
-  --ui-soft: 0.97 0.01 250;
-  --ui-medium: 0.90 0.02 250;
-  --ui-hard: 0.40 0.02 250;
+  /* Shades 500 for the second cycle */
+  --color-sky-500: theme('colors.sky.500');
+  --color-blue-500: theme('colors.blue.500');
+  --color-indigo-500: theme('colors.indigo.500');
+  --color-violet-500: theme('colors.violet.500');
+  --color-purple-500: theme('colors.purple.500');
+  --color-fuchsia-500: theme('colors.fuchsia.500');
+  --color-pink-500: theme('colors.pink.500');
+  --color-rose-500: theme('colors.rose.500');
+  --color-red-500: theme('colors.red.500');
+  --color-orange-500: theme('colors.orange.500');
+  --color-amber-500: theme('colors.amber.500');
+  --color-yellow-500: theme('colors.yellow.500');
+  --color-lime-500: theme('colors.lime.500');
+  --color-green-500: theme('colors.green.500');
+  --color-emerald-500: theme('colors.emerald.500');
+  --color-teal-500: theme('colors.teal.500');
+  --color-cyan-500: theme('colors.cyan.500');
 
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.141 0.005 285.823);
@@ -155,33 +166,6 @@ code {
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  /* Chart Colors (Dark) */
-  --chart-1: oklch(0.7 0.15 251.813);
-  --chart-2: oklch(0.6 0.18 259.815);
-  --chart-3: oklch(0.5 0.2 262.881);
-  --chart-4: oklch(0.45 0.2 264.376);
-  --chart-5: oklch(0.4 0.18 265.638);
-
-  /* Espectro Universal (Ajustado para Dark) */
-  --hue-red: 0.65 0.18 25;
-  --hue-orange: 0.75 0.18 45;
-  --hue-amber: 0.85 0.12 75;
-  --hue-yellow: 0.90 0.12 95;
-  --hue-lime: 0.90 0.18 125;
-  --hue-green: 0.75 0.12 145;
-  --hue-emerald: 0.70 0.12 165;
-  --hue-teal: 0.70 0.10 195;
-  --hue-cyan: 0.75 0.10 220;
-  --hue-blue: 0.65 0.15 255;
-  --hue-indigo: 0.60 0.15 280;
-  --hue-violet: 0.65 0.18 300;
-  --hue-pink: 0.70 0.18 330;
-  --hue-rose: 0.65 0.18 0;
-
-  /* Neutros Dark */
-  --ui-soft: 0.25 0.02 250;
-  --ui-medium: 0.35 0.02 250;
-  --ui-hard: 0.85 0.01 250;
 
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
@@ -212,14 +196,8 @@ code {
   --destructive-foreground: #f1f5f9;
   --border: #334155;
   --input: #4e617b;
-  --ring: #38bdf8;
-  --chart-1: #38bdf8;
-  --chart-2: #22c55e;
-  --chart-3: #fbbf24;
-  --chart-4: #f87171;
-  --chart-5: #6366f1;
+  --ring: #38bdf8; 
 
-  /* Hue Ocean Blue overrides if needed, using universal fallback for now */
   --sidebar: #0f172a;
   --sidebar-foreground: #f1f5f9;
   --sidebar-primary: #38bdf8;
@@ -250,14 +228,9 @@ code {
   --input: oklch(0.93 0.04 40.57);
   --ring: oklch(0.74 0.16 34.57);
   --radius: 0;
-  --chart-1: #38bdf8;
-  --chart-2: #34d399;
-  --chart-3: #fbbf24;
-  --chart-4: #f87171;
-  --chart-5: #334155;
+  --radius: 0;
 
   /* Hue Sunset overrides */
-  --hue-orange: 0.65 0.15 35; 
   --sidebar: oklch(0.97 0.02 44.86);
   --sidebar-foreground: oklch(0.34 0.01 7.89);
   --sidebar-primary: oklch(0.74 0.16 34.57);
@@ -288,33 +261,6 @@ code {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-
-  /* Hue Spectrum */
-  --color-hue-red: oklch(var(--hue-red));
-  --color-hue-orange: oklch(var(--hue-orange));
-  --color-hue-amber: oklch(var(--hue-amber));
-  --color-hue-yellow: oklch(var(--hue-yellow));
-  --color-hue-lime: oklch(var(--hue-lime));
-  --color-hue-green: oklch(var(--hue-green));
-  --color-hue-emerald: oklch(var(--hue-emerald));
-  --color-hue-teal: oklch(var(--hue-teal));
-  --color-hue-cyan: oklch(var(--hue-cyan));
-  --color-hue-blue: oklch(var(--hue-blue));
-  --color-hue-indigo: oklch(var(--hue-indigo));
-  --color-hue-violet: oklch(var(--hue-violet));
-  --color-hue-pink: oklch(var(--hue-pink));
-  --color-hue-rose: oklch(var(--hue-rose));
-
-  /* UI Neutrals */
-  --color-ui-soft: oklch(var(--ui-soft));
-  --color-ui-medium: oklch(var(--ui-medium));
-  --color-ui-hard: oklch(var(--ui-hard));
-
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

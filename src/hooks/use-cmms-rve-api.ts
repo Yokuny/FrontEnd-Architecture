@@ -13,7 +13,7 @@ export function useCMMSKPIs(filters: any) {
   return useQuery({
     queryKey: cmmsKeys.kpis(filters),
     queryFn: async () => {
-      const response = await api.get(`/formdata/data/${FORM_ID}`, {
+      const response = await api.get<any[]>(`/formdata/data/${FORM_ID}`, {
         params: {
           fieldDate: 'dataAbertura',
           isNotDeletedDate: 'true',

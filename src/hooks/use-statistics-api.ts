@@ -18,6 +18,7 @@ export interface TimeOperationData {
     status: string;
     minutes: number;
     distance: number;
+    [key: string]: any;
   }[];
   [key: string]: any; // For dynamic status percentages
 }
@@ -49,6 +50,7 @@ export function useTimeOperationDetails(idMachine: string | undefined, filters: 
 export interface FleetStatusData {
   name: string;
   date: string;
+  createAt?: string;
   dataSheet?: {
     imo?: string;
     mmsi?: string;
@@ -57,6 +59,13 @@ export interface FleetStatusData {
   eta?: string;
   destiny?: string;
   integration?: string;
+  typeIntegration?: string;
+  extra?: {
+    api?: string;
+  };
+  image?: {
+    url?: string;
+  };
   [key: string]: any;
 }
 

@@ -3,7 +3,6 @@ import { Users } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import DefaultEmptyData from '@/components/default-empty-data';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { Item, ItemGroup } from '@/components/ui/item';

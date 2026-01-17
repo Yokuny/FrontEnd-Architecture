@@ -9,6 +9,7 @@ import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { getChartColor } from '@/components/ui/chart';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -66,7 +67,7 @@ function KPISCMMSPage() {
   const chartData = useMemo(() => {
     if (!data) return null;
     const osOpen = data.filter((x: any) => !x.dataConclusao).length;
-    const osClosed = data.filter((x: any) => x.dataConclusao).length;
+    const osClosed = data?.filter((x: any) => x.dataConclusao).length;
 
     return [
       { name: t('open'), value: osOpen },
@@ -157,7 +158,7 @@ function KPISCMMSPage() {
             {chartData && (
               <Card className="border shadow-none">
                 <CardContent className="pt-6">
-                  <CMMSPieChart title={t('tasks.open.vs.closed')} data={chartData} colors={['hsl(var(--destructive))', 'hsl(var(--primary))']} />
+                  <CMMSPieChart title={t('tasks.open.vs.closed')} data={chartData} colors={[getChartColor(11), getChartColor(0)]} />
                 </CardContent>
               </Card>
             )}

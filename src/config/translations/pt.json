@@ -1072,6 +1072,7 @@
   "support.time.first.label.placeholder": "Horas primeiro atendimento HH:mm",
   "setup.sensor.course": "Sensor de Rumo",
   "fleet": "Frota",
+  "status.fleet": "Status da Frota",
   "fleet.manager": "Gestão de Frota",
   "fleet.map": "Mapa da Frota",
   "fleet.map.description": "Visualize sua frota em tempo real no mapa.",

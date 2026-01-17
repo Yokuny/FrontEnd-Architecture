@@ -1,60 +1,114 @@
-import { format } from 'date-fns';
+import { differenceInHours, format, isValid } from 'date-fns';
 import { Anchor, MapPin, Ship } from 'lucide-react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import EmptyData from '@/components/default-empty-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
+import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import type { FleetStatusData } from '@/hooks/use-statistics-api';
-
-interface FleetStatusTableProps {
-  data: FleetStatusData[];
-}
+import { INTEGRATION_OPTIONS } from '../@consts/integration.consts';
 
 export function FleetStatusTable({ data }: FleetStatusTableProps) {
   const { t } = useTranslation();
 
-  const columns: DataTableColumn<FleetStatusData>[] = [
+  const getColorUpdate = (date?: string) => {
+    if (!date) return undefined;
+
+    const dateObj = new Date(date);
+    if (!isValid(dateObj)) return undefined;
+
+    const hours = differenceInHours(new Date(), dateObj);
+
+    if (hours >= 14) {
+      return {
+        text: t('to.check'),
+        className: 'bg-destructive text-white hover:bg-destructive/80',
+      };
+    }
+
+    if (hours >= 8) {
+      return {
+        text: t('worrisome'),
+        className: 'bg-destructive text-white hover:bg-destructive/80',
+      };
+    }
+
+    if (hours >= 4) {
+      return {
+        text: t('warn'),
+        className: 'bg-warning text-warning-foreground hover:bg-warning/80',
+      };
+    }
+
+    return undefined;
+  };
+
+  const columns: DataTableColumn<any>[] = [
     {
       key: 'dataSheet',
       header: t('image'),
       width: '80px',
       render: (value, row) => (
-        <Avatar className="size-10 border">
-          <AvatarImage src={value?.image?.url} alt={row.name} />
-          <AvatarFallback className="bg-primary/10 text-primary">
+        <Avatar className="size-12">
+          <AvatarImage src={value?.image?.url || row.image?.url} alt={row.name} />
+          <AvatarFallback>
             <Ship className="size-5" />
           </AvatarFallback>
         </Avatar>
       ),
     },
     {
-      key: 'name',
+      key: 'name_search',
       header: t('name'),
-      render: (value, row) => (
-        <div className="flex flex-col">
-          <span className="font-bold text-sm tracking-tight">{value || '-'}</span>
-          {(row.dataSheet?.imo || row.dataSheet?.mmsi) && (
-            <span className="text-[10px] text-muted-foreground font-mono uppercase">{row.dataSheet?.imo ? `IMO: ${row.dataSheet.imo}` : `MMSI: ${row.dataSheet?.mmsi}`}</span>
+      render: (_, row) => (
+        <ItemContent>
+          <ItemTitle className="text-base">{row.name || '-'}</ItemTitle>
+          <div className="flex gap-2">
+            {row.dataSheet?.mmsi && <ItemDescription className="text-xs uppercase">MMSI: {row.dataSheet.mmsi}</ItemDescription>}
+            {row.dataSheet?.imo && <ItemDescription className="text-xs uppercase">IMO: {row.dataSheet.imo}</ItemDescription>}
+          </div>
+          {row.createAt && (
+            <ItemDescription className="text-xs">
+              {t('create.at')}: {format(new Date(row.createAt), 'dd-MM-yyyy HH:mm')}
+            </ItemDescription>
           )}
-        </div>
+        </ItemContent>
       ),
       sortable: true,
     },
     {
       key: 'date',
       header: t('last.date.acronym'),
-      render: (value) => (
-        <div className="flex flex-col gap-1">
-          <span className="text-sm font-mono">{value ? format(new Date(value), 'dd/MM/yyyy') : '-'}</span>
-          <span className="text-[10px] text-muted-foreground font-mono">{value ? format(new Date(value), 'HH:mm') : ''}</span>
-        </div>
-      ),
+      render: (value) => {
+        const dateObj = value ? new Date(value) : null;
+        const colorUpdate = getColorUpdate(value);
+        const dateValid = dateObj && isValid(dateObj);
+
+        return (
+          <ItemContent>
+            <ItemTitle className={`${colorUpdate ? 'text-destructive' : ''}`}>{dateValid ? format(dateObj, 'dd MM yyyy') : '-'}</ItemTitle>
+            {dateValid && <ItemDescription className={`${colorUpdate ? 'text-destructive' : ''}`}>{format(dateObj, 'HH:mm')}</ItemDescription>}
+          </ItemContent>
+        );
+      },
       sortable: true,
     },
     {
       key: 'eta',
       header: 'ETA',
-      render: (value) => <span className="text-sm font-mono">{value || '-'}</span>,
+      render: (value) => {
+        const dateObj = value ? new Date(value) : null;
+        const dateValid = dateObj && isValid(dateObj);
+        return (
+          <ItemContent>
+            <ItemTitle className="font-mono text-sm">{dateValid ? format(dateObj, 'dd MM yyyy') : '-'}</ItemTitle>
+            {dateValid && <ItemDescription>{format(dateObj, 'HH:mm')}</ItemDescription>}
+          </ItemContent>
+        );
+      },
+      sortable: true,
     },
     {
       key: 'destiny',
@@ -62,37 +116,73 @@ export function FleetStatusTable({ data }: FleetStatusTableProps) {
       render: (value) => (
         <div className="flex items-center gap-2">
           <Anchor className="size-3 text-muted-foreground" />
-          <span className="text-sm">{value || '-'}</span>
+          <ItemDescription className="text-sm">{value || '-'}</ItemDescription>
         </div>
       ),
     },
     {
       key: 'integration',
       header: t('integration'),
-      render: (value) => (
-        <div className="flex items-center gap-2">
-          <MapPin className="size-3 text-muted-foreground" />
-          <span className="text-sm">{value || '-'}</span>
-        </div>
-      ),
+      render: (value, row) => {
+        const option = INTEGRATION_OPTIONS.find((opt) => opt.value === row.extra?.api);
+        return (
+          <ItemContent>
+            {row.typeIntegration && (
+              <Badge variant={row.typeIntegration === 'MIDDLEWARE' ? 'default' : 'secondary'} className="w-fit h-4 px-2 py-0 text-[10px]">
+                {row.typeIntegration}
+              </Badge>
+            )}
+            <div className="flex min-w-[120px] items-center gap-2">
+              <MapPin className="size-3 text-muted-foreground" />
+              <ItemDescription className="text-sm">{option ? `${option.label} (${option.value})` : value || '-'}</ItemDescription>
+            </div>
+          </ItemContent>
+        );
+      },
+    },
+    {
+      key: 'status',
+      header: t('status'),
+      render: (_, row) => {
+        const colorUpdate = getColorUpdate(row.date);
+        if (!colorUpdate) return '-';
+        return <Badge className={`px-2 text-xs ${colorUpdate.className}`}>{colorUpdate.text}</Badge>;
+      },
     },
   ];
+
+  const displayData = useMemo(() => {
+    if (!data) return [];
+    return [...data]
+      .map((item) => ({
+        ...item,
+        name_search: `${item.name} ${item.dataSheet?.mmsi || ''} ${item.dataSheet?.imo || ''}`,
+      }))
+      .sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+        return dateB - dateA;
+      });
+  }, [data]);
 
   if (!data || data.length === 0) {
     return <EmptyData />;
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
-      <DataTable
-        data={data}
-        columns={columns}
-        bordered={false}
-        searchable={true}
-        searchPlaceholder={t('search.placeholder')}
-        className="border-none shadow-none py-0"
-        itemsPerPage={20}
-      />
-    </div>
+    <DataTable
+      className="p-0 border-none"
+      compact
+      bordered={false}
+      data={displayData}
+      columns={columns}
+      searchable={true}
+      searchPlaceholder={t('search.placeholder')}
+      itemsPerPage={20}
+    />
   );
+}
+
+interface FleetStatusTableProps {
+  data: FleetStatusData[];
 }

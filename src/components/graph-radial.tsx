@@ -2,12 +2,12 @@
 
 import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts';
 
-import { type ChartConfig, ChartContainer } from '@/components/ui/chart';
+import { type ChartConfig, ChartContainer, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 
 export const description = 'A radial chart with a custom shape';
 
-const chartData = [{ browser: 'safari', visitors: 1260, fill: 'var(--color-hue-blue)' }];
+const chartData = [{ browser: 'safari', visitors: 1260, fill: getChartColor(0) }];
 
 const chartConfig = {
   visitors: {
@@ -15,7 +15,7 @@ const chartConfig = {
   },
   safari: {
     label: 'Safari',
-    color: 'var(--color-hue-blue)',
+    color: getChartColor(0),
   },
 } satisfies ChartConfig;
 

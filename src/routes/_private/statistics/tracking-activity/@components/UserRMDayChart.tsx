@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import DefaultEmptyData from '@/components/default-empty-data';
-import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTrackingUserRMDay } from '@/hooks/use-tracking-activity-api';
@@ -40,11 +40,11 @@ export function UserRMDayChart({ filters }: UserRMDayChartProps) {
   const chartConfig = {
     accesses: {
       label: `${totals.accesses} - ${t('access.day')}`,
-      color: 'var(--color-hue-cyan)',
+      color: getChartColor(5),
     },
     users: {
       label: `${totals.users} - ${t('users')}`,
-      color: 'var(--color-hue-violet)',
+      color: getChartColor(2),
     },
   } satisfies ChartConfig;
 
@@ -70,8 +70,8 @@ export function UserRMDayChart({ filters }: UserRMDayChartProps) {
                 <YAxis tickLine={false} axisLine={false} tickMargin={10} hide />
                 <ChartTooltip content={<ChartTooltipContent hideLabel />} />
                 <ChartLegend content={<ChartLegendContent />} />
-                <Bar dataKey="accesses" fill="var(--color-hue-cyan)" radius={[0, 0, 4, 4]} />
-                <Bar dataKey="users" fill="var(--color-hue-violet)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="accesses" fill={getChartColor(5)} radius={[0, 0, 4, 4]} />
+                <Bar dataKey="users" fill={getChartColor(2)} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ChartContainer>
             <ItemFooter className="flex-wrap items-center justify-center gap-6 p-4 mt-4">

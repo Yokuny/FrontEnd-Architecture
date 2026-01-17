@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';
+import { getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -10,7 +11,7 @@ import { useTrackingUsers } from '@/hooks/use-tracking-activity-api';
 import { CHART_HEIGHT_LARGE } from '../@consts';
 import type { TrackingFilters, TrackingUserData } from '../@interface';
 
-const BREAK_COLORS = ['var(--color-hue-blue)', 'var(--color-hue-violet)', 'var(--color-hue-emerald)', 'var(--color-hue-orange)', 'var(--color-hue-cyan)'];
+const BREAK_COLORS = Array.from({ length: 5 }, (_, i) => getChartColor(i * 3));
 
 export function UsersChart({ filters }: UsersChartProps) {
   const { t } = useTranslation();
@@ -54,7 +55,7 @@ export function UsersChart({ filters }: UsersChartProps) {
         key: 'others',
         label: t('others'),
         value: othersTotal,
-        color: 'var(--color-ui-hard)',
+        color: 'var(--color-slate-500)',
         width: barWidth,
         left: xPosition,
       });
@@ -103,7 +104,7 @@ export function UsersChart({ filters }: UsersChartProps) {
                         }}
                       >
                         <div
-                          className="w-full h-full shadow-sm border-y border-white/5 first:border-l last:border-r"
+                          className="w-full h-full border-y border-white/5 first:border-l last:border-r"
                           style={{
                             backgroundColor: d.color,
                             borderRadius: d.borderRadius,

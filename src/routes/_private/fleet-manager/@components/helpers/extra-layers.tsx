@@ -29,7 +29,7 @@ export function ExtraLayers() {
         geofences
           ?.filter((f) => f.location?.coordinates?.length)
           ?.map((f, i) => (
-            <Polygon key={`fence-${i}`} color={f.color} positions={f.location.coordinates} weight={1} dashArray="5,5">
+            <Polygon key={`${i}-fence`} color={f.color} positions={f.location.coordinates} weight={1} dashArray="5,5">
               {showNameFence && <Tooltip permanent>{f.name}</Tooltip>}
               <Popup>{f.name}</Popup>
             </Polygon>
@@ -40,7 +40,7 @@ export function ExtraLayers() {
           ?.filter((f) => f.location?.properties?.radius && f.location?.geometry?.coordinates)
           ?.map((f, i) => (
             <Circle
-              key={`fence-circle-${i}`}
+              key={`${i}-fence-circle`}
               color={f.color}
               weight={1}
               dashArray="5,5"
@@ -67,7 +67,7 @@ export function ExtraLayers() {
           ?.map((b, i) => {
             const position: [number, number] = [b.location[0].geometry.coordinates[1], b.location[0].geometry.coordinates[0]];
             return (
-              <Marker key={`buoy-${i}`} position={position} icon={buoyIcon}>
+              <Marker key={`${b.vessel.navigationalInformation.location.latitude}-${i}-buoy`} position={position} icon={buoyIcon}>
                 <Circle center={position} radius={b.location[0].properties.radius} color={b.location[0].color} />
                 <Popup>{b.name}</Popup>
               </Marker>
@@ -76,7 +76,7 @@ export function ExtraLayers() {
 
       {showVesselsNearBouys &&
         vesselsNear?.map((group: any[], i: number) => (
-          <div key={`near-group-${i}`}>
+          <div key={`${group[0].vessel.navigationalInformation.location.latitude}-${i}-near-group`}>
             {group
               ?.filter((v) => v?.vessel?.datasheet?.vesselClass !== 'ATON' && v?.vessel?.navigationalInformation?.location)
               ?.map((v, j) => {
@@ -85,7 +85,7 @@ export function ExtraLayers() {
 
                 return (
                   <Marker
-                    key={`near-${i}-${j}`}
+                    key={`${j}-${v.vessel.navigationalInformation.location.latitude}-near`}
                     position={pos}
                     icon={
                       new L.DivIcon({

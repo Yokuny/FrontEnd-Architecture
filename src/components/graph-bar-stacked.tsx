@@ -1,7 +1,7 @@
 'use client';
 
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 
 export const description = 'A stacked bar chart with a legend';
@@ -18,11 +18,11 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: 'var(--color-hue-blue)',
+    color: getChartColor(0),
   },
   mobile: {
     label: 'Mobile',
-    color: 'var(--color-hue-orange)',
+    color: getChartColor(1),
   },
 } satisfies ChartConfig;
 
@@ -40,8 +40,8 @@ export function GraphBarStacked() {
             <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <ChartLegend content={<ChartLegendContent />} />
-            <Bar dataKey="desktop" stackId="a" fill="var(--color-hue-blue)" radius={[0, 0, 4, 4]} />
-            <Bar dataKey="mobile" stackId="a" fill="var(--color-hue-orange)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="desktop" stackId="a" fill={getChartColor(0)} radius={[0, 0, 4, 4]} />
+            <Bar dataKey="mobile" stackId="a" fill={getChartColor(1)} radius={[4, 4, 0, 0]} />
           </BarChart>
         </ChartContainer>
       </ItemContent>

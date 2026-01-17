@@ -142,7 +142,7 @@ export function DataTable<T extends Record<string, any>>({
 
   if (loading) {
     return (
-      <div className={cn('bg-background text-card-foreground flex flex-col gap-6 rounded-lg md:border border-sidebar-border shadow-sm py-6', className)}>
+      <div className={cn('bg-background text-card-foreground flex flex-col gap-6 rounded-lg py-6', className)}>
         <ItemContent className="p-6">
           {/* Search skeleton */}
           {searchable && <Skeleton className="mb-6 h-10 w-full sm:w-64" />}
@@ -160,16 +160,6 @@ export function DataTable<T extends Record<string, any>>({
                 </div>
               </div>
             ))}
-          </div>
-          {/* Pagination skeleton */}
-          <div className="mt-6 flex justify-between items-center">
-            <Skeleton className="size-48" />
-            <div className="flex gap-2">
-              <Skeleton className="h-9 w-20" />
-              <Skeleton className="h-9 w-9" />
-              <Skeleton className="h-9 w-9" />
-              <Skeleton className="h-9 w-16" />
-            </div>
           </div>
         </ItemContent>
       </div>
