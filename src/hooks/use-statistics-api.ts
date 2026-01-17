@@ -33,6 +33,17 @@ export function useTimeOperation(filters: any) {
   });
 }
 
+export function useTimeOperationDetails(idMachine: string | undefined, filters: any) {
+  return useQuery({
+    queryKey: [...statisticsKeys.timeOperation(filters), 'detail', idMachine],
+    queryFn: async () => {
+      const response = await api.get(`/machineevent/${idMachine}/kpis`, { params: filters });
+      return response.data;
+    },
+    enabled: !!idMachine && !!filters.min && !!filters.max,
+  });
+}
+
 // --- Fleet Status (Integration) ---
 
 export interface FleetStatusData {

@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 
 export type DataTableColumn<T> = {
   key: keyof T;
-  header: string;
+  header: React.ReactNode;
   sortable?: boolean;
   filterable?: boolean;
   render?: (value: any, row: T) => React.ReactNode;

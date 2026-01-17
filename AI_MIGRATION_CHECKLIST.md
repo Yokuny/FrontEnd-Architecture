@@ -60,6 +60,7 @@ Antes de codar, mapeie os arquivos originais.
 | `ListPaginated` | `<Item>` + `<Pagination>` | Ver `src/components/ui/item.tsx` |
 | `toastr.success` | `toast.success` | `sonner` |
 | `styled-components` | `className="flex gap-2 ..."` | Tailwind CSS |
+| `Modal` | `Dialog` | <Dialog > |
 
 ---
 
