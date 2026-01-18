@@ -606,7 +606,7 @@
   "line.chart": "Linha",
   "area.chart": "Area",
   "bar.chart": "Barra",
-  "monitoring.plan": "Monitoramento plano de manutenção",
+  "monitoring.plan": "Plano de Manutenção",
   "monitoring": "Monitoramento",
   "days.notice": "Dias aviso",
   "expired": "Atrasada",
@@ -2581,5 +2581,15 @@
   "kpis.cmms.reliability.index.description": "Índice de confiabilidade por embarcação",
   "kpis.cmms.open.tasks.by.vessel.description": "Quantidade de tarefas abertas por embarcação",
   "kpis.cmms.tasks.open.vs.closed.description": "Distribuição de tarefas abertas e concluídas",
-  "kpis.cmms.predictive.deviations.description": "Desvios preditivos abertos vs executados"
+  "kpis.cmms.predictive.deviations.description": "Desvios preditivos abertos vs executados",
+  "consumption.upper": "CONSUMO",
+  "consumption.interval": "Consumo por Intervalo",
+  "consumption.daily.description": "Monitoramento de consumo diário de combustível.",
+  "consumption.interval.description": "Análise de consumo em intervalos de tempo personalizados.",
+  "consumption.time.operation.description": "Consumo por modo de operação e tempo de atividade.",
+  "consumption.comparative.description": "Comparação de consumo entre diferentes embarcações.",
+  "consumption.rve.rdo": "Dashboard RVE vs RDO",
+  "consumption.rve.rdo.description": "Dashboard comparativo entre RDO e RVE.",
+  "consumption.rve.sounding": "Dashboard RVE vs Sondagem",
+  "consumption.rve.sounding.description": "Dashboard comparativo entre sondagem e RVE."
 }

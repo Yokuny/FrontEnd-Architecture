@@ -584,7 +584,7 @@
   "line.chart": "Line",
   "area.chart": "Area",
   "bar.chart": "Bar",
-  "monitoring.plan": "Maintenance plan monitoring",
+  "monitoring.plan": "Monitoring plan",
   "monitoring": "Monitoring",
   "days.notice": "Days to notice",
   "expired": "Delayed",
@@ -2507,5 +2507,15 @@
   "kpis.cmms.reliability.index.description": "Reliability index by vessel",
   "kpis.cmms.open.tasks.by.vessel.description": "Quantity of open tasks by vessel",
   "kpis.cmms.tasks.open.vs.closed.description": "Distribution of open and closed tasks",
-  "kpis.cmms.predictive.deviations.description": "Open vs executed predictive deviations"
+  "kpis.cmms.predictive.deviations.description": "Open vs executed predictive deviations",
+  "consumption.upper": "CONSUMPTION",
+  "consumption.interval": "Consumption by Interval",
+  "consumption.daily.description": "Daily fuel consumption monitoring.",
+  "consumption.interval.description": "Consumption analysis in custom time intervals.",
+  "consumption.time.operation.description": "Consumption by operation mode and active time.",
+  "consumption.comparative.description": "Consumption comparison between different vessels.",
+  "consumption.rve.rdo": "Dashboard RVE vs RDO",
+  "consumption.rve.rdo.description": "Comparative dashboard between RDO and RVE.",
+  "consumption.rve.sounding": "Dashboard RVE vs Sounding",
+  "consumption.rve.sounding.description": "Comparative dashboard between sounding and RVE."
 }

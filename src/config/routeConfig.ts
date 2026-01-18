@@ -8,6 +8,7 @@ import {
   CheckSquare,
   FileText,
   Flame,
+  Fuel,
   KeySquare,
   LayoutDashboard,
   Leaf,
@@ -36,6 +37,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   'fleet-manager': MapIcon,
   esg: Leaf,
   statistics: BarChart3,
+  consumo: Fuel,
 };
 
 // Ícones para sub-rotas específicas
@@ -66,6 +68,11 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   'rve-dashboard': LayoutDashboard,
   'kpis-cmms': BarChart3,
   integration: Network,
+  daily: BarChart3,
+  interval: Fuel,
+  comparative: Activity,
+  'rve-rdo': FileText,
+  'rve-sounding': FileText,
 };
 
 // Chaves i18n para tradução de rotas
@@ -78,7 +85,7 @@ export const ROUTE_LABELS: Record<string, string> = {
   'setup-email': 'setup.email',
   'setup-api-external': 'setup.api.external',
   'integration-list': 'integration',
-  'monitoring-plans': 'monitoring.plan.maintenance',
+  'monitoring-plans': 'monitoring.plan',
   'monitoring-wear': 'monitoring.wear.part',
   'list-os-done': 'done.os',
   alerts: 'alerts',
@@ -100,6 +107,12 @@ export const ROUTE_LABELS: Record<string, string> = {
   'rve-dashboard': 'RVE Dashboard',
   'kpis-cmms': "KPI's CMMS",
   integration: 'integration',
+  consumo: 'consumption.upper',
+  daily: 'consumption.daily',
+  interval: 'consumption.interval',
+  comparative: 'consumption.comparative',
+  'rve-rdo': 'consumption.rve.rdo',
+  'rve-sounding': 'consumption.rve.sounding',
 };
 
 /**
@@ -110,6 +123,12 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
+  '/consumo/comparative',
+  '/consumo/daily',
+  '/consumo/interval',
+  '/consumo/rve-rdo',
+  '/consumo/rve-sounding',
+  '/consumo/time-operation',
   '/esg/cii-fleet',
   '/esg/consumption-co2',
   '/esg/indicators-eeoi-cii',
