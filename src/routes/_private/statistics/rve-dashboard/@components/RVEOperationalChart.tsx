@@ -33,7 +33,7 @@ export function RVEOperationalChart({ data }: RVEOperationalChartProps) {
         <ItemTitle>{t('rve.dashboard.operationalCodes')}</ItemTitle>
       </ItemHeader>
       <ItemContent className="flex-1">
-        <ChartContainer config={chartConfig} className="aspect-square max-h-[350px]">
+        <ChartContainer config={chartConfig} className="aspect-square max-h-80">
           <PieChart>
             <ChartTooltip
               content={

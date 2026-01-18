@@ -27,8 +27,8 @@ export const CHART_COLORS = {
 
 export const DEVICE_COLORS = [getChartColor(1), getChartColor(14), getChartColor(3), getChartColor(10), getChartColor(7)];
 
-export const CHART_HEIGHT = 'h-[350px]';
-export const CHART_HEIGHT_LARGE = 'h-[400px]';
+export const CHART_HEIGHT = 'h-80';
+export const CHART_HEIGHT_LARGE = 'h-96';
 
 export const TOP_BAR_LIMIT = 10;
 export const TOP_USER_LIMIT = 15;

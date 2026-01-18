@@ -82,12 +82,12 @@ export function AuthLayout({ children }: { children?: React.ReactNode }) {
 
           {/* Animated Images */}
           <div className="relative flex-1 flex items-center justify-center overflow-hidden perspective-[400px]">
-            <div className="absolute start-1/2 top-1/2 -z-2 h-[400px] w-[500px] -translate-x-1/2 -translate-y-1/4 skew-x-12 -skew-y-3 rounded-lg border border-zinc-700 overflow-hidden shadow-2xl">
+            <div className="absolute start-1/2 top-1/2 -z-2 h-96 w-[500px] -translate-x-1/2 -translate-y-1/4 skew-x-12 -skew-y-3 rounded-lg border border-zinc-700 overflow-hidden shadow-2xl">
               <img src="/images/demo/sidebar-1.jpg" alt="Dashboard Sidebar" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-zinc-900/30" />
             </div>
 
-            <div className="absolute start-[60%] top-[30%] -z-1 h-[450px] w-[550px] -translate-x-1/2 skew-x-12 -skew-y-3 rounded-lg border border-zinc-700 overflow-hidden shadow-2xl">
+            <div className="absolute start-[60%] top-[30%] -z-1 h-96 w-[550px] -translate-x-1/2 skew-x-12 -skew-y-3 rounded-lg border border-zinc-700 overflow-hidden shadow-2xl">
               <img src="/images/demo/hero-1.jpg" alt="Dashboard Preview" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-zinc-900/20" />
             </div>

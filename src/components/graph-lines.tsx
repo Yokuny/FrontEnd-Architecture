@@ -18,18 +18,18 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: getChartColor(0),
+    color: getChartColor(3),
   },
   mobile: {
     label: 'Mobile',
-    color: getChartColor(1),
+    color: getChartColor(6),
   },
 } satisfies ChartConfig;
 
 export function GraphLines() {
   return (
-    <Item variant="outline" className="flex-col items-stretch">
-      <ItemHeader className="flex-col items-start gap-1">
+    <Item variant="outline">
+      <ItemHeader className="flex-col items-center justify-center">
         <ItemTitle>Line Chart - Multiple</ItemTitle>
         <ItemDescription>Description</ItemDescription>
       </ItemHeader>

@@ -33,19 +33,19 @@ const chartConfig = {
   },
   safari: {
     label: 'Safari',
-    color: getChartColor(1),
+    color: getChartColor(3),
   },
   firefox: {
     label: 'Firefox',
-    color: getChartColor(2),
+    color: getChartColor(6),
   },
   edge: {
     label: 'Edge',
-    color: getChartColor(3),
+    color: getChartColor(9),
   },
   other: {
     label: 'Other',
-    color: getChartColor(4),
+    color: getChartColor(12),
   },
 } satisfies ChartConfig;
 
@@ -55,14 +55,14 @@ export function GraphPizza() {
   }, []);
 
   return (
-    <Item variant="outline" className="flex-col items-stretch">
-      <ItemHeader className="items-center flex-col">
+    <Item variant="outline">
+      <ItemHeader className="flex-col items-center justify-center">
         <ItemTitle>Pie Chart - Donut with Text</ItemTitle>
         <ItemDescription>Description</ItemDescription>
       </ItemHeader>
       <ItemContent>
         {/* IMPORTANT: Do not use 'mx-auto' in ChartContainer className as it breaks the ResponsiveContainer layout */}
-        <ChartContainer config={chartConfig} className="aspect-square max-h-[300px]">
+        <ChartContainer config={chartConfig} className="aspect-square max-h-80">
           <PieChart>
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
             <Pie data={chartData} dataKey="visitors" nameKey="browser" innerRadius={60} strokeWidth={5}>

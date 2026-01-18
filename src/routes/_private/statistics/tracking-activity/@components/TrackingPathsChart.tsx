@@ -64,7 +64,7 @@ export function TrackingPathsChart({ filters }: TrackingPathsChartProps) {
         {isEmpty ? (
           <DefaultEmptyData />
         ) : (
-          <ChartContainer config={chartConfig} className="spect-square max-h-[350px]">
+          <ChartContainer config={chartConfig} className="spect-square max-h-80">
             <PieChart>
               <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
               <Pie data={chartData} dataKey="value" nameKey="key" innerRadius={60} strokeWidth={5}>

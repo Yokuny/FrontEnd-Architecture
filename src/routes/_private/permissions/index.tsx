@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Shield, Users } from 'lucide-react';
+import { DoorOpen, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
@@ -22,7 +22,7 @@ function PermissionsHubPage() {
     {
       title: t('role'),
       description: t('roles.description', { defaultValue: 'Configure perfis de acesso e agrupe permissões.' }),
-      icon: Shield,
+      icon: DoorOpen,
       to: '/permissions/roles' as const,
     },
   ];

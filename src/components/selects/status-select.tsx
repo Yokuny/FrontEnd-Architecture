@@ -13,6 +13,7 @@ export function StatusSelect(props: StatusSelectProps) {
   const query = useStatusSelect(idEnterprise);
 
   const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const displayLabel = label || t('status.placeholder');
 
   const mapWithDefaults = (statuses: string[]) => {
     const undefinedLabel = t('undefined', { defaultValue: 'Indefinido' });
@@ -28,7 +29,6 @@ export function StatusSelect(props: StatusSelectProps) {
   };
 
   if (mode === 'multi') {
-    const displayLabel = label || t('status.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -54,7 +54,6 @@ export function StatusSelect(props: StatusSelectProps) {
     );
   }
 
-  const displayLabel = label || t('status.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -90,7 +89,7 @@ interface StatusSelectBaseProps {
 }
 
 interface StatusSelectSingleProps extends StatusSelectBaseProps {
-  mode: 'single';
+  mode?: 'single';
   value?: string;
   onChange: (value: string | undefined) => void;
 }

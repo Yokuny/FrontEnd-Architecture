@@ -159,7 +159,7 @@ function SimulatorCIIPage() {
           </div>
 
           {!results ? (
-            <div className="flex flex-col items-center justify-center min-h-[300px] text-muted-foreground space-y-4 rounded-xl border border-dashed bg-secondary/5">
+            <div className="flex flex-col items-center justify-center min-h-80 text-muted-foreground space-y-4 rounded-xl border border-dashed bg-secondary/5">
               <Navigation className="size-12 opacity-20" />
               <p className="italic">{t('enter.data.to.see.results')}</p>
             </div>

@@ -32,7 +32,7 @@ export function RVEScaleChart({ data }: RVEScaleChartProps) {
         <ItemTitle>{t('rve.dashboard.scales')}</ItemTitle>
       </ItemHeader>
       <ItemContent className="flex-1">
-        <ChartContainer config={chartConfig} className="aspect-square max-h-[350px]">
+        <ChartContainer config={chartConfig} className="aspect-square max-h-80">
           <PieChart>
             <ChartTooltip
               content={

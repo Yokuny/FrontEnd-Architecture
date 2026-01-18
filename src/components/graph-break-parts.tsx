@@ -32,7 +32,7 @@ const data = [
 
 const chartData = data.map((item, index) => ({
   ...item,
-  color: getChartColor(index),
+  color: getChartColor(index * 3),
 }));
 
 export function GraphBreakParts() {
@@ -68,7 +68,7 @@ export function GraphBreakParts() {
   }, []);
 
   return (
-    <Item variant="outline" className="flex-col items-stretch">
+    <Item variant="outline">
       <ItemHeader className="items-center flex-col">
         <ItemTitle>Breakdown Chart - Parts</ItemTitle>
         <ItemDescription>Description</ItemDescription>
@@ -137,7 +137,7 @@ export function GraphBreakParts() {
         </div>
 
         {/* Legend Pattern consistent with Pizza Chart */}
-        <ItemFooter className="flex-wrap items-center justify-center gap-6">
+        <ItemFooter className="flex-wrap items-center justify-center gap-4">
           {processedData.map((item) => (
             <div key={item.key} className="flex flex-col items-center">
               <div className="flex items-baseline gap-2">

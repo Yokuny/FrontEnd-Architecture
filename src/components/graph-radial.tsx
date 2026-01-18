@@ -7,7 +7,7 @@ import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/com
 
 export const description = 'A radial chart with a custom shape';
 
-const chartData = [{ browser: 'safari', visitors: 1260, fill: getChartColor(0) }];
+const chartData = [{ browser: 'safari', visitors: 1260, fill: getChartColor(3) }];
 
 const chartConfig = {
   visitors: {
@@ -15,13 +15,13 @@ const chartConfig = {
   },
   safari: {
     label: 'Safari',
-    color: getChartColor(0),
+    color: getChartColor(3),
   },
 } satisfies ChartConfig;
 
 export function GraphRadial() {
   return (
-    <Item variant="outline" className="flex-col items-stretch">
+    <Item variant="outline">
       <ItemHeader className="items-center flex-col">
         <ItemTitle>Radial Chart - Shape</ItemTitle>
         <ItemDescription>Description</ItemDescription>

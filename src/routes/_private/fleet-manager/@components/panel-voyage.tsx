@@ -24,7 +24,7 @@ export function FleetLastVoyagePanel() {
   if (!data || !data.code) {
     return (
       <ItemGroup className="p-4 flex-1">
-        <div className="flex-1 flex flex-col items-center justify-center min-h-[400px]">
+        <div className="flex-1 flex flex-col items-center justify-center min-h-96">
           <DefaultEmptyData />
         </div>
       </ItemGroup>
