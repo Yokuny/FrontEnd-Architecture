@@ -78,6 +78,7 @@ code {
 }
 
 :root, [data-theme="light"] {
+  --radius: 0.65rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -93,32 +94,65 @@ code {
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --positive: oklch(81.048% 0.245 150);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.871 0.006 286.286);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
+  --ring: oklch(0.708 0 0);
+
+  /* Chart Colors Safelist for dynamic var(--color-*) usage */
+  --color-sky-400: theme('colors.sky.400');
+  --color-blue-400: theme('colors.blue.400');
+  --color-indigo-400: theme('colors.indigo.400');
+  --color-violet-400: theme('colors.violet.400');
+  --color-purple-400: theme('colors.purple.400');
+  --color-fuchsia-400: theme('colors.fuchsia.400');
+  --color-pink-400: theme('colors.pink.400');
+  --color-rose-400: theme('colors.rose.400');
+  --color-red-400: theme('colors.red.400');
+  --color-orange-400: theme('colors.orange.400');
+  --color-amber-400: theme('colors.amber.400');
+  --color-yellow-400: theme('colors.yellow.400');
+  --color-lime-400: theme('colors.lime.400');
+  --color-green-400: theme('colors.green.400');
+  --color-emerald-400: theme('colors.emerald.400');
+  --color-teal-400: theme('colors.teal.400');
+  --color-cyan-400: theme('colors.cyan.400');
+
+  /* Shades 500 for the second cycle */
+  --color-sky-500: theme('colors.sky.500');
+  --color-blue-500: theme('colors.blue.500');
+  --color-indigo-500: theme('colors.indigo.500');
+  --color-violet-500: theme('colors.violet.500');
+  --color-purple-500: theme('colors.purple.500');
+  --color-fuchsia-500: theme('colors.fuchsia.500');
+  --color-pink-500: theme('colors.pink.500');
+  --color-rose-500: theme('colors.rose.500');
+  --color-red-500: theme('colors.red.500');
+  --color-orange-500: theme('colors.orange.500');
+  --color-amber-500: theme('colors.amber.500');
+  --color-yellow-500: theme('colors.yellow.500');
+  --color-lime-500: theme('colors.lime.500');
+  --color-green-500: theme('colors.green.500');
+  --color-emerald-500: theme('colors.emerald.500');
+  --color-teal-500: theme('colors.teal.500');
+  --color-cyan-500: theme('colors.cyan.500');
+
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.546 0.245 262.881);
+  --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
   --sidebar-accent: oklch(0.967 0.001 286.375);
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.871 0.006 286.286);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark, [data-theme="dark"] {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.141 0.005 285.823);
+  --card: oklch(0.21 0.006 285.885);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.141 0.005 285.823);
+  --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.985 0 0);
   --primary-foreground: oklch(0.21 0.006 285.885);
@@ -128,24 +162,19 @@ code {
   --muted-foreground: oklch(0.705 0.015 286.067);
   --accent: oklch(0.274 0.006 286.033);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(50.51% 0.1973 19.763);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.3 0.006 285);
-  --input: oklch(0.5 0.006 285);
-  --ring: oklch(0.4 0.006 285);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.623 0.214 259.815);
+  --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
   --sidebar-accent: oklch(0.274 0.006 286.033);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.274 0.006 286.033);
-  --sidebar-ring: oklch(0.442 0.017 285.786);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.439 0 0);
 }
 
 .ocean-blue, [data-theme="ocean-blue"] {
@@ -167,12 +196,8 @@ code {
   --destructive-foreground: #f1f5f9;
   --border: #334155;
   --input: #4e617b;
-  --ring: #38bdf8;
-  --chart-1: #38bdf8;
-  --chart-2: #34d399;
-  --chart-3: #fbbf24;
-  --chart-4: #f87171;
-  --chart-5: #334155;
+  --ring: #38bdf8; 
+
   --sidebar: #0f172a;
   --sidebar-foreground: #f1f5f9;
   --sidebar-primary: #38bdf8;
@@ -203,11 +228,9 @@ code {
   --input: oklch(0.93 0.04 40.57);
   --ring: oklch(0.74 0.16 34.57);
   --radius: 0;
-  --chart-1: oklch(0.74 0.16 34.57);
-  --chart-2: oklch(0.83 0.11 57.89);
-  --chart-3: oklch(0.88 0.08 56.41);
-  --chart-4: oklch(0.82 0.11 41.27);
-  --chart-5: oklch(0.64 0.13 32.06);
+  --radius: 0;
+
+  /* Hue Sunset overrides */
   --sidebar: oklch(0.97 0.02 44.86);
   --sidebar-foreground: oklch(0.34 0.01 7.89);
   --sidebar-primary: oklch(0.74 0.16 34.57);
@@ -238,11 +261,6 @@ code {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

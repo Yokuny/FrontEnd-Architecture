@@ -102,7 +102,7 @@ export function ContractForm() {
                     </FormControl>
                     <SelectContent>
                       {Array.from({ length: 28 }, (_, i) => (
-                        <SelectItem key={i + 1} value={(i + 1).toString()}>
+                        <SelectItem key={`${i + 1}`} value={(i + 1).toString()}>
                           {i + 1}
                         </SelectItem>
                       ))}

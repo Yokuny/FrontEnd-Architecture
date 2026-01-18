@@ -4,6 +4,7 @@ import { Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { Badge } from '@/components/ui/badge';
+import { getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import type { MonitoringPlanItem as MonitoringPlanItemType } from '../@interface/monitoring-plan.types';
 import { EditEventScheduleDialog } from './edit-event-schedule-dialog';
@@ -19,11 +20,11 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
 
   // Color logic based on legacy ItemMonitoringPlan.jsx
   const getStatusColor = () => {
-    if (planItem.expired) return '#b91c1c'; // Danger 700
-    if (planItem.next) return '#ef4444'; // Danger 500
-    if (planItem.warning) return '#f59e0b'; // Warning 500
-    if (planItem.daysLeft) return '#22c55e'; // Success 500
-    return '#6b7280'; // Muted
+    if (planItem.expired) return getChartColor(8); // Red
+    if (planItem.next) return getChartColor(9); // Orange
+    if (planItem.warning) return getChartColor(10); // Amber
+    if (planItem.daysLeft) return getChartColor(13); // Green
+    return 'var(--color-slate-400)';
   };
 
   const handleSuccess = () => {
@@ -46,13 +47,13 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
             <ItemTitle className="font-medium text-base">{planItem.description}</ItemTitle>
             <div className="flex gap-4 items-center">
               <div className="flex gap-1.5 shrink-0">
-                {planItem.expired && <Badge className="bg-red-700 hover:bg-red-700 text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('expired')}</Badge>}
+                {planItem.expired && <Badge className="bg-red-400/80 hover:bg-red-400 text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('expired')}</Badge>}
                 {planItem.next && !planItem.expired && (
                   <Badge variant="destructive" className="text-[9px] px-1.5 h-4.5 uppercase font-bold">
                     {t('next')}
                   </Badge>
                 )}
-                {planItem.warning && <Badge className="bg-yellow-500 hover:bg-yellow-500 text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('next')}</Badge>}
+                {planItem.warning && <Badge className="bg-amber-400/80 hover:bg-amber-400 text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('next')}</Badge>}
               </div>
 
               {planItem.daysLeft !== null && (

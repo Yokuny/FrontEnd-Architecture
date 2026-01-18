@@ -69,7 +69,6 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 
   return (
     <style
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: This is required to inject dynamic CSS variables based on the chart configuration.
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
@@ -264,6 +263,16 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
   }
 
   return configLabelKey in config ? config[configLabelKey] : config[key as keyof typeof config];
+}
+
+const COLORS = ['sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan'] as const;
+
+export function getChartColor(index: number) {
+  const colorIndex = index % COLORS.length;
+  const shadeIndex = Math.floor(index / COLORS.length);
+  const shade = 400 + shadeIndex * 100;
+
+  return `var(--color-${COLORS[colorIndex]}-${shade})`;
 }
 
 export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle };

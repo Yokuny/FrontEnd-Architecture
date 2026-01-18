@@ -1,9 +1,8 @@
 'use client';
 
 import { Area, AreaChart, XAxis } from 'recharts';
-import { ChartContainer } from '@/components/ui/chart';
-import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
-import { cn } from '@/lib/utils';
+import { ChartContainer, getChartColor } from '@/components/ui/chart';
+import { Item, ItemContent, ItemTitle } from '@/components/ui/item';
 
 const data = [
   {
@@ -124,33 +123,33 @@ const sanitizeName = (name: string) => {
     .toLowerCase();
 };
 
-export default function Stats10() {
+export function GraphArea() {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full">
+    <div className="flex flex-col gap-4">
       {summary.map((item) => {
         const sanitizedName = sanitizeName(item.name);
         const gradientId = `gradient-${sanitizedName}`;
 
-        const color = item.changeType === 'positive' ? 'hsl(142.1 76.2% 36.3%)' : 'hsl(0 72.2% 50.6%)';
+        const color = item.changeType === 'positive' ? getChartColor(1) : getChartColor(11);
 
         return (
-          <Item key={item.name} variant="outline" className="flex-col items-stretch p-4 pb-0">
+          <Item key={item.name} variant="outline" className="flex-col items-stretch">
             <ItemContent>
               <ItemTitle>
                 {item.name} <span className="font-normal text-muted-foreground">({item.tickerSymbol})</span>
               </ItemTitle>
               <div className="flex items-baseline justify-between w-full">
-                <ItemTitle className={cn(item.changeType === 'positive' ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500', 'text-lg font-semibold')}>
+                <ItemTitle className="text-lg font-semibold" style={{ color: color }}>
                   {item.value}
                 </ItemTitle>
-                <ItemDescription className="flex items-center space-x-1 text-sm">
+                <div className="flex items-center space-x-1 text-sm">
                   <span className="font-medium text-foreground">{item.change}</span>
-                  <span className={cn(item.changeType === 'positive' ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500')}>({item.percentageChange})</span>
-                </ItemDescription>
+                  <span style={{ color: color }}>({item.percentageChange})</span>
+                </div>
               </div>
             </ItemContent>
 
-            <div className="mt-2 h-16 overflow-hidden">
+            <div className="h-16">
               <ChartContainer
                 className="w-full h-full"
                 config={{

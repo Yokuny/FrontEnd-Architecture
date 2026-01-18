@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import DefaultEmpty from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -40,7 +41,7 @@ function ListRolesPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-muted-foreground">{t('no.roles.found')}</div>
+          <DefaultEmpty />
         )}
       </CardContent>
     </Card>

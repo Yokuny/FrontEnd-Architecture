@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { Edit, MoreVertical, Shield, Users } from 'lucide-react';
+import { DoorOpen, Edit, MoreVertical, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Status, StatusIndicator, StatusLabel } from '@/components/kibo-ui/status';
 import { Button } from '@/components/ui/button';
@@ -34,8 +34,8 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
 
   return (
     <Item variant="outline" className="bg-card">
-      <ItemMedia className="size-12 rounded-full bg-warning/10">
-        <Shield className="size-6 text-warning" />
+      <ItemMedia className="size-12 rounded-full border bg-secondary">
+        <DoorOpen className="size-6 text-warning" />
       </ItemMedia>
 
       <ItemContent>

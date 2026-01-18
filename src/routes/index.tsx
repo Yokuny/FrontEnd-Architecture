@@ -11,8 +11,7 @@ export const Route = createFileRoute('/')({
 
     // Se autenticado, vai para área privada, senão vai para login
     throw redirect({
-      to: isAuthenticated ? '/permissions/users' : '/auth',
-      search: isAuthenticated ? { page: 1, pageSize: 10 } : undefined,
+      to: isAuthenticated ? '/fleet-manager' : '/auth',
     });
   },
 });

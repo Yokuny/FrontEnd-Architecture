@@ -7,6 +7,7 @@ import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enter
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useFleetCII } from '@/hooks/use-esg-api';
@@ -35,19 +36,19 @@ function CIIFleetPage() {
     <Card>
       <CardHeader title={t('esg.fleet')} />
       <CardContent className="flex flex-col">
-        <div className="flex flex-wrap items-end gap-4 p-4 border rounded-lg bg-secondary">
+        <Item variant="outline" className="bg-secondary">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="search-input">{t('search.placeholder')}</Label>
             <Input id="search-input" placeholder={t('search.placeholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="w-64 bg-background" />
           </div>
 
-          <MachineByEnterpriseSelect idEnterprise={idEnterprise} value={selectedMachines} onChange={(val: any) => setSelectedMachines(val)} mode="multi" />
+          <MachineByEnterpriseSelect mode="multi" label={t('machines')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
 
           <Button variant="outline" className="gap-2 bg-background ml-auto">
             <Search className="size-4" />
             {t('search')}
           </Button>
-        </div>
+        </Item>
 
         <div className="overflow-auto">{isLoading ? <DefaultLoading /> : <FleetCIITable data={data || []} />}</div>
       </CardContent>

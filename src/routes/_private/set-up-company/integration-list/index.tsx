@@ -7,7 +7,7 @@ import DefaultLoading from '@/components/default-loading';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -68,7 +68,12 @@ function IntegrationListPage() {
 
   return (
     <Card>
-      <CardHeader title={`${t('integration')} AIS`} />
+      <CardHeader title={`${t('integration')} AIS`}>
+        <Button onClick={handleSave} disabled={isLoading || saveMachineIntegrations.isPending}>
+          <Save className="mr-2 size-4" />
+          {t('save')}
+        </Button>
+      </CardHeader>
       <CardContent>
         {isLoading ? (
           <DefaultLoading />
@@ -188,12 +193,6 @@ function IntegrationListPage() {
           </div>
         )}
       </CardContent>
-      <CardFooter>
-        <Button onClick={handleSave} disabled={isLoading || saveMachineIntegrations.isPending}>
-          <Save className="mr-2 size-4" />
-          {t('save')}
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

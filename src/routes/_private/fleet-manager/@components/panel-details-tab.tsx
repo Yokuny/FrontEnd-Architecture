@@ -3,6 +3,7 @@ import { Activity, Anchor, Clock, Compass, Gauge, ListTree, TrendingUp, Waves } 
 import { useTranslation } from 'react-i18next';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import DefaultLoading from '@/components/default-loading';
+import { getChartColor } from '@/components/ui/chart';
 import { ItemContent, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { cn } from '@/lib/utils';
@@ -120,8 +121,8 @@ export function MachineDetailsPanel() {
               <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="speedGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                    <stop offset="5%" stopColor={getChartColor(0)} stopOpacity={0.3} />
+                    <stop offset="95%" stopColor={getChartColor(0)} stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <Tooltip
@@ -130,7 +131,9 @@ export function MachineDetailsPanel() {
                       return (
                         <div className="bg-background border rounded-lg p-2 shadow-lg text-[10px]">
                           <div className="font-bold">{format(new Date(payload[0].payload.time), 'HH:mm')}</div>
-                          <div className="text-primary font-bold">{payload[0].value} kn</div>
+                          <div className="font-bold" style={{ color: getChartColor(0) }}>
+                            {payload[0].value} kn
+                          </div>
                         </div>
                       );
                     }
@@ -139,7 +142,7 @@ export function MachineDetailsPanel() {
                 />
                 <XAxis dataKey="time" hide />
                 <YAxis hide domain={[0, 'auto']} />
-                <Area type="monotone" dataKey="speed" stroke="hsl(var(--primary))" fill="url(#speedGradient)" strokeWidth={2} />
+                <Area type="monotone" dataKey="speed" stroke={getChartColor(0)} fill="url(#speedGradient)" strokeWidth={2} />
               </AreaChart>
             </ResponsiveContainer>
           )}

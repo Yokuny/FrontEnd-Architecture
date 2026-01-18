@@ -13,6 +13,7 @@ import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateStatisticsIndexRouteImport } from './routes/_private/statistics/index';
 import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
 import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
 import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
@@ -22,6 +23,11 @@ import { Route as PrivateEsgIndexRouteImport } from './routes/_private/esg/index
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PrivateStatisticsTrackingActivityIndexRouteImport } from './routes/_private/statistics/tracking-activity/index';
+import { Route as PrivateStatisticsTimeOperationIndexRouteImport } from './routes/_private/statistics/time-operation/index';
+import { Route as PrivateStatisticsRveDashboardIndexRouteImport } from './routes/_private/statistics/rve-dashboard/index';
+import { Route as PrivateStatisticsKpisCmmsIndexRouteImport } from './routes/_private/statistics/kpis-cmms/index';
+import { Route as PrivateStatisticsIntegrationIndexRouteImport } from './routes/_private/statistics/integration/index';
 import { Route as PrivateSetUpCompanySetupLimitsIndexRouteImport } from './routes/_private/set-up-company/setup-limits/index';
 import { Route as PrivateSetUpCompanySetupFleetIndexRouteImport } from './routes/_private/set-up-company/setup-fleet/index';
 import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
@@ -99,6 +105,11 @@ const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   path: '/auth/',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateStatisticsIndexRoute = PrivateStatisticsIndexRouteImport.update({
+  id: '/statistics/',
+  path: '/statistics/',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PrivateSetUpCompanyIndexRoute =
   PrivateSetUpCompanyIndexRouteImport.update({
     id: '/set-up-company/',
@@ -146,6 +157,36 @@ const PublicAuthRegisterRoute = PublicAuthRegisterRouteImport.update({
   path: '/auth/register',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateStatisticsTrackingActivityIndexRoute =
+  PrivateStatisticsTrackingActivityIndexRouteImport.update({
+    id: '/statistics/tracking-activity/',
+    path: '/statistics/tracking-activity/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateStatisticsTimeOperationIndexRoute =
+  PrivateStatisticsTimeOperationIndexRouteImport.update({
+    id: '/statistics/time-operation/',
+    path: '/statistics/time-operation/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateStatisticsRveDashboardIndexRoute =
+  PrivateStatisticsRveDashboardIndexRouteImport.update({
+    id: '/statistics/rve-dashboard/',
+    path: '/statistics/rve-dashboard/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateStatisticsKpisCmmsIndexRoute =
+  PrivateStatisticsKpisCmmsIndexRouteImport.update({
+    id: '/statistics/kpis-cmms/',
+    path: '/statistics/kpis-cmms/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateStatisticsIntegrationIndexRoute =
+  PrivateStatisticsIntegrationIndexRouteImport.update({
+    id: '/statistics/integration/',
+    path: '/statistics/integration/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateSetUpCompanySetupLimitsIndexRoute =
   PrivateSetUpCompanySetupLimitsIndexRouteImport.update({
     id: '/set-up-company/setup-limits/',
@@ -502,6 +543,7 @@ export interface FileRoutesByFullPath {
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/register': typeof PrivateRegisterIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
+  '/statistics': typeof PrivateStatisticsIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -556,6 +598,11 @@ export interface FileRoutesByFullPath {
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/set-up-company/setup-fleet': typeof PrivateSetUpCompanySetupFleetIndexRoute;
   '/set-up-company/setup-limits': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
+  '/statistics/integration': typeof PrivateStatisticsIntegrationIndexRoute;
+  '/statistics/kpis-cmms': typeof PrivateStatisticsKpisCmmsIndexRoute;
+  '/statistics/rve-dashboard': typeof PrivateStatisticsRveDashboardIndexRoute;
+  '/statistics/time-operation': typeof PrivateStatisticsTimeOperationIndexRoute;
+  '/statistics/tracking-activity': typeof PrivateStatisticsTrackingActivityIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -573,6 +620,7 @@ export interface FileRoutesByTo {
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/register': typeof PrivateRegisterIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
+  '/statistics': typeof PrivateStatisticsIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -627,6 +675,11 @@ export interface FileRoutesByTo {
   '/set-up-company/setup-email': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/set-up-company/setup-fleet': typeof PrivateSetUpCompanySetupFleetIndexRoute;
   '/set-up-company/setup-limits': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
+  '/statistics/integration': typeof PrivateStatisticsIntegrationIndexRoute;
+  '/statistics/kpis-cmms': typeof PrivateStatisticsKpisCmmsIndexRoute;
+  '/statistics/rve-dashboard': typeof PrivateStatisticsRveDashboardIndexRoute;
+  '/statistics/time-operation': typeof PrivateStatisticsTimeOperationIndexRoute;
+  '/statistics/tracking-activity': typeof PrivateStatisticsTrackingActivityIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -647,6 +700,7 @@ export interface FileRoutesById {
   '/_private/permissions/': typeof PrivatePermissionsIndexRoute;
   '/_private/register/': typeof PrivateRegisterIndexRoute;
   '/_private/set-up-company/': typeof PrivateSetUpCompanyIndexRoute;
+  '/_private/statistics/': typeof PrivateStatisticsIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/permissions/roles/add': typeof PrivatePermissionsRolesAddRoute;
   '/_private/permissions/users/add': typeof PrivatePermissionsUsersAddRoute;
@@ -701,6 +755,11 @@ export interface FileRoutesById {
   '/_private/set-up-company/setup-email/': typeof PrivateSetUpCompanySetupEmailIndexRoute;
   '/_private/set-up-company/setup-fleet/': typeof PrivateSetUpCompanySetupFleetIndexRoute;
   '/_private/set-up-company/setup-limits/': typeof PrivateSetUpCompanySetupLimitsIndexRoute;
+  '/_private/statistics/integration/': typeof PrivateStatisticsIntegrationIndexRoute;
+  '/_private/statistics/kpis-cmms/': typeof PrivateStatisticsKpisCmmsIndexRoute;
+  '/_private/statistics/rve-dashboard/': typeof PrivateStatisticsRveDashboardIndexRoute;
+  '/_private/statistics/time-operation/': typeof PrivateStatisticsTimeOperationIndexRoute;
+  '/_private/statistics/tracking-activity/': typeof PrivateStatisticsTrackingActivityIndexRoute;
   '/_private/maintenance/list-os-done/view/': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/_private/permissions/roles/edit/': typeof PrivatePermissionsRolesEditIndexRoute;
   '/_private/permissions/roles/users/': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -720,6 +779,7 @@ export interface FileRouteTypes {
     | '/permissions'
     | '/register'
     | '/set-up-company'
+    | '/statistics'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
@@ -774,6 +834,11 @@ export interface FileRouteTypes {
     | '/set-up-company/setup-email'
     | '/set-up-company/setup-fleet'
     | '/set-up-company/setup-limits'
+    | '/statistics/integration'
+    | '/statistics/kpis-cmms'
+    | '/statistics/rve-dashboard'
+    | '/statistics/time-operation'
+    | '/statistics/tracking-activity'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -791,6 +856,7 @@ export interface FileRouteTypes {
     | '/permissions'
     | '/register'
     | '/set-up-company'
+    | '/statistics'
     | '/auth'
     | '/permissions/roles/add'
     | '/permissions/users/add'
@@ -845,6 +911,11 @@ export interface FileRouteTypes {
     | '/set-up-company/setup-email'
     | '/set-up-company/setup-fleet'
     | '/set-up-company/setup-limits'
+    | '/statistics/integration'
+    | '/statistics/kpis-cmms'
+    | '/statistics/rve-dashboard'
+    | '/statistics/time-operation'
+    | '/statistics/tracking-activity'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -864,6 +935,7 @@ export interface FileRouteTypes {
     | '/_private/permissions/'
     | '/_private/register/'
     | '/_private/set-up-company/'
+    | '/_private/statistics/'
     | '/_public/auth/'
     | '/_private/permissions/roles/add'
     | '/_private/permissions/users/add'
@@ -918,6 +990,11 @@ export interface FileRouteTypes {
     | '/_private/set-up-company/setup-email/'
     | '/_private/set-up-company/setup-fleet/'
     | '/_private/set-up-company/setup-limits/'
+    | '/_private/statistics/integration/'
+    | '/_private/statistics/kpis-cmms/'
+    | '/_private/statistics/rve-dashboard/'
+    | '/_private/statistics/time-operation/'
+    | '/_private/statistics/tracking-activity/'
     | '/_private/maintenance/list-os-done/view/'
     | '/_private/permissions/roles/edit/'
     | '/_private/permissions/roles/users/'
@@ -960,6 +1037,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth';
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/statistics/': {
+      id: '/_private/statistics/';
+      path: '/statistics';
+      fullPath: '/statistics';
+      preLoaderRoute: typeof PrivateStatisticsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/set-up-company/': {
       id: '/_private/set-up-company/';
@@ -1023,6 +1107,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/register';
       preLoaderRoute: typeof PublicAuthRegisterRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/statistics/tracking-activity/': {
+      id: '/_private/statistics/tracking-activity/';
+      path: '/statistics/tracking-activity';
+      fullPath: '/statistics/tracking-activity';
+      preLoaderRoute: typeof PrivateStatisticsTrackingActivityIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/statistics/time-operation/': {
+      id: '/_private/statistics/time-operation/';
+      path: '/statistics/time-operation';
+      fullPath: '/statistics/time-operation';
+      preLoaderRoute: typeof PrivateStatisticsTimeOperationIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/statistics/rve-dashboard/': {
+      id: '/_private/statistics/rve-dashboard/';
+      path: '/statistics/rve-dashboard';
+      fullPath: '/statistics/rve-dashboard';
+      preLoaderRoute: typeof PrivateStatisticsRveDashboardIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/statistics/kpis-cmms/': {
+      id: '/_private/statistics/kpis-cmms/';
+      path: '/statistics/kpis-cmms';
+      fullPath: '/statistics/kpis-cmms';
+      preLoaderRoute: typeof PrivateStatisticsKpisCmmsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/statistics/integration/': {
+      id: '/_private/statistics/integration/';
+      path: '/statistics/integration';
+      fullPath: '/statistics/integration';
+      preLoaderRoute: typeof PrivateStatisticsIntegrationIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/set-up-company/setup-limits/': {
       id: '/_private/set-up-company/setup-limits/';
@@ -1440,6 +1559,7 @@ interface PrivateRouteChildren {
   PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
   PrivateRegisterIndexRoute: typeof PrivateRegisterIndexRoute;
   PrivateSetUpCompanyIndexRoute: typeof PrivateSetUpCompanyIndexRoute;
+  PrivateStatisticsIndexRoute: typeof PrivateStatisticsIndexRoute;
   PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
   PrivatePermissionsUsersAddRoute: typeof PrivatePermissionsUsersAddRoute;
   PrivatePermissionsUsersPermissionsAddRoute: typeof PrivatePermissionsUsersPermissionsAddRoute;
@@ -1493,6 +1613,11 @@ interface PrivateRouteChildren {
   PrivateSetUpCompanySetupEmailIndexRoute: typeof PrivateSetUpCompanySetupEmailIndexRoute;
   PrivateSetUpCompanySetupFleetIndexRoute: typeof PrivateSetUpCompanySetupFleetIndexRoute;
   PrivateSetUpCompanySetupLimitsIndexRoute: typeof PrivateSetUpCompanySetupLimitsIndexRoute;
+  PrivateStatisticsIntegrationIndexRoute: typeof PrivateStatisticsIntegrationIndexRoute;
+  PrivateStatisticsKpisCmmsIndexRoute: typeof PrivateStatisticsKpisCmmsIndexRoute;
+  PrivateStatisticsRveDashboardIndexRoute: typeof PrivateStatisticsRveDashboardIndexRoute;
+  PrivateStatisticsTimeOperationIndexRoute: typeof PrivateStatisticsTimeOperationIndexRoute;
+  PrivateStatisticsTrackingActivityIndexRoute: typeof PrivateStatisticsTrackingActivityIndexRoute;
   PrivateMaintenanceListOsDoneViewIndexRoute: typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   PrivatePermissionsRolesEditIndexRoute: typeof PrivatePermissionsRolesEditIndexRoute;
   PrivatePermissionsRolesUsersIndexRoute: typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -1507,6 +1632,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
   PrivateRegisterIndexRoute: PrivateRegisterIndexRoute,
   PrivateSetUpCompanyIndexRoute: PrivateSetUpCompanyIndexRoute,
+  PrivateStatisticsIndexRoute: PrivateStatisticsIndexRoute,
   PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
   PrivatePermissionsUsersAddRoute: PrivatePermissionsUsersAddRoute,
   PrivatePermissionsUsersPermissionsAddRoute:
@@ -1575,6 +1701,15 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateSetUpCompanySetupFleetIndexRoute,
   PrivateSetUpCompanySetupLimitsIndexRoute:
     PrivateSetUpCompanySetupLimitsIndexRoute,
+  PrivateStatisticsIntegrationIndexRoute:
+    PrivateStatisticsIntegrationIndexRoute,
+  PrivateStatisticsKpisCmmsIndexRoute: PrivateStatisticsKpisCmmsIndexRoute,
+  PrivateStatisticsRveDashboardIndexRoute:
+    PrivateStatisticsRveDashboardIndexRoute,
+  PrivateStatisticsTimeOperationIndexRoute:
+    PrivateStatisticsTimeOperationIndexRoute,
+  PrivateStatisticsTrackingActivityIndexRoute:
+    PrivateStatisticsTrackingActivityIndexRoute,
   PrivateMaintenanceListOsDoneViewIndexRoute:
     PrivateMaintenanceListOsDoneViewIndexRoute,
   PrivatePermissionsRolesEditIndexRoute: PrivatePermissionsRolesEditIndexRoute,
