@@ -1,4 +1,6 @@
 {
+  "expand.all": "Expand all",
+  "collapse.all": "Collapse all",
   "format.date": "YYYY-MM-DD",
   "format.daymonth": "MM-DD",
   "format.monthyear": "YYYY-MM",
@@ -2508,7 +2510,6 @@
   "kpis.cmms.open.tasks.by.vessel.description": "Quantity of open tasks by vessel",
   "kpis.cmms.tasks.open.vs.closed.description": "Distribution of open and closed tasks",
   "kpis.cmms.predictive.deviations.description": "Open vs executed predictive deviations",
-  "consumption.upper": "CONSUMPTION",
   "consumption.interval": "Consumption by Interval",
   "consumption.daily.description": "Daily fuel consumption monitoring.",
   "consumption.interval.description": "Consumption analysis in custom time intervals.",

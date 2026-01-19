@@ -107,7 +107,7 @@ export const ROUTE_LABELS: Record<string, string> = {
   'rve-dashboard': 'RVE Dashboard',
   'kpis-cmms': "KPI's CMMS",
   integration: 'integration',
-  consumo: 'consumption.upper',
+  consumo: 'consumption',
   daily: 'consumption.daily',
   interval: 'consumption.interval',
   comparative: 'consumption.comparative',

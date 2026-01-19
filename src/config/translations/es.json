@@ -1,4 +1,6 @@
 {
+  "expand.all": "Expandir todo",
+  "collapse.all": "Contraer todo",
   "format.date": "DD/MM/YYYY",
   "format.daymonth": "DD/MM",
   "format.monthyear": "MM/YYYY",
@@ -2484,7 +2486,6 @@
   "kpis.cmms.open.tasks.by.vessel.description": "Cantidad de tareas abiertas por embarcación",
   "kpis.cmms.tasks.open.vs.closed.description": "Distribución de tareas abiertas y concluidas",
   "kpis.cmms.predictive.deviations.description": "Desvíos predictivos abiertos vs ejecutados",
-  "consumption.upper": "CONSUMO",
   "consumption.interval": "Consumo por Intervalo",
   "consumption.daily.description": "Monitoreo de consumo diario de combustible.",
   "consumption.interval.description": "Análisis de consumo en intervalos de tiempo personalizados.",
