@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { format, subDays } from 'date-fns';
-import { CalendarIcon, Download, Search, X } from 'lucide-react';
+import { BrushCleaning, CalendarIcon, Download, Search, X } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';
@@ -189,17 +189,16 @@ function RVERDODashboardPage() {
             </div>
           </ItemContent>
 
-          <div className="flex flex-col gap-2 pb-1">
+          <div className="flex flex-row items-center gap-2 pb-1">
+            {hasFilter && (
+              <Button onClick={clearFilter} className="text-amber-700 hover:text-amber-800">
+                <BrushCleaning className="size-4" />
+              </Button>
+            )}
             <Button variant={hasFilter ? 'default' : 'outline'} onClick={handleSearch} className="gap-2">
               <Search className="size-4" />
               {t('filter')}
             </Button>
-            {hasFilter && (
-              <Button variant="ghost" onClick={clearFilter} className="h-8 gap-1 text-red-500 hover:text-red-600">
-                <X className="size-3" />
-                {t('clear.filter')}
-              </Button>
-            )}
           </div>
         </Item>
 

@@ -1,6 +1,6 @@
 import { Clock, CloudUpload, Droplet, Droplets } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 import type { ConsumptionIntervalData } from '../@interface/consumption-interval.types';
 
