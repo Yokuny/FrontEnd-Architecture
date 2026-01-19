@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import DefaultLoading from '@/components/default-loading';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-export const Route = createFileRoute('/_private/consumo/time-operation/')({
+export const Route = createFileRoute('/_private/consumption/time-operation/')({
   component: ConsumptionTimeOperationPage,
 });
 

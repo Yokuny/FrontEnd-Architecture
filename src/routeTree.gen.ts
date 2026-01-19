@@ -20,7 +20,7 @@ import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/p
 import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
 import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/fleet-manager/index';
 import { Route as PrivateEsgIndexRouteImport } from './routes/_private/esg/index';
-import { Route as PrivateConsumoIndexRouteImport } from './routes/_private/consumo/index';
+import { Route as PrivateConsumptionIndexRouteImport } from './routes/_private/consumption/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
@@ -62,12 +62,12 @@ import { Route as PrivateEsgSimulatorCiiIndexRouteImport } from './routes/_priva
 import { Route as PrivateEsgIndicatorsEeoiCiiIndexRouteImport } from './routes/_private/esg/indicators-eeoi-cii/index';
 import { Route as PrivateEsgConsumptionCo2IndexRouteImport } from './routes/_private/esg/consumption-co2/index';
 import { Route as PrivateEsgCiiFleetIndexRouteImport } from './routes/_private/esg/cii-fleet/index';
-import { Route as PrivateConsumoTimeOperationIndexRouteImport } from './routes/_private/consumo/time-operation/index';
-import { Route as PrivateConsumoRveSoundingIndexRouteImport } from './routes/_private/consumo/rve-sounding/index';
-import { Route as PrivateConsumoRveRdoIndexRouteImport } from './routes/_private/consumo/rve-rdo/index';
-import { Route as PrivateConsumoIntervalIndexRouteImport } from './routes/_private/consumo/interval/index';
-import { Route as PrivateConsumoDailyIndexRouteImport } from './routes/_private/consumo/daily/index';
-import { Route as PrivateConsumoComparativeIndexRouteImport } from './routes/_private/consumo/comparative/index';
+import { Route as PrivateConsumptionTimeOperationIndexRouteImport } from './routes/_private/consumption/time-operation/index';
+import { Route as PrivateConsumptionRveSoundingIndexRouteImport } from './routes/_private/consumption/rve-sounding/index';
+import { Route as PrivateConsumptionRveRdoIndexRouteImport } from './routes/_private/consumption/rve-rdo/index';
+import { Route as PrivateConsumptionIntervalIndexRouteImport } from './routes/_private/consumption/interval/index';
+import { Route as PrivateConsumptionDailyIndexRouteImport } from './routes/_private/consumption/daily/index';
+import { Route as PrivateConsumptionComparativeIndexRouteImport } from './routes/_private/consumption/comparative/index';
 import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
 import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
 import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
@@ -149,9 +149,9 @@ const PrivateEsgIndexRoute = PrivateEsgIndexRouteImport.update({
   path: '/esg/',
   getParentRoute: () => PrivateRoute,
 } as any);
-const PrivateConsumoIndexRoute = PrivateConsumoIndexRouteImport.update({
-  id: '/consumo/',
-  path: '/consumo/',
+const PrivateConsumptionIndexRoute = PrivateConsumptionIndexRouteImport.update({
+  id: '/consumption/',
+  path: '/consumption/',
   getParentRoute: () => PrivateRoute,
 } as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
@@ -396,40 +396,40 @@ const PrivateEsgCiiFleetIndexRoute = PrivateEsgCiiFleetIndexRouteImport.update({
   path: '/esg/cii-fleet/',
   getParentRoute: () => PrivateRoute,
 } as any);
-const PrivateConsumoTimeOperationIndexRoute =
-  PrivateConsumoTimeOperationIndexRouteImport.update({
-    id: '/consumo/time-operation/',
-    path: '/consumo/time-operation/',
+const PrivateConsumptionTimeOperationIndexRoute =
+  PrivateConsumptionTimeOperationIndexRouteImport.update({
+    id: '/consumption/time-operation/',
+    path: '/consumption/time-operation/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateConsumoRveSoundingIndexRoute =
-  PrivateConsumoRveSoundingIndexRouteImport.update({
-    id: '/consumo/rve-sounding/',
-    path: '/consumo/rve-sounding/',
+const PrivateConsumptionRveSoundingIndexRoute =
+  PrivateConsumptionRveSoundingIndexRouteImport.update({
+    id: '/consumption/rve-sounding/',
+    path: '/consumption/rve-sounding/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateConsumoRveRdoIndexRoute =
-  PrivateConsumoRveRdoIndexRouteImport.update({
-    id: '/consumo/rve-rdo/',
-    path: '/consumo/rve-rdo/',
+const PrivateConsumptionRveRdoIndexRoute =
+  PrivateConsumptionRveRdoIndexRouteImport.update({
+    id: '/consumption/rve-rdo/',
+    path: '/consumption/rve-rdo/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateConsumoIntervalIndexRoute =
-  PrivateConsumoIntervalIndexRouteImport.update({
-    id: '/consumo/interval/',
-    path: '/consumo/interval/',
+const PrivateConsumptionIntervalIndexRoute =
+  PrivateConsumptionIntervalIndexRouteImport.update({
+    id: '/consumption/interval/',
+    path: '/consumption/interval/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateConsumoDailyIndexRoute =
-  PrivateConsumoDailyIndexRouteImport.update({
-    id: '/consumo/daily/',
-    path: '/consumo/daily/',
+const PrivateConsumptionDailyIndexRoute =
+  PrivateConsumptionDailyIndexRouteImport.update({
+    id: '/consumption/daily/',
+    path: '/consumption/daily/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateConsumoComparativeIndexRoute =
-  PrivateConsumoComparativeIndexRouteImport.update({
-    id: '/consumo/comparative/',
-    path: '/consumo/comparative/',
+const PrivateConsumptionComparativeIndexRoute =
+  PrivateConsumptionComparativeIndexRouteImport.update({
+    id: '/consumption/comparative/',
+    path: '/consumption/comparative/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateRegisterUserTypeAddRoute =
@@ -585,7 +585,7 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
-  '/consumo': typeof PrivateConsumoIndexRoute;
+  '/consumption': typeof PrivateConsumptionIndexRoute;
   '/esg': typeof PrivateEsgIndexRoute;
   '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
@@ -614,12 +614,12 @@ export interface FileRoutesByFullPath {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
-  '/consumo/comparative': typeof PrivateConsumoComparativeIndexRoute;
-  '/consumo/daily': typeof PrivateConsumoDailyIndexRoute;
-  '/consumo/interval': typeof PrivateConsumoIntervalIndexRoute;
-  '/consumo/rve-rdo': typeof PrivateConsumoRveRdoIndexRoute;
-  '/consumo/rve-sounding': typeof PrivateConsumoRveSoundingIndexRoute;
-  '/consumo/time-operation': typeof PrivateConsumoTimeOperationIndexRoute;
+  '/consumption/comparative': typeof PrivateConsumptionComparativeIndexRoute;
+  '/consumption/daily': typeof PrivateConsumptionDailyIndexRoute;
+  '/consumption/interval': typeof PrivateConsumptionIntervalIndexRoute;
+  '/consumption/rve-rdo': typeof PrivateConsumptionRveRdoIndexRoute;
+  '/consumption/rve-sounding': typeof PrivateConsumptionRveSoundingIndexRoute;
+  '/consumption/time-operation': typeof PrivateConsumptionTimeOperationIndexRoute;
   '/esg/cii-fleet': typeof PrivateEsgCiiFleetIndexRoute;
   '/esg/consumption-co2': typeof PrivateEsgConsumptionCo2IndexRoute;
   '/esg/indicators-eeoi-cii': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
@@ -669,7 +669,7 @@ export interface FileRoutesByTo {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
-  '/consumo': typeof PrivateConsumoIndexRoute;
+  '/consumption': typeof PrivateConsumptionIndexRoute;
   '/esg': typeof PrivateEsgIndexRoute;
   '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/maintenance': typeof PrivateMaintenanceIndexRoute;
@@ -698,12 +698,12 @@ export interface FileRoutesByTo {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
-  '/consumo/comparative': typeof PrivateConsumoComparativeIndexRoute;
-  '/consumo/daily': typeof PrivateConsumoDailyIndexRoute;
-  '/consumo/interval': typeof PrivateConsumoIntervalIndexRoute;
-  '/consumo/rve-rdo': typeof PrivateConsumoRveRdoIndexRoute;
-  '/consumo/rve-sounding': typeof PrivateConsumoRveSoundingIndexRoute;
-  '/consumo/time-operation': typeof PrivateConsumoTimeOperationIndexRoute;
+  '/consumption/comparative': typeof PrivateConsumptionComparativeIndexRoute;
+  '/consumption/daily': typeof PrivateConsumptionDailyIndexRoute;
+  '/consumption/interval': typeof PrivateConsumptionIntervalIndexRoute;
+  '/consumption/rve-rdo': typeof PrivateConsumptionRveRdoIndexRoute;
+  '/consumption/rve-sounding': typeof PrivateConsumptionRveSoundingIndexRoute;
+  '/consumption/time-operation': typeof PrivateConsumptionTimeOperationIndexRoute;
   '/esg/cii-fleet': typeof PrivateEsgCiiFleetIndexRoute;
   '/esg/consumption-co2': typeof PrivateEsgConsumptionCo2IndexRoute;
   '/esg/indicators-eeoi-cii': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
@@ -756,7 +756,7 @@ export interface FileRoutesById {
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
-  '/_private/consumo/': typeof PrivateConsumoIndexRoute;
+  '/_private/consumption/': typeof PrivateConsumptionIndexRoute;
   '/_private/esg/': typeof PrivateEsgIndexRoute;
   '/_private/fleet-manager/': typeof PrivateFleetManagerIndexRoute;
   '/_private/maintenance/': typeof PrivateMaintenanceIndexRoute;
@@ -785,12 +785,12 @@ export interface FileRoutesById {
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
-  '/_private/consumo/comparative/': typeof PrivateConsumoComparativeIndexRoute;
-  '/_private/consumo/daily/': typeof PrivateConsumoDailyIndexRoute;
-  '/_private/consumo/interval/': typeof PrivateConsumoIntervalIndexRoute;
-  '/_private/consumo/rve-rdo/': typeof PrivateConsumoRveRdoIndexRoute;
-  '/_private/consumo/rve-sounding/': typeof PrivateConsumoRveSoundingIndexRoute;
-  '/_private/consumo/time-operation/': typeof PrivateConsumoTimeOperationIndexRoute;
+  '/_private/consumption/comparative/': typeof PrivateConsumptionComparativeIndexRoute;
+  '/_private/consumption/daily/': typeof PrivateConsumptionDailyIndexRoute;
+  '/_private/consumption/interval/': typeof PrivateConsumptionIntervalIndexRoute;
+  '/_private/consumption/rve-rdo/': typeof PrivateConsumptionRveRdoIndexRoute;
+  '/_private/consumption/rve-sounding/': typeof PrivateConsumptionRveSoundingIndexRoute;
+  '/_private/consumption/time-operation/': typeof PrivateConsumptionTimeOperationIndexRoute;
   '/_private/esg/cii-fleet/': typeof PrivateEsgCiiFleetIndexRoute;
   '/_private/esg/consumption-co2/': typeof PrivateEsgConsumptionCo2IndexRoute;
   '/_private/esg/indicators-eeoi-cii/': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
@@ -842,7 +842,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
-    | '/consumo'
+    | '/consumption'
     | '/esg'
     | '/fleet-manager'
     | '/maintenance'
@@ -871,12 +871,12 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
-    | '/consumo/comparative'
-    | '/consumo/daily'
-    | '/consumo/interval'
-    | '/consumo/rve-rdo'
-    | '/consumo/rve-sounding'
-    | '/consumo/time-operation'
+    | '/consumption/comparative'
+    | '/consumption/daily'
+    | '/consumption/interval'
+    | '/consumption/rve-rdo'
+    | '/consumption/rve-sounding'
+    | '/consumption/time-operation'
     | '/esg/cii-fleet'
     | '/esg/consumption-co2'
     | '/esg/indicators-eeoi-cii'
@@ -926,7 +926,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
-    | '/consumo'
+    | '/consumption'
     | '/esg'
     | '/fleet-manager'
     | '/maintenance'
@@ -955,12 +955,12 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
-    | '/consumo/comparative'
-    | '/consumo/daily'
-    | '/consumo/interval'
-    | '/consumo/rve-rdo'
-    | '/consumo/rve-sounding'
-    | '/consumo/time-operation'
+    | '/consumption/comparative'
+    | '/consumption/daily'
+    | '/consumption/interval'
+    | '/consumption/rve-rdo'
+    | '/consumption/rve-sounding'
+    | '/consumption/time-operation'
     | '/esg/cii-fleet'
     | '/esg/consumption-co2'
     | '/esg/indicators-eeoi-cii'
@@ -1012,7 +1012,7 @@ export interface FileRouteTypes {
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
-    | '/_private/consumo/'
+    | '/_private/consumption/'
     | '/_private/esg/'
     | '/_private/fleet-manager/'
     | '/_private/maintenance/'
@@ -1041,12 +1041,12 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
     | '/_private/register/user-type/add'
-    | '/_private/consumo/comparative/'
-    | '/_private/consumo/daily/'
-    | '/_private/consumo/interval/'
-    | '/_private/consumo/rve-rdo/'
-    | '/_private/consumo/rve-sounding/'
-    | '/_private/consumo/time-operation/'
+    | '/_private/consumption/comparative/'
+    | '/_private/consumption/daily/'
+    | '/_private/consumption/interval/'
+    | '/_private/consumption/rve-rdo/'
+    | '/_private/consumption/rve-sounding/'
+    | '/_private/consumption/time-operation/'
     | '/_private/esg/cii-fleet/'
     | '/_private/esg/consumption-co2/'
     | '/_private/esg/indicators-eeoi-cii/'
@@ -1177,11 +1177,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateEsgIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/consumo/': {
-      id: '/_private/consumo/';
-      path: '/consumo';
-      fullPath: '/consumo';
-      preLoaderRoute: typeof PrivateConsumoIndexRouteImport;
+    '/_private/consumption/': {
+      id: '/_private/consumption/';
+      path: '/consumption';
+      fullPath: '/consumption';
+      preLoaderRoute: typeof PrivateConsumptionIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_public/auth/unlock': {
@@ -1471,46 +1471,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateEsgCiiFleetIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/consumo/time-operation/': {
-      id: '/_private/consumo/time-operation/';
-      path: '/consumo/time-operation';
-      fullPath: '/consumo/time-operation';
-      preLoaderRoute: typeof PrivateConsumoTimeOperationIndexRouteImport;
+    '/_private/consumption/time-operation/': {
+      id: '/_private/consumption/time-operation/';
+      path: '/consumption/time-operation';
+      fullPath: '/consumption/time-operation';
+      preLoaderRoute: typeof PrivateConsumptionTimeOperationIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/consumo/rve-sounding/': {
-      id: '/_private/consumo/rve-sounding/';
-      path: '/consumo/rve-sounding';
-      fullPath: '/consumo/rve-sounding';
-      preLoaderRoute: typeof PrivateConsumoRveSoundingIndexRouteImport;
+    '/_private/consumption/rve-sounding/': {
+      id: '/_private/consumption/rve-sounding/';
+      path: '/consumption/rve-sounding';
+      fullPath: '/consumption/rve-sounding';
+      preLoaderRoute: typeof PrivateConsumptionRveSoundingIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/consumo/rve-rdo/': {
-      id: '/_private/consumo/rve-rdo/';
-      path: '/consumo/rve-rdo';
-      fullPath: '/consumo/rve-rdo';
-      preLoaderRoute: typeof PrivateConsumoRveRdoIndexRouteImport;
+    '/_private/consumption/rve-rdo/': {
+      id: '/_private/consumption/rve-rdo/';
+      path: '/consumption/rve-rdo';
+      fullPath: '/consumption/rve-rdo';
+      preLoaderRoute: typeof PrivateConsumptionRveRdoIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/consumo/interval/': {
-      id: '/_private/consumo/interval/';
-      path: '/consumo/interval';
-      fullPath: '/consumo/interval';
-      preLoaderRoute: typeof PrivateConsumoIntervalIndexRouteImport;
+    '/_private/consumption/interval/': {
+      id: '/_private/consumption/interval/';
+      path: '/consumption/interval';
+      fullPath: '/consumption/interval';
+      preLoaderRoute: typeof PrivateConsumptionIntervalIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/consumo/daily/': {
-      id: '/_private/consumo/daily/';
-      path: '/consumo/daily';
-      fullPath: '/consumo/daily';
-      preLoaderRoute: typeof PrivateConsumoDailyIndexRouteImport;
+    '/_private/consumption/daily/': {
+      id: '/_private/consumption/daily/';
+      path: '/consumption/daily';
+      fullPath: '/consumption/daily';
+      preLoaderRoute: typeof PrivateConsumptionDailyIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/consumo/comparative/': {
-      id: '/_private/consumo/comparative/';
-      path: '/consumo/comparative';
-      fullPath: '/consumo/comparative';
-      preLoaderRoute: typeof PrivateConsumoComparativeIndexRouteImport;
+    '/_private/consumption/comparative/': {
+      id: '/_private/consumption/comparative/';
+      path: '/consumption/comparative';
+      fullPath: '/consumption/comparative';
+      preLoaderRoute: typeof PrivateConsumptionComparativeIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/register/user-type/add': {
@@ -1692,7 +1692,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
-  PrivateConsumoIndexRoute: typeof PrivateConsumoIndexRoute;
+  PrivateConsumptionIndexRoute: typeof PrivateConsumptionIndexRoute;
   PrivateEsgIndexRoute: typeof PrivateEsgIndexRoute;
   PrivateFleetManagerIndexRoute: typeof PrivateFleetManagerIndexRoute;
   PrivateMaintenanceIndexRoute: typeof PrivateMaintenanceIndexRoute;
@@ -1720,12 +1720,12 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
-  PrivateConsumoComparativeIndexRoute: typeof PrivateConsumoComparativeIndexRoute;
-  PrivateConsumoDailyIndexRoute: typeof PrivateConsumoDailyIndexRoute;
-  PrivateConsumoIntervalIndexRoute: typeof PrivateConsumoIntervalIndexRoute;
-  PrivateConsumoRveRdoIndexRoute: typeof PrivateConsumoRveRdoIndexRoute;
-  PrivateConsumoRveSoundingIndexRoute: typeof PrivateConsumoRveSoundingIndexRoute;
-  PrivateConsumoTimeOperationIndexRoute: typeof PrivateConsumoTimeOperationIndexRoute;
+  PrivateConsumptionComparativeIndexRoute: typeof PrivateConsumptionComparativeIndexRoute;
+  PrivateConsumptionDailyIndexRoute: typeof PrivateConsumptionDailyIndexRoute;
+  PrivateConsumptionIntervalIndexRoute: typeof PrivateConsumptionIntervalIndexRoute;
+  PrivateConsumptionRveRdoIndexRoute: typeof PrivateConsumptionRveRdoIndexRoute;
+  PrivateConsumptionRveSoundingIndexRoute: typeof PrivateConsumptionRveSoundingIndexRoute;
+  PrivateConsumptionTimeOperationIndexRoute: typeof PrivateConsumptionTimeOperationIndexRoute;
   PrivateEsgCiiFleetIndexRoute: typeof PrivateEsgCiiFleetIndexRoute;
   PrivateEsgConsumptionCo2IndexRoute: typeof PrivateEsgConsumptionCo2IndexRoute;
   PrivateEsgIndicatorsEeoiCiiIndexRoute: typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
@@ -1772,7 +1772,7 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
-  PrivateConsumoIndexRoute: PrivateConsumoIndexRoute,
+  PrivateConsumptionIndexRoute: PrivateConsumptionIndexRoute,
   PrivateEsgIndexRoute: PrivateEsgIndexRoute,
   PrivateFleetManagerIndexRoute: PrivateFleetManagerIndexRoute,
   PrivateMaintenanceIndexRoute: PrivateMaintenanceIndexRoute,
@@ -1803,12 +1803,15 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
   PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
-  PrivateConsumoComparativeIndexRoute: PrivateConsumoComparativeIndexRoute,
-  PrivateConsumoDailyIndexRoute: PrivateConsumoDailyIndexRoute,
-  PrivateConsumoIntervalIndexRoute: PrivateConsumoIntervalIndexRoute,
-  PrivateConsumoRveRdoIndexRoute: PrivateConsumoRveRdoIndexRoute,
-  PrivateConsumoRveSoundingIndexRoute: PrivateConsumoRveSoundingIndexRoute,
-  PrivateConsumoTimeOperationIndexRoute: PrivateConsumoTimeOperationIndexRoute,
+  PrivateConsumptionComparativeIndexRoute:
+    PrivateConsumptionComparativeIndexRoute,
+  PrivateConsumptionDailyIndexRoute: PrivateConsumptionDailyIndexRoute,
+  PrivateConsumptionIntervalIndexRoute: PrivateConsumptionIntervalIndexRoute,
+  PrivateConsumptionRveRdoIndexRoute: PrivateConsumptionRveRdoIndexRoute,
+  PrivateConsumptionRveSoundingIndexRoute:
+    PrivateConsumptionRveSoundingIndexRoute,
+  PrivateConsumptionTimeOperationIndexRoute:
+    PrivateConsumptionTimeOperationIndexRoute,
   PrivateEsgCiiFleetIndexRoute: PrivateEsgCiiFleetIndexRoute,
   PrivateEsgConsumptionCo2IndexRoute: PrivateEsgConsumptionCo2IndexRoute,
   PrivateEsgIndicatorsEeoiCiiIndexRoute: PrivateEsgIndicatorsEeoiCiiIndexRoute,

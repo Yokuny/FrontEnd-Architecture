@@ -37,7 +37,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   'fleet-manager': MapIcon,
   esg: Leaf,
   statistics: BarChart3,
-  consumo: Fuel,
+  consumption: Fuel,
 };
 
 // Ícones para sub-rotas específicas
@@ -107,7 +107,7 @@ export const ROUTE_LABELS: Record<string, string> = {
   'rve-dashboard': 'RVE Dashboard',
   'kpis-cmms': "KPI's CMMS",
   integration: 'integration',
-  consumo: 'consumption',
+  consumption: 'consumption',
   daily: 'consumption.daily',
   interval: 'consumption.interval',
   comparative: 'consumption.comparative',
@@ -123,12 +123,12 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
-  '/consumo/comparative',
-  '/consumo/daily',
-  '/consumo/interval',
-  '/consumo/rve-rdo',
-  '/consumo/rve-sounding',
-  '/consumo/time-operation',
+  '/consumption/comparative',
+  '/consumption/daily',
+  '/consumption/interval',
+  '/consumption/rve-rdo',
+  '/consumption/rve-sounding',
+  '/consumption/time-operation',
   '/esg/cii-fleet',
   '/esg/consumption-co2',
   '/esg/indicators-eeoi-cii',

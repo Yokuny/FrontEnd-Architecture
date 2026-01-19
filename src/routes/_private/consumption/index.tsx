@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 
-export const Route = createFileRoute('/_private/consumo/')({
+export const Route = createFileRoute('/_private/consumption/')({
   component: ConsumoHubPage,
 });
 
@@ -16,37 +16,37 @@ function ConsumoHubPage() {
       title: t('consumption.daily'),
       description: t('consumption.daily.description', { defaultValue: 'Monitoramento de consumo diário de combustível.' }),
       icon: BarChart2,
-      to: '/consumo/daily' as const,
+      to: '/consumption/daily' as const,
     },
     {
       title: t('consumption.interval'),
       description: t('consumption.interval.description', { defaultValue: 'Análise de consumo em intervalos de tempo personalizados.' }),
       icon: Gauge,
-      to: '/consumo/interval' as const,
+      to: '/consumption/interval' as const,
     },
     {
       title: t('consumption.time.operation'),
       description: t('consumption.time.operation.description', { defaultValue: 'Consumo por modo de operação e tempo de atividade.' }),
       icon: Clock,
-      to: '/consumo/time-operation' as const,
+      to: '/consumption/time-operation' as const,
     },
     {
       title: t('consumption.comparative'),
       description: t('consumption.comparative.description', { defaultValue: 'Comparação de consumo entre diferentes embarcações.' }),
       icon: GitCompare,
-      to: '/consumo/comparative' as const,
+      to: '/consumption/comparative' as const,
     },
     {
       title: t('consumption.rve.rdo'),
       description: t('consumption.rve.rdo.description', { defaultValue: 'Dashboard comparativo entre RDO e RVE.' }),
       icon: FileText,
-      to: '/consumo/rve-rdo' as const,
+      to: '/consumption/rve-rdo' as const,
     },
     {
       title: t('consumption.rve.sounding'),
       description: t('consumption.rve.sounding.description', { defaultValue: 'Dashboard comparativo entre sondagem e RVE.' }),
       icon: TrendingUp,
-      to: '/consumo/rve-sounding' as const,
+      to: '/consumption/rve-sounding' as const,
     },
   ];
 

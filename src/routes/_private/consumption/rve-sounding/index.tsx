@@ -3,19 +3,19 @@ import { useTranslation } from 'react-i18next';
 import DefaultLoading from '@/components/default-loading';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-export const Route = createFileRoute('/_private/consumo/comparative/')({
-  component: ConsumptionComparativePage,
+export const Route = createFileRoute('/_private/consumption/rve-sounding/')({
+  component: ConsumptionRVESoundingPage,
 });
 
-function ConsumptionComparativePage() {
+function ConsumptionRVESoundingPage() {
   const { t } = useTranslation();
 
   return (
     <Card>
-      <CardHeader title={t('consumption.comparative')} />
+      <CardHeader title={t('consumption.rve.sounding')} />
       <CardContent>
         <DefaultLoading />
-        {/* TODO: Implementar lógica de consumo comparativo */}
+        {/* TODO: Implementar dashboard RVE vs Sondagem */}
       </CardContent>
     </Card>
   );

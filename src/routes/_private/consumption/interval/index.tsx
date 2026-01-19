@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { format, subDays } from 'date-fns';
-import { CalendarIcon, Search } from 'lucide-react';
+import { format, subMonths } from 'date-fns';
+import { CalendarIcon, Download, Search } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';
@@ -9,82 +9,104 @@ import { ConsumptionMachineSelect } from '@/components/selects/consumption-machi
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Item, ItemContent } from '@/components/ui/item';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Item, ItemContent, ItemTitle } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { mapConsumptionMachinesToOptions, useConsumptionMachinesSelect } from '@/hooks/use-consumption-machines-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { cn } from '@/lib/utils';
-import { ConsumptionChart } from './@components/ConsumptionChart';
-import { ListPolling } from './@components/ListPolling';
-import { Statistics } from './@components/Statistics';
-import { DEFAULT_DATE_RANGE_DAYS, UNIT_OPTIONS } from './@consts/consumption-daily.consts';
-import { useConsumptionDailyData } from './@hooks/use-consumption-daily-api';
-import { searchSchema } from './@interface/consumption-daily.schema';
+import { downloadCSV } from '../daily/@helpers/consumption-daily.helpers';
+import { ConsumptionTable } from './@components/ConsumptionTable';
+import { SummaryCards } from './@components/SummaryCards';
+import { VesselComparison } from './@components/VesselComparison';
+import { DEFAULT_DATE_RANGE_MONTHS, UNIT_OPTIONS } from './@consts/consumption-interval.consts';
+import { useConsumptionIntervalData } from './@hooks/use-consumption-interval-api';
+import { searchSchema } from './@interface/consumption-interval.schema';
 
-export const Route = createFileRoute('/_private/consumo/daily/')({
-  component: ConsumptionDailyPage,
+export const Route = createFileRoute('/_private/consumption/interval/')({
+  component: ConsumptionIntervalPage,
   validateSearch: searchSchema,
 });
 
-function ConsumptionDailyPage() {
+function ConsumptionIntervalPage() {
   const { t } = useTranslation();
   const navigate = useNavigate({ from: Route.fullPath });
   const search = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
 
   // Initialize state from URL params or defaults
-  const [dateMin, setDateMin] = useState<Date>(search.dateMin ? new Date(search.dateMin) : subDays(new Date(), DEFAULT_DATE_RANGE_DAYS));
+  const [dateMin, setDateMin] = useState<Date>(search.dateMin ? new Date(search.dateMin) : subMonths(new Date(), DEFAULT_DATE_RANGE_MONTHS));
   const [dateMax, setDateMax] = useState<Date>(search.dateMax ? new Date(search.dateMax) : new Date());
   const [unit, setUnit] = useState<string>(search.unit || 'L');
-  const [machineId, setMachineId] = useState<string | undefined>(search.machine);
+  const [machineIds, setMachineIds] = useState<string[]>(search.machines || []);
 
-  // Chart toggles
+  // View toggles
   const [showReal, setShowReal] = useState(true);
-  const [showEstimated, setShowEstimated] = useState(true);
+  const [showEstimated, setShowEstimated] = useState(false);
 
-  // Derive API filters from URL params (Single Source of Truth)
+  // Derive API filters
   const apiFilters = useMemo(
     () => ({
-      idMachine: search.machine || '',
-      dateMin: search.dateMin ? new Date(search.dateMin) : dateMin,
-      dateMax: search.dateMax ? new Date(search.dateMax) : dateMax,
-      unit: search.unit || unit,
+      machines: machineIds,
+      dateMin,
+      dateMax,
+      unit,
       idEnterprise,
     }),
-    [search, dateMin, dateMax, unit, idEnterprise],
+    [machineIds, dateMin, dateMax, unit, idEnterprise],
   );
 
-  // Fetch data
-  const { data = [], isLoading } = useConsumptionDailyData(apiFilters);
+  const { data = [], isLoading } = useConsumptionIntervalData(apiFilters);
 
   const handleSearch = useCallback(() => {
     navigate({
       search: {
         dateMin: format(dateMin, 'yyyy-MM-dd'),
         dateMax: format(dateMax, 'yyyy-MM-dd'),
-        machine: machineId,
+        machines: machineIds,
         unit,
       },
       replace: true,
     });
-  }, [navigate, dateMin, dateMax, machineId, unit]);
+  }, [navigate, dateMin, dateMax, machineIds, unit]);
 
-  // Check permissions - simplificado para esta implementação
-  // TODO: Integrar com sistema de permissões real (useAuth ou similar)
-  const hasPermissionEditor = true;
+  const exportToCSV = () => {
+    const csvData = data.map((x) => ({
+      date: format(new Date(x.date), 'yyyy-MM-dd'),
+      vessel: x.machine?.name,
+      hours: x.hours,
+      consumptionReal: x.consumptionReal?.value,
+      consumptionRealType: x.consumptionReal?.type,
+      consumptionEstimated: x.consumption?.value,
+      consumptionEstimatedType: x.consumption?.type,
+      consumptionEstimatedUnit: unit,
+      consumptionEstimatedCo2: x.consumption?.co2,
+      stock: x.oil?.stock,
+      ...x.engines?.reduce(
+        (acc, engine) => {
+          acc[engine.description] = engine.consumption?.value;
+          acc[`${engine.description}HR`] = engine.hours;
+          return acc;
+        },
+        {} as Record<string, number | undefined>,
+      ),
+    }));
 
-  // Get machine name
-  const machinesQuery = useConsumptionMachinesSelect(idEnterprise);
-  const machinesOptions = useMemo(() => (machinesQuery.data ? mapConsumptionMachinesToOptions(machinesQuery.data) : []), [machinesQuery.data]);
-  const selectedMachine = machinesOptions.find((m: any) => m.value === machineId);
-  const machineName = selectedMachine?.label || 'Unknown';
+    downloadCSV(csvData, `consumption_interval`);
+  };
 
   return (
     <Card>
-      <CardHeader title={t('consumption.daily')} />
+      <CardHeader title={t('consumption')}>
+        {!isLoading && data.length > 0 && (
+          <Button size="sm" onClick={exportToCSV}>
+            <Download className="size-4" />
+          </Button>
+        )}
+      </CardHeader>
       <CardContent>
+        {/* Filters Section */}
         <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
           <ItemContent className="flex-none">
             <Label>{t('date.start')}</Label>
@@ -132,14 +154,14 @@ function ConsumptionDailyPage() {
             </Popover>
           </ItemContent>
 
-          <ItemContent className="min-w-[240px]">
+          <ItemContent className="min-w-[300px]">
             <ConsumptionMachineSelect
-              mode="single"
+              mode="multi"
               label={t('vessel')}
               placeholder={t('vessels.select.placeholder')}
               idEnterprise={idEnterprise}
-              value={machineId}
-              onChange={setMachineId}
+              value={machineIds}
+              onChange={setMachineIds}
             />
           </ItemContent>
 
@@ -159,22 +181,49 @@ function ConsumptionDailyPage() {
             </Select>
           </ItemContent>
 
-          <Button variant="outline" className="ml-auto shrink-0 gap-2 bg-background" onClick={handleSearch} disabled={!machineId}>
+          <Button variant="outline" className="ml-auto shrink-0 gap-2 bg-background" onClick={handleSearch} disabled={!idEnterprise}>
             <Search className="size-4" />
             {t('filter')}
           </Button>
         </Item>
 
+        <div className="mb-6 flex items-center gap-6">
+          <div className="flex items-center space-x-2">
+            <Checkbox id="showReal" checked={showReal} onCheckedChange={(checked) => setShowReal(!!checked)} />
+            <Label htmlFor="showReal" className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              {t('real.consumption')}
+            </Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="showEstimated" checked={showEstimated} onCheckedChange={(checked) => setShowEstimated(!!checked)} />
+            <Label htmlFor="showEstimated" className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              {t('estimated.consumption')}
+            </Label>
+          </div>
+        </div>
+
         {isLoading && <DefaultLoading />}
-        {!isLoading && !data.length && machineId && <DefaultEmptyData />}
+        {!isLoading && !data.length && <DefaultEmptyData />}
 
         {!isLoading && data.length > 0 && (
-          <div className="space-y-6">
-            <ConsumptionChart data={data} showReal={showReal} showEstimated={showEstimated} onToggleReal={setShowReal} onToggleEstimated={setShowEstimated} />
+          <div className="space-y-8">
+            {showReal && (
+              <div className="space-y-4">
+                <ItemTitle className="font-bold uppercase text-sky-600">{t('polling')}</ItemTitle>
+                <SummaryCards data={data} unit={unit} isReal={true} />
+                <VesselComparison data={data} unit={unit} isReal={true} />
+              </div>
+            )}
 
-            <Statistics data={data} machineId={machineId} machineName={machineName} hasPermissionEditor={hasPermissionEditor} />
+            {showEstimated && (
+              <div className="space-y-4">
+                <ItemTitle className="font-bold uppercase text-amber-600">{t('flowmeter')}</ItemTitle>
+                <SummaryCards data={data} unit={unit} isReal={false} />
+                <VesselComparison data={data} unit={unit} isReal={false} />
+              </div>
+            )}
 
-            <ListPolling data={data} machineId={machineId} machineName={machineName} hasPermissionEditor={hasPermissionEditor} />
+            <ConsumptionTable data={data} unit={unit} isReal={showReal} isEstimated={showEstimated} />
           </div>
         )}
       </CardContent>
