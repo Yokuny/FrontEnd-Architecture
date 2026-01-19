@@ -96,6 +96,18 @@ async function handleError(response: Response, options: ApiOptions) {
  * Parse response based on responseType
  */
 async function parseResponse<T>(response: Response, responseType: ApiOptions['responseType']): Promise<T> {
+  if (response.status === 204) {
+    return {} as T;
+  }
+
+  const contentType = response.headers.get('content-type');
+  if (!contentType || contentType.indexOf('application/json') === -1) {
+    if (responseType === 'blob') return (await response.blob()) as T;
+    if (responseType === 'text') return (await response.text()) as T;
+    if (responseType === 'arraybuffer') return (await response.arrayBuffer()) as T;
+    return (await response.text()) as T;
+  }
+
   switch (responseType) {
     case 'blob':
       return (await response.blob()) as T;
@@ -104,7 +116,11 @@ async function parseResponse<T>(response: Response, responseType: ApiOptions['re
     case 'arraybuffer':
       return (await response.arrayBuffer()) as T;
     default:
-      return (await response.json()) as T;
+      try {
+        return (await response.json()) as T;
+      } catch {
+        return {} as T;
+      }
   }
 }
 

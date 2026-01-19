@@ -6,6 +6,8 @@ import {
   Building2,
   CalendarClock,
   CheckSquare,
+  Clock,
+  DollarSign,
   FileText,
   Flame,
   Fuel,
@@ -22,10 +24,12 @@ import {
   Settings,
   Shield,
   Ship,
+  Target,
   Timer,
   Users,
   Variable,
   Wrench,
+  Zap,
 } from 'lucide-react';
 
 // Mapeamento de ícones por segmento de rota
@@ -38,6 +42,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   esg: Leaf,
   statistics: BarChart3,
   consumption: Fuel,
+  operation: Zap,
 };
 
 // Ícones para sub-rotas específicas
@@ -73,6 +78,12 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   comparative: Activity,
   'rve-rdo': FileText,
   'rve-sounding': FileText,
+  downtime: Clock,
+  inoperability: Activity,
+  dashboard: LayoutDashboard,
+  groups: Users,
+  goals: Target,
+  ptax: DollarSign,
 };
 
 // Chaves i18n para tradução de rotas
@@ -113,6 +124,13 @@ export const ROUTE_LABELS: Record<string, string> = {
   comparative: 'consumption.comparative',
   'rve-rdo': 'consumption.rve.rdo',
   'rve-sounding': 'consumption.rve.sounding',
+  operation: 'operation',
+  downtime: 'downtime',
+  inoperability: 'inoperability',
+  dashboard: 'dashboard',
+  groups: 'groups',
+  goals: 'goals',
+  ptax: 'ptax',
 };
 
 /**
@@ -129,6 +147,12 @@ export const MAIN_ROUTES = [
   '/consumption/rve-rdo',
   '/consumption/rve-sounding',
   '/consumption/time-operation',
+  '/operation/dashboard',
+  '/operation/downtime',
+  '/operation/goals',
+  '/operation/groups',
+  '/operation/inoperability',
+  '/operation/ptax',
   '/esg/cii-fleet',
   '/esg/consumption-co2',
   '/esg/indicators-eeoi-cii',

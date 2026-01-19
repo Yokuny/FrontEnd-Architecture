@@ -166,7 +166,7 @@ function ConsumptionDailyPage() {
         </Item>
 
         {isLoading && <DefaultLoading />}
-        {!isLoading && !data.length && machineId && <DefaultEmptyData />}
+        {!isLoading && !data.length && <DefaultEmptyData />}
 
         {!isLoading && data.length > 0 && (
           <div className="space-y-6">
