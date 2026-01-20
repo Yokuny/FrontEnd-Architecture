@@ -24,7 +24,7 @@ import { DEFAULT_DATE_RANGE_MONTHS, UNIT_OPTIONS } from './@consts/consumption-i
 import { useConsumptionIntervalData } from './@hooks/use-consumption-interval-api';
 import { searchSchema } from './@interface/consumption-interval.schema';
 
-export const Route = createFileRoute('/_private/consumption/interval/')({
+export const Route = createFileRoute('/_private/consumption/relatorio/')({
   component: ConsumptionIntervalPage,
   validateSearch: searchSchema,
 });

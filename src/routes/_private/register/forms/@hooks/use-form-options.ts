@@ -6,12 +6,12 @@ export function useFormOptions() {
 
   const formTypeOptions = FORM_TYPES.map((type) => ({
     value: type.value,
-    label: t(type.label, { defaultValue: type.label }),
+    label: t(type.label),
   }));
 
   const datatypeOptions = FIELD_DATATYPES.map((type) => ({
     value: type.value,
-    label: t(type.label, { defaultValue: type.label }),
+    label: t(type.label),
     color: type.color,
   }));
 

@@ -19,7 +19,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
 
   const query = useSensorsByAssetsSelect(idAssets);
 
-  const noOptionsMessage = !idAssets || idAssets.length === 0 ? t('select.first.assets', { defaultValue: 'Selecione pelo menos um ativo primeiro.' }) : t('nooptions.message');
+  const noOptionsMessage = !idAssets || idAssets.length === 0 ? t('select.first.assets') : t('nooptions.message');
 
   const filterOptions = (sensors: SensorByAsset[]) => {
     const options = mapSensorsByAssetsToOptions(sensors);

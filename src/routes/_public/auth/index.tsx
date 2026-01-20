@@ -73,9 +73,9 @@ function LoginPage() {
 
         <Field>
           <FieldDescription className="px-6 text-center">
-            {t('login.no.account', { defaultValue: "Don't have an account?" })}{' '}
+            {t('login.no.account')}{' '}
             <a href="/auth/register" className="underline underline-offset-4 text-primary">
-              {t('login.register', { defaultValue: 'Register' })}
+              {t('login.register')}
             </a>
           </FieldDescription>
         </Field>

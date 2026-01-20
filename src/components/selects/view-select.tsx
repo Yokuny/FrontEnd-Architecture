@@ -14,7 +14,7 @@ export function ViewSelect(props: ViewSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = VIEW_OPTIONS.map((opt) => ({
     ...opt,
-    label: t(`view.${opt.value}`, { defaultValue: opt.label }),
+    label: t(`view.${opt.value}`),
   }));
 
   // Simulated query object

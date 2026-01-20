@@ -16,7 +16,7 @@ export function StatusSelect(props: StatusSelectProps) {
   const displayLabel = label || t('status.placeholder');
 
   const mapWithDefaults = (statuses: string[]) => {
-    const undefinedLabel = t('undefined', { defaultValue: 'Indefinido' });
+    const undefinedLabel = t('undefined');
     const options = [
       { value: 'empty', label: undefinedLabel, data: 'empty' },
       ...statuses.map((status) => ({

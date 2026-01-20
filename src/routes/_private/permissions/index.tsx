@@ -14,14 +14,14 @@ function PermissionsHubPage() {
   const menuItems = [
     {
       title: t('users'),
-      description: t('users.permissions.description', { defaultValue: 'Gerencie usuários e suas respectivas permissões de acesso.' }),
+      description: t('users.permissions.description'),
       icon: Users,
       to: '/permissions/users' as const,
       search: { page: 1, pageSize: 10 },
     },
     {
       title: t('role'),
-      description: t('roles.description', { defaultValue: 'Configure perfis de acesso e agrupe permissões.' }),
+      description: t('roles.description'),
       icon: DoorOpen,
       to: '/permissions/roles' as const,
     },

@@ -14,7 +14,7 @@ export function LevelSelect(props: LevelSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = LEVEL_OPTIONS.map((opt) => ({
     ...opt,
-    name: t(opt.id, { defaultValue: opt.name }),
+    name: t(opt.id),
   }));
 
   // Simulated query object

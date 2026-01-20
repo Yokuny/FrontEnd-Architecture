@@ -14,7 +14,7 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = FENCE_TYPES.map((opt) => ({
     ...opt,
-    name: t(opt.id, { defaultValue: opt.name }),
+    name: t(opt.id),
   }));
 
   // Simulated query object

@@ -13,7 +13,7 @@ export function PrioritySelect(props: PrioritySelectProps) {
   // Mapping options to translated ones
   const translatedOptions = PRIORITY_OPTIONS.map((opt) => ({
     ...opt,
-    label: t(`priority.${opt.label.toLowerCase()}`, { defaultValue: opt.label }),
+    label: t(`priority.${opt.label.toLowerCase()}`),
   }));
 
   // Simulated query object

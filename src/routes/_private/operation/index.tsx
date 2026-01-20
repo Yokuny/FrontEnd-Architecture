@@ -14,37 +14,37 @@ function OperationHubPage() {
   const menuItems = [
     {
       title: t('downtime'),
-      description: t('operation.downtime.description', { defaultValue: 'Gerenciamento de paradas e tempos de inatividade.' }),
+      description: t('operation.downtime.description'),
       icon: Clock,
       to: '/operation/downtime' as const,
     },
     {
       title: t('operational.asset'),
-      description: t('operation.operational.asset.description', { defaultValue: 'Análise de índices desempenho operacional dos ativos.' }),
+      description: t('operation.operational.asset.description'),
       icon: Activity,
       to: '/operation/operational-asset' as const,
     },
     {
       title: t('operational.fleet'),
-      description: t('operation.operational.fleet.description', { defaultValue: 'Dashboard operacional com indicadores em tempo real.' }),
+      description: t('operation.operational.fleet.description'),
       icon: LayoutDashboard,
       to: '/operation/operational-fleet' as const,
     },
     {
       title: t('groups'),
-      description: t('operation.groups.description', { defaultValue: 'Gerenciamento de grupos operacionais.' }),
+      description: t('operation.groups.description'),
       icon: Users,
       to: '/operation/groups' as const,
     },
     {
       title: t('goals'),
-      description: t('operation.goals.description', { defaultValue: 'Definição e acompanhamento de metas operacionais.' }),
+      description: t('operation.goals.description'),
       icon: Target,
       to: '/operation/goals' as const,
     },
     {
       title: t('ptax'),
-      description: t('operation.ptax.description', { defaultValue: 'Gerenciamento de taxas PTAX.' }),
+      description: t('operation.ptax.description'),
       icon: DollarSign,
       to: '/operation/ptax' as const,
     },

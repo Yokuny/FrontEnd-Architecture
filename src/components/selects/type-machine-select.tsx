@@ -20,7 +20,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = MACHINE_TYPES.map((opt) => ({
     ...opt,
-    label: t(`machine.type.${opt.value}`, { defaultValue: opt.label }),
+    label: t(`machine.type.${opt.value}`),
   }));
 
   // Simulated query object

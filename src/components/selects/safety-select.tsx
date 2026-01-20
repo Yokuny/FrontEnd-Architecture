@@ -14,7 +14,7 @@ export function SafetySelect(props: SafetySelectProps) {
   // Mapping options to translated ones
   const translatedOptions = SAFETY_AREAS.map((opt) => ({
     ...opt,
-    label: t(`safety.${opt.value}`, { defaultValue: opt.label }),
+    label: t(`safety.${opt.value}`),
   }));
 
   // Simulated query object

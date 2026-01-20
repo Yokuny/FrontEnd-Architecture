@@ -13,11 +13,7 @@ export function UserRoleSelect(props: UserRoleSelectProps) {
   const id = useId();
   const query = useUsersNotInRole(idRole, idEnterprise);
 
-  const noOptionsMessage = !idEnterprise
-    ? t('select.first.enterprise')
-    : !idRole
-      ? t('select.first.role', { defaultValue: 'Selecione um perfil primeiro.' })
-      : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : !idRole ? t('select.first.role') : t('nooptions.message');
 
   const mapToOptions = (users: UserListItem[]) => {
     return users

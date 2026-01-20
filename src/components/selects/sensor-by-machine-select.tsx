@@ -23,7 +23,7 @@ export function SensorByMachineSelect({
   const id = useId();
   const query = useSensorsByMachineSelect(idMachine);
 
-  const noOptionsMessage = !idMachine ? t('select.first.machine', { defaultValue: 'Selecione uma máquina primeiro.' }) : t('nooptions.message');
+  const noOptionsMessage = !idMachine ? t('select.first.machine') : t('nooptions.message');
 
   if (multi) {
     return (

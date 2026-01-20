@@ -47,7 +47,7 @@ function OperationalDashboardPage() {
 
   return (
     <Card>
-      <CardHeader title={t('performance.fleet.operational', { defaultValue: 'Performance Operacional da Frota' })}>
+      <CardHeader title={t('performance.fleet.operational')}>
         <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
           {lastUpdate && (
             <ItemDescription>

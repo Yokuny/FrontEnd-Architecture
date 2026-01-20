@@ -44,7 +44,7 @@ export function FormTypeSelect(props: FormTypeSelectProps) {
   const mapToOptions = (options: FormTypeOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
-      label: t(opt.labelKey, { defaultValue: opt.labelKey }),
+      label: t(opt.labelKey),
       data: opt,
     }));
   };

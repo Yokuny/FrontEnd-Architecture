@@ -20,7 +20,7 @@ export function ConditionSelect(props: ConditionSelectProps) {
   // Mapping static options to translated ones
   const translatedOptions = CONDITION_OPTIONS.map((opt) => ({
     ...opt,
-    label: t(`conditions.${opt.value.toLowerCase()}`, { defaultValue: opt.label }),
+    label: t(`conditions.${opt.value.toLowerCase()}`),
   }));
 
   // Simulated query object for static data

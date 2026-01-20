@@ -72,7 +72,7 @@ import { Route as PrivateEsgCiiFleetIndexRouteImport } from './routes/_private/e
 import { Route as PrivateConsumptionTimeOperationIndexRouteImport } from './routes/_private/consumption/time-operation/index';
 import { Route as PrivateConsumptionRveSoundingIndexRouteImport } from './routes/_private/consumption/rve-sounding/index';
 import { Route as PrivateConsumptionRveRdoIndexRouteImport } from './routes/_private/consumption/rve-rdo/index';
-import { Route as PrivateConsumptionIntervalIndexRouteImport } from './routes/_private/consumption/interval/index';
+import { Route as PrivateConsumptionRelatorioIndexRouteImport } from './routes/_private/consumption/relatorio/index';
 import { Route as PrivateConsumptionDailyIndexRouteImport } from './routes/_private/consumption/daily/index';
 import { Route as PrivateConsumptionComparativeIndexRouteImport } from './routes/_private/consumption/comparative/index';
 import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
@@ -464,10 +464,10 @@ const PrivateConsumptionRveRdoIndexRoute =
     path: '/consumption/rve-rdo/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateConsumptionIntervalIndexRoute =
-  PrivateConsumptionIntervalIndexRouteImport.update({
-    id: '/consumption/interval/',
-    path: '/consumption/interval/',
+const PrivateConsumptionRelatorioIndexRoute =
+  PrivateConsumptionRelatorioIndexRouteImport.update({
+    id: '/consumption/relatorio/',
+    path: '/consumption/relatorio/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateConsumptionDailyIndexRoute =
@@ -681,7 +681,7 @@ export interface FileRoutesByFullPath {
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
   '/consumption/comparative': typeof PrivateConsumptionComparativeIndexRoute;
   '/consumption/daily': typeof PrivateConsumptionDailyIndexRoute;
-  '/consumption/interval': typeof PrivateConsumptionIntervalIndexRoute;
+  '/consumption/relatorio': typeof PrivateConsumptionRelatorioIndexRoute;
   '/consumption/rve-rdo': typeof PrivateConsumptionRveRdoIndexRoute;
   '/consumption/rve-sounding': typeof PrivateConsumptionRveSoundingIndexRoute;
   '/consumption/time-operation': typeof PrivateConsumptionTimeOperationIndexRoute;
@@ -774,7 +774,7 @@ export interface FileRoutesByTo {
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
   '/consumption/comparative': typeof PrivateConsumptionComparativeIndexRoute;
   '/consumption/daily': typeof PrivateConsumptionDailyIndexRoute;
-  '/consumption/interval': typeof PrivateConsumptionIntervalIndexRoute;
+  '/consumption/relatorio': typeof PrivateConsumptionRelatorioIndexRoute;
   '/consumption/rve-rdo': typeof PrivateConsumptionRveRdoIndexRoute;
   '/consumption/rve-sounding': typeof PrivateConsumptionRveSoundingIndexRoute;
   '/consumption/time-operation': typeof PrivateConsumptionTimeOperationIndexRoute;
@@ -870,7 +870,7 @@ export interface FileRoutesById {
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
   '/_private/consumption/comparative/': typeof PrivateConsumptionComparativeIndexRoute;
   '/_private/consumption/daily/': typeof PrivateConsumptionDailyIndexRoute;
-  '/_private/consumption/interval/': typeof PrivateConsumptionIntervalIndexRoute;
+  '/_private/consumption/relatorio/': typeof PrivateConsumptionRelatorioIndexRoute;
   '/_private/consumption/rve-rdo/': typeof PrivateConsumptionRveRdoIndexRoute;
   '/_private/consumption/rve-sounding/': typeof PrivateConsumptionRveSoundingIndexRoute;
   '/_private/consumption/time-operation/': typeof PrivateConsumptionTimeOperationIndexRoute;
@@ -965,7 +965,7 @@ export interface FileRouteTypes {
     | '/register/user-type/add'
     | '/consumption/comparative'
     | '/consumption/daily'
-    | '/consumption/interval'
+    | '/consumption/relatorio'
     | '/consumption/rve-rdo'
     | '/consumption/rve-sounding'
     | '/consumption/time-operation'
@@ -1058,7 +1058,7 @@ export interface FileRouteTypes {
     | '/register/user-type/add'
     | '/consumption/comparative'
     | '/consumption/daily'
-    | '/consumption/interval'
+    | '/consumption/relatorio'
     | '/consumption/rve-rdo'
     | '/consumption/rve-sounding'
     | '/consumption/time-operation'
@@ -1153,7 +1153,7 @@ export interface FileRouteTypes {
     | '/_private/register/user-type/add'
     | '/_private/consumption/comparative/'
     | '/_private/consumption/daily/'
-    | '/_private/consumption/interval/'
+    | '/_private/consumption/relatorio/'
     | '/_private/consumption/rve-rdo/'
     | '/_private/consumption/rve-sounding/'
     | '/_private/consumption/time-operation/'
@@ -1657,11 +1657,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateConsumptionRveRdoIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/consumption/interval/': {
-      id: '/_private/consumption/interval/';
-      path: '/consumption/interval';
-      fullPath: '/consumption/interval';
-      preLoaderRoute: typeof PrivateConsumptionIntervalIndexRouteImport;
+    '/_private/consumption/relatorio/': {
+      id: '/_private/consumption/relatorio/';
+      path: '/consumption/relatorio';
+      fullPath: '/consumption/relatorio';
+      preLoaderRoute: typeof PrivateConsumptionRelatorioIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/consumption/daily/': {
@@ -1904,7 +1904,7 @@ interface PrivateRouteChildren {
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
   PrivateConsumptionComparativeIndexRoute: typeof PrivateConsumptionComparativeIndexRoute;
   PrivateConsumptionDailyIndexRoute: typeof PrivateConsumptionDailyIndexRoute;
-  PrivateConsumptionIntervalIndexRoute: typeof PrivateConsumptionIntervalIndexRoute;
+  PrivateConsumptionRelatorioIndexRoute: typeof PrivateConsumptionRelatorioIndexRoute;
   PrivateConsumptionRveRdoIndexRoute: typeof PrivateConsumptionRveRdoIndexRoute;
   PrivateConsumptionRveSoundingIndexRoute: typeof PrivateConsumptionRveSoundingIndexRoute;
   PrivateConsumptionTimeOperationIndexRoute: typeof PrivateConsumptionTimeOperationIndexRoute;
@@ -1997,7 +1997,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateConsumptionComparativeIndexRoute:
     PrivateConsumptionComparativeIndexRoute,
   PrivateConsumptionDailyIndexRoute: PrivateConsumptionDailyIndexRoute,
-  PrivateConsumptionIntervalIndexRoute: PrivateConsumptionIntervalIndexRoute,
+  PrivateConsumptionRelatorioIndexRoute: PrivateConsumptionRelatorioIndexRoute,
   PrivateConsumptionRveRdoIndexRoute: PrivateConsumptionRveRdoIndexRoute,
   PrivateConsumptionRveSoundingIndexRoute:
     PrivateConsumptionRveSoundingIndexRoute,

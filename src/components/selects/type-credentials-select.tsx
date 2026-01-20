@@ -23,7 +23,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
   const mapToOptions = (options: CredentialsOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
-      label: t(opt.labelKey, { defaultValue: opt.labelKey }),
+      label: t(opt.labelKey),
       data: opt,
     }));
   };

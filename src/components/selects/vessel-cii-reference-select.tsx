@@ -20,7 +20,7 @@ export function VesselCIIReferenceSelect(props: VesselCIIReferenceSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = VESSEL_CII_TYPES.map((opt) => ({
     ...opt,
-    label: t(`vessel.type.${opt.value.toLowerCase()}`, { defaultValue: opt.label }),
+    label: t(`vessel.type.${opt.value.toLowerCase()}`),
   }));
 
   // Simulated query object

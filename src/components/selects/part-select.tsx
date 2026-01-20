@@ -36,7 +36,7 @@ export function PartSelect({
         )}
         <DataMultiSelect
           id={id}
-          placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
+          placeholder={placeholder || t('part.placeholder')}
           value={values}
           onChange={(newValues) => onChangeMulti?.(newValues as string[])}
           query={query}
@@ -61,7 +61,7 @@ export function PartSelect({
       )}
       <DataSelect
         id={id}
-        placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
+        placeholder={placeholder || t('part.placeholder')}
         value={value}
         onChange={(newValue) => onChange?.(newValue as string | undefined)}
         query={query}

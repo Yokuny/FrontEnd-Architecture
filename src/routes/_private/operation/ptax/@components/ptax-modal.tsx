@@ -48,7 +48,7 @@ export function PtaxModal({ open, onOpenChange, initialData }: PtaxModalProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{initialData?.id ? t('ptax.edit') : t('ptax.new', { defaultValue: 'Nova PTAX' })}</DialogTitle>
+          <DialogTitle>{initialData?.id ? t('ptax.edit') : t('ptax.new')}</DialogTitle>
           <DialogDescription>{t('operation.ptax.description')}</DialogDescription>
         </DialogHeader>
 
@@ -84,7 +84,7 @@ export function PtaxModal({ open, onOpenChange, initialData }: PtaxModalProps) {
                   </FormControl>
                   {cotationDate && (
                     <p className="text-xs text-muted-foreground mt-1">
-                      {t('quote.day', { defaultValue: 'Cotação do dia' })} {format(cotationDate, 'dd MMM yyyy')}
+                      {t('quote.day')} {format(cotationDate, 'dd MMM yyyy')}
                     </p>
                   )}
                   <FormMessage />

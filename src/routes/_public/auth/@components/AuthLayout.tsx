@@ -62,21 +62,10 @@ export function AuthLayout({ children }: { children?: React.ReactNode }) {
 
           {/* Title and Subtitle */}
           <div className="relative z-10 pt-16 px-12">
-            <MorphingText
-              texts={[
-                t('auth.morphing.think', { defaultValue: 'Think Smarter' }),
-                t('auth.morphing.work', { defaultValue: 'Work Faster' }),
-                t('auth.morphing.achieve', { defaultValue: 'Achieve More' }),
-              ]}
-              className="text-white"
-            />
+            <MorphingText texts={[t('auth.morphing.think'), t('auth.morphing.work'), t('auth.morphing.achieve')]} className="text-white" />
 
             <RevealText type="lines" className="mt-4 lg:mt-6" gsapVars={{ filter: 'blur(8px)', duration: 1.5, stagger: 0.15, delay: 0.25 }}>
-              <p className="text-zinc-400 text-center text-sm leading-snug font-medium md:text-base lg:text-lg">
-                {t('auth.hero.description', {
-                  defaultValue: 'Monitor, analyze, and optimize your industrial operations with real-time IoT data and intelligent insights.',
-                })}
-              </p>
+              <p className="text-zinc-400 text-center text-sm leading-snug font-medium md:text-base lg:text-lg">{t('auth.hero.description')}</p>
             </RevealText>
           </div>
 

@@ -12,11 +12,7 @@ export function OperationsContractSelect(props: OperationsContractSelectProps) {
   const id = useId();
   const query = useOperationsByAssetSelect(idEnterprise, idMachine);
 
-  const noOptionsMessage = !idEnterprise
-    ? t('select.first.enterprise')
-    : !idMachine
-      ? t('select.machine.first', { defaultValue: 'Selecione uma máquina primeiro.' })
-      : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : !idMachine ? t('select.machine.first') : t('nooptions.message');
 
   if (mode === 'multi') {
     const displayLabel = label || t('machine.placeholder');

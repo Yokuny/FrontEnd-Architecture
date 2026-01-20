@@ -14,21 +14,21 @@ function MaintenanceHubPage() {
   const menuItems = [
     {
       title: t('monitoring.plan.maintenance'),
-      description: t('monitoring.plan.maintenance.description', { defaultValue: 'Visualize e gerencie o monitoramento dos planos de manutenção preventiva.' }),
+      description: t('monitoring.plan.maintenance.description'),
       icon: CalendarClock,
       to: '/maintenance/monitoring-plans' as const,
       search: { page: 1, size: 10 },
     },
     {
       title: t('monitoring.wear.part'),
-      description: t('monitoring.wear.part.description', { defaultValue: 'Monitore o desgaste de peças e componentes dos ativos em tempo real.' }),
+      description: t('monitoring.wear.part.description'),
       icon: Activity,
       to: '/maintenance/monitoring-wear' as const,
       search: { page: 1, size: 10 },
     },
     {
       title: t('done.os'),
-      description: t('done.os.description', { defaultValue: 'Histórico detalhado de ordens de serviço concluídas e manutenções realizadas.' }),
+      description: t('done.os.description'),
       icon: CheckSquare,
       to: '/maintenance/list-os-done' as const,
       search: { page: 1, size: 10 },

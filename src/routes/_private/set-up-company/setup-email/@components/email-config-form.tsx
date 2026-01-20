@@ -26,7 +26,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
   const sections = [
     {
       title: t('identification'),
-      description: t('setup.email.identification.description', { defaultValue: 'Selecione a empresa para configurar o e-mail.' }),
+      description: t('setup.email.identification.description'),
       fields: [
         <Field key="idEnterprise" className="gap-2">
           <FormControl>
@@ -44,7 +44,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
     },
     {
       title: t('setup.email.connection'),
-      description: t('setup.email.connection.description', { defaultValue: 'Configure as informações de conexão do servidor SMTP.' }),
+      description: t('setup.email.connection.description'),
       fields: [
         <FormField
           key="host"
@@ -91,7 +91,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
     },
     {
       title: t('setup.email.authentication'),
-      description: t('setup.email.authentication.description', { defaultValue: 'Configure as credenciais de acesso para envio de e-mail.' }),
+      description: t('setup.email.authentication.description'),
       fields: [
         <FormField
           key="accountname"

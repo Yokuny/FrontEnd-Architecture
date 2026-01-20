@@ -26,7 +26,7 @@ export function ApiExternalForm({ showEnterpriseSelect }: { showEnterpriseSelect
       ? [
           {
             title: t('identification'),
-            description: t('setup.api.external.identification.description', { defaultValue: 'Selecione a empresa para configurar as APIs externas.' }),
+            description: t('setup.api.external.identification.description'),
             fields: [
               <Field key="idEnterprise" className="gap-2">
                 <FormControl>
@@ -46,7 +46,7 @@ export function ApiExternalForm({ showEnterpriseSelect }: { showEnterpriseSelect
       : []),
     {
       title: t('setup.api.external.credentials'),
-      description: t('setup.api.external.credentials.description', { defaultValue: 'Configure as chaves de acesso para APIs externas.' }),
+      description: t('setup.api.external.credentials.description'),
       fields: [
         <FormField
           key="windyKey"
