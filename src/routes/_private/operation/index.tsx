@@ -19,16 +19,16 @@ function OperationHubPage() {
       to: '/operation/downtime' as const,
     },
     {
-      title: t('inoperability'),
-      description: t('operation.inoperability.description', { defaultValue: 'Análise de índices de inoperabilidade dos ativos.' }),
+      title: t('operational.asset'),
+      description: t('operation.operational.asset.description', { defaultValue: 'Análise de índices desempenho operacional dos ativos.' }),
       icon: Activity,
-      to: '/operation/inoperability' as const,
+      to: '/operation/operational-asset' as const,
     },
     {
-      title: t('dashboard'),
-      description: t('operation.dashboard.description', { defaultValue: 'Dashboard operacional com indicadores em tempo real.' }),
+      title: t('operational.fleet'),
+      description: t('operation.operational.fleet.description', { defaultValue: 'Dashboard operacional com indicadores em tempo real.' }),
       icon: LayoutDashboard,
-      to: '/operation/dashboard' as const,
+      to: '/operation/operational-fleet' as const,
     },
     {
       title: t('groups'),

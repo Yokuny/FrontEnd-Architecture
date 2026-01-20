@@ -57,11 +57,11 @@ import { Route as PrivateRegisterAlertsIndexRouteImport } from './routes/_privat
 import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
 import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
 import { Route as PrivateOperationPtaxIndexRouteImport } from './routes/_private/operation/ptax/index';
-import { Route as PrivateOperationInoperabilityIndexRouteImport } from './routes/_private/operation/inoperability/index';
+import { Route as PrivateOperationOperationalFleetIndexRouteImport } from './routes/_private/operation/operational-fleet/index';
+import { Route as PrivateOperationOperationalAssetIndexRouteImport } from './routes/_private/operation/operational-asset/index';
 import { Route as PrivateOperationGroupsIndexRouteImport } from './routes/_private/operation/groups/index';
 import { Route as PrivateOperationGoalsIndexRouteImport } from './routes/_private/operation/goals/index';
 import { Route as PrivateOperationDowntimeIndexRouteImport } from './routes/_private/operation/downtime/index';
-import { Route as PrivateOperationDashboardIndexRouteImport } from './routes/_private/operation/dashboard/index';
 import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
 import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
 import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
@@ -375,10 +375,16 @@ const PrivateOperationPtaxIndexRoute =
     path: '/operation/ptax/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateOperationInoperabilityIndexRoute =
-  PrivateOperationInoperabilityIndexRouteImport.update({
-    id: '/operation/inoperability/',
-    path: '/operation/inoperability/',
+const PrivateOperationOperationalFleetIndexRoute =
+  PrivateOperationOperationalFleetIndexRouteImport.update({
+    id: '/operation/operational-fleet/',
+    path: '/operation/operational-fleet/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateOperationOperationalAssetIndexRoute =
+  PrivateOperationOperationalAssetIndexRouteImport.update({
+    id: '/operation/operational-asset/',
+    path: '/operation/operational-asset/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateOperationGroupsIndexRoute =
@@ -397,12 +403,6 @@ const PrivateOperationDowntimeIndexRoute =
   PrivateOperationDowntimeIndexRouteImport.update({
     id: '/operation/downtime/',
     path: '/operation/downtime/',
-    getParentRoute: () => PrivateRoute,
-  } as any);
-const PrivateOperationDashboardIndexRoute =
-  PrivateOperationDashboardIndexRouteImport.update({
-    id: '/operation/dashboard/',
-    path: '/operation/dashboard/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateMaintenanceMonitoringWearIndexRoute =
@@ -692,11 +692,11 @@ export interface FileRoutesByFullPath {
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
-  '/operation/dashboard': typeof PrivateOperationDashboardIndexRoute;
   '/operation/downtime': typeof PrivateOperationDowntimeIndexRoute;
   '/operation/goals': typeof PrivateOperationGoalsIndexRoute;
   '/operation/groups': typeof PrivateOperationGroupsIndexRoute;
-  '/operation/inoperability': typeof PrivateOperationInoperabilityIndexRoute;
+  '/operation/operational-asset': typeof PrivateOperationOperationalAssetIndexRoute;
+  '/operation/operational-fleet': typeof PrivateOperationOperationalFleetIndexRoute;
   '/operation/ptax': typeof PrivateOperationPtaxIndexRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
@@ -785,11 +785,11 @@ export interface FileRoutesByTo {
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
-  '/operation/dashboard': typeof PrivateOperationDashboardIndexRoute;
   '/operation/downtime': typeof PrivateOperationDowntimeIndexRoute;
   '/operation/goals': typeof PrivateOperationGoalsIndexRoute;
   '/operation/groups': typeof PrivateOperationGroupsIndexRoute;
-  '/operation/inoperability': typeof PrivateOperationInoperabilityIndexRoute;
+  '/operation/operational-asset': typeof PrivateOperationOperationalAssetIndexRoute;
+  '/operation/operational-fleet': typeof PrivateOperationOperationalFleetIndexRoute;
   '/operation/ptax': typeof PrivateOperationPtaxIndexRoute;
   '/permissions/roles': typeof PrivatePermissionsRolesIndexRoute;
   '/permissions/users': typeof PrivatePermissionsUsersIndexRoute;
@@ -881,11 +881,11 @@ export interface FileRoutesById {
   '/_private/maintenance/list-os-done/': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/_private/maintenance/monitoring-plans/': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/_private/maintenance/monitoring-wear/': typeof PrivateMaintenanceMonitoringWearIndexRoute;
-  '/_private/operation/dashboard/': typeof PrivateOperationDashboardIndexRoute;
   '/_private/operation/downtime/': typeof PrivateOperationDowntimeIndexRoute;
   '/_private/operation/goals/': typeof PrivateOperationGoalsIndexRoute;
   '/_private/operation/groups/': typeof PrivateOperationGroupsIndexRoute;
-  '/_private/operation/inoperability/': typeof PrivateOperationInoperabilityIndexRoute;
+  '/_private/operation/operational-asset/': typeof PrivateOperationOperationalAssetIndexRoute;
+  '/_private/operation/operational-fleet/': typeof PrivateOperationOperationalFleetIndexRoute;
   '/_private/operation/ptax/': typeof PrivateOperationPtaxIndexRoute;
   '/_private/permissions/roles/': typeof PrivatePermissionsRolesIndexRoute;
   '/_private/permissions/users/': typeof PrivatePermissionsUsersIndexRoute;
@@ -976,11 +976,11 @@ export interface FileRouteTypes {
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
-    | '/operation/dashboard'
     | '/operation/downtime'
     | '/operation/goals'
     | '/operation/groups'
-    | '/operation/inoperability'
+    | '/operation/operational-asset'
+    | '/operation/operational-fleet'
     | '/operation/ptax'
     | '/permissions/roles'
     | '/permissions/users'
@@ -1069,11 +1069,11 @@ export interface FileRouteTypes {
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
-    | '/operation/dashboard'
     | '/operation/downtime'
     | '/operation/goals'
     | '/operation/groups'
-    | '/operation/inoperability'
+    | '/operation/operational-asset'
+    | '/operation/operational-fleet'
     | '/operation/ptax'
     | '/permissions/roles'
     | '/permissions/users'
@@ -1164,11 +1164,11 @@ export interface FileRouteTypes {
     | '/_private/maintenance/list-os-done/'
     | '/_private/maintenance/monitoring-plans/'
     | '/_private/maintenance/monitoring-wear/'
-    | '/_private/operation/dashboard/'
     | '/_private/operation/downtime/'
     | '/_private/operation/goals/'
     | '/_private/operation/groups/'
-    | '/_private/operation/inoperability/'
+    | '/_private/operation/operational-asset/'
+    | '/_private/operation/operational-fleet/'
     | '/_private/operation/ptax/'
     | '/_private/permissions/roles/'
     | '/_private/permissions/users/'
@@ -1552,11 +1552,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateOperationPtaxIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/operation/inoperability/': {
-      id: '/_private/operation/inoperability/';
-      path: '/operation/inoperability';
-      fullPath: '/operation/inoperability';
-      preLoaderRoute: typeof PrivateOperationInoperabilityIndexRouteImport;
+    '/_private/operation/operational-fleet/': {
+      id: '/_private/operation/operational-fleet/';
+      path: '/operation/operational-fleet';
+      fullPath: '/operation/operational-fleet';
+      preLoaderRoute: typeof PrivateOperationOperationalFleetIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/operation/operational-asset/': {
+      id: '/_private/operation/operational-asset/';
+      path: '/operation/operational-asset';
+      fullPath: '/operation/operational-asset';
+      preLoaderRoute: typeof PrivateOperationOperationalAssetIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/operation/groups/': {
@@ -1578,13 +1585,6 @@ declare module '@tanstack/react-router' {
       path: '/operation/downtime';
       fullPath: '/operation/downtime';
       preLoaderRoute: typeof PrivateOperationDowntimeIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
-    '/_private/operation/dashboard/': {
-      id: '/_private/operation/dashboard/';
-      path: '/operation/dashboard';
-      fullPath: '/operation/dashboard';
-      preLoaderRoute: typeof PrivateOperationDashboardIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/maintenance/monitoring-wear/': {
@@ -1915,11 +1915,11 @@ interface PrivateRouteChildren {
   PrivateMaintenanceListOsDoneIndexRoute: typeof PrivateMaintenanceListOsDoneIndexRoute;
   PrivateMaintenanceMonitoringPlansIndexRoute: typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   PrivateMaintenanceMonitoringWearIndexRoute: typeof PrivateMaintenanceMonitoringWearIndexRoute;
-  PrivateOperationDashboardIndexRoute: typeof PrivateOperationDashboardIndexRoute;
   PrivateOperationDowntimeIndexRoute: typeof PrivateOperationDowntimeIndexRoute;
   PrivateOperationGoalsIndexRoute: typeof PrivateOperationGoalsIndexRoute;
   PrivateOperationGroupsIndexRoute: typeof PrivateOperationGroupsIndexRoute;
-  PrivateOperationInoperabilityIndexRoute: typeof PrivateOperationInoperabilityIndexRoute;
+  PrivateOperationOperationalAssetIndexRoute: typeof PrivateOperationOperationalAssetIndexRoute;
+  PrivateOperationOperationalFleetIndexRoute: typeof PrivateOperationOperationalFleetIndexRoute;
   PrivateOperationPtaxIndexRoute: typeof PrivateOperationPtaxIndexRoute;
   PrivatePermissionsRolesIndexRoute: typeof PrivatePermissionsRolesIndexRoute;
   PrivatePermissionsUsersIndexRoute: typeof PrivatePermissionsUsersIndexRoute;
@@ -2013,12 +2013,13 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateMaintenanceMonitoringPlansIndexRoute,
   PrivateMaintenanceMonitoringWearIndexRoute:
     PrivateMaintenanceMonitoringWearIndexRoute,
-  PrivateOperationDashboardIndexRoute: PrivateOperationDashboardIndexRoute,
   PrivateOperationDowntimeIndexRoute: PrivateOperationDowntimeIndexRoute,
   PrivateOperationGoalsIndexRoute: PrivateOperationGoalsIndexRoute,
   PrivateOperationGroupsIndexRoute: PrivateOperationGroupsIndexRoute,
-  PrivateOperationInoperabilityIndexRoute:
-    PrivateOperationInoperabilityIndexRoute,
+  PrivateOperationOperationalAssetIndexRoute:
+    PrivateOperationOperationalAssetIndexRoute,
+  PrivateOperationOperationalFleetIndexRoute:
+    PrivateOperationOperationalFleetIndexRoute,
   PrivateOperationPtaxIndexRoute: PrivateOperationPtaxIndexRoute,
   PrivatePermissionsRolesIndexRoute: PrivatePermissionsRolesIndexRoute,
   PrivatePermissionsUsersIndexRoute: PrivatePermissionsUsersIndexRoute,

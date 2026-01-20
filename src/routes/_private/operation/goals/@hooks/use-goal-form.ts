@@ -97,7 +97,7 @@ export function useGoalForm(initialData?: any) {
       }
       toast.success('Salvo com sucesso');
       navigate({ to: '/operation/goals' });
-    } catch (error) {
+    } catch {
       toast.error('Erro ao salvar');
     }
   });

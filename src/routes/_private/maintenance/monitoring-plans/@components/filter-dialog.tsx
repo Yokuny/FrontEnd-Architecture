@@ -1,4 +1,4 @@
-import { BrushCleaning, Filter, X } from 'lucide-react';
+import { BrushCleaning, Filter } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MachineManagerSelect, MachineSelect, MaintenancePlanSelect } from '@/components/selects';

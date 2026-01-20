@@ -145,7 +145,7 @@ function KPISCMMSPage() {
           />
 
           <div className="flex flex-col gap-1.5">
-            <Label>{t('critical.equipment')}</Label>
+            <Label>{t('critical.equipment.label')}</Label>
             <Select value={selectedEquipment} onValueChange={setSelectedEquipment}>
               <SelectTrigger className="w-48 bg-background">
                 <SelectValue placeholder={t('critical.equipment.placeholder')} />

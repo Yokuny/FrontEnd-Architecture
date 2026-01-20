@@ -1,8 +1,4 @@
-import { useTranslation } from 'react-i18next';
-
 export function useGoalOptions() {
-  const { t } = useTranslation();
-
   const goalTypes = [
     { value: 'DOWNTIME', label: 'Downtime' },
     { value: 'PRODUCTION', label: 'Production' },

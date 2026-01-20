@@ -17,7 +17,7 @@ const dashboardSearchSchema = z.object({
   search: z.string().optional(),
 });
 
-export const Route = createFileRoute('/_private/operation/dashboard/')({
+export const Route = createFileRoute('/_private/operation/operational-fleet/')({
   component: OperationalDashboardPage,
   validateSearch: (search: Record<string, unknown>) => dashboardSearchSchema.parse(search),
 });
@@ -25,7 +25,7 @@ export const Route = createFileRoute('/_private/operation/dashboard/')({
 function OperationalDashboardPage() {
   const { t } = useTranslation();
   const navigate = useNavigate({ from: Route.fullPath });
-  const { search } = useSearch({ from: '/_private/operation/dashboard/' });
+  const { search } = useSearch({ from: '/_private/operation/operational-fleet/' });
   const { idEnterprise } = useEnterpriseFilter();
   const { data, isLoading, dataUpdatedAt } = useOperationalDashboard(idEnterprise || '');
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
@@ -79,15 +79,9 @@ function OperationalDashboardPage() {
         </div>
       </CardHeader>
       <CardContent className="flex flex-col">
-        {isLoading ? (
-          <DefaultLoading />
-        ) : filteredDashboardData.length === 0 ? (
-          <EmptyData />
-        ) : (
-          <div className="overflow-auto">
-            <AssetOperationalList data={filteredDashboardData} isLoading={isLoading} />
-          </div>
-        )}
+        {isLoading && <DefaultLoading />}
+        {filteredDashboardData.length === 0 && <EmptyData />}
+        {filteredDashboardData.length > 0 && <AssetOperationalList data={filteredDashboardData} isLoading={isLoading} />}
       </CardContent>
     </Card>
   );

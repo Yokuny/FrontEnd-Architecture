@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { format, subDays } from 'date-fns';
-import { BrushCleaning, CalendarIcon, Search, X } from 'lucide-react';
+import { BrushCleaning, CalendarIcon, Search } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';

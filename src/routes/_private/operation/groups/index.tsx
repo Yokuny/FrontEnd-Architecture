@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Book, MoreVertical, Pencil, Plus, Search, Users } from 'lucide-react';
+import { MoreVertical, Pencil, Plus, Search, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import EmptyData from '@/components/default-empty-data';
