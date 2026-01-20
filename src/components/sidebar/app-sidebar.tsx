@@ -1,13 +1,13 @@
 'use client';
 
 import { Airplay, Navigation, Ship } from 'lucide-react';
-import { LanguageSwitcher } from '@/components/language-switcher';
 import AppNavigation from '@/components/sidebar/nav-main';
-import { NotificationsPopover } from '@/components/sidebar/nav-notifications';
-import { TeamSwitcher } from '@/components/sidebar/team-switcher';
+import { LanguageSwitcher } from '@/components/sidebar/switcher-language';
+import { NotificationsSwitcher } from '@/components/sidebar/switcher-notifications';
+import { SidebarSwitcher } from '@/components/sidebar/switcher-sidebar';
+import { TeamSwitcher } from '@/components/sidebar/switcher-team';
+import { ThemeSwitcher } from '@/components/sidebar/switcher-theme';
 import { useDynamicRoutes } from '@/components/sidebar/use-dynamic-routes';
-import { SidebarTrigger } from '@/components/sidebar-trigger';
-import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 
@@ -53,8 +53,8 @@ export function AppSidebar() {
       <SidebarHeader className="pt-3 items-center gap-2 px-2">
         <div className={cn('flex items-center')}>
           <div className={cn('flex items-center', isCollapsed && 'flex-col')}>
-            <SidebarTrigger />
-            <NotificationsPopover notifications={sampleNotifications} />
+            <SidebarSwitcher />
+            <NotificationsSwitcher notifications={sampleNotifications} />
           </div>
           {!isCollapsed && (
             <div className="flex items-center">

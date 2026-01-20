@@ -3,7 +3,7 @@ import { Maximize2, Pin, PinOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSidebar } from '@/hooks/use-sidebar-toggle';
 
-export function SidebarTrigger() {
+export function SidebarSwitcher() {
   const { open, isHovered, toggle } = useSidebar();
 
   const getIconData = () => {
