@@ -837,7 +837,6 @@
   "action": "Acción",
   "part.replace": "Reemplazo",
   "unity.acronym": "Uni.",
-  "last.date.acronym": "Últ. Actual.",
   "warn.alert.in": "Alertar con",
   "machine.wear.config": "Configuracíon de desgaste",
   "conditions.between": "entre",
@@ -1923,8 +1922,6 @@
   "operations": "Operaciones",
   "fine.factor": "Factor de multa",
   "event.description": "Descripción del evento",
-  "ai": "AI",
-  "ai.prompt": "Prompt AI (Beta)",
   "can.i.help.you": "¿Puedo ayudarte?",
   "control.status.operational": "Estado operativo",
   "port.vessels.coming": "Barcos llegando",
@@ -2553,5 +2550,12 @@
   "Relatório de evento diário": "Informe de evento diario",
   "Noon Report": "Noon Report",
   "RDO": "RDO",
-  "CMMS": "CMMS"
+  "CMMS": "CMMS",
+  "ai": "IA",
+  "ai.prompt": "Chat IA",
+  "ai.prompt.description": "Interfaz de chat con inteligencia artificial para análisis y soporte.",
+  "ai.anomaly.detector": "Detector de Anomalías",
+  "ai.anomaly.detector.description": "Análisis predictivo de activos para identificar comportamientos anômalos.",
+  "last.date.acronym": "Últ. fecha",
+  "upload.csv": "Cargar CSV"
 }

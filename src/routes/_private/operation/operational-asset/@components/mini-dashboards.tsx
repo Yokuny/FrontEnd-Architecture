@@ -1,7 +1,7 @@
 import { Activity, BarChart3, Clock, TrendingDown, TrendingUp, TriangleAlert } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CURRENCY_CONFIG, OPERATIONAL_ASSET_STATUS, STATUS_COLORS } from '../@consts/operational-asset.constants';
 import type { StatusDataItem } from '../@services/operational-asset.service';
@@ -95,14 +95,12 @@ export function MiniDashboards({ data, totalLoss, totalRevenue, viewFinancial }:
         </ItemContent>
       </Item>
 
-      <Item variant="outline" className="border-l-4 border-l-indigo-500 min-w-[200px] flex-1">
-        <ItemMedia variant="icon">
+      <Item variant="outline" className="border-l-4 border-l-indigo-500 min-w-[200px] flex-col flex-1">
+        <ItemContent className="flex flex-row items-center gap-2">
           <BarChart3 className="size-5 text-indigo-500" />
-        </ItemMedia>
-        <ItemContent className="flex flex-col">
           <ItemDescription className="uppercase text-xs font-bold">{t('avg.daily.operational')}</ItemDescription>
-          <ItemTitle className="text-2xl font-bold text-indigo-600">{avgDailyOperational.toFixed(1)}h</ItemTitle>
         </ItemContent>
+        <ItemTitle className="text-2xl font-bold text-indigo-600">{avgDailyOperational.toFixed(1)}h</ItemTitle>
       </Item>
 
       {viewFinancial && (

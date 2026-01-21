@@ -132,10 +132,10 @@ const MailCheckIcon = forwardRef<MailCheckIconHandle, HTMLAttributes<HTMLDivElem
         width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <title>No Notifications</title>
         <path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8" />
         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
         <motion.path animate={controls} d="m16 19 2 2 4-4" initial="normal" style={{ transformOrigin: 'center' }} variants={CHECK_VARIANTS} />
+        <title>No Notifications</title>
       </svg>
     </div>
   );
@@ -215,8 +215,8 @@ const MessageSquareIcon = forwardRef<MessageSquareIconHandle, HTMLAttributes<HTM
         width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <title>MessageSquareIcon</title>
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        <title>MessageSquareIcon</title>
       </motion.svg>
     </div>
   );

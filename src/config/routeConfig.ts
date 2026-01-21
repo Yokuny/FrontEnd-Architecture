@@ -152,6 +152,8 @@ export const MAIN_ROUTES = [
   '/esg/indicators-eeoi-cii',
   '/esg/simulator-cii',
   '/fleet-manager',
+  '/ia/anomaly-detector',
+  '/ia/prompt',
   '/maintenance/list-os-done',
   '/maintenance/monitoring-plans',
   '/maintenance/monitoring-wear',

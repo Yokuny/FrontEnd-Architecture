@@ -125,13 +125,13 @@ const LanguagesIcon = forwardRef<LanguagesIconHandle, HTMLAttributes<HTMLDivElem
         width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <title>Languages</title>
         <motion.path animate={pathControls} custom={3} d="m5 8 6 6" variants={PATH_VARIANTS} />
         <motion.path animate={pathControls} custom={2} d="m4 14 6-6 3-3" variants={PATH_VARIANTS} />
         <motion.path animate={pathControls} custom={1} d="M2 5h12" variants={PATH_VARIANTS} />
         <motion.path animate={pathControls} custom={0} d="M7 2h1" variants={PATH_VARIANTS} />
         <motion.path animate={pathControls} custom={3} d="m22 22-5-10-5 10" variants={PATH_VARIANTS} />
         <motion.path animate={pathControls} custom={3} d="M14 18h6" variants={PATH_VARIANTS} />
+        <title>Languages</title>
       </motion.svg>
     </div>
   );

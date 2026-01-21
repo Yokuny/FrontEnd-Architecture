@@ -82,7 +82,6 @@ const Maximize2Icon = forwardRef<Maximize2IconHandle, HTMLAttributes<HTMLDivElem
         width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <title>Maximize2Icon</title>
         <motion.path
           animate={controls}
           d="M3 16.2V21m0 0h4.8M3 21l6-6"
@@ -101,6 +100,7 @@ const Maximize2Icon = forwardRef<Maximize2IconHandle, HTMLAttributes<HTMLDivElem
             animate: { translateX: '2px', translateY: '-2px' },
           }}
         />
+        <title>Maximize2Icon</title>
       </svg>
     </div>
   );
@@ -145,7 +145,6 @@ const MaximizeIcon = forwardRef<MaximizeIconHandle, HTMLAttributes<HTMLDivElemen
   return (
     <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg fill="none" height="28" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
-        <title>MaximizeIcon</title>
         <motion.path
           animate={controls}
           d="M8 3H5a2 2 0 0 0-2 2v3"
@@ -155,7 +154,6 @@ const MaximizeIcon = forwardRef<MaximizeIconHandle, HTMLAttributes<HTMLDivElemen
             animate: { translateX: '-2px', translateY: '-2px' },
           }}
         />
-
         <motion.path
           animate={controls}
           d="M21 8V5a2 2 0 0 0-2-2h-3"
@@ -165,7 +163,6 @@ const MaximizeIcon = forwardRef<MaximizeIconHandle, HTMLAttributes<HTMLDivElemen
             animate: { translateX: '2px', translateY: '-2px' },
           }}
         />
-
         <motion.path
           animate={controls}
           d="M3 16v3a2 2 0 0 0 2 2h3"
@@ -175,7 +172,6 @@ const MaximizeIcon = forwardRef<MaximizeIconHandle, HTMLAttributes<HTMLDivElemen
             animate: { translateX: '-2px', translateY: '2px' },
           }}
         />
-
         <motion.path
           animate={controls}
           d="M16 21h3a2 2 0 0 0 2-2v-3"
@@ -185,6 +181,7 @@ const MaximizeIcon = forwardRef<MaximizeIconHandle, HTMLAttributes<HTMLDivElemen
             animate: { translateX: '2px', translateY: '2px' },
           }}
         />
+        <title>MaximizeIcon</title>
       </svg>
     </div>
   );
@@ -240,7 +237,6 @@ const MinimizeIcon = forwardRef<MinimizeIconHandle, HTMLAttributes<HTMLDivElemen
         width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <title>MinimizeIcon</title>
         <motion.path
           animate={controls}
           d="M8 3v3a2 2 0 0 1-2 2H3"
@@ -277,6 +273,7 @@ const MinimizeIcon = forwardRef<MinimizeIconHandle, HTMLAttributes<HTMLDivElemen
             animate: { translateX: '-2px', translateY: '-2px' },
           }}
         />
+        <title>MinimizeIcon</title>
       </svg>
     </div>
   );
