@@ -72,7 +72,7 @@ export function ParamForm() {
             <FormItem>
               <Field className="gap-2">
                 <FieldLabel>{t('description')}</FieldLabel>
-                <Input {...field} placeholder={t('description.placeholder')} maxLength={150} />
+                <Input {...field} placeholder={t('description')} maxLength={150} />
               </Field>
               <FormMessage />
             </FormItem>

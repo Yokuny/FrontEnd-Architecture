@@ -55,7 +55,7 @@ export function useConsumptionDailyApi() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: consumptionDailyKeys.all });
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
     },
     onError: () => {
       toast.error(t('error.save'));
@@ -69,7 +69,7 @@ export function useConsumptionDailyApi() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: consumptionDailyKeys.all });
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
     },
     onError: () => {
       toast.error(t('error.save'));

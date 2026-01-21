@@ -49,7 +49,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -76,7 +76,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

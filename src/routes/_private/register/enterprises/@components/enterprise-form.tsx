@@ -41,7 +41,7 @@ export function EnterpriseForm() {
           render={({ field }) => (
             <FormItem className="flex items-center justify-between rounded-lg border p-4 bg-muted/50">
               <div className="space-y-0.5">
-                <FormLabel className="text-base">{t('active')}</FormLabel>
+                <FormLabel className="text-base">{t('machine')}</FormLabel>
               </div>
               <FormControl>
                 <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -153,9 +153,9 @@ export function EnterpriseForm() {
             name="city"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('city.label')}</FormLabel>
+                <FormLabel>{t('city')}</FormLabel>
                 <FormControl>
-                  <Input placeholder={t('city.label')} {...field} />
+                  <Input placeholder={t('city')} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -179,9 +179,9 @@ export function EnterpriseForm() {
             name="country"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('country.label')}</FormLabel>
+                <FormLabel>{t('country')}</FormLabel>
                 <FormControl>
-                  <Input placeholder={t('country.label')} {...field} />
+                  <Input placeholder={t('country')} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -214,7 +214,7 @@ export function EnterpriseForm() {
             name="lat"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('lat.label')}</FormLabel>
+                <FormLabel>{t('latitude')}</FormLabel>
                 <FormControl>
                   <Input type="number" step="any" placeholder="0.0000" {...field} onChange={(e) => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))} />
                 </FormControl>
@@ -227,7 +227,7 @@ export function EnterpriseForm() {
             name="lon"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('lon.label')}</FormLabel>
+                <FormLabel>{t('longitude')}</FormLabel>
                 <FormControl>
                   <Input type="number" step="any" placeholder="0.0000" {...field} onChange={(e) => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))} />
                 </FormControl>

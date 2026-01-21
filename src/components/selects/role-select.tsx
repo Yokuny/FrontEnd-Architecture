@@ -41,7 +41,7 @@ export function RoleSelect(props: RoleSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -67,7 +67,7 @@ export function RoleSelect(props: RoleSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

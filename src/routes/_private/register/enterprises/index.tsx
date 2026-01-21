@@ -131,7 +131,7 @@ function EnterprisesListPage() {
                   }}
                 >
                   <Settings className="size-4 mr-2" />
-                  {t('setup')} Fleet
+                  {t('config')} Fleet
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

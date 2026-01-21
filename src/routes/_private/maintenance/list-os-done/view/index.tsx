@@ -98,7 +98,7 @@ function OsDetailsPage() {
 
         {/* Checklist Section */}
         <div className="space-y-10 lg:space-y-16">
-          <h2 className="text-4xl font-semibold tracking-tighter">{t('checklist')}</h2>
+          <h2 className="text-4xl font-semibold tracking-tighter">{t('check.list')}</h2>
 
           <ul className="divide-y">
             {data.services.map((service, index) => (

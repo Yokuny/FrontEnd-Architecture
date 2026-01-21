@@ -16,11 +16,11 @@ export function PortSelect(props: PortSelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
-
   const query = usePortsSelect();
 
+  const displayLabel = label || t('port');
+
   if (mode === 'multi') {
-    const displayLabel = label || t('port.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -31,7 +31,7 @@ export function PortSelect(props: PortSelectProps) {
         )}
         <DataMultiSelect<Port, Port>
           id={id}
-          placeholder={placeholder || t('port.placeholder')}
+          placeholder={placeholder || t('port')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
@@ -39,14 +39,13 @@ export function PortSelect(props: PortSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || t('port.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -57,7 +56,7 @@ export function PortSelect(props: PortSelectProps) {
       )}
       <DataSelect<Port, Port>
         id={id}
-        placeholder={placeholder || t('port.placeholder')}
+        placeholder={placeholder || t('port')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
@@ -66,7 +65,7 @@ export function PortSelect(props: PortSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

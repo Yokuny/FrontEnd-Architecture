@@ -61,7 +61,7 @@ function IntegrationListPage() {
 
     try {
       await saveMachineIntegrations.mutateAsync(payload);
-      toast.success(t('success.save'));
+      toast.success(t('save.success'));
     } catch (_error) {
       toast.error(t('error.save'));
     }
@@ -88,7 +88,7 @@ function IntegrationListPage() {
                   <TableHead className="w-[160px] text-center">{t('type')}</TableHead>
                   <TableHead className="w-[120px] text-center">{t('interval')}</TableHead>
                   <TableHead className="text-center">{t('options')}</TableHead>
-                  <TableHead className="w-[80px] text-center">{t('active')}</TableHead>
+                  <TableHead className="w-[80px] text-center">{t('machine')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

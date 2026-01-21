@@ -11,7 +11,7 @@ export function ProductServiceSelect(props: ProductServiceSelectProps) {
   const id = useId();
   const query = useMachinesByEnterpriseSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   const displayLabel = label || t('support.product.placeholder');
   return (
@@ -33,7 +33,7 @@ export function ProductServiceSelect(props: ProductServiceSelectProps) {
         clearable={false}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

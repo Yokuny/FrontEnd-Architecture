@@ -25,7 +25,7 @@ export function UserSelect({
   const { t } = useTranslation();
   const query = useUsersByEnterprise(idEnterprise, includeDetails);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -47,7 +47,7 @@ export function UserSelect({
           className={className}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     );
@@ -73,7 +73,7 @@ export function UserSelect({
         className={className}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

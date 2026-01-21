@@ -54,7 +54,7 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -81,7 +81,7 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
         clearable
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

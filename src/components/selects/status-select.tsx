@@ -12,7 +12,7 @@ export function StatusSelect(props: StatusSelectProps) {
   const id = useId();
   const query = useStatusSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
   const displayLabel = label || t('status.placeholder');
 
   const mapWithDefaults = (statuses: string[]) => {
@@ -47,7 +47,7 @@ export function StatusSelect(props: StatusSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -73,7 +73,7 @@ export function StatusSelect(props: StatusSelectProps) {
         clearable
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

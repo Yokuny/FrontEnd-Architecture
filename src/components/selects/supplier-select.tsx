@@ -91,7 +91,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
             disabled={disabled}
             searchPlaceholder={t('search.placeholder')}
             noOptionsMessage={t('nooptions.message')}
-            noResultsMessage={t('noresults.message')}
+            noResultsMessage={t('not.found')}
           />
         </div>
       </div>
@@ -139,7 +139,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
           clearable={true}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     </div>

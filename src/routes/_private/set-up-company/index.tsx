@@ -52,7 +52,7 @@ function SetupCompanyHubPage() {
       to: '/set-up-company/setup-limits' as const,
     },
     {
-      title: `${t('setup')} Fleet`,
+      title: `${t('config')} Fleet`,
       description: t('setup.fleet.description'),
       icon: MapPin,
       to: '/set-up-company/setup-fleet' as const,

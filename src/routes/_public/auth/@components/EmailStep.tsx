@@ -37,7 +37,7 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-medium">{t('login.email')}</FormLabel>
+              <FormLabel className="font-medium">{t('email')}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Input {...field} className="h-14" type="email" placeholder={t('login.email.placeholder')} autoFocus />

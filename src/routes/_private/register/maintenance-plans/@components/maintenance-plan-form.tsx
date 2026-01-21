@@ -59,7 +59,7 @@ export function MaintenancePlanForm() {
               <Field className="gap-2">
                 <FieldLabel>{t('description')} *</FieldLabel>
                 <FormControl>
-                  <Input {...field} placeholder={t('maintenance.description.placeholder')} maxLength={150} />
+                  <Input {...field} placeholder={t('description')} maxLength={150} />
                 </FormControl>
               </Field>
               <FormMessage />
@@ -154,11 +154,11 @@ export function MaintenancePlanForm() {
                   render={({ field }) => (
                     <FormItem>
                       <Field className="gap-2">
-                        <FieldLabel>{t('unity.cycle')} *</FieldLabel>
+                        <FieldLabel>{t('unit')} *</FieldLabel>
                         <Select value={field.value} onValueChange={field.onChange}>
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder={t('unity.cycle')} />
+                              <SelectValue placeholder={t('unit')} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>

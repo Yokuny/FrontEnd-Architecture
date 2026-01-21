@@ -98,7 +98,7 @@ function ConsumptionIntervalPage() {
 
   return (
     <Card>
-      <CardHeader title={t('consumption')}>
+      <CardHeader title={t('consume')}>
         {!isLoading && data.length > 0 && (
           <Button size="sm" onClick={exportToCSV}>
             <Download className="size-4" />

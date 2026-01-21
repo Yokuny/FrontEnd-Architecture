@@ -60,7 +60,7 @@ export function ConditionSelect(props: ConditionSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -87,7 +87,7 @@ export function ConditionSelect(props: ConditionSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

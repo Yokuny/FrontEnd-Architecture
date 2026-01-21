@@ -60,7 +60,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-medium">{t('login.email')}</FormLabel>
+                <FormLabel className="font-medium">{t('email')}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input {...field} type="email" placeholder={t('login.email.placeholder')} autoFocus />

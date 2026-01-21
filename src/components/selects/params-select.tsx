@@ -16,11 +16,10 @@ export function ParamsSelect(props: ParamsSelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
-
   const query = useParamsSelect();
+  const displayLabel = label || t('parameters');
 
   if (mode === 'multi') {
-    const displayLabel = label || t('params.placeholder');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -31,7 +30,7 @@ export function ParamsSelect(props: ParamsSelectProps) {
         )}
         <DataMultiSelect<Param, Param>
           id={id}
-          placeholder={placeholder || t('params.placeholder')}
+          placeholder={placeholder || t('parameters')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
@@ -39,14 +38,13 @@ export function ParamsSelect(props: ParamsSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || t('params.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -57,7 +55,7 @@ export function ParamsSelect(props: ParamsSelectProps) {
       )}
       <DataSelect<Param, Param>
         id={id}
-        placeholder={placeholder || t('params.placeholder')}
+        placeholder={placeholder || t('parameters')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
@@ -66,7 +64,7 @@ export function ParamsSelect(props: ParamsSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

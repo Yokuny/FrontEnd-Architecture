@@ -37,7 +37,7 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" className="w-80 my-6">
-        <DropdownMenuLabel>{t('notifications')}</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('alerts')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <div className="max-h-[300px] overflow-y-auto">
           {hasNotifications ? (

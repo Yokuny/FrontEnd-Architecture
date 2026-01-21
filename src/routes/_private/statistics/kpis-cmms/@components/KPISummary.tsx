@@ -63,7 +63,7 @@ export function KPISummary({ filters }: { filters: KPISCMMSFilters & { min: stri
       <Item variant="outline" className="border-l-4 border-l-red-500 min-w-[200px] flex-1">
         <ItemContent className="flex flex-col">
           <div className="flex justify-between items-center">
-            <ItemDescription className="uppercase text-xs font-bold">{t('kpis.cmms.expired.os')}</ItemDescription>
+            <ItemDescription className="uppercase text-xs font-bold">{t('predictive.deviation')}</ItemDescription>
             <Badge className="bg-red-100 text-red-700 font-bold rounded-sm border-none shadow-none">{kpis.expiredPercent.toFixed(1)}%</Badge>
           </div>
           <ItemTitle className="text-3xl font-bold text-red-600">{kpis.expired}</ItemTitle>

@@ -273,7 +273,7 @@ function PtaxPage() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t('confirm.delete.title')}</AlertDialogTitle>
+            <AlertDialogTitle>{t('confirm.delete')}</AlertDialogTitle>
             <AlertDialogDescription>{t('confirm.delete.message', { count: 1 })}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

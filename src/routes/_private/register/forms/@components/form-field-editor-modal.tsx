@@ -130,7 +130,7 @@ export function FormFieldEditorModal({ open, onOpenChange, field, onSave, idEnte
                 <Input
                   value={optionInput}
                   onChange={(e) => setOptionInput(e.target.value)}
-                  placeholder={t('add.option')}
+                  placeholder={t('add.options')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();

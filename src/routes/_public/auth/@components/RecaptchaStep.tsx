@@ -18,7 +18,7 @@ export function RecaptchaStep({ email, recaptchaRef, onVerify, onBack, isLoading
   return (
     <div className="space-y-5">
       <Field>
-        <FieldLabel className="font-medium">{t('login.email')}</FieldLabel>
+        <FieldLabel className="font-medium">{t('email')}</FieldLabel>
         <Input type="email" className="h-14" value={email} disabled />
       </Field>
 

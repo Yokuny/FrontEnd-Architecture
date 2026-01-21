@@ -76,7 +76,7 @@ function EnterpriseAddFormContent({ initialData }: { initialData?: any }) {
     if (!initialData?.id) return;
     try {
       await deleteEnterprise.mutateAsync(initialData.id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/enterprises', search: { page: 1, size: 10 } });
     } catch {
       toast.error(t('error.delete'));

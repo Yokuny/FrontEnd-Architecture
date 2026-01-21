@@ -12,7 +12,7 @@ export function OperationsContractSelect(props: OperationsContractSelectProps) {
   const id = useId();
   const query = useOperationsByAssetSelect(idEnterprise, idMachine);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : !idMachine ? t('select.machine.first') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : !idMachine ? t('select.machine.first') : t('nooptions.message');
 
   if (mode === 'multi') {
     const displayLabel = label || t('machine.placeholder');
@@ -34,7 +34,7 @@ export function OperationsContractSelect(props: OperationsContractSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -61,7 +61,7 @@ export function OperationsContractSelect(props: OperationsContractSelectProps) {
         clearable
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

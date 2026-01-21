@@ -82,9 +82,9 @@ function ExternalUsersContent({ idEnterprise }: { idEnterprise: string }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{t('username')}</TableHead>
+                <TableHead>{t('user')}</TableHead>
                 <TableHead>Token</TableHead>
-                <TableHead className="w-[100px] text-center">{t('active.check')}</TableHead>
+                <TableHead className="w-[100px] text-center">{t('machine')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

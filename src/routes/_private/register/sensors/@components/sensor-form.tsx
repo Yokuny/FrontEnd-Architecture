@@ -45,9 +45,9 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
             render={({ field }) => (
               <FormItem>
                 <Field className="gap-2">
-                  <FieldLabel>{t('sensor.id.placeholder')} *</FieldLabel>
+                  <FieldLabel>{t('sensor.id.label')} *</FieldLabel>
                   <FormControl>
-                    <Input placeholder={t('sensor.id.placeholder')} disabled={isEdit} {...field} />
+                    <Input placeholder={t('sensor.id.label')} disabled={isEdit} {...field} />
                   </FormControl>
                   <FormMessage />
                 </Field>
@@ -60,9 +60,9 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
             render={({ field }) => (
               <FormItem>
                 <Field className="gap-2">
-                  <FieldLabel>{t('sensor.name.placeholder')} *</FieldLabel>
+                  <FieldLabel>{t('sensor.name')} *</FieldLabel>
                   <FormControl>
-                    <Input placeholder={t('sensor.name.placeholder')} {...field} />
+                    <Input placeholder={t('sensor.name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </Field>

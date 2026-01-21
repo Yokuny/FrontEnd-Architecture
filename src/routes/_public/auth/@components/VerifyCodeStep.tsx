@@ -62,7 +62,7 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder={t('unlock.code.placeholder')}
+                    placeholder={t('add.code')}
                     className="h-14 text-center text-3xl font-bold tracking-[0.5em]"
                     autoComplete="one-time-code"
                     autoFocus

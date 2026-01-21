@@ -34,7 +34,7 @@ export function useContractForm(initialData?: any) {
         } else {
           await createContract.mutateAsync(values as any);
         }
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
         navigate({ to: '/register/contracts' as any, search: { page: 1, size: 10 } as any });
       } catch {
         // Error handled by API client

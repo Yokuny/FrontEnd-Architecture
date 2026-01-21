@@ -40,7 +40,7 @@ export function IncludeVesselModal({ isOpen, onClose, idEnterprise }: IncludeVes
         ...data,
         idEnterprise,
       });
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       onClose();
     } catch {
       toast.error(t('error.save'));

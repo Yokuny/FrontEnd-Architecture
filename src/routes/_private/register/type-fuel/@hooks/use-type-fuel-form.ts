@@ -32,7 +32,7 @@ export function useTypeFuelForm(initialData?: Partial<TypeFuelFormData>) {
       } else {
         await createFuelType.mutateAsync(data as any);
       }
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/type-fuel' });
     } catch {
       toast.error(t('error.save'));

@@ -76,7 +76,7 @@ function UserTypeAddFormContent({ initialData }: { initialData?: any }) {
     if (!initialData?.id) return;
     try {
       await deleteUserType.mutateAsync(initialData.id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/user-type' });
     } catch {
       toast.error(t('error.delete'));

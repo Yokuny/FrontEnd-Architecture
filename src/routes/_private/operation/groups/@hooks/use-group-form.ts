@@ -24,10 +24,10 @@ export function useGroupForm(initialData?: Partial<Group>) {
     try {
       if (data.id || data._id) {
         await updateGroup.mutateAsync(data);
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
       } else {
         await createGroup.mutateAsync(data);
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
       }
       navigate({ to: '/operation/groups' });
     } catch {

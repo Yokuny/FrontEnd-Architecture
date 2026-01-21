@@ -55,7 +55,7 @@ function MachineAddPage() {
     e.preventDefault();
     try {
       await onSubmit();
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/machines' } satisfies { to: string });
     } catch {
       toast.error(t('error.save'));

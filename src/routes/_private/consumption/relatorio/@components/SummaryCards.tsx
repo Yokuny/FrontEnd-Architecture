@@ -14,7 +14,7 @@ export function SummaryCards({ data, unit, isReal }: SummaryCardsProps) {
 
   const cards = [
     {
-      title: `${t('consumption')} ${unit}`,
+      title: `${t('consume')} ${unit}`,
       value: totalConsumption.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
       icon: Droplet,
       color: isReal ? 'text-sky-600' : 'text-amber-600',
@@ -26,7 +26,7 @@ export function SummaryCards({ data, unit, isReal }: SummaryCardsProps) {
       color: isReal ? 'text-blue-800' : 'text-amber-800',
     },
     {
-      title: `${t('average')} ${unit}/HR`,
+      title: `${t('medium')} ${unit}/HR`,
       value: average.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
       icon: Droplets,
       color: isReal ? 'text-sky-600' : 'text-amber-600',

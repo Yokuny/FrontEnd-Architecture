@@ -224,7 +224,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
               <FormItem>
                 <Field className="gap-2">
                   <FieldLabel>
-                    {t('radius')} ({t('meter.unity')})
+                    {t('radius')} ({t('meter')})
                   </FieldLabel>
                   <FormControl>
                     <Input type="number" min={0} placeholder={t('radius')} {...field} />
@@ -276,7 +276,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
       ],
     },
     {
-      title: t('ais_dimensions'),
+      title: t('ais.dimensions'),
       description: t('platforms.ais.description'),
       fields: [
         <div key="row-ais-1" className="grid grid-cols-1 md:grid-cols-2 gap-4">

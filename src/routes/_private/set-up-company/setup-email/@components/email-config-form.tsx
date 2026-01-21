@@ -34,7 +34,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
               mode="single"
               value={watch('idEnterprise')}
               onChange={(val) => setValue('idEnterprise', val || '')}
-              placeholder={t('enterprise.placeholder')}
+              placeholder={t('select.company')}
               disabled={isLoading || isPending || !!isEnterpriseDisabled}
             />
           </FormControl>
@@ -43,7 +43,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
       ],
     },
     {
-      title: t('setup.email.connection'),
+      title: t('connection'),
       description: t('setup.email.connection.description'),
       fields: [
         <FormField

@@ -22,17 +22,17 @@ export function DeviationsChart({ filters }: { filters: KPISCMMSFilters & { min:
     const total = openDeviations + executedDeviations;
 
     const formattedData = [
-      { name: t('kpis.cmms.deviation.open'), value: openDeviations, fill: getChartColor(0), key: 'open' },
-      { name: t('kpis.cmms.deviation.executed'), value: executedDeviations, fill: getChartColor(8), key: 'executed' },
+      { name: t('open.deviation'), value: openDeviations, fill: getChartColor(0), key: 'open' },
+      { name: t('executed.deviation'), value: executedDeviations, fill: getChartColor(8), key: 'executed' },
     ];
 
     const config: ChartConfig = {
       open: {
-        label: t('kpis.cmms.deviation.open'),
+        label: t('open.deviation'),
         color: getChartColor(0),
       },
       executed: {
-        label: t('kpis.cmms.deviation.executed'),
+        label: t('executed.deviation'),
         color: getChartColor(8),
       },
     };
@@ -47,7 +47,7 @@ export function DeviationsChart({ filters }: { filters: KPISCMMSFilters & { min:
   return (
     <Item variant="outline" className="flex-col items-stretch w-full flex-1">
       <ItemHeader className="items-center flex-col pb-4">
-        <ItemTitle className="text-lg font-bold">{t('kpis.cmms.predictive.deviations')}</ItemTitle>
+        <ItemTitle className="text-lg font-bold">{t('predictive.deviation')}</ItemTitle>
         <ItemDescription>{t('kpis.cmms.predictive.deviations.description')}</ItemDescription>
       </ItemHeader>
       <ItemContent>

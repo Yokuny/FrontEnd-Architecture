@@ -60,8 +60,8 @@ function EditUserPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Name */}
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="name">{t('account.name')} *</Label>
-              <Input id="name" {...form.register('name')} placeholder={t('account.name.placeholder')} maxLength={150} disabled={isDisabled} />
+              <Label htmlFor="name">{t('name')} *</Label>
+              <Input id="name" {...form.register('name')} placeholder={t('name.placeholder')} maxLength={150} disabled={isDisabled} />
               {form.formState.errors.name && <p className="text-sm text-destructive">{t(form.formState.errors.name.message)}</p>}
             </div>
 
@@ -76,7 +76,7 @@ function EditUserPage() {
             {/* Email */}
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="email">
-                {t('login.email')} {!isOnlyContact && '*'}
+                {t('email')} {!isOnlyContact && '*'}
               </Label>
               <Input id="email" type="email" {...form.register('email')} placeholder={t('login.email.placeholder')} disabled={isDisabled} />
               {form.formState.errors.email && <p className="text-sm text-destructive">{t(form.formState.errors.email.message)}</p>}

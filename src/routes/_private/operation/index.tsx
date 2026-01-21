@@ -26,7 +26,7 @@ function OperationHubPage() {
     },
     {
       title: t('operational.fleet'),
-      description: t('operation.operational.fleet.description'),
+      description: t('operation.dashboard.description'),
       icon: LayoutDashboard,
       to: '/operation/operational-fleet' as const,
     },

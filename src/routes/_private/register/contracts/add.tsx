@@ -81,7 +81,7 @@ function ContractFormContent({ initialData, id, isDuplicate }: { initialData?: a
     if (!id) return;
     try {
       await deleteContract.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/contracts', search: { page: 1, size: 10 } });
     } catch {
       toast.error(t('error.delete'));

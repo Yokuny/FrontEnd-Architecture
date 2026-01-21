@@ -59,7 +59,7 @@ export function useSensorFunctionForm(idEnterprise: string, initialData?: any) {
         toast.success(t('success.update'));
       } else {
         await createSensorFunction.mutateAsync(payload);
-        toast.success(t('success.save'));
+        toast.success(t('save.success'));
       }
       navigate({ to: '/register/sensor-functions' });
     } catch (_error) {
@@ -73,7 +73,7 @@ export function useSensorFunctionForm(idEnterprise: string, initialData?: any) {
 
     try {
       await toggleSensorFunction.mutateAsync(id);
-      toast.success(t('success.save'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/sensor-functions' });
     } catch (_error) {
       toast.error(t('error.save'));

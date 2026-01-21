@@ -12,7 +12,7 @@ export function FleetSelect(props: FleetSelectProps) {
   const id = useId();
   const query = useFleetsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (mode === 'multi') {
     const displayLabel = label || t('select.fleet');
@@ -34,7 +34,7 @@ export function FleetSelect(props: FleetSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -61,7 +61,7 @@ export function FleetSelect(props: FleetSelectProps) {
         clearable
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

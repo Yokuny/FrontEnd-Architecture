@@ -20,17 +20,17 @@ export function StatusChart({ filters }: { filters: KPISCMMSFilters & { min: str
     const total = openCount + closedCount;
 
     const formattedData = [
-      { name: t('kpis.cmms.open'), value: openCount, fill: getChartColor(3), key: 'open' },
-      { name: t('kpis.cmms.closed'), value: closedCount, fill: getChartColor(12), key: 'closed' },
+      { name: t('list.opens'), value: openCount, fill: getChartColor(3), key: 'open' },
+      { name: t('finished'), value: closedCount, fill: getChartColor(12), key: 'closed' },
     ];
 
     const config: ChartConfig = {
       open: {
-        label: t('kpis.cmms.open'),
+        label: t('list.opens'),
         color: getChartColor(3),
       },
       closed: {
-        label: t('kpis.cmms.closed'),
+        label: t('finished'),
         color: getChartColor(12),
       },
     };

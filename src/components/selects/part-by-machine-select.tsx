@@ -23,7 +23,7 @@ export function PartByMachineSelect({
   const id = useId();
   const query = usePartsByMachineSelect(idMachine);
 
-  const noOptionsMessage = !idMachine ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idMachine ? t('select.enterprise.first') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -45,7 +45,7 @@ export function PartByMachineSelect({
           className={className}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     );
@@ -71,7 +71,7 @@ export function PartByMachineSelect({
         className={className}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

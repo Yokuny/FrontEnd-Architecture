@@ -110,7 +110,7 @@ export function EditEventScheduleDialog({
       };
 
       await api.post('/event-schedule?applyTo=none', payload);
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       setOpen(false);
       onSuccess();
     } catch {
@@ -147,7 +147,7 @@ export function EditEventScheduleDialog({
             <Calendar className="size-5" />
             {isFetching ? t('loading') : title}
           </DialogTitle>
-          <DialogDescription>{isFetching ? t('loading') : event?.maintenancePlan?.description || t('event.maintenance')}</DialogDescription>
+          <DialogDescription>{isFetching ? t('loading') : event?.maintenancePlan?.description || t('maintenance')}</DialogDescription>
         </DialogHeader>
 
         {isFetching ? (

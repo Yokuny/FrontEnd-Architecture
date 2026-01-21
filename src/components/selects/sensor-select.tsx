@@ -24,7 +24,7 @@ export function SensorSelect({
   const id = useId();
   const query = useSensorsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -46,7 +46,7 @@ export function SensorSelect({
           className={className}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     );
@@ -72,7 +72,7 @@ export function SensorSelect({
         className={className}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

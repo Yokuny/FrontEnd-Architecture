@@ -70,7 +70,7 @@ export function useEmailConfigForm({ idEnterprise }: UseEmailConfigFormOptions) 
           },
         },
       });
-      toast.success(t('success.save'));
+      toast.success(t('save.success'));
       navigate({ to: '..' });
     } catch (_error) {
       toast.error(t('error.save'));

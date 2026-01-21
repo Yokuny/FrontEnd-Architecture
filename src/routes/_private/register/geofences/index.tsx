@@ -53,7 +53,7 @@ function GeofenceListPage() {
   const handleDelete = async (id: string) => {
     try {
       await deleteGeofence.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
     } catch {
       toast.error(t('error.delete'));
     }

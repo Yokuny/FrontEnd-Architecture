@@ -117,7 +117,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
                 <FormLabel className="font-medium">{t('account.confirm.password')}</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input {...field} type={showConfirmPassword ? 'text' : 'password'} placeholder={t('account.confirm.password.placeholder')} className="pr-12" />
+                    <Input {...field} type={showConfirmPassword ? 'text' : 'password'} placeholder={t('account.confirm.password')} className="pr-12" />
                     <Button
                       type="button"
                       variant="ghost"

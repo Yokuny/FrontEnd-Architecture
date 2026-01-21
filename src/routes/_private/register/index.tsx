@@ -70,7 +70,7 @@ function RegisterHubPage() {
       to: '/register/platform' as const,
     },
     {
-      title: t('buoys'),
+      title: t('monobuoys'),
       description: t('buoys.description', 'Gerencie as boias e sua localização.'),
       icon: Radio,
       to: '/register/buoy' as const,
@@ -112,7 +112,7 @@ function RegisterHubPage() {
       to: '/register/forms' as const,
     },
     {
-      title: t('params'),
+      title: t('parameters'),
       description: t('params.description', 'Configure os parâmetros globais do sistema.'),
       icon: Sliders,
       to: '/register/params' as const,

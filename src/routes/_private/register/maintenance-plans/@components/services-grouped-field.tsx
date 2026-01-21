@@ -107,7 +107,7 @@ function ServiceItemsField({ groupIndex }: { groupIndex: number }) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <TypeServiceMaintenanceSelect value={field.value} onChange={field.onChange} label={undefined} placeholder={t('select.type.service.placeholder')} />
+                    <TypeServiceMaintenanceSelect value={field.value} onChange={field.onChange} label={undefined} placeholder={t('type.service')} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

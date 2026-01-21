@@ -78,7 +78,7 @@ function AddPermissionPage() {
 
               <div className="col-span-full sm:col-span-3">
                 <Field className="gap-2">
-                  <FieldLabel>{t('username')} *</FieldLabel>
+                  <FieldLabel>{t('user')} *</FieldLabel>
                   {idRef ? (
                     <Input value={isLoadingUserRef ? '...' : userRefData?.name || idRef} disabled className="bg-muted" />
                   ) : (

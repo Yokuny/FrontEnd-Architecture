@@ -51,10 +51,10 @@ export function usePermissionForm(id?: string, idRef?: string): UsePermissionFor
     try {
       if (id) {
         await updatePermission.mutateAsync(data);
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
       } else {
         await addPermission.mutateAsync(data);
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
       }
       navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
@@ -66,7 +66,7 @@ export function usePermissionForm(id?: string, idRef?: string): UsePermissionFor
     if (!id) return;
     try {
       await deletePermission.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
       toast.error(t('error.delete'));

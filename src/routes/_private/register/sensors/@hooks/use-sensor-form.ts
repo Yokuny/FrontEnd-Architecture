@@ -34,7 +34,7 @@ export function useSensorForm(initialData?: Partial<SensorFormData>) {
       } else {
         await createSensor.mutateAsync(data as any);
       }
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/sensors' } as { to: string });
     } catch {
       toast.error(t('error.save'));

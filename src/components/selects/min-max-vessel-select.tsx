@@ -45,7 +45,7 @@ export function MinMaxVesselSelect({ idEnterprise, disabled, className, value, o
         disabled={disabled || !idEnterprise}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={!idEnterprise ? t('select.enterprise.first') : t('minmax.no.vessels')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

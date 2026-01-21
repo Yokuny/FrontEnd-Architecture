@@ -62,7 +62,7 @@ export function useRoleForm(id?: string): UseRoleFormReturn {
       } else {
         await createRole.mutateAsync(data);
       }
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/permissions/roles' });
     } catch (_error) {
       toast.error(t('error.save'));
@@ -79,7 +79,7 @@ export function useRoleForm(id?: string): UseRoleFormReturn {
       } else {
         await deleteRole.mutateAsync({ id, idEnterprise });
       }
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/permissions/roles' });
     } catch (_error) {
       toast.error(t('role.request.error'));

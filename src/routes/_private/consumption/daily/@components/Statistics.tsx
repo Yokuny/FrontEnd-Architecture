@@ -213,7 +213,7 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
                         <Item variant="default" size="sm" className="justify-between hover:bg-secondary">
                           <div className="flex items-center gap-2">
                             <Fuel className="size-4 text-pink-800" />
-                            <ItemDescription className="font-sans">{t('fueling')}</ItemDescription>
+                            <ItemDescription className="font-sans">{t('fill')}</ItemDescription>
                             <p className="text-[10px] text-muted-foreground uppercase">MDO</p>
                           </div>
                           <div className="flex items-baseline gap-1">

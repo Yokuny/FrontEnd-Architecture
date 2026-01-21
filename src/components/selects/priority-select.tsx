@@ -53,7 +53,7 @@ export function PrioritySelect(props: PrioritySelectProps) {
         clearable={false}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

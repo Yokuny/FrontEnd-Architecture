@@ -47,7 +47,7 @@ export function OsOptionSelect(props: OsOptionSelectProps) {
         clearable={false}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

@@ -12,7 +12,7 @@ function ConsumptionRVESoundingPage() {
 
   return (
     <Card>
-      <CardHeader title={t('consumption.rve.sounding')} />
+      <CardHeader title={t('dashboard.rve.sounding')} />
       <CardContent>
         <DefaultLoading />
         {/* TODO: Implementar dashboard RVE vs Sondagem */}

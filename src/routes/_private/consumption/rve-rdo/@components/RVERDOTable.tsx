@@ -23,7 +23,7 @@ export function RVERDOTable({ data }: RVERDOTableProps) {
           <TableRow>
             <TableHead className="text-center">{t('date')}</TableHead>
             <TableHead className="text-right">
-              {t('consumption')} {t('estimated')} (m³)
+              {t('consume')} {t('estimated')} (m³)
             </TableHead>
             <TableHead className="text-right">
               {t('consumption.max')}

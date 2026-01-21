@@ -67,7 +67,7 @@ export function RVERDOItem({ asset, data, showInoperabilities }: RVERDOItemProps
                     {t('consumption.max')}: <strong>{totals.max.toFixed(3)} m³</strong>
                   </p>
                   <p>
-                    {t('consumption')} {t('estimated')}: <strong>{totals.estimated.toFixed(3)} m³</strong>
+                    {t('consume')} {t('estimated')}: <strong>{totals.estimated.toFixed(3)} m³</strong>
                   </p>
                   <p>
                     {t('diff')}: <strong>{(totals.estimated - totals.max).toFixed(3)} m³</strong>

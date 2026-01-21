@@ -168,7 +168,7 @@ export function MonthlyStatusChart({ data, isLoading, viewFinancial }: MonthlySt
                           className="text-[10px] font-bold"
                           textAnchor="end"
                         >
-                          {t('average')} {viewFinancial ? t('tax') : t('operation')}: {average.toFixed(1)}%
+                          {t('medium')} {viewFinancial ? t('tax') : t('operation')}: {average.toFixed(1)}%
                         </text>
                       </g>
                     );

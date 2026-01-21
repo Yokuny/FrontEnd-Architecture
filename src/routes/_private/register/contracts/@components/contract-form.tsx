@@ -43,9 +43,9 @@ export function ContractForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('description.placeholder')} *</FormLabel>
+              <FormLabel>{t('description')} *</FormLabel>
               <FormControl>
-                <Input placeholder={t('description.placeholder')} {...field} maxLength={150} />
+                <Input placeholder={t('description')} {...field} maxLength={150} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -197,7 +197,7 @@ function GroupConsumptionTab() {
             <TableRow>
               <TableHead className="w-[100px]">{t('code')}</TableHead>
               <TableHead>{t('description')}</TableHead>
-              <TableHead className="text-right">{t('consumption')} (m³)</TableHead>
+              <TableHead className="text-right">{t('consume')} (m³)</TableHead>
               <TableHead className="w-[100px] text-center">{t('actions')}</TableHead>
             </TableRow>
           </TableHeader>
@@ -205,7 +205,7 @@ function GroupConsumptionTab() {
             {fields.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
-                  {t('noresults.message')}
+                  {t('not.found')}
                 </TableCell>
               </TableRow>
             ) : (
@@ -260,7 +260,7 @@ function GroupConsumptionTab() {
               <Input value={tempData.description} onChange={(e) => setTempData({ ...tempData, description: e.target.value })} />
             </div>
             <div className="grid gap-2">
-              <FormLabel>{t('consumption')} (m³)</FormLabel>
+              <FormLabel>{t('consume')} (m³)</FormLabel>
               <Input type="number" value={tempData.consumption} onChange={(e) => setTempData({ ...tempData, consumption: Number(e.target.value) })} />
             </div>
           </div>
@@ -331,7 +331,7 @@ function OperationsTab() {
             {fields.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
-                  {t('noresults.message')}
+                  {t('not.found')}
                 </TableCell>
               </TableRow>
             ) : (
@@ -468,7 +468,7 @@ function EventsTab() {
             {fields.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={3} className="h-24 text-center text-muted-foreground">
-                  {t('noresults.message')}
+                  {t('not.found')}
                 </TableCell>
               </TableRow>
             ) : (

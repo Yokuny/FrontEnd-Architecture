@@ -38,7 +38,7 @@ export function IndicatorsTableDetails({ data }: IndicatorsTableDetailsProps) {
     },
     {
       key: 'timeInVoyage',
-      header: `${t('speed')} * ${t('average')} (kn)`,
+      header: `${t('speed')} * ${t('medium')} (kn)`,
       render: (value, row) => (Number(value) > 0 ? (row.distanceInVoyage / Number(value)).toFixed(1) : '0.0'),
     },
     {

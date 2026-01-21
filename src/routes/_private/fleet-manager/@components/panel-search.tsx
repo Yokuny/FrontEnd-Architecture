@@ -46,7 +46,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
 
       <Tabs defaultValue="assets">
         <TabsList className="grid w-full grid-cols-2 h-9">
-          <TabsTrigger value="assets">{t('active.owner')}</TabsTrigger>
+          <TabsTrigger value="assets">{t('machines')}</TabsTrigger>
           <TabsTrigger value="voyages">{t('travel')}</TabsTrigger>
         </TabsList>
 
@@ -85,7 +85,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                     return { label: t('slow', 'Devagar'), icon: Navigation, color: 'bg-green-400', text: 'text-green-400' };
                   }
                   if (['restricted manoeuvrability'].includes(s)) {
-                    return { label: t('restricted.manoeuvrabilitys'), icon: AlertTriangle, color: 'bg-orange-600', text: 'text-orange-600' };
+                    return { label: t('maneuver'), icon: AlertTriangle, color: 'bg-orange-600', text: 'text-orange-600' };
                   }
                   if (['underway by sail'].includes(s)) {
                     return { label: t('underway.sail'), icon: Wind, color: 'bg-cyan-500', text: 'text-cyan-500' };
@@ -178,7 +178,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
               {voyages.map((item) => {
                 const getVoyageStatusConfig = () => {
                   if (item.dateTimeEnd || item.metadata?.dateTimeArrival) {
-                    return { label: t('finished.travel'), icon: CheckCircle2, color: 'bg-green-500' };
+                    return { label: t('finished'), icon: CheckCircle2, color: 'bg-green-500' };
                   }
                   if (item.metadata?.eta) {
                     const late = isAfter(new Date(), new Date(item.metadata.eta));

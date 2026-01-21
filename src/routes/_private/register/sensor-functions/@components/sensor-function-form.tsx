@@ -25,7 +25,7 @@ export function SensorFunctionForm({ idEnterprise }: { idEnterprise: string }) {
             <FormItem>
               <FormLabel>{t('description')}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder={t('description.placeholder')} />
+                <Input {...field} placeholder={t('description')} />
               </FormControl>
               <FormMessage />
             </FormItem>

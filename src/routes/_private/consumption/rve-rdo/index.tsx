@@ -179,7 +179,7 @@ function RVERDODashboardPage() {
           <ItemContent className="flex-none">
             <Label className="mb-2 flex items-center gap-2">
               <span className="size-1" /> {/* Spacer to align with icons */}
-              {t('consumption')}
+              {t('consume')}
             </Label>
             <div className="flex h-10 items-center gap-2 pb-2">
               <Checkbox id="inoperabilities" checked={showInoperabilities} onCheckedChange={(val) => setShowInoperabilities(!!val)} />

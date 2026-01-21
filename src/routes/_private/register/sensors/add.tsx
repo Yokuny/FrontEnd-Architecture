@@ -81,7 +81,7 @@ function SensorAddFormContent({ initialData }: { initialData?: any }) {
     if (!initialData?.id) return;
     try {
       await deleteSensor.mutateAsync(initialData.id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/sensors' } as { to: string });
     } catch {
       toast.error(t('error.delete'));

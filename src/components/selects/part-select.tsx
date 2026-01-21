@@ -23,7 +23,7 @@ export function PartSelect({
   const id = useId();
   const query = usePartsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -45,7 +45,7 @@ export function PartSelect({
           className={className}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     );
@@ -71,7 +71,7 @@ export function PartSelect({
         className={className}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

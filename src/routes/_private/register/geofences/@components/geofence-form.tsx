@@ -173,7 +173,7 @@ export function GeofenceForm() {
               <FormItem>
                 <FormLabel>{t('city')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value ?? ''} placeholder={t('city.label')} />
+                  <Input {...field} value={field.value ?? ''} placeholder={t('city')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -199,9 +199,9 @@ export function GeofenceForm() {
             name="country"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('country.label')}</FormLabel>
+                <FormLabel>{t('country')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value ?? ''} placeholder={t('country.label')} />
+                  <Input {...field} value={field.value ?? ''} placeholder={t('country')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -273,9 +273,9 @@ export function GeofenceForm() {
           name="link"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('link.label')}</FormLabel>
+              <FormLabel>{t('link')}</FormLabel>
               <FormControl>
-                <Input {...field} value={field.value ?? ''} placeholder={t('link.label')} />
+                <Input {...field} value={field.value ?? ''} placeholder={t('link')} />
               </FormControl>
               <FormMessage />
             </FormItem>

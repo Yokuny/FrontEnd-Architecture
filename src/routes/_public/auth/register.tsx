@@ -42,10 +42,10 @@ function RegisterPage() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-medium">{t('account.name')}</FormLabel>
+                  <FormLabel className="font-medium">{t('name')}</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input {...field} className="h-14" type="text" placeholder={t('account.name.placeholder')} autoFocus />
+                      <Input {...field} className="h-14" type="text" placeholder={t('name.placeholder')} autoFocus />
                       <div className="absolute right-3 top-1/2 -translate-y-1/2">
                         <User className="size-5 text-muted-foreground" />
                       </div>
@@ -62,7 +62,7 @@ function RegisterPage() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-medium">{t('login.email')}</FormLabel>
+                  <FormLabel className="font-medium">{t('email')}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input {...field} className="h-14" type="email" placeholder={t('login.email.placeholder')} />
@@ -112,7 +112,7 @@ function RegisterPage() {
                     <FormLabel className="font-medium">{t('account.confirm.password')}</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Input {...field} className="pr-12 h-14" type={showConfirmPassword ? 'text' : 'password'} placeholder={t('account.confirm.password.placeholder')} />
+                        <Input {...field} className="pr-12 h-14" type={showConfirmPassword ? 'text' : 'password'} placeholder={t('account.confirm.password')} />
                         <Button
                           type="button"
                           variant="ghost"

@@ -12,7 +12,7 @@ export function QlpSelect(props: QlpSelectProps) {
   const id = useId();
   const query = useQlpsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (mode === 'multi') {
     const displayLabel = label || t('qlp.placeholder');
@@ -34,7 +34,7 @@ export function QlpSelect(props: QlpSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -61,7 +61,7 @@ export function QlpSelect(props: QlpSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

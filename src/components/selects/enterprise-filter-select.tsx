@@ -53,7 +53,7 @@ export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
         placeholder={t('enterprise')}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

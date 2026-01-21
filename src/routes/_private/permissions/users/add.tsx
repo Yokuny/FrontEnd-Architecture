@@ -64,8 +64,8 @@ function AddUserPage() {
 
               <div className="col-span-full sm:col-span-4">
                 <Field className="gap-2">
-                  <FieldLabel htmlFor="name">{t('account.name')} *</FieldLabel>
-                  <Input id="name" {...form.register('name')} placeholder={t('account.name.placeholder')} maxLength={150} />
+                  <FieldLabel htmlFor="name">{t('name')} *</FieldLabel>
+                  <Input id="name" {...form.register('name')} placeholder={t('name.placeholder')} maxLength={150} />
                   {form.formState.errors.name && <p className="text-sm text-destructive">{t(form.formState.errors.name.message as string)}</p>}
                 </Field>
               </div>
@@ -82,7 +82,7 @@ function AddUserPage() {
               <div className="col-span-full sm:col-span-4">
                 <Field className="gap-2">
                   <FieldLabel htmlFor="email">
-                    {t('login.email')} {isUser && '*'}
+                    {t('email')} {isUser && '*'}
                   </FieldLabel>
                   <Input id="email" type="email" {...form.register('email')} placeholder={t('login.email.placeholder')} />
                   {form.formState.errors.email && <p className="text-sm text-destructive">{t(form.formState.errors.email.message as string)}</p>}

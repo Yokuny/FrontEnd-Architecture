@@ -37,13 +37,13 @@ function ConsumoHubPage() {
       to: '/consumption/comparative' as const,
     },
     {
-      title: t('consumption.rve.rdo'),
+      title: t('dashboard.rve.rdo'),
       description: t('consumption.rve.rdo.description'),
       icon: FileText,
       to: '/consumption/rve-rdo' as const,
     },
     {
-      title: t('consumption.rve.sounding'),
+      title: t('dashboard.rve.sounding'),
       description: t('consumption.rve.sounding.description'),
       icon: TrendingUp,
       to: '/consumption/rve-sounding' as const,
@@ -52,7 +52,7 @@ function ConsumoHubPage() {
 
   return (
     <Card>
-      <CardHeader title={t('consumption')} />
+      <CardHeader title={t('consume')} />
       <CardContent className="grid gap-4 md:grid-cols-2">
         {menuItems.map((item) => (
           <Item key={item.to} variant="outline" className="cursor-pointer h-full" asChild>

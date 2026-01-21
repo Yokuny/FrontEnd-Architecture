@@ -32,7 +32,7 @@ export function EnterpriseWithSetupSelect(props: EnterpriseWithSetupSelectProps)
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -60,7 +60,7 @@ export function EnterpriseWithSetupSelect(props: EnterpriseWithSetupSelectProps)
         clearable={false}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

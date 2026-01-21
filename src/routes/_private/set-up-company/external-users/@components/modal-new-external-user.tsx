@@ -33,7 +33,7 @@ export function ModalNewExternalUser({ idEnterprise, open, onOpenChange }: Modal
         </DialogHeader>
         <div className="py-4">
           <Field className="gap-2">
-            <FieldLabel>{t('username')}</FieldLabel>
+            <FieldLabel>{t('user')}</FieldLabel>
             <Input value={username} onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z0-9]/g, ''))} placeholder={t('username.name')} />
           </Field>
         </div>

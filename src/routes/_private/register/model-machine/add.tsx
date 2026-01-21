@@ -117,7 +117,7 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
           await deleteFile.mutateAsync({ idModelMachine: id, filename });
         }
 
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
         navigate({ to: '/register/model-machine', search: { page: 1, size: 10 } });
       }
     } catch {
@@ -129,7 +129,7 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
     if (!initialData?.id) return;
     try {
       await deleteModelMachine.mutateAsync(initialData.id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/model-machine', search: { page: 1, size: 10 } });
     } catch {
       toast.error(t('error.delete'));
@@ -213,7 +213,7 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
                 ) : (
                   <>
                     <Upload className="size-10 text-muted-foreground mb-2" />
-                    <p className="text-xs text-muted-foreground">{t('drag.icon')}</p>
+                    <p className="text-xs text-muted-foreground">{t('add.icon')}</p>
                   </>
                 )}
               </div>

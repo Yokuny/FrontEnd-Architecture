@@ -57,7 +57,7 @@ export function useApiExternalForm({ idEnterprise }: UseApiExternalFormOptions) 
         id: data.id,
         windyKey: data.windyKey,
       });
-      toast.success(t('success.save'));
+      toast.success(t('save.success'));
       navigate({ to: '..' });
     } catch (_error) {
       toast.error(t('error.save'));

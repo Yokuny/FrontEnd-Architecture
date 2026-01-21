@@ -30,7 +30,7 @@ export function SetupChatbotForm({ isEnterpriseDisabled }: { isEnterpriseDisable
               mode="single"
               value={watch('idEnterprise')}
               onChange={(val) => setValue('idEnterprise', val || '')}
-              placeholder={t('enterprise.placeholder')}
+              placeholder={t('select.company')}
               disabled={isLoading || isPending || isEnterpriseDisabled}
             />
           </FormControl>
@@ -39,7 +39,7 @@ export function SetupChatbotForm({ isEnterpriseDisabled }: { isEnterpriseDisable
       ],
     },
     {
-      title: t('setup.chatbot.config'),
+      title: t('configuration'),
       description: t('setup.chatbot.config.description'),
       fields: [
         <FormField

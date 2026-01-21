@@ -75,7 +75,7 @@ function AlertAddFormContent({ initialData }: { initialData?: any }) {
   const handleSave = async () => {
     try {
       await onSubmit();
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/alerts', search: { page: 1, size: 10 } } as any);
     } catch (_error) {
       // Error handled by hook or API
@@ -86,7 +86,7 @@ function AlertAddFormContent({ initialData }: { initialData?: any }) {
     if (!id) return;
     try {
       await remove.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/alerts', search: { page: 1, size: 10 } } as any);
     } catch {
       toast.error(t('error.delete'));
@@ -113,7 +113,7 @@ function AlertAddFormContent({ initialData }: { initialData?: any }) {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>{t('confirm.delete.title')}</AlertDialogTitle>
+                    <AlertDialogTitle>{t('confirm.delete')}</AlertDialogTitle>
                     <AlertDialogDescription>{t('delete.message.default')}</AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

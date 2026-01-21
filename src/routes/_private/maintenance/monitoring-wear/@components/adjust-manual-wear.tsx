@@ -35,7 +35,7 @@ export function AdjustManualWear({ idMachine, idPart, idTypeService, idWearConfi
       return;
     }
     if (!reason.trim()) {
-      toast.warning(t('reason.required'));
+      toast.warning(t('reason'));
       return;
     }
 
@@ -50,7 +50,7 @@ export function AdjustManualWear({ idMachine, idPart, idTypeService, idWearConfi
         wear: newWear,
         isRestartCounter,
       });
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       setIsOpen(false);
       setNewWear('');
       setReason('');

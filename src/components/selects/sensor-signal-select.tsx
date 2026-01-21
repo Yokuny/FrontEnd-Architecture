@@ -22,7 +22,7 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
   const filterId = idMachine || idEnterprise;
   const query = useSensorSignalsSelect(filterId, sensorId);
 
-  const noOptionsMessage = !filterId ? t('identifier.not.provided') : !sensorId ? t('select.sensor.first') : t('noresults.message');
+  const noOptionsMessage = !filterId ? t('identifier.not.provided') : !sensorId ? t('select.sensor.first') : t('not.found');
 
   if (mode === 'multi') {
     const displayLabel = label || t('signals');
@@ -44,7 +44,7 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -71,7 +71,7 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

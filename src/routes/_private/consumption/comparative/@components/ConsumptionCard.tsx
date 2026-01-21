@@ -37,7 +37,7 @@ export function ConsumptionCard({ data, filters }: ConsumptionCardProps) {
           <ItemContent className="gap-0">
             <ItemTitle className="text-lg leading-none">{machine.name}</ItemTitle>
             <Badge variant={filters.viewType === 'consumption' ? 'default' : 'secondary'} className="mt-1">
-              {filters.viewType === 'consumption' ? t('consumption') : t('stock')}
+              {filters.viewType === 'consumption' ? t('consume') : t('stock')}
             </Badge>
           </ItemContent>
         </div>

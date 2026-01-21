@@ -25,10 +25,10 @@ export function usePtaxForm(initialData?: PtaxFormData, onSuccess?: () => void) 
       const payload = { ...data, idEnterprise: data.idEnterprise || idEnterprise };
       if (data.id) {
         await updatePtax.mutateAsync(payload);
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
       } else {
         await createPtax.mutateAsync(payload);
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
       }
       onSuccess?.();
     } catch {

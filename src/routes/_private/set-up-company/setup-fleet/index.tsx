@@ -38,7 +38,7 @@ function SetupFleetFormContent({ idEnterprise }: { idEnterprise?: string }) {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader title={`${t('setup')} Fleet`} />
+        <CardHeader title={`${t('config')} Fleet`} />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -48,7 +48,7 @@ function SetupFleetFormContent({ idEnterprise }: { idEnterprise?: string }) {
 
   return (
     <Card>
-      <CardHeader title={`${t('setup')} Fleet`} />
+      <CardHeader title={`${t('config')} Fleet`} />
       <Form {...form}>
         <form onSubmit={onSubmit}>
           <CardContent>

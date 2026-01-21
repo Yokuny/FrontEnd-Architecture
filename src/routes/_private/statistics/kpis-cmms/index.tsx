@@ -152,7 +152,7 @@ function KPISCMMSPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="All">{t('all')}</SelectItem>
-                <SelectItem value="true">{t('critical.equipment.true')}</SelectItem>
+                <SelectItem value="true">{t('critical')}</SelectItem>
                 <SelectItem value="false">{t('critical.equipment.false')}</SelectItem>
               </SelectContent>
             </Select>

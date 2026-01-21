@@ -34,7 +34,7 @@ export function ApiExternalForm({ showEnterpriseSelect }: { showEnterpriseSelect
                     mode="single"
                     value={watch('idEnterprise')}
                     onChange={(val) => setValue('idEnterprise', val || '')}
-                    placeholder={t('enterprise.placeholder')}
+                    placeholder={t('select.company')}
                     disabled={isLoading || isPending}
                   />
                 </FormControl>

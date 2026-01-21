@@ -52,7 +52,7 @@ function BuoyListPage() {
   const handleDelete = async (id: string) => {
     try {
       await deleteBuoy.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
     } catch {
       toast.error(t('error.delete'));
     }
@@ -60,7 +60,7 @@ function BuoyListPage() {
 
   return (
     <Card>
-      <CardHeader title={t('buoys')}>
+      <CardHeader title={t('monobuoys')}>
         <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
           <div className="relative w-full sm:max-w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />

@@ -66,7 +66,7 @@ function MaintenancePlansListPage() {
     if (!idToDelete) return;
     try {
       await deleteMaintenancePlan.mutateAsync(idToDelete);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       setIdToDelete(null);
     } catch {
       toast.error(t('error.delete'));

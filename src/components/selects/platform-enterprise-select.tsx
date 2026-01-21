@@ -12,7 +12,7 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
   const id = useId();
   const query = usePlatformsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (mode === 'multi') {
     const displayLabel = label || t('platforms.select.placeholder');
@@ -34,7 +34,7 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -61,7 +61,7 @@ export function PlatformEnterpriseSelect(props: PlatformEnterpriseSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>
