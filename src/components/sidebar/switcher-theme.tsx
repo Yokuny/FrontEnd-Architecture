@@ -5,7 +5,6 @@ import { motion, useAnimation } from 'framer-motion';
 import { Cog } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { forwardRef, type HTMLAttributes, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
@@ -26,7 +25,7 @@ export function ThemeSwitcher() {
   if (!mounted) {
     return (
       <Button size="icon" variant="ghost">
-        <SunIcon size={22} />
+        <SunIcon className="w-full h-full flex justify-center items-center" />
       </Button>
     );
   }
@@ -34,40 +33,38 @@ export function ThemeSwitcher() {
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="ghost" className="relative group">
-          <div className="animate-pop flex items-center justify-center">
-            {theme === 'sunset' ? (
-              <SunDimIcon size={22} />
-            ) : theme === 'ocean-blue' ? (
-              <CloudSunIcon size={22} />
-            ) : resolvedTheme === 'dark' ? (
-              <MoonIcon size={22} />
-            ) : (
-              <SunIcon size={22} />
-            )}
-          </div>
+        <Button size="icon" variant="ghost">
+          {theme === 'sunset' ? (
+            <SunDimIcon className="w-full h-full flex justify-center items-center" />
+          ) : theme === 'ocean-blue' ? (
+            <CloudSunIcon className="w-full h-full flex justify-center items-center" />
+          ) : resolvedTheme === 'dark' ? (
+            <MoonIcon className="w-full h-full flex justify-center items-center" />
+          ) : (
+            <SunIcon className="w-full h-full flex justify-center items-center" />
+          )}
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme('system')} className={theme === 'system' ? 'bg-accent font-medium' : ''}>
-          <Cog size={16} className="mr-2" />
+          <Cog className="mr-2" />
           System {theme === 'system' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('light')} className={theme === 'light' ? 'bg-accent font-medium' : ''}>
-          <SunIcon size={16} className="mr-2" />
+          <SunIcon className="mr-2" />
           Light {theme === 'light' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('sunset')} className={theme === 'sunset' ? 'bg-accent font-medium' : ''}>
-          <SunDimIcon size={16} className="mr-2" />
+          <SunDimIcon className="mr-2" />
           Sunset {theme === 'sunset' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('dark')} className={theme === 'dark' ? 'bg-accent font-medium' : ''}>
-          <MoonIcon size={16} className="mr-2" />
+          <MoonIcon className="mr-2" />
           Dark {theme === 'dark' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('ocean-blue')} className={theme === 'ocean-blue' ? 'bg-accent font-medium' : ''}>
-          <CloudSunIcon size={16} className="mr-2" />
+          <CloudSunIcon className="mr-2" />
           Ocean Blue {theme === 'ocean-blue' && '✓'}
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -77,15 +74,6 @@ export function ThemeSwitcher() {
 
 // --- Icons ---
 
-export interface SunIconHandle {
-  startAnimation: () => void;
-  stopAnimation: () => void;
-}
-
-interface SunIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number;
-}
-
 const SUN_PATH_VARIANTS: Variants = {
   normal: { opacity: 1 },
   animate: (i: number) => ({
@@ -94,7 +82,7 @@ const SUN_PATH_VARIANTS: Variants = {
   }),
 };
 
-const SunIcon = forwardRef<SunIconHandle, SunIconProps>(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+const SunIcon = forwardRef<SunIconHandle, HTMLAttributes<HTMLDivElement>>(({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
   const controls = useAnimation();
   const isControlledRef = useRef(false);
 
@@ -132,13 +120,13 @@ const SunIcon = forwardRef<SunIconHandle, SunIconProps>(({ onMouseEnter, onMouse
     <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
-        height={size}
+        height="28"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
         viewBox="0 0 24 24"
-        width={size}
+        width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
         <title>Sun</title>
@@ -153,15 +141,6 @@ const SunIcon = forwardRef<SunIconHandle, SunIconProps>(({ onMouseEnter, onMouse
 
 SunIcon.displayName = 'SunIcon';
 
-export interface SunDimIconHandle {
-  startAnimation: () => void;
-  stopAnimation: () => void;
-}
-
-interface SunDimIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number;
-}
-
 const SUN_DIM_PATH_VARIANTS: Variants = {
   normal: { opacity: 1 },
   animate: (i: number) => ({
@@ -170,7 +149,7 @@ const SUN_DIM_PATH_VARIANTS: Variants = {
   }),
 };
 
-const SunDimIcon = forwardRef<SunDimIconHandle, SunDimIconProps>(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+const SunDimIcon = forwardRef<SunDimIconHandle, HTMLAttributes<HTMLDivElement>>(({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
   const controls = useAnimation();
   const isControlledRef = useRef(false);
 
@@ -209,13 +188,13 @@ const SunDimIcon = forwardRef<SunDimIconHandle, SunDimIconProps>(({ onMouseEnter
     <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
-        height={size}
+        height="28"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
         viewBox="0 0 24 24"
-        width={size}
+        width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
         <title>Sun Dim</title>
@@ -229,15 +208,6 @@ const SunDimIcon = forwardRef<SunDimIconHandle, SunDimIconProps>(({ onMouseEnter
 });
 
 SunDimIcon.displayName = 'SunDimIcon';
-
-export interface MoonIconHandle {
-  startAnimation: () => void;
-  stopAnimation: () => void;
-}
-
-interface MoonIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number;
-}
 
 const MOON_SVG_VARIANTS: Variants = {
   normal: {
@@ -253,7 +223,7 @@ const MOON_SVG_TRANSITION: Transition = {
   ease: 'easeInOut',
 };
 
-const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+const MoonIcon = forwardRef<MoonIconHandle, HTMLAttributes<HTMLDivElement>>(({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
   const controls = useAnimation();
   const isControlledRef = useRef(false);
 
@@ -292,7 +262,7 @@ const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(({ onMouseEnter, onMo
       <motion.svg
         animate={controls}
         fill="none"
-        height={size}
+        height="28"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -300,7 +270,7 @@ const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(({ onMouseEnter, onMo
         transition={MOON_SVG_TRANSITION}
         variants={MOON_SVG_VARIANTS}
         viewBox="0 0 24 24"
-        width={size}
+        width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
         <title>Moon</title>
@@ -311,15 +281,6 @@ const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(({ onMouseEnter, onMo
 });
 
 MoonIcon.displayName = 'MoonIcon';
-
-export interface CloudSunIconHandle {
-  startAnimation: () => void;
-  stopAnimation: () => void;
-}
-
-interface CloudSunIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number;
-}
 
 const CLOUD_VARIANTS: Variants = {
   normal: {
@@ -344,7 +305,7 @@ const SUN_VARIANTS: Variants = {
   }),
 };
 
-const CloudSunIcon = forwardRef<CloudSunIconHandle, CloudSunIconProps>(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+const CloudSunIcon = forwardRef<CloudSunIconHandle, HTMLAttributes<HTMLDivElement>>(({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
   const cloudControls = useAnimation();
   const sunControls = useAnimation();
   const isControlledRef = useRef(false);
@@ -392,14 +353,14 @@ const CloudSunIcon = forwardRef<CloudSunIconHandle, CloudSunIconProps>(({ onMous
     <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
-        height={size}
+        height="28"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
         style={{ overflow: 'visible' }}
         viewBox="0 0 24 24"
-        width={size}
+        width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
         <title>Cloud Sun</title>
@@ -415,3 +376,23 @@ const CloudSunIcon = forwardRef<CloudSunIconHandle, CloudSunIconProps>(({ onMous
 });
 
 CloudSunIcon.displayName = 'CloudSunIcon';
+
+export interface SunIconHandle {
+  startAnimation: () => void;
+  stopAnimation: () => void;
+}
+
+export interface SunDimIconHandle {
+  startAnimation: () => void;
+  stopAnimation: () => void;
+}
+
+export interface MoonIconHandle {
+  startAnimation: () => void;
+  stopAnimation: () => void;
+}
+
+export interface CloudSunIconHandle {
+  startAnimation: () => void;
+  stopAnimation: () => void;
+}

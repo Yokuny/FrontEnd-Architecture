@@ -4,7 +4,6 @@ import type { Variants } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
 import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -12,14 +11,6 @@ import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
 import { cn } from '@/lib/utils';
 
 // --- Switcher ---
-
-export type Notification = {
-  id: string;
-  avatar: string;
-  fallback: string;
-  text: string;
-  time: string;
-};
 
 export function NotificationsSwitcher({ notifications }: { notifications: Notification[] }) {
   const { setMenuOpen } = useSidebarToggle();
@@ -30,12 +21,16 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="ghost" className="relative" aria-label="Open notifications">
-          {hasNotifications ? <BellElectricIcon size={20} /> : <MailCheckIcon size={20} />}
+        <Button size="icon" variant="ghost" aria-label="Open notifications" className="relative">
+          {hasNotifications ? (
+            <MessageSquareIcon className="w-full h-full flex justify-center items-center" />
+          ) : (
+            <MailCheckIcon className="w-full h-full flex justify-center items-center" />
+          )}
           {hasNotifications && (
             <span className="absolute top-2.5 right-2.5 flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500" />
             </span>
           )}
           <span className="sr-only">Open notifications</span>
@@ -71,15 +66,6 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
 
 // --- Icons ---
 
-export interface MailCheckIconHandle {
-  startAnimation: () => void;
-  stopAnimation: () => void;
-}
-
-interface MailCheckIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number;
-}
-
 const CHECK_VARIANTS: Variants = {
   normal: {
     pathLength: 1,
@@ -98,7 +84,7 @@ const CHECK_VARIANTS: Variants = {
   },
 };
 
-const MailCheckIcon = forwardRef<MailCheckIconHandle, MailCheckIconProps>(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+const MailCheckIcon = forwardRef<MailCheckIconHandle, HTMLAttributes<HTMLDivElement>>(({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
   const controls = useAnimation();
   const isControlledRef = useRef(false);
 
@@ -137,13 +123,13 @@ const MailCheckIcon = forwardRef<MailCheckIconHandle, MailCheckIconProps>(({ onM
     <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
-        height={size}
+        height="28"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
         viewBox="0 0 24 24"
-        width={size}
+        width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
         <title>No Notifications</title>
@@ -157,21 +143,35 @@ const MailCheckIcon = forwardRef<MailCheckIconHandle, MailCheckIconProps>(({ onM
 
 MailCheckIcon.displayName = 'MailCheckIcon';
 
-export interface BellElectricIconHandle {
-  startAnimation: () => void;
-  stopAnimation: () => void;
-}
+const ICON_VARIANTS: Variants = {
+  normal: {
+    scale: 1,
+    rotate: 0,
+  },
+  animate: {
+    scale: 1.05,
+    rotate: [0, -7, 7, 0],
+    transition: {
+      rotate: {
+        duration: 0.5,
+        ease: 'easeInOut',
+      },
+      scale: {
+        type: 'spring',
+        stiffness: 400,
+        damping: 10,
+      },
+    },
+  },
+};
 
-interface BellElectricIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number;
-}
-
-const BellElectricIcon = forwardRef<BellElectricIconHandle, BellElectricIconProps>(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+const MessageSquareIcon = forwardRef<MessageSquareIconHandle, HTMLAttributes<HTMLDivElement>>(({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
   const controls = useAnimation();
   const isControlledRef = useRef(false);
 
   useImperativeHandle(ref, () => {
     isControlledRef.current = true;
+
     return {
       startAnimation: () => controls.start('animate'),
       stopAnimation: () => controls.start('normal'),
@@ -205,62 +205,39 @@ const BellElectricIcon = forwardRef<BellElectricIconHandle, BellElectricIconProp
       <motion.svg
         animate={controls}
         fill="none"
-        height={size}
+        height="28"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
-        style={{ transformBox: 'fill-box', transformOrigin: '50% 50%' }}
-        transition={{ duration: 0.9 }}
-        variants={{
-          normal: { rotate: 0, translateX: 0, translateY: 0 },
-          animate: {
-            rotate: [0, -12, 12, -8, 8, 0],
-            translateX: [0, -1.5, 1.5, -1, 1, 0],
-            translateY: [0, -1, 1, -0.5, 0.5, 0],
-          },
-        }}
+        variants={ICON_VARIANTS}
         viewBox="0 0 24 24"
-        width={size}
+        width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <title>Notifications</title>
-        <path d="M18.518 17.347A7 7 0 0 1 14 19" />
-        <motion.path
-          animate={controls}
-          d="M18.8 4A11 11 0 0 1 20 9"
-          style={{ transformBox: 'fill-box', originX: '50%', originY: '50%' }}
-          transition={{ duration: 0.9 }}
-          variants={{
-            normal: { translateX: 0, translateY: 0, rotate: 0 },
-            animate: {
-              translateX: [0, -0.8, 0.8, -0.6, 0.6, 0],
-              translateY: [0, -0.5, 0.5, -0.3, 0.3, 0],
-              rotate: [0, -6, 6, -4, 4, 0],
-            },
-          }}
-        />
-        <motion.path
-          animate={controls}
-          d="M9 9h.01"
-          style={{ transformBox: 'fill-box', originX: '50%', originY: '50%' }}
-          transition={{ duration: 0.75 }}
-          variants={{
-            normal: { translateX: 0, translateY: 0, rotate: 0, scale: 1 },
-            animate: {
-              translateX: [0, -1.6, 1.6, -1.2, 1.2, 0],
-              translateY: [0, -1.2, 1.2, -0.8, 0.8, 0],
-              rotate: [0, -10, 10, -7, 7, 0],
-              scale: [1, 1.08, 0.95, 1.06, 0.98, 1],
-            },
-          }}
-        />
-        <circle cx="9" cy="9" r="7" />
-        <rect height="6" rx="2" width="10" x="4" y="16" />
-        <circle cx="20" cy="16" r="2" />
+        <title>MessageSquareIcon</title>
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
       </motion.svg>
     </div>
   );
 });
 
-BellElectricIcon.displayName = 'BellElectricIcon';
+MessageSquareIcon.displayName = 'MessageSquareIcon';
+
+export interface MailCheckIconHandle {
+  startAnimation: () => void;
+  stopAnimation: () => void;
+}
+
+export interface MessageSquareIconHandle {
+  startAnimation: () => void;
+  stopAnimation: () => void;
+}
+
+export type Notification = {
+  id: string;
+  avatar: string;
+  fallback: string;
+  text: string;
+  time: string;
+};

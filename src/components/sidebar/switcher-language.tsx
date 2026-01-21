@@ -19,8 +19,8 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="ghost" className="relative group">
-          <LanguagesIcon size={20} />
+        <Button size="icon" variant="ghost" aria-label="Switch language">
+          <LanguagesIcon className="w-full h-full flex justify-center items-center" />
           <span className="sr-only">{t('login.language')}</span>
         </Button>
       </DropdownMenuTrigger>
@@ -65,7 +65,7 @@ const SVG_VARIANTS: Variants = {
   },
 };
 
-const LanguagesIcon = forwardRef<LanguagesIconHandle, LanguagesIconProps>(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+const LanguagesIcon = forwardRef<LanguagesIconHandle, HTMLAttributes<HTMLDivElement>>(({ onMouseEnter, onMouseLeave, className, ...props }, ref) => {
   const svgControls = useAnimation();
   const pathControls = useAnimation();
 
@@ -115,14 +115,14 @@ const LanguagesIcon = forwardRef<LanguagesIconHandle, LanguagesIconProps>(({ onM
       <motion.svg
         animate={svgControls}
         fill="none"
-        height={size}
+        height="28"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
         variants={SVG_VARIANTS}
         viewBox="0 0 24 24"
-        width={size}
+        width="28"
         xmlns="http://www.w3.org/2000/svg"
       >
         <title>Languages</title>
@@ -142,8 +142,4 @@ LanguagesIcon.displayName = 'LanguagesIcon';
 export interface LanguagesIconHandle {
   startAnimation: () => void;
   stopAnimation: () => void;
-}
-
-interface LanguagesIconProps extends HTMLAttributes<HTMLDivElement> {
-  size?: number;
 }
