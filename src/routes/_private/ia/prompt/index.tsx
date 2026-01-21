@@ -5,9 +5,9 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { ItemDescription } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { SparklesIcon } from '../../../../components/sidebar/sparkles-icon';
 import { ChatContent, ChatMessage } from './@components/chat';
 import { PromptInputBasic } from './@components/prompt-input-basic';
-import { SparklesIcon } from './@components/sparkles-icon';
 import { useAIPrompt } from './@hooks/use-prompt-api';
 import { usePromptForm } from './@hooks/use-prompt-form';
 import type { ChatMessage as ChatMessageType } from './@interface/prompt.types';

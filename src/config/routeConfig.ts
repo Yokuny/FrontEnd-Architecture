@@ -8,6 +8,7 @@ import {
   CheckSquare,
   Clock,
   DollarSign,
+  DoorOpen,
   FileText,
   Flame,
   Fuel,
@@ -22,8 +23,8 @@ import {
   Network,
   NotebookPen,
   Settings,
-  Shield,
   Ship,
+  Sparkles,
   Target,
   Timer,
   Users,
@@ -43,12 +44,13 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   statistics: BarChart3,
   consumption: Fuel,
   operation: Zap,
+  ia: Sparkles,
 };
 
 // Ícones para sub-rotas específicas
 export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   users: Users,
-  roles: Shield,
+  roles: DoorOpen,
   'setup-email': Mail,
   'setup-api-external': Network,
   'integration-list': Building2,
@@ -84,6 +86,8 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   groups: Users,
   goals: Target,
   ptax: DollarSign,
+  'anomaly-detector': Activity,
+  prompt: Activity,
 };
 
 // Chaves i18n para tradução de rotas
@@ -131,6 +135,9 @@ export const ROUTE_LABELS: Record<string, string> = {
   groups: 'groups',
   goals: 'goals',
   ptax: 'ptax',
+  ia: 'IA',
+  'anomaly-detector': 'menu.nexai.anomaly.detector',
+  prompt: 'ai.prompt',
 };
 
 /**
