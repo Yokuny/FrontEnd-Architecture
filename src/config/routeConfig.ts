@@ -111,7 +111,7 @@ export const ROUTE_LABELS: Record<string, string> = {
   'setup-fleet': 'setup.fleet',
   'setup-limits': 'setup.limits',
   'fleet-manager': 'fleet.manager',
-  esg: 'esg.upper',
+  esg: 'esg',
   'indicators-eeoi-cii': 'menu.eeoi.cii',
   'cii-fleet': 'esg.fleet',
   'simulator-cii': 'simulator.cii',
