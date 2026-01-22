@@ -23,6 +23,7 @@ import { Route as PrivateIaIndexRouteImport } from './routes/_private/ia/index';
 import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/fleet-manager/index';
 import { Route as PrivateEsgIndexRouteImport } from './routes/_private/esg/index';
 import { Route as PrivateConsumptionIndexRouteImport } from './routes/_private/consumption/index';
+import { Route as PrivateCalendarMaintenanceIndexRouteImport } from './routes/_private/calendar-maintenance/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
@@ -176,6 +177,12 @@ const PrivateConsumptionIndexRoute = PrivateConsumptionIndexRouteImport.update({
   path: '/consumption/',
   getParentRoute: () => PrivateRoute,
 } as any);
+const PrivateCalendarMaintenanceIndexRoute =
+  PrivateCalendarMaintenanceIndexRouteImport.update({
+    id: '/calendar-maintenance/',
+    path: '/calendar-maintenance/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PublicAuthUnlockRoute = PublicAuthUnlockRouteImport.update({
   id: '/auth/unlock',
   path: '/auth/unlock',
@@ -666,6 +673,7 @@ export interface FileRoutesByFullPath {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/calendar-maintenance': typeof PrivateCalendarMaintenanceIndexRoute;
   '/consumption': typeof PrivateConsumptionIndexRoute;
   '/esg': typeof PrivateEsgIndexRoute;
   '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
@@ -762,6 +770,7 @@ export interface FileRoutesByTo {
   '/auth/register': typeof PublicAuthRegisterRoute;
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/calendar-maintenance': typeof PrivateCalendarMaintenanceIndexRoute;
   '/consumption': typeof PrivateConsumptionIndexRoute;
   '/esg': typeof PrivateEsgIndexRoute;
   '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
@@ -861,6 +870,7 @@ export interface FileRoutesById {
   '/_public/auth/register': typeof PublicAuthRegisterRoute;
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
+  '/_private/calendar-maintenance/': typeof PrivateCalendarMaintenanceIndexRoute;
   '/_private/consumption/': typeof PrivateConsumptionIndexRoute;
   '/_private/esg/': typeof PrivateEsgIndexRoute;
   '/_private/fleet-manager/': typeof PrivateFleetManagerIndexRoute;
@@ -959,6 +969,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/calendar-maintenance'
     | '/consumption'
     | '/esg'
     | '/fleet-manager'
@@ -1055,6 +1066,7 @@ export interface FileRouteTypes {
     | '/auth/register'
     | '/auth/reset-password'
     | '/auth/unlock'
+    | '/calendar-maintenance'
     | '/consumption'
     | '/esg'
     | '/fleet-manager'
@@ -1153,6 +1165,7 @@ export interface FileRouteTypes {
     | '/_public/auth/register'
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
+    | '/_private/calendar-maintenance/'
     | '/_private/consumption/'
     | '/_private/esg/'
     | '/_private/fleet-manager/'
@@ -1349,6 +1362,13 @@ declare module '@tanstack/react-router' {
       path: '/consumption';
       fullPath: '/consumption';
       preLoaderRoute: typeof PrivateConsumptionIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/calendar-maintenance/': {
+      id: '/_private/calendar-maintenance/';
+      path: '/calendar-maintenance';
+      fullPath: '/calendar-maintenance';
+      preLoaderRoute: typeof PrivateCalendarMaintenanceIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_public/auth/unlock': {
@@ -1929,6 +1949,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
+  PrivateCalendarMaintenanceIndexRoute: typeof PrivateCalendarMaintenanceIndexRoute;
   PrivateConsumptionIndexRoute: typeof PrivateConsumptionIndexRoute;
   PrivateEsgIndexRoute: typeof PrivateEsgIndexRoute;
   PrivateFleetManagerIndexRoute: typeof PrivateFleetManagerIndexRoute;
@@ -2021,6 +2042,7 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateCalendarMaintenanceIndexRoute: PrivateCalendarMaintenanceIndexRoute,
   PrivateConsumptionIndexRoute: PrivateConsumptionIndexRoute,
   PrivateEsgIndexRoute: PrivateEsgIndexRoute,
   PrivateFleetManagerIndexRoute: PrivateFleetManagerIndexRoute,

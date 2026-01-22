@@ -24,6 +24,10 @@ As seguintes regras são **INVIOLÁVEIS** e devem ser verificadas em todas as su
     - Use `getChartColor(index)` para cores.
     - NÃO use `mx-auto` no container.
     - Use `aspect-square` ou `max-h-[XXXpx]`.
+- **Arquivos Modelo (NÃO IMPORTAR)**:
+    - Estes arquivos são apenas templates. Copie o código, não faça importação:
+    - `GraphArea`, `GraphBarStacked`, `GraphLines`, `GraphPizza`, `GraphProgress`, `GraphRadial`.
+    - `DefaultNumbersRender`, `DefaultTable`.
 - **Estados Visuais**:
     - **Loading**: Use `DefaultLoading` (`src/components/default-loading.tsx`).
     - **Vazio**: Use `default-empty-data.tsx` se `data.length === 0`.
@@ -38,7 +42,9 @@ As seguintes regras são **INVIOLÁVEIS** e devem ser verificadas em todas as su
 
 ### 4. Roteamento e Estrutura de Pastas
 - **Padrão**: Baseado em diretórios.
+- **Arquivos**: `index.tsx` (Lista), `add.tsx` (Criação), `$id.tsx` (Detalhe).
 - **Restrição**: PROIBIDO usar `.` no nome de pastas para aninhamento (ex: `users.edit` ❌ -> `users/edit` ✅).
+- **Search Params**: Use `validateSearch` com `zod` no `createFileRoute`.
 - **Index**: Toda pasta de rota DEVE ter um `index.tsx`.
 - **Estrutura Interna da Rota**:
     - `src/routes/_private/{feature}/`

@@ -1,4 +1,4 @@
-import { Clock, Droplet, Fuel, Info, Ship } from 'lucide-react';
+import { Clock, Fuel, Ship } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';

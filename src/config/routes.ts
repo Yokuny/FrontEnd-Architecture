@@ -4,7 +4,7 @@ import {
   BarChart3,
   Bell,
   Building2,
-  CalendarClock,
+  CalendarFold,
   CheckSquare,
   Clock,
   DollarSign,
@@ -45,6 +45,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   consumption: Fuel,
   operation: Zap,
   ia: Sparkles,
+  'calendar-maintenance': CalendarFold,
 };
 
 // Ícones para sub-rotas específicas
@@ -54,7 +55,7 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   'setup-email': Mail,
   'setup-api-external': Network,
   'integration-list': Building2,
-  'monitoring-plans': CalendarClock,
+  'monitoring-plans': CalendarFold,
   'monitoring-wear': Activity,
   'list-os-done': CheckSquare,
   sensors: Activity,
@@ -138,6 +139,7 @@ export const ROUTE_LABELS: Record<string, string> = {
   ia: 'IA',
   'anomaly-detector': 'menu.nexai.anomaly.detector',
   prompt: 'ai.prompt',
+  'calendar-maintenance': 'calendar.maintenance',
 };
 
 /**
@@ -148,6 +150,7 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Novas rotas adicionadas ao projeto aparecerão em routeTree.gen.ts.
  */
 export const MAIN_ROUTES = [
+  '/calendar-maintenance',
   '/consumption/comparative',
   '/consumption/daily',
   '/consumption/relatorio',

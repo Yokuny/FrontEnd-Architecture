@@ -4,7 +4,7 @@
  * Uso: npx tsx src/config/extractRoutes.ts
  *
  * Este script lê o arquivo routeTree.gen.ts e extrai as rotas privadas
- * para atualizar o MAIN_ROUTES em routeConfig.ts
+ * para atualizar o MAIN_ROUTES em route.ts
  *
  * Estratégia: Extrai apenas a rota base de cada grupo e o primeiro nível de sub-rotas.
  * Exemplo: /permissions, /permissions/users, /permissions/roles
@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const ROUTE_TREE_PATH = path.resolve(__dirname, '../routeTree.gen.ts');
-const ROUTE_CONFIG_PATH = path.resolve(__dirname, './routeConfig.ts');
+const ROUTE_CONFIG_PATH = path.resolve(__dirname, './routes.ts');
 
 // Rotas públicas a ignorar
 const PUBLIC_ROUTES = ['/', '/auth', '/auth/register', '/auth/reset-password', '/auth/unlock'];
@@ -97,7 +97,7 @@ function extractRoutes(): string[] {
   return filteredRoutes.sort();
 }
 
-function updateRouteConfig(routes: string[]): void {
+function updateRoutes(routes: string[]): void {
   let content = fs.readFileSync(ROUTE_CONFIG_PATH, 'utf-8');
 
   // Gerar o novo array de rotas
@@ -119,7 +119,7 @@ function updateRouteConfig(routes: string[]): void {
 const routes = extractRoutes();
 
 if (routes.length > 0) {
-  updateRouteConfig(routes);
+  updateRoutes(routes);
   // biome-ignore lint: CLI script output
   console.log('✓ MAIN_ROUTES atualizado com', routes.length, 'rotas:');
   for (const r of routes) {
