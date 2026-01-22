@@ -3,8 +3,8 @@ import { addMonths, addWeeks, endOfWeek, format, isSameMonth, startOfWeek, subMo
 import { ptBR } from 'date-fns/locale';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useUserEnterprisesPreferred } from '@/hooks/use-user-enterprises-api';
 import { api } from '@/lib/api/client';
 import type { CalendarFilterParams, CalendarView, PartialSchedule } from '../@interface/schedule';
 import { transformLegacyEvent } from '../@utils/calendar.utils';
@@ -18,7 +18,10 @@ export function useEventScheduleCalendar(params: CalendarFilterParams) {
       if (params.month) queryParams.append('month', params.month);
       if (params.year) queryParams.append('year', params.year);
       if (params.day) queryParams.append('day', params.day);
-      if (params.eventType) queryParams.append('eventType', params.eventType);
+      if (params.eventType) {
+        const type = typeof params.eventType === 'object' ? (params.eventType as any).value : params.eventType;
+        queryParams.append('eventType', type);
+      }
 
       if (params.idMachine?.length) {
         params.idMachine.forEach((id) => {
@@ -35,6 +38,7 @@ export function useEventScheduleCalendar(params: CalendarFilterParams) {
           queryParams.append('managers[]', id);
         });
       }
+      if (params.status) queryParams.append('status', params.status);
 
       const response = await api.get<any[]>('/event-schedule', {
         params: queryParams,
@@ -48,22 +52,37 @@ export function useEventScheduleCalendar(params: CalendarFilterParams) {
 
 export function useCalendarMaintenance() {
   const isMobile = useIsMobile();
-  const { data: preferredEnterprises } = useUserEnterprisesPreferred();
-
-  const idEnterprise = useMemo(() => {
-    return preferredEnterprises?.[0]?.enterprise?.id || '';
-  }, [preferredEnterprises]);
+  const { idEnterprise } = useEnterpriseFilter();
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>('week');
-  const [filters, setFilters] = useState<Partial<CalendarFilterParams>>({});
+  const [filters, setFilters] = useState<Partial<Omit<CalendarFilterParams, 'idEnterprise'>>>({});
 
-  const { data: events = [], isLoading } = useEventScheduleCalendar({
+  const { data: eventsRes = [], isLoading } = useEventScheduleCalendar({
     idEnterprise,
     month: format(currentDate, 'MM'),
     year: format(currentDate, 'yyyy'),
     ...filters,
   });
+
+  const events = useMemo(() => {
+    if (filters.status === 'next') {
+      return eventsRes.filter(
+        (m) =>
+          (!m.dateDoneInit && m.datePlanEnd && new Date(m.datePlanEnd) > new Date()) ||
+          (m.dateWindowEnd && new Date(m.dateWindowEnd) > new Date() && !m.datePlanEnd) ||
+          (m.date && new Date(m.date) > new Date()),
+      );
+    }
+    if (filters.status === 'late') {
+      return eventsRes.filter(
+        (m) =>
+          (!m.dateDoneEnd && ((m.datePlanEnd && new Date(m.datePlanEnd) < new Date()) || (m.dateWindowEnd && new Date(m.dateWindowEnd) < new Date() && !m.datePlanEnd))) ||
+          (m.date && new Date(m.date) < new Date()),
+      );
+    }
+    return eventsRes;
+  }, [eventsRes, filters.status]);
 
   const handlePrevious = () => {
     if (view === 'month') {
