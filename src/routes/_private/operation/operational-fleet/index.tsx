@@ -80,7 +80,7 @@ function OperationalDashboardPage() {
       </CardHeader>
       <CardContent className="flex flex-col">
         {isLoading && <DefaultLoading />}
-        {filteredDashboardData.length === 0 && <EmptyData />}
+        {!isLoading && filteredDashboardData.length === 0 && <EmptyData />}
         {filteredDashboardData.length > 0 && <AssetOperationalList data={filteredDashboardData} isLoading={isLoading} />}
       </CardContent>
     </Card>

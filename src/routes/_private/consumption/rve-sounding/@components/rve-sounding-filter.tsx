@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { CalendarIcon, Search, X } from 'lucide-react';
+import { BrushCleaning, CalendarIcon, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enterprise-select';
@@ -125,9 +125,8 @@ export function RVESoundingFilter({ idEnterprise, filters, onFilterChange, isLoa
 
       <div className="ml-auto flex shrink-0 gap-2">
         {hasFilter && (
-          <Button variant="ghost" className="gap-2" disabled={isLoading} onClick={handleClear}>
-            <X className="size-4" />
-            {t('clear.filter')}
+          <Button className="text-amber-700 hover:text-amber-800" disabled={isLoading} onClick={handleClear}>
+            <BrushCleaning className="size-4" />
           </Button>
         )}
         <Button variant="outline" className="gap-2 bg-background" disabled={isLoading} onClick={handleSearch}>

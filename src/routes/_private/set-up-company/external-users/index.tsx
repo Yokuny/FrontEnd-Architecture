@@ -56,17 +56,6 @@ function ExternalUsersContent({ idEnterprise }: { idEnterprise: string }) {
     setShowToken((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
 
-  if (isLoading) {
-    return (
-      <Card>
-        <CardHeader title={t('usernames.external')} />
-        <CardContent className="p-12">
-          <DefaultLoading />
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card>
       <CardHeader title={t('usernames.external')}>
@@ -76,7 +65,9 @@ function ExternalUsersContent({ idEnterprise }: { idEnterprise: string }) {
         </Button>
       </CardHeader>
       <CardContent>
-        {!users || users.length === 0 ? (
+        {isLoading ? (
+          <DefaultLoading />
+        ) : !users || users.length === 0 ? (
           <EmptyData />
         ) : (
           <Table>

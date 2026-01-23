@@ -1,11 +1,12 @@
 'use client';
 
 import { eachDayOfInterval, endOfMonth, endOfWeek, format, getDay, isSameDay, isSameMonth, isToday, startOfMonth, startOfWeek } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { type CSSProperties, type MouseEvent, useEffect, useMemo, useState } from 'react';
 import { Item, ItemContent, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useLocale } from '@/hooks/use-locale';
+import { getDateLocale } from '@/routes/_private/calendar-maintenance/@utils/locale';
 import { DefaultStartHour, EventGap, EventHeight } from '../@consts/calendar';
 import { useEventVisibility } from '../@hooks/use-event-visibility';
 import type { PartialSchedule } from '../@interface/schedule';
@@ -13,14 +14,23 @@ import { getAllEventsForDay, getEventsForDay, getSpanningEventsForDay, sortEvent
 import { EventItem } from './Event';
 
 const Header = () => {
+  const { locale: appLocale } = useLocale();
+  const dateLocale = getDateLocale(appLocale);
+
+  const weekDays = useMemo(() => {
+    const start = startOfWeek(new Date(), { weekStartsOn: 1 });
+    const end = endOfWeek(new Date(), { weekStartsOn: 1 });
+    return eachDayOfInterval({ start, end });
+  }, []);
+
   return (
-    <Item className="border-accent text-muted-foreground w-full rounded-none border-b p-0" size="sm">
+    <Item variant="outline" className="border-accent text-muted-foreground w-full rounded-none border-x-0 border-t-0 p-0 bg-secondary" size="sm">
       <ItemContent className="grid grid-cols-7 flex-row">
-        {['S', 'T', 'Q', 'Q', 'S', 'S', 'D'].map((day, index) => (
-          <ItemContent key={`${index}-${day}month-header-`} className="flex items-center justify-center py-3">
+        {weekDays.map((day, index) => (
+          <ItemContent key={`${index}-${day.toString()}month-header-`} className="flex items-center justify-center py-3 border-r last:border-r-0">
             <ItemTitle className="text-xs font-semibold">
-              <span>{day}</span>
-              <span className="sr-only sm:not-sr-only">{['eg', 'er', 'ua', 'ui', 'ex', 'ab', 'om'][index]}</span>
+              <span className="sm:hidden">{format(day, 'EEEEE', { locale: dateLocale })}</span>
+              <span className="max-sm:hidden">{format(day, 'EEEE', { locale: dateLocale })}</span>
             </ItemTitle>
           </ItemContent>
         ))}
@@ -30,6 +40,9 @@ const Header = () => {
 };
 
 export function MonthView({ currentDate, events, onEventSelect, onEventCreate }: MonthViewProps) {
+  const { locale: appLocale } = useLocale();
+  const dateLocale = getDateLocale(appLocale);
+
   const days = useMemo(() => {
     const monthStart = startOfMonth(currentDate);
     const monthEnd = endOfMonth(monthStart);
@@ -69,7 +82,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
   return (
     <ItemContent
       data-slot="month-view"
-      className="h-full"
+      className="h-full border rounded-md overflow-hidden"
       style={
         {
           '--event-height': `${EventHeight}px`,
@@ -99,7 +112,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                 return (
                   <Item
                     key={day.toString()}
-                    className="group border-accent data-outside-cell:text-muted-foreground min-h-[120px] items-start rounded-none border-r border-b p-1 last:border-r-0 data-outside-cell:bg-slate-50 dark:data-outside-cell:bg-slate-900"
+                    className="group border-accent data-outside-cell:text-muted-foreground min-h-[120px] items-start rounded-none border-r border-b p-1 last:border-r-0 data-outside-cell:bg-secondary"
                     data-today={isToday(day) || undefined}
                     data-outside-cell={!isCurrentMonth || (isSunday && dayIndex === 6) || undefined}
                     onClick={() => {
@@ -151,7 +164,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                             </PopoverTrigger>
                             <PopoverContent align="center" className="max-w-52 p-3" style={{ '--event-height': `${EventHeight}px` } as CSSProperties}>
                               <ItemContent className="gap-2">
-                                <ItemTitle className="text-sm">{format(day, 'd MMMM, EEE', { locale: ptBR })}</ItemTitle>
+                                <ItemTitle className="text-sm">{format(day, 'd MMMM, EEE', { locale: dateLocale })}</ItemTitle>
                                 <ItemContent className="gap-1">
                                   {sortEvents(allEvents).map((event) => {
                                     const eventStart = new Date(event.start);

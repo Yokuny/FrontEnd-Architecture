@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { addMonths, addWeeks, endOfWeek, format, isSameMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { useMemo, useState } from 'react';
-import { toast } from 'sonner';
-import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useLocale } from '@/hooks/use-locale';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { api } from '@/lib/api/client';
+import { getDateLocale } from '@/routes/_private/calendar-maintenance/@utils/locale';
 import type { CalendarFilterParams, CalendarView, PartialSchedule } from '../@interface/schedule';
 import { transformLegacyEvent } from '../@utils/calendar.utils';
 
@@ -13,32 +12,29 @@ export function useEventScheduleCalendar(params: CalendarFilterParams) {
   return useQuery({
     queryKey: ['event-schedule', params],
     queryFn: async () => {
-      const queryParams = new URLSearchParams();
-      queryParams.append('idEnterprise', params.idEnterprise);
-      if (params.month) queryParams.append('month', params.month);
-      if (params.year) queryParams.append('year', params.year);
-      if (params.day) queryParams.append('day', params.day);
+      const queryParams: Record<string, any> = {
+        idEnterprise: params.idEnterprise,
+        month: params.month,
+        year: params.year,
+        day: params.day,
+        status: params.status,
+      };
+
       if (params.eventType) {
-        const type = typeof params.eventType === 'object' ? (params.eventType as any).value : params.eventType;
-        queryParams.append('eventType', type);
+        queryParams.eventType = typeof params.eventType === 'object' ? (params.eventType as any).value : params.eventType;
       }
 
       if (params.idMachine?.length) {
-        params.idMachine.forEach((id) => {
-          queryParams.append('idMachine[]', id);
-        });
+        queryParams['idMachine[]'] = params.idMachine;
       }
+
       if (params.idMaintenancePlan?.length) {
-        params.idMaintenancePlan.forEach((id) => {
-          queryParams.append('idMaintenancePlan[]', id);
-        });
+        queryParams['idMaintenancePlan[]'] = params.idMaintenancePlan;
       }
+
       if (params.managers?.length) {
-        params.managers.forEach((id) => {
-          queryParams.append('managers[]', id);
-        });
+        queryParams['managers[]'] = params.managers;
       }
-      if (params.status) queryParams.append('status', params.status);
 
       const response = await api.get<any[]>('/event-schedule', {
         params: queryParams,
@@ -50,13 +46,16 @@ export function useEventScheduleCalendar(params: CalendarFilterParams) {
   });
 }
 
-export function useCalendarMaintenance() {
+export function useCalendarMaintenance(idEnterprise: string) {
   const isMobile = useIsMobile();
-  const { idEnterprise } = useEnterpriseFilter();
+  const { locale: appLocale } = useLocale();
+  const dateLocale = getDateLocale(appLocale);
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>('week');
   const [filters, setFilters] = useState<Partial<Omit<CalendarFilterParams, 'idEnterprise'>>>({});
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Partial<PartialSchedule> | null>(null);
 
   const { data: eventsRes = [], isLoading } = useEventScheduleCalendar({
     idEnterprise,
@@ -101,28 +100,40 @@ export function useCalendarMaintenance() {
   };
 
   const handleEventCreate = (start: Date) => {
-    toast('Criar evento em: ' + format(start, 'dd/MM/yyyy HH:mm'));
+    setSelectedEvent({
+      id: '0',
+      start,
+      end: addWeeks(start, 0), // Default duration or same as start
+      idEnterprise,
+      eventType: 'maintenance',
+    });
+    setIsDialogOpen(true);
+  };
+
+  const handleAddEvent = () => {
+    handleEventCreate(new Date());
   };
 
   const handleEventSelect = (event: PartialSchedule) => {
-    toast('Selecionou evento: ' + event.title);
+    setSelectedEvent(event);
+    setIsDialogOpen(true);
   };
 
   const headerTitle = useMemo(() => {
-    if (isMobile) return format(currentDate, 'MMMM', { locale: ptBR });
+    if (isMobile) return format(currentDate, 'MMMM', { locale: dateLocale });
     switch (view) {
       case 'week': {
         const startWeek = startOfWeek(currentDate, { weekStartsOn: 1 });
         const endWeek = endOfWeek(currentDate, { weekStartsOn: 1 });
         if (isSameMonth(startWeek, endWeek)) {
-          return format(startWeek, 'MMMM yyyy', { locale: ptBR });
+          return format(startWeek, 'MMMM yyyy', { locale: dateLocale });
         }
-        return `${format(startWeek, 'MMM', { locale: ptBR })} - ${format(endWeek, 'MMM yyyy', { locale: ptBR })}`;
+        return `${format(startWeek, 'MMM', { locale: dateLocale })} - ${format(endWeek, 'MMM yyyy', { locale: dateLocale })}`;
       }
       default:
-        return format(currentDate, 'MMMM yyyy', { locale: ptBR });
+        return format(currentDate, 'MMMM yyyy', { locale: dateLocale });
     }
-  }, [currentDate, view, isMobile]);
+  }, [currentDate, view, isMobile, dateLocale]);
 
   return {
     currentDate,
@@ -134,9 +145,14 @@ export function useCalendarMaintenance() {
     handlePrevious,
     handleNext,
     handleEventCreate,
+    handleAddEvent,
     handleEventSelect,
     headerTitle,
     filters,
     setFilters,
+    isDialogOpen,
+    setIsDialogOpen,
+    selectedEvent,
+    setSelectedEvent,
   };
 }

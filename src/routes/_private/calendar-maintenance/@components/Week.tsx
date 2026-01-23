@@ -17,30 +17,38 @@ import {
   startOfDay,
   startOfWeek,
 } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { type CSSProperties, type MouseEvent, useMemo } from 'react';
 import { Item, ItemContent, ItemTitle } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useLocale } from '@/hooks/use-locale';
 import { cn } from '@/lib/utils';
+import { getDateLocale } from '@/routes/_private/calendar-maintenance/@utils/locale';
 import { EndHour, StartHour, WeekCellsHeight } from '../@consts/calendar';
 import type { PartialSchedule } from '../@interface/schedule';
 import { isMultiDayEvent } from '../@utils/calendar.utils';
 import { EventItem } from './Event';
 
 const Header = ({ days }: { days: Date[] }) => {
+  const { locale: appLocale } = useLocale();
+  const dateLocale = getDateLocale(appLocale);
+
   return (
-    <Item className="text-muted-foreground sticky top-0 z-30 grid w-full grid-cols-8 rounded-none border-0 p-0 text-xs font-medium backdrop-blur-md" size="sm">
-      <ItemContent className="flex items-center justify-center border-0 py-2 text-center">
-        <ItemTitle className="max-[479px]:sr-only">{format(new Date(), 'O')}</ItemTitle>
+    <Item
+      variant="outline"
+      className="text-muted-foreground sticky top-0 z-30 grid w-full grid-cols-[4rem_repeat(7,1fr)] rounded-none border-x-0 border-t-0 p-0 text-xs font-medium backdrop-blur-md bg-secondary"
+      size="sm"
+    >
+      <ItemContent className="flex items-center justify-center border-r py-2 text-center">
+        <ItemTitle className="max-[479px]:sr-only">{format(new Date(), 'O', { locale: dateLocale })}</ItemTitle>
       </ItemContent>
       {days.map((day) => (
         <ItemContent
           key={day.toString()}
-          className="data-today:text-sky-blue data-today:dark:text-sky-blue data-outside-cell:text-muted-foreground flex items-center justify-center border-0 py-3 text-center data-today:font-semibold"
+          className="data-today:text-primary data-today:font-semibold data-outside-cell:text-muted-foreground flex items-center justify-center border-r py-3 text-center last:border-r-0"
           data-today={isToday(day) || undefined}
           data-outside-cell={(getDay(day) === 0 && days.indexOf(day) === 6) || undefined}
         >
-          <ItemTitle className="text-xs">{format(day, 'EEEEEE dd', { locale: ptBR })}</ItemTitle>
+          <ItemTitle className="text-xs">{format(day, 'EEEEEE dd', { locale: dateLocale })}</ItemTitle>
         </ItemContent>
       ))}
     </Item>
@@ -48,6 +56,9 @@ const Header = ({ days }: { days: Date[] }) => {
 };
 
 export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: WeekViewProps) {
+  const { locale: appLocale } = useLocale();
+  const dateLocale = getDateLocale(appLocale);
+
   const days = useMemo(() => {
     const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 });
     const weekEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
@@ -195,7 +206,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
   return (
     <ItemContent
       data-slot="week-view"
-      className="h-full"
+      className="h-full border rounded-md overflow-hidden"
       style={
         {
           '--week-cells-height': `${WeekCellsHeight}px`,
@@ -205,8 +216,10 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
       <Header days={days} />
       {showAllDaySection && (
         <ItemContent className="border-accent bg-muted border-b p-0">
-          <ItemContent className="grid grid-cols-8 flex-row gap-0 p-0">
-            <ItemContent className="text-muted-foreground border-accent flex items-center justify-center border-r p-1 text-center text-xs">Dia inteiro</ItemContent>
+          <ItemContent className="grid grid-cols-[4rem_repeat(7,1fr)] flex-row gap-0 p-0">
+            <ItemContent className="text-muted-foreground border-accent flex items-center justify-center border-r p-1 text-center text-[10px] leading-tight sm:text-xs">
+              Dia inteiro
+            </ItemContent>
             {days.map((day, dayIndex) => {
               const dayAllDayEvents = allDayEvents.filter((event) => {
                 const eventStart = new Date(event.start);
@@ -254,13 +267,13 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
       )}
 
       <ScrollArea className="md:h-[calc(100vh-13.35rem)]">
-        <ItemContent className="grid grid-cols-8 gap-0 p-0">
+        <ItemContent className="grid grid-cols-[4rem_repeat(7,1fr)] gap-0 p-0">
           <ItemContent className="border-accent border-r flex flex-col gap-0 p-0">
             {hours.map((hour, index) => (
               <ItemContent key={hour.toString()} className="border-accent relative min-h-(--week-cells-height) border-b p-0 last:border-b-0">
                 {index > 0 && (
                   <ItemTitle className="text-muted-foreground absolute -top-3 right-0 flex h-6 w-full items-center justify-end px-2 text-[10px] font-normal sm:pe-4 sm:text-xs">
-                    {format(hour, 'h a')}
+                    {format(hour, 'p', { locale: dateLocale })}
                   </ItemTitle>
                 )}
               </ItemContent>
@@ -269,7 +282,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
           {days.map((day, dayIndex) => (
             <ItemContent
               key={day.toString()}
-              className="border-accent data-outside-cell:text-muted-foreground relative flex flex-col border-r p-0 last:border-r-0 data-outside-cell:bg-slate-50 dark:data-outside-cell:bg-slate-900"
+              className="border-accent data-outside-cell:text-muted-foreground relative flex flex-col border-r p-0 last:border-r-0 data-outside-cell:bg-secondary"
               data-today={isToday(day) || undefined}
               data-outside-cell={(getDay(day) === 0 && dayIndex === 6) || undefined}
             >

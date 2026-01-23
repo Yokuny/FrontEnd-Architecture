@@ -20,8 +20,6 @@ const alertsSearchSchema = z.object({
   search: z.string().optional(),
 });
 
-type AlertsSearch = z.infer<typeof alertsSearchSchema>;
-
 export const Route = createFileRoute('/_private/register/alerts/')({
   component: AlertsListPage,
   validateSearch: (search: Record<string, unknown>): AlertsSearch => alertsSearchSchema.parse(search),
@@ -254,3 +252,5 @@ function AlertsListPage() {
     </Card>
   );
 }
+
+type AlertsSearch = z.infer<typeof alertsSearchSchema>;

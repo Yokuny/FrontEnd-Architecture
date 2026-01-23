@@ -1,7 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ChevronDown, ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { format } from 'date-fns';
+import { BrushCleaning, ChevronDown, ChevronLeft, ChevronRight, Plus, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
+import { z } from 'zod';
+import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enterprise-select';
 import { MachineManagerSelect } from '@/components/selects/machine-manager-select';
@@ -12,13 +14,21 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuShortc
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useLocale } from '@/hooks/use-locale';
+import { getDateLocale } from '@/routes/_private/calendar-maintenance/@utils/locale';
+import { EditEventDialog } from './@components/EditEventDialog';
 import { MonthView } from './@components/Month';
 import { WeekView } from './@components/Week';
 import { useCalendarMaintenance } from './@hooks/use-calendar-maintenance';
 import { capitalizeString } from './@utils/calendar.utils';
 
+const searchSchema = z.object({
+  id: z.string().optional(),
+});
+
 export const Route = createFileRoute('/_private/calendar-maintenance/')({
   component: CalendarMaintenancePage,
+  validateSearch: searchSchema,
   beforeLoad: () => ({
     title: 'calendar.maintenance',
   }),
@@ -26,9 +36,45 @@ export const Route = createFileRoute('/_private/calendar-maintenance/')({
 
 function CalendarMaintenancePage() {
   const { t } = useTranslation();
-  const { idEnterprise } = useEnterpriseFilter();
-  const { currentDate, setCurrentDate, events, view, setView, isLoading, handlePrevious, handleNext, handleEventCreate, handleEventSelect, headerTitle, filters, setFilters } =
-    useCalendarMaintenance();
+  const { id: idEnterpriseQuery } = Route.useSearch();
+  const { idEnterprise: idEnterpriseFilter } = useEnterpriseFilter();
+  const idEnterprise = idEnterpriseQuery || idEnterpriseFilter;
+  if (!idEnterprise) {
+    return (
+      <Card>
+        <CardHeader title={t('calendar.maintenance')} />
+        <CardContent>
+          <EmptyData />
+        </CardContent>
+      </Card>
+    );
+  }
+  return <CalendarMaintenanceContent idEnterprise={idEnterprise} />;
+}
+
+function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) {
+  const { t } = useTranslation();
+  const { locale: appLocale } = useLocale();
+  const dateLocale = getDateLocale(appLocale);
+  const {
+    currentDate,
+    setCurrentDate,
+    events,
+    view,
+    setView,
+    isLoading,
+    handlePrevious,
+    handleNext,
+    handleEventCreate,
+    handleAddEvent,
+    handleEventSelect,
+    headerTitle,
+    filters,
+    setFilters,
+    isDialogOpen,
+    setIsDialogOpen,
+    selectedEvent,
+  } = useCalendarMaintenance(idEnterprise);
 
   return (
     <Card className="gap-1">
@@ -36,18 +82,18 @@ function CalendarMaintenancePage() {
         <Item className="items-center p-0">
           <ItemContent className="flex-row items-baseline gap-2">
             <ItemTitle className="text-xl font-semibold">{String(currentDate.getDate()).padStart(2, '0')}</ItemTitle>
-            <ItemTitle className="text-xl font-semibold">{['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][currentDate.getDay()]}</ItemTitle>
+            <ItemTitle className="text-xl font-semibold">{format(currentDate, 'EEE.', { locale: dateLocale })}</ItemTitle>
             <ItemDescription className="text-lg">{headerTitle}</ItemDescription>
           </ItemContent>
           <ItemContent className="flex-row items-center gap-2">
             <div className="relative flex items-center md:items-stretch">
-              <Button variant="outline" onClick={handlePrevious} aria-label="previous" className="rounded-none rounded-l-md border-r-0 px-2">
+              <Button variant="outline" onClick={handlePrevious} aria-label="previous" className="rounded-none rounded-l-md border-r-0 w-6 justify-start">
                 <ChevronLeft className="size-5 stroke-[1.8]" aria-hidden="true" />
               </Button>
               <Button variant="outline" onClick={() => setCurrentDate(new Date())} className="hidden rounded-none border-x-0 md:block">
                 {t('today')}
               </Button>
-              <Button variant="outline" onClick={handleNext} aria-label="next" className="rounded-none rounded-r-md border-l-0 px-2">
+              <Button variant="outline" onClick={handleNext} aria-label="next" className="rounded-none rounded-r-md border-l-0 w-6 p-0 justify-end">
                 <ChevronRight className="size-5 stroke-[1.8]" aria-hidden="true" />
               </Button>
             </div>
@@ -72,6 +118,10 @@ function CalendarMaintenancePage() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button onClick={handleAddEvent}>
+              <Plus className="size-4" />
+              <ItemContent className="max-sm:hidden">{t('add')}</ItemContent>
+            </Button>
           </ItemContent>
         </Item>
       </CardHeader>
@@ -116,8 +166,8 @@ function CalendarMaintenancePage() {
           </div>
 
           <div className="flex ml-auto gap-2">
-            <Button variant="outline" className="flex-1 gap-2 bg-background" onClick={() => setFilters({})}>
-              {t('clear.filters')}
+            <Button className="text-amber-700 hover:text-amber-800" variant="outline" onClick={() => setFilters({})}>
+              <BrushCleaning className="size-4" />
             </Button>
             <Button variant="outline" className="flex-1 gap-2 bg-background">
               <Search className="size-4" />
@@ -137,6 +187,8 @@ function CalendarMaintenancePage() {
             <WeekView currentDate={currentDate} events={events} onEventSelect={handleEventSelect} onEventCreate={handleEventCreate} />
           )}
         </ItemContent>
+
+        <EditEventDialog isOpen={isDialogOpen} onOpenChange={setIsDialogOpen} event={selectedEvent} idEnterprise={idEnterprise} />
       </CardContent>
     </Card>
   );

@@ -38,33 +38,26 @@ function SetupApiExternalFormContent({ idEnterprise }: { idEnterprise?: string }
   const windyKeyValue = form.watch('windyKey');
   const isKeyMasked = windyKeyValue?.includes('***');
 
-  if (isLoading) {
-    return (
-      <Card>
-        <CardHeader title={t('setup.api.external')} />
-        <CardContent className="p-12">
-          <DefaultLoading />
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card>
       <CardHeader title={t('setup.api.external')} />
-      <Form {...form}>
-        <form onSubmit={onSubmit}>
-          <CardContent>
-            <ApiExternalForm showEnterpriseSelect={!idEnterprise} />
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" disabled={isPending || isLoading || isKeyMasked} className="min-w-[120px]">
-              {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
-              {t('save')}
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
+      <CardContent>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={onSubmit}>
+              <ApiExternalForm showEnterpriseSelect={!idEnterprise} />
+              <CardFooter className="px-0 pt-6 mt-6 border-t">
+                <Button type="submit" disabled={isPending || isLoading || isKeyMasked} className="min-w-[120px]">
+                  {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
+                  {t('save')}
+                </Button>
+              </CardFooter>
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }

@@ -35,33 +35,26 @@ function SetupEmailFormContent({ idEnterprise }: { idEnterprise?: string }) {
     idEnterprise,
   });
 
-  if (isLoading) {
-    return (
-      <Card>
-        <CardHeader title={t('setup.email')} />
-        <CardContent className="p-12">
-          <DefaultLoading />
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card>
       <CardHeader title={t('setup.email')} />
-      <Form {...form}>
-        <form onSubmit={onSubmit}>
-          <CardContent>
-            <EmailConfigForm isEnterpriseDisabled={!!idEnterprise} />
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" disabled={isPending || isLoading} className="min-w-[120px]">
-              {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
-              {t('save')}
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
+      <CardContent>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={onSubmit}>
+              <EmailConfigForm isEnterpriseDisabled={!!idEnterprise} />
+              <CardFooter className="px-0 pt-6 mt-6 border-t">
+                <Button type="submit" disabled={isPending || isLoading} className="min-w-[120px]">
+                  {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
+                  {t('save')}
+                </Button>
+              </CardFooter>
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }
