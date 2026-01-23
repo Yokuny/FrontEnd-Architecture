@@ -50,9 +50,9 @@ function UserTypeListPage() {
   return (
     <Card>
       <CardHeader title={t('types.user')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"
@@ -74,7 +74,7 @@ function UserTypeListPage() {
             />
           </div>
           <Button onClick={() => navigate({ to: '/register/user-type/add' })}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
         </div>
@@ -99,7 +99,7 @@ function UserTypeListPage() {
                   })
                 }
               >
-                <div className="flex items-center gap-4 flex-1">
+                <div className="flex flex-1 items-center gap-4">
                   <ItemMedia variant="image">
                     <User className="size-5" />
                   </ItemMedia>

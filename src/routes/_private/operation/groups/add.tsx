@@ -90,7 +90,7 @@ function GroupFormContent({ initialData }: { initialData: any }) {
       <Form {...form}>
         <form onSubmit={onSubmit}>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="idEnterprise"
@@ -121,17 +121,17 @@ function GroupFormContent({ initialData }: { initialData: any }) {
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium">{t('subgroups')}</h3>
+                <h3 className="font-medium text-lg">{t('subgroups')}</h3>
                 <Button type="button" variant="outline" size="sm" onClick={() => append({ name: '', description: '', details: [] })}>
-                  <Plus className="size-4 mr-2" />
+                  <Plus className="mr-2 size-4" />
                   {t('add')}
                 </Button>
               </div>
 
               <div className="space-y-4">
                 {fields.map((field, index) => (
-                  <div key={field.id} className="flex gap-4 items-end border p-4 rounded-lg relative">
-                    <div className="flex-1 grid grid-cols-1 gap-4">
+                  <div key={field.id} className="relative flex items-end gap-4 rounded-lg border p-4">
+                    <div className="grid flex-1 grid-cols-1 gap-4">
                       <FormField
                         control={form.control}
                         name={`subgroup.${index}.name`}
@@ -147,7 +147,7 @@ function GroupFormContent({ initialData }: { initialData: any }) {
                       />
                     </div>
 
-                    <Button type="button" variant="ghost" size="icon" className="text-destructive h-10 w-10 shrink-0" onClick={() => remove(index)} disabled={fields.length === 1}>
+                    <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0 text-destructive" onClick={() => remove(index)} disabled={fields.length === 1}>
                       <Trash2 className="size-4" />
                     </Button>
                   </div>

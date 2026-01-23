@@ -73,7 +73,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar variant="floating" collapsible="icon" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className="transition-all duration-300 ease-in-out">
-      <SidebarHeader className="pt-3 items-center px-2">
+      <SidebarHeader className="items-center px-2 pt-3">
         <div className={cn('flex items-center')}>
           <div className={cn('flex items-center', isCollapsed && 'flex-col')}>
             <SidebarSwitcher />

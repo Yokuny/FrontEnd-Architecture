@@ -30,7 +30,7 @@ export function EventConfig() {
   return (
     <div className="space-y-6">
       {/* 1. In/Out Geofence */}
-      <div className={cn('rounded-lg border p-4 space-y-4 transition-colors', events?.inOutGeofence ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
+      <div className={cn('space-y-4 rounded-lg border p-4 transition-colors', events?.inOutGeofence ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 font-medium">
             <MapPin className="size-4 text-purple-500" />
@@ -40,7 +40,7 @@ export function EventConfig() {
         </div>
         {!!events?.inOutGeofence && (
           <div className="grid gap-4 pt-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <FormField
                   control={control}
@@ -106,7 +106,7 @@ export function EventConfig() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4 mt-2">
+            <div className="mt-2 grid grid-cols-1 gap-4 border-t pt-4 md:grid-cols-3">
               <FormField
                 control={control}
                 name="events.inOutGeofence.alertEntering"
@@ -149,7 +149,7 @@ export function EventConfig() {
       </div>
 
       {/* 2. Platform Proximity */}
-      <div className={cn('rounded-lg border p-4 space-y-4 transition-colors', events?.startInsideInPlatformArea ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
+      <div className={cn('space-y-4 rounded-lg border p-4 transition-colors', events?.startInsideInPlatformArea ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 font-medium">
             <Monitor className="size-4 text-blue-500" />
@@ -159,7 +159,7 @@ export function EventConfig() {
         </div>
         {!!events?.startInsideInPlatformArea && (
           <div className="grid gap-4 pt-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <FormField
                   control={control}
@@ -235,7 +235,7 @@ export function EventConfig() {
       </div>
 
       {/* 3. Lost Connection */}
-      <div className={cn('rounded-lg border p-4 space-y-4 transition-colors', events?.lostConnectionSensor ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
+      <div className={cn('space-y-4 rounded-lg border p-4 transition-colors', events?.lostConnectionSensor ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 font-medium">
             <WifiOff className="size-4 text-red-500" />
@@ -245,7 +245,7 @@ export function EventConfig() {
         </div>
         {!!events?.lostConnectionSensor && (
           <div className="grid gap-4 pt-2">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <FormField
                 control={control}
                 name="events.lostConnectionSensor.idMachine"
@@ -282,7 +282,7 @@ export function EventConfig() {
                     <FormLabel>{t('time.min.lost.connection')}</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Clock className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Clock className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
                         <Input type="number" className="pl-9" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} placeholder={t('time.min')} />
                       </div>
                     </FormControl>
@@ -296,7 +296,7 @@ export function EventConfig() {
       </div>
 
       {/* 4. Status Distance Port */}
-      <div className={cn('rounded-lg border p-4 space-y-4 transition-colors', events?.statusDistancePort ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
+      <div className={cn('space-y-4 rounded-lg border p-4 transition-colors', events?.statusDistancePort ? 'border-primary bg-primary/5' : 'bg-muted/30')}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 font-medium">
             <ArrowUpRight className="size-4 text-orange-500" />
@@ -306,13 +306,13 @@ export function EventConfig() {
         </div>
         {!!events?.statusDistancePort && (
           <div className="grid gap-4 pt-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               <div className="space-y-2 lg:col-span-3">
                 <FormField
                   control={control}
                   name="events.statusDistancePort.allMachines"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 mb-2">
+                    <FormItem className="mb-2 flex flex-row items-start space-x-3 space-y-0">
                       <FormControl>
                         <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                       </FormControl>
@@ -384,7 +384,7 @@ export function EventConfig() {
         )}
       </div>
 
-      <div className="pt-4 border-t">
+      <div className="border-t pt-4">
         <FormField
           control={control}
           name="events.description"

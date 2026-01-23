@@ -42,33 +42,33 @@ export function VesselComparison({ data, unit, isReal }: VesselComparisonProps) 
               <ItemContent className="flex-none">
                 <div className="flex items-center gap-2">
                   <Clock className={cn('size-4', isReal ? 'text-blue-800' : 'text-amber-800')} />
-                  <ItemDescription className="text-sm font-medium">HR</ItemDescription>
+                  <ItemDescription className="font-medium text-sm">HR</ItemDescription>
                 </div>
-                <ItemTitle className="text-lg font-bold">{totalHours.toFixed(2)}</ItemTitle>
+                <ItemTitle className="font-bold text-lg">{totalHours.toFixed(2)}</ItemTitle>
               </ItemContent>
 
               <ItemContent className="flex-none">
                 <div className="flex items-center gap-2">
                   <Droplet className={cn('size-4', isReal ? 'text-blue-600' : 'text-amber-600')} />
-                  <ItemDescription className="text-sm font-medium">{unit}</ItemDescription>
+                  <ItemDescription className="font-medium text-sm">{unit}</ItemDescription>
                 </div>
-                <ItemTitle className="text-lg font-bold">{totalConsumption.toFixed(2)}</ItemTitle>
+                <ItemTitle className="font-bold text-lg">{totalConsumption.toFixed(2)}</ItemTitle>
               </ItemContent>
 
               <ItemContent className="flex-none">
                 <div className="flex items-center gap-2">
                   <Droplets className={cn('size-4', isReal ? 'text-blue-600' : 'text-amber-600')} />
-                  <ItemDescription className="text-sm font-medium">{unit}/HR</ItemDescription>
+                  <ItemDescription className="font-medium text-sm">{unit}/HR</ItemDescription>
                 </div>
-                <ItemTitle className="text-lg font-bold">{average.toFixed(3)}</ItemTitle>
+                <ItemTitle className="font-bold text-lg">{average.toFixed(3)}</ItemTitle>
               </ItemContent>
 
               <ItemContent className="flex-none">
                 <div className="flex items-center gap-2">
                   <CloudUpload className="size-4 text-zinc-500" />
-                  <ItemDescription className="text-sm font-medium">Ton</ItemDescription>
+                  <ItemDescription className="font-medium text-sm">Ton</ItemDescription>
                 </div>
-                <ItemTitle className="text-lg font-bold">{(totalCo2 / 1000).toFixed(2)}</ItemTitle>
+                <ItemTitle className="font-bold text-lg">{(totalCo2 / 1000).toFixed(2)}</ItemTitle>
               </ItemContent>
             </ItemContent>
           </Item>

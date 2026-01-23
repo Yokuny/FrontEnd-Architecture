@@ -65,7 +65,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
             </FormItem>
           )}
         />,
-        <div key="id-name-row" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="id-name-row" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={form.control}
             name="id"
@@ -118,7 +118,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
             </FormItem>
           )}
         />,
-        <div key="code-model-row" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="code-model-row" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={form.control}
             name="code"
@@ -164,7 +164,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
       title: t('vessel.characteristics'),
       description: t('machine.vessel.description'),
       fields: [
-        <div key="mmsi-imo-row" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="mmsi-imo-row" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="mmsi"
@@ -196,7 +196,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
             )}
           />
         </div>,
-        <div key="dims-row" className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div key="dims-row" className="grid grid-cols-1 gap-4 md:grid-cols-4">
           <FormField
             control={form.control}
             name="dataSheet.lengthLoa"
@@ -258,7 +258,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
             )}
           />
         </div>,
-        <div key="flag-year-call-row" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="flag-year-call-row" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={form.control}
             name="dataSheet.flag"
@@ -333,7 +333,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
       title: t('ais.dimensions'),
       description: t('machine.ais.description'),
       fields: [
-        <div key="ais-dims" className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div key="ais-dims" className="grid grid-cols-1 gap-4 md:grid-cols-4">
           <FormField
             control={form.control}
             name="dataSheet.aisDimensions.distanceToBow"
@@ -421,7 +421,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
           {contactFields.map((field, index) => (
             <Card key={field.id}>
               <CardContent className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <FormField
                     control={form.control}
                     name={`contacts.${index}.name`}
@@ -453,7 +453,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
                         </FormItem>
                       )}
                     />
-                    <Button type="button" variant="ghost" size="icon" className="text-destructive h-10 w-10" onClick={() => removeContact(index)}>
+                    <Button type="button" variant="ghost" size="icon" className="h-10 w-10 text-destructive" onClick={() => removeContact(index)}>
                       <Trash2 className="size-4" />
                     </Button>
                   </div>
@@ -462,7 +462,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
             </Card>
           ))}
           <Button type="button" variant="outline" size="sm" className="w-full" onClick={() => appendContact({ name: '', phone: '' })}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('add.contact')}
           </Button>
         </div>,
@@ -476,7 +476,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
           {cameraFields.map((field, index) => (
             <Card key={field.id}>
               <CardContent className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <FormField
                     control={form.control}
                     name={`cameras.${index}.name`}
@@ -492,7 +492,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
                       </FormItem>
                     )}
                   />
-                  <div className="md:col-span-2 flex items-end gap-2" key={`camera-link-${field.id}`}>
+                  <div className="flex items-end gap-2 md:col-span-2" key={`camera-link-${field.id}`}>
                     <FormField
                       control={form.control}
                       name={`cameras.${index}.link`}
@@ -508,7 +508,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
                         </FormItem>
                       )}
                     />
-                    <Button type="button" variant="ghost" size="icon" className="text-destructive h-10 w-10" onClick={() => removeCamera(index)}>
+                    <Button type="button" variant="ghost" size="icon" className="h-10 w-10 text-destructive" onClick={() => removeCamera(index)}>
                       <Trash2 className="size-4" />
                     </Button>
                   </div>
@@ -517,7 +517,7 @@ export function MachineForm({ isEdit }: { isEdit?: boolean }) {
             </Card>
           ))}
           <Button type="button" variant="default" size="sm" className="w-full" onClick={() => appendCamera({ name: '', link: '' })}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('add.camera')}
           </Button>
         </div>,

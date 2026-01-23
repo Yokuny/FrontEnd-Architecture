@@ -52,9 +52,9 @@ function SensorFunctionsListPage() {
   return (
     <Card>
       <CardHeader title={t('sensor.functions')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"
@@ -76,7 +76,7 @@ function SensorFunctionsListPage() {
             />
           </div>
           <Button onClick={() => navigate({ to: '/register/sensor-functions/add' })} disabled={!idEnterprise}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
         </div>
@@ -93,7 +93,7 @@ function SensorFunctionsListPage() {
               <Item
                 key={item.id || item._id}
                 variant="outline"
-                className={`cursor-pointer ${!item.enabled ? 'opacity-50 grayscale bg-muted/50' : ''}`}
+                className={`cursor-pointer ${!item.enabled ? 'bg-muted/50 opacity-50 grayscale' : ''}`}
                 onClick={() =>
                   navigate({
                     to: '/register/sensor-functions/add',
@@ -101,7 +101,7 @@ function SensorFunctionsListPage() {
                   })
                 }
               >
-                <div className="flex items-center gap-4 flex-1">
+                <div className="flex flex-1 items-center gap-4">
                   <ItemMedia variant="image">
                     <FunctionSquare className={`size-5 ${item.enabled ? 'text-primary' : 'text-muted-foreground'}`} />
                   </ItemMedia>
@@ -111,9 +111,9 @@ function SensorFunctionsListPage() {
                   </ItemContent>
                 </div>
 
-                <div className="hidden md:flex items-center justify-center overflow-hidden">
+                <div className="hidden items-center justify-center overflow-hidden md:flex">
                   {item.machines && item.machines.length > 0 && (
-                    <div className="flex flex-wrap gap-1 justify-center max-h-[40px] overflow-y-auto">
+                    <div className="flex max-h-[40px] flex-wrap justify-center gap-1 overflow-y-auto">
                       {item.machines.map((machine, idx) => (
                         <Badge key={machine.value || idx} variant="outline">
                           {machine.label}
@@ -156,7 +156,7 @@ function SensorFunctionsListPage() {
 
       {total > 0 && (
         <CardFooter layout="multi">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+          <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">

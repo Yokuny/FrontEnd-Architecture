@@ -36,7 +36,7 @@ export function AssetOperationalList({ data, isLoading }: AssetOperationalListPr
         <TableRow>
           <TableHead className="w-[200px]">{t('last.status')}</TableHead>
           <TableHead>{t('machine')}</TableHead>
-          <TableHead className="text-right w-[150px]">{t('perc.title.last.30.days')}</TableHead>
+          <TableHead className="w-[150px] text-right">{t('perc.title.last.30.days')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -69,7 +69,7 @@ export function AssetOperationalList({ data, isLoading }: AssetOperationalListPr
               <TableCell className="text-right">
                 <div
                   className={cn(
-                    'inline-flex px-2 py-1 rounded text-xs font-bold min-w-16 justify-center',
+                    'inline-flex min-w-16 justify-center rounded px-2 py-1 font-bold text-xs',
                     colorStatus === 'success' && 'bg-emerald-500/10 text-emerald-600',
                     colorStatus === 'warning' && 'bg-amber-500/10 text-amber-600',
                     colorStatus === 'destructive' && 'bg-rose-500/10 text-rose-600',

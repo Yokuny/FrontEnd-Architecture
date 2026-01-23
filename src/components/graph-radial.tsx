@@ -22,7 +22,7 @@ const chartConfig = {
 export function GraphRadial() {
   return (
     <Item variant="outline">
-      <ItemHeader className="items-center flex-col">
+      <ItemHeader className="flex-col items-center">
         <ItemTitle>Radial Chart - Shape</ItemTitle>
         <ItemDescription>Description</ItemDescription>
       </ItemHeader>
@@ -37,7 +37,7 @@ export function GraphRadial() {
                   if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                     return (
                       <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-4xl font-bold">
+                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground font-bold text-4xl">
                           {chartData[0].visitors.toLocaleString()}
                         </tspan>
                         <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground">

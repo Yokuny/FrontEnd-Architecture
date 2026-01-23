@@ -105,7 +105,7 @@ function IntegrationListPage() {
                         <ItemTitle className={item.disabled ? 'text-muted-foreground' : ''}>{item.name}</ItemTitle>
                         {item.disabled && (
                           <Badge variant="secondary" className="text-xs">
-                            <WifiOff className="size-3 mr-1" />
+                            <WifiOff className="mr-1 size-3" />
                             {t('deactivate')}
                           </Badge>
                         )}
@@ -144,7 +144,7 @@ function IntegrationListPage() {
                     <TableCell>
                       <div className="flex gap-2">
                         {item.type === 'MOON' && (
-                          <div className="space-y-1 flex flex-row items-baseline gap-2">
+                          <div className="flex flex-row items-baseline gap-2 space-y-1">
                             <Label className="text-xs">ID Moon</Label>
                             <Input
                               type="text"
@@ -158,7 +158,7 @@ function IntegrationListPage() {
                           </div>
                         )}
                         {TYPES_WITH_IMO.some((t) => t === item.type) && (
-                          <div className="space-y-1 flex flex-row items-baseline gap-2">
+                          <div className="flex flex-row items-baseline gap-2 space-y-1">
                             <Label className="text-xs">IMO</Label>
                             <Input
                               type="number"
@@ -172,7 +172,7 @@ function IntegrationListPage() {
                           </div>
                         )}
                         {TYPES_WITH_MMSI.some((t) => t === item.type) && (
-                          <div className="space-y-1 flex flex-row items-baseline gap-2">
+                          <div className="flex flex-row items-baseline gap-2 space-y-1">
                             <Label className="text-xs">MMSI</Label>
                             <Input
                               type="number"

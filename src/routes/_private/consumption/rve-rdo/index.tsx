@@ -183,7 +183,7 @@ function RVERDODashboardPage() {
             </Label>
             <div className="flex h-10 items-center gap-2 pb-2">
               <Checkbox id="inoperabilities" checked={showInoperabilities} onCheckedChange={(val) => setShowInoperabilities(!!val)} />
-              <Label htmlFor="inoperabilities" className="text-xs font-normal leading-tight">
+              <Label htmlFor="inoperabilities" className="font-normal text-xs leading-tight">
                 {t('include.consumption.in')}
               </Label>
             </div>

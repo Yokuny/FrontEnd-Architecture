@@ -39,7 +39,7 @@ export function EnterpriseForm() {
           control={control}
           name="active"
           render={({ field }) => (
-            <FormItem className="flex items-center justify-between rounded-lg border p-4 bg-muted/50">
+            <FormItem className="flex items-center justify-between rounded-lg border bg-muted/50 p-4">
               <div className="space-y-0.5">
                 <FormLabel className="text-base">{t('machine')}</FormLabel>
               </div>
@@ -56,7 +56,7 @@ export function EnterpriseForm() {
               <FormControl>
                 <Input type={showToken ? 'text' : 'password'} value={publicKey} readOnly className="pr-10" />
               </FormControl>
-              <button type="button" onClick={() => setShowToken(!showToken)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+              <button type="button" onClick={() => setShowToken(!showToken)} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                 {showToken ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
               </button>
             </div>
@@ -69,7 +69,7 @@ export function EnterpriseForm() {
       title: t('address'),
       description: t('enterprise.address.description', 'Localização física da sede da empresa.'),
       fields: [
-        <div key="zip-address" className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div key="zip-address" className="grid grid-cols-1 gap-4 md:grid-cols-12">
           <div className="md:col-span-4">
             <FormField
               control={control}
@@ -101,7 +101,7 @@ export function EnterpriseForm() {
             />
           </div>
         </div>,
-        <div key="number-district" className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div key="number-district" className="grid grid-cols-1 gap-4 md:grid-cols-12">
           <div className="md:col-span-3">
             <FormField
               control={control}
@@ -147,7 +147,7 @@ export function EnterpriseForm() {
             </FormItem>
           )}
         />,
-        <div key="city-state-country" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="city-state-country" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={control}
             name="city"
@@ -208,7 +208,7 @@ export function EnterpriseForm() {
             </FormItem>
           )}
         />,
-        <div key="lat-lon" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="lat-lon" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="lat"
@@ -242,7 +242,7 @@ export function EnterpriseForm() {
       title: t('appearance'),
       description: t('enterprise.logos.description', 'Logos for light and dark themes.'),
       fields: [
-        <div key="logos" className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div key="logos" className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
             control={control}
             name="image"

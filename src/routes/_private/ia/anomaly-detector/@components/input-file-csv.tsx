@@ -19,7 +19,7 @@ const csvStringToJson = (csvString: string) => {
       if (!header) continue;
 
       if (!Number.isNaN(value as any) && value !== '') {
-        obj[header] = value.includes('.') ? parseFloat(value) : parseInt(value);
+        obj[header] = value.includes('.') ? parseFloat(value) : parseInt(value, 10);
       } else if (Date.parse(value)) {
         obj[header] = new Date(value);
       } else {
@@ -90,7 +90,7 @@ export function InputFileCsv({ onHandleData }: InputFileCsvProps) {
   return (
     <div>
       {!isMonitoring ? (
-        <div className="flex items-center gap-4 w-full justify-between">
+        <div className="flex w-full items-center justify-between gap-4">
           <input className="hidden" type="file" accept=".csv" ref={inputFileRef} onChange={handleFileChange} />
 
           {!file ? (
@@ -103,32 +103,32 @@ export function InputFileCsv({ onHandleData }: InputFileCsvProps) {
               <Button variant="ghost" className="size-8 text-destructive" onClick={() => setFile(null)}>
                 <X className="size-4" />
               </Button>
-              <span className="text-sm font-medium truncate max-w-[200px]">{file.name}</span>
+              <span className="max-w-[200px] truncate font-medium text-sm">{file.name}</span>
             </div>
           )}
 
           {file && (
-            <Button variant="default" onClick={handleUpload} className="gap-2 animate-pulse shadow-lg shadow-primary/20">
+            <Button variant="default" onClick={handleUpload} className="animate-pulse gap-2 shadow-lg shadow-primary/20">
               <Play className="size-4" />
               {t('start.monitoring')}
             </Button>
           )}
         </div>
       ) : (
-        <div className="flex items-center justify-between w-full p-2 bg-primary/5 rounded-lg border border-primary/20 animate-in fade-in slide-in-from-bottom-2">
+        <div className="fade-in slide-in-from-bottom-2 flex w-full animate-in items-center justify-between rounded-lg border border-primary/20 bg-primary/5 p-2">
           <div className="flex items-center gap-4">
             <div className="relative">
-              <RefreshCw className="size-5 text-primary animate-spin" />
-              <div className="absolute inset-0 bg-primary/20 blur-sm animate-pulse rounded-full" />
+              <RefreshCw className="size-5 animate-spin text-primary" />
+              <div className="absolute inset-0 animate-pulse rounded-full bg-primary/20 blur-sm" />
             </div>
             <ItemContent>
               <div className="flex items-center gap-2">
-                <ItemTitle className="text-sm font-bold text-primary uppercase">{t('classify')}</ItemTitle>
-                <span className="text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded font-mono">
+                <ItemTitle className="font-bold text-primary text-sm uppercase">{t('classify')}</ItemTitle>
+                <span className="rounded bg-primary/20 px-1.5 py-0.5 font-mono text-primary text-xs">
                   {(index || 0) + 1}/{data.length}
                 </span>
               </div>
-              <ItemDescription className="text-[10px] mt-0.5 uppercase tracking-wider">
+              <ItemDescription className="mt-0.5 text-[10px] uppercase tracking-wider">
                 {t('last.date.acronym')}: {new Date().toLocaleTimeString()}
               </ItemDescription>
             </ItemContent>

@@ -31,15 +31,15 @@ const data = [
 export default function Stats01() {
   return (
     <div className="flex items-center justify-center p-10">
-      <div className="mx-auto grid grid-cols-1 gap-px rounded-xl bg-border sm:grid-cols-2 lg:grid-cols-4 overflow-hidden">
+      <div className="mx-auto grid grid-cols-1 gap-px overflow-hidden rounded-xl bg-border sm:grid-cols-2 lg:grid-cols-4">
         {data.map((stat) => (
-          <Item key={stat.name} className="rounded-none border-0 shadow-none bg-background p-4 sm:p-6">
+          <Item key={stat.name} className="rounded-none border-0 bg-background p-4 shadow-none sm:p-6">
             <ItemContent className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
               <ItemDescription>{stat.name}</ItemDescription>
-              <div className={cn('text-xs font-medium', stat.changeType === 'positive' ? 'text-green-800 dark:text-green-400' : 'text-red-800 dark:text-red-400')}>
+              <div className={cn('font-medium text-xs', stat.changeType === 'positive' ? 'text-green-800 dark:text-green-400' : 'text-red-800 dark:text-red-400')}>
                 {stat.change}
               </div>
-              <ItemTitle className="w-full flex-none text-3xl font-medium tracking-tight">{stat.value}</ItemTitle>
+              <ItemTitle className="w-full flex-none font-medium text-3xl tracking-tight">{stat.value}</ItemTitle>
             </ItemContent>
           </Item>
         ))}

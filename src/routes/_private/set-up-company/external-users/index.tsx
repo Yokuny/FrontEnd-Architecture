@@ -84,7 +84,7 @@ function ExternalUsersContent({ idEnterprise }: { idEnterprise: string }) {
                   <TableCell className="font-medium">{user.username}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <Input type={showToken.includes(user.id) ? 'text' : 'password'} value={user.token} readOnly className="bg-muted max-w-[400px]" />
+                      <Input type={showToken.includes(user.id) ? 'text' : 'password'} value={user.token} readOnly className="max-w-[400px] bg-muted" />
                       <Button variant="ghost" size="icon" onClick={() => toggleToken(user.id)}>
                         {showToken.includes(user.id) ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                       </Button>

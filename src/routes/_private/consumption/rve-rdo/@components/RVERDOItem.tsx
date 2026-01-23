@@ -56,9 +56,9 @@ export function RVERDOItem({ asset, data, showInoperabilities }: RVERDOItemProps
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" className={cn('h-auto gap-2 py-1 text-white', exceeded ? 'bg-red-500  ' : 'bg-blue-500')}>
+                <Button variant="outline" className={cn('h-auto gap-2 py-1 text-white', exceeded ? 'bg-red-500' : 'bg-blue-500')}>
                   {exceeded ? <TrendingUp className="size-4" /> : <CheckCircle2 className="size-4" />}
-                  <span className="font-mono font-bold">{diffPercent.toFixed(1)}%</span>
+                  <span className="font-bold font-mono">{diffPercent.toFixed(1)}%</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -83,9 +83,9 @@ export function RVERDOItem({ asset, data, showInoperabilities }: RVERDOItemProps
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex items-center gap-1 text-amber-500 animate-pulse">
+                  <div className="flex animate-pulse items-center gap-1 text-amber-500">
                     <AlertCircle className="size-5" />
-                    <span className="hidden text-xs font-bold uppercase md:inline">{t('null.consumption.estimated')}</span>
+                    <span className="hidden font-bold text-xs uppercase md:inline">{t('null.consumption.estimated')}</span>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>{t('null.consumption.estimated')}</TooltipContent>
@@ -97,9 +97,9 @@ export function RVERDOItem({ asset, data, showInoperabilities }: RVERDOItemProps
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex items-center gap-1 text-red-500 animate-pulse">
+                  <div className="flex animate-pulse items-center gap-1 text-red-500">
                     <AlertCircle className="size-5" />
-                    <span className="hidden text-xs font-bold uppercase md:inline">{t('consumption.exceeded')}</span>
+                    <span className="hidden font-bold text-xs uppercase md:inline">{t('consumption.exceeded')}</span>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>{t('consumption.exceeded')}</TooltipContent>

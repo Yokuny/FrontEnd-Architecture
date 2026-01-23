@@ -53,9 +53,9 @@ export function UserRMDayChart({ filters }: UserRMDayChartProps) {
   const isEmpty = !data || ((data.accessRMDay?.length || 0) === 0 && (data.usersRMDay?.length || 0) === 0);
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full">
-      <ItemHeader className="flex-col items-start gap-1 mb-6">
-        <ItemTitle className="text-xl font-semibold">RM</ItemTitle>
+    <Item variant="outline" className="w-full flex-col items-stretch">
+      <ItemHeader className="mb-6 flex-col items-start gap-1">
+        <ItemTitle className="font-semibold text-xl">RM</ItemTitle>
         <ItemDescription>{t('tracking.activity.rm.day.description', 'Consultas e usuários únicos RM por dia')}</ItemDescription>
       </ItemHeader>
       <ItemContent>
@@ -74,14 +74,14 @@ export function UserRMDayChart({ filters }: UserRMDayChartProps) {
                 <Bar dataKey="users" fill={getChartColor(2)} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ChartContainer>
-            <ItemFooter className="flex-wrap items-center justify-center gap-6 p-4 mt-4">
+            <ItemFooter className="mt-4 flex-wrap items-center justify-center gap-6 p-4">
               <div className="flex flex-col items-center">
-                <ItemDescription className="text-xs font-semibold text-muted-foreground uppercase">{t('total.accesses')}</ItemDescription>
-                <ItemTitle className="tabular-nums font-semibold text-lg">{totals.accesses.toLocaleString()}</ItemTitle>
+                <ItemDescription className="font-semibold text-muted-foreground text-xs uppercase">{t('total.accesses')}</ItemDescription>
+                <ItemTitle className="font-semibold text-lg tabular-nums">{totals.accesses.toLocaleString()}</ItemTitle>
               </div>
               <div className="flex flex-col items-center">
-                <ItemDescription className="text-xs font-semibold text-muted-foreground uppercase">{t('total.users')}</ItemDescription>
-                <ItemTitle className="tabular-nums font-semibold text-lg">{totals.users.toLocaleString()}</ItemTitle>
+                <ItemDescription className="font-semibold text-muted-foreground text-xs uppercase">{t('total.users')}</ItemDescription>
+                <ItemTitle className="font-semibold text-lg tabular-nums">{totals.users.toLocaleString()}</ItemTitle>
               </div>
             </ItemFooter>
           </>

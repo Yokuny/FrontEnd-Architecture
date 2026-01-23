@@ -1,5 +1,5 @@
-import { format, differenceInMinutes } from 'date-fns';
-import { Eye, Download } from 'lucide-react';
+import { differenceInMinutes, format } from 'date-fns';
+import { Download, Eye } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -46,16 +46,16 @@ export function ModalViewDetails({ operations, rdo }: ModalViewDetailsProps) {
           <Eye className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{t('polling')}</DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+        <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* RDO Table */}
           <div className="space-y-4">
-            <h3 className="text-center font-bold text-muted-foreground uppercase text-sm">RDO</h3>
-            <div className="border rounded-md overflow-hidden">
+            <h3 className="text-center font-bold text-muted-foreground text-sm uppercase">RDO</h3>
+            <div className="overflow-hidden rounded-md border">
               <table className="w-full text-xs">
                 <thead className="bg-muted text-muted-foreground">
                   <tr>
@@ -86,7 +86,7 @@ export function ModalViewDetails({ operations, rdo }: ModalViewDetailsProps) {
             </div>
             <div className="flex justify-center">
               <Button variant="ghost" size="sm" className="text-[10px]">
-                <Download className="h-3 w-3 mr-1" />
+                <Download className="mr-1 h-3 w-3" />
                 {t('download')} CSV
               </Button>
             </div>
@@ -94,8 +94,8 @@ export function ModalViewDetails({ operations, rdo }: ModalViewDetailsProps) {
 
           {/* RVE Table */}
           <div className="space-y-4">
-            <h3 className="text-center font-bold text-muted-foreground uppercase text-sm">RVE</h3>
-            <div className="border rounded-md overflow-hidden">
+            <h3 className="text-center font-bold text-muted-foreground text-sm uppercase">RVE</h3>
+            <div className="overflow-hidden rounded-md border">
               <table className="w-full text-xs">
                 <thead className="bg-muted text-muted-foreground">
                   <tr>
@@ -135,7 +135,7 @@ export function ModalViewDetails({ operations, rdo }: ModalViewDetailsProps) {
             </div>
             <div className="flex justify-center">
               <Button variant="ghost" size="sm" className="text-[10px]">
-                <Download className="h-3 w-3 mr-1" />
+                <Download className="mr-1 h-3 w-3" />
                 {t('download')} CSV
               </Button>
             </div>

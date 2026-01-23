@@ -81,19 +81,19 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
       <CardHeader title={t('calendar.maintenance')}>
         <Item className="items-center p-0">
           <ItemContent className="flex-row items-baseline gap-2">
-            <ItemTitle className="text-xl font-semibold">{String(currentDate.getDate()).padStart(2, '0')}</ItemTitle>
-            <ItemTitle className="text-xl font-semibold">{format(currentDate, 'EEE.', { locale: dateLocale })}</ItemTitle>
+            <ItemTitle className="font-semibold text-xl">{String(currentDate.getDate()).padStart(2, '0')}</ItemTitle>
+            <ItemTitle className="font-semibold text-xl">{format(currentDate, 'EEE.', { locale: dateLocale })}</ItemTitle>
             <ItemDescription className="text-lg">{headerTitle}</ItemDescription>
           </ItemContent>
           <ItemContent className="flex-row items-center gap-2">
             <div className="relative flex items-center md:items-stretch">
-              <Button variant="outline" onClick={handlePrevious} aria-label="previous" className="rounded-none rounded-l-md border-r-0 w-6 justify-start">
+              <Button variant="outline" onClick={handlePrevious} aria-label="previous" className="w-6 justify-start rounded-none rounded-l-md border-r-0">
                 <ChevronLeft className="size-5 stroke-[1.8]" aria-hidden="true" />
               </Button>
               <Button variant="outline" onClick={() => setCurrentDate(new Date())} className="hidden rounded-none border-x-0 md:block">
                 {t('today')}
               </Button>
-              <Button variant="outline" onClick={handleNext} aria-label="next" className="rounded-none rounded-r-md border-l-0 w-6 p-0 justify-end">
+              <Button variant="outline" onClick={handleNext} aria-label="next" className="w-6 justify-end rounded-none rounded-r-md border-l-0 p-0">
                 <ChevronRight className="size-5 stroke-[1.8]" aria-hidden="true" />
               </Button>
             </div>
@@ -126,7 +126,7 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
         </Item>
       </CardHeader>
       <CardContent className="flex flex-col">
-        <Item variant="outline" className="bg-secondary gap-4">
+        <Item variant="outline" className="gap-4 bg-secondary">
           <MachineByEnterpriseSelect
             mode="multi"
             label={t('machines')}
@@ -152,9 +152,9 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
           />
 
           <div className="flex flex-col gap-1.5">
-            <span className="text-muted-foreground text-xs font-medium">{t('status')}</span>
+            <span className="font-medium text-muted-foreground text-xs">{t('status')}</span>
             <Select value={filters.status || 'all'} onValueChange={(val) => setFilters((prev) => ({ ...prev, status: val === 'all' ? undefined : (val as any) }))}>
-              <SelectTrigger className="bg-background h-10">
+              <SelectTrigger className="h-10 bg-background">
                 <SelectValue placeholder={t('all')} />
               </SelectTrigger>
               <SelectContent>
@@ -165,7 +165,7 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
             </Select>
           </div>
 
-          <div className="flex ml-auto gap-2">
+          <div className="ml-auto flex gap-2">
             <Button className="text-amber-700 hover:text-amber-800" variant="outline" onClick={() => setFilters({})}>
               <BrushCleaning className="size-4" />
             </Button>

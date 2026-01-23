@@ -38,7 +38,7 @@ export function ApiExternalForm({ showEnterpriseSelect }: { showEnterpriseSelect
                     disabled={isLoading || isPending}
                   />
                 </FormControl>
-                {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
+                {errors.idEnterprise && <p className="text-destructive text-sm">{t(errors.idEnterprise.message as string)}</p>}
               </Field>,
             ],
           },
@@ -59,7 +59,7 @@ export function ApiExternalForm({ showEnterpriseSelect }: { showEnterpriseSelect
                 <FormControl>
                   <div className="relative">
                     <Input id="windyKey" type={showKey ? 'text' : 'password'} placeholder="API KEY" {...field} disabled={isLoading || isPending} className="pr-10" />
-                    <button type="button" onClick={() => setShowKey(!showKey)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                    <button type="button" onClick={() => setShowKey(!showKey)} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                       {showKey ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                     </button>
                   </div>

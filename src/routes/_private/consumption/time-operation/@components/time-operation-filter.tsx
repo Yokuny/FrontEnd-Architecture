@@ -140,7 +140,7 @@ export function TimeOperationFilter({ idEnterprise, filters, onFilterChange, isL
 
       <div className="flex items-center space-x-2 pb-3">
         <Checkbox id="show-disabled" checked={localFilters.isShowDisabled} onCheckedChange={(checked) => setLocalFilters({ ...localFilters, isShowDisabled: !!checked })} />
-        <Label htmlFor="show-disabled" className="text-sm font-medium leading-none cursor-pointer">
+        <Label htmlFor="show-disabled" className="cursor-pointer font-medium text-sm leading-none">
           {t('show.disabled')}
         </Label>
       </div>

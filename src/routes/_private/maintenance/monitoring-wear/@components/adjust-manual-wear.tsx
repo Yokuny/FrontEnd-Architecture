@@ -66,7 +66,7 @@ export function AdjustManualWear({ idMachine, idPart, idTypeService, idWearConfi
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="size-8 text-destructive hover:text-destructive hover:bg-destructive/10">
+        <Button variant="ghost" size="icon" className="size-8 text-destructive hover:bg-destructive/10 hover:text-destructive">
           <Settings2 className="size-4" />
         </Button>
       </DialogTrigger>
@@ -100,7 +100,7 @@ export function AdjustManualWear({ idMachine, idPart, idTypeService, idWearConfi
           </div>
           <div className="flex items-center space-x-2 pt-2">
             <Checkbox id="restart-counter" checked={isRestartCounter} onCheckedChange={(checked) => setIsRestartCounter(checked as boolean)} />
-            <Label htmlFor="restart-counter" className="font-normal decoration- cursor-pointer underline underline-offset-4 leading-tight">
+            <Label htmlFor="restart-counter" className="decoration- cursor-pointer font-normal leading-tight underline underline-offset-4">
               {t('sensor.restart.to.zero')}
             </Label>
           </div>

@@ -38,7 +38,7 @@ export function FormFieldPreview({ field, value, onChange, idEnterprise }: FormF
         return (
           <div className="relative">
             <Input type="number" value={value || ''} onChange={(e) => onChange(e.target.value)} placeholder={description} />
-            {properties?.unit && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">{properties.unit}</span>}
+            {properties?.unit && <span className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground text-sm">{properties.unit}</span>}
           </div>
         );
 
@@ -96,7 +96,7 @@ export function FormFieldPreview({ field, value, onChange, idEnterprise }: FormF
 
       case 'group':
         return (
-          <div className="space-y-3 p-4 border rounded-lg bg-accent/5">
+          <div className="space-y-3 rounded-lg border bg-accent/5 p-4">
             <div className="grid grid-cols-12 gap-x-4 gap-y-2">
               {(field.fields || []).map((subField: any, i: number) => (
                 <FormFieldPreview
@@ -116,8 +116,8 @@ export function FormFieldPreview({ field, value, onChange, idEnterprise }: FormF
 
       case 'table':
         return (
-          <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-lg bg-accent/20 text-muted-foreground">
-            <p className="text-sm font-medium">{t('table.form', 'Tabela de Formulário')}</p>
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed bg-accent/20 p-8 text-muted-foreground">
+            <p className="font-medium text-sm">{t('table.form', 'Tabela de Formulário')}</p>
             <p className="text-xs">{t('table.preview.desc', 'Campos dinâmicos em formato de tabela')}</p>
           </div>
         );
@@ -125,7 +125,7 @@ export function FormFieldPreview({ field, value, onChange, idEnterprise }: FormF
       case 'image':
       case 'signature':
         return (
-          <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-lg bg-accent/20 text-muted-foreground whitespace-nowrap">
+          <div className="flex flex-col items-center justify-center whitespace-nowrap rounded-lg border-2 border-dashed bg-accent/20 p-8 text-muted-foreground">
             <p className="text-sm">{t('field.preview.placeholder', { type: t(datatype) })}</p>
           </div>
         );
@@ -142,7 +142,7 @@ export function FormFieldPreview({ field, value, onChange, idEnterprise }: FormF
     <div className={cn('p-1', colSpan)}>
       {datatype !== 'boolean' && datatype !== 'checkbox' && (
         <Field className="gap-1.5">
-          <FieldLabel className="text-sm font-semibold">{label}</FieldLabel>
+          <FieldLabel className="font-semibold text-sm">{label}</FieldLabel>
           {renderField()}
         </Field>
       )}

@@ -46,9 +46,9 @@ export function SummaryCards({ data, unit, isReal }: SummaryCardsProps) {
           <ItemContent>
             <div className="flex items-center gap-2">
               <card.icon className={cn('size-5', card.color)} />
-              <ItemDescription className="text-sm font-medium">{card.title}</ItemDescription>
+              <ItemDescription className="font-medium text-sm">{card.title}</ItemDescription>
             </div>
-            <ItemTitle className="text-2xl font-bold">{card.value}</ItemTitle>
+            <ItemTitle className="font-bold text-2xl">{card.value}</ItemTitle>
           </ItemContent>
         </Item>
       ))}

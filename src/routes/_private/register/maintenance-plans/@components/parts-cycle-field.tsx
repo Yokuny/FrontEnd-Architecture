@@ -21,9 +21,9 @@ export function PartsCycleField() {
   return (
     <div className="space-y-4">
       {fields.map((field, index) => (
-        <Item key={field.id} variant="outline" className="flex-col items-stretch p-0 overflow-hidden bg-muted/5 border-muted-foreground/10 mb-2">
-          <ItemHeader className="p-4 bg-muted/10 border-b border-muted-foreground/10">
-            <div className="md:col-span-11 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+        <Item key={field.id} variant="outline" className="mb-2 flex-col items-stretch overflow-hidden border-muted-foreground/10 bg-muted/5 p-0">
+          <ItemHeader className="border-muted-foreground/10 border-b bg-muted/10 p-4">
+            <div className="grid w-full grid-cols-1 gap-4 md:col-span-11 md:grid-cols-3">
               <FormField
                 control={control}
                 name={`partsCycle.${index}.part`}
@@ -65,7 +65,7 @@ export function PartsCycleField() {
               />
             </div>
             <ItemActions className="pt-6">
-              <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)} className="text-destructive h-8 w-8 hover:bg-destructive/10">
+              <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)} className="h-8 w-8 text-destructive hover:bg-destructive/10">
                 <Trash2 className="size-4" />
               </Button>
             </ItemActions>
@@ -77,10 +77,10 @@ export function PartsCycleField() {
         variant="ghost"
         size="sm"
         onClick={() => append({ part: undefined, typeService: undefined, observation: '' })}
-        className="text-primary hover:text-primary hover:bg-primary/10 ml-4"
+        className="ml-4 text-primary hover:bg-primary/10 hover:text-primary"
         disabled={!idEnterprise}
       >
-        <Plus className="size-4 mr-2" />
+        <Plus className="mr-2 size-4" />
         {t('add.item')}
       </Button>
     </div>

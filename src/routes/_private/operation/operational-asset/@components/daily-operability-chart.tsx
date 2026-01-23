@@ -37,7 +37,7 @@ export function DailyOperabilityChart({ data, isLoading }: DailyOperabilityChart
         {isEmpty ? (
           <DefaultEmptyData />
         ) : (
-          <ChartContainer config={chartConfig} style={{ minHeight: CHART_MIN_HEIGHT.DEFAULT }} className="w-full h-40">
+          <ChartContainer config={chartConfig} style={{ minHeight: CHART_MIN_HEIGHT.DEFAULT }} className="h-40 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 20, right: 30, left: 10, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--muted-foreground))" opacity={0.2} />
@@ -69,7 +69,7 @@ export function DailyOperabilityChart({ data, isLoading }: DailyOperabilityChart
                             <ItemTitle>{t('operating.rate')}:</ItemTitle>
                             <ItemContent>{value}%</ItemContent>
                           </div>
-                          <div className="flex items-baseline gap-1 ml-4">
+                          <div className="ml-4 flex items-baseline gap-1">
                             <ItemTitle>{t('hours')}:</ItemTitle>
                             <ItemContent>{(item.payload as any).hours}h</ItemContent>
                           </div>

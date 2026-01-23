@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { ArrowDownCircle, ArrowUpCircle, ChevronDown, ChevronUp, Droplet, TrendingUp, TrendingDown, AlertTriangle, Info, Clock } from 'lucide-react';
+import { AlertTriangle, ArrowDownCircle, ArrowUpCircle, ChevronDown, ChevronUp, Clock, Droplet, Info, TrendingDown, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
@@ -50,40 +50,40 @@ export function ItemPeriodSounding({ data }: ItemPeriodSoundingProps) {
         const isOpen = openIndex === i;
 
         return (
-          <Card key={i} className="shadow-none border">
+          <Card key={i} className="border shadow-none">
             <CardHeader className="p-4">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+              <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-12">
                 {/* Start */}
-                <div className="md:col-span-2 flex flex-col">
-                  <span className="text-[10px] uppercase text-muted-foreground font-semibold mb-1">{t('start')}</span>
-                  <div className="flex items-center gap-1 text-sm font-medium">
+                <div className="flex flex-col md:col-span-2">
+                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('start')}</span>
+                  <div className="flex items-center gap-1 font-medium text-sm">
                     <Clock className="size-3 text-muted-foreground" />
                     {format(first.date, 'dd MMM, HH:mm')}
                   </div>
-                  <div className="flex items-center gap-1 text-base font-bold text-sky-500">
+                  <div className="flex items-center gap-1 font-bold text-base text-sky-500">
                     <Droplet className="size-4" />
                     {formatNumber(first.volume, 3)}
-                    <span className="text-[10px] font-normal text-muted-foreground ml-1">m³</span>
+                    <span className="ml-1 font-normal text-[10px] text-muted-foreground">m³</span>
                   </div>
                 </div>
 
                 {/* End */}
-                <div className="md:col-span-2 flex flex-col">
-                  <span className="text-[10px] uppercase text-muted-foreground font-semibold mb-1">{t('end')}</span>
-                  <div className="flex items-center gap-1 text-sm font-medium">
+                <div className="flex flex-col md:col-span-2">
+                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('end')}</span>
+                  <div className="flex items-center gap-1 font-medium text-sm">
                     <Clock className="size-3 text-muted-foreground" />
                     {format(last.date, 'dd MMM, HH:mm')}
                   </div>
-                  <div className="flex items-center gap-1 text-base font-bold text-sky-500">
+                  <div className="flex items-center gap-1 font-bold text-base text-sky-500">
                     <Droplet className="size-4" />
                     {formatNumber(last.volume, 3)}
-                    <span className="text-[10px] font-normal text-muted-foreground ml-1">m³</span>
+                    <span className="ml-1 font-normal text-[10px] text-muted-foreground">m³</span>
                   </div>
                 </div>
 
                 {/* Moving */}
-                <div className="md:col-span-2 flex flex-col">
-                  <span className="text-[10px] uppercase text-muted-foreground font-semibold mb-1">{t('moving')}</span>
+                <div className="flex flex-col md:col-span-2">
+                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('moving')}</span>
                   <div className="flex items-center gap-1 text-xs">
                     <ArrowDownCircle className="size-3 text-green-500" />
                     {formatNumber(totalReceive, 3)} m³
@@ -97,41 +97,41 @@ export function ItemPeriodSounding({ data }: ItemPeriodSoundingProps) {
                 </div>
 
                 {/* Maximum */}
-                <div className="md:col-span-2 flex flex-col">
-                  <span className="text-[10px] uppercase text-muted-foreground font-semibold mb-1">{t('maximum')}</span>
-                  <div className="flex items-center gap-1 text-sm font-medium">
+                <div className="flex flex-col md:col-span-2">
+                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('maximum')}</span>
+                  <div className="flex items-center gap-1 font-medium text-sm">
                     <TrendingUp className={isExcess ? 'text-red-500' : 'text-muted-foreground'} size={14} />
                     {formatNumber(maxAllow, 3)}
-                    <span className="text-[10px] font-normal text-muted-foreground ml-1">m³</span>
+                    <span className="ml-1 font-normal text-[10px] text-muted-foreground">m³</span>
                   </div>
                 </div>
 
                 {/* Consumption */}
-                <div className="md:col-span-2 flex flex-col">
-                  <span className="text-[10px] uppercase text-muted-foreground font-semibold mb-1">{t('consumption')}</span>
-                  <div className="flex items-center gap-1 text-lg font-bold">
+                <div className="flex flex-col md:col-span-2">
+                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('consumption')}</span>
+                  <div className="flex items-center gap-1 font-bold text-lg">
                     <Droplet className={isExcess ? 'text-red-500' : 'text-green-500'} size={16} />
                     {formatNumber(consumed, 3)}
-                    <span className="text-[10px] font-normal text-muted-foreground ml-1">m³</span>
+                    <span className="ml-1 font-normal text-[10px] text-muted-foreground">m³</span>
                   </div>
                 </div>
 
                 {/* Status Badge */}
-                <div className="md:col-span-1 flex items-center justify-center">
+                <div className="flex items-center justify-center md:col-span-1">
                   {dataInThisPeriod.length >= 4 ? (
                     isExcess ? (
-                      <div className="flex items-center gap-1 text-[10px] font-bold text-red-500 border border-red-500 rounded px-2 py-1">
+                      <div className="flex items-center gap-1 rounded border border-red-500 px-2 py-1 font-bold text-[10px] text-red-500">
                         <AlertTriangle size={12} />
                         {t('in.excess')}
                       </div>
                     ) : (
-                      <div className="flex items-center gap-1 text-[10px] font-bold text-green-500 border border-green-500 rounded px-2 py-1">
+                      <div className="flex items-center gap-1 rounded border border-green-500 px-2 py-1 font-bold text-[10px] text-green-500">
                         <TrendingDown size={12} />
                         {t('below.contract')}
                       </div>
                     )
                   ) : (
-                    <div className="flex items-center gap-1 text-[10px] font-bold text-orange-500 border border-orange-500 rounded px-2 py-1">
+                    <div className="flex items-center gap-1 rounded border border-orange-500 px-2 py-1 font-bold text-[10px] text-orange-500">
                       <Info size={12} />
                       {t('period.not.close')}
                     </div>
@@ -139,7 +139,7 @@ export function ItemPeriodSounding({ data }: ItemPeriodSoundingProps) {
                 </div>
 
                 {/* Toggle Action */}
-                <div className="md:col-span-1 flex justify-end">
+                <div className="flex justify-end md:col-span-1">
                   <Button variant="ghost" size="sm" onClick={() => setOpenIndex(isOpen ? null : i)}>
                     {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
                   </Button>
@@ -147,7 +147,7 @@ export function ItemPeriodSounding({ data }: ItemPeriodSoundingProps) {
               </div>
             </CardHeader>
             {isOpen && (
-              <CardContent className="p-4 border-t bg-muted/20">
+              <CardContent className="border-t bg-muted/20 p-4">
                 <TableListRVESounding data={{ ...data, sounding: dataInThisPeriod }} />
               </CardContent>
             )}

@@ -48,14 +48,14 @@ function OperationalDashboardPage() {
   return (
     <Card>
       <CardHeader title={t('performance.fleet.operational')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           {lastUpdate && (
             <ItemDescription>
               {t('last.date.acronym')}: {format(lastUpdate, 'dd MM yyyy HH:mm')}
             </ItemDescription>
           )}
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"

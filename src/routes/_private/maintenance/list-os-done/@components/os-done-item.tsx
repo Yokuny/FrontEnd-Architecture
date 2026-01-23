@@ -25,7 +25,7 @@ export function OsDoneItem({ item, hasViewPermission }: OsDoneItemProps) {
 
   return (
     <Item variant="outline" className="group">
-      <ItemMedia variant="icon" className="bg-red-50 text-red-600 border-red-100 size-11 rounded-full">
+      <ItemMedia variant="icon" className="size-11 rounded-full border-red-100 bg-red-50 text-red-600">
         <FileText className="size-5" />
       </ItemMedia>
 
@@ -37,9 +37,9 @@ export function OsDoneItem({ item, hasViewPermission }: OsDoneItemProps) {
       </ItemContent>
 
       <div className="flex flex-col items-end gap-1 px-4">
-        <div className="flex items-center gap-1.5 text-green-600 bg-green-50 px-2 py-1 rounded-md border border-green-100">
+        <div className="flex items-center gap-1.5 rounded-md border border-green-100 bg-green-50 px-2 py-1 text-green-600">
           <CheckCircle2 className="size-3.5" />
-          <span className="text-[11px] font-bold uppercase tracking-tight">
+          <span className="font-bold text-[11px] uppercase tracking-tight">
             {t('done.at')} {item.doneAt ? format(new Date(item.doneAt), 'dd/MM/yyyy') : '-'}
           </span>
         </div>
@@ -49,7 +49,7 @@ export function OsDoneItem({ item, hasViewPermission }: OsDoneItemProps) {
         {hasViewPermission && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="size-9 rounded-full group-hover:bg-primary/10 transition-colors">
+              <Button variant="ghost" size="icon" className="size-9 rounded-full transition-colors group-hover:bg-primary/10">
                 <MoreVertical className="size-4" />
               </Button>
             </DropdownMenuTrigger>

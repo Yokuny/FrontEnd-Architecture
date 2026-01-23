@@ -65,7 +65,7 @@ function FormsListPage() {
       <Item
         key={item.id || item._id}
         variant="outline"
-        className={` ${item.appliedPermissions?.canEdit ? 'cursor-pointer' : 'cursor-not-allowed'} ${isPending ? 'opacity-70 bg-muted/30' : ''}`}
+        className={` ${item.appliedPermissions?.canEdit ? 'cursor-pointer' : 'cursor-not-allowed'} ${isPending ? 'bg-muted/30 opacity-70' : ''}`}
         onClick={() => {
           if (!item.appliedPermissions?.canEdit) return;
           navigate({
@@ -74,7 +74,7 @@ function FormsListPage() {
           });
         }}
       >
-        <div className="flex items-center gap-4 flex-1">
+        <div className="flex flex-1 items-center gap-4">
           <ItemMedia variant="image">
             <FileText className={`size-5 ${isPending ? 'text-muted-foreground' : 'text-primary'}`} />
           </ItemMedia>
@@ -116,7 +116,7 @@ function FormsListPage() {
                     });
                   }}
                 >
-                  <Pencil className="size-4 mr-2" />
+                  <Pencil className="mr-2 size-4" />
                   {t('edit')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -130,9 +130,9 @@ function FormsListPage() {
   return (
     <Card>
       <CardHeader title={t('config.form')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"
@@ -154,7 +154,7 @@ function FormsListPage() {
             />
           </div>
           <Button onClick={() => navigate({ to: '/register/forms/add' })} disabled={!idEnterprise}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
         </div>
@@ -171,7 +171,7 @@ function FormsListPage() {
 
             {pendingForms.length > 0 && (
               <div className="mt-6">
-                <p className="text-sm text-muted-foreground text-center mb-4">{t('unsaved.forms')}</p>
+                <p className="mb-4 text-center text-muted-foreground text-sm">{t('unsaved.forms')}</p>
                 <ItemGroup>
                   {pendingForms.map((form) =>
                     renderFormItem(
@@ -193,7 +193,7 @@ function FormsListPage() {
 
       {total > 0 && (
         <CardFooter layout="multi">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+          <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">

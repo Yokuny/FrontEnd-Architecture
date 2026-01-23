@@ -26,7 +26,7 @@ export function RuleConfig() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-6 border-b">
+      <div className="grid grid-cols-1 gap-4 border-b pb-6 md:grid-cols-2">
         <FormField
           control={control}
           name="rule.then.message"
@@ -98,27 +98,27 @@ function RuleGroup({ andIndex, idEnterprise, onRemove, canRemove }: { andIndex: 
   });
 
   return (
-    <Card className="relative group overflow-hidden border-muted-foreground/20">
+    <Card className="group relative overflow-hidden border-muted-foreground/20">
       {canRemove && (
         <Button
           type="button"
           variant="destructive"
           size="icon"
-          className="absolute right-2 top-2 z-10 size-8 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-2 right-2 z-10 size-8 opacity-0 transition-opacity group-hover:opacity-100"
           onClick={onRemove}
         >
           <Trash2 className="size-4" />
         </Button>
       )}
-      <CardContent className="pt-6 space-y-4">
+      <CardContent className="space-y-4 pt-6">
         {orFields.map((field, index) => (
           <div key={field.id} className="relative">
             {index > 0 && (
-              <div className="flex justify-center my-2">
-                <span className="bg-muted px-2 py-1 text-xs rounded uppercase font-bold text-muted-foreground">{t('condition.or')}</span>
+              <div className="my-2 flex justify-center">
+                <span className="rounded bg-muted px-2 py-1 font-bold text-muted-foreground text-xs uppercase">{t('condition.or')}</span>
               </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end bg-accent/30 p-4 rounded-lg border border-accent">
+            <div className="grid grid-cols-1 items-end gap-4 rounded-lg border border-accent bg-accent/30 p-4 md:grid-cols-12">
               <div className="md:col-span-4">
                 <FormField
                   control={control}
@@ -170,7 +170,7 @@ function RuleGroup({ andIndex, idEnterprise, onRemove, canRemove }: { andIndex: 
                 />
               </div>
 
-              <div className="md:col-span-1 flex justify-end">
+              <div className="flex justify-end md:col-span-1">
                 {orFields.length > 1 && (
                   <Button type="button" variant="ghost" size="icon" onClick={() => removeOr(index)}>
                     <Trash2 className="size-4 text-muted-foreground hover:text-destructive" />

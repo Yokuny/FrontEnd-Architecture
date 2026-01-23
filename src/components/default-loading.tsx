@@ -5,7 +5,7 @@ import { Spinner } from '@/components/ui/spinner';
 
 const DefaultLoading = () => {
   return (
-    <Skeleton className="h-48 w-full flex items-center justify-center">
+    <Skeleton className="flex h-48 w-full items-center justify-center">
       <Spinner />
     </Skeleton>
   );

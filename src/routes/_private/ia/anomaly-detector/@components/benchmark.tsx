@@ -17,29 +17,29 @@ export function Benchmark({ data }: BenchmarkProps) {
   };
 
   return (
-    <div className="mx-auto grid gap-px rounded-xl bg-border grid-cols-3 overflow-hidden border mb-6">
-      <Item className="rounded-none border-0 bg-background flex-col">
+    <div className="mx-auto mb-6 grid grid-cols-3 gap-px overflow-hidden rounded-xl border bg-border">
+      <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex flex-row items-center gap-2">
           <Check className="size-5 text-lime-700" />
-          <ItemDescription className="text-sm font-medium">Ok</ItemDescription>
+          <ItemDescription className="font-medium text-sm">Ok</ItemDescription>
         </ItemContent>
-        <ItemTitle className="text-2xl font-medium tracking-tight ml-6">{counts.ok}</ItemTitle>
+        <ItemTitle className="ml-6 font-medium text-2xl tracking-tight">{counts.ok}</ItemTitle>
       </Item>
 
-      <Item className="rounded-none border-0 bg-background flex-col">
+      <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex flex-row items-center gap-2">
           <Bug className="size-5 text-red-800" />
-          <ItemDescription className="uppercase text-xs font-bold">{t('anamoly.detected')}</ItemDescription>
+          <ItemDescription className="font-bold text-xs uppercase">{t('anamoly.detected')}</ItemDescription>
         </ItemContent>
-        <ItemTitle className="text-2xl font-medium tracking-tight ml-6">{counts.anomaly}</ItemTitle>
+        <ItemTitle className="ml-6 font-medium text-2xl tracking-tight">{counts.anomaly}</ItemTitle>
       </Item>
 
-      <Item className="rounded-none border-0 bg-background flex-col">
+      <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex flex-row items-center gap-2">
           <CloudOff className="size-5 text-muted-foreground" />
-          <ItemDescription className="text-sm font-medium">Off-line</ItemDescription>
+          <ItemDescription className="font-medium text-sm">Off-line</ItemDescription>
         </ItemContent>
-        <ItemTitle className="text-2xl font-medium tracking-tight ml-6">{counts.off}</ItemTitle>
+        <ItemTitle className="ml-6 font-medium text-2xl tracking-tight">{counts.off}</ItemTitle>
       </Item>
     </div>
   );

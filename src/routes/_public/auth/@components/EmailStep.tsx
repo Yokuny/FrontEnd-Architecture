@@ -41,7 +41,7 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
               <FormControl>
                 <div className="relative">
                   <Input {...field} className="h-14" type="email" placeholder={t('login.email.placeholder')} autoFocus />
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <div className="absolute top-1/2 right-3 -translate-y-1/2">
                     <Mail className="size-5 text-muted-foreground" />
                   </div>
                 </div>
@@ -53,12 +53,12 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
 
         <div className="flex items-center space-x-2">
           <Checkbox id="remember" variant="blue" checked={rememberEmail} onCheckedChange={(checked: boolean | 'indeterminate') => onRememberChange(checked === true)} />
-          <Label htmlFor="remember" className="text-sm font-normal cursor-pointer">
+          <Label htmlFor="remember" className="cursor-pointer font-normal text-sm">
             {t('remember.email')}
           </Label>
         </div>
 
-        <Button type="submit" variant="blue" className="w-full mt-4 font-semibold text-base" size="lg">
+        <Button type="submit" variant="blue" className="mt-4 w-full font-semibold text-base" size="lg">
           {t('next')}
           <ArrowRight className="ml-2 size-5" />
         </Button>

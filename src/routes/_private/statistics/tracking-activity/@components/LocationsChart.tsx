@@ -32,7 +32,7 @@ export function LocationsChart({ filters }: LocationsChartProps) {
   const isEmpty = tableData.length === 0;
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full">
+    <Item variant="outline" className="w-full flex-col items-stretch">
       <ItemHeader className="flex-col items-start gap-1">
         <ItemTitle>{t('locations')}</ItemTitle>
         <ItemDescription>{t('locations.description', 'Localizações de acesso ao sistema')}</ItemDescription>

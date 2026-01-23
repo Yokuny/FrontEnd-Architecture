@@ -84,8 +84,8 @@ function GoalAddFormContent({ initialData }: { initialData: any }) {
         <form onSubmit={onSubmit}>
           <CardContent>
             <GoalFormMeta />
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-medium">{t('goals')}</h3>
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="font-medium text-lg">{t('goals')}</h3>
               <GoalAddMachineModal />
             </div>
             <GoalFormTable />

@@ -16,20 +16,20 @@ export function MonitoringPlanCard({ machine }: MonitoringPlanCardProps) {
     .slice(0, 2);
 
   return (
-    <div className="rounded-lg border bg-card text-card-foreground overflow-hidden ">
-      <Item variant="default" className="bg-muted/10 border-b">
+    <div className="overflow-hidden rounded-lg border bg-card text-card-foreground">
+      <Item variant="default" className="border-b bg-muted/10">
         <Avatar className="size-14">
           <AvatarImage src={machine.image?.url} alt={machine.name} />
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
 
         <ItemContent>
-          <ItemTitle className="text-base font-semibold tracking-tight">{machine.name}</ItemTitle>
+          <ItemTitle className="font-semibold text-base tracking-tight">{machine.name}</ItemTitle>
           <ItemDescription className="text-xs">{machine.enterprise?.name}</ItemDescription>
         </ItemContent>
       </Item>
 
-      <ItemGroup className="border-t p-4 space-y-2 ">
+      <ItemGroup className="space-y-2 border-t p-4">
         {machine.monitoringPlan?.map((planItem, index) => (
           <MonitoringPlanItem key={`${planItem.idMaintenancePlan}-${index}`} planItem={planItem} idMachine={machine.idMachine} />
         ))}

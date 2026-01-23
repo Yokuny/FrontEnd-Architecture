@@ -144,7 +144,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
                 <span className="text-muted-foreground">{placeholder}</span>
               )}
             </div>
-            <ChevronsUpDownIcon className="text-muted-foreground/80 shrink-0" aria-hidden="true" />
+            <ChevronsUpDownIcon className="shrink-0 text-muted-foreground/80" aria-hidden="true" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[--radix-popover-trigger-width] p-0">

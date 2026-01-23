@@ -43,7 +43,7 @@ function VoyageHubPage() {
       <CardHeader title={t('voyage')} />
       <CardContent className="grid gap-4 md:grid-cols-2">
         {menuItems.map((item) => (
-          <Item key={item.to} variant="outline" className="cursor-pointer h-full" asChild>
+          <Item key={item.to} variant="outline" className="h-full cursor-pointer" asChild>
             <Link to={item.to}>
               <ItemMedia variant="icon">
                 <item.icon className="size-5" />

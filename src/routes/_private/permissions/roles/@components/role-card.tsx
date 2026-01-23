@@ -39,8 +39,8 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
       </ItemMedia>
 
       <ItemContent>
-        <ItemTitle className="text-lg truncate block">{role.description}</ItemTitle>
-        {role.enterprise && <ItemDescription className="truncate block">{role.enterprise.name}</ItemDescription>}
+        <ItemTitle className="block truncate text-lg">{role.description}</ItemTitle>
+        {role.enterprise && <ItemDescription className="block truncate">{role.enterprise.name}</ItemDescription>}
       </ItemContent>
 
       <ItemActions className="gap-3">

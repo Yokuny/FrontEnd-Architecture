@@ -27,8 +27,8 @@ export function FleetCrewPanel() {
 
   if (!crewData?.people || crewData.people.length === 0) {
     return (
-      <ItemGroup className="p-4 flex-1">
-        <div className="flex-1 flex flex-col items-center justify-center min-h-96">
+      <ItemGroup className="flex-1 p-4">
+        <div className="flex min-h-96 flex-1 flex-col items-center justify-center">
           <DefaultEmptyData />
         </div>
       </ItemGroup>
@@ -36,36 +36,36 @@ export function FleetCrewPanel() {
   }
 
   return (
-    <ItemGroup className="px-0 py-4 gap-4 h-full flex flex-col">
+    <ItemGroup className="flex h-full flex-col gap-4 px-0 py-4">
       <div className="flex-1 overflow-auto">
         {crewData.totalOnBoard !== undefined && (
-          <div className="px-4 py-2 border-b bg-muted/10 flex items-center gap-2 mb-2">
+          <div className="mb-2 flex items-center gap-2 border-b bg-muted/10 px-4 py-2">
             <Users className="size-3 text-primary" />
-            <span className="text-[10px] uppercase font-bold text-muted-foreground">{t('total.on.board')}:</span>
-            <span className="text-xs font-bold">{crewData.totalOnBoard}</span>
+            <span className="font-bold text-[10px] text-muted-foreground uppercase">{t('total.on.board')}:</span>
+            <span className="font-bold text-xs">{crewData.totalOnBoard}</span>
           </div>
         )}
 
         <div className="px-4">
           <Table>
-            <TableHeader className="bg-muted/20 sticky top-0 z-10">
+            <TableHeader className="sticky top-0 z-10 bg-muted/20">
               <TableRow>
-                <TableHead className="text-[10px] uppercase font-bold h-10">{t('name')}</TableHead>
-                <TableHead className="text-[10px] uppercase font-bold h-10">{t('boarding')}</TableHead>
-                <TableHead className="text-[10px] uppercase font-bold h-10">{t('landing')}</TableHead>
+                <TableHead className="h-10 font-bold text-[10px] uppercase">{t('name')}</TableHead>
+                <TableHead className="h-10 font-bold text-[10px] uppercase">{t('boarding')}</TableHead>
+                <TableHead className="h-10 font-bold text-[10px] uppercase">{t('landing')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {crewData.people.map((person: any, idx: number) => (
-                <TableRow key={`${person.id}-${idx}`} className="hover:bg-accent/50 transition-colors">
-                  <TableCell className="py-3 text-xs font-medium">{person.name}</TableCell>
-                  <TableCell className="py-3 text-xs text-muted-foreground">
+                <TableRow key={`${person.id}-${idx}`} className="transition-colors hover:bg-accent/50">
+                  <TableCell className="py-3 font-medium text-xs">{person.name}</TableCell>
+                  <TableCell className="py-3 text-muted-foreground text-xs">
                     <div className="flex items-center gap-2">
                       <Calendar className="size-3 opacity-50" />
                       {person.boarding ? format(new Date(person.boarding), 'dd MMM yyyy') : '-'}
                     </div>
                   </TableCell>
-                  <TableCell className="py-3 text-xs text-muted-foreground">
+                  <TableCell className="py-3 text-muted-foreground text-xs">
                     <div className="flex items-center gap-2">
                       <Calendar className="size-3 opacity-50" />
                       {person.landing ? format(new Date(person.landing), 'dd MMM yyyy') : '-'}

@@ -85,7 +85,7 @@ export function EditEventDialog({ isOpen, onOpenChange, event, idEnterprise }: E
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] overflow-y-auto max-h-[90vh]">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>{formData.id && formData.id !== '0' ? t('edit.event') : t('new.event')}</DialogTitle>
         </DialogHeader>

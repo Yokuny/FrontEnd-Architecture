@@ -68,7 +68,7 @@ function RoleUsersPage() {
             <UserPlus className="mr-2 size-4" />
             {t('role.user.permission')}
           </Button>
-          {role && <p className="text-sm text-muted-foreground">{role.description}</p>}
+          {role && <p className="text-muted-foreground text-sm">{role.description}</p>}
         </div>
       </CardHeader>
       <CardContent>
@@ -85,7 +85,7 @@ function RoleUsersPage() {
                 .slice(0, 2);
 
               return (
-                <div key={user.idUser} className="flex items-center justify-between p-4 border rounded-lg" style={{ borderLeft: '4px solid #115C93' }}>
+                <div key={user.idUser} className="flex items-center justify-between rounded-lg border p-4" style={{ borderLeft: '4px solid #115C93' }}>
                   <div className="flex items-center gap-4">
                     <Avatar>
                       <AvatarImage src={user.image?.url} alt={user.name} />
@@ -93,7 +93,7 @@ function RoleUsersPage() {
                     </Avatar>
                     <div>
                       <p className="font-medium">{user.name}</p>
-                      <p className="text-sm text-muted-foreground">{user.email}</p>
+                      <p className="text-muted-foreground text-sm">{user.email}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -123,7 +123,7 @@ function RoleUsersPage() {
             })}
           </div>
         ) : (
-          <div className="text-center py-8 text-muted-foreground">{t('no.users.found')}</div>
+          <div className="py-8 text-center text-muted-foreground">{t('no.users.found')}</div>
         )}
       </CardContent>
     </Card>

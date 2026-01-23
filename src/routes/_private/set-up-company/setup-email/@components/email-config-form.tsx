@@ -38,7 +38,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
               disabled={isLoading || isPending || !!isEnterpriseDisabled}
             />
           </FormControl>
-          {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
+          {errors.idEnterprise && <p className="text-destructive text-sm">{t(errors.idEnterprise.message as string)}</p>}
         </Field>,
       ],
     },
@@ -136,7 +136,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
                 <FormControl>
                   <div className="relative">
                     <Input type={showPass ? 'text' : 'password'} placeholder="••••••••" {...field} disabled={isLoading || isPending} className="pr-10" />
-                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                       {showPass ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                     </button>
                   </div>

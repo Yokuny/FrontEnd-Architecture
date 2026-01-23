@@ -87,14 +87,14 @@ function KPISCMMSPage() {
     <Card>
       <CardHeader title="KPI's CMMS" />
       <CardContent className="flex flex-col gap-6">
-        <div className="flex flex-wrap items-end gap-4 p-4 border rounded-lg bg-secondary/50">
+        <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary/50 p-4">
           <MachineByEnterpriseSelect mode="multi" idEnterprise={idEnterprise} value={selectedMachines} onChange={setSelectedMachines} label={t('vessels')} className="w-64" />
 
           <div className="flex flex-col gap-1.5">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('justify-start text-left font-normal w-40 bg-background', !dateMin && 'text-muted-foreground')}>
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {dateMin ? format(dateMin, 'dd/MM/yyyy') : <span>{t('date.start')}</span>}
                 </Button>
@@ -117,7 +117,7 @@ function KPISCMMSPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('justify-start text-left font-normal w-40 bg-background', !dateMax && 'text-muted-foreground')}>
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {dateMax ? format(dateMax, 'dd/MM/yyyy') : <span>{t('date.end')}</span>}
                 </Button>
@@ -170,7 +170,7 @@ function KPISCMMSPage() {
 
         {/* Charts Grid */}
         <ItemGroup className="gap-6">
-          <div className="flex w-full gap-6 flex-wrap lg:flex-nowrap">
+          <div className="flex w-full flex-wrap gap-6 lg:flex-nowrap">
             <ReliabilityVesselChart filters={appliedFilters} />
             <ReliabilityGroupChart filters={appliedFilters} />
           </div>

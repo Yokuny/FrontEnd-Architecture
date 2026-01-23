@@ -86,11 +86,11 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
         <ItemTitle>{t('resume.daily')}</ItemTitle>
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
-            <Button variant="ghost" size="sm" onClick={expandAll} className="text-xs text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
               {t('expand.all')}
             </Button>
             <Separator orientation="vertical" className="h-4 self-center" />
-            <Button variant="ghost" size="sm" onClick={collapseAll} className="text-xs text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
               {t('collapse.all')}
             </Button>
           </div>
@@ -111,11 +111,11 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
             <Collapsible key={item._id} open={isOpen} onOpenChange={() => toggleCategory(item._id)}>
               <div className="rounded-lg border bg-card">
                 <CollapsibleTrigger asChild>
-                  <Button variant="ghost" className="w-full items-center justify-between hover:bg-secondary outline-none focus-visible:ring-2">
+                  <Button variant="ghost" className="w-full items-center justify-between outline-none hover:bg-secondary focus-visible:ring-2">
                     <div className="flex items-center gap-3">
                       <Calendar className="size-4" />
                       <ItemTitle className="text-base">{format(new Date(date), 'dd MMM yyyy', { locale: pt })}</ItemTitle>
-                      <div className="flex items-center gap-2 ml-2">
+                      <div className="ml-2 flex items-center gap-2">
                         {item.isNeedRegeneration && <AlertTriangle className="size-4 text-amber-500" />}
                         <Badge variant={isConsumptionReal ? 'default' : 'secondary'}>{isConsumptionReal ? 'SON*' : 'FLM*'}</Badge>
                       </div>
@@ -249,7 +249,7 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
 
             <div>
               <ItemTitle className="text-muted-foreground">{t('moving')}</ItemTitle>
-              <ItemContent className="flex-row justify-between items-end">
+              <ItemContent className="flex-row items-end justify-between">
                 <div>
                   <Label className="flex items-stretch gap-2">
                     <Fuel className="size-4" />
@@ -261,7 +261,7 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
                   </ItemDescription>
                 </div>
 
-                <div className="max-w-40 w-full flex flex-col gap-1">
+                <div className="flex w-full max-w-40 flex-col gap-1">
                   <Label htmlFor="newOil" className="flex items-stretch gap-2">
                     <Pencil className="size-4" />
                     {t('new')} {selectedItem?.oil?.unit && `(${selectedItem.oil.unit})`}
@@ -273,7 +273,7 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
                     value={newOilReceived}
                     onChange={(e) => setNewOilReceived(e.target.value)}
                     placeholder={`${t('new')} ${selectedItem?.oil?.unit || ''}`}
-                    className="max-w-40 w-full"
+                    className="w-full max-w-40"
                   />
                 </div>
               </ItemContent>

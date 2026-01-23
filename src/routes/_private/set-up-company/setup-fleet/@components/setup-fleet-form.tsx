@@ -33,7 +33,7 @@ export function SetupFleetForm({ isEnterpriseDisabled }: { isEnterpriseDisabled:
               disabled={isLoading || isPending || isEnterpriseDisabled}
             />
           </FormControl>
-          {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
+          {errors.idEnterprise && <p className="text-destructive text-sm">{t(errors.idEnterprise.message as string)}</p>}
         </Field>,
       ],
     },
@@ -41,7 +41,7 @@ export function SetupFleetForm({ isEnterpriseDisabled }: { isEnterpriseDisabled:
       title: t('setup.fleet.coordinates'),
       description: t('setup.fleet.description'),
       fields: [
-        <div key="coords" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="coords" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={control}
             name="latitude"

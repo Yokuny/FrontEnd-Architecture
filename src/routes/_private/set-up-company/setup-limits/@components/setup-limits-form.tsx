@@ -41,7 +41,7 @@ export function SetupLimitsForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
       title: t('setup.limits.general'),
       description: t('setup.limits.general.description'),
       fields: [
-        <div key="general-limits" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="general-limits" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="maxContacts"
@@ -85,7 +85,7 @@ export function SetupLimitsForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
       title: t('setup.limits.api'),
       description: t('setup.limits.api.description'),
       fields: [
-        <div key="api-limits" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="api-limits" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={control}
             name="maxRequestHistorySensorApi"

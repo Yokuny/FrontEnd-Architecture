@@ -22,8 +22,8 @@ export function FleetContactsPanel() {
 
   if (!data || (!data.contacts?.length && !data.dataSheet?.managementName)) {
     return (
-      <ItemGroup className="p-4 flex-1">
-        <div className="flex-1 flex flex-col items-center justify-center min-h-96">
+      <ItemGroup className="flex-1 p-4">
+        <div className="flex min-h-96 flex-1 flex-col items-center justify-center">
           <DefaultEmptyData />
         </div>
       </ItemGroup>
@@ -36,9 +36,9 @@ export function FleetContactsPanel() {
   ];
 
   return (
-    <ItemGroup className="p-4 space-y-4">
+    <ItemGroup className="space-y-4 p-4">
       {/* Identification Grid */}
-      <ItemContent className="grid grid-cols-2 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
+      <ItemContent className="grid grid-cols-2 gap-x-2 gap-y-4 rounded-md border border-accent bg-accent/50 p-2">
         {gridItems.map((item) => (
           <DetailGridItem key={item.id} label={item.label} icon={item.icon} value={item.value} />
         ))}
@@ -48,28 +48,28 @@ export function FleetContactsPanel() {
       <ItemContent className="space-y-4">
         <div className="flex items-center gap-2 border-b pb-2">
           <Phone className="size-4 text-primary" />
-          <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('contacts')}</ItemTitle>
+          <ItemTitle className="font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{t('contacts')}</ItemTitle>
         </div>
 
         <div className="space-y-2">
           {!data.contacts || data.contacts.length === 0 ? (
-            <div className="text-xs text-muted-foreground italic p-4 text-center">{t('no.contacts')}</div>
+            <div className="p-4 text-center text-muted-foreground text-xs italic">{t('no.contacts')}</div>
           ) : (
             data.contacts.map((contact: any, i: number) => (
               <div
                 key={`${contact.id}-${i}`}
-                className="flex items-center justify-between p-3 rounded-lg bg-accent/30 border border-primary/5 group hover:bg-accent/50 transition-colors"
+                className="group flex items-center justify-between rounded-lg border border-primary/5 bg-accent/30 p-3 transition-colors hover:bg-accent/50"
               >
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold">{contact.name}</span>
-                  <span className="text-[10px] text-muted-foreground tabular-nums font-medium">{contact.phone || '-'}</span>
+                  <span className="font-bold text-xs">{contact.name}</span>
+                  <span className="font-medium text-[10px] text-muted-foreground tabular-nums">{contact.phone || '-'}</span>
                 </div>
                 {contact.phone && (
                   <a
                     href={`https://wa.me/${contact.phone.replace(/\D/g, '')}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-full hover:bg-primary/20 text-primary transition-colors"
+                    className="rounded-full p-2 text-primary transition-colors hover:bg-primary/20"
                     title="WhatsApp"
                   >
                     <Phone className="size-4" />

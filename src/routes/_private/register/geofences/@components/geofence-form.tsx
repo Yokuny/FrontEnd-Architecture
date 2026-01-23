@@ -128,7 +128,7 @@ export function GeofenceForm() {
             </FormItem>
           )}
         />,
-        <div key="row-type-code" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-type-code" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="type"
@@ -165,7 +165,7 @@ export function GeofenceForm() {
       title: t('location.details'),
       description: t('geofence.location.description'),
       fields: [
-        <div key="row-city-state" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-city-state" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="city"
@@ -193,7 +193,7 @@ export function GeofenceForm() {
             )}
           />
         </div>,
-        <div key="row-country-tz" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-country-tz" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="country"
@@ -281,7 +281,7 @@ export function GeofenceForm() {
             </FormItem>
           )}
         />,
-        <div key="row-checks" className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div key="row-checks" className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-2">
           <FormField
             control={form.control}
             name="initializeTravel"

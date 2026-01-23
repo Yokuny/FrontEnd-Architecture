@@ -54,7 +54,7 @@ export function GoalAddMachineModal() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
-          <Plus className="size-4 mr-2" />
+          <Plus className="mr-2 size-4" />
           {t('add')}
         </Button>
       </DialogTrigger>
@@ -71,7 +71,7 @@ export function GoalAddMachineModal() {
 
           <div className="flex items-center space-x-2">
             <Checkbox id="isFleet" checked={isFleet} onCheckedChange={(checked) => setIsFleet(checked === true)} disabled={!!selectedMachineId} />
-            <label htmlFor="isFleet" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+            <label htmlFor="isFleet" className="cursor-pointer font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               {t('fleet')}
             </label>
           </div>

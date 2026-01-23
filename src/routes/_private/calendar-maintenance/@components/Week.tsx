@@ -35,7 +35,7 @@ const Header = ({ days }: { days: Date[] }) => {
   return (
     <Item
       variant="outline"
-      className="text-muted-foreground sticky top-0 z-30 grid w-full grid-cols-[4rem_repeat(7,1fr)] rounded-none border-x-0 border-t-0 p-0 text-xs font-medium backdrop-blur-md bg-secondary"
+      className="sticky top-0 z-30 grid w-full grid-cols-[4rem_repeat(7,1fr)] rounded-none border-x-0 border-t-0 bg-secondary p-0 font-medium text-muted-foreground text-xs backdrop-blur-md"
       size="sm"
     >
       <ItemContent className="flex items-center justify-center border-r py-2 text-center">
@@ -44,7 +44,7 @@ const Header = ({ days }: { days: Date[] }) => {
       {days.map((day) => (
         <ItemContent
           key={day.toString()}
-          className="data-today:text-primary data-today:font-semibold data-outside-cell:text-muted-foreground flex items-center justify-center border-r py-3 text-center last:border-r-0"
+          className="flex items-center justify-center border-r py-3 text-center last:border-r-0 data-today:font-semibold data-outside-cell:text-muted-foreground data-today:text-primary"
           data-today={isToday(day) || undefined}
           data-outside-cell={(getDay(day) === 0 && days.indexOf(day) === 6) || undefined}
         >
@@ -206,7 +206,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
   return (
     <ItemContent
       data-slot="week-view"
-      className="h-full border rounded-md overflow-hidden"
+      className="h-full overflow-hidden rounded-md border"
       style={
         {
           '--week-cells-height': `${WeekCellsHeight}px`,
@@ -215,9 +215,9 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
     >
       <Header days={days} />
       {showAllDaySection && (
-        <ItemContent className="border-accent bg-muted border-b p-0">
+        <ItemContent className="border-accent border-b bg-muted p-0">
           <ItemContent className="grid grid-cols-[4rem_repeat(7,1fr)] flex-row gap-0 p-0">
-            <ItemContent className="text-muted-foreground border-accent flex items-center justify-center border-r p-1 text-center text-[10px] leading-tight sm:text-xs">
+            <ItemContent className="flex items-center justify-center border-accent border-r p-1 text-center text-[10px] text-muted-foreground leading-tight sm:text-xs">
               Dia inteiro
             </ItemContent>
             {days.map((day, dayIndex) => {
@@ -230,7 +230,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
               return (
                 <ItemContent
                   key={day.toString()}
-                  className="border-accent data-outside-cell:text-muted-foreground relative border-r py-0.5 last:border-r-0"
+                  className="relative border-accent border-r py-0.5 last:border-r-0 data-outside-cell:text-muted-foreground"
                   data-today={isToday(day) || undefined}
                   data-outside-cell={(getDay(day) === 0 && dayIndex === 6) || undefined}
                 >
@@ -268,11 +268,11 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
 
       <ScrollArea className="md:h-[calc(100vh-13.35rem)]">
         <ItemContent className="grid grid-cols-[4rem_repeat(7,1fr)] gap-0 p-0">
-          <ItemContent className="border-accent border-r flex flex-col gap-0 p-0">
+          <ItemContent className="flex flex-col gap-0 border-accent border-r p-0">
             {hours.map((hour, index) => (
-              <ItemContent key={hour.toString()} className="border-accent relative min-h-(--week-cells-height) border-b p-0 last:border-b-0">
+              <ItemContent key={hour.toString()} className="relative min-h-(--week-cells-height) border-accent border-b p-0 last:border-b-0">
                 {index > 0 && (
-                  <ItemTitle className="text-muted-foreground absolute -top-3 right-0 flex h-6 w-full items-center justify-end px-2 text-[10px] font-normal sm:pe-4 sm:text-xs">
+                  <ItemTitle className="absolute -top-3 right-0 flex h-6 w-full items-center justify-end px-2 font-normal text-[10px] text-muted-foreground sm:pe-4 sm:text-xs">
                     {format(hour, 'p', { locale: dateLocale })}
                   </ItemTitle>
                 )}
@@ -282,7 +282,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
           {days.map((day, dayIndex) => (
             <ItemContent
               key={day.toString()}
-              className="border-accent data-outside-cell:text-muted-foreground relative flex flex-col border-r p-0 last:border-r-0 data-outside-cell:bg-secondary"
+              className="relative flex flex-col border-accent border-r p-0 last:border-r-0 data-outside-cell:bg-secondary data-outside-cell:text-muted-foreground"
               data-today={isToday(day) || undefined}
               data-outside-cell={(getDay(day) === 0 && dayIndex === 6) || undefined}
             >
@@ -311,13 +311,13 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
               {hours.map((hour) => {
                 const hourValue = getHours(hour);
                 return (
-                  <ItemContent key={hour.toString()} className="border-accent relative min-h-(--week-cells-height) border-b p-0 last:border-b-0">
+                  <ItemContent key={hour.toString()} className="relative min-h-(--week-cells-height) border-accent border-b p-0 last:border-b-0">
                     {[0, 1, 2, 3].map((quarter) => {
                       return (
                         <ItemContent
                           key={`${hour.toString()}-${quarter}`}
                           className={cn(
-                            'absolute h-[calc(var(--week-cells-height)/4)] w-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer',
+                            'absolute h-[calc(var(--week-cells-height)/4)] w-full cursor-pointer transition-colors hover:bg-slate-100 dark:hover:bg-slate-800',
                             quarter === 0 && 'top-0',
                             quarter === 1 && 'top-[calc(var(--week-cells-height)/4)]',
                             quarter === 2 && 'top-[calc(var(--week-cells-height)/4*2)]',

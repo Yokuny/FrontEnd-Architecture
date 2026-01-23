@@ -65,8 +65,8 @@ function LoginPage() {
     <AuthLayout>
       <FieldGroup className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">{t('login.title')}</h1>
-          <p className="text-muted-foreground text-sm text-balance">{t('login.subtitle')}</p>
+          <h1 className="font-bold text-2xl">{t('login.title')}</h1>
+          <p className="text-balance text-muted-foreground text-sm">{t('login.subtitle')}</p>
         </div>
 
         {renderStep()}
@@ -74,7 +74,7 @@ function LoginPage() {
         <Field>
           <FieldDescription className="px-6 text-center">
             {t('login.no.account')}{' '}
-            <a href="/auth/register" className="underline underline-offset-4 text-primary">
+            <a href="/auth/register" className="text-primary underline underline-offset-4">
               {t('login.register')}
             </a>
           </FieldDescription>
@@ -82,7 +82,7 @@ function LoginPage() {
       </FieldGroup>
 
       {isLoading && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <Loader2 className="h-12 w-12 animate-spin text-white" />
         </div>
       )}

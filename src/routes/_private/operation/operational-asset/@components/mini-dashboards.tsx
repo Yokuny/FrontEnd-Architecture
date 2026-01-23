@@ -67,70 +67,70 @@ export function MiniDashboards({ data, totalLoss, totalRevenue, viewFinancial }:
   }, [data, t]);
 
   return (
-    <div className="flex justify-between gap-4 w-full flex-wrap">
-      <Item variant="outline" className="border-l-4 border-l-emerald-500 min-w-[200px] flex-col flex-1">
+    <div className="flex w-full flex-wrap justify-between gap-4">
+      <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-emerald-500">
         <ItemContent className="flex flex-row items-center gap-2">
           <Clock className="size-5 text-emerald-500" />
-          <ItemDescription className="uppercase text-xs font-bold">{t('time.operational')}</ItemDescription>
+          <ItemDescription className="font-bold text-xs uppercase">{t('time.operational')}</ItemDescription>
         </ItemContent>
-        <ItemTitle className="text-2xl font-bold text-emerald-600">{operationalHours.toFixed(1)}h</ItemTitle>
+        <ItemTitle className="font-bold text-2xl text-emerald-600">{operationalHours.toFixed(1)}h</ItemTitle>
       </Item>
 
-      <Item variant="outline" className="border-l-4 border-l-red-500 min-w-[200px] flex-col flex-1">
+      <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-red-500">
         <ItemContent className="flex flex-row items-center gap-2">
           <TriangleAlert className="size-5 text-red-500" />
-          <ItemDescription className="uppercase text-xs font-bold">{t('time.inoperability')}</ItemDescription>
+          <ItemDescription className="font-bold text-xs uppercase">{t('time.inoperability')}</ItemDescription>
         </ItemContent>
-        <ItemTitle className="text-2xl font-bold text-red-600">{downtimeHours.toFixed(1)}h</ItemTitle>
+        <ItemTitle className="font-bold text-2xl text-red-600">{downtimeHours.toFixed(1)}h</ItemTitle>
       </Item>
 
       {/* OPERABILITY RATE */}
-      <Item variant="outline" className="border-l-4 border-l-blue-500 min-w-[200px] flex-col flex-1">
+      <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-blue-500">
         <ItemContent className="flex flex-row items-center gap-2">
           <Activity className="size-5 text-blue-500" />
-          <ItemDescription className="uppercase text-xs font-bold">{t('operating.rate')}</ItemDescription>
+          <ItemDescription className="font-bold text-xs uppercase">{t('operating.rate')}</ItemDescription>
         </ItemContent>
         <ItemContent className="flex flex-col">
-          <ItemTitle className="text-2xl font-bold text-blue-600">{operabilityRate.toFixed(1)}%</ItemTitle>
+          <ItemTitle className="font-bold text-2xl text-blue-600">{operabilityRate.toFixed(1)}%</ItemTitle>
         </ItemContent>
       </Item>
 
-      <Item variant="outline" className="border-l-4 border-l-indigo-500 min-w-[200px] flex-col flex-1">
+      <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-indigo-500">
         <ItemContent className="flex flex-row items-center gap-2">
           <BarChart3 className="size-5 text-indigo-500" />
-          <ItemDescription className="uppercase text-xs font-bold">{t('avg.daily.operational')}</ItemDescription>
+          <ItemDescription className="font-bold text-xs uppercase">{t('avg.daily.operational')}</ItemDescription>
         </ItemContent>
-        <ItemTitle className="text-2xl font-bold text-indigo-600">{avgDailyOperational.toFixed(1)}h</ItemTitle>
+        <ItemTitle className="font-bold text-2xl text-indigo-600">{avgDailyOperational.toFixed(1)}h</ItemTitle>
       </Item>
 
       {viewFinancial && (
         <>
-          <Item variant="outline" className="border-l-4 border-l-emerald-600 min-w-[200px] flex-col flex-1">
+          <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-emerald-600">
             <ItemContent className="flex flex-row items-center gap-2">
               <TrendingUp className="size-5 text-emerald-600" />
-              <ItemDescription className="uppercase text-xs font-bold">{t('revenue')}</ItemDescription>
+              <ItemDescription className="font-bold text-xs uppercase">{t('revenue')}</ItemDescription>
             </ItemContent>
-            <ItemTitle className="text-xl font-bold text-emerald-600">{currencyFormatter.format(totalRevenue)}</ItemTitle>
+            <ItemTitle className="font-bold text-emerald-600 text-xl">{currencyFormatter.format(totalRevenue)}</ItemTitle>
           </Item>
-          <Item variant="outline" className="border-l-4 border-l-rose-600 min-w-[200px] flex-col flex-1">
+          <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-rose-600">
             <ItemContent className="flex flex-row items-center gap-2">
               <TrendingDown className="size-5 text-rose-600" />
-              <ItemDescription className="uppercase text-xs font-bold">{t('loss')}</ItemDescription>
+              <ItemDescription className="font-bold text-xs uppercase">{t('loss')}</ItemDescription>
             </ItemContent>
-            <ItemTitle className="text-xl font-bold text-rose-600">{currencyFormatter.format(totalLoss)}</ItemTitle>
+            <ItemTitle className="font-bold text-rose-600 text-xl">{currencyFormatter.format(totalLoss)}</ItemTitle>
           </Item>
         </>
       )}
 
       <Item variant="outline" className="flex-1">
-        <ItemDescription className="uppercase text-xs font-bold">{t('last.status')}</ItemDescription>
-        <div className="relative w-full h-8 bg-muted rounded-md overflow-hidden flex items-center">
+        <ItemDescription className="font-bold text-xs uppercase">{t('last.status')}</ItemDescription>
+        <div className="relative flex h-8 w-full items-center overflow-hidden rounded-md bg-muted">
           <TooltipProvider>
             {breakdownData.map((d, index) => (
               <Tooltip key={`${d.status}-${index}`}>
                 <TooltipTrigger asChild>
                   <div
-                    className="absolute h-full transition-all duration-300 hover:brightness-110 cursor-help flex items-center justify-center overflow-hidden"
+                    className="absolute flex h-full cursor-help items-center justify-center overflow-hidden transition-all duration-300 hover:brightness-110"
                     style={{
                       width: `${d.width}%`,
                       left: `${d.left}%`,
@@ -138,17 +138,17 @@ export function MiniDashboards({ data, totalLoss, totalRevenue, viewFinancial }:
                       borderRadius: d.borderRadius,
                     }}
                   >
-                    {d.width > 15 && <span className="text-[10px] text-white font-bold truncate px-1">{d.percentage}%</span>}
+                    {d.width > 15 && <span className="truncate px-1 font-bold text-[10px] text-white">{d.percentage}%</span>}
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top" className="flex flex-col gap-1 min-w-32">
+                <TooltipContent side="top" className="flex min-w-32 flex-col gap-1">
                   <div className="flex items-center gap-2">
                     <div className="size-3" style={{ backgroundColor: d.color }} />
                     <ItemTitle className="font-bold text-xs uppercase tracking-tight">{d.label}</ItemTitle>
                   </div>
-                  <div className="flex items-baseline gap-1 mt-1">
-                    <ItemTitle className="text-lg font-black tabular-nums">{d.value.toFixed(1)}</ItemTitle>
-                    <ItemDescription className="text-xs font-normal uppercase">horas</ItemDescription>
+                  <div className="mt-1 flex items-baseline gap-1">
+                    <ItemTitle className="font-black text-lg tabular-nums">{d.value.toFixed(1)}</ItemTitle>
+                    <ItemDescription className="font-normal text-xs uppercase">horas</ItemDescription>
                   </div>
                 </TooltipContent>
               </Tooltip>

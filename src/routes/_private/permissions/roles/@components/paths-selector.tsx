@@ -34,7 +34,7 @@ export function PathsSelector({ form }: PathsSelectorProps) {
 
   if (isLoading) {
     return (
-      <Skeleton className="h-32 w-full flex items-center justify-center">
+      <Skeleton className="flex h-32 w-full items-center justify-center">
         <Spinner />
       </Skeleton>
     );
@@ -48,7 +48,7 @@ export function PathsSelector({ form }: PathsSelectorProps) {
           title: t('pages'),
           description: t('roles.pages.description', 'Selecione as páginas que este perfil pode acessar'),
           fields: [
-            <div key="paths-grid" className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div key="paths-grid" className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {paths?.map((pathGroup) => (
                 <div key={pathGroup.codeLanguage} className="space-y-3">
                   <h3 className="font-semibold text-sm">{t(pathGroup.codeLanguage)}</h3>
@@ -58,9 +58,9 @@ export function PathsSelector({ form }: PathsSelectorProps) {
                       return (
                         <div key={item.path} className="flex items-center space-x-2">
                           <Checkbox id={`path-${item.path}`} checked={isChecked} onCheckedChange={() => handleTogglePath(item.path)} />
-                          <Label htmlFor={`path-${item.path}`} className="text-sm font-normal cursor-pointer text-balance">
+                          <Label htmlFor={`path-${item.path}`} className="cursor-pointer text-balance font-normal text-sm">
                             {t(item.codeLanguage)}
-                            {item.isDeprecated && <span className="ml-1 text-xs text-muted-foreground">(DEPRECATED)</span>}
+                            {item.isDeprecated && <span className="ml-1 text-muted-foreground text-xs">(DEPRECATED)</span>}
                           </Label>
                         </div>
                       );

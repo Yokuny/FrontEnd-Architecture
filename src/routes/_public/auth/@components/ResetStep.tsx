@@ -60,11 +60,11 @@ export function ResetStep({ requestId }: ResetStepProps) {
   return (
     <FieldGroup className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1 text-center">
-        <div className="mx-auto mb-4 bg-primary/10 p-4 rounded-2xl w-fit border border-primary/20">
+        <div className="mx-auto mb-4 w-fit rounded-2xl border border-primary/20 bg-primary/10 p-4">
           <Shield className="h-12 w-12 text-primary" />
         </div>
-        <h1 className="text-2xl font-bold">{t('new.password')}</h1>
-        <p className="text-muted-foreground text-sm text-balance">{t('new.password.details')}</p>
+        <h1 className="font-bold text-2xl">{t('new.password')}</h1>
+        <p className="text-balance text-muted-foreground text-sm">{t('new.password.details')}</p>
       </div>
 
       <Form {...form}>
@@ -84,7 +84,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
                       variant="ghost"
                       size="icon"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      className="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                     </Button>
@@ -97,8 +97,8 @@ export function ResetStep({ requestId }: ResetStepProps) {
 
           {/* Password Strength Indicators */}
           {password && (
-            <div className="space-y-2 p-4 bg-muted/50 rounded-lg border">
-              <p className="text-sm text-muted-foreground font-medium">{t('password.requirements')}</p>
+            <div className="space-y-2 rounded-lg border bg-muted/50 p-4">
+              <p className="font-medium text-muted-foreground text-sm">{t('password.requirements')}</p>
               <div className="space-y-1">
                 <PasswordRequirement met={passwordStrength.minLength} text={t('form.min.length')} />
                 <PasswordRequirement met={passwordStrength.hasLowerCase} text={t('form.has.lower.case')} />
@@ -123,7 +123,7 @@ export function ResetStep({ requestId }: ResetStepProps) {
                       variant="ghost"
                       size="icon"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      className="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
                       {showConfirmPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                     </Button>
@@ -138,9 +138,9 @@ export function ResetStep({ requestId }: ResetStepProps) {
           <div className="flex justify-center">
             <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={handleRecaptchaChange} theme="light" />
           </div>
-          {form.formState.errors.code && <p className="text-sm text-destructive text-center">{form.formState.errors.code.message}</p>}
+          {form.formState.errors.code && <p className="text-center text-destructive text-sm">{form.formState.errors.code.message}</p>}
 
-          <Button type="submit" variant="green" disabled={isPending} className="w-full mt-4 font-semibold text-base" size="lg">
+          <Button type="submit" variant="green" disabled={isPending} className="mt-4 w-full font-semibold text-base" size="lg">
             {isPending ? (
               <>
                 <Loader2 className="mr-2 size-5 animate-spin" />

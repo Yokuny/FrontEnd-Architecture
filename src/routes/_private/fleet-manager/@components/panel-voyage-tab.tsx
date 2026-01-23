@@ -46,8 +46,8 @@ export function VoyageDetailsPanel() {
   };
 
   return (
-    <ItemGroup className="p-4 space-y-4">
-      <ItemTitle className="text-lg font-bold text-primary">{data.code}</ItemTitle>
+    <ItemGroup className="space-y-4 p-4">
+      <ItemTitle className="font-bold text-lg text-primary">{data.code}</ItemTitle>
 
       <div className="grid grid-cols-2 gap-3 border-b pb-4">
         <DetailItemCard label={t('departure')} icon={Calendar} value={data.dateTimeStart ? format(new Date(data.dateTimeStart), 'dd MMM, HH:mm') : '-'} />
@@ -62,23 +62,23 @@ export function VoyageDetailsPanel() {
 
       <div className="flex flex-col gap-4 border-b pb-4">
         <DetailGridItem label={t('vessel')} icon={Ship} value={<span className="font-bold text-primary">{data.machine?.name}</span>} />
-        <ItemContent className="p-3 bg-accent/30 rounded-lg border border-primary/5">
+        <ItemContent className="rounded-lg border border-primary/5 bg-accent/30 p-3">
           <div className="flex gap-4">
-            <div className="flex flex-col gap-1 items-center">
+            <div className="flex flex-col items-center gap-1">
               <div className="size-2 rounded-full bg-primary" />
-              <div className="w-px h-8 bg-border" />
+              <div className="h-8 w-px bg-border" />
               <div className="size-2 rounded-full border border-primary bg-background" />
             </div>
-            <div className="flex-1 flex flex-col gap-2">
+            <div className="flex flex-1 flex-col gap-2">
               <div className="flex flex-col">
                 <span className="text-[10px] text-muted-foreground uppercase">{t('source')}</span>
-                <span className="text-sm font-medium">
+                <span className="font-medium text-sm">
                   {data.portPointStart?.code} - {data.portPointStart?.description}
                 </span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-muted-foreground uppercase">{t('destiny.port')}</span>
-                <span className="text-sm font-medium">
+                <span className="font-medium text-sm">
                   {data.portPointEnd?.code || data.portPointDestiny?.code} - {data.portPointEnd?.description || data.portPointDestiny?.description}
                 </span>
               </div>
@@ -89,16 +89,16 @@ export function VoyageDetailsPanel() {
 
       {analytics?.length > 0 && (
         <>
-          <div className="flex items-center gap-2 mb-2 border-b pb-4">
+          <div className="mb-2 flex items-center gap-2 border-b pb-4">
             <TrendingUp className="size-3 text-primary" />
-            <Label className="text-[10px] text-muted-foreground uppercase font-bold">{t('analytics')}</Label>
+            <Label className="font-bold text-[10px] text-muted-foreground uppercase">{t('analytics')}</Label>
           </div>
           <div className="grid grid-cols-2 gap-2">
             {analytics.map((a: any, i: number) => (
-              <div key={`${a.id}-${i}`} className="p-2 rounded-md bg-accent/20 border border-primary/5">
-                <p className="text-[10px] text-muted-foreground uppercase font-bold truncate">{a.description}</p>
+              <div key={`${a.id}-${i}`} className="rounded-md border border-primary/5 bg-accent/20 p-2">
+                <p className="truncate font-bold text-[10px] text-muted-foreground uppercase">{a.description}</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-sm font-bold">{a.value}</span>
+                  <span className="font-bold text-sm">{a.value}</span>
                   <span className="text-[10px] text-muted-foreground">{a.unit}</span>
                 </div>
               </div>
@@ -109,17 +109,17 @@ export function VoyageDetailsPanel() {
 
       {timeline?.length > 0 && (
         <>
-          <div className="flex items-center gap-2 mb-4 border-b pb-4">
+          <div className="mb-4 flex items-center gap-2 border-b pb-4">
             <ListTree className="size-3 text-primary" />
-            <Label className="text-[10px] text-muted-foreground uppercase font-bold">{t('timeline')}</Label>
+            <Label className="font-bold text-[10px] text-muted-foreground uppercase">{t('timeline')}</Label>
           </div>
-          <div className="space-y-4 ml-2 border-l-2 border-primary/10 pl-4 relative">
+          <div className="relative ml-2 space-y-4 border-primary/10 border-l-2 pl-4">
             {timeline.map((event: any, i: number) => (
               <div key={`${event.type}-${i}`} className="relative">
-                <div className="absolute -left-[21px] top-1 size-2 rounded-full bg-primary" />
+                <div className="absolute top-1 -left-[21px] size-2 rounded-full bg-primary" />
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[10px] text-muted-foreground uppercase font-bold">{event.type}</span>
-                  <span className="text-xs font-medium">{event.data?.status || event.geofence?.description || event.type}</span>
+                  <span className="font-bold text-[10px] text-muted-foreground uppercase">{event.type}</span>
+                  <span className="font-medium text-xs">{event.data?.status || event.geofence?.description || event.type}</span>
                   <span className="text-[10px] text-muted-foreground">{event.date ? format(new Date(event.date), 'dd MMM, HH:mm') : '-'}</span>
                 </div>
               </div>

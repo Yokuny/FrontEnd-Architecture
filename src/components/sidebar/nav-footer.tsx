@@ -33,7 +33,7 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton size="default" tooltip={route.title} className={cn('transition-all', isCollapsed ? 'justify-center' : 'justify-start')}>
                     {customIcon || route.icon}
-                    {!isCollapsed && <span className="ml-2 flex-1 text-left truncate">{route.title}</span>}
+                    {!isCollapsed && <span className="ml-2 flex-1 truncate text-left">{route.title}</span>}
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="right" className="min-w-48">
@@ -51,7 +51,7 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
               <SidebarMenuButton size="default" tooltip={route.title} className={cn('transition-all', isCollapsed ? 'justify-center' : 'justify-start')} asChild>
                 <Link to={route.link}>
                   {customIcon || route.icon}
-                  {!isCollapsed && <span className="ml-2 flex-1 text-left truncate">{route.title}</span>}
+                  {!isCollapsed && <span className="ml-2 flex-1 truncate text-left">{route.title}</span>}
                 </Link>
               </SidebarMenuButton>
             )}

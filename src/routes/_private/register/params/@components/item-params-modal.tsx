@@ -49,7 +49,7 @@ export default function ItemParamsModal({ show, handleClose, dataInitial, onSave
         <DialogHeader>
           <DialogTitle>{t('options')}</DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
+        <div className="grid grid-cols-1 gap-4 py-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="value">{t('value')} *</Label>
             <Input id="value" value={data?.value || ''} onChange={(e) => onChange('value', e.target.value)} maxLength={200} />

@@ -49,8 +49,8 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
   return (
     <FieldGroup className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1 text-center">
-        <h1 className="text-2xl font-bold">{t('request.password')}</h1>
-        <p className="text-muted-foreground text-sm text-balance">{t('request.password.instructions')}</p>
+        <h1 className="font-bold text-2xl">{t('request.password')}</h1>
+        <p className="text-balance text-muted-foreground text-sm">{t('request.password.instructions')}</p>
       </div>
 
       <Form {...form}>
@@ -64,7 +64,7 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
                 <FormControl>
                   <div className="relative">
                     <Input {...field} type="email" placeholder={t('login.email.placeholder')} autoFocus />
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                    <div className="absolute top-1/2 right-3 -translate-y-1/2">
                       <Mail className="size-5 text-muted-foreground" />
                     </div>
                   </div>
@@ -77,9 +77,9 @@ export function RequestStep({ onSuccess }: RequestStepProps) {
           <div className="flex justify-center">
             <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={handleRecaptchaChange} theme="light" />
           </div>
-          {form.formState.errors.reCaptcha && <p className="text-sm text-destructive text-center">{form.formState.errors.reCaptcha.message}</p>}
+          {form.formState.errors.reCaptcha && <p className="text-center text-destructive text-sm">{form.formState.errors.reCaptcha.message}</p>}
 
-          <Button type="submit" variant="blue" disabled={isPending} className="w-full mt-4 font-semibold text-base" size="lg">
+          <Button type="submit" variant="blue" disabled={isPending} className="mt-4 w-full font-semibold text-base" size="lg">
             {isPending ? (
               <>
                 <Loader2 className="mr-2 size-5 animate-spin" />

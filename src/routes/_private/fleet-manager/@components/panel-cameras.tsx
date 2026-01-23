@@ -26,8 +26,8 @@ export function FleetCamerasPanel() {
 
   if (validCameras.length === 0) {
     return (
-      <ItemGroup className="p-4 flex-1">
-        <div className="flex-1 flex flex-col items-center justify-center min-h-96">
+      <ItemGroup className="flex-1 p-4">
+        <div className="flex min-h-96 flex-1 flex-col items-center justify-center">
           <DefaultEmptyData />
         </div>
       </ItemGroup>
@@ -37,42 +37,42 @@ export function FleetCamerasPanel() {
   const currentCamera = activeCamera !== null ? validCameras[activeCamera] : validCameras[0];
 
   return (
-    <ItemGroup className="p-4 space-y-4">
+    <ItemGroup className="space-y-4 p-4">
       {/* Header Info */}
       <ItemContent className="flex items-center gap-2 border-b pb-2">
         <Camera className="size-4 text-primary" />
-        <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('camera')}</ItemTitle>
+        <ItemTitle className="font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{t('camera')}</ItemTitle>
       </ItemContent>
 
       <div className="space-y-4">
         {/* Video Player Container */}
-        <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-primary/10 group">
+        <div className="group relative aspect-video overflow-hidden rounded-xl border border-primary/10 bg-black shadow-2xl">
           {currentCamera ? (
-            <video key={currentCamera.link} src={currentCamera.link} autoPlay controls className="w-full h-full object-contain">
+            <video key={currentCamera.link} src={currentCamera.link} autoPlay controls className="h-full w-full object-contain">
               {t('no.support.video')}
             </video>
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <Play className="size-12 text-primary/40 animate-pulse" />
+            <div className="flex h-full w-full items-center justify-center">
+              <Play className="size-12 animate-pulse text-primary/40" />
             </div>
           )}
 
           {/* Overlay Camera Name */}
           {currentCamera && (
-            <div className="absolute top-3 left-3 px-2 py-1 bg-black/60 rounded text-[10px] font-mono text-white/80 border border-white/10 backdrop-blur-sm">
+            <div className="absolute top-3 left-3 rounded border border-white/10 bg-black/60 px-2 py-1 font-mono text-[10px] text-white/80 backdrop-blur-sm">
               REC: {currentCamera.name}
             </div>
           )}
         </div>
 
         {/* Camera Selection Grid */}
-        <ItemContent className="grid grid-cols-2 gap-2 p-2 bg-accent/20 rounded-lg border border-primary/5">
+        <ItemContent className="grid grid-cols-2 gap-2 rounded-lg border border-primary/5 bg-accent/20 p-2">
           {validCameras.map((camera: any, index: number) => (
             <Button
               key={`${camera.name}-${index}`}
               variant={activeCamera === index || (activeCamera === null && index === 0) ? 'default' : 'secondary'}
               onClick={() => setActiveCamera(index)}
-              className="justify-start gap-2 h-10 px-3 uppercase text-[9px] font-bold tracking-tight"
+              className="h-10 justify-start gap-2 px-3 font-bold text-[9px] uppercase tracking-tight"
             >
               <Camera className="size-3 shrink-0" />
               <span className="truncate">{camera.name}</span>

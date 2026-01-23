@@ -35,7 +35,7 @@ function CMMSHubPage() {
   return (
     <Card>
       <CardHeader title={t('cmms')} />
-      <CardContent className="gap-4 grid md:grid-cols-2 lg:grid-cols-3">
+      <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {menuItems.map((item) => (
           <Item key={item.to} variant="outline" className="h-full cursor-pointer" asChild>
             <Link to={item.to}>

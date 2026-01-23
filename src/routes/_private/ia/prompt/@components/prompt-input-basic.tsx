@@ -37,10 +37,10 @@ export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: 
       {files.length > 0 && (
         <div className="flex flex-wrap gap-2 pb-2">
           {files.map((file, index) => (
-            <div key={`${file.name}-${index}`} className="bg-secondary flex items-center gap-2 rounded-lg px-3 py-2" onClick={(e) => e.stopPropagation()}>
+            <div key={`${file.name}-${index}`} className="flex items-center gap-2 rounded-lg bg-secondary px-3 py-2" onClick={(e) => e.stopPropagation()}>
               <FileDigit className="size-4" />
               <span className="max-w-32 truncate">{file.name}</span>
-              <button onClick={() => handleRemoveFile(index)} className="hover:bg-secondary/50 rounded-full p-1" type="button">
+              <button onClick={() => handleRemoveFile(index)} className="rounded-full p-1 hover:bg-secondary/50" type="button">
                 <X className="size-4" />
               </button>
             </div>
@@ -52,9 +52,9 @@ export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: 
 
       <div className="flex items-center justify-between gap-2 pt-2">
         <ChatInputAction tooltip={t('attach.files') || 'Attach files'}>
-          <label htmlFor="file-upload" className="hover:bg-secondary-foreground/10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-2xl">
+          <label htmlFor="file-upload" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-2xl hover:bg-secondary-foreground/10">
             <input type="file" multiple onChange={handleFileChange} className="hidden" id="file-upload" ref={uploadInputRef} />
-            <Paperclip className="text-primary size-5" />
+            <Paperclip className="size-5 text-primary" />
           </label>
         </ChatInputAction>
 

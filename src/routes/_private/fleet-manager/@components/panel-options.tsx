@@ -63,7 +63,7 @@ export function FleetOptionsPanel() {
       <Item variant="outline" className="flex-col items-stretch p-4">
         <ItemHeader>
           <MapIcon className="size-3.5" />
-          <ItemTitle className="uppercase text-[10px] font-semibold tracking-wider">{t('map')}</ItemTitle>
+          <ItemTitle className="font-semibold text-[10px] uppercase tracking-wider">{t('map')}</ItemTitle>
         </ItemHeader>
         <RadioGroup
           value={mapTheme}
@@ -74,9 +74,9 @@ export function FleetOptionsPanel() {
           className="grid grid-cols-2 gap-2"
         >
           {themes.map((theme) => (
-            <div key={theme.value} className="flex items-center space-x-2 border rounded-md px-3 py-2 cursor-pointer hover:bg-muted/50 transition-colors">
+            <div key={theme.value} className="flex cursor-pointer items-center space-x-2 rounded-md border px-3 py-2 transition-colors hover:bg-muted/50">
               <RadioGroupItem value={theme.value} id={`theme-${theme.value}`} />
-              <Label htmlFor={`theme-${theme.value}`} className="text-xs cursor-pointer flex-1">
+              <Label htmlFor={`theme-${theme.value}`} className="flex-1 cursor-pointer text-xs">
                 {theme.label}
               </Label>
             </div>
@@ -88,13 +88,13 @@ export function FleetOptionsPanel() {
       <Item variant="outline" className="flex-col items-stretch p-4">
         <ItemHeader>
           <Anchor className="size-3.5" />
-          <ItemTitle className="uppercase text-[10px] font-semibold tracking-wider">{t('nautical.chart')}</ItemTitle>
+          <ItemTitle className="font-semibold text-[10px] uppercase tracking-wider">{t('nautical.chart')}</ItemTitle>
         </ItemHeader>
         <RadioGroup value={nauticalChart} onValueChange={(val: any) => setNauticalChart(val)} className="grid grid-cols-2 gap-2">
           {charts.map((chart) => (
-            <div key={chart.value} className="flex items-center space-x-2 border rounded-md px-3 py-2 cursor-pointer hover:bg-muted/50 transition-colors">
+            <div key={chart.value} className="flex cursor-pointer items-center space-x-2 rounded-md border px-3 py-2 transition-colors hover:bg-muted/50">
               <RadioGroupItem value={chart.value} id={`chart-${chart.value}`} />
-              <Label htmlFor={`chart-${chart.value}`} className="text-xs cursor-pointer flex-1">
+              <Label htmlFor={`chart-${chart.value}`} className="flex-1 cursor-pointer text-xs">
                 {chart.label}
               </Label>
             </div>
@@ -106,31 +106,31 @@ export function FleetOptionsPanel() {
       <Item variant="outline" className="flex-col items-stretch p-4">
         <ItemHeader>
           <Layers className="size-3.5" />
-          <ItemTitle className="uppercase text-[10px] font-semibold tracking-wider">{t('details')}</ItemTitle>
+          <ItemTitle className="font-semibold text-[10px] uppercase tracking-wider">{t('details')}</ItemTitle>
         </ItemHeader>
         <ItemContent className="px-1">
           <div className="flex items-center space-x-2">
             <Checkbox id="show-geofences" checked={showGeofences} onCheckedChange={toggleShowGeofences} />
-            <Label htmlFor="show-geofences" className="text-xs font-medium cursor-pointer">
+            <Label htmlFor="show-geofences" className="cursor-pointer font-medium text-xs">
               {t('geofences')}
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="show-platforms" checked={showPlatforms} onCheckedChange={setShowPlatforms} />
-            <Label htmlFor="show-platforms" className="text-xs font-medium cursor-pointer">
+            <Label htmlFor="show-platforms" className="cursor-pointer font-medium text-xs">
               {t('platforms')}
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="show-bouys" checked={showBouys} onCheckedChange={setShowBouys} />
-            <Label htmlFor="show-bouys" className="text-xs font-medium cursor-pointer">
+            <Label htmlFor="show-bouys" className="cursor-pointer font-medium text-xs">
               {t('monobuoys')}
             </Label>
           </div>
           {showBouys && (
-            <div className="flex items-center space-x-2 ml-6 animate-in slide-in-from-left-2 fade-in duration-200">
+            <div className="slide-in-from-left-2 fade-in ml-6 flex animate-in items-center space-x-2 duration-200">
               <Checkbox id="show-near-bouys" checked={showVesselsNearBouys} onCheckedChange={setShowVesselsNearBouys} />
-              <Label htmlFor="show-near-bouys" className="text-[11px] text-muted-foreground cursor-pointer">
+              <Label htmlFor="show-near-bouys" className="cursor-pointer text-[11px] text-muted-foreground">
                 {t('vessels.near.buoy')}
               </Label>
             </div>
@@ -140,19 +140,19 @@ export function FleetOptionsPanel() {
 
           <div className="flex items-center space-x-2">
             <Checkbox id="show-name" checked={showNames} onCheckedChange={toggleShowNames} />
-            <Label htmlFor="show-name" className="text-xs font-medium cursor-pointer">
+            <Label htmlFor="show-name" className="cursor-pointer font-medium text-xs">
               {t('name')}
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="show-code" checked={showCodes} onCheckedChange={toggleShowCodes} />
-            <Label htmlFor="show-code" className="text-xs font-medium cursor-pointer">
+            <Label htmlFor="show-code" className="cursor-pointer font-medium text-xs">
               {t('code')}
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="show-name-fence" checked={showNameFence} onCheckedChange={setShowNameFence} />
-            <Label htmlFor="show-name-fence" className="text-xs font-medium cursor-pointer">
+            <Label htmlFor="show-name-fence" className="cursor-pointer font-medium text-xs">
               {t('details.geofence')}
             </Label>
           </div>
@@ -163,18 +163,18 @@ export function FleetOptionsPanel() {
       <Item variant="outline" className="flex-col items-stretch p-4">
         <ItemHeader>
           <Palette className="size-3.5" />
-          <ItemTitle className="uppercase text-[10px] font-semibold tracking-wider">{t('fleet')}</ItemTitle>
+          <ItemTitle className="font-semibold text-[10px] uppercase tracking-wider">{t('fleet')}</ItemTitle>
         </ItemHeader>
         <ItemContent className="px-1">
           <div className="flex items-center space-x-2">
             <Checkbox id="status-nav" checked={isNavigationIndicator} onCheckedChange={setIsNavigationIndicator} />
-            <Label htmlFor="status-nav" className="text-xs font-medium cursor-pointer">
+            <Label htmlFor="status-nav" className="cursor-pointer font-medium text-xs">
               {t('view.status.navigation')}
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="status-op" checked={isOperationIndicator} onCheckedChange={setIsOperationIndicator} />
-            <Label htmlFor="status-op" className="text-xs font-medium cursor-pointer">
+            <Label htmlFor="status-op" className="cursor-pointer font-medium text-xs">
               {t('view.status.operation')}
             </Label>
           </div>

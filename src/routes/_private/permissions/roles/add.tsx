@@ -26,16 +26,16 @@ function AddRolePage() {
       <CardHeader title={t('new.role')} />
       <form onSubmit={onSubmit}>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="space-y-2">
               <EnterpriseSelect mode="single" value={form.watch('idEnterprise')} onChange={(val) => form.setValue('idEnterprise', val || '')} oneBlocked />
-              {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{form.formState.errors.idEnterprise.message}</p>}
+              {form.formState.errors.idEnterprise && <p className="text-destructive text-sm">{form.formState.errors.idEnterprise.message}</p>}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="description">{t('description')} *</Label>
               <Input id="description" {...form.register('description')} placeholder={t('message.description.placeholder')} maxLength={150} />
-              {form.formState.errors.description && <p className="text-sm text-destructive">{form.formState.errors.description.message}</p>}
+              {form.formState.errors.description && <p className="text-destructive text-sm">{form.formState.errors.description.message}</p>}
             </div>
           </div>
 

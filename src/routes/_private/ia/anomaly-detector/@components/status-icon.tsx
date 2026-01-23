@@ -39,7 +39,7 @@ export function StatusIcon({ status, showText = true }: StatusIconProps) {
   return (
     <div className="flex items-center gap-2">
       <Icon className={cn('size-4', config.color)} />
-      {showText && <span className={cn('text-sm font-medium', config.color)}>{config.label}</span>}
+      {showText && <span className={cn('font-medium text-sm', config.color)}>{config.label}</span>}
     </div>
   );
 }

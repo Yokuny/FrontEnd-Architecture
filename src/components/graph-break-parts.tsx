@@ -69,7 +69,7 @@ export function GraphBreakParts() {
 
   return (
     <Item variant="outline">
-      <ItemHeader className="items-center flex-col">
+      <ItemHeader className="flex-col items-center">
         <ItemTitle>Breakdown Chart - Parts</ItemTitle>
         <ItemDescription>Description</ItemDescription>
       </ItemHeader>
@@ -80,7 +80,7 @@ export function GraphBreakParts() {
               <Tooltip key={`${d.key}-${index}`}>
                 <TooltipTrigger asChild>
                   <div
-                    className="absolute transition-all duration-300 hover:brightness-110 hover:z-10 group cursor-help"
+                    className="group absolute cursor-help transition-all duration-300 hover:z-10 hover:brightness-110"
                     style={{
                       width: `${d.width}%`,
                       height: `${barHeight}px`,
@@ -88,7 +88,7 @@ export function GraphBreakParts() {
                     }}
                   >
                     <div
-                      className="w-full h-full shadow-sm border-y border-white/5 first:border-l last:border-r"
+                      className="h-full w-full border-white/5 border-y shadow-sm first:border-l last:border-r"
                       style={{
                         backgroundColor: d.color,
                         borderRadius: d.borderRadius,
@@ -98,37 +98,37 @@ export function GraphBreakParts() {
                     {d.width > 10 && (
                       <>
                         <div
-                          className="absolute pointer-events-none text-white font-semibold text-center w-full"
+                          className="pointer-events-none absolute w-full text-center font-semibold text-white"
                           style={{
                             top: `${barHeight / 5}px`,
                             left: '50%',
                             transform: 'translateX(-50%)',
                           }}
                         >
-                          <ItemDescription className="text-white font-semibold">{d.key}</ItemDescription>
+                          <ItemDescription className="font-semibold text-white">{d.key}</ItemDescription>
                         </div>
                         <div
-                          className="absolute pointer-events-none text-white text-center w-full"
+                          className="pointer-events-none absolute w-full text-center text-white"
                           style={{
                             top: `${barHeight * 0.45}px`,
                             left: '50%',
                             transform: 'translateX(-50%)',
                           }}
                         >
-                          <p className="text-white text-lg font-bold font-mono tabular-nums">{d.value}</p>
+                          <p className="font-bold font-mono text-lg text-white tabular-nums">{d.value}</p>
                         </div>
                       </>
                     )}
                   </div>
                 </TooltipTrigger>
-                <TooltipContent side="top" className="flex flex-col gap-1 min-w-32">
+                <TooltipContent side="top" className="flex min-w-32 flex-col gap-1">
                   <div className="flex items-center gap-2">
                     <div className="size-3" style={{ backgroundColor: d.color }} />
                     <ItemTitle className="font-bold text-xs uppercase tracking-tight">{d.key}</ItemTitle>
                   </div>
-                  <div className="flex items-baseline gap-1 mt-1">
-                    <ItemTitle className="text-lg font-black tabular-nums">{d.value.toLocaleString()}</ItemTitle>
-                    <ItemDescription className="text-xs font-normal uppercase">unidades</ItemDescription>
+                  <div className="mt-1 flex items-baseline gap-1">
+                    <ItemTitle className="font-black text-lg tabular-nums">{d.value.toLocaleString()}</ItemTitle>
+                    <ItemDescription className="font-normal text-xs uppercase">unidades</ItemDescription>
                   </div>
                 </TooltipContent>
               </Tooltip>
@@ -142,9 +142,9 @@ export function GraphBreakParts() {
             <div key={item.key} className="flex flex-col items-center">
               <div className="flex items-baseline gap-2">
                 <div className="size-2" style={{ backgroundColor: item.color }} />
-                <ItemTitle className="text-xs font-semibold text-muted-foreground uppercase">{item.key}</ItemTitle>
+                <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{item.key}</ItemTitle>
               </div>
-              <ItemTitle className="tabular-nums font-semibold text-lg">{item.value}</ItemTitle>
+              <ItemTitle className="font-semibold text-lg tabular-nums">{item.value}</ItemTitle>
             </div>
           ))}
         </ItemFooter>

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 export function ChatMessage({ children, className, ...props }: React.ComponentProps<typeof Item>) {
   return (
-    <Item className={cn('flex gap-3 items-stretch border-none p-0', className)} {...props}>
+    <Item className={cn('flex items-stretch gap-3 border-none p-0', className)} {...props}>
       {children}
     </Item>
   );
@@ -14,7 +14,7 @@ export function ChatMessage({ children, className, ...props }: React.ComponentPr
 
 export function ChatContent({ children, className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div className={cn('rounded-lg p-2 px-4 font-sans text-foreground bg-secondary wrap-break-word whitespace-normal', className)} {...props}>
+    <div className={cn('wrap-break-word whitespace-normal rounded-lg bg-secondary p-2 px-4 font-sans text-foreground', className)} {...props}>
       {children}
     </div>
   );
@@ -22,7 +22,7 @@ export function ChatContent({ children, className, ...props }: React.ComponentPr
 
 export function ChatInput({ children, className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div className={cn('border-input bg-background cursor-text rounded-3xl border p-2 shadow-xs', className)} {...props}>
+    <div className={cn('cursor-text rounded-3xl border border-input bg-background p-2 shadow-xs', className)} {...props}>
       {children}
     </div>
   );
@@ -37,14 +37,14 @@ export function ChatInputTextarea({ value, onChange, ...props }: React.Component
       el.style.height = 'auto';
       el.style.height = `${Math.min(el.scrollHeight, 240)}px`;
     }
-  }, [value]);
+  }, []);
 
   return (
     <Textarea
       ref={textareaRef}
       value={value}
       onChange={onChange}
-      className={cn('text-primary min-h-[44px] w-full resize-none border-none bg-transparent shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0')}
+      className={cn('min-h-[44px] w-full resize-none border-none bg-transparent text-primary shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0')}
       rows={1}
       {...props}
     />

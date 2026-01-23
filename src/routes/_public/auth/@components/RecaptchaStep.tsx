@@ -23,7 +23,7 @@ export function RecaptchaStep({ email, recaptchaRef, onVerify, onBack, isLoading
       </Field>
 
       {isLoading ? (
-        <div className="flex justify-center items-center py-8">
+        <div className="flex items-center justify-center py-8">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       ) : (

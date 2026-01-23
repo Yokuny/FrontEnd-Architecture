@@ -67,7 +67,7 @@ function OperationalAssetPage() {
   return (
     <Card>
       <CardHeader title={t('performance.asset.operational')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           {hasData && (
             <div className="flex items-center gap-2">
               <Button onClick={toggleFinancialView} className="gap-2">
@@ -81,7 +81,7 @@ function OperationalAssetPage() {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <div className="p-4 border rounded-lg bg-secondary/50">
+        <div className="rounded-lg border bg-secondary/50 p-4">
           <OperationalAssetFilter idEnterprise={idEnterprise || ''} filter={filter} onFilterChange={handleFilterChange} isLoading={isLoading} />
         </div>
 
@@ -90,7 +90,7 @@ function OperationalAssetPage() {
         ) : !hasData ? (
           <DefaultEmptyData />
         ) : (
-          <ItemGroup className="flex flex-col space-y-6 w-full">
+          <ItemGroup className="flex w-full flex-col space-y-6">
             <MiniDashboards data={data.statusList} totalLoss={data.totalLoss} totalRevenue={data.totalRevenue} viewFinancial={viewFinancial} />
 
             <DailyOperabilityChart data={data.dailyList} isLoading={isLoading} />

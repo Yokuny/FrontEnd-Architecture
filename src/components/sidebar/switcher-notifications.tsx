@@ -23,9 +23,9 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="ghost" aria-label="Open notifications" className="relative">
           {hasNotifications ? (
-            <MessageSquareIcon className="w-full h-full flex justify-center items-center" />
+            <MessageSquareIcon className="flex h-full w-full items-center justify-center" />
           ) : (
-            <MailCheckIcon className="w-full h-full flex justify-center items-center" />
+            <MailCheckIcon className="flex h-full w-full items-center justify-center" />
           )}
           {hasNotifications && (
             <span className="absolute top-2.5 right-2.5 flex h-2 w-2">
@@ -36,7 +36,7 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
           <span className="sr-only">Open notifications</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="right" className="w-80 my-6">
+      <DropdownMenuContent side="right" className="my-6 w-80">
         <DropdownMenuLabel>{t('alerts')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <div className="max-h-[300px] overflow-y-auto">
@@ -48,17 +48,17 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
                   <AvatarFallback>{fallback}</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium line-clamp-2">{text}</span>
-                  <span className="text-xs text-muted-foreground">{time}</span>
+                  <span className="line-clamp-2 font-medium text-sm">{text}</span>
+                  <span className="text-muted-foreground text-xs">{time}</span>
                 </div>
               </DropdownMenuItem>
             ))
           ) : (
-            <div className="p-4 text-center text-sm text-muted-foreground">{t('notifications.empty')}</div>
+            <div className="p-4 text-center text-muted-foreground text-sm">{t('notifications.empty')}</div>
           )}
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="justify-center text-sm text-muted-foreground font-mono hover:text-primary">{t('notifications.viewall')}</DropdownMenuItem>
+        <DropdownMenuItem className="justify-center font-mono text-muted-foreground text-sm hover:text-primary">{t('notifications.viewall')}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

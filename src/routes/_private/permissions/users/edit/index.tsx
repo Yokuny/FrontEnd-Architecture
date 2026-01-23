@@ -57,12 +57,12 @@ function EditUserPage() {
       <CardHeader title={t('edit.user')} />
       <form onSubmit={onSubmit}>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Name */}
             <div className="space-y-2 md:col-span-2">
               <Label htmlFor="name">{t('name')} *</Label>
               <Input id="name" {...form.register('name')} placeholder={t('name.placeholder')} maxLength={150} disabled={isDisabled} />
-              {form.formState.errors.name && <p className="text-sm text-destructive">{t(form.formState.errors.name.message)}</p>}
+              {form.formState.errors.name && <p className="text-destructive text-sm">{t(form.formState.errors.name.message)}</p>}
             </div>
 
             {/* Is System User */}
@@ -79,7 +79,7 @@ function EditUserPage() {
                 {t('email')} {!isOnlyContact && '*'}
               </Label>
               <Input id="email" type="email" {...form.register('email')} placeholder={t('login.email.placeholder')} disabled={isDisabled} />
-              {form.formState.errors.email && <p className="text-sm text-destructive">{t(form.formState.errors.email.message)}</p>}
+              {form.formState.errors.email && <p className="text-destructive text-sm">{t(form.formState.errors.email.message)}</p>}
             </div>
 
             {/* Phone */}

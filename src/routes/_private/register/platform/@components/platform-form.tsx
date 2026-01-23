@@ -29,7 +29,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
             </FormItem>
           )}
         />,
-        <div key="row-name-acronym" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-name-acronym" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="name"
@@ -83,7 +83,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
       title: t('technical_details'),
       description: t('platforms.technical.description'),
       fields: [
-        <div key="row-basin-type" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-basin-type" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="basin"
@@ -126,7 +126,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
             )}
           />
         </div>,
-        <div key="row-model-operator" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-model-operator" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="modelType"
@@ -186,7 +186,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
       title: t('safety_tracking'),
       description: t('platforms.safety.description'),
       fields: [
-        <div key="row-imo-mmsi-radius" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="row-imo-mmsi-radius" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={control}
             name="imo"
@@ -241,7 +241,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
       title: t('location'),
       description: t('platforms.location.description'),
       fields: [
-        <div key="row-lat-lon" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-lat-lon" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="latitude"
@@ -279,7 +279,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
       title: t('ais.dimensions'),
       description: t('platforms.ais.description'),
       fields: [
-        <div key="row-ais-1" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-ais-1" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="ais.distanceToBow"
@@ -311,7 +311,7 @@ export function PlatformForm({ isEdit }: { isEdit?: boolean }) {
             )}
           />
         </div>,
-        <div key="row-ais-2" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-ais-2" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="ais.distanceToStarboard"

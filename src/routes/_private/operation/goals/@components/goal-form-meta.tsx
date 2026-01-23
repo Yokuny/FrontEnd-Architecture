@@ -12,7 +12,7 @@ export function GoalFormMeta() {
   const { goalTypes, years } = useGoalOptions();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
       <FormField
         control={control}
         name="name"

@@ -16,12 +16,12 @@ export function RVESoundingItem({ asset, data }: RVESoundingItemProps) {
   return (
     <Card className="mb-6 overflow-hidden border-2 border-muted/50">
       <CardContent className="p-0">
-        <div className="bg-muted/30 p-4 border-b flex items-center gap-4">
-          <img src={asset.image?.url} alt={asset.name} className="w-14 h-14 rounded-full object-cover border-2 border-background shadow-sm" />
-          <ItemTitle className="text-xl font-bold tracking-tight">{asset.name}</ItemTitle>
+        <div className="flex items-center gap-4 border-b bg-muted/30 p-4">
+          <img src={asset.image?.url} alt={asset.name} className="h-14 w-14 rounded-full border-2 border-background object-cover shadow-sm" />
+          <ItemTitle className="font-bold text-xl tracking-tight">{asset.name}</ItemTitle>
         </div>
 
-        <div className="p-4 bg-background">
+        <div className="bg-background p-4">
           <ItemPeriodSounding data={data} />
         </div>
       </CardContent>

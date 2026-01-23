@@ -20,7 +20,7 @@ export function LanguageSwitcher() {
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="ghost" aria-label="Switch language">
-          <LanguagesIcon className="w-full h-full flex justify-center items-center" />
+          <LanguagesIcon className="flex h-full w-full items-center justify-center" />
           <span className="sr-only">{t('language')}</span>
         </Button>
       </DropdownMenuTrigger>

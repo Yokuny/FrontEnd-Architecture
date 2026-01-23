@@ -35,17 +35,17 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
   return (
     <ItemGroup className="p-4">
       <div className="relative">
-        <Search className="absolute left-2.5 top-2.5 size-4" />
-        <Input placeholder={t('search')} className="pl-9 h-9" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+        <Search className="absolute top-2.5 left-2.5 size-4" />
+        <Input placeholder={t('search')} className="h-9 pl-9" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
         {searchText && (
-          <button type="button" className="absolute right-2.5 top-2.5" onClick={() => setSearchText('')}>
+          <button type="button" className="absolute top-2.5 right-2.5" onClick={() => setSearchText('')}>
             <X className="size-4" />
           </button>
         )}
       </div>
 
       <Tabs defaultValue="assets">
-        <TabsList className="grid w-full grid-cols-2 h-9">
+        <TabsList className="grid h-9 w-full grid-cols-2">
           <TabsTrigger value="assets">{t('machines')}</TabsTrigger>
           <TabsTrigger value="voyages">{t('travel')}</TabsTrigger>
         </TabsList>
@@ -101,7 +101,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                     key={item.machine.id}
                     asChild
                     variant="outline"
-                    className={cn('w-full p-3 cursor-pointer hover:bg-accent', selectedMachineId === item.machine.id && 'bg-accent')}
+                    className={cn('w-full cursor-pointer p-3 hover:bg-accent', selectedMachineId === item.machine.id && 'bg-accent')}
                     onClick={() => {
                       setSelectedVoyageId(null);
                       setSelectedMachineId(item.machine.id);
@@ -109,18 +109,18 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                     }}
                   >
                     <ItemContent className="grow items-start gap-0">
-                      <div className="flex items-center w-full justify-between">
-                        <ItemTitle className="font-semibold text-sm truncate leading-tight">
+                      <div className="flex w-full items-center justify-between">
+                        <ItemTitle className="truncate font-semibold text-sm leading-tight">
                           {item.machine.code ? `${item.machine.code} - ` : ''}
                           {item.machine.name}
                         </ItemTitle>
-                        <Badge className={cn('px-1 flex h-4 text-[10px] uppercase font-bold text-white', statusConfig.color)}>
+                        <Badge className={cn('flex h-4 px-1 font-bold text-[10px] text-white uppercase', statusConfig.color)}>
                           <StatusIcon className="size-2.5 fill-white" />
                           {statusConfig.label}
                         </Badge>
                       </div>
 
-                      <div className="flex items-end w-full justify-between">
+                      <div className="flex w-full items-end justify-between">
                         <ItemContent className="w-full text-[10px]">
                           {item.lastState?.eta && (
                             <div className="flex items-center gap-1.5">
@@ -199,7 +199,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                     key={item.id}
                     asChild
                     variant="outline"
-                    className={cn('w-full p-3 cursor-pointer hover:bg-accent', selectedVoyageId === item.id && 'bg-accent')}
+                    className={cn('w-full cursor-pointer p-3 hover:bg-accent', selectedVoyageId === item.id && 'bg-accent')}
                     onClick={() => {
                       setSelectedMachineId(item.machine?.id || null);
                       setSelectedVoyageId(item.id);
@@ -207,19 +207,19 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                     }}
                   >
                     <ItemContent className="grow items-start gap-0">
-                      <div className="flex items-center w-full justify-between">
-                        <ItemTitle className="font-semibold text-sm truncate leading-tight">{item.code}</ItemTitle>
-                        <Badge className={cn('px-1 h-4 text-[10px] uppercase font-bold', statusConfig.color)}>{statusConfig.label}</Badge>
+                      <div className="flex w-full items-center justify-between">
+                        <ItemTitle className="truncate font-semibold text-sm leading-tight">{item.code}</ItemTitle>
+                        <Badge className={cn('h-4 px-1 font-bold text-[10px] uppercase', statusConfig.color)}>{statusConfig.label}</Badge>
                       </div>
 
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1 text-muted-foreground text-xs">
                         <ItemContent>
                           {item.machine?.image?.url ? <img src={item.machine.image.url} className="size-5 object-contain" alt="#" /> : <Ship className="size-4" />}
                         </ItemContent>
                         <ItemDescription className="truncate">{item.machine?.name}</ItemDescription>
                       </div>
 
-                      <div className="flex items-center justify-between w-full gap-4 mt-1">
+                      <div className="mt-1 flex w-full items-center justify-between gap-4">
                         <div className="flex flex-col items-start">
                           <ItemTitle>{item.portPointStart?.code || '-'}</ItemTitle>
                           <div className="text-[10px] leading-tight">
@@ -241,7 +241,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
 
                         <div className="flex flex-col items-end">
                           <ItemTitle>{portFinal?.code || '-'}</ItemTitle>
-                          <div className="text-[10px] leading-tight flex flex-col items-end">
+                          <div className="flex flex-col items-end text-[10px] leading-tight">
                             {item.metadata?.eta && (
                               <div className="flex flex-col items-end">
                                 <span className="font-bold text-muted-foreground">ETA</span>
@@ -250,7 +250,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                               </div>
                             )}
                             {(item.metadata?.dateTimeArrival || item.dateTimeEnd) && (
-                              <div className="flex flex-col items-end mt-1 border-t border-muted/20 pt-1">
+                              <div className="mt-1 flex flex-col items-end border-muted/20 border-t pt-1">
                                 <div className="whitespace-nowrap">{format(new Date(item.metadata?.dateTimeArrival || item.dateTimeEnd || ''), 'dd MMM yy')}</div>
                                 <div>{format(new Date(item.metadata?.dateTimeArrival || item.dateTimeEnd || ''), 'HH:mm')}</div>
                               </div>

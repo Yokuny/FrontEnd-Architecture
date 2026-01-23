@@ -101,7 +101,7 @@ function MachineAddPage() {
                 </AlertDialogContent>
               </AlertDialog>
             )}
-            <div className="flex items-center gap-2 ml-auto">
+            <div className="ml-auto flex items-center gap-2">
               <Button type="button" onClick={() => navigate({ to: '/register/machines' } satisfies { to: string })}>
                 {t('cancel')}
               </Button>

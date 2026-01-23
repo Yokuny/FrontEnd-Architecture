@@ -83,7 +83,7 @@ export function PtaxModal({ open, onOpenChange, initialData }: PtaxModalProps) {
                     <Input type="number" step="0.0001" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
                   </FormControl>
                   {cotationDate && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="mt-1 text-muted-foreground text-xs">
                       {t('quote.day')} {format(cotationDate, 'dd MMM yyyy')}
                     </p>
                   )}

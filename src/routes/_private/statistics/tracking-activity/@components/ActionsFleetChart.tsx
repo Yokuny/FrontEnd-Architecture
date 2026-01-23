@@ -55,8 +55,8 @@ export function ActionsFleetChart({ filters }: ActionsFleetChartProps) {
   if (isLoading) return <Skeleton className={`${CHART_HEIGHT_LARGE} w-full`} />;
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full">
-      <ItemHeader className="items-center flex-col">
+    <Item variant="outline" className="w-full flex-col items-stretch">
+      <ItemHeader className="flex-col items-center">
         <ItemTitle>{t('actions.fleet')}</ItemTitle>
         <ItemDescription>{t('actions.fleet.distribution.description', 'Distribuição de ações realizadas na frota')}</ItemDescription>
       </ItemHeader>
@@ -73,10 +73,10 @@ export function ActionsFleetChart({ filters }: ActionsFleetChartProps) {
                     if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                       return (
                         <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                          <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-3xl font-bold">
+                          <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground font-bold text-3xl">
                             {totalValue.toLocaleString()}
                           </tspan>
-                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground uppercase text-[10px] font-bold">
+                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground font-bold text-[10px] uppercase">
                             {t('total', 'Ações')}
                           </tspan>
                         </text>

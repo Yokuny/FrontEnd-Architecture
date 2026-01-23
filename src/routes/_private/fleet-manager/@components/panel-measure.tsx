@@ -110,11 +110,11 @@ export function FleetMeasurePanel() {
 
   return (
     <ItemGroup className="p-4">
-      <Item variant="outline" className="bg-accent p-2 px-4 gap-2">
+      <Item variant="outline" className="gap-2 bg-accent p-2 px-4">
         <ItemHeader>
-          <ItemTitle className="uppercase text-[10px] font-semibold tracking-wider">{t('units')}</ItemTitle>
+          <ItemTitle className="font-semibold text-[10px] uppercase tracking-wider">{t('units')}</ItemTitle>
           <ItemActions>
-            <Button size="sm" className="font-semibold uppercase text-[10px]" onClick={() => setUnitMeasureLine(unitMeasureLine === 'nm' ? 'm' : 'nm')}>
+            <Button size="sm" className="font-semibold text-[10px] uppercase" onClick={() => setUnitMeasureLine(unitMeasureLine === 'nm' ? 'm' : 'nm')}>
               {unitMeasureLine}
             </Button>
             <Button size="sm" className="text-destructive" onClick={handleClearAll} title={t('clear')}>
@@ -123,13 +123,13 @@ export function FleetMeasurePanel() {
           </ItemActions>
         </ItemHeader>
         <div className="flex items-center gap-2">
-          <ItemTitle className="text-[10px] uppercase whitespace-nowrap">{t('speed')} (kn):</ItemTitle>
-          <Input type="number" value={speed} onChange={(e) => setSpeed(Number(e.target.value))} className="text-xs h-8" />
+          <ItemTitle className="whitespace-nowrap text-[10px] uppercase">{t('speed')} (kn):</ItemTitle>
+          <Input type="number" value={speed} onChange={(e) => setSpeed(Number(e.target.value))} className="h-8 text-xs" />
         </div>
       </Item>
 
       {!pointsMeasureLine || pointsMeasureLine.length === 0 ? (
-        <Item className="py-12 flex flex-col text-center">
+        <Item className="flex flex-col py-12 text-center">
           <MapPin className="size-6 text-muted-foreground" />
           <ItemDescription>{t('measure.empty.description')}</ItemDescription>
         </Item>
@@ -140,35 +140,35 @@ export function FleetMeasurePanel() {
           const totalDays = totalHours / 24;
 
           return (
-            <Item key={lineData.id || idx} variant="outline" className="flex-col w-full items-stretch gap-4">
+            <Item key={lineData.id || idx} variant="outline" className="w-full flex-col items-stretch gap-4">
               <ItemHeader className="uppercase">
-                <ItemTitle className="font-bold text-xs uppercase text-muted-foreground">
+                <ItemTitle className="font-bold text-muted-foreground text-xs uppercase">
                   {t('route')} {idx + 1}
                 </ItemTitle>
-                <ItemTitle className="text-primary tabular-nums font-bold text-xs">
+                <ItemTitle className="font-bold text-primary text-xs tabular-nums">
                   {formatDist(totalDist)} {unitMeasureLine}
                 </ItemTitle>
               </ItemHeader>
 
               <ItemContent className="grid grid-cols-2 gap-2">
-                <div className="flex items-center font-semibold gap-1.5 text-xs p-1.5 rounded border border-accent">
+                <div className="flex items-center gap-1.5 rounded border border-accent p-1.5 font-semibold text-xs">
                   <Clock className="size-3" />
                   {totalHours.toFixed(1)} HR
                 </div>
-                <div className="flex items-center font-semibold gap-1.5 text-xs p-1.5 rounded border border-accent">
+                <div className="flex items-center gap-1.5 rounded border border-accent p-1.5 font-semibold text-xs">
                   <Clock className="size-3" />
                   {totalDays.toFixed(1)} {t('days')}
                 </div>
               </ItemContent>
 
               <ItemContent>
-                <ItemHeader className="font-bold text-xs uppercase text-muted-foreground">{t('points')}</ItemHeader>
-                <div className="space-y-2 border-l-2 border-primary/20 ml-2 pl-3">
+                <ItemHeader className="font-bold text-muted-foreground text-xs uppercase">{t('points')}</ItemHeader>
+                <div className="ml-2 space-y-2 border-primary/20 border-l-2 pl-3">
                   {lineData.points.map((_: any, ptIdx: number) => {
                     const distFromStart = getDistancesInUnit(lineData.points.slice(0, ptIdx + 1));
                     return (
                       <div key={`${lineData.id}-${ptIdx}`} className="relative py-1">
-                        <ItemMedia className="absolute -left-[1.2rem] top-1.5 bg-background box-content py-0.5">
+                        <ItemMedia className="absolute top-1.5 -left-[1.2rem] box-content bg-background py-0.5">
                           <MapPin className="size-3 text-muted-foreground" />
                         </ItemMedia>
                         <ItemContent>
@@ -176,7 +176,7 @@ export function FleetMeasurePanel() {
                             {t('point')} {ptIdx + 1}
                           </ItemTitle>
                           {ptIdx > 0 && (
-                            <div className="text-[9px] text-muted-foreground flex items-center gap-1">
+                            <div className="flex items-center gap-1 text-[9px] text-muted-foreground">
                               <Ruler className="size-2.5" />
                               {formatDist(distFromStart)} {unitMeasureLine}
                             </div>

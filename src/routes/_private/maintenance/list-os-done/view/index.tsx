@@ -54,17 +54,17 @@ function OsDetailsPage() {
         </Button>
       </CardHeader>
 
-      <CardContent className="space-y-6 pb-20 max-w-5xl print:max-w-none">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pt-6">
-          <div className="flex justify-between items-center w-full">
+      <CardContent className="max-w-5xl space-y-6 pb-20 print:max-w-none">
+        <div className="flex flex-col justify-between gap-8 pt-6 md:flex-row md:items-end">
+          <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <FileText className="size-6" />
               </div>
-              <span className="text-3xl font-semibold tracking-tighter">{data.order}</span>
+              <span className="font-semibold text-3xl tracking-tighter">{data.order}</span>
             </div>
-            <div className="flex items-start flex-col gap-1">
-              <h2 className="text-2xl font-bold tracking-tight">{data.enterprise.name}</h2>
+            <div className="flex flex-col items-start gap-1">
+              <h2 className="font-bold text-2xl tracking-tight">{data.enterprise.name}</h2>
               <p className="text-muted-foreground">
                 {data.enterprise.city} - {data.enterprise.state}
               </p>
@@ -73,66 +73,66 @@ function OsDetailsPage() {
         </div>
 
         {/* Info Grid - Experience inspired */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-y py-6">
-          <div className="px-0 md:pr-12 space-y-2 border-b md:border-b-0 md:border-r pb-8 md:pb-0">
-            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">{t('machine')}</span>
-            <h3 className="text-3xl font-semibold tracking-tighter leading-tight">{data.machine.name}</h3>
+        <div className="grid grid-cols-1 gap-0 border-y py-6 md:grid-cols-3">
+          <div className="space-y-2 border-b px-0 pb-8 md:border-r md:border-b-0 md:pr-12 md:pb-0">
+            <span className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('machine')}</span>
+            <h3 className="font-semibold text-3xl leading-tight tracking-tighter">{data.machine.name}</h3>
           </div>
-          <div className="px-0 md:px-12 space-y-2 border-b md:border-b-0 md:border-r py-8 md:py-0">
-            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">{t('maintenance.plan')}</span>
-            <h3 className="text-3xl font-semibold tracking-tighter leading-tight">{data.maintenancePlan.description}</h3>
+          <div className="space-y-2 border-b px-0 py-8 md:border-r md:border-b-0 md:px-12 md:py-0">
+            <span className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('maintenance.plan')}</span>
+            <h3 className="font-semibold text-3xl leading-tight tracking-tighter">{data.maintenancePlan.description}</h3>
           </div>
-          <div className="px-0 md:pl-12 space-y-2 pt-8 md:pt-0">
-            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">{t('done.at')}</span>
-            <h3 className="text-3xl font-semibold tracking-tighter leading-tight">{data.doneAt ? format(new Date(data.doneAt), 'dd MM yyyy') : '-'}</h3>
+          <div className="space-y-2 px-0 pt-8 md:pt-0 md:pl-12">
+            <span className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('done.at')}</span>
+            <h3 className="font-semibold text-3xl leading-tight tracking-tighter">{data.doneAt ? format(new Date(data.doneAt), 'dd MM yyyy') : '-'}</h3>
           </div>
         </div>
 
         {/* Description Section */}
         {data.description && (
           <div className="space-y-4">
-            <h3 className="text-xl font-semibold tracking-tighter uppercase text-muted-foreground/60">{t('description')}</h3>
-            <p className="text-2xl font-medium tracking-tight whitespace-pre-wrap leading-relaxed text-foreground/80">{data.description}</p>
+            <h3 className="font-semibold text-muted-foreground/60 text-xl uppercase tracking-tighter">{t('description')}</h3>
+            <p className="whitespace-pre-wrap font-medium text-2xl text-foreground/80 leading-relaxed tracking-tight">{data.description}</p>
           </div>
         )}
 
         {/* Checklist Section */}
         <div className="space-y-10 lg:space-y-16">
-          <h2 className="text-4xl font-semibold tracking-tighter">{t('check.list')}</h2>
+          <h2 className="font-semibold text-4xl tracking-tighter">{t('check.list')}</h2>
 
           <ul className="divide-y">
             {data.services.map((service, index) => (
-              <li key={`${service.description}-${index}`} className="flex flex-col py-8 first:pt-0 last:pb-0 md:flex-row md:items-start gap-6 md:gap-12">
+              <li key={`${service.description}-${index}`} className="flex flex-col gap-6 py-8 first:pt-0 last:pb-0 md:flex-row md:items-start md:gap-12">
                 <div className="w-16 shrink-0 md:pt-1">
                   {service.done ? (
-                    <div className="size-10 rounded-full bg-green-50 flex items-center justify-center text-green-600 border border-green-100">
+                    <div className="flex size-10 items-center justify-center rounded-full border border-green-100 bg-green-50 text-green-600">
                       <CheckCircle2 className="size-5" />
                     </div>
                   ) : (
-                    <div className="size-10 rounded-full bg-red-50 flex items-center justify-center text-red-600 border border-red-100">
+                    <div className="flex size-10 items-center justify-center rounded-full border border-red-100 bg-red-50 text-red-600">
                       <XCircle className="size-5" />
                     </div>
                   )}
                 </div>
 
                 <div className="flex-1 space-y-2">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <h4 className="text-2xl font-semibold tracking-tighter leading-none">{service.description}</h4>
-                    <Badge variant="secondary" className="w-fit font-medium text-xs px-3 py-1">
+                  <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                    <h4 className="font-semibold text-2xl leading-none tracking-tighter">{service.description}</h4>
+                    <Badge variant="secondary" className="w-fit px-3 py-1 font-medium text-xs">
                       {service.groupName}
                     </Badge>
                   </div>
 
-                  {service.typeService?.label && <p className="text-sm font-semibold text-primary/70">{service.typeService.label}</p>}
+                  {service.typeService?.label && <p className="font-semibold text-primary/70 text-sm">{service.typeService.label}</p>}
 
                   {service.observation && (
-                    <p className="text-lg text-muted-foreground italic mt-4 border-l-4 border-primary/20 pl-6 py-2 bg-muted/20 rounded-r-lg">{service.observation}</p>
+                    <p className="mt-4 rounded-r-lg border-primary/20 border-l-4 bg-muted/20 py-2 pl-6 text-lg text-muted-foreground italic">{service.observation}</p>
                   )}
                 </div>
               </li>
             ))}
             {data.services.length === 0 && (
-              <li className="py-6 border-none">
+              <li className="border-none py-6">
                 <EmptyData />
               </li>
             )}
@@ -140,27 +140,27 @@ function OsDetailsPage() {
         </div>
 
         {/* Personnel Section */}
-        <div className="flex justify-between items-center">
-          <div className="space-y-6 flex flex-col w-fit items-center">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">{t('action.by')}</h3>
+        <div className="flex items-center justify-between">
+          <div className="flex w-fit flex-col items-center space-y-6">
+            <h3 className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('action.by')}</h3>
             <div className="flex flex-wrap gap-4">
               {data.usersDone.map((user) => (
-                <div key={user.id} className="flex items-center gap-3 px-5 py-2.5 bg-muted/40 rounded-full border border-border/50 hover:bg-muted/60 transition-colors">
-                  <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">{user.name.charAt(0)}</div>
-                  <span className="font-semibold tracking-tight text-sm">{user.name}</span>
+                <div key={user.id} className="flex items-center gap-3 rounded-full border border-border/50 bg-muted/40 px-5 py-2.5 transition-colors hover:bg-muted/60">
+                  <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 font-bold text-primary text-xs">{user.name.charAt(0)}</div>
+                  <span className="font-semibold text-sm tracking-tight">{user.name}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-12">
             <div className="space-y-2">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">{t('user.fill')}</h3>
-              <p className="text-xl font-bold tracking-tight">{data.userFill?.name || '-'}</p>
+              <h3 className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('user.fill')}</h3>
+              <p className="font-bold text-xl tracking-tight">{data.userFill?.name || '-'}</p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">{t('fill.at')}</h3>
-              <p className="text-xl font-medium tracking-tight tabular-nums text-muted-foreground">{data.createAt ? format(new Date(data.createAt), 'dd MM yyyy HH:mm') : '-'}</p>
+              <h3 className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('fill.at')}</h3>
+              <p className="font-medium text-muted-foreground text-xl tabular-nums tracking-tight">{data.createAt ? format(new Date(data.createAt), 'dd MM yyyy HH:mm') : '-'}</p>
             </div>
           </div>
         </div>

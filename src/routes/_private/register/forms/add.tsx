@@ -166,7 +166,7 @@ function FormAddFormContent({ initialData, pendingData, formId }: FormAddFormCon
         <CardHeader title={t('config.form')}>
           {fields.length > 0 && (
             <Button variant="outline" onClick={() => setShowPreview(true)}>
-              <Eye className="size-4 mr-2" />
+              <Eye className="mr-2 size-4" />
               Preview
             </Button>
           )}

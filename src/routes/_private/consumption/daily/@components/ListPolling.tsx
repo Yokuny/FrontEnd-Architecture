@@ -99,11 +99,11 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
         <ItemTitle>{t('polling')}</ItemTitle>
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
-            <Button variant="ghost" size="sm" onClick={expandAll} className="text-xs text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
               {t('expand.all')}
             </Button>
             <Separator orientation="vertical" className="h-4 self-center" />
-            <Button variant="ghost" size="sm" onClick={collapseAll} className="text-xs text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
               {t('collapse.all')}
             </Button>
           </div>
@@ -121,11 +121,11 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
             <Collapsible key={item._id} open={isOpen} onOpenChange={() => toggleCategory(item._id)}>
               <div className="rounded-lg border bg-card">
                 <CollapsibleTrigger asChild>
-                  <Button variant="ghost" className="w-full items-center justify-between hover:bg-secondary outline-none focus-visible:ring-2">
+                  <Button variant="ghost" className="w-full items-center justify-between outline-none hover:bg-secondary focus-visible:ring-2">
                     <div className="flex items-center gap-3">
                       <Calendar className="size-4" />
                       <ItemTitle className="text-base">{item?.pollingEndDateTime ? format(new Date(item.pollingEndDateTime), 'dd MMM HH:mm', { locale: pt }) : '-'}</ItemTitle>
-                      {item?.status === 'processing' && <Loader2 className="size-4 animate-spin text-muted-foreground ml-2" />}
+                      {item?.status === 'processing' && <Loader2 className="ml-2 size-4 animate-spin text-muted-foreground" />}
                     </div>
                     <div className="flex items-center gap-2">
                       {hasPermissionEditor && item?.status === 'processed' && (
@@ -148,7 +148,7 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                 <CollapsibleContent>
                   <ItemGroup>
                     {item?.status === 'processing' && (
-                      <Item variant="default" size="sm" className="bg-transparent border-transparent">
+                      <Item variant="default" size="sm" className="border-transparent bg-transparent">
                         <ItemDescription>{t('processing')}...</ItemDescription>
                       </Item>
                     )}
@@ -182,7 +182,7 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
           {/* Início */}
           <div>
             <ItemTitle className="text-muted-foreground">{t('start')}</ItemTitle>
-            <ItemContent className="flex-row justify-between items-end">
+            <ItemContent className="flex-row items-end justify-between">
               <div className="flex gap-4">
                 <div>
                   <Label className="flex items-stretch gap-2">
@@ -201,12 +201,12 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                   <ItemDescription className="text-lg">{selectedItem?.pollingStartDateTime ? format(new Date(selectedItem.pollingStartDateTime), 'HH:mm') : '-'}</ItemDescription>
                 </div>
               </div>
-              <div className="max-w-30 w-full flex flex-col gap-1">
+              <div className="flex w-full max-w-30 flex-col gap-1">
                 <Label htmlFor="startTime" className="flex items-stretch gap-2">
                   <Clock className="size-4" />
                   {t('new')}
                 </Label>
-                <Input className="max-w-24 w-full" id="startTime" type="time" value={selectedTimeStart} onChange={(e) => setSelectedTimeStart(e.target.value)} />
+                <Input className="w-full max-w-24" id="startTime" type="time" value={selectedTimeStart} onChange={(e) => setSelectedTimeStart(e.target.value)} />
               </div>
             </ItemContent>
           </div>
@@ -214,7 +214,7 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
           {/* Fim */}
           <div className="mt-4">
             <ItemTitle className="text-muted-foreground">{t('end')}</ItemTitle>
-            <ItemContent className="flex-row justify-between items-end">
+            <ItemContent className="flex-row items-end justify-between">
               <div className="flex gap-4">
                 <div>
                   <Label className="flex items-stretch gap-2">
@@ -233,12 +233,12 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                   <ItemDescription className="text-lg">{selectedItem?.pollingEndDateTime ? format(new Date(selectedItem.pollingEndDateTime), 'HH:mm') : '-'}</ItemDescription>
                 </div>
               </div>
-              <div className="max-w-30 w-full flex flex-col gap-1">
+              <div className="flex w-full max-w-30 flex-col gap-1">
                 <Label htmlFor="endTime" className="flex items-stretch gap-2">
                   <Clock className="size-4" />
                   {t('new')}
                 </Label>
-                <Input className="max-w-24 w-full" id="endTime" type="time" value={selectedTimeEnd} onChange={(e) => setSelectedTimeEnd(e.target.value)} />
+                <Input className="w-full max-w-24" id="endTime" type="time" value={selectedTimeEnd} onChange={(e) => setSelectedTimeEnd(e.target.value)} />
               </div>
             </ItemContent>
           </div>

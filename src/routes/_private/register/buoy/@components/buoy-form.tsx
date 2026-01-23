@@ -122,7 +122,7 @@ export function BuoyForm({ isEdit }: BuoyFormProps) {
               {fields.map((field, index) => (
                 <div key={field.id} className="space-y-4">
                   {index > 0 && <Separator className="my-4" />}
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                  <div className="grid grid-cols-1 items-end gap-4 md:grid-cols-12">
                     <div className="md:col-span-1">
                       <FormField
                         control={control}
@@ -132,8 +132,8 @@ export function BuoyForm({ isEdit }: BuoyFormProps) {
                             <Field className="gap-2">
                               <FieldLabel>{t('color')}</FieldLabel>
                               <FormControl>
-                                <div className="flex h-10 w-full rounded-md border border-input bg-background px-1 py-1 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                                  <input type="color" className="w-full h-full border-0 bg-transparent cursor-pointer" {...field} />
+                                <div className="flex h-10 w-full rounded-md border border-input bg-background px-1 py-1 text-sm ring-offset-background file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                                  <input type="color" className="h-full w-full cursor-pointer border-0 bg-transparent" {...field} />
                                 </div>
                               </FormControl>
                             </Field>
@@ -176,7 +176,7 @@ export function BuoyForm({ isEdit }: BuoyFormProps) {
                         )}
                       />
                     </div>
-                    <div className="md:col-span-1 flex justify-end">
+                    <div className="flex justify-end md:col-span-1">
                       {fields.length > 1 && (
                         <Button type="button" variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => remove(index)}>
                           <Trash2 className="size-4" />

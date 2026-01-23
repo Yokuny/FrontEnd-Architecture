@@ -141,7 +141,7 @@ export function EditEventScheduleDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
       {children && <DialogTrigger asChild>{children}</DialogTrigger>}
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Calendar className="size-5" />
@@ -151,9 +151,9 @@ export function EditEventScheduleDialog({
         </DialogHeader>
 
         {isFetching ? (
-          <div className="flex flex-col items-center justify-center py-12 gap-4">
+          <div className="flex flex-col items-center justify-center gap-4 py-12">
             <Loader2 className="size-8 animate-spin text-primary" />
-            <p className="text-sm text-muted-foreground">{t('loading')}</p>
+            <p className="text-muted-foreground text-sm">{t('loading')}</p>
           </div>
         ) : (
           <div className="grid gap-6 py-4">
@@ -210,7 +210,7 @@ export function EditEventScheduleDialog({
 
         <DialogFooter className="gap-2">
           {event?.id && !isFetching && (
-            <Button variant="ghost" onClick={handleDelete} disabled={isLoading} className="text-destructive hover:text-destructive mr-auto">
+            <Button variant="ghost" onClick={handleDelete} disabled={isLoading} className="mr-auto text-destructive hover:text-destructive">
               {isLoading ? <Spinner className="size-4" /> : <Trash2 className="size-4" />}
               {t('delete')}
             </Button>

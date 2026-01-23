@@ -20,7 +20,12 @@
       "recommended": true,
       "a11y": "info",
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": {
+          "level": "error",
+          "options": {
+            "functions": ["cn", "clsx", "twMerge", "cva"]
+          }
+        }
       },
       "suspicious": {
         "noReactSpecificProps": "off",

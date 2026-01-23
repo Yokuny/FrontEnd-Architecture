@@ -28,8 +28,8 @@ export function ConsumptionCard({ data, filters }: ConsumptionCardProps) {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="rounded-lg border bg-card">
-      <div className="flex items-center justify-between p-4 flex-wrap gap-4">
-        <div className="flex items-center gap-4 min-w-[200px]">
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4">
+        <div className="flex min-w-[200px] items-center gap-4">
           <Avatar className="size-12 border">
             <AvatarImage src={machine.image?.url} alt={machine.name} className="object-cover" />
             <AvatarFallback>{machine.name.substring(0, 2).toUpperCase()}</AvatarFallback>
@@ -45,10 +45,10 @@ export function ConsumptionCard({ data, filters }: ConsumptionCardProps) {
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-1">
               <Fuel className="size-4 text-amber-800" />
-              <ItemDescription className="text-xs font-bold uppercase">{t('manual')}</ItemDescription>
+              <ItemDescription className="font-bold text-xs uppercase">{t('manual')}</ItemDescription>
             </div>
             <div className="flex items-center gap-1">
-              <ItemTitle className="text-lg font-bold">{manual.value.toFixed(3)}</ItemTitle>
+              <ItemTitle className="font-bold text-lg">{manual.value.toFixed(3)}</ItemTitle>
               <ItemDescription>{manual.unit}</ItemDescription>
             </div>
           </div>
@@ -56,10 +56,10 @@ export function ConsumptionCard({ data, filters }: ConsumptionCardProps) {
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-1">
               <Activity className="size-4 text-blue-700" />
-              <ItemDescription className="text-xs font-bold uppercase">{t('telemetry')}</ItemDescription>
+              <ItemDescription className="font-bold text-xs uppercase">{t('telemetry')}</ItemDescription>
             </div>
             <div className="flex items-center gap-1">
-              <ItemTitle className="text-lg font-bold">{telemetry.value.toFixed(3)}</ItemTitle>
+              <ItemTitle className="font-bold text-lg">{telemetry.value.toFixed(3)}</ItemTitle>
               <ItemDescription>{telemetry.unit}</ItemDescription>
             </div>
           </div>
@@ -67,9 +67,9 @@ export function ConsumptionCard({ data, filters }: ConsumptionCardProps) {
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-1">
               <FlipHorizontal2 className={cn('size-4', diffPercent > 0 ? 'text-red-700' : 'text-green-700')} />
-              <ItemDescription className="text-xs font-bold uppercase">{t('diff')}</ItemDescription>
+              <ItemDescription className="font-bold text-xs uppercase">{t('diff')}</ItemDescription>
             </div>
-            <ItemTitle className={cn('font-mono text-lg font-bold', diffPercent > 0 ? 'text-red-700' : 'text-green-700')}>
+            <ItemTitle className={cn('font-bold font-mono text-lg', diffPercent > 0 ? 'text-red-700' : 'text-green-700')}>
               {hasValues ? `${diffPercent.toFixed(1)}%` : '-'}
             </ItemTitle>
           </div>

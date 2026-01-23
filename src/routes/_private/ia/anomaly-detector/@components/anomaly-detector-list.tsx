@@ -35,7 +35,7 @@ export function AnomalyDetectorList({ data, onShowDetails }: AnomalyDetectorList
       header: t('machine'),
       render: (_, row) => (
         <div
-          className="flex items-center gap-3 cursor-pointer group/item"
+          className="group/item flex cursor-pointer items-center gap-3"
           onClick={() =>
             navigate({
               to: '/remote-ihm' as any,
@@ -47,13 +47,13 @@ export function AnomalyDetectorList({ data, onShowDetails }: AnomalyDetectorList
             })
           }
         >
-          <Avatar className="size-12 rounded-full border-2 border-background shadow-sm group-hover/item:border-primary/20 transition-all">
+          <Avatar className="size-12 rounded-full border-2 border-background shadow-sm transition-all group-hover/item:border-primary/20">
             <AvatarImage src={row.asset.image?.url} alt={row.asset.name} />
             <AvatarFallback className="bg-primary/5 text-primary">{row.asset.name.substring(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
           <ItemContent>
-            <ItemTitle className="text-sm font-bold truncate group-hover/item:text-primary transition-colors">{row.asset.name}</ItemTitle>
-            <ItemDescription className="text-xs truncate">{row.asset.modelMachine?.description}</ItemDescription>
+            <ItemTitle className="truncate font-bold text-sm transition-colors group-hover/item:text-primary">{row.asset.name}</ItemTitle>
+            <ItemDescription className="truncate text-xs">{row.asset.modelMachine?.description}</ItemDescription>
           </ItemContent>
         </div>
       ),
@@ -64,12 +64,12 @@ export function AnomalyDetectorList({ data, onShowDetails }: AnomalyDetectorList
       header: t('mode.operation'),
       render: (value, row) => (
         <div className="flex items-center gap-2">
-          <div className={cn('p-1.5 rounded-full bg-muted', value === 'operating' && 'bg-lime-100 text-lime-700', row.status === 'anomaly' && 'bg-red-100 text-red-800')}>
+          <div className={cn('rounded-full bg-muted p-1.5', value === 'operating' && 'bg-lime-100 text-lime-700', row.status === 'anomaly' && 'bg-red-100 text-red-800')}>
             {value === 'operating' ? <Check className="size-4" /> : <CloudOff className="size-4" />}
           </div>
           <span
             className={cn(
-              'text-xs font-bold uppercase tracking-wider',
+              'font-bold text-xs uppercase tracking-wider',
               row.status === 'anomaly' && 'text-red-800',
               value === 'operating' && 'text-lime-700',
               !value && 'text-muted-foreground',
@@ -86,11 +86,11 @@ export function AnomalyDetectorList({ data, onShowDetails }: AnomalyDetectorList
       header: t('status'),
       render: (value, row) => (
         <div
-          className={cn('flex items-center justify-between group/status', row.is_anomaly && 'cursor-pointer')}
+          className={cn('group/status flex items-center justify-between', row.is_anomaly && 'cursor-pointer')}
           onClick={() => row.is_anomaly && onShowDetails(row.important_features || {})}
         >
           <StatusIcon status={value} />
-          {row.is_anomaly && <ArrowRight className="size-4 text-primary opacity-0 group-hover/status:opacity-100 transition-opacity" />}
+          {row.is_anomaly && <ArrowRight className="size-4 text-primary opacity-0 transition-opacity group-hover/status:opacity-100" />}
         </div>
       ),
       sortable: true,
@@ -99,7 +99,7 @@ export function AnomalyDetectorList({ data, onShowDetails }: AnomalyDetectorList
 
   return (
     <DataTable
-      className="p-0 border-none"
+      className="border-none p-0"
       compact
       bordered={false}
       data={displayData}

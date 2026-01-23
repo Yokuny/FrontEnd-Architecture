@@ -63,9 +63,9 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
   return (
     <div className="flex">
       <Table className="min-w-0">
-        <TableHeader className="bg-secondary sticky top-0 z-20">
+        <TableHeader className="sticky top-0 z-20 bg-secondary">
           <TableRow className="hover:bg-transparent">
-            <TableHead className="p-4 sticky left-0 z-30 bg-background/95 backdrop-blur min-w-[160px]">
+            <TableHead className="sticky left-0 z-30 min-w-[160px] bg-background/95 p-4 backdrop-blur">
               <ItemTitle className="text-muted-foreground uppercase">{t('machine')}</ItemTitle>
             </TableHead>
 
@@ -75,7 +75,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
               const ruleInfo = RULES[v];
 
               return (
-                <TableHead key={v} className="p-4 text-right min-w-[180px] group cursor-pointer hover:bg-accent transition-colors border" onClick={() => handleSort(v)}>
+                <TableHead key={v} className="group min-w-[180px] cursor-pointer border p-4 text-right transition-colors hover:bg-accent" onClick={() => handleSort(v)}>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild className="flex items-center justify-end gap-2">
@@ -83,7 +83,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                           <ItemMedia className={cn('size-6 p-1 transition-transform group-hover:scale-120', statusConfig.color)}>
                             <StatusIcon className="size-full" />
                           </ItemMedia>
-                          <ItemTitle className="text-muted-foreground group-hover:text-foreground transition-colors whitespace-nowrap">{t(statusConfig.key)}</ItemTitle>
+                          <ItemTitle className="whitespace-nowrap text-muted-foreground transition-colors group-hover:text-foreground">{t(statusConfig.key)}</ItemTitle>
                         </div>
                       </TooltipTrigger>
                       {ruleInfo && (
@@ -91,17 +91,17 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                           {ruleInfo.rules.map((r, i) => (
                             <ItemTitle key={`${i}${r}`}>{r}</ItemTitle>
                           ))}
-                          {ruleInfo.observation && <ItemDescription className="italic pt-1 border-t">{ruleInfo.observation}</ItemDescription>}
+                          {ruleInfo.observation && <ItemDescription className="border-t pt-1 italic">{ruleInfo.observation}</ItemDescription>}
                         </TooltipContent>
                       )}
                     </Tooltip>
                   </TooltipProvider>
-                  {orderColumn?.column === v && <span className="text-xs text-primary">{orderColumn.order === 'asc' ? '↑' : '↓'}</span>}
+                  {orderColumn?.column === v && <span className="text-primary text-xs">{orderColumn.order === 'asc' ? '↑' : '↓'}</span>}
                 </TableHead>
               );
             })}
 
-            <TableHead className="uppercase sticky right-0 z-30 bg-background/30 backdrop-blur min-w-[150px]">
+            <TableHead className="sticky right-0 z-30 min-w-[150px] bg-background/30 uppercase backdrop-blur">
               <ItemTitle className="text-muted-foreground uppercase">{t('total')}</ItemTitle>
             </TableHead>
           </TableRow>
@@ -110,7 +110,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
         <TableBody>
           {data.map((row, index) => (
             <TableRow key={`${index + 1}_${row.machine.id}`}>
-              <TableCell className="p-2 sticky left-0 z-10 bg-background/30 backdrop-blur min-w-[200px]">
+              <TableCell className="sticky left-0 z-10 min-w-[200px] bg-background/30 p-2 backdrop-blur">
                 <div className="flex items-center gap-3">
                   <Avatar className="size-10">
                     <AvatarImage src={row.machine.image?.url} alt={row.machine.name} />
@@ -118,7 +118,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                       <Ship className="size-5" />
                     </AvatarFallback>
                   </Avatar>
-                  <ItemTitle className=" tracking-tight">{row.machine.name}</ItemTitle>
+                  <ItemTitle className="tracking-tight">{row.machine.name}</ItemTitle>
                 </div>
               </TableCell>
 
@@ -130,7 +130,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
 
                 if (!itemStatus)
                   return (
-                    <TableCell key={v} className="px-4 border-l text-right">
+                    <TableCell key={v} className="border-l px-4 text-right">
                       -
                     </TableCell>
                   );
@@ -140,15 +140,15 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                 const consumptionValue = itemStatus.consumption || 0;
 
                 return (
-                  <TableCell key={v} className="p-2 border-l min-w-[160px]">
+                  <TableCell key={v} className="min-w-[160px] border-l p-2">
                     <ItemContent className="items-end p-0">
-                      <ItemDescription className="text-xs font-bold text-muted-foreground">{formatNumber(percentual, 0)}%</ItemDescription>
+                      <ItemDescription className="font-bold text-muted-foreground text-xs">{formatNumber(percentual, 0)}%</ItemDescription>
                       <ItemActions className="items-baseline gap-1">
                         <ItemTitle>{formatNumber(hoursValue, 1)}</ItemTitle>
                         <ItemDescription className="text-xs uppercase">HR</ItemDescription>
                         <Clock className="size-3 text-muted-foreground" />
                       </ItemActions>
-                      <ItemActions className="gap-1 items-baseline text-sky-600">
+                      <ItemActions className="items-baseline gap-1 text-sky-600">
                         <ItemTitle>{formatNumber(consumptionValue, 2)}</ItemTitle>
                         <ItemDescription className="text-xs uppercase">{unit}</ItemDescription>
                         <Fuel className="size-3" />
@@ -158,7 +158,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                 );
               })}
 
-              <TableCell className="p-2 sticky right-0 z-10 bg-background/30 backdrop-blur min-w-[150px]">
+              <TableCell className="sticky right-0 z-10 min-w-[150px] bg-background/30 p-2 backdrop-blur">
                 <ItemContent className="items-end">
                   <ItemActions>
                     <ItemTitle>{formatNumber(row.listTimeStatus.reduce((acc: number, curr: any) => acc + (curr.minutes || 0), 0) / 60, 1)}</ItemTitle>
@@ -191,7 +191,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
 
               {listStatusAllow.map((v) => {
                 const statusTotal = benchmarkTotals.statusTotals.find((s) => s.key === v);
-                if (!statusTotal) return <TableCell key={v} className="p-4 border-l" />;
+                if (!statusTotal) return <TableCell key={v} className="border-l p-4" />;
 
                 const avgPerHour = statusTotal.minutes / 60 > 0 ? statusTotal.consumption / (statusTotal.minutes / 60) : 0;
                 const avgPerDay = avgPerHour * 24;
@@ -199,22 +199,22 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                 return (
                   <TableCell key={v} className="bg-secondary">
                     <ItemContent className="items-end">
-                      <ItemDescription className="text-xs font-bold uppercase">{statusTotal.percentual.toFixed(1)}%</ItemDescription>
-                      <ItemActions className="gap-1 items-baseline">
+                      <ItemDescription className="font-bold text-xs uppercase">{statusTotal.percentual.toFixed(1)}%</ItemDescription>
+                      <ItemActions className="items-baseline gap-1">
                         <ItemTitle>{(statusTotal.minutes / 60).toFixed(1)}</ItemTitle>
                         <ItemDescription className="uppercase">HR</ItemDescription>
                       </ItemActions>
-                      <ItemActions className="gap-1 items-baseline text-sky-600">
+                      <ItemActions className="items-baseline gap-1 text-sky-600">
                         <ItemTitle>{statusTotal.consumption.toFixed(2)}</ItemTitle>
                         <ItemDescription className="uppercase">{unit}</ItemDescription>
                       </ItemActions>
 
-                      <div className="mt-2 w-full text-right border-t pt-2">
-                        <ItemActions className="gap-1 items-baseline justify-end">
+                      <div className="mt-2 w-full border-t pt-2 text-right">
+                        <ItemActions className="items-baseline justify-end gap-1">
                           <ItemTitle>{avgPerHour.toFixed(2)}</ItemTitle>
                           <ItemDescription className="uppercase">{unit}/HR</ItemDescription>
                         </ItemActions>
-                        <ItemActions className="gap-1 items-baseline justify-end text-sky-600">
+                        <ItemActions className="items-baseline justify-end gap-1 text-sky-600">
                           <ItemTitle>{avgPerDay.toFixed(2)}</ItemTitle>
                           <ItemDescription className="uppercase">
                             {unit}/{t('day')}
@@ -226,23 +226,23 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                 );
               })}
 
-              <TableCell className="p-4 sticky right-0 z-10 bg-secondary">
+              <TableCell className="sticky right-0 z-10 bg-secondary p-4">
                 <ItemContent className="items-end gap-1 font-bold">
-                  <ItemActions className="gap-1 items-baseline">
+                  <ItemActions className="items-baseline gap-1">
                     <ItemTitle className="text-sm">{(benchmarkTotals.totalAllMinutes / 60).toFixed(1)}</ItemTitle>
                     <ItemDescription className="uppercase">HR</ItemDescription>
                   </ItemActions>
-                  <ItemActions className="gap-1 items-baseline">
+                  <ItemActions className="items-baseline gap-1">
                     <ItemTitle>{benchmarkTotals.totalAllConsumption.toFixed(1)}</ItemTitle>
                     <ItemDescription className="uppercase">{unit}</ItemDescription>
                   </ItemActions>
 
-                  <div className="mt-2 w-full text-right border-t border-muted-foreground/20 pt-2 font-bold">
-                    <ItemActions className="gap-1 items-baseline justify-end">
+                  <div className="mt-2 w-full border-muted-foreground/20 border-t pt-2 text-right font-bold">
+                    <ItemActions className="items-baseline justify-end gap-1">
                       <ItemTitle>{(benchmarkTotals.totalAllConsumption / (benchmarkTotals.totalAllMinutes / 60 || 1)).toFixed(2)}</ItemTitle>
                       <ItemDescription className="uppercase">{unit}/HR</ItemDescription>
                     </ItemActions>
-                    <ItemActions className="gap-1 items-baseline justify-end text-sky-600">
+                    <ItemActions className="items-baseline justify-end gap-1 text-sky-600">
                       <ItemTitle className="font-bold">{((benchmarkTotals.totalAllConsumption / (benchmarkTotals.totalAllMinutes / 60 || 1)) * 24).toFixed(2)}</ItemTitle>
                       <ItemDescription className="uppercase">
                         {unit}/{t('day')}

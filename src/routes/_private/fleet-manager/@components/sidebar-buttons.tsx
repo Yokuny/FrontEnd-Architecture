@@ -9,8 +9,8 @@ export function FleetActionButtons() {
   const { selectedMachineId, selectedPanel, setSelectedPanel, isFleetbarOpen, toggleFleetbar } = useFleetManagerStore();
 
   return (
-    <div className="absolute right-0 pointer-events-none flex flex-col p-4" style={{ zIndex: 1010 }}>
-      <ButtonGroup orientation="vertical" className="pointer-events-auto border rounded-lg">
+    <div className="pointer-events-none absolute right-0 flex flex-col p-4" style={{ zIndex: 1010 }}>
+      <ButtonGroup orientation="vertical" className="pointer-events-auto rounded-lg border">
         <Button
           title={t('menu')}
           size="icon-lg"

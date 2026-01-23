@@ -190,13 +190,13 @@ function ConsumptionIntervalPage() {
         <div className="mb-6 flex items-center gap-6">
           <div className="flex items-center space-x-2">
             <Checkbox id="showReal" checked={showReal} onCheckedChange={(checked) => setShowReal(!!checked)} />
-            <Label htmlFor="showReal" className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label htmlFor="showReal" className="cursor-pointer font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               {t('real.consumption')}
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="showEstimated" checked={showEstimated} onCheckedChange={(checked) => setShowEstimated(!!checked)} />
-            <Label htmlFor="showEstimated" className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label htmlFor="showEstimated" className="cursor-pointer font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               {t('estimated.consumption')}
             </Label>
           </div>
@@ -209,7 +209,7 @@ function ConsumptionIntervalPage() {
           <div className="space-y-8">
             {showReal && (
               <div className="space-y-4">
-                <ItemTitle className="font-bold uppercase text-sky-600">{t('polling')}</ItemTitle>
+                <ItemTitle className="font-bold text-sky-600 uppercase">{t('polling')}</ItemTitle>
                 <SummaryCards data={data} unit={unit} isReal={true} />
                 <VesselComparison data={data} unit={unit} isReal={true} />
               </div>
@@ -217,7 +217,7 @@ function ConsumptionIntervalPage() {
 
             {showEstimated && (
               <div className="space-y-4">
-                <ItemTitle className="font-bold uppercase text-amber-600">{t('flowmeter')}</ItemTitle>
+                <ItemTitle className="font-bold text-amber-600 uppercase">{t('flowmeter')}</ItemTitle>
                 <SummaryCards data={data} unit={unit} isReal={false} />
                 <VesselComparison data={data} unit={unit} isReal={false} />
               </div>

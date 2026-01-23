@@ -24,7 +24,7 @@ export function FormPermissionsTab({ form, idEnterprise, markAsChanged }: FormPe
       <Item>
         <ItemContent>
           <ItemTitle>{label}</ItemTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField
               control={form.control}
               name={visibilityName}

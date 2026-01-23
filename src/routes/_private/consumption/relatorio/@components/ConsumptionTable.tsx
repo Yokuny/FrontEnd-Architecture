@@ -56,7 +56,7 @@ export function ConsumptionTable({ data, unit, isReal, isEstimated }: Consumptio
             <TableBody>
               {data.map((item, index) => (
                 <TableRow key={item._id || index}>
-                  <TableCell className="text-center whitespace-nowrap">{format(new Date(item.date), 'dd MMM yyyy')}</TableCell>
+                  <TableCell className="whitespace-nowrap text-center">{format(new Date(item.date), 'dd MMM yyyy')}</TableCell>
                   <TableCell className="text-center font-medium">{item.machine.name}</TableCell>
                   {isReal && (
                     <>

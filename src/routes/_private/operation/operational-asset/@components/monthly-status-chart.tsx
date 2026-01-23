@@ -89,13 +89,13 @@ export function MonthlyStatusChart({ data, isLoading, viewFinancial }: MonthlySt
     <Item variant="outline">
       <ItemHeader>
         <ItemTitle className="text-lg">{t('operational.average')}</ItemTitle>
-        <div className="flex bg-muted p-1 rounded-lg gap-1 h-9">
+        <div className="flex h-9 gap-1 rounded-lg bg-muted p-1">
           {/* TODO: Add toggle to switch between competence and month */}
           <Toggle
             size="sm"
             pressed={typeView === 'competence'}
             onPressedChange={() => setTypeView('competence')}
-            className="text-xs px-4 h-7 data-[state=on]:bg-background data-[state=on]:shadow-sm"
+            className="h-7 px-4 text-xs data-[state=on]:bg-background data-[state=on]:shadow-sm"
           >
             {t('competence')}
           </Toggle>
@@ -103,7 +103,7 @@ export function MonthlyStatusChart({ data, isLoading, viewFinancial }: MonthlySt
             size="sm"
             pressed={typeView === 'month'}
             onPressedChange={() => setTypeView('month')}
-            className="text-xs px-4 h-7 data-[state=on]:bg-background data-[state=on]:shadow-sm"
+            className="h-7 px-4 text-xs data-[state=on]:bg-background data-[state=on]:shadow-sm"
           >
             {t('monthly')}
           </Toggle>
@@ -113,7 +113,7 @@ export function MonthlyStatusChart({ data, isLoading, viewFinancial }: MonthlySt
         {isEmpty ? (
           <DefaultEmptyData />
         ) : (
-          <ChartContainer config={chartConfig} style={{ minHeight: CHART_MIN_HEIGHT.DEFAULT }} className="w-full h-40">
+          <ChartContainer config={chartConfig} style={{ minHeight: CHART_MIN_HEIGHT.DEFAULT }} className="h-40 w-full">
             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 10, bottom: 10 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--muted-foreground))" opacity={0.2} />
               <XAxis dataKey={typeView} axisLine={false} tickLine={false} tickMargin={10} fontSize={12} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
@@ -135,7 +135,7 @@ export function MonthlyStatusChart({ data, isLoading, viewFinancial }: MonthlySt
                             <ItemTitle>{chartConfig[status]?.label}:</ItemTitle>
                             <ItemContent>{parseFloat(Number(value).toFixed(1))}%</ItemContent>
                           </div>
-                          <div className="flex flex-col ml-4">
+                          <div className="ml-4 flex flex-col">
                             <div className="flex items-baseline gap-1">
                               <ItemTitle>{t('day.unity')}:</ItemTitle>
                               <ItemContent>{((hours || 0) / 24).toFixed(3)}</ItemContent>
@@ -165,7 +165,7 @@ export function MonthlyStatusChart({ data, isLoading, viewFinancial }: MonthlySt
                           x={viewBox.width - 100}
                           y={viewBox.y - 10}
                           fill={average < 85 ? 'hsl(var(--destructive))' : 'hsl(var(--primary))'}
-                          className="text-[10px] font-bold"
+                          className="font-bold text-[10px]"
                           textAnchor="end"
                         >
                           {t('medium')} {viewFinancial ? t('tax') : t('operation')}: {average.toFixed(1)}%

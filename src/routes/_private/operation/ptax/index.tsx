@@ -107,9 +107,9 @@ function PtaxPage() {
   return (
     <Card>
       <CardHeader title="PTAX">
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"
@@ -131,7 +131,7 @@ function PtaxPage() {
             />
           </div>
           <Button onClick={handleNew} disabled={isLoading}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('new')}
           </Button>
         </div>
@@ -172,11 +172,11 @@ function PtaxPage() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem onClick={() => handleEdit(ptax)}>
-                            <Pencil className="size-4 mr-2" />
+                            <Pencil className="mr-2 size-4" />
                             {t('edit')}
                           </DropdownMenuItem>
                           <DropdownMenuItem className="text-destructive" onClick={() => confirmDelete(ptax.id)}>
-                            <Trash2 className="size-4 mr-2" />
+                            <Trash2 className="mr-2 size-4" />
                             {t('delete')}
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -192,7 +192,7 @@ function PtaxPage() {
 
       {totalCount > 0 && (
         <CardFooter layout="multi">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+          <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">

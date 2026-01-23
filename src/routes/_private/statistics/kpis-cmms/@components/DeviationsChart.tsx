@@ -45,9 +45,9 @@ export function DeviationsChart({ filters }: { filters: KPISCMMSFilters & { min:
   const isEmpty = totalValue === 0;
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full flex-1">
-      <ItemHeader className="items-center flex-col pb-4">
-        <ItemTitle className="text-lg font-bold">{t('predictive.deviation')}</ItemTitle>
+    <Item variant="outline" className="w-full flex-1 flex-col items-stretch">
+      <ItemHeader className="flex-col items-center pb-4">
+        <ItemTitle className="font-bold text-lg">{t('predictive.deviation')}</ItemTitle>
         <ItemDescription>{t('kpis.cmms.predictive.deviations.description')}</ItemDescription>
       </ItemHeader>
       <ItemContent>
@@ -62,12 +62,12 @@ export function DeviationsChart({ filters }: { filters: KPISCMMSFilters & { min:
                   <ChartTooltipContent
                     hideLabel
                     formatter={(value, name, item) => (
-                      <div className="flex flex-1 justify-between items-center leading-none gap-4">
+                      <div className="flex flex-1 items-center justify-between gap-4 leading-none">
                         <div className="flex items-center gap-1.5">
                           <div className="h-2.5 w-2.5 shrink-0 rounded-[2px]" style={{ backgroundColor: item.color }} />
                           <span className="text-muted-foreground">{chartConfig[name as keyof typeof chartConfig]?.label || name}</span>
                         </div>
-                        <span className="text-foreground font-mono font-medium tabular-nums">
+                        <span className="font-medium font-mono text-foreground tabular-nums">
                           {value.toLocaleString()} ({((Number(value) / totalValue) * 100).toFixed(1)}%)
                         </span>
                       </div>
@@ -81,10 +81,10 @@ export function DeviationsChart({ filters }: { filters: KPISCMMSFilters & { min:
                     if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                       return (
                         <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                          <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-3xl font-bold">
+                          <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground font-bold text-3xl">
                             {totalValue.toLocaleString()}
                           </tspan>
-                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground uppercase text-[10px] font-bold">
+                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground font-bold text-[10px] uppercase">
                             {t('total')}
                           </tspan>
                         </text>

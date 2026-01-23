@@ -118,16 +118,16 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
   const collapseAll = () => setOpenCategories([]);
 
   return (
-    <section className={cn('py-8 container max-w-4xl', className)}>
+    <section className={cn('container max-w-4xl py-8', className)}>
       {/* Header */}
       <ItemHeader className="mb-6">
         <ItemTitle className="text-xl md:text-2xl">{title}</ItemTitle>
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" onClick={expandAll} className="text-xs text-muted-foreground hover:text-foreground">
+          <Button variant="ghost" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
             {t('expand.all')}
           </Button>
           <Separator orientation="vertical" className="h-4 self-center" />
-          <Button variant="ghost" size="sm" onClick={collapseAll} className="text-xs text-muted-foreground hover:text-foreground">
+          <Button variant="ghost" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
             {t('collapse.all')}
           </Button>
         </div>
@@ -139,9 +139,9 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
           <Collapsible key={category.id} open={openCategories.includes(category.id)} onOpenChange={() => toggleCategory(category.id)}>
             <div className="rounded-lg border bg-card">
               <CollapsibleTrigger asChild>
-                <Button variant="ghost" className="w-full items-center justify-between hover:bg-secondary outline-none focus-visible:ring-2">
+                <Button variant="ghost" className="w-full items-center justify-between outline-none hover:bg-secondary focus-visible:ring-2">
                   <div className="flex items-center gap-3">
-                    <ItemMedia variant="icon" className="bg-muted rounded-lg text-foreground">
+                    <ItemMedia variant="icon" className="rounded-lg bg-muted text-foreground">
                       {category.icon}
                     </ItemMedia>
                     <ItemTitle className="text-base">{category.name}</ItemTitle>

@@ -70,7 +70,7 @@ function MonitoringPlansPage() {
           <Button variant="outline" disabled={page <= 1} onClick={() => navigate({ search: { page: page - 1, size, search } })}>
             {t('previous')}
           </Button>
-          <span className="flex items-center px-3 text-sm text-muted-foreground">
+          <span className="flex items-center px-3 text-muted-foreground text-sm">
             {t('page')} {page} / {Math.ceil(totalItems / size)}
           </span>
           <Button variant="outline" disabled={page >= Math.ceil(totalItems / size)} onClick={() => navigate({ search: { page: page + 1, size, search } })}>

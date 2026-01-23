@@ -45,7 +45,7 @@ export function StatusChartPie({ data, isLoading }: StatusChartPieProps) {
         {isEmpty ? (
           <DefaultEmptyData />
         ) : (
-          <ChartContainer config={chartConfig} style={{ minHeight: CHART_MIN_HEIGHT.DEFAULT }} className="w-full h-40">
+          <ChartContainer config={chartConfig} style={{ minHeight: CHART_MIN_HEIGHT.DEFAULT }} className="h-40 w-full">
             <PieChart>
               <ChartTooltip content={<ChartTooltipContent hideLabel />} />
               <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} strokeWidth={5} paddingAngle={2}>

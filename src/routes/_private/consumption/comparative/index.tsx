@@ -170,7 +170,7 @@ function ConsumptionComparativePage() {
             </Select>
           </ItemContent>
 
-          <div className="flex ml-auto gap-2">
+          <div className="ml-auto flex gap-2">
             {hasFilter && (
               <Button onClick={clearFilter} className="text-amber-700 hover:text-amber-800">
                 <BrushCleaning className="size-4" />

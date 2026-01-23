@@ -21,7 +21,7 @@ function ChatMessageItem({ msg }: ChatMessageProps) {
 
   return (
     <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
-      {isAI && <SparklesIcon size={18} className="text-muted-foreground mr-2" />}
+      {isAI && <SparklesIcon size={18} className="mr-2 text-muted-foreground" />}
       <ChatContent className={cn('max-w-[85%]', isAI ? 'bg-muted' : 'bg-muted-foreground text-primary-foreground')}>{msg.message}</ChatContent>
     </ChatMessage>
   );
@@ -77,18 +77,18 @@ function AIPromptPage() {
       <CardContent>
         <ScrollArea className="h-[61.5vh]" ref={scrollRef}>
           {messages.length === 0 ? (
-            <div className="w-full text-xl text-center">
+            <div className="w-full text-center text-xl">
               <ItemDescription>{t('can.i.help.you')}</ItemDescription>
             </div>
           ) : (
-            <div className="w-full flex flex-col gap-2 pr-6">
+            <div className="flex w-full flex-col gap-2 pr-6">
               {messages.map((msg, i) => (
                 <ChatMessageItem key={`${msg.sender}-${i}`} msg={msg} />
               ))}
 
               {promptMutation.isPending && (
                 <ChatMessage className="animate-pulse">
-                  <ChatContent className="bg-accent flex items-center justify-center border">
+                  <ChatContent className="flex items-center justify-center border bg-accent">
                     <SparklesIcon size={20} className="text-primary" />
                   </ChatContent>
                 </ChatMessage>

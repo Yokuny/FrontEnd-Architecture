@@ -43,7 +43,7 @@ export function ReliabilityGroupChart({ filters }: { filters: KPISCMMSFilters & 
   return (
     <Item variant="outline" className="min-w-80 flex-1">
       <ItemHeader className="flex-col items-center gap-1">
-        <ItemTitle className="text-lg font-bold">{t('kpis.cmms.reliability.group')}</ItemTitle>
+        <ItemTitle className="font-bold text-lg">{t('kpis.cmms.reliability.group')}</ItemTitle>
         <ItemDescription>{t('kpis.cmms.reliability.group.description')}</ItemDescription>
       </ItemHeader>
       <ItemContent>

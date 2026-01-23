@@ -24,11 +24,11 @@ const Header = () => {
   }, []);
 
   return (
-    <Item variant="outline" className="border-accent text-muted-foreground w-full rounded-none border-x-0 border-t-0 p-0 bg-secondary" size="sm">
+    <Item variant="outline" className="w-full rounded-none border-accent border-x-0 border-t-0 bg-secondary p-0 text-muted-foreground" size="sm">
       <ItemContent className="grid grid-cols-7 flex-row">
         {weekDays.map((day, index) => (
-          <ItemContent key={`${index}-${day.toString()}month-header-`} className="flex items-center justify-center py-3 border-r last:border-r-0">
-            <ItemTitle className="text-xs font-semibold">
+          <ItemContent key={`${index}-${day.toString()}month-header-`} className="flex items-center justify-center border-r py-3 last:border-r-0">
+            <ItemTitle className="font-semibold text-xs">
               <span className="sm:hidden">{format(day, 'EEEEE', { locale: dateLocale })}</span>
               <span className="max-sm:hidden">{format(day, 'EEEE', { locale: dateLocale })}</span>
             </ItemTitle>
@@ -82,7 +82,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
   return (
     <ItemContent
       data-slot="month-view"
-      className="h-full border rounded-md overflow-hidden"
+      className="h-full overflow-hidden rounded-md border"
       style={
         {
           '--event-height': `${EventHeight}px`,
@@ -112,7 +112,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                 return (
                   <Item
                     key={day.toString()}
-                    className="group border-accent data-outside-cell:text-muted-foreground min-h-[120px] items-start rounded-none border-r border-b p-1 last:border-r-0 data-outside-cell:bg-secondary"
+                    className="group min-h-[120px] items-start rounded-none border-accent border-r border-b p-1 last:border-r-0 data-outside-cell:bg-secondary data-outside-cell:text-muted-foreground"
                     data-today={isToday(day) || undefined}
                     data-outside-cell={!isCurrentMonth || (isSunday && dayIndex === 6) || undefined}
                     onClick={() => {
@@ -123,7 +123,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                   >
                     <ItemContent className="w-full">
                       <ItemHeader className="basis-auto justify-start">
-                        <ItemTitle className="group-data-today:bg-sky-blue dark:group-data-today:bg-dark-blue inline-flex size-5 items-center justify-center rounded-full font-mono text-xs group-data-today:font-bold group-data-today:text-white">
+                        <ItemTitle className="inline-flex size-5 items-center justify-center rounded-full font-mono text-xs group-data-today:bg-sky-blue group-data-today:font-bold group-data-today:text-white dark:group-data-today:bg-dark-blue">
                           {format(day, 'd')}
                         </ItemTitle>
                       </ItemHeader>
@@ -156,7 +156,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                           <Popover modal>
                             <PopoverTrigger asChild>
                               <ItemContent
-                                className="focus-visible:border-ring focus-visible:ring-ring/50 text-muted-foreground hover:text-foreground hover:bg-muted/50 mt-(--event-gap) h-(--event-height) w-full cursor-pointer items-center gap-1 overflow-hidden px-1 text-left text-[10px] backdrop-blur-md transition outline-none select-none focus-visible:ring-[3px] sm:px-2 sm:text-xs"
+                                className="mt-(--event-gap) h-(--event-height) w-full cursor-pointer select-none items-center gap-1 overflow-hidden px-1 text-left text-[10px] text-muted-foreground outline-none backdrop-blur-md transition hover:bg-muted/50 hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-2 sm:text-xs"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 + {remainingCount} <span className="max-sm:sr-only">Ver tudo</span>

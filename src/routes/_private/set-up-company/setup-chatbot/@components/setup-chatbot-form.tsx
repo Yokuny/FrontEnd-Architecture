@@ -34,7 +34,7 @@ export function SetupChatbotForm({ isEnterpriseDisabled }: { isEnterpriseDisable
               disabled={isLoading || isPending || isEnterpriseDisabled}
             />
           </FormControl>
-          {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
+          {errors.idEnterprise && <p className="text-destructive text-sm">{t(errors.idEnterprise.message as string)}</p>}
         </Field>,
       ],
     },

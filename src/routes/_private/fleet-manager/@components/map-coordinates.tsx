@@ -87,9 +87,9 @@ export function MapCoordinates() {
   const dms = new DmsCoordinates(coords[0], coords[1]);
 
   return (
-    <div className={cn('fixed bottom-6 right-20 select-none pointer-events-none transition-colors duration-300 drop-shadow-sm', textColor)} style={{ zIndex: 9999 }}>
+    <div className={cn('pointer-events-none fixed right-20 bottom-6 select-none drop-shadow-sm transition-colors duration-300', textColor)} style={{ zIndex: 9999 }}>
       <div className="flex flex-col">
-        <ItemTitle className={cn('text-[10px] uppercase font-bold tracking-tighter leading-none mb-1.5 opacity-70', textColor)}>{t('setup.fleet.coordinates')}</ItemTitle>
+        <ItemTitle className={cn('mb-1.5 font-bold text-[10px] uppercase leading-none tracking-tighter opacity-70', textColor)}>{t('setup.fleet.coordinates')}</ItemTitle>
         <div className="flex gap-2">
           <CoordinateItem label="lat" dd={coords[0]} dms={dms.getLatitude()} textColor={textColor} />
           <CoordinateItem label="lon" dd={coords[1]} dms={dms.getLongitude()} textColor={textColor} />
@@ -101,12 +101,12 @@ export function MapCoordinates() {
 
 function CoordinateItem({ label, dd, dms, textColor }: { label: string; dd: number; dms: string; textColor: string }) {
   return (
-    <div className="flex flex-col min-w-[110px]">
+    <div className="flex min-w-[110px] flex-col">
       <div className="flex items-baseline gap-1.5">
-        <span className={cn('text-[9px] font-mono font-bold uppercase opacity-60', textColor)}>{label}</span>
-        <span className={cn('text-xs font-bold tabular-nums tracking-tight', textColor)}>{dd.toFixed(6)}°</span>
+        <span className={cn('font-bold font-mono text-[9px] uppercase opacity-60', textColor)}>{label}</span>
+        <span className={cn('font-bold text-xs tabular-nums tracking-tight', textColor)}>{dd.toFixed(6)}°</span>
       </div>
-      <span className={cn('text-[10px] font-medium tabular-nums whitespace-nowrap opacity-80', textColor)}>{dms}</span>
+      <span className={cn('whitespace-nowrap font-medium text-[10px] tabular-nums opacity-80', textColor)}>{dms}</span>
     </div>
   );
 }

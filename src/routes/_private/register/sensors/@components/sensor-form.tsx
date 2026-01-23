@@ -38,7 +38,7 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
             </FormItem>
           )}
         />,
-        <div key="row-sensor" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-sensor" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="sensorId"
@@ -92,7 +92,7 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
       title: t('configuration'),
       description: t('sensors.configuration.description'),
       fields: [
-        <div key="row-type-unit" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-type-unit" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="type"
@@ -138,7 +138,7 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
           )}
         </div>,
         ['int', 'decimal'].includes(sensorType || '') && (
-          <div key="row-min-max" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div key="row-min-max" className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField
               control={control}
               name="valueMin"

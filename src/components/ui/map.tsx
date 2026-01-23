@@ -382,30 +382,30 @@ function MapMarker({
 }
 
 function MapCircle({ className, ...props }: CircleProps & { ref?: Ref<Circle> }) {
-  return <LeafletCircle className={cn('fill-foreground stroke-foreground stroke-2', className)} {...props} />;
+  return <LeafletCircle className={cn('fill-foreground stroke-2 stroke-foreground', className)} {...props} />;
 }
 
 function MapCircleMarker({ className, ...props }: CircleMarkerProps & { ref?: Ref<CircleMarker> }) {
-  return <LeafletCircleMarker className={cn('fill-foreground stroke-foreground stroke-2', className)} {...props} />;
+  return <LeafletCircleMarker className={cn('fill-foreground stroke-2 stroke-foreground', className)} {...props} />;
 }
 
 function MapPolyline({ className, ...props }: PolylineProps & { ref?: Ref<Polyline> }) {
-  return <LeafletPolyline className={cn('fill-foreground stroke-foreground stroke-2', className)} {...props} />;
+  return <LeafletPolyline className={cn('fill-foreground stroke-2 stroke-foreground', className)} {...props} />;
 }
 
 function MapPolygon({ className, ...props }: PolygonProps & { ref?: Ref<Polygon> }) {
-  return <LeafletPolygon className={cn('fill-foreground stroke-foreground stroke-2', className)} {...props} />;
+  return <LeafletPolygon className={cn('fill-foreground stroke-2 stroke-foreground', className)} {...props} />;
 }
 
 function MapRectangle({ className, ...props }: RectangleProps & { ref?: Ref<Rectangle> }) {
-  return <LeafletRectangle className={cn('fill-foreground stroke-foreground stroke-2', className)} {...props} />;
+  return <LeafletRectangle className={cn('fill-foreground stroke-2 stroke-foreground', className)} {...props} />;
 }
 
 function MapPopup({ className, ...props }: Omit<PopupProps, 'content'> & { ref?: Ref<Popup> }) {
   return (
     <LeafletPopup
       className={cn(
-        'bg-popover text-popover-foreground animate-in fade-out-0 fade-in-0 zoom-out-95 zoom-in-95 slide-in-from-bottom-2 z-50 w-72 rounded-md border p-4 font-sans shadow-md outline-hidden',
+        'fade-out-0 fade-in-0 zoom-out-95 zoom-in-95 slide-in-from-bottom-2 z-50 w-72 animate-in rounded-md border bg-popover p-4 font-sans text-popover-foreground shadow-md outline-hidden',
         className,
       )}
       {...props}
@@ -434,7 +434,7 @@ function MapTooltip({
   return (
     <LeafletTooltip
       className={cn(
-        'animate-in fade-in-0 zoom-in-95 fade-out-0 zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 w-fit text-xs text-balance transition-opacity',
+        'fade-in-0 zoom-in-95 fade-out-0 zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 w-fit animate-in text-balance text-xs transition-opacity',
         className,
       )}
       data-side={side}
@@ -491,8 +491,8 @@ function MapZoomControl({ className, ...props }: React.ComponentProps<'div'>) {
 function MapLocatePulseIcon() {
   return (
     <div className="absolute -top-1 -right-1 flex size-3 rounded-full">
-      <div className="bg-primary absolute inline-flex size-full animate-ping rounded-full opacity-75" />
-      <div className="bg-primary relative inline-flex size-3 rounded-full" />
+      <div className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />
+      <div className="relative inline-flex size-3 rounded-full bg-primary" />
     </div>
   );
 }
@@ -1000,7 +1000,7 @@ function useMapDrawHandleIcon() {
 
     return L.divIcon({
       iconAnchor: [8, 8],
-      html: renderToString(<CircleIcon className="fill-primary stroke-primary size-4 transition-transform hover:scale-110" />),
+      html: renderToString(<CircleIcon className="size-4 fill-primary stroke-primary transition-transform hover:scale-110" />),
     });
   }, [L]);
 }

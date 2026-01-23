@@ -24,10 +24,10 @@ export function RVEKPIs({ data }: RVEKPIsProps) {
   if (data.length === 0) return null;
 
   return (
-    <div className="flex justify-between gap-4 w-full flex-wrap">
-      <Item variant="outline" className="border-l-4 border-l-muted min-w-1/12 flex-1">
+    <div className="flex w-full flex-wrap justify-between gap-4">
+      <Item variant="outline" className="min-w-1/12 flex-1 border-l-4 border-l-muted">
         <ItemContent className="flex flex-col">
-          <ItemDescription className="uppercase text-xs">{t('total.time')}</ItemDescription>
+          <ItemDescription className="text-xs uppercase">{t('total.time')}</ItemDescription>
           <ItemTitle className="text-2xl">{totalHours.toFixed(2)} h</ItemTitle>
         </ItemContent>
       </Item>
@@ -38,11 +38,11 @@ export function RVEKPIs({ data }: RVEKPIsProps) {
         const mapping = RVE_COLOR_MAPPING[type] || { border: 'border-l-muted', badge: 'bg-muted text-muted-foreground' };
 
         return (
-          <Item variant="outline" key={type} className={`border-l-4 min-w-1/12 flex-1 ${mapping.border}`}>
+          <Item variant="outline" key={type} className={`min-w-1/12 flex-1 border-l-4 ${mapping.border}`}>
             <ItemContent className="flex flex-col">
-              <div className="flex justify-between items-center">
-                <ItemDescription className="uppercase text-xs">{type}</ItemDescription>
-                <Badge className={`font-bold rounded-sm ${mapping.badge}`}>{percentage.toFixed(1)}%</Badge>
+              <div className="flex items-center justify-between">
+                <ItemDescription className="text-xs uppercase">{type}</ItemDescription>
+                <Badge className={`rounded-sm font-bold ${mapping.badge}`}>{percentage.toFixed(1)}%</Badge>
               </div>
               <ItemTitle className="text-2xl">{categoryHours.toFixed(2)} h</ItemTitle>
             </ItemContent>

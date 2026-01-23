@@ -26,7 +26,7 @@ function EventWrapper({ event, isFirstDay = true, isLastDay = true, onClick, cla
     <button
       data-past-event={isEventInPast || undefined}
       className={cn(
-        'overflow-hidden px-1 backdrop-blur-md transition border-none select-none data-past-event:line-through',
+        'select-none overflow-hidden border-none px-1 backdrop-blur-md transition data-past-event:line-through',
         getEventColorClasses(event.color),
         getBorderRadiusClasses(isFirstDay, isLastDay),
         className,
@@ -95,13 +95,13 @@ export function EventItem({ event, view, onClick, showTime, currentTime, isFirst
     >
       {durationMinutes < 45 ? (
         <ItemContent className="flex-row items-center gap-2">
-          <ItemTitle className="leading-none font-normal">{event.title}</ItemTitle>
+          <ItemTitle className="font-normal leading-none">{event.title}</ItemTitle>
           {showTime && <ItemContent className="flex-none font-normal">{formatTimeWithOptionalMinutes(displayStart)}</ItemContent>}
         </ItemContent>
       ) : (
         <ItemContent className="gap-0.5">
-          <ItemTitle className="leading-none font-normal">{event.title}</ItemTitle>
-          {showTime && !isMobile && <ItemContent className="text-[10px] opacity-80 font-normal">{getEventTime()}</ItemContent>}
+          <ItemTitle className="font-normal leading-none">{event.title}</ItemTitle>
+          {showTime && !isMobile && <ItemContent className="font-normal text-[10px] opacity-80">{getEventTime()}</ItemContent>}
         </ItemContent>
       )}
     </EventWrapper>

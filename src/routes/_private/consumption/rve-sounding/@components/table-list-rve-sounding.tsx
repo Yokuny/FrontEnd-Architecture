@@ -20,29 +20,29 @@ export function TableListRVESounding({ data }: TableListRVESoundingProps) {
       <table className="w-full border-collapse">
         <thead>
           <tr className="border-b">
-            <th className="p-2 text-left text-xs font-semibold text-muted-foreground uppercase" colSpan={2}>
+            <th className="p-2 text-left font-semibold text-muted-foreground text-xs uppercase" colSpan={2}>
               {t('polling.start')}
-              <div className="flex justify-between mt-1 text-[10px]">
+              <div className="mt-1 flex justify-between text-[10px]">
                 <span>{t('date')}</span>
                 <span>{t('volume')} (m³)</span>
               </div>
             </th>
-            <th className="p-2 text-left text-xs font-semibold text-muted-foreground uppercase" colSpan={2}>
+            <th className="p-2 text-left font-semibold text-muted-foreground text-xs uppercase" colSpan={2}>
               {t('polling.next')}
-              <div className="flex justify-between mt-1 text-[10px]">
+              <div className="mt-1 flex justify-between text-[10px]">
                 <span>{t('date')}</span>
                 <span>{t('volume')} (m³)</span>
               </div>
             </th>
-            <th className="p-2 text-right text-xs font-semibold text-muted-foreground uppercase">{t('machine.supplies.consumption.received')} (m³)</th>
-            <th className="p-2 text-right text-xs font-semibold text-muted-foreground uppercase">{t('machine.supplies.consumption.supplied')} (m³)</th>
-            <th className="p-2 text-right text-xs font-semibold text-muted-foreground uppercase">
+            <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">{t('machine.supplies.consumption.received')} (m³)</th>
+            <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">{t('machine.supplies.consumption.supplied')} (m³)</th>
+            <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">
               {t('consumption')} {t('period')} (m³)
             </th>
-            <th className="p-2 text-right text-xs font-semibold text-muted-foreground uppercase">{t('contract.max')} (m³)</th>
-            <th className="p-2 text-center text-xs font-semibold text-muted-foreground uppercase">{t('status')}</th>
-            <th className="p-2 text-right text-xs font-semibold text-muted-foreground uppercase">{t('diff')}</th>
-            <th className="p-2 text-center text-xs font-semibold text-muted-foreground uppercase">{t('actions')}</th>
+            <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">{t('contract.max')} (m³)</th>
+            <th className="p-2 text-center font-semibold text-muted-foreground text-xs uppercase">{t('status')}</th>
+            <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">{t('diff')}</th>
+            <th className="p-2 text-center font-semibold text-muted-foreground text-xs uppercase">{t('actions')}</th>
           </tr>
         </thead>
         <tbody className="divide-y">
@@ -69,16 +69,16 @@ export function TableListRVESounding({ data }: TableListRVESoundingProps) {
 
             return (
               <tr key={index} className="hover:bg-muted/50">
-                <td className="p-2 text-center whitespace-nowrap">
+                <td className="whitespace-nowrap p-2 text-center">
                   <div className="text-sm">{format(item.date, 'dd MMM yyyy')}</div>
-                  <div className="text-xs text-muted-foreground">{format(item.date, 'HH:mm')}</div>
+                  <div className="text-muted-foreground text-xs">{format(item.date, 'HH:mm')}</div>
                 </td>
                 <td className="p-2 text-right font-medium">{formatNumber(item.volume, 3)}</td>
-                <td className="p-2 text-center whitespace-nowrap">
+                <td className="whitespace-nowrap p-2 text-center">
                   {nextItem ? (
                     <>
                       <div className="text-sm">{format(nextItem.date, 'dd MMM yyyy')}</div>
-                      <div className="text-xs text-muted-foreground">{format(nextItem.date, 'HH:mm')}</div>
+                      <div className="text-muted-foreground text-xs">{format(nextItem.date, 'HH:mm')}</div>
                     </>
                   ) : null}
                 </td>
@@ -91,7 +91,7 @@ export function TableListRVESounding({ data }: TableListRVESoundingProps) {
                   {nextItem && (
                     <span
                       className={cn(
-                        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold',
+                        'inline-flex items-center rounded-full px-2.5 py-0.5 font-semibold text-xs',
                         isExcess ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800',
                       )}
                     >
@@ -99,11 +99,11 @@ export function TableListRVESounding({ data }: TableListRVESoundingProps) {
                     </span>
                   )}
                 </td>
-                <td className="p-2 text-right whitespace-nowrap">
+                <td className="whitespace-nowrap p-2 text-right">
                   {nextItem && (
                     <div className="flex flex-col items-end">
-                      {isExcess && <span className="bg-red-500 text-white text-[10px] px-1 rounded mb-1">{formatNumber(diffPercentual, 1)}%</span>}
-                      <span className={cn('text-sm font-semibold', isExcess ? 'text-red-500' : 'text-foreground')}>
+                      {isExcess && <span className="mb-1 rounded bg-red-500 px-1 text-[10px] text-white">{formatNumber(diffPercentual, 1)}%</span>}
+                      <span className={cn('font-semibold text-sm', isExcess ? 'text-red-500' : 'text-foreground')}>
                         {isExcess ? '' : '-'}
                         {formatNumber(Math.abs(maxAllow - consumed), 1)} m³
                       </span>

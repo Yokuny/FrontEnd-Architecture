@@ -237,11 +237,11 @@ export function ConsumptionChart({ data, showReal, showEstimated, onToggleReal, 
   };
 
   return (
-    <div className="space-y-4 w-full">
+    <div className="w-full space-y-4">
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <Eye className="size-4 text-muted-foreground" />
-          <span className="text-sm font-medium text-muted-foreground">{t('show')}</span>
+          <span className="font-medium text-muted-foreground text-sm">{t('show')}</span>
         </div>
         <div className="flex items-center gap-2">
           <Checkbox id="real" checked={showReal} onCheckedChange={onToggleReal} />

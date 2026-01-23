@@ -17,9 +17,9 @@ const EmptyData = () => {
   return (
     <Empty className="border-2 bg-accent/30">
       <EmptyHeader>
-        <Icon className="size-6 text-muted-foreground animate-in zoom-in-50 duration-500" />
+        <Icon className="zoom-in-50 size-6 animate-in text-muted-foreground duration-500" />
         <EmptyTitle>{t('not.found')}</EmptyTitle>
-        <EmptyDescription className="leading-tight font-mono">{t('not.found.description')}</EmptyDescription>
+        <EmptyDescription className="font-mono leading-tight">{t('not.found.description')}</EmptyDescription>
       </EmptyHeader>
     </Empty>
   );

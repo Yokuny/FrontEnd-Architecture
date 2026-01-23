@@ -25,7 +25,7 @@ export function OperationalAssetFilter({ idEnterprise, filter, onFilterChange, i
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
       <div className="space-y-2">
         <Label className="flex items-center gap-2">
           <CalendarIcon className="size-4" />
@@ -96,9 +96,9 @@ export function OperationalAssetFilter({ idEnterprise, filter, onFilterChange, i
         </Select>
       </div>
 
-      <div className="flex ml-auto items-end">
+      <div className="ml-auto flex items-end">
         <Button className="w-full" disabled={isLoading} onClick={handleSearch}>
-          <Search className="size-4 mr-2" />
+          <Search className="mr-2 size-4" />
           {t('search')}
         </Button>
       </div>

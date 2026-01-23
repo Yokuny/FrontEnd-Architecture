@@ -109,7 +109,7 @@ function EnterpriseAddFormContent({ initialData }: { initialData?: any }) {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90 text-background">
+                    <AlertDialogAction onClick={handleDelete} className="bg-destructive text-background hover:bg-destructive/90">
                       {t('delete')}
                     </AlertDialogAction>
                   </AlertDialogFooter>

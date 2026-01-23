@@ -73,7 +73,7 @@ export function ModelMachineForm({ attachmentFields }: ModelMachineFormProps) {
       title: t('configuration'),
       description: t('model.machine.configuration.description'),
       fields: [
-        <div key="config-row" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="config-row" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="typeMachine"
@@ -109,7 +109,7 @@ export function ModelMachineForm({ attachmentFields }: ModelMachineFormProps) {
                   <FieldLabel>{t('color')}</FieldLabel>
                   <FormControl>
                     <div className="flex items-center gap-2">
-                      <Input type="color" {...field} className="w-12 h-10 p-1" />
+                      <Input type="color" {...field} className="h-10 w-12 p-1" />
                       <Input {...field} className="flex-1" />
                     </div>
                   </FormControl>

@@ -18,7 +18,7 @@ export function ChatbotPermissions({ form }: ChatbotPermissionsProps) {
 
   if (isLoading) {
     return (
-      <Skeleton className="h-32 w-full flex items-center justify-center">
+      <Skeleton className="flex h-32 w-full items-center justify-center">
         <Spinner />
       </Skeleton>
     );
@@ -32,17 +32,17 @@ export function ChatbotPermissions({ form }: ChatbotPermissionsProps) {
           title: 'Chatbot',
           description: t('roles.chatbot.description', 'Configure as permissões de interação com o Chatbot'),
           fields: [
-            <div key="chatbot-grid" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div key="chatbot-grid" className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {permissions?.map((permission) => {
                 const value = form.watch(permission.value as keyof RoleFormData);
                 return (
-                  <div key={permission.value} className="flex items-center space-x-2 p-2 border rounded-md bg-card/50">
+                  <div key={permission.value} className="flex items-center space-x-2 rounded-md border bg-card/50 p-2">
                     <Checkbox
                       id={`chatbot-${permission.value}`}
                       checked={!!value}
                       onCheckedChange={(checked) => form.setValue(permission.value as keyof RoleFormData, !!checked as any)}
                     />
-                    <Label htmlFor={`chatbot-${permission.value}`} className="cursor-pointer text-sm font-medium">
+                    <Label htmlFor={`chatbot-${permission.value}`} className="cursor-pointer font-medium text-sm">
                       {t(permission.code)}
                     </Label>
                   </div>

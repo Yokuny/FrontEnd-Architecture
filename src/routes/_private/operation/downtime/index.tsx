@@ -14,8 +14,8 @@ function DowntimePage() {
       <CardHeader title={t('downtime')} />
       <CardContent>
         <p className="text-muted-foreground">{t('operation.downtime.description')}</p>
-        <div className="mt-8 flex items-center justify-center p-8 border-2 border-dashed rounded-lg">
-          <p className="text-sm text-muted-foreground">Conteúdo em migração...</p>
+        <div className="mt-8 flex items-center justify-center rounded-lg border-2 border-dashed p-8">
+          <p className="text-muted-foreground text-sm">Conteúdo em migração...</p>
         </div>
       </CardContent>
     </Card>

@@ -12,7 +12,7 @@ import { useAuth } from '@/hooks/use-auth';
 function PrivateLayout() {
   return (
     <SidebarProvider defaultOpen={false}>
-      <main className="relative flex bg-accent w-full">
+      <main className="relative flex w-full bg-accent">
         <AppSidebar />
         {/* representa a Main */}
         <SidebarInset>

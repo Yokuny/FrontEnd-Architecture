@@ -68,7 +68,7 @@ export function EventTypesChart({ data, isLoading }: EventTypesChartProps) {
         {isEmpty ? (
           <DefaultEmptyData />
         ) : (
-          <ChartContainer config={chartConfig} style={{ minHeight: CHART_MIN_HEIGHT.LARGE }} className="w-full h-40">
+          <ChartContainer config={chartConfig} style={{ minHeight: CHART_MIN_HEIGHT.LARGE }} className="h-40 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={chartData}
@@ -91,12 +91,12 @@ export function EventTypesChart({ data, isLoading }: EventTypesChartProps) {
                         <div className="flex flex-col gap-1">
                           <div className="flex items-center gap-2">
                             <div className="size-2 rounded-full" style={{ backgroundColor: item.color }} />
-                            <ItemTitle className="text-xs font-bold">{item.payload.name}:</ItemTitle>
-                            <ItemContent className="text-xs font-bold">{value}</ItemContent>
+                            <ItemTitle className="font-bold text-xs">{item.payload.name}:</ItemTitle>
+                            <ItemContent className="font-bold text-xs">{value}</ItemContent>
                           </div>
-                          <div className="flex items-baseline gap-1 ml-4">
+                          <div className="ml-4 flex items-baseline gap-1">
                             <ItemTitle className="text-[10px] text-muted-foreground">{t('percentage')}:</ItemTitle>
-                            <ItemContent className="text-[10px] text-muted-foreground font-medium">{item.payload.percentage}%</ItemContent>
+                            <ItemContent className="font-medium text-[10px] text-muted-foreground">{item.payload.percentage}%</ItemContent>
                           </div>
                         </div>
                       )}

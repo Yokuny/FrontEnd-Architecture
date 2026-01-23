@@ -19,30 +19,30 @@ export function GoalFormTable() {
   if (fields.length === 0) return null;
 
   return (
-    <div className="border rounded-md overflow-x-auto mb-6">
+    <div className="mb-6 overflow-x-auto rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="min-w-[150px] sticky left-0 bg-background z-10">{t('machine')}</TableHead>
+            <TableHead className="sticky left-0 z-10 min-w-[150px] bg-background">{t('machine')}</TableHead>
             {months.map((month) => (
-              <TableHead key={month} className="w-[100px] text-center px-1">
+              <TableHead key={month} className="w-[100px] px-1 text-center">
                 {t(month)}
               </TableHead>
             ))}
-            <TableHead className="w-[100px] text-center px-1 font-bold">{t('total.year')}</TableHead>
+            <TableHead className="w-[100px] px-1 text-center font-bold">{t('total.year')}</TableHead>
             <TableHead className="w-[50px]"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {fields.map((field, index) => (
             <TableRow key={field.id}>
-              <TableCell className="font-medium sticky left-0 bg-background z-10">{field.isFleet ? t('fleet') : field.machineName}</TableCell>
+              <TableCell className="sticky left-0 z-10 bg-background font-medium">{field.isFleet ? t('fleet') : field.machineName}</TableCell>
               {months.map((_, monthIndex) => (
                 <TableCell key={`${field.id}-${monthIndex}`} className="px-1">
                   <Input
                     type="number"
                     step="0.01"
-                    className="h-8 text-center px-1"
+                    className="h-8 px-1 text-center"
                     {...register(`rows.${index}.months.${monthIndex}.value` as const, {
                       valueAsNumber: true,
                     })}
@@ -53,7 +53,7 @@ export function GoalFormTable() {
                 <Input
                   type="number"
                   step="0.01"
-                  className="h-8 text-center px-1 font-bold bg-muted/30"
+                  className="h-8 bg-muted/30 px-1 text-center font-bold"
                   {...register(`rows.${index}.months.12.value` as const, {
                     valueAsNumber: true,
                   })}

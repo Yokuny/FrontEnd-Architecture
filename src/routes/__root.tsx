@@ -38,11 +38,11 @@ export const Route = createRootRoute({
           </div>
         </CardHeader>
         <CardContent>
-          <Empty className="border-2 bg-destructive/10 border-destructive/20">
+          <Empty className="border-2 border-destructive/20 bg-destructive/10">
             <EmptyHeader>
-              <CircleAlert className="size-8 text-destructive animate-pulse" />
+              <CircleAlert className="size-8 animate-pulse text-destructive" />
               <EmptyTitle className="text-destructive">{t('something.went.wrong')}</EmptyTitle>
-              <EmptyDescription className="font-mono text-xs break-all max-w-md bg-background/50 p-4 rounded-md border">
+              <EmptyDescription className="max-w-md break-all rounded-md border bg-background/50 p-4 font-mono text-xs">
                 {error instanceof Error ? error.message : String(error)}
               </EmptyDescription>
             </EmptyHeader>

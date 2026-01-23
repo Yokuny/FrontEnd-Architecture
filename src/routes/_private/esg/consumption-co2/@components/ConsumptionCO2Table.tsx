@@ -32,7 +32,7 @@ export function ConsumptionCO2Table({ data, selectedUnit }: ConsumptionCO2TableP
           </Avatar>
           <div className="flex flex-col">
             <span className="font-bold text-sm tracking-tight">{value?.name || '-'}</span>
-            {value?.code && <span className="text-[10px] text-muted-foreground uppercase font-mono tracking-wider">{value.code}</span>}
+            {value?.code && <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-wider">{value.code}</span>}
           </div>
         </div>
       ),
@@ -47,8 +47,8 @@ export function ConsumptionCO2Table({ data, selectedUnit }: ConsumptionCO2TableP
             <div className="flex flex-col gap-1">
               {row.oilDetails.map((oil) => (
                 <div key={oil.type} className="flex flex-col">
-                  <span className="text-[10px] text-muted-foreground font-bold uppercase">{oil.type}</span>
-                  <span className="text-sm font-mono font-bold text-primary">
+                  <span className="font-bold text-[10px] text-muted-foreground uppercase">{oil.type}</span>
+                  <span className="font-bold font-mono text-primary text-sm">
                     {oil.consumption.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} <span className="text-[10px] text-muted-foreground">{oil.unit}</span>
                   </span>
                 </div>
@@ -58,8 +58,8 @@ export function ConsumptionCO2Table({ data, selectedUnit }: ConsumptionCO2TableP
         }
         return (
           <div className="flex flex-col">
-            {row.type && <span className="text-[10px] text-muted-foreground font-bold uppercase">{row.type}</span>}
-            <span className="text-sm font-mono font-bold text-primary">
+            {row.type && <span className="font-bold text-[10px] text-muted-foreground uppercase">{row.type}</span>}
+            <span className="font-bold font-mono text-primary text-sm">
               {(row.consumption || value || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}{' '}
               <span className="text-[10px] text-muted-foreground">{row.unit || row.oilDetails?.[0]?.unit || selectedUnit}</span>
             </span>
@@ -78,13 +78,13 @@ export function ConsumptionCO2Table({ data, selectedUnit }: ConsumptionCO2TableP
         return (
           <div className="flex flex-col gap-2">
             <div className="flex flex-col">
-              <span className="text-sm font-mono font-bold text-foreground">
-                {co2Kg.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} <span className="text-[10px] text-muted-foreground font-bold">KG</span>
+              <span className="font-bold font-mono text-foreground text-sm">
+                {co2Kg.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} <span className="font-bold text-[10px] text-muted-foreground">KG</span>
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="text-sm font-mono font-bold text-primary">
-                {co2Ton.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} <span className="text-[10px] font-bold text-primary">TON</span>
+              <span className="font-bold font-mono text-primary text-sm">
+                {co2Ton.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} <span className="font-bold text-[10px] text-primary">TON</span>
               </span>
             </div>
           </div>
@@ -96,7 +96,7 @@ export function ConsumptionCO2Table({ data, selectedUnit }: ConsumptionCO2TableP
 
   return (
     <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
-      <DataTable data={data} columns={columns} bordered={false} searchable={false} className="border-none shadow-none py-0" />
+      <DataTable data={data} columns={columns} bordered={false} searchable={false} className="border-none py-0 shadow-none" />
     </div>
   );
 }

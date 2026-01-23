@@ -30,7 +30,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
         header: t('machine'),
         width: '250px',
         render: (value) => (
-          <Item className="border-none p-0 items-center">
+          <Item className="items-center border-none p-0">
             <Avatar className="size-12">
               <AvatarImage src={value?.image?.url} alt={value?.name} />
               <AvatarFallback className="bg-secondary text-primary">
@@ -54,13 +54,13 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
       return {
         key: sortKey,
         header: (
-          <Item asChild className="border-none p-0 flex-row items-center justify-end gap-2 cursor-pointer group hover:bg-transparent" onClick={() => handleSort(status)}>
+          <Item asChild className="group cursor-pointer flex-row items-center justify-end gap-2 border-none p-0 hover:bg-transparent" onClick={() => handleSort(status)}>
             <div className="flex items-center justify-end gap-2">
               <ItemMedia className={cn('size-6 p-1 transition-transform group-hover:scale-110', statusConfig.color)}>
                 <StatusIcon className="size-full" />
               </ItemMedia>
-              <ItemTitle className="text-muted-foreground group-hover:text-foreground transition-colors uppercase">{t(statusConfig.key)}</ItemTitle>
-              {orderColumn?.column === status && <span className="text-xs text-primary">{orderColumn.order === 'asc' ? '↑' : '↓'}</span>}
+              <ItemTitle className="text-muted-foreground uppercase transition-colors group-hover:text-foreground">{t(statusConfig.key)}</ItemTitle>
+              {orderColumn?.column === status && <span className="text-primary text-xs">{orderColumn.order === 'asc' ? '↑' : '↓'}</span>}
             </div>
           </Item>
         ),
@@ -78,13 +78,13 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
 
           return (
             <ItemContent className="items-end gap-1 p-0">
-              <ItemDescription className="text-xs font-bold text-muted-foreground uppercase">{normalizedPercent.toFixed(0)}%</ItemDescription>
-              <ItemActions className="gap-1 items-baseline">
+              <ItemDescription className="font-bold text-muted-foreground text-xs uppercase">{normalizedPercent.toFixed(0)}%</ItemDescription>
+              <ItemActions className="items-baseline gap-1">
                 <ItemTitle>{hoursValue.toFixed(2)}</ItemTitle>
                 <ItemDescription className="text-xs uppercase">HR</ItemDescription>
                 <Clock className="size-3 text-muted-foreground" />
               </ItemActions>
-              <ItemActions className="gap-1 items-baseline">
+              <ItemActions className="items-baseline gap-1">
                 <ItemTitle>{distanceValue.toFixed(2)}</ItemTitle>
                 <ItemDescription className="text-xs uppercase">NM</ItemDescription>
                 <Navigation className="size-3 text-muted-foreground" />
@@ -105,11 +105,11 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
 
         return (
           <ItemContent className="items-end gap-1 p-0">
-            <ItemActions className="gap-1 items-baseline">
+            <ItemActions className="items-baseline gap-1">
               <ItemTitle>{(totalMinutes / 60).toFixed(1)}</ItemTitle>
               <ItemDescription className="text-xs uppercase">HR</ItemDescription>
             </ItemActions>
-            <ItemActions className="gap-1 items-baseline text-primary">
+            <ItemActions className="items-baseline gap-1 text-primary">
               <ItemTitle>{totalDistance.toFixed(1)}</ItemTitle>
               <ItemDescription className="text-xs uppercase">NM</ItemDescription>
             </ItemActions>
@@ -160,10 +160,10 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
   return (
     <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
       <Table>
-        <TableHeader className="bg-muted/30 sticky top-0 z-10">
-          <TableRow className="hover:bg-transparent border-none">
+        <TableHeader className="sticky top-0 z-10 bg-muted/30">
+          <TableRow className="border-none hover:bg-transparent">
             {columns.map((column) => (
-              <TableHead key={String(column.key)} className="align-middle p-4" style={column.width ? { width: column.width } : undefined}>
+              <TableHead key={String(column.key)} className="p-4 align-middle" style={column.width ? { width: column.width } : undefined}>
                 {typeof column.header === 'string' ? <ItemTitle className="text-muted-foreground uppercase">{column.header}</ItemTitle> : column.header}
               </TableHead>
             ))}
@@ -175,10 +175,10 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
           ))}
         </TableBody>
         {benchmarkTotals && (
-          <TableFooter className="bg-secondary sticky bottom-0  ">
+          <TableFooter className="sticky bottom-0 bg-secondary">
             <TableRow className="hover:bg-transparent">
               <TableCell className="p-4">
-                <ItemTitle className="text-sm text-muted-foreground uppercase">{t('total')}</ItemTitle>
+                <ItemTitle className="text-muted-foreground text-sm uppercase">{t('total')}</ItemTitle>
               </TableCell>
               {listStatusAllow.map((status) => {
                 const statusTotal = benchmarkTotals.statusTotals.find((s) => s.status === status);
@@ -187,12 +187,12 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                 return (
                   <TableCell key={status} className="p-4">
                     <ItemContent className="items-end gap-1 p-0">
-                      <ItemDescription className="text-xs font-bold uppercase">{statusTotal.percentual.toFixed(1)}%</ItemDescription>
-                      <ItemActions className="gap-1 items-baseline">
+                      <ItemDescription className="font-bold text-xs uppercase">{statusTotal.percentual.toFixed(1)}%</ItemDescription>
+                      <ItemActions className="items-baseline gap-1">
                         <ItemTitle>{(statusTotal.minutes / 60).toFixed(1)}</ItemTitle>
                         <ItemDescription className="text-xs uppercase">HR</ItemDescription>
                       </ItemActions>
-                      <ItemActions className="gap-1 items-baseline">
+                      <ItemActions className="items-baseline gap-1">
                         <ItemTitle>{statusTotal.distance.toFixed(2)}</ItemTitle>
                         <ItemDescription className="text-xs uppercase">NM</ItemDescription>
                       </ItemActions>
@@ -202,11 +202,11 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
               })}
               <TableCell className="p-4">
                 <ItemContent className="items-end gap-1 p-0">
-                  <ItemActions className="gap-1 items-baseline">
+                  <ItemActions className="items-baseline gap-1">
                     <ItemTitle>{(benchmarkTotals.totalAllMinutes / 60).toFixed(1)}</ItemTitle>
                     <ItemDescription className="text-xs uppercase">HR</ItemDescription>
                   </ItemActions>
-                  <ItemActions className="gap-1 text-primary items-baseline">
+                  <ItemActions className="items-baseline gap-1 text-primary">
                     <ItemTitle>{benchmarkTotals.totalAllDistance.toFixed(2)}</ItemTitle>
                     <ItemDescription className="text-xs uppercase">NM</ItemDescription>
                   </ItemActions>

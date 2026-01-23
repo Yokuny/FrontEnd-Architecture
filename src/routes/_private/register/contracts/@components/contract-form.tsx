@@ -65,7 +65,7 @@ export function ContractForm() {
             </FormItem>
           )}
         />,
-        <div key="competence-group" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="competence-group" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="competence"
