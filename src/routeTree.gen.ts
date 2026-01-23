@@ -27,6 +27,7 @@ import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/
 import { Route as PrivateEsgIndexRouteImport } from './routes/_private/esg/index';
 import { Route as PrivateContractsIndexRouteImport } from './routes/_private/contracts/index';
 import { Route as PrivateConsumptionIndexRouteImport } from './routes/_private/consumption/index';
+import { Route as PrivateCmmsIndexRouteImport } from './routes/_private/cmms/index';
 import { Route as PrivateCalendarMaintenanceIndexRouteImport } from './routes/_private/calendar-maintenance/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
@@ -223,6 +224,11 @@ const PrivateContractsIndexRoute = PrivateContractsIndexRouteImport.update({
 const PrivateConsumptionIndexRoute = PrivateConsumptionIndexRouteImport.update({
   id: '/consumption/',
   path: '/consumption/',
+  getParentRoute: () => PrivateRoute,
+} as any);
+const PrivateCmmsIndexRoute = PrivateCmmsIndexRouteImport.update({
+  id: '/cmms/',
+  path: '/cmms/',
   getParentRoute: () => PrivateRoute,
 } as any);
 const PrivateCalendarMaintenanceIndexRoute =
@@ -860,6 +866,7 @@ export interface FileRoutesByFullPath {
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
   '/calendar-maintenance': typeof PrivateCalendarMaintenanceIndexRoute;
+  '/cmms': typeof PrivateCmmsIndexRoute;
   '/consumption': typeof PrivateConsumptionIndexRoute;
   '/contracts': typeof PrivateContractsIndexRoute;
   '/esg': typeof PrivateEsgIndexRoute;
@@ -984,6 +991,7 @@ export interface FileRoutesByTo {
   '/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/auth/unlock': typeof PublicAuthUnlockRoute;
   '/calendar-maintenance': typeof PrivateCalendarMaintenanceIndexRoute;
+  '/cmms': typeof PrivateCmmsIndexRoute;
   '/consumption': typeof PrivateConsumptionIndexRoute;
   '/contracts': typeof PrivateContractsIndexRoute;
   '/esg': typeof PrivateEsgIndexRoute;
@@ -1111,6 +1119,7 @@ export interface FileRoutesById {
   '/_public/auth/reset-password': typeof PublicAuthResetPasswordRoute;
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
   '/_private/calendar-maintenance/': typeof PrivateCalendarMaintenanceIndexRoute;
+  '/_private/cmms/': typeof PrivateCmmsIndexRoute;
   '/_private/consumption/': typeof PrivateConsumptionIndexRoute;
   '/_private/contracts/': typeof PrivateContractsIndexRoute;
   '/_private/esg/': typeof PrivateEsgIndexRoute;
@@ -1237,6 +1246,7 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/auth/unlock'
     | '/calendar-maintenance'
+    | '/cmms'
     | '/consumption'
     | '/contracts'
     | '/esg'
@@ -1361,6 +1371,7 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/auth/unlock'
     | '/calendar-maintenance'
+    | '/cmms'
     | '/consumption'
     | '/contracts'
     | '/esg'
@@ -1487,6 +1498,7 @@ export interface FileRouteTypes {
     | '/_public/auth/reset-password'
     | '/_public/auth/unlock'
     | '/_private/calendar-maintenance/'
+    | '/_private/cmms/'
     | '/_private/consumption/'
     | '/_private/contracts/'
     | '/_private/esg/'
@@ -1738,6 +1750,13 @@ declare module '@tanstack/react-router' {
       path: '/consumption';
       fullPath: '/consumption';
       preLoaderRoute: typeof PrivateConsumptionIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/cmms/': {
+      id: '/_private/cmms/';
+      path: '/cmms';
+      fullPath: '/cmms';
+      preLoaderRoute: typeof PrivateCmmsIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/calendar-maintenance/': {
@@ -2487,6 +2506,7 @@ declare module '@tanstack/react-router' {
 
 interface PrivateRouteChildren {
   PrivateCalendarMaintenanceIndexRoute: typeof PrivateCalendarMaintenanceIndexRoute;
+  PrivateCmmsIndexRoute: typeof PrivateCmmsIndexRoute;
   PrivateConsumptionIndexRoute: typeof PrivateConsumptionIndexRoute;
   PrivateContractsIndexRoute: typeof PrivateContractsIndexRoute;
   PrivateEsgIndexRoute: typeof PrivateEsgIndexRoute;
@@ -2607,6 +2627,7 @@ interface PrivateRouteChildren {
 
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateCalendarMaintenanceIndexRoute: PrivateCalendarMaintenanceIndexRoute,
+  PrivateCmmsIndexRoute: PrivateCmmsIndexRoute,
   PrivateConsumptionIndexRoute: PrivateConsumptionIndexRoute,
   PrivateContractsIndexRoute: PrivateContractsIndexRoute,
   PrivateEsgIndexRoute: PrivateEsgIndexRoute,

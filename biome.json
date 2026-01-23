@@ -19,6 +19,9 @@
     "rules": {
       "recommended": true,
       "a11y": "info",
+      "nursery": {
+        "useSortedClasses": "error"
+      },
       "suspicious": {
         "noReactSpecificProps": "off",
         "noConsole": "warn",
