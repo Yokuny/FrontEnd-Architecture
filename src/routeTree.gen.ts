@@ -13,6 +13,7 @@ import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateTelemetryIndexRouteImport } from './routes/_private/telemetry/index';
 import { Route as PrivateStatisticsIndexRouteImport } from './routes/_private/statistics/index';
 import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
 import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
@@ -27,6 +28,15 @@ import { Route as PrivateCalendarMaintenanceIndexRouteImport } from './routes/_p
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PrivateTelemetryRemoteIhmIndexRouteImport } from './routes/_private/telemetry/remote-ihm/index';
+import { Route as PrivateTelemetryPerformanceIndexRouteImport } from './routes/_private/telemetry/performance/index';
+import { Route as PrivateTelemetryListDashboardIndexRouteImport } from './routes/_private/telemetry/list-dashboard/index';
+import { Route as PrivateTelemetryHeatmapPanelIndexRouteImport } from './routes/_private/telemetry/heatmap-panel/index';
+import { Route as PrivateTelemetryHeatmapFleetIndexRouteImport } from './routes/_private/telemetry/heatmap-fleet/index';
+import { Route as PrivateTelemetryDownloadDataAssetRequestIndexRouteImport } from './routes/_private/telemetry/download-data-asset-request/index';
+import { Route as PrivateTelemetryDiagramListIndexRouteImport } from './routes/_private/telemetry/diagram-list/index';
+import { Route as PrivateTelemetryDataloggerIndexRouteImport } from './routes/_private/telemetry/datalogger/index';
+import { Route as PrivateTelemetryBuoysDwellTimeIndexRouteImport } from './routes/_private/telemetry/buoys-dwell-time/index';
 import { Route as PrivateStatisticsTrackingActivityIndexRouteImport } from './routes/_private/statistics/tracking-activity/index';
 import { Route as PrivateStatisticsTimeOperationIndexRouteImport } from './routes/_private/statistics/time-operation/index';
 import { Route as PrivateStatisticsRveDashboardIndexRouteImport } from './routes/_private/statistics/rve-dashboard/index';
@@ -125,6 +135,11 @@ const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   path: '/auth/',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateTelemetryIndexRoute = PrivateTelemetryIndexRouteImport.update({
+  id: '/telemetry/',
+  path: '/telemetry/',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PrivateStatisticsIndexRoute = PrivateStatisticsIndexRouteImport.update({
   id: '/statistics/',
   path: '/statistics/',
@@ -198,6 +213,60 @@ const PublicAuthRegisterRoute = PublicAuthRegisterRouteImport.update({
   path: '/auth/register',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateTelemetryRemoteIhmIndexRoute =
+  PrivateTelemetryRemoteIhmIndexRouteImport.update({
+    id: '/telemetry/remote-ihm/',
+    path: '/telemetry/remote-ihm/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryPerformanceIndexRoute =
+  PrivateTelemetryPerformanceIndexRouteImport.update({
+    id: '/telemetry/performance/',
+    path: '/telemetry/performance/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryListDashboardIndexRoute =
+  PrivateTelemetryListDashboardIndexRouteImport.update({
+    id: '/telemetry/list-dashboard/',
+    path: '/telemetry/list-dashboard/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryHeatmapPanelIndexRoute =
+  PrivateTelemetryHeatmapPanelIndexRouteImport.update({
+    id: '/telemetry/heatmap-panel/',
+    path: '/telemetry/heatmap-panel/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryHeatmapFleetIndexRoute =
+  PrivateTelemetryHeatmapFleetIndexRouteImport.update({
+    id: '/telemetry/heatmap-fleet/',
+    path: '/telemetry/heatmap-fleet/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryDownloadDataAssetRequestIndexRoute =
+  PrivateTelemetryDownloadDataAssetRequestIndexRouteImport.update({
+    id: '/telemetry/download-data-asset-request/',
+    path: '/telemetry/download-data-asset-request/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryDiagramListIndexRoute =
+  PrivateTelemetryDiagramListIndexRouteImport.update({
+    id: '/telemetry/diagram-list/',
+    path: '/telemetry/diagram-list/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryDataloggerIndexRoute =
+  PrivateTelemetryDataloggerIndexRouteImport.update({
+    id: '/telemetry/datalogger/',
+    path: '/telemetry/datalogger/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryBuoysDwellTimeIndexRoute =
+  PrivateTelemetryBuoysDwellTimeIndexRouteImport.update({
+    id: '/telemetry/buoys-dwell-time/',
+    path: '/telemetry/buoys-dwell-time/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateStatisticsTrackingActivityIndexRoute =
   PrivateStatisticsTrackingActivityIndexRouteImport.update({
     id: '/statistics/tracking-activity/',
@@ -684,6 +753,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof PrivateRegisterIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/statistics': typeof PrivateStatisticsIndexRoute;
+  '/telemetry': typeof PrivateTelemetryIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/operation/goals/add': typeof PrivateOperationGoalsAddRoute;
   '/operation/groups/add': typeof PrivateOperationGroupsAddRoute;
@@ -759,6 +829,15 @@ export interface FileRoutesByFullPath {
   '/statistics/rve-dashboard': typeof PrivateStatisticsRveDashboardIndexRoute;
   '/statistics/time-operation': typeof PrivateStatisticsTimeOperationIndexRoute;
   '/statistics/tracking-activity': typeof PrivateStatisticsTrackingActivityIndexRoute;
+  '/telemetry/buoys-dwell-time': typeof PrivateTelemetryBuoysDwellTimeIndexRoute;
+  '/telemetry/datalogger': typeof PrivateTelemetryDataloggerIndexRoute;
+  '/telemetry/diagram-list': typeof PrivateTelemetryDiagramListIndexRoute;
+  '/telemetry/download-data-asset-request': typeof PrivateTelemetryDownloadDataAssetRequestIndexRoute;
+  '/telemetry/heatmap-fleet': typeof PrivateTelemetryHeatmapFleetIndexRoute;
+  '/telemetry/heatmap-panel': typeof PrivateTelemetryHeatmapPanelIndexRoute;
+  '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
+  '/telemetry/performance': typeof PrivateTelemetryPerformanceIndexRoute;
+  '/telemetry/remote-ihm': typeof PrivateTelemetryRemoteIhmIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -781,6 +860,7 @@ export interface FileRoutesByTo {
   '/register': typeof PrivateRegisterIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/statistics': typeof PrivateStatisticsIndexRoute;
+  '/telemetry': typeof PrivateTelemetryIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/operation/goals/add': typeof PrivateOperationGoalsAddRoute;
   '/operation/groups/add': typeof PrivateOperationGroupsAddRoute;
@@ -856,6 +936,15 @@ export interface FileRoutesByTo {
   '/statistics/rve-dashboard': typeof PrivateStatisticsRveDashboardIndexRoute;
   '/statistics/time-operation': typeof PrivateStatisticsTimeOperationIndexRoute;
   '/statistics/tracking-activity': typeof PrivateStatisticsTrackingActivityIndexRoute;
+  '/telemetry/buoys-dwell-time': typeof PrivateTelemetryBuoysDwellTimeIndexRoute;
+  '/telemetry/datalogger': typeof PrivateTelemetryDataloggerIndexRoute;
+  '/telemetry/diagram-list': typeof PrivateTelemetryDiagramListIndexRoute;
+  '/telemetry/download-data-asset-request': typeof PrivateTelemetryDownloadDataAssetRequestIndexRoute;
+  '/telemetry/heatmap-fleet': typeof PrivateTelemetryHeatmapFleetIndexRoute;
+  '/telemetry/heatmap-panel': typeof PrivateTelemetryHeatmapPanelIndexRoute;
+  '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
+  '/telemetry/performance': typeof PrivateTelemetryPerformanceIndexRoute;
+  '/telemetry/remote-ihm': typeof PrivateTelemetryRemoteIhmIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -881,6 +970,7 @@ export interface FileRoutesById {
   '/_private/register/': typeof PrivateRegisterIndexRoute;
   '/_private/set-up-company/': typeof PrivateSetUpCompanyIndexRoute;
   '/_private/statistics/': typeof PrivateStatisticsIndexRoute;
+  '/_private/telemetry/': typeof PrivateTelemetryIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/operation/goals/add': typeof PrivateOperationGoalsAddRoute;
   '/_private/operation/groups/add': typeof PrivateOperationGroupsAddRoute;
@@ -956,6 +1046,15 @@ export interface FileRoutesById {
   '/_private/statistics/rve-dashboard/': typeof PrivateStatisticsRveDashboardIndexRoute;
   '/_private/statistics/time-operation/': typeof PrivateStatisticsTimeOperationIndexRoute;
   '/_private/statistics/tracking-activity/': typeof PrivateStatisticsTrackingActivityIndexRoute;
+  '/_private/telemetry/buoys-dwell-time/': typeof PrivateTelemetryBuoysDwellTimeIndexRoute;
+  '/_private/telemetry/datalogger/': typeof PrivateTelemetryDataloggerIndexRoute;
+  '/_private/telemetry/diagram-list/': typeof PrivateTelemetryDiagramListIndexRoute;
+  '/_private/telemetry/download-data-asset-request/': typeof PrivateTelemetryDownloadDataAssetRequestIndexRoute;
+  '/_private/telemetry/heatmap-fleet/': typeof PrivateTelemetryHeatmapFleetIndexRoute;
+  '/_private/telemetry/heatmap-panel/': typeof PrivateTelemetryHeatmapPanelIndexRoute;
+  '/_private/telemetry/list-dashboard/': typeof PrivateTelemetryListDashboardIndexRoute;
+  '/_private/telemetry/performance/': typeof PrivateTelemetryPerformanceIndexRoute;
+  '/_private/telemetry/remote-ihm/': typeof PrivateTelemetryRemoteIhmIndexRoute;
   '/_private/maintenance/list-os-done/view/': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/_private/permissions/roles/edit/': typeof PrivatePermissionsRolesEditIndexRoute;
   '/_private/permissions/roles/users/': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -980,6 +1079,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/set-up-company'
     | '/statistics'
+    | '/telemetry'
     | '/auth'
     | '/operation/goals/add'
     | '/operation/groups/add'
@@ -1055,6 +1155,15 @@ export interface FileRouteTypes {
     | '/statistics/rve-dashboard'
     | '/statistics/time-operation'
     | '/statistics/tracking-activity'
+    | '/telemetry/buoys-dwell-time'
+    | '/telemetry/datalogger'
+    | '/telemetry/diagram-list'
+    | '/telemetry/download-data-asset-request'
+    | '/telemetry/heatmap-fleet'
+    | '/telemetry/heatmap-panel'
+    | '/telemetry/list-dashboard'
+    | '/telemetry/performance'
+    | '/telemetry/remote-ihm'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -1077,6 +1186,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/set-up-company'
     | '/statistics'
+    | '/telemetry'
     | '/auth'
     | '/operation/goals/add'
     | '/operation/groups/add'
@@ -1152,6 +1262,15 @@ export interface FileRouteTypes {
     | '/statistics/rve-dashboard'
     | '/statistics/time-operation'
     | '/statistics/tracking-activity'
+    | '/telemetry/buoys-dwell-time'
+    | '/telemetry/datalogger'
+    | '/telemetry/diagram-list'
+    | '/telemetry/download-data-asset-request'
+    | '/telemetry/heatmap-fleet'
+    | '/telemetry/heatmap-panel'
+    | '/telemetry/list-dashboard'
+    | '/telemetry/performance'
+    | '/telemetry/remote-ihm'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -1176,6 +1295,7 @@ export interface FileRouteTypes {
     | '/_private/register/'
     | '/_private/set-up-company/'
     | '/_private/statistics/'
+    | '/_private/telemetry/'
     | '/_public/auth/'
     | '/_private/operation/goals/add'
     | '/_private/operation/groups/add'
@@ -1251,6 +1371,15 @@ export interface FileRouteTypes {
     | '/_private/statistics/rve-dashboard/'
     | '/_private/statistics/time-operation/'
     | '/_private/statistics/tracking-activity/'
+    | '/_private/telemetry/buoys-dwell-time/'
+    | '/_private/telemetry/datalogger/'
+    | '/_private/telemetry/diagram-list/'
+    | '/_private/telemetry/download-data-asset-request/'
+    | '/_private/telemetry/heatmap-fleet/'
+    | '/_private/telemetry/heatmap-panel/'
+    | '/_private/telemetry/list-dashboard/'
+    | '/_private/telemetry/performance/'
+    | '/_private/telemetry/remote-ihm/'
     | '/_private/maintenance/list-os-done/view/'
     | '/_private/permissions/roles/edit/'
     | '/_private/permissions/roles/users/'
@@ -1293,6 +1422,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth';
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/telemetry/': {
+      id: '/_private/telemetry/';
+      path: '/telemetry';
+      fullPath: '/telemetry';
+      preLoaderRoute: typeof PrivateTelemetryIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/statistics/': {
       id: '/_private/statistics/';
@@ -1391,6 +1527,69 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/register';
       preLoaderRoute: typeof PublicAuthRegisterRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/telemetry/remote-ihm/': {
+      id: '/_private/telemetry/remote-ihm/';
+      path: '/telemetry/remote-ihm';
+      fullPath: '/telemetry/remote-ihm';
+      preLoaderRoute: typeof PrivateTelemetryRemoteIhmIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/performance/': {
+      id: '/_private/telemetry/performance/';
+      path: '/telemetry/performance';
+      fullPath: '/telemetry/performance';
+      preLoaderRoute: typeof PrivateTelemetryPerformanceIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/list-dashboard/': {
+      id: '/_private/telemetry/list-dashboard/';
+      path: '/telemetry/list-dashboard';
+      fullPath: '/telemetry/list-dashboard';
+      preLoaderRoute: typeof PrivateTelemetryListDashboardIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/heatmap-panel/': {
+      id: '/_private/telemetry/heatmap-panel/';
+      path: '/telemetry/heatmap-panel';
+      fullPath: '/telemetry/heatmap-panel';
+      preLoaderRoute: typeof PrivateTelemetryHeatmapPanelIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/heatmap-fleet/': {
+      id: '/_private/telemetry/heatmap-fleet/';
+      path: '/telemetry/heatmap-fleet';
+      fullPath: '/telemetry/heatmap-fleet';
+      preLoaderRoute: typeof PrivateTelemetryHeatmapFleetIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/download-data-asset-request/': {
+      id: '/_private/telemetry/download-data-asset-request/';
+      path: '/telemetry/download-data-asset-request';
+      fullPath: '/telemetry/download-data-asset-request';
+      preLoaderRoute: typeof PrivateTelemetryDownloadDataAssetRequestIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/diagram-list/': {
+      id: '/_private/telemetry/diagram-list/';
+      path: '/telemetry/diagram-list';
+      fullPath: '/telemetry/diagram-list';
+      preLoaderRoute: typeof PrivateTelemetryDiagramListIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/datalogger/': {
+      id: '/_private/telemetry/datalogger/';
+      path: '/telemetry/datalogger';
+      fullPath: '/telemetry/datalogger';
+      preLoaderRoute: typeof PrivateTelemetryDataloggerIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/buoys-dwell-time/': {
+      id: '/_private/telemetry/buoys-dwell-time/';
+      path: '/telemetry/buoys-dwell-time';
+      fullPath: '/telemetry/buoys-dwell-time';
+      preLoaderRoute: typeof PrivateTelemetryBuoysDwellTimeIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/statistics/tracking-activity/': {
       id: '/_private/statistics/tracking-activity/';
@@ -1960,6 +2159,7 @@ interface PrivateRouteChildren {
   PrivateRegisterIndexRoute: typeof PrivateRegisterIndexRoute;
   PrivateSetUpCompanyIndexRoute: typeof PrivateSetUpCompanyIndexRoute;
   PrivateStatisticsIndexRoute: typeof PrivateStatisticsIndexRoute;
+  PrivateTelemetryIndexRoute: typeof PrivateTelemetryIndexRoute;
   PrivateOperationGoalsAddRoute: typeof PrivateOperationGoalsAddRoute;
   PrivateOperationGroupsAddRoute: typeof PrivateOperationGroupsAddRoute;
   PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
@@ -2034,6 +2234,15 @@ interface PrivateRouteChildren {
   PrivateStatisticsRveDashboardIndexRoute: typeof PrivateStatisticsRveDashboardIndexRoute;
   PrivateStatisticsTimeOperationIndexRoute: typeof PrivateStatisticsTimeOperationIndexRoute;
   PrivateStatisticsTrackingActivityIndexRoute: typeof PrivateStatisticsTrackingActivityIndexRoute;
+  PrivateTelemetryBuoysDwellTimeIndexRoute: typeof PrivateTelemetryBuoysDwellTimeIndexRoute;
+  PrivateTelemetryDataloggerIndexRoute: typeof PrivateTelemetryDataloggerIndexRoute;
+  PrivateTelemetryDiagramListIndexRoute: typeof PrivateTelemetryDiagramListIndexRoute;
+  PrivateTelemetryDownloadDataAssetRequestIndexRoute: typeof PrivateTelemetryDownloadDataAssetRequestIndexRoute;
+  PrivateTelemetryHeatmapFleetIndexRoute: typeof PrivateTelemetryHeatmapFleetIndexRoute;
+  PrivateTelemetryHeatmapPanelIndexRoute: typeof PrivateTelemetryHeatmapPanelIndexRoute;
+  PrivateTelemetryListDashboardIndexRoute: typeof PrivateTelemetryListDashboardIndexRoute;
+  PrivateTelemetryPerformanceIndexRoute: typeof PrivateTelemetryPerformanceIndexRoute;
+  PrivateTelemetryRemoteIhmIndexRoute: typeof PrivateTelemetryRemoteIhmIndexRoute;
   PrivateMaintenanceListOsDoneViewIndexRoute: typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   PrivatePermissionsRolesEditIndexRoute: typeof PrivatePermissionsRolesEditIndexRoute;
   PrivatePermissionsRolesUsersIndexRoute: typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -2053,6 +2262,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterIndexRoute: PrivateRegisterIndexRoute,
   PrivateSetUpCompanyIndexRoute: PrivateSetUpCompanyIndexRoute,
   PrivateStatisticsIndexRoute: PrivateStatisticsIndexRoute,
+  PrivateTelemetryIndexRoute: PrivateTelemetryIndexRoute,
   PrivateOperationGoalsAddRoute: PrivateOperationGoalsAddRoute,
   PrivateOperationGroupsAddRoute: PrivateOperationGroupsAddRoute,
   PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
@@ -2151,6 +2361,20 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateStatisticsTimeOperationIndexRoute,
   PrivateStatisticsTrackingActivityIndexRoute:
     PrivateStatisticsTrackingActivityIndexRoute,
+  PrivateTelemetryBuoysDwellTimeIndexRoute:
+    PrivateTelemetryBuoysDwellTimeIndexRoute,
+  PrivateTelemetryDataloggerIndexRoute: PrivateTelemetryDataloggerIndexRoute,
+  PrivateTelemetryDiagramListIndexRoute: PrivateTelemetryDiagramListIndexRoute,
+  PrivateTelemetryDownloadDataAssetRequestIndexRoute:
+    PrivateTelemetryDownloadDataAssetRequestIndexRoute,
+  PrivateTelemetryHeatmapFleetIndexRoute:
+    PrivateTelemetryHeatmapFleetIndexRoute,
+  PrivateTelemetryHeatmapPanelIndexRoute:
+    PrivateTelemetryHeatmapPanelIndexRoute,
+  PrivateTelemetryListDashboardIndexRoute:
+    PrivateTelemetryListDashboardIndexRoute,
+  PrivateTelemetryPerformanceIndexRoute: PrivateTelemetryPerformanceIndexRoute,
+  PrivateTelemetryRemoteIhmIndexRoute: PrivateTelemetryRemoteIhmIndexRoute,
   PrivateMaintenanceListOsDoneViewIndexRoute:
     PrivateMaintenanceListOsDoneViewIndexRoute,
   PrivatePermissionsRolesEditIndexRoute: PrivatePermissionsRolesEditIndexRoute,

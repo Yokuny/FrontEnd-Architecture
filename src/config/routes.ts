@@ -22,6 +22,7 @@ import {
   MonitorCog,
   Network,
   NotebookPen,
+  Radio,
   Settings,
   Ship,
   Sparkles,
@@ -46,6 +47,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   operation: Zap,
   ia: Sparkles,
   'calendar-maintenance': CalendarFold,
+  telemetry: Radio,
 };
 
 // Ícones para sub-rotas específicas
@@ -89,6 +91,15 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   ptax: DollarSign,
   'anomaly-detector': Activity,
   prompt: Activity,
+  datalogger: Activity,
+  performance: BarChart3,
+  'list-dashboard': LayoutDashboard,
+  'remote-ihm': MonitorCog,
+  'heatmap-fleet': MapPin,
+  'heatmap-panel': BarChart3,
+  'buoys-dwell-time': Timer,
+  'download-data-asset-request': FileText,
+  'diagram-list': Network,
 };
 
 // Chaves i18n para tradução de rotas
@@ -140,6 +151,16 @@ export const ROUTE_LABELS: Record<string, string> = {
   'anomaly-detector': 'menu.nexai.anomaly.detector',
   prompt: 'ai.prompt',
   'calendar-maintenance': 'calendar.maintenance',
+  telemetry: 'telemetry',
+  datalogger: 'telemetry.datalogger',
+  performance: 'telemetry.performance',
+  'list-dashboard': 'telemetry.list.dashboard',
+  'remote-ihm': 'telemetry.remote.ihm',
+  'heatmap-fleet': 'telemetry.heatmap.fleet',
+  'heatmap-panel': 'telemetry.heatmap.panel',
+  'buoys-dwell-time': 'telemetry.buoys.dwell.time',
+  'download-data-asset-request': 'telemetry.download.data.asset.request',
+  'diagram-list': 'telemetry.diagram.list',
 };
 
 /**
@@ -204,6 +225,15 @@ export const MAIN_ROUTES = [
   '/statistics/rve-dashboard',
   '/statistics/time-operation',
   '/statistics/tracking-activity',
+  '/telemetry/buoys-dwell-time',
+  '/telemetry/datalogger',
+  '/telemetry/diagram-list',
+  '/telemetry/download-data-asset-request',
+  '/telemetry/heatmap-fleet',
+  '/telemetry/heatmap-panel',
+  '/telemetry/list-dashboard',
+  '/telemetry/performance',
+  '/telemetry/remote-ihm',
 ] as const;
 
 export type MainRoute = (typeof MAIN_ROUTES)[number];
