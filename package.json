@@ -13,6 +13,7 @@
     "preview": "vite preview",
     "start": "vite",
     "lint": "biome check --write .",
+    "lint:fix": "biome check --write --unsafe",
     "format": "biome format --write .",
     "check": "tsc --noEmit",
     "routes": "npx tsx src/config/extractRoutes.ts && pnpm run format"
