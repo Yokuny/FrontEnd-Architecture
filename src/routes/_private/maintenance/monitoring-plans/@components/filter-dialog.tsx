@@ -1,4 +1,4 @@
-import { Filter, X } from 'lucide-react';
+import { BrushCleaning, Filter } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MachineManagerSelect, MachineSelect, MaintenancePlanSelect } from '@/components/selects';
@@ -104,9 +104,8 @@ export function FilterDialog({ idEnterprise, filter, onFilterChange }: FilterDia
         </div>
 
         <DialogFooter className="flex justify-between">
-          <Button variant="ghost" onClick={handleClear} className="text-destructive hover:text-destructive">
-            <X className="size-4 mr-1" />
-            {t('clear.filter')}
+          <Button onClick={handleClear} className="text-amber-700 hover:text-amber-800">
+            <BrushCleaning className="size-4" />
           </Button>
           <Button onClick={handleApply}>{t('filter')}</Button>
         </DialogFooter>

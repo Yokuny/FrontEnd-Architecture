@@ -14,7 +14,7 @@ export function ViewSelect(props: ViewSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = VIEW_OPTIONS.map((opt) => ({
     ...opt,
-    label: t(`view.${opt.value}`, { defaultValue: opt.label }),
+    label: t(`view.${opt.value}`),
   }));
 
   // Simulated query object
@@ -54,7 +54,7 @@ export function ViewSelect(props: ViewSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -81,7 +81,7 @@ export function ViewSelect(props: ViewSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

@@ -31,7 +31,7 @@ export function RVEFilter({ idEnterprise, initialValues, onSearch, isLoading }: 
   };
 
   return (
-    <div className="flex flex-wrap items-end gap-4 p-4 border rounded-lg bg-secondary/50">
+    <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary/50 p-4">
       <MachineByEnterpriseSelect
         idEnterprise={idEnterprise}
         mode="multi"
@@ -44,7 +44,7 @@ export function RVEFilter({ idEnterprise, initialValues, onSearch, isLoading }: 
         <Label>{t('date.start')}</Label>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className={cn('justify-start text-left font-normal w-40 bg-background', !dateMin && 'text-muted-foreground')}>
+            <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
               <CalendarIcon className="mr-2 h-4 w-4" />
               {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
             </Button>
@@ -59,7 +59,7 @@ export function RVEFilter({ idEnterprise, initialValues, onSearch, isLoading }: 
         <Label>{t('date.end')}</Label>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className={cn('justify-start text-left font-normal w-40 bg-background', !dateMax && 'text-muted-foreground')}>
+            <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
               <CalendarIcon className="mr-2 h-4 w-4" />
               {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
             </Button>

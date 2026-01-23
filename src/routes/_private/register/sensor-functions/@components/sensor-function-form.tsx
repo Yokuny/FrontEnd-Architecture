@@ -25,7 +25,7 @@ export function SensorFunctionForm({ idEnterprise }: { idEnterprise: string }) {
             <FormItem>
               <FormLabel>{t('description')}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder={t('description.placeholder')} />
+                <Input {...field} placeholder={t('description')} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -39,7 +39,7 @@ export function SensorFunctionForm({ idEnterprise }: { idEnterprise: string }) {
             <FormItem>
               <FormLabel>{t('sensor.function.input.title')}</FormLabel>
               <FormControl>
-                <Textarea {...field} rows={4} className="font-mono mt-1" placeholder={t('sensor.function.algorithm.placeholder')} />
+                <Textarea {...field} rows={4} className="mt-1 font-mono" placeholder={t('sensor.function.algorithm.placeholder')} />
               </FormControl>
               <FormMessage />
             </FormItem>

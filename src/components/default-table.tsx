@@ -212,10 +212,10 @@ export default function Table05() {
   const currentPage = table.getState().pagination.pageIndex + 1;
 
   return (
-    <div className="max-w-3xl w-full space-y-4">
+    <div className="w-full max-w-3xl space-y-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Show</span>
+          <span className="text-muted-foreground text-sm">Show</span>
           <Select value={String(table.getState().pagination.pageSize)} onValueChange={(value) => table.setPageSize(Number(value))}>
             <SelectTrigger className="h-8 w-16">
               <SelectValue />
@@ -228,7 +228,7 @@ export default function Table05() {
               ))}
             </SelectContent>
           </Select>
-          <span className="text-sm text-muted-foreground">entries</span>
+          <span className="text-muted-foreground text-sm">entries</span>
         </div>
         <Input placeholder="Search..." value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} className="h-8 w-full sm:w-64" />
       </div>
@@ -265,7 +265,7 @@ export default function Table05() {
       </div>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
           {Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)} of{' '}
           {table.getFilteredRowModel().rows.length} entries

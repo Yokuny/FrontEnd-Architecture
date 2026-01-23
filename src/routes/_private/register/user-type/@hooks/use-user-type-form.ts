@@ -29,7 +29,7 @@ export function useUserTypeForm(initialData?: Partial<UserTypeFormData>) {
       } else {
         await createUserType.mutateAsync(data as any);
       }
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/user-type' });
     } catch {
       toast.error(t('error.save'));

@@ -35,33 +35,26 @@ function SetupLimitsFormContent({ idEnterprise }: { idEnterprise?: string }) {
     idEnterprise,
   });
 
-  if (isLoading) {
-    return (
-      <Card>
-        <CardHeader title={t('setup.limits')} />
-        <CardContent className="p-12">
-          <DefaultLoading />
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card>
       <CardHeader title={t('setup.limits')} />
-      <Form {...form}>
-        <form onSubmit={onSubmit}>
-          <CardContent>
-            <SetupLimitsForm isEnterpriseDisabled={!!idEnterprise} />
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" disabled={isPending || isLoading} className="min-w-[120px]">
-              {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
-              {t('save')}
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
+      <CardContent>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={onSubmit}>
+              <SetupLimitsForm isEnterpriseDisabled={!!idEnterprise} />
+              <CardFooter className="mt-6 border-t px-0 pt-6">
+                <Button type="submit" disabled={isPending || isLoading} className="min-w-[120px]">
+                  {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
+                  {t('save')}
+                </Button>
+              </CardFooter>
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }

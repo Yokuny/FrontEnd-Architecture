@@ -60,7 +60,7 @@ export function useSetupLimitsForm({ idEnterprise }: UseSetupLimitsFormOptions) 
           maxRequestOffhireApi: data.maxRequestOffhireApi,
         },
       });
-      toast.success(t('success.save'));
+      toast.success(t('save.success'));
       navigate({ to: '..' });
     } catch (_error) {
       toast.error(t('error.save'));

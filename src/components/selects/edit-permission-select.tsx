@@ -41,7 +41,7 @@ export function EditPermissionSelect(props: EditPermissionSelectProps) {
         )}
         <DataMultiSelect<EditPermissionOption, EditPermissionOption>
           id={id}
-          placeholder={placeholder || t('edit.permission.all')}
+          placeholder={placeholder || t('all')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query as any}
@@ -49,7 +49,7 @@ export function EditPermissionSelect(props: EditPermissionSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -66,7 +66,7 @@ export function EditPermissionSelect(props: EditPermissionSelectProps) {
       )}
       <DataSelect<EditPermissionOption, EditPermissionOption>
         id={id}
-        placeholder={placeholder || t('edit.permission.all')}
+        placeholder={placeholder || t('all')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query as any}
@@ -75,7 +75,7 @@ export function EditPermissionSelect(props: EditPermissionSelectProps) {
         clearable={false}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

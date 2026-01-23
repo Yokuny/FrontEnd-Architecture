@@ -115,7 +115,7 @@ function BuoyAddFormContent({ initialData }: { initialData?: any }) {
     if (!buoyId) return;
     try {
       await deleteBuoy.mutateAsync(buoyId);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/buoy', search: { page: 1, size: 10 } });
     } catch {
       toast.error(t('error.delete'));

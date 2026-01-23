@@ -1,7 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/project-settings",
-  "baseLocale": "en",
-  "locales": ["en", "pt", "es"],
+  "baseLocale": "pt",
+  "locales": ["pt", "en", "es"],
   "modules": ["https://cdn.jsdelivr.net/npm/@inlang/plugin-json@4/dist/index.js"],
   "plugin.inlang.i18next": {
     "pathPattern": "./src/config/translations/{locale}.json",

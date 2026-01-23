@@ -41,7 +41,7 @@ const Experience = ({ className }: Experience1Props) => {
     <section className={cn('py-32', className)}>
       <div className="container space-y-10 lg:space-y-20">
         <div className="flex w-full items-end justify-between">
-          <h1 className="text-5xl font-semibold tracking-tighter lg:text-6xl">Experience</h1>
+          <h1 className="font-semibold text-5xl tracking-tighter lg:text-6xl">Experience</h1>
           <Button variant="ghost" size="lg" className="font-semibold">
             Download CV <Download className="size-4" />
           </Button>
@@ -50,9 +50,9 @@ const Experience = ({ className }: Experience1Props) => {
         <ul>
           {experience.map((exp) => (
             <li key={`${exp.company}-${exp.period}`} className="flex flex-col justify-between border-b py-10 md:flex-row">
-              <div className="max-w-lg text-xl font-semibold tracking-tighter lg:w-1/3">{exp.period}</div>
+              <div className="max-w-lg font-semibold text-xl tracking-tighter lg:w-1/3">{exp.period}</div>
               <div className="lg:w-1/3">
-                <h2 className="mb-4 text-2xl font-semibold tracking-tighter">{exp.title}</h2>
+                <h2 className="mb-4 font-semibold text-2xl tracking-tighter">{exp.title}</h2>
                 <p className="text-foreground/50">{exp.description}</p>
               </div>
               <div className="text-right lg:w-1/4">{exp.company}</div>

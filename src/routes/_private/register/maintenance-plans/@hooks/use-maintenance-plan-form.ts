@@ -33,7 +33,7 @@ export function useMaintenancePlanForm(initialData?: Partial<MaintenancePlanForm
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['maintenance-plans'] });
-      toast.success('save.successfull');
+      toast.success('save.success');
       navigate({ to: '/register/maintenance-plans', search: { page: 1, size: 20 } });
     },
     onError: () => {

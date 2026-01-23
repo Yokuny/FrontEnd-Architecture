@@ -18,12 +18,12 @@ export function RecaptchaStep({ email, recaptchaRef, onVerify, onBack, isLoading
   return (
     <div className="space-y-5">
       <Field>
-        <FieldLabel className="font-medium">{t('login.email')}</FieldLabel>
+        <FieldLabel className="font-medium">{t('email')}</FieldLabel>
         <Input type="email" className="h-14" value={email} disabled />
       </Field>
 
       {isLoading ? (
-        <div className="flex justify-center items-center py-8">
+        <div className="flex items-center justify-center py-8">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       ) : (

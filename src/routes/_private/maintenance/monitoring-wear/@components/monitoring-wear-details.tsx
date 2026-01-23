@@ -18,30 +18,30 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
 
   if (isLoading) {
     return (
-      <Skeleton className="h-32 w-full flex items-center justify-center">
+      <Skeleton className="flex h-32 w-full items-center justify-center">
         <Spinner />
       </Skeleton>
     );
   }
 
   return (
-    <div className="border rounded-md overflow-hidden bg-background/50">
+    <div className="overflow-hidden rounded-md border bg-background/50">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-xs uppercase text-muted-foreground">{t('action')}</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">SKU</TableHead>
-            <TableHead className="text-xs uppercase text-muted-foreground">{t('part')}</TableHead>
+            <TableHead className="text-muted-foreground text-xs uppercase">{t('action')}</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">SKU</TableHead>
+            <TableHead className="text-muted-foreground text-xs uppercase">{t('part')}</TableHead>
             {/* <TableHead className="text-xs text-center uppercase text-muted-foreground">{t('image')}</TableHead> */}
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">{t('proportional')}</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">{t('max.contraction')}</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">{t('wear')}</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">{t('next.contraction')}</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">{t('unity.acronym')}</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">%</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">{t('status')}</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground">{t('last.date.acronym')}</TableHead>
-            <TableHead className="text-xs text-center uppercase text-muted-foreground w-12">Op.</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">{t('proportional')}</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">{t('max.contraction')}</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">{t('wear')}</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">{t('next.contraction')}</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">{t('unity.acronym')}</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">%</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">{t('status')}</TableHead>
+            <TableHead className="text-center text-muted-foreground text-xs uppercase">{t('last.date.acronym')}</TableHead>
+            <TableHead className="w-12 text-center text-muted-foreground text-xs uppercase">Op.</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -50,9 +50,9 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
             const nextContraction = (part.lastWearDone || 0) + (action?.valueCycle || 0);
 
             return (
-              <TableRow key={`${part.part.id}-${part.typeService.id}`} className="hover:bg-accent/5 transition-colors">
-                <TableCell className="text-sm py-3">{part.typeService.description}</TableCell>
-                <TableCell className="text-center text-xs font-mono">{part.part.sku}</TableCell>
+              <TableRow key={`${part.part.id}-${part.typeService.id}`} className="transition-colors hover:bg-accent/5">
+                <TableCell className="py-3 text-sm">{part.typeService.description}</TableCell>
+                <TableCell className="text-center font-mono text-xs">{part.part.sku}</TableCell>
                 <TableCell className="text-sm">{part.part.name}</TableCell>
                 {/* <TableCell className="text-center text-xs text-muted-foreground">{part.part.image?.url || '-'}</TableCell> */}
                 <TableCell className="text-center text-sm">{part.wearConfig?.proportional ? `${part.wearConfig.proportional}%` : '-'}</TableCell>
@@ -60,10 +60,10 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                 <TableCell className="text-center font-semibold text-sm">{part.wear}</TableCell>
                 <TableCell className="text-center text-sm">{nextContraction}</TableCell>
                 <TableCell className="text-center text-sm">{action?.unityCycle ? t(action.unityCycle) : '-'}</TableCell>
-                <TableCell className="text-center min-w-[100px]">
-                  <div className="flex flex-col gap-1 items-center">
+                <TableCell className="min-w-[100px] text-center">
+                  <div className="flex flex-col items-center gap-1">
                     <Progress value={part.percentual} className="h-2 w-16" />
-                    <span className="text-[10px] text-muted-foreground font-medium">{part.percentual}%</span>
+                    <span className="font-medium text-[10px] text-muted-foreground">{part.percentual}%</span>
                   </div>
                 </TableCell>
                 <TableCell className="text-center">
@@ -73,13 +73,13 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                         {t('late')}
                       </Badge>
                     ) : part.percentual > 90 ? (
-                      <Badge className="h-6 bg-yellow-500 hover:bg-yellow-600 text-white whitespace-nowrap">{t('next')}</Badge>
+                      <Badge className="h-6 whitespace-nowrap bg-yellow-500 text-white hover:bg-yellow-600">{t('next')}</Badge>
                     ) : (
                       <div className="min-h-6" />
                     )}
                   </div>
                 </TableCell>
-                <TableCell className="text-center text-[10px] leading-tight text-muted-foreground">
+                <TableCell className="text-center text-[10px] text-muted-foreground leading-tight">
                   {part.lastModified ? (
                     <>
                       <div className="font-medium text-foreground">{format(new Date(part.lastModified), 'dd/MM/yyyy')}</div>
@@ -89,7 +89,7 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                     '-'
                   )}
                 </TableCell>
-                <TableCell className="text-center p-2">
+                <TableCell className="p-2 text-center">
                   <AdjustManualWear
                     idMachine={idMachine}
                     idPart={part.part.id}

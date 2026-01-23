@@ -14,7 +14,7 @@ export function LevelSelect(props: LevelSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = LEVEL_OPTIONS.map((opt) => ({
     ...opt,
-    name: t(opt.id, { defaultValue: opt.name }),
+    name: t(opt.id),
   }));
 
   // Simulated query object
@@ -54,7 +54,7 @@ export function LevelSelect(props: LevelSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -81,7 +81,7 @@ export function LevelSelect(props: LevelSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

@@ -40,20 +40,20 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
 
   return (
     <EditEventScheduleDialog idMachine={idMachine} idMaintenancePlan={planItem.idMaintenancePlan} dateWindowEnd={planItem.dateWindowEnd} onSuccess={handleSuccess}>
-      <Item variant="outline" className="cursor-pointer p-2 px-4 bg-secondary">
-        <ItemContent className="flex w-full flex-row justify-between items-center">
+      <Item variant="outline" className="cursor-pointer bg-secondary p-2 px-4">
+        <ItemContent className="flex w-full flex-row items-center justify-between">
           {/* Titulo e status */}
           <div className="flex flex-col gap-2">
             <ItemTitle className="font-medium text-base">{planItem.description}</ItemTitle>
-            <div className="flex gap-4 items-center">
-              <div className="flex gap-1.5 shrink-0">
-                {planItem.expired && <Badge className="bg-red-400/80 hover:bg-red-400 text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('expired')}</Badge>}
+            <div className="flex items-center gap-4">
+              <div className="flex shrink-0 gap-1.5">
+                {planItem.expired && <Badge className="h-4.5 bg-red-400/80 px-1.5 font-bold text-[9px] uppercase hover:bg-red-400">{t('expired')}</Badge>}
                 {planItem.next && !planItem.expired && (
-                  <Badge variant="destructive" className="text-[9px] px-1.5 h-4.5 uppercase font-bold">
+                  <Badge variant="destructive" className="h-4.5 px-1.5 font-bold text-[9px] uppercase">
                     {t('next')}
                   </Badge>
                 )}
-                {planItem.warning && <Badge className="bg-amber-400/80 hover:bg-amber-400 text-[9px] px-1.5 h-4.5 uppercase font-bold">{t('next')}</Badge>}
+                {planItem.warning && <Badge className="h-4.5 bg-amber-400/80 px-1.5 font-bold text-[9px] uppercase hover:bg-amber-400">{t('next')}</Badge>}
               </div>
 
               {planItem.daysLeft !== null && (
@@ -67,14 +67,14 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
           {/* Data */}
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center gap-1">
-              <ItemDescription className="text-lg font-semibold">{planItem.dateWindowEnd ? format(new Date(planItem.dateWindowEnd), 'dd MM yyyy') : '-'}</ItemDescription>
+              <ItemDescription className="font-semibold text-lg">{planItem.dateWindowEnd ? format(new Date(planItem.dateWindowEnd), 'dd MM yyyy') : '-'}</ItemDescription>
               <div className="flex items-center gap-2">
                 <Calendar className="size-4 shrink-0" />
                 {t('date.window.end')}
               </div>
             </div>
 
-            <div className="size-16 shrink-0 relative">
+            <div className="relative size-16 shrink-0">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie data={chartData} innerRadius="75%" outerRadius="100%" startAngle={90} endAngle={-270} paddingAngle={0} dataKey="value">
@@ -83,8 +83,8 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
-              <div className="absolute inset-0 flex items-center justify-center flex-col text-center">
-                <span className="text-[11px] font-bold tracking-tighter" style={{ color: statusColor }}>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span className="font-bold text-[11px] tracking-tighter" style={{ color: statusColor }}>
                   {planItem.percentual}%
                 </span>
               </div>

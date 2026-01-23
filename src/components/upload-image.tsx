@@ -23,7 +23,7 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
     <button
       type="button"
       className={cn(
-        'relative flex items-center justify-center border-2 border-dashed rounded-lg hover:bg-secondary transition-colors cursor-pointer overflow-hidden group w-full',
+        'group relative flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-dashed transition-colors hover:bg-secondary',
         className,
       )}
       style={{ height: height || 192 }}
@@ -33,11 +33,11 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
 
       {value ? (
         <>
-          <ItemMedia variant="image" className="w-full h-full">
-            <img src={value} alt="Preview" className="w-full h-full object-contain" />
+          <ItemMedia variant="image" className="h-full w-full">
+            <img src={value} alt="Preview" className="h-full w-full object-contain" />
           </ItemMedia>
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <div className="flex items-center justify-center size-10 rounded-md text-white hover:bg-white/20">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+            <div className="flex size-10 items-center justify-center rounded-md text-white hover:bg-white/20">
               <ImagePlus className="size-6" />
             </div>
           </div>
@@ -47,7 +47,7 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
           <ItemMedia variant="icon" className="text-muted-foreground">
             <ImagePlus className="size-8" />
           </ItemMedia>
-          <ItemDescription className="text-xs text-center">{t('drag.image', 'Arraste uma imagem aqui ou clique para selecionar')}</ItemDescription>
+          <ItemDescription className="text-center text-xs">{t('drag.image', 'Arraste uma imagem aqui ou clique para selecionar')}</ItemDescription>
         </div>
       )}
     </button>

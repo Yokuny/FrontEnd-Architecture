@@ -5,23 +5,23 @@ import type * as React from 'react';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground border border-input hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
-        secondary: 'bg-secondary border border-input text-secondary-foreground hover:bg-primary-foreground',
-        destructive: 'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
-        outline: 'border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
-        ghost: 'hover:bg-foreground/10 transition-colors',
+        default: 'border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50',
+        secondary: 'border border-input bg-secondary text-secondary-foreground hover:bg-primary-foreground',
+        destructive: 'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40',
+        outline: 'border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50',
+        ghost: 'transition-colors hover:bg-foreground/10',
         link: 'text-primary underline-offset-4 hover:underline',
-        blue: 'bg-linear-to-r from-blue-600 to-blue-500 text-white hover:text-white hover:from-blue-500 hover:to-blue-600 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border-none',
+        blue: 'border-none bg-linear-to-r from-blue-600 to-blue-500 text-white shadow-blue-600/30 shadow-lg transition-all duration-200 hover:scale-[1.02] hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-blue-600/50 active:scale-[0.98]',
         green:
-          'bg-linear-to-r from-green-600 to-green-500 text-white hover:text-white hover:from-green-500 hover:to-green-600 shadow-lg shadow-green-600/30 hover:shadow-green-600/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border-none',
+          'border-none bg-linear-to-r from-green-600 to-green-500 text-white shadow-green-600/30 shadow-lg transition-all duration-200 hover:scale-[1.02] hover:from-green-500 hover:to-green-600 hover:text-white hover:shadow-green-600/50 active:scale-[0.98]',
       },
       size: {
         default: 'h-11 px-4 py-2 has-[>svg]:px-3',
-        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
+        sm: 'h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5',
         lg: 'h-12 rounded-md px-6 has-[>svg]:px-4',
         icon: 'size-9',
         'icon-sm': 'size-8',

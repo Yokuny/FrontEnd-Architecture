@@ -37,7 +37,7 @@ export function CustomerForm() {
             <FormItem>
               <FormLabel>{t('name')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('name.placeholder')} {...field} />
+                <Input placeholder={t('name')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

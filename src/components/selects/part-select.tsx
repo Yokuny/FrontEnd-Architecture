@@ -23,7 +23,7 @@ export function PartSelect({
   const id = useId();
   const query = usePartsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -36,7 +36,7 @@ export function PartSelect({
         )}
         <DataMultiSelect
           id={id}
-          placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
+          placeholder={placeholder || t('part.placeholder')}
           value={values}
           onChange={(newValues) => onChangeMulti?.(newValues as string[])}
           query={query}
@@ -45,7 +45,7 @@ export function PartSelect({
           className={className}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     );
@@ -61,7 +61,7 @@ export function PartSelect({
       )}
       <DataSelect
         id={id}
-        placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
+        placeholder={placeholder || t('part.placeholder')}
         value={value}
         onChange={(newValue) => onChange?.(newValue as string | undefined)}
         query={query}
@@ -71,7 +71,7 @@ export function PartSelect({
         className={className}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

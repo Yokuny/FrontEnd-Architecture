@@ -14,7 +14,7 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
 
   const query = useMaintenanceTypesSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (mode === 'multi') {
     const displayLabel = label || t('maintenance.type');
@@ -36,7 +36,7 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -63,7 +63,7 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

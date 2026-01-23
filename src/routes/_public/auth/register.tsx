@@ -30,8 +30,8 @@ function RegisterPage() {
     <AuthLayout>
       <FieldGroup className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">{t('new.account')}</h1>
-          <p className="text-muted-foreground text-sm text-balance">{t('new.account.subtitle')}</p>
+          <h1 className="font-bold text-2xl">{t('new.account')}</h1>
+          <p className="text-balance text-muted-foreground text-sm">{t('new.account.subtitle')}</p>
         </div>
 
         <Form {...form}>
@@ -42,11 +42,11 @@ function RegisterPage() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-medium">{t('account.name')}</FormLabel>
+                  <FormLabel className="font-medium">{t('name')}</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input {...field} className="h-14" type="text" placeholder={t('account.name.placeholder')} autoFocus />
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <Input {...field} className="h-14" type="text" placeholder={t('name.placeholder')} autoFocus />
+                      <div className="absolute top-1/2 right-3 -translate-y-1/2">
                         <User className="size-5 text-muted-foreground" />
                       </div>
                     </div>
@@ -62,11 +62,11 @@ function RegisterPage() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-medium">{t('login.email')}</FormLabel>
+                  <FormLabel className="font-medium">{t('email')}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input {...field} className="h-14" type="email" placeholder={t('login.email.placeholder')} />
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <div className="absolute top-1/2 right-3 -translate-y-1/2">
                         <Mail className="size-5 text-muted-foreground" />
                       </div>
                     </div>
@@ -77,7 +77,7 @@ function RegisterPage() {
             />
 
             {/* Password */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="password"
@@ -86,13 +86,13 @@ function RegisterPage() {
                     <FormLabel className="font-medium">{t('login.password')}</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Input {...field} className="pr-12 h-14" type={showPassword ? 'text' : 'password'} placeholder={t('login.password.placeholder')} />
+                        <Input {...field} className="h-14 pr-12" type={showPassword ? 'text' : 'password'} placeholder={t('login.password.placeholder')} />
                         <Button
                           type="button"
                           variant="ghost"
                           size="icon"
                           onClick={onTogglePassword}
-                          className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                          className="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         >
                           {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                         </Button>
@@ -112,13 +112,13 @@ function RegisterPage() {
                     <FormLabel className="font-medium">{t('account.confirm.password')}</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Input {...field} className="pr-12 h-14" type={showConfirmPassword ? 'text' : 'password'} placeholder={t('account.confirm.password.placeholder')} />
+                        <Input {...field} className="h-14 pr-12" type={showConfirmPassword ? 'text' : 'password'} placeholder={t('account.confirm.password')} />
                         <Button
                           type="button"
                           variant="ghost"
                           size="icon"
                           onClick={onToggleConfirmPassword}
-                          className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                          className="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         >
                           {showConfirmPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                         </Button>
@@ -148,7 +148,7 @@ function RegisterPage() {
                     <Checkbox id="termsAccepted" checked={field.value} onCheckedChange={field.onChange} className="mt-1" />
                   </FormControl>
                   <div className="space-y-1">
-                    <Label htmlFor="termsAccepted" className="block text-sm font-normal cursor-pointer leading-relaxed">
+                    <Label htmlFor="termsAccepted" className="block cursor-pointer font-normal text-sm leading-relaxed">
                       {t('accept.terms')}{' '}
                       <a href="/terms" target="_blank" className="text-primary hover:underline" rel="noopener">
                         {t('terms')}
@@ -169,10 +169,10 @@ function RegisterPage() {
             <div className="flex justify-center">
               <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ''} onChange={onRecaptchaChange} theme="light" />
             </div>
-            {form.formState.errors.reCaptcha && <p className="text-sm text-destructive text-center">{form.formState.errors.reCaptcha.message}</p>}
+            {form.formState.errors.reCaptcha && <p className="text-center text-destructive text-sm">{form.formState.errors.reCaptcha.message}</p>}
 
             {/* Submit Button */}
-            <Button type="submit" variant="green" disabled={isPending} className="w-full mt-4 font-semibold text-base" size="lg">
+            <Button type="submit" variant="green" disabled={isPending} className="mt-4 w-full font-semibold text-base" size="lg">
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 size-5 animate-spin" />

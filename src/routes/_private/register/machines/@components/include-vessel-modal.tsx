@@ -40,7 +40,7 @@ export function IncludeVesselModal({ isOpen, onClose, idEnterprise }: IncludeVes
         ...data,
         idEnterprise,
       });
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       onClose();
     } catch {
       toast.error(t('error.save'));
@@ -54,7 +54,7 @@ export function IncludeVesselModal({ isOpen, onClose, idEnterprise }: IncludeVes
           <DialogTitle>{t('add.machine')}</DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+        <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label className="flex items-center gap-2">
               <Link2 className="size-4" />
@@ -100,17 +100,17 @@ export function IncludeVesselModal({ isOpen, onClose, idEnterprise }: IncludeVes
             </Select>
           </div>
 
-          <div className="space-y-4 md:col-span-2 pt-4">
+          <div className="space-y-4 pt-4 md:col-span-2">
             <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium">{t('show.in.fleet')}</Label>
+              <Label className="font-medium text-sm">{t('show.in.fleet')}</Label>
               <Switch checked={data.showInFleet} onCheckedChange={(checked) => setData({ ...data, showInFleet: checked })} />
             </div>
             <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium">{t('process.status')}</Label>
+              <Label className="font-medium text-sm">{t('process.status')}</Label>
               <Switch checked={data.processStatus} onCheckedChange={(checked) => setData({ ...data, processStatus: checked })} />
             </div>
             <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium">{t('process.travel')}</Label>
+              <Label className="font-medium text-sm">{t('process.travel')}</Label>
               <Switch checked={data.processTravel} onCheckedChange={(checked) => setData({ ...data, processTravel: checked })} />
             </div>
           </div>

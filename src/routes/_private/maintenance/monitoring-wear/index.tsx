@@ -44,7 +44,7 @@ function MonitoringWearPage() {
     <Card>
       <CardHeader title={t('monitoring.wear.part')}>
         <div className="relative w-full max-w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+          <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder={t('search')}
             className="pl-9"
@@ -82,7 +82,7 @@ function MonitoringWearPage() {
           <Button variant="outline" disabled={page <= 1} onClick={() => navigate({ search: { page: page - 1, size, search } })}>
             {t('previous')}
           </Button>
-          <span className="flex items-center px-3 text-sm text-muted-foreground">
+          <span className="flex items-center px-3 text-muted-foreground text-sm">
             {t('page')} {page} / {Math.ceil(totalItems / size)}
           </span>
           <Button variant="outline" disabled={page >= Math.ceil(totalItems / size)} onClick={() => navigate({ search: { page: page + 1, size, search } })}>

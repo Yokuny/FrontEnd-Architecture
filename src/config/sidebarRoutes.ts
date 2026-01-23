@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { MAIN_ROUTES, ROUTE_ICONS, ROUTE_LABELS, SUB_ROUTE_ICONS } from './routeConfig';
+import { MAIN_ROUTES, ROUTE_ICONS, ROUTE_LABELS, SUB_ROUTE_ICONS } from './routes';
 
 export interface SidebarRoute {
   id: string;

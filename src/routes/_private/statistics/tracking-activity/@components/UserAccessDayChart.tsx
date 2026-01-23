@@ -67,9 +67,9 @@ export function UserAccessDayChart({ filters }: UserAccessDayChartProps) {
   const isEmpty = !data || ((data.usersDay?.length || 0) === 0 && (data.usersDayWhatsapp?.length || 0) === 0);
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full">
-      <ItemHeader className="flex-col items-start gap-1 mb-6">
-        <ItemTitle className="text-xl font-semibold">{t('users')}</ItemTitle>
+    <Item variant="outline" className="w-full flex-col items-stretch">
+      <ItemHeader className="mb-6 flex-col items-start gap-1">
+        <ItemTitle className="font-semibold text-xl">{t('users')}</ItemTitle>
         <ItemDescription>{t('tracking.activity.users.description', 'Acesso diário por usuário ao sistema e WhatsApp')}</ItemDescription>
       </ItemHeader>
       <ItemContent>

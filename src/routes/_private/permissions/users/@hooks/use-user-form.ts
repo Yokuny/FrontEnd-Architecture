@@ -48,10 +48,10 @@ export function useUserForm(id?: string): UseUserFormReturn {
     try {
       if (id) {
         await updateUser.mutateAsync({ ...data, id });
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
       } else {
         await createUser.mutateAsync(data);
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
       }
       navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
@@ -63,7 +63,7 @@ export function useUserForm(id?: string): UseUserFormReturn {
     if (!id) return;
     try {
       await deleteUser.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
       toast.error(t('error.delete'));

@@ -1,0 +1,2890 @@
+[
+  {
+    "label": "A CENTRAL-BS - POSIÇÃO FIXA ÁREA CENTRAL NA AGBS",
+    "value": "fc33fff8-74cd-4ed6-b373-7e433825d44a"
+  },
+  {
+    "label": "A CENTRAL-ES - POSIÇÃO FIXA AREA CENTRAL NA AGB-ES",
+    "value": "060eec2f-adc2-488c-8ab1-0e06e59ee766"
+  },
+  {
+    "label": "ACCO - SEVEN CONDOR",
+    "value": "7fe579b9-d0f2-417d-9e42-e6adb0df3de3"
+  },
+  {
+    "label": "ACPE - ACERGY PERTINACIA",
+    "value": "de5f177f-f091-4703-a295-8d55e24d2d09"
+  },
+  {
+    "label": "ACPO - ACERGY POLARIS",
+    "value": "7ec068ed-5f70-474e-b07e-1b6368bb2f6c"
+  },
+  {
+    "label": "ADAQ - ADAMS AQUANAUT",
+    "value": "aeb39e6c-d3b0-4ccc-96d7-e448687e87d4"
+  },
+  {
+    "label": "AGB-BC - ÁREA GEOGRÁFICA - BC",
+    "value": "1814a50b-0c9b-498f-8330-6713a9e4daf8"
+  },
+  {
+    "label": "AGB-BS - ÁREA GEOGRÁFICA - BS",
+    "value": "569bafda-7915-42dd-99c5-bfee63019bf9"
+  },
+  {
+    "label": "AGB-ES - ÁREA GEOGRÁFICA - ES",
+    "value": "4fe62f95-9738-44c9-ac71-8aaf0de0da94"
+  },
+  {
+    "label": "AGB-RNCE - ÁREA GEOGRÁFICA - RNCE",
+    "value": "4cbff522-5b27-4115-9cd8-813a9eae6487"
+  },
+  {
+    "label": "AGB-SEAL - ÁREA GEOGRÁFICA - SEAL",
+    "value": "e3c47e03-7931-45aa-8cf9-4d2e7c785815"
+  },
+  {
+    "label": "AGIL - PLSV AGILE",
+    "value": "8581419d-9416-4ee1-86b3-7115a008e33c"
+  },
+  {
+    "label": "ALIZ - CGG ALIZE",
+    "value": "fd0eb11d-d429-4514-bb5b-8d9a128f7abd"
+  },
+  {
+    "label": "ANGRA DOS REIS - ANGRA DOS REIS - ANGRA DOS REIS - RJ",
+    "value": "edd241e8-fca1-4365-b33a-eb18556ef41f"
+  },
+  {
+    "label": "ARACAJU - ARACAJU - ARACAJÚ - SE",
+    "value": "db9d978c-85b4-42a5-a510-37ed21102923"
+  },
+  {
+    "label": "ARACRUZ - ARACRUZ",
+    "value": "b6a7af67-5237-4002-a970-27e8ef02ec88"
+  },
+  {
+    "label": "AREA - ÁREA EM ALTO-MAR",
+    "value": "dcaf4b41-465d-470d-bd55-57ba806c8eb7"
+  },
+  {
+    "label": "ARRAIO DO CABO - ARRAIO DO CABO",
+    "value": "5fd9d4e6-04fc-40ea-b2c9-b43be2bac9a7"
+  },
+  {
+    "label": "ARSB - ÁREA DE SÃO SEBASTIÃO",
+    "value": "0c177e60-a1d5-46ce-a499-98611fc0b3e4"
+  },
+  {
+    "label": "ARTC - ARCTIC 1",
+    "value": "cb71f80c-7ad4-4637-9ee1-746f680590e4"
+  },
+  {
+    "label": "ASUB - ALMOXARIFADO SUBMARINO AREA NORTE",
+    "value": "4641ef86-43a6-4708-8472-4b749959b831"
+  },
+  {
+    "label": "ATEP - ALMOXARIFADO SUBMARINO AREA SUL",
+    "value": "764b2b39-b3aa-4042-a27a-17a020eba0ea"
+  },
+  {
+    "label": "ATLA - TOP CORAL DO ATLÂNTICO",
+    "value": "2657625a-f625-41de-bc5a-73b1083f6336"
+  },
+  {
+    "label": "AUVBS - AUV BACIA DE SANTOS",
+    "value": "009cca91-5416-45a4-9d60-a2387d74b241"
+  },
+  {
+    "label": "BAGRE - BOIA DE BAGRE",
+    "value": "402e1927-01a2-4b48-815d-cba74cda15c2"
+  },
+  {
+    "label": "BANG - BAÍA DE ANGRA DOS REIS",
+    "value": "74b6c439-0550-4bd9-aba6-188dc3ac41d4"
+  },
+  {
+    "label": "BBACIASANTOS - BOIA BACIA DE SANTOS N4",
+    "value": "6fbe3131-4288-4d62-a183-78272f29b6a7"
+  },
+  {
+    "label": "BBADEJO - BOIA DE BADEJO",
+    "value": "a07c9ba3-4458-46b0-bec8-196ab9916359"
+  },
+  {
+    "label": "BDTS - BAÍA DE TODOS OS SANTOS",
+    "value": "ffd2dbd4-09c4-43f5-99cf-53e37bfc101a"
+  },
+  {
+    "label": "BGIQ - BALSA GLOBAL IROQUOIS",
+    "value": "3df41e78-9c61-47a8-ade9-80a5d3f73edd"
+  },
+  {
+    "label": "BGL1 - BALSA GUINDASTE LANÇAMENTO 01",
+    "value": "8ca39fdf-3021-4bad-941c-5b21af27db2c"
+  },
+  {
+    "label": "BGL2 - BALSA GUINDASTE LANÇAMENTO 02",
+    "value": "fc6b4990-1767-4c07-80ea-c5346ba79b71"
+  },
+  {
+    "label": "BGUA - B. GUANABARA",
+    "value": "1a30813f-96c5-4b61-95fb-ddd187a8ad31"
+  },
+  {
+    "label": "BIVUR - BIVUR - PONTO DE NOTIFICAÇÃO",
+    "value": "46db7dd4-3820-44ec-a20d-8d41e6b4f024"
+  },
+  {
+    "label": "BLNAMORADO - BOIA LESTE DE NAMORADO N5",
+    "value": "7b79d5e6-c7dc-4451-b932-3e87622de49a"
+  },
+  {
+    "label": "BLTAMBAU - BOIA LESTE DE TAMBAU N8",
+    "value": "bd31e43b-d33c-4706-9075-ebcf108f4917"
+  },
+  {
+    "label": "BMAC - BASE DE APOIO OFFSHORE DE MACAÉ",
+    "value": "afcc5621-8760-495b-9576-0b367686389c"
+  },
+  {
+    "label": "BMALHADO - BOIA DE BAGRE",
+    "value": "a92aa81b-7705-468b-89f6-cd80bb04fe13"
+  },
+  {
+    "label": "BOIA PGME - BOIA PGME - BOIA DE ESPERA DO CANAL DE GUAMARÉ",
+    "value": "78573370-447f-4dcf-9ea4-034bf681e4b0"
+  },
+  {
+    "label": "BOIA PGME 10 - BOIA PGME 10 - BOIA DO CANAL DE GUAMARÉ 10 VERDE SEGA",
+    "value": "3860ebf9-f8f1-4491-a5bd-91fb1b93b316"
+  },
+  {
+    "label": "BOIA 1 - BADEJO",
+    "value": "e6f56d98-ff83-4f63-a4f7-49d6c7e5a637"
+  },
+  {
+    "label": "BOIA 2 - VIOLA",
+    "value": "4e691908-6250-4a2e-9ccf-79f8b3581c98"
+  },
+  {
+    "label": "BOIA 3 - BOIA 3 - RONCADOR",
+    "value": "ab28bc61-d928-4e11-84f8-254d71e1030b"
+  },
+  {
+    "label": "BOIA 4 - BACIA DE SANTOS",
+    "value": "8357dcec-98f7-47b1-8cc1-c85a416aa256"
+  },
+  {
+    "label": "BOIA 5 - NAMORADO",
+    "value": "d16811a1-b6fb-443a-8be5-3b592a1bcf26"
+  },
+  {
+    "label": "BOIA 6 - BOIA 6 - PAMPO",
+    "value": "05a2b40a-2837-42de-94e3-de64e05bcb1b"
+  },
+  {
+    "label": "BOIA 8 - LESTE DE TAMBAU",
+    "value": "0d9d68f7-9aaa-4ea6-ab76-90c70acdf24b"
+  },
+  {
+    "label": "BONG - BONGO",
+    "value": "58f73f3c-fc3c-492c-bc7b-5e41b01a68b8"
+  },
+  {
+    "label": "BPAMPO - BOIA DE PAMPO",
+    "value": "a16c86b7-1ac1-48e7-8674-87f9fd89a2fc"
+  },
+  {
+    "label": "BRASFELS - ESTALEIRO BRASFELS ANGRA DOS REIS",
+    "value": "5f1cd4bb-5021-495d-84c7-0fd72ff2b5d7"
+  },
+  {
+    "label": "BREGE - BOIA DE REGENCIA",
+    "value": "1b78f768-9662-4a3b-a38f-dc2758bbb3b3"
+  },
+  {
+    "label": "BRONCADOR - BRONCADOR - BOIA DE RONCADOR",
+    "value": "011f7211-fdfe-499d-a484-e4e084a8018e"
+  },
+  {
+    "label": "BS01 - BALSA DE SERVIÇO 01",
+    "value": "b85db78a-6634-4213-9b8c-9f5e31e9039a"
+  },
+  {
+    "label": "BUNKER-BA - BUNKER-BA - POSTO ABAST SSA-EMBARCAÇÕES",
+    "value": "47604553-2d05-4429-a0e2-372993f97984"
+  },
+  {
+    "label": "BVIOLA - BOIA DE VIOLA",
+    "value": "88418dce-fcfb-4f2d-b54a-7d61f97a8f0a"
+  },
+  {
+    "label": "BVIT - BVIT - BAÍA DE VITÓRIA - ES",
+    "value": "c9f73ab1-2ab3-42d3-a1ee-6ff028d46cf6"
+  },
+  {
+    "label": "CAND - CHLOE CANDIES",
+    "value": "7c3cb716-c36e-45b2-b5fe-6f52cfd24944"
+  },
+  {
+    "label": "CAPX - FPSO CAPIXABA",
+    "value": "6f022447-2e7e-4a7a-b638-5f672e5c2b90"
+  },
+  {
+    "label": "CBOG - CBO GUANABARA",
+    "value": "1b504f21-0e54-4b55-b85e-96d163562c6e"
+  },
+  {
+    "label": "CBOM - CBO MANUELLA",
+    "value": "7edf5573-93be-4a5a-a270-2d108a1be9b4"
+  },
+  {
+    "label": "CDAN - FPSO CIDADE DE ANCHIETA",
+    "value": "9e670425-5ab8-41bc-a9a9-ab0920fe6f41"
+  },
+  {
+    "label": "CDSM - FPSO CIDADE DE SÃO MATEUS",
+    "value": "2260fedf-74ee-456b-b66d-6da9166e7bd2"
+  },
+  {
+    "label": "CES157 - CES157 - 1-CES-157 ARARAUNA",
+    "value": "ad0b1d45-f4c4-4c62-9e3b-310e0d225262"
+  },
+  {
+    "label": "CGOLF - CAMPO DE GOLFINHO",
+    "value": "5495a405-6f7e-44fd-bf13-7cf67345e34e"
+  },
+  {
+    "label": "CIAC - UMS CIDADE ARRAIAL DO CABO",
+    "value": "37251b78-80a2-4900-960a-5a156d5bd492"
+  },
+  {
+    "label": "CITA - CITA - CANAL RIO ITAJAÍ",
+    "value": "31119809-6a64-484a-9142-dae20f206148"
+  },
+  {
+    "label": "CLIP - NORMAND CLIPPER",
+    "value": "f8bf0939-b8ed-4238-a8c5-73c94dcea84e"
+  },
+  {
+    "label": "CMERCADO - CMERCADO - CAIS DO MERCADO - ARACAJU",
+    "value": "c5d0e5e2-00bc-4051-9a82-f70b28df491e"
+  },
+  {
+    "label": "CNAT - CNAT - CANAL RIO POTENGI",
+    "value": "e44f6a68-7ab1-4dcb-a9bf-0f70b9a7950a"
+  },
+  {
+    "label": "CNVV - CNVV - CANAL VITÓRIA/VILA VELHA",
+    "value": "150f3f20-08cb-4a22-b362-27f3a083a23f"
+  },
+  {
+    "label": "CODESA - CODESA - CAIS COMERCIAL DA CODESA",
+    "value": "751e3567-6744-4f2a-9b2e-284489c22695"
+  },
+  {
+    "label": "COOK - COOK - WG COOK",
+    "value": "8e17370b-2fed-4ccb-b0b4-d5f0a5abb9d4"
+  },
+  {
+    "label": "CPVV - CPVV",
+    "value": "066ecaeb-b307-49e2-adb7-6c5587632757"
+  },
+  {
+    "label": "CSMT - CSMT - FPSO - CIDADE DE SÃO MATEUS",
+    "value": "d3699ad5-2da1-4dd3-bfb0-0f0f8f8113b5"
+  },
+  {
+    "label": "CVIT - FPSO CIDADE DE VITÓRIA",
+    "value": "c1a00d2a-1b27-4d97-97e6-7b188eb577ba"
+  },
+  {
+    "label": "DECO - DEEP CONSTRUTOR",
+    "value": "34e8ce54-b660-4fd3-98e6-b37610c0b022"
+  },
+  {
+    "label": "DEEP - DEEP BLUE",
+    "value": "7ac6ffc4-3391-4eea-aa5d-d8bef4feb0e5"
+  },
+  {
+    "label": "DEND - DEEP ENDEAVOUR",
+    "value": "edba9ca6-48d3-405e-a288-b605a06f91ef"
+  },
+  {
+    "label": "DEVIT - DEVIT - DEPOSITO BR VITORIA ES",
+    "value": "86cc16a2-82bc-4627-ab8c-fd5e81fc42bc"
+  },
+  {
+    "label": "DISC - DISC - DSV - DISCOVERY",
+    "value": "adcd3f0b-7a27-4ed0-9ba0-75bfce828053"
+  },
+  {
+    "label": "DSCRT - DESCARTE DE CASCALHO",
+    "value": "5fe4ca4f-984f-4dfd-9c95-0b80f1998495"
+  },
+  {
+    "label": "DSCRTN - DESCARTE DE CASCALHO NORDESTE",
+    "value": "749d3808-f271-443f-8125-dc1dd9cc5d1a"
+  },
+  {
+    "label": "DSGA - DSV GULMAR ATLANTIS",
+    "value": "91ab7172-632e-4dac-b424-2b08bad7025f"
+  },
+  {
+    "label": "DSVD - DSV DISCORERY",
+    "value": "16184545-e416-4783-b444-3e23a3df6d17"
+  },
+  {
+    "label": "DYNA - DYNAMIC PRODUCER",
+    "value": "ea701190-2848-41af-8929-240ac713c16e"
+  },
+  {
+    "label": "EDBC - ESTOQUE DE DIESEL DA BACIA DE CAMPOS",
+    "value": "1911b326-0f6d-4f7d-b317-71fe1570f6e7"
+  },
+  {
+    "label": "EDBC 1 - BÓIA 1",
+    "value": "af716c2e-8518-409a-b86c-7399a15cdaf9"
+  },
+  {
+    "label": "EDBC 2 - BÓIA 2",
+    "value": "c02b29ef-9ccd-490f-8c9e-62927401403c"
+  },
+  {
+    "label": "EDBC 3 - BÓIA 3",
+    "value": "65bad3dc-d3a9-428b-ae32-4ee84b0c35e9"
+  },
+  {
+    "label": "EDBC 4 - BÓIA 4",
+    "value": "35ab3604-ea64-47d6-95b6-83735ac1b56e"
+  },
+  {
+    "label": "EDBC 5 - BÓIA 5",
+    "value": "484dc674-3671-4a8f-8864-6e6779478b2c"
+  },
+  {
+    "label": "EDBC 6 - BÓIA 6",
+    "value": "93288330-b7d0-4c1a-bf6e-8d343bd02586"
+  },
+  {
+    "label": "EDBS - ESTOQUE DE DIESEL DA BACIA DE SANTOS",
+    "value": "7ef63ff8-ec3d-4b43-93aa-274d57327ba9"
+  },
+  {
+    "label": "EDIÇÃO - LIBERADO PARA EDIÇÃO",
+    "value": "2ec96b38-6de7-4693-9cfa-36042c3c280b"
+  },
+  {
+    "label": "EFOR - EFOR - ENSEADA DE FORNO",
+    "value": "c8ebf66b-4d3d-4e99-a251-10d778252314"
+  },
+  {
+    "label": "EGBIA - EGBIA - PONTO DE NOTIFICAÇÃO",
+    "value": "9301fc47-6926-4c1c-8d7f-e9a68821e7a4"
+  },
+  {
+    "label": "EMH1 - MONOBOIA EMH1",
+    "value": "6e36513e-d6b5-4d80-90d9-9d4025be0944"
+  },
+  {
+    "label": "ENO12 - BOIA DE MARCAÇÃO NA AREA DE ENCHOVA",
+    "value": "282c6d0f-4990-48fe-9632-8ea41b7a9ae3"
+  },
+  {
+    "label": "EPA - ESTAÇÃO DE PRODUÇÃO DE ATALAIA",
+    "value": "3766dd3d-5d3b-4d9d-bfe0-6321573c477f"
+  },
+  {
+    "label": "ESPF - ESPADARTE FPSO 06",
+    "value": "4e459e51-7e66-41b0-b622-d4cb667af496"
+  },
+  {
+    "label": "EST VANDEMIR - EST VANDEMIR - ESTAÇÃO VANDEMIR FERREIRA",
+    "value": "46e088fc-3464-4419-a9df-35d1c4e48c8c"
+  },
+  {
+    "label": "EVIK - EVIK - M/T EVI KNUTSEN",
+    "value": "b7edb500-d28c-46dc-b156-cd7a3d006046"
+  },
+  {
+    "label": "FASA - FAR SAGA",
+    "value": "44a5fbf4-8073-467d-b01c-ca7509910ebe"
+  },
+  {
+    "label": "FCSV - FPSO CIDADE SÃO VICENTE",
+    "value": "3eaea70e-3cee-49df-90cd-22d2acd4ba5d"
+  },
+  {
+    "label": "FDS2 - SAIPEM FDS2",
+    "value": "f70953c4-1864-4cc1-b66e-6039746ed5d5"
+  },
+  {
+    "label": "FLOT - ETESCO MILLENNIUM",
+    "value": "b00607af-94cf-4f15-a596-f3872a0e01bb"
+  },
+  {
+    "label": "FOR - PORTO MUCURIPE",
+    "value": "a79800ec-bc6a-48f2-8055-73c697609927"
+  },
+  {
+    "label": "FORTALEZA - FORTALEZA - FORTALEZA - CE",
+    "value": "e06176b3-dc8d-4f8a-9fd5-41c0264f1a40"
+  },
+  {
+    "label": "FPAB - FPSO ALMIRANTE BARROSO",
+    "value": "9d9dbe40-3e56-427e-9d22-e4db05cac721"
+  },
+  {
+    "label": "FPAG - FPSO ANITA GARIBALDI",
+    "value": "3b029ad7-397b-41f1-bef2-e74d3741e0a3"
+  },
+  {
+    "label": "FPAG - ANA NERY",
+    "value": "5e14ba40-5f7a-4625-883f-23d629365f4d"
+  },
+  {
+    "label": "FPAN - FPSO ANNA NERY",
+    "value": "9f31b0c8-415b-44a2-90fc-a24fb2a8ca8f"
+  },
+  {
+    "label": "FPAR - FPSO ANGRA DOS REIS",
+    "value": "af49de77-2825-4f7b-8418-287fd42a3eef"
+  },
+  {
+    "label": "FPAR - FPSO ANGRA DOS REIS",
+    "value": "991d7290-d95e-4ff8-bed5-a3859b5cac88"
+  },
+  {
+    "label": "FPBR - FPSO BRASIL",
+    "value": "49f30720-09d2-4643-af14-9ca04c6fcd91"
+  },
+  {
+    "label": "FPCA - FPSO CIDADE DE CARAGUATATUBA",
+    "value": "7322f0fa-e9e5-4354-825e-26d07ed00ecc"
+  },
+  {
+    "label": "FPCG - CAMPOS DOS GOYTACAZES",
+    "value": "76bff511-7dc1-4467-9f8f-b35880030f42"
+  },
+  {
+    "label": "FPCI - FPSO CIDADE DE ITAJAI",
+    "value": "90762515-bc73-448b-9372-192785762ebb"
+  },
+  {
+    "label": "FPCR - FPSO CARIOCA",
+    "value": "a576adab-c6a6-4672-84b2-b2a1806de93f"
+  },
+  {
+    "label": "FPCS - FPSO CIDADE DE SANTOS",
+    "value": "f3d5c58e-2554-448f-9147-b3eb51f8d3ed"
+  },
+  {
+    "label": "FPFL - FPSO FLUMINENSE",
+    "value": "851d1fdc-aaad-493e-91e6-30cf94cf7a7a"
+  },
+  {
+    "label": "FPGU - FPSO GUANABARA",
+    "value": "c8f5271a-e2b2-4526-a6a3-45ec95497b46"
+  },
+  {
+    "label": "FPIB - FPSO CIDADE DE ILHABELA",
+    "value": "7e83bab4-64b7-4dd3-af1a-da1c4bb59394"
+  },
+  {
+    "label": "FPIT - FPSO CIDADE DE ITAGUAI",
+    "value": "70dd27de-7cdf-42be-84c3-6299b2f778a9"
+  },
+  {
+    "label": "FPMA - FPSO CIDADE MANGARATIBA",
+    "value": "b0e9b45a-0693-44e7-b949-d01d60baeef4"
+  },
+  {
+    "label": "FPMR - FPSO CIDADE DE MARICA",
+    "value": "a2e8dd4e-bd08-41dd-a9df-6b0f8ce6aa88"
+  },
+  {
+    "label": "FPMS - FPSO MARLIN SUL",
+    "value": "e90cede5-5260-4fca-b378-8454beffc010"
+  },
+  {
+    "label": "FPNT - FPSO CIDADE DE NITEROI",
+    "value": "62a026e5-10f8-4c51-a290-7fc608cd6216"
+  },
+  {
+    "label": "FPPA - FPSO CIDADE PARATY",
+    "value": "998ad126-d851-45b0-bda6-583f31757aad"
+  },
+  {
+    "label": "FPPL - FPSO PIONEIRO DE LIBRA",
+    "value": "e2ef8135-788d-42c8-ae00-e0ecfd8e8695"
+  },
+  {
+    "label": "FPRJ - FPSO RIO DE JANEIRO",
+    "value": "29225c56-8606-4f33-92ae-f09d612b8893"
+  },
+  {
+    "label": "FPRO - FPSO RIO DAS OSTRAS",
+    "value": "6f995465-35b6-4957-b1f9-b83b460288fc"
+  },
+  {
+    "label": "FPSA - FPSO CIDADE DE SAQUAREMA",
+    "value": "f34c015d-3490-48bd-8b55-db3d88c39f55"
+  },
+  {
+    "label": "FPSP - FPSO CIDADE DE SÃO PAULO MV 23",
+    "value": "3d8d21a1-62d1-46dc-bcb3-328bdd2c8858"
+  },
+  {
+    "label": "FSAM - FAR SAMSON",
+    "value": "a462e5a4-e1d5-4eac-af5a-5ad2a6cf7f88"
+  },
+  {
+    "label": "FSME - FSO CIDADE DE MACAÉ",
+    "value": "e0b38f9e-5aba-45b0-81b2-c6b4280d782a"
+  },
+  {
+    "label": "FUEX - FUGRO EXPLORE",
+    "value": "70cfd14a-04ff-4c26-be59-d298ee670eec"
+  },
+  {
+    "label": "FUNDEIO VITÓRIA - ÁREA DE FUNDEIO VITÓRIA",
+    "value": "da9b47fc-9316-46d7-b79d-f0a37454bf02"
+  },
+  {
+    "label": "GEOM - MV GEOHOLM",
+    "value": "7727387b-75f4-4147-8fec-5ac5e26f7f79"
+  },
+  {
+    "label": "GEOSEA - RSV GEOSEA",
+    "value": "e254bcf4-f318-43c8-86df-1a4a41274908"
+  },
+  {
+    "label": "GJFFGJFGJFG - JFGJFGJFGJFGJ",
+    "value": "ea7eba5f-e707-44f7-a1d6-6441e1b761d4"
+  },
+  {
+    "label": "GMR-A - GMR-A - GUAMARE A (PONTO DE FUNDEIO)",
+    "value": "861e4c27-f62b-4edd-8ac8-187500c03eeb"
+  },
+  {
+    "label": "GMR-B - GMR-B - GUAMARE B (PONTO DE FUNDEIO)",
+    "value": "d9d32c91-df6e-4f03-aec7-beb6ec5b9bce"
+  },
+  {
+    "label": "GUAMARE - GUAMARE - GUAMARÉ - RN",
+    "value": "6672ff1c-5a14-4f08-8b18-c5b501fe8588"
+  },
+  {
+    "label": "GULA - GULMAR ATLANTIS",
+    "value": "6231e445-5759-4ddb-93b0-7e1302b39b67"
+  },
+  {
+    "label": "ILGR - ILHA GRANDE RJ",
+    "value": "96e2bc89-fc76-4a7c-b42a-645aa74a491a"
+  },
+  {
+    "label": "IMBITUBA - PORTO DE IMBITUBA   - SC",
+    "value": "54badcef-9a14-4c25-9f80-18a90a8be9ad"
+  },
+  {
+    "label": "IMODC3 - MONOBOIA IMODCO3",
+    "value": "b6623be4-ee75-41ac-844d-fb265267e7e8"
+  },
+  {
+    "label": "IMODC4 - MONOBOIA IMODCO4",
+    "value": "de75ccf0-2173-42a8-b342-cf949a218dd0"
+  },
+  {
+    "label": "IM03 - MONOBOIA BONITO",
+    "value": "65a4ed63-770c-4f21-ad63-f69233f40ab3"
+  },
+  {
+    "label": "IM04 - MONOBOIA VIOLA",
+    "value": "b5c85aef-ce96-4f7a-9249-417689ba8412"
+  },
+  {
+    "label": "INSP - LEWEK INSPECTOR",
+    "value": "85929ca6-1d8e-44d0-955d-b84010d0a6a8"
+  },
+  {
+    "label": "INTOR - INTOR - NAVIO DE PESQISA INSPECTOR",
+    "value": "a5b2560b-5bcc-4e61-b06c-f4887130bba7"
+  },
+  {
+    "label": "IPAI - ILHAS PAI E MAE",
+    "value": "d69b3795-99bd-4b22-b4ec-b823d54a1763"
+  },
+  {
+    "label": "ISAN - ILHA DE SANTANA",
+    "value": "e7cbf4fd-b954-4d18-bd9f-acc5bc9b2183"
+  },
+  {
+    "label": "ITAJAI - ITAJAI - ITAJAÍ - SC",
+    "value": "2b687309-8cd1-4a2e-8d02-a433868325a3"
+  },
+  {
+    "label": "JN28 - JASCON28",
+    "value": "594e756d-caed-4429-8807-9ee0f6c98e10"
+  },
+  {
+    "label": "JOAO PESSOA - JOAO PESSOA - JOÃO PESSOA - PB",
+    "value": "79eb04f2-4077-44a9-9f91-9aecfb26ca93"
+  },
+  {
+    "label": "JOEG - RSV JOE GRIFFIN",
+    "value": "ca5fbb71-fa2d-4623-84bc-f3f2eba0b571"
+  },
+  {
+    "label": "JUBA - CAMPO DE JUBARTE",
+    "value": "38560a45-e74e-49e1-b9c7-951db899a35d"
+  },
+  {
+    "label": "KEAN - KELLY ANN",
+    "value": "f4cf045b-1504-4575-8a51-ef1b46bd3e9e"
+  },
+  {
+    "label": "KELLY - KELLY - DSV KELLY ANN CANDIES",
+    "value": "678d97a6-ce36-4758-9f43-59c7f89f88de"
+  },
+  {
+    "label": "KMD2 - KOMMANDOR 2000",
+    "value": "faa84e10-b6f0-45ff-bf5e-71c5bc942b7c"
+  },
+  {
+    "label": "KMD3 - KOMMANDOR 3000",
+    "value": "726ae17b-73ae-4be3-9c9c-815b2079f392"
+  },
+  {
+    "label": "LAUR - LAUR - CGG  LAURENTIAN",
+    "value": "0dc20a11-4126-4dbb-9aaa-a14088b4c2ea"
+  },
+  {
+    "label": "LOCH - LOCHNAGAR",
+    "value": "bc71c077-5986-4b61-bdaa-ca7930cd7c15"
+  },
+  {
+    "label": "MACAE - MACAE - MACAÉ - RJ",
+    "value": "364b27b6-dc72-45e6-8332-83e942ab30f6"
+  },
+  {
+    "label": "MAGE - RB. MAGE",
+    "value": "138a7c29-d309-4923-8226-3dcea8397c90"
+  },
+  {
+    "label": "MAKIT - MAKIT - PONTO DE NOTIFICAÇÃO",
+    "value": "b9f2e84b-0a14-496b-a018-748663ed6133"
+  },
+  {
+    "label": "MAPRO - MAPRO - PONTO DE NOTIFICAÇÃO",
+    "value": "b3da1319-84fa-4433-99ed-6fe2833b6c55"
+  },
+  {
+    "label": "MART - MART - CONSULTA COORDENADAS",
+    "value": "f3fd8c4b-539c-4fbb-962d-c2acf5ab1aca"
+  },
+  {
+    "label": "MASPI - MASPI - PONTO  DE NOTIFICAÇÃO",
+    "value": "9ca38678-9866-4709-8409-ab1f7728fdfb"
+  },
+  {
+    "label": "MEBDA - MEBDA - PONTO DE NOTIFICAÇÃO",
+    "value": "d77f2db2-73f7-4bae-aa82-50f0de937dfd"
+  },
+  {
+    "label": "MECO - MERMAID COMMANDER",
+    "value": "8c6dab47-559c-422f-afd5-69fc2b6025c2"
+  },
+  {
+    "label": "MILOG - MILOG - PONTO DE NOTIFICAÇÃO",
+    "value": "a8a585d3-f455-4e59-a18d-401e58ef481c"
+  },
+  {
+    "label": "MINOD - MINOD - PONTO DE NOTIFICAÇÃO",
+    "value": "597b2404-db92-4879-8b3a-e27637c467ba"
+  },
+  {
+    "label": "MNT - MNT - CAMPO MARÍTIMO DE MANATI",
+    "value": "6038588a-a840-47e3-a70c-4caa45eb1414"
+  },
+  {
+    "label": "MOLDA - MOLDA - PONTO DE NOTIFICAÇÃO",
+    "value": "1f053638-66da-454f-a881-07c4983e4787"
+  },
+  {
+    "label": "MOP1 - MÓDULO DE OPERAÇÃO DE PIG 1",
+    "value": "36e45aed-75aa-4052-834b-6ab99bbb0b7b"
+  },
+  {
+    "label": "MTNC - MONOBOIA TERMINAL NORTE CAPIXABA",
+    "value": "8cccfda6-fdc5-419a-926f-943c735efd5e"
+  },
+  {
+    "label": "NAAN - NAVION ANGLIA",
+    "value": "1a1535bf-a0a3-4f02-9a2d-9fb16abd32da"
+  },
+  {
+    "label": "NATAL - NATAL - NATAL - RN",
+    "value": "0530a957-208d-417e-965a-f00e68e44100"
+  },
+  {
+    "label": "NAVEGANTES - PORTO DE NAVEGANTES",
+    "value": "42e4cf5d-5943-4733-94a8-891f2cf78870"
+  },
+  {
+    "label": "NITEROI - NITEROI - NITERÓI - RJ",
+    "value": "1be7f166-91ab-4b78-bead-aa3de7f77eb8"
+  },
+  {
+    "label": "NORM - NORMAND 7",
+    "value": "c7eb8128-8812-4ccb-90ca-4db3dcc10582"
+  },
+  {
+    "label": "NPRO - NORMAND PROGRESS",
+    "value": "a87beea5-6b3d-4e4f-8a4b-d3f37bf6e1ba"
+  },
+  {
+    "label": "NS07 - ABAN ABRAHAM",
+    "value": "efaf0b8b-3748-4e31-ae35-64de2fe9b1ca"
+  },
+  {
+    "label": "NS09 - S.C. LANCER",
+    "value": "caa1a968-a0e1-4348-9f5e-a94e9d020f5c"
+  },
+  {
+    "label": "NS11 - NOBLE PHOENIX",
+    "value": "f5e9e959-9f02-44fc-9b48-03d66f040414"
+  },
+  {
+    "label": "NS15 - NOBLE ROGER EASON",
+    "value": "83b8c03b-0556-4d91-93db-f68e93ca4c14"
+  },
+  {
+    "label": "NS16 - PEREGRINE I",
+    "value": "cd6a0200-a549-459e-8220-4f2fa497c09a"
+  },
+  {
+    "label": "NS17 - NOBLE LEO SEGERIUS",
+    "value": "9b1b6c7a-d162-47e0-ab6c-9f7d8f8acd42"
+  },
+  {
+    "label": "NS18 - NEDDRILL MURAVLENKO",
+    "value": "aad754f6-baef-4228-b416-dcc9042cbd6c"
+  },
+  {
+    "label": "NS20 - PEREGRINE IV",
+    "value": "5aa963e0-a68b-4103-8c62-7b8d05203056"
+  },
+  {
+    "label": "NS21 - OCEAN CLIPPER",
+    "value": "92be95de-2e1c-4909-9cd0-e63e71b58d90"
+  },
+  {
+    "label": "NS22 - NS22 - DEEPWATER FRONT",
+    "value": "213b9fa4-c729-4796-bb2d-0d9a30b6e297"
+  },
+  {
+    "label": "NS23 - DEEPWATER NAVIGATOR",
+    "value": "6a29930e-d0fa-4d70-a5d5-3fe2ff253933"
+  },
+  {
+    "label": "NS25 - STENA DRILLMAX",
+    "value": "041a4d70-0c12-41c9-bef6-69926ea17288"
+  },
+  {
+    "label": "NS26 - DEEPWATER MILLENNIUM",
+    "value": "af970c26-4a49-4886-b4ac-0ea2f2e28fd7"
+  },
+  {
+    "label": "NS27 - DEEPWATER DISCOVERY",
+    "value": "7ba74a38-4a04-4c8e-bf97-b95c4469b29b"
+  },
+  {
+    "label": "NS28 - WEST POLARIS",
+    "value": "6009da3f-817c-4d93-90a0-b9d662d1a02a"
+  },
+  {
+    "label": "NS29 - NS CAROLINA",
+    "value": "9f34134c-ee56-4b90-9536-29a96598a37d"
+  },
+  {
+    "label": "NS30 - VITÓRIA 10.000",
+    "value": "279216c5-10e5-4bb9-ab7a-4becc2c09a58"
+  },
+  {
+    "label": "NS31 - PETROBRAS 10000",
+    "value": "2d80157e-ab1d-47e4-8d1e-691b59d2ce8d"
+  },
+  {
+    "label": "NS32 - NORBE VIII",
+    "value": "e04dffe0-52de-46b2-9a18-f6c8b27dcf00"
+  },
+  {
+    "label": "NS33 - NORBE IX",
+    "value": "af3c02dc-5eeb-4498-92d2-58e3e759b6e4"
+  },
+  {
+    "label": "NS34 - PACIFIC MISTRAL",
+    "value": "7fb4ab65-9619-4753-9c97-e415c2b18b21"
+  },
+  {
+    "label": "NS35 - DEEPSEA METRO II",
+    "value": "57a7d131-35bb-4177-af4d-0bbe5781a6da"
+  },
+  {
+    "label": "NS36 - SCHAHIN CERRADO",
+    "value": "b5ded631-5f32-44ae-b5f5-bd6654c6d180"
+  },
+  {
+    "label": "NS37 - SCHAHIN SERTÃO",
+    "value": "3a510f53-16b6-4ffd-b309-d68165133e0d"
+  },
+  {
+    "label": "NS38 - ETESCO TAKATSUGU J.",
+    "value": "82aadc34-167b-475d-9a63-84338cbe036a"
+  },
+  {
+    "label": "NS39 - OCEAN RIG MYKONOS",
+    "value": "db965049-7fa8-4595-b0c7-b3adad6f6e2f"
+  },
+  {
+    "label": "NS40 - OCEAN RIG CORCOVADO",
+    "value": "6a24de39-12a2-4c37-bd8b-22345140c2d0"
+  },
+  {
+    "label": "NS41 - DELBA VII ODN I",
+    "value": "ff177b0d-80c8-4592-9d7f-6f9b9e3cfa13"
+  },
+  {
+    "label": "NS42 - DELBA VIII ODN II",
+    "value": "36c40d8e-164a-459b-96c8-572d9b93ad98"
+  },
+  {
+    "label": "NS43 - AMARALINA STAR",
+    "value": "97a73a1c-1d67-4a08-959e-f830d5a81952"
+  },
+  {
+    "label": "NS44 - LAGUNA STAR",
+    "value": "7a4577ec-8dc1-4aaf-bdfe-8e65c39e2a5b"
+  },
+  {
+    "label": "NS45 - BRAVA STAR",
+    "value": "c8f826ca-a86e-4828-83c3-3308adacce0b"
+  },
+  {
+    "label": "NS46 - NS-46 ",
+    "value": "53c373f4-4f7b-4a84-889e-47254599c973"
+  },
+  {
+    "label": "NS47 - WEST TELLUS",
+    "value": "10a7119e-6f8a-49b5-90fb-384407573159"
+  },
+  {
+    "label": "NS48 - WEST CARINA",
+    "value": "153d15ab-541a-4e4c-af19-381d19fb979c"
+  },
+  {
+    "label": "NS51 - SIEM HELIX I",
+    "value": "090b0b8c-9f50-4610-9bd4-d02d9c9eb753"
+  },
+  {
+    "label": "NS51 - SIEM HELIX",
+    "value": "b15522eb-c680-4456-b783-9aee4b298744"
+  },
+  {
+    "label": "NS52 - NAVIO SONDA",
+    "value": "8a275568-1c8e-4184-98e7-9d9f51ca11ad"
+  },
+  {
+    "label": "NS52 -  NAVIO SONDA",
+    "value": "d221ef8d-b32e-491e-b02a-dcce1cb05aa9"
+  },
+  {
+    "label": "NS54 - VALARIS DS 4",
+    "value": "29fdab33-de8e-4cfc-9ea7-5257843fe076"
+  },
+  {
+    "label": "NS55 - NS55 - WEST JUPITER",
+    "value": "e1ff5749-793b-487d-9e49-c9271aae83af"
+  },
+  {
+    "label": "NTAV - NTAV - FSO AVARÉ",
+    "value": "dd7cda69-a30a-42ef-bff3-81723f09a037"
+  },
+  {
+    "label": "NTBI - NTBI - NAVIO-TANQUE BICAS",
+    "value": "a4c3b8b5-dee1-4c79-ad12-6a984fb63208"
+  },
+  {
+    "label": "NTCA - NT CANTAGALO",
+    "value": "8d534926-03d0-470e-bcf8-1e7901a9e4b4"
+  },
+  {
+    "label": "NTPIQT - NT PIQUETE",
+    "value": "a9bb0d23-666f-4526-a0a5-d53b066edfc3"
+  },
+  {
+    "label": "N102 - LAY VESSEL NORTH OCEAN 102",
+    "value": "39c94655-503c-4545-acf6-08f7e3a5b8d6"
+  },
+  {
+    "label": "N105 - LAY VESSEL NORTH OCEAN 105",
+    "value": "43b506c4-8e9c-48d0-b6e9-4195b5f677de"
+  },
+  {
+    "label": "OCEX - OCEAN EXPLORER",
+    "value": "8f8be977-e2d9-4271-b4d4-a4d151d246a8"
+  },
+  {
+    "label": "P 16 - ACAMPAMENTO DE ALAGOAS",
+    "value": "5498ac86-b252-429e-9df6-94c924067e55"
+  },
+  {
+    "label": "PABR - PABR - PORTO DE AREIA BRANCA - CODERN",
+    "value": "071a8f04-cdf9-4e01-8479-03d07192c778"
+  },
+  {
+    "label": "PACU - PORTO DO AÇU",
+    "value": "723c8170-7f4b-42d5-ac86-ef3a819fc00e"
+  },
+  {
+    "label": "PAG-01 - PAG-01 - PLATAFORMA DE AGULHA 1",
+    "value": "24ee5675-a782-4e7d-ae68-9ad17b514e50"
+  },
+  {
+    "label": "PAG-02 - PAG-02 - PLATAFORMA DE AGULHA 2",
+    "value": "8da46b03-9f4e-4fc8-b85c-5bc427b39d45"
+  },
+  {
+    "label": "PAG-03 - PAG-03 - PLATAFORMA DE AGULHA 3",
+    "value": "47f94728-d580-49af-b297-93c6914167ca"
+  },
+  {
+    "label": "PANC - PORTO TRIUNFO BASE ANCORAGEM",
+    "value": "a4d990e2-94d5-4f69-a506-29a75f84771a"
+  },
+  {
+    "label": "PARB-1 - PARB-1 - PLATAFORMA DE ARABAIANA 1",
+    "value": "fa5d5906-8630-422d-ac62-2178a6989f63"
+  },
+  {
+    "label": "PARB-2 - PLATAFORMA DE ARABAIANA 02",
+    "value": "5a3b6e74-41d8-4398-bb70-0a069d4228a2"
+  },
+  {
+    "label": "PARB-3 - PARB-3 - PLATAFORMA DE ARABAIANA 3",
+    "value": "7b841648-a3e4-4c97-95fe-eb8be938ce6d"
+  },
+  {
+    "label": "PART-1 - PART-1 - PLATAFORMA DE ARATUM 1",
+    "value": "3173ce54-5ff1-450d-8318-90380ce33a00"
+  },
+  {
+    "label": "PART-2 - PART-2 - PLATAFORMA DE ARATUM 2",
+    "value": "93ec8507-3de4-44ec-92a2-297122d1153f"
+  },
+  {
+    "label": "PART-3 - PLATAFORMA DE ARABAIANA 03",
+    "value": "f3cf24ce-ae40-48ad-ab1d-b6727a31a579"
+  },
+  {
+    "label": "PARU - PARU - BÓIA DE PARU",
+    "value": "e9cf915a-5caa-44e0-99f9-9a42c6cc66be"
+  },
+  {
+    "label": "PAT-01 - PAT-01 - PLATAFORMA DE ATUM 1",
+    "value": "880075f5-ae7b-4b3d-9acf-f42892523b1d"
+  },
+  {
+    "label": "PAT-02 - PAT-02 - PLATAFORMA DE ATUM 2",
+    "value": "54c2e29e-a852-499f-a6db-e4884d5ed083"
+  },
+  {
+    "label": "PAT-03 - PAT-03 - PLATAFORMA DE ATUM 3",
+    "value": "0962b831-71b6-4683-aa2f-da501feac29b"
+  },
+  {
+    "label": "PA29 - PA29 - PLATAFORMA NORTH STAR I  / PA-29",
+    "value": "58a47590-7188-4b7a-a6a2-58606fe4bf6f"
+  },
+  {
+    "label": "PA37 - PLATAFORMA PA37",
+    "value": "6b3e64d8-1adb-43de-b692-094fba11eb91"
+  },
+  {
+    "label": "PA59 - PA59 - PLATAFORMA PA59",
+    "value": "bb0a5dbd-eecd-4514-8a6a-ac5d217790ad"
+  },
+  {
+    "label": "PBAR - PBAR - PORTO DE BARBADO",
+    "value": "4d3bc866-764a-417b-baef-e6fda7b86a40"
+  },
+  {
+    "label": "PBEL - PORTO DE BELÉM-PA",
+    "value": "6aef2d9f-9dae-44d6-bc92-d894b478bab7"
+  },
+  {
+    "label": "PBIQ-1 - PBIQ-1 - PLATAFORMA DE BIQUARA 1",
+    "value": "b14bb02e-51ca-41dd-a7d8-000166d72c7f"
+  },
+  {
+    "label": "PBIQ-2 - PBIQ-2 - PLATAFORMA DE BIQUARA 2",
+    "value": "6603cea8-6491-4c75-8396-4b2140f54c1d"
+  },
+  {
+    "label": "PBLU - PORTO DE MACAE",
+    "value": "9bb29bbd-93b1-4fd9-8188-0f81e9a4f093"
+  },
+  {
+    "label": "PBOV - PORTO BOA VISTA",
+    "value": "ed807e60-68a5-4d76-b83d-4d2bdb048587"
+  },
+  {
+    "label": "PBRASCO - PORTO DA BRASCO DE NITEROI",
+    "value": "5e658afc-6429-4839-a849-d9e625e9b99c"
+  },
+  {
+    "label": "PBRASCO-HALLIBURTON  - BRASCO MERO FLUIDO ",
+    "value": "542ad343-b96c-418d-846d-bfb76cc45827"
+  },
+  {
+    "label": "PBRASCO-SCHLUMBERGER  - BRASCO SCHLUM GRAN SOLIDOS E FLUIDOS ",
+    "value": "9aa954a0-8a85-4d8d-a104-79780b6b18eb"
+  },
+  {
+    "label": "PC-A - PORTO DO CARÃO A",
+    "value": "7e94ebe8-426d-4095-aa12-4c2c5feb3cf5"
+  },
+  {
+    "label": "PCAR - PORTO CARINHOSO - MANAUS",
+    "value": "8cdfb03e-8fdb-4a9c-84a3-6c0e56ff1e05"
+  },
+  {
+    "label": "PCAU - PORTO DE CARAUARI",
+    "value": "f8d5ca3b-0e5e-4158-86cd-be09ee5c322d"
+  },
+  {
+    "label": "PCA2 - PLATAFORMA DE CAÇÃO 2",
+    "value": "42111703-ef80-4629-a653-4fe8f871f57f"
+  },
+  {
+    "label": "PCB-1 - PCB-1 - PLATAFORMA DE CAIOBA 1",
+    "value": "fd46ef95-babf-4271-8248-a2b3a0bf4c6b"
+  },
+  {
+    "label": "PCB-2 - PCB-2 - PLATAFORMA DE CAIOBA 2",
+    "value": "aa0b295f-4602-4a54-a7d2-6b12671c5267"
+  },
+  {
+    "label": "PCB-3 - PCB-3 - PLATAFORMA DE CAIOBA 3",
+    "value": "964adac3-cf5b-4633-94b7-a77d102fb60c"
+  },
+  {
+    "label": "PCB-4 - PCB-4 - PLATAFORMA DE CAIOBA 4",
+    "value": "85362f81-86ad-4ce8-8b9d-25f9268bd8ba"
+  },
+  {
+    "label": "PCDJ - PORTO DE CODAJÁS",
+    "value": "412f83c6-6d3d-4498-8b50-02ddf0eb3c57"
+  },
+  {
+    "label": "PCE1 - PCE1 - PLATAFORMA ENCHOVA 1",
+    "value": "2037ba8a-5504-4dd2-a07d-b62dac62cfa9"
+  },
+  {
+    "label": "PCHB - PORTO CHIBATÃO - MANAUS",
+    "value": "35a9cb21-01ad-42e9-a0d6-8932f11764b0"
+  },
+  {
+    "label": "PCH1 - PCH1 - PLATAFORMA CHERNE 1",
+    "value": "67fb9e2f-4979-4395-af2c-75b073bb4711"
+  },
+  {
+    "label": "PCH2 - PLATAFORMA CHERNE 2",
+    "value": "0328f484-86fc-4869-9f51-3b4d8c05d215"
+  },
+  {
+    "label": "PCIO-1 - PCIO-1 - PLATAFORMA DE CIOBA 1",
+    "value": "088473a8-9575-4aef-97da-c7a3c09748f6"
+  },
+  {
+    "label": "PCIO-2 - PCIO-2 - PLATAFORMA DE CIOBA 2",
+    "value": "55457aa6-2f05-4120-8abd-a5b594f7af36"
+  },
+  {
+    "label": "PCM-1 - PCM-1 - PLATAFORMA DE CAMORIM 1",
+    "value": "9457fa05-fadf-4d47-940b-d93cef4bac9b"
+  },
+  {
+    "label": "PCM-10 - PCM-10 - PLATAFORMA DE CAMORIM 10",
+    "value": "9b6439e5-64fd-48c1-9f4f-a130c76fef42"
+  },
+  {
+    "label": "PCM-11 - PCM-11 - PLATAFORMA DE CAMORIM 11",
+    "value": "0ba73416-66ca-42fd-9272-5f15428d197b"
+  },
+  {
+    "label": "PCM-2 - PCM-2 - PLATAFORMA DE CAMORIM 2",
+    "value": "999ea841-526e-4f2b-81b2-78e33a0b70bf"
+  },
+  {
+    "label": "PCM-3 - PCM-3 - PLATAFORMA DE CAMORIM 3",
+    "value": "c24dad9d-8f6e-45ac-8ce1-fa5215b7e79b"
+  },
+  {
+    "label": "PCM-4 - PCM-4 - PLATAFORMA DE CAMORIM 4",
+    "value": "d88c43c8-69e6-4488-81f6-9a9bfc1de05d"
+  },
+  {
+    "label": "PCM-5 - PCM-5 - PLATAFORMA DE CAMORIM 5",
+    "value": "951f6520-1519-46b7-b461-aec627c37485"
+  },
+  {
+    "label": "PCM-6 - PCM-6 - PLATAFORMA DE CAMORIM 6",
+    "value": "beddc0b0-74d3-4962-9e0b-efa37efb1675"
+  },
+  {
+    "label": "PCM-7 - PCM-7 - PLATAFORMA DE CAMORIM 7",
+    "value": "59d59a92-d4b1-47b7-ad83-9189a0b56b09"
+  },
+  {
+    "label": "PCM-8 - PCM-8 - PLATAFORMA DE CAMORIM 8",
+    "value": "9880af2e-d2c9-4214-90c9-413e9763e69f"
+  },
+  {
+    "label": "PCM-9 - PCM-9 - PLATAFORMA DE CAMORIM 9",
+    "value": "e14c4c6c-1212-40d4-85de-a53f80661970"
+  },
+  {
+    "label": "PCOA - PORTO DE COARI",
+    "value": "e3233f38-859d-410c-bb1a-32143026d050"
+  },
+  {
+    "label": "PCP1 - PLATAFORMA CARAPEBA 1",
+    "value": "fc544014-81a3-4f28-9b9e-7133866c512f"
+  },
+  {
+    "label": "PCP2 - PLATAFORMA CARAPEBA 2",
+    "value": "4fdb54b2-fcfb-400c-80f7-43d4914b6dc6"
+  },
+  {
+    "label": "PCP3 - PLATAFORMA CARAPEBA 3",
+    "value": "a30dd5a0-bc22-43f1-810f-8241ff17e023"
+  },
+  {
+    "label": "PCR-01 - PCR-01 - PLATAFORMA DE CURIMÃ 1",
+    "value": "bb03ef27-01a3-44cb-8b48-3ff9aedd5da7"
+  },
+  {
+    "label": "PCR-02 - PCR-02 - PLATAFORMA DE CURIMÃ 2",
+    "value": "1c32603a-1210-47f0-89d9-820ef3ed2e35"
+  },
+  {
+    "label": "PDILHA - PDILHA - NAVIO-TANQUE DILHA",
+    "value": "e2db06df-f608-4a50-8210-87bf27e5f197"
+  },
+  {
+    "label": "PDILYA - NT DILYA",
+    "value": "82067871-59fa-4f86-ad7d-7f729374bb26"
+  },
+  {
+    "label": "PDIVA - NT DIVA",
+    "value": "e3d6b96f-19de-412a-9113-ba29926e8513"
+  },
+  {
+    "label": "PDOCAS - PORTO DE DOCAS DO RIO DE JANEIRO",
+    "value": "b9d46367-4895-4f76-82fa-f0872aaa6245"
+  },
+  {
+    "label": "PDO-1 - PLATAFORMA DE DOURADO 1",
+    "value": "dcc1def0-6fb2-41fc-92d9-89394e6bf914"
+  },
+  {
+    "label": "PDO-2 - PDO-2 - PLATAFORMA DE DOURADO 2",
+    "value": "8130843d-c3ca-4710-96fc-3880212aee6a"
+  },
+  {
+    "label": "PDO-3 - PDO-3 - PLATAFORMA DE DOURADO 3",
+    "value": "91a21082-7b88-4898-99f3-31b426616877"
+  },
+  {
+    "label": "PDO-6 - PLATAFORMA DE DOURADO 6",
+    "value": "e1cf5a01-1019-4af2-9b2d-1e4f33c98a05"
+  },
+  {
+    "label": "PEA - PORTO ENCONTRO DAS ÁGUAS",
+    "value": "879d4c87-dc22-4faa-ace2-12b0061d98d7"
+  },
+  {
+    "label": "PEIU - PORTO DE PEIU",
+    "value": "934656ad-3b9d-440a-a852-07292ffead63"
+  },
+  {
+    "label": "PEP-01 - PEP-01 - PLATAFORMA DE ESPADA 1",
+    "value": "8d9e2596-a9c9-4cd7-a6e7-0130e2290340"
+  },
+  {
+    "label": "PEV1 - PORTO EVANDRO-01",
+    "value": "d594476b-1acc-4074-82b8-617a781af2fd"
+  },
+  {
+    "label": "PEV2 - PORTO EVANDRO-02",
+    "value": "fbc85750-6745-4a50-a10f-a558e0a05d57"
+  },
+  {
+    "label": "PFBS - PORTO F. BARBOSA",
+    "value": "d3cf3a3e-e6b8-47d5-a72b-0076da4a621e"
+  },
+  {
+    "label": "PFOR - PORTO DO FORNO A. CABO",
+    "value": "d9307efd-dab4-485c-b2f3-5db44969b6dc"
+  },
+  {
+    "label": "PFOT - PORTO FORTE",
+    "value": "9d9c7e57-5b45-48a4-a3ec-5d8086371a21"
+  },
+  {
+    "label": "PFTL - PORTO FORTALEZA",
+    "value": "05497e73-7f0b-4f10-a126-d9feadb59bf5"
+  },
+  {
+    "label": "PFTZ - PFTZ - PORTO DE FORTALEZA",
+    "value": "b72e106f-b3ef-42da-bfbe-3bcc669eddb8"
+  },
+  {
+    "label": "PGAV - PORTO GAVIÃO",
+    "value": "54136e51-2f19-4d48-8a61-e398610276e6"
+  },
+  {
+    "label": "PGA-1 - PGA-1 - PLATAFORMA DE GUARICEMA 1",
+    "value": "4e85de2f-1b8a-4549-838d-71e7e7387901"
+  },
+  {
+    "label": "PGA-2 - PGA-2 - PLATAFORMA DE GUARICEMA 2",
+    "value": "0f610b90-26d8-4b90-8f18-b7912b106b9b"
+  },
+  {
+    "label": "PGA-3 - PGA-3 - PLATAFORMA DE GUARICEMA 3",
+    "value": "8189e6c6-5833-4081-9c54-7bc539e762ee"
+  },
+  {
+    "label": "PGA-4 - PGA-4 - PLATAFORMA DE GUARICEMA 4",
+    "value": "16540208-a889-444b-a43b-2d409f880f30"
+  },
+  {
+    "label": "PGA-5 - PGA-5 - PLATAFORMA DE GUARICEMA 5",
+    "value": "a3c8dfc0-2f4c-44ca-a267-7a0e8b43e0ff"
+  },
+  {
+    "label": "PGA-6 - PGA-6 - PLATAFORMA DE GUARICEMA 6",
+    "value": "aa006e01-5941-455a-ad31-da34c7dc099c"
+  },
+  {
+    "label": "PGA-7 - PGA-7 - PLATAFORMA DE GUARICEMA 7",
+    "value": "d22bf133-c556-4072-9e23-690684378bfe"
+  },
+  {
+    "label": "PGA-8 - PGA-8 - PLATAFORMA DE GUARICEMA 8",
+    "value": "ca77712d-c67c-448a-90e1-319da82db5cd"
+  },
+  {
+    "label": "PGME - PGME - PORTO DE GUAMARÉ",
+    "value": "cce7b650-ff57-454f-933f-a9f2e95b3a2e"
+  },
+  {
+    "label": "PGP1 - PLATAFORMA GAROUPA 1",
+    "value": "ea53fcb6-149d-4d4b-a4ee-c2a4e1c45be2"
+  },
+  {
+    "label": "PGRANDE - PGRANDE - PORTO GRANDE",
+    "value": "22906e74-1320-4694-8da4-b18d2827b2b2"
+  },
+  {
+    "label": "P-I - P-I - PLATAFORMA PETROBRAS I",
+    "value": "9279c831-2481-41cb-9954-bb74f254da31"
+  },
+  {
+    "label": "PIDO - PORTO IDÓ",
+    "value": "5af190e3-0e64-4837-a519-93edbb4f316e"
+  },
+  {
+    "label": "P-III - P-III - PLATAFORMA PETROBRAS - III",
+    "value": "07852ba1-49fb-4d78-a2ab-8fb0f95f1453"
+  },
+  {
+    "label": "PILHEUS - PILHEUS - PORTO DE ILHÉUS",
+    "value": "dfb2abb8-04ee-4b4e-95bd-5c976955b80e"
+  },
+  {
+    "label": "PIRA - PLATAFORMA DE PIRANEMA",
+    "value": "04973264-6a1b-4bd2-ae21-d9faedad8c4e"
+  },
+  {
+    "label": "PITAJ - PITAJ - PORTO DE ITAJAÍ",
+    "value": "8d3133f4-1ffe-46e7-a4db-98d7e23152a9"
+  },
+  {
+    "label": "PITAQUI - PITAQUI - PORTO DE ITAQUI - SÃO LUIZ MA",
+    "value": "860ff98c-46f0-4b47-b34f-a8fdcbe501cc"
+  },
+  {
+    "label": "P-IV - P-IV - PLATAFORMA PETROBRAS - IV",
+    "value": "062b564e-2924-41ae-8386-a0318802459d"
+  },
+  {
+    "label": "PJUM - PORTO JUMA / SÃO JOAQUIM",
+    "value": "3dca2fa3-4ee9-4373-9020-436de120360f"
+  },
+  {
+    "label": "PLATAFORMA P 75 - P-75",
+    "value": "6e10c82b-53e1-4beb-87ab-a4f16044daab"
+  },
+  {
+    "label": "PLOND - NT LONDRINA",
+    "value": "7c6c9870-95ff-46f2-b0b8-b8fbd921474b"
+  },
+  {
+    "label": "PLVS - PLV SOLITAIRE",
+    "value": "f28396ec-e035-4179-a171-56536241ad0f"
+  },
+  {
+    "label": "PMAC - PORTO DE MACAE ,ZEPHYRINO LAVENÈRE",
+    "value": "988c609b-bdc4-4573-b405-2373eb5a9029"
+  },
+  {
+    "label": "PMACEIO - PMACEIO - PORTO DE MACEIÓ",
+    "value": "edbd7e18-e4bb-422b-9b3d-5554b85e2c85"
+  },
+  {
+    "label": "PMACEIO  - PORTO DE MACEIO",
+    "value": "c6d0f5b9-ca04-410a-b343-ebfbec769725"
+  },
+  {
+    "label": "PMAI - PMAI - NAVIO-TANQUE MAISA",
+    "value": "f27193f5-d57d-4623-ab28-530127c2ba40"
+  },
+  {
+    "label": "PMAISA - NT MAISA",
+    "value": "926ec739-5163-4248-8160-f809974e06e9"
+  },
+  {
+    "label": "PMAO - PORTO DE MANAUS",
+    "value": "3f5aa0ea-8b67-4ec1-8419-244031f55b46"
+  },
+  {
+    "label": "PMARTA - PMARTA - NAVIO-TANQUE MARTA",
+    "value": "4fc2066b-b0fd-461e-bd45-b44e99cf89eb"
+  },
+  {
+    "label": "PMLZ1 - PLATAFORMA MERLUZA 1",
+    "value": "94a4f36a-315f-4eee-bee4-59293ace6353"
+  },
+  {
+    "label": "PMNT1 - PMNT1 - PLATAFORMA DE MANATI I",
+    "value": "0332cef0-25c5-48b1-b7cd-0b934166973e"
+  },
+  {
+    "label": "PMUC - PORTO DE MUCURIPE",
+    "value": "073f5bdb-a760-4e27-b4f1-d0f9c400ecac"
+  },
+  {
+    "label": "PMXL - PLATAFORMA MEXILHÃO",
+    "value": "61df6173-d0c5-4ec4-b674-7d6cbdaf0791"
+  },
+  {
+    "label": "PNARA - NT NARA",
+    "value": "cd361dca-b2d6-4fa4-a1c9-fd8acd7c2f18"
+  },
+  {
+    "label": "PNAT - PNAT - PORTO DE NATAL",
+    "value": "3af8f51d-2887-4e7e-be95-d6f4e21a389a"
+  },
+  {
+    "label": "PNA1 - PNA1 - PLATAFORMA NAMORADO 1",
+    "value": "29f6af06-07cb-4834-b6d7-c9728d1d98e6"
+  },
+  {
+    "label": "PNA2 - PLATAFORMA NAMORADO 2",
+    "value": "455087f7-a340-4562-a2a4-566650b1db1f"
+  },
+  {
+    "label": "PNEUSA - NT NEUSA",
+    "value": "6f9fb5f5-3181-44ef-930b-e6f8528187bd"
+  },
+  {
+    "label": "PNILZA - NT NILZA",
+    "value": "8efe5440-a7d4-45c0-8cad-e1c67db416f7"
+  },
+  {
+    "label": "PNIT - PORTO DE NITEROI",
+    "value": "f2281b61-3c24-4464-aef0-51a0b6c6e6f7"
+  },
+  {
+    "label": "PNIT-BAKER  - PORTO DE NITEROI (FLUIDOS E SÓLIDOS) ",
+    "value": "1f9c7926-91a6-484b-b7b8-a86e20dc8348"
+  },
+  {
+    "label": "PNIT-HALLIBURTON  - PORTO DE NITEROI (GRANEIS SOLID E LIQ) ",
+    "value": "25a298ca-74b7-48f8-88ab-998caa90f1a2"
+  },
+  {
+    "label": "PNORMA - NT NORMA",
+    "value": "bc9cd120-d2d4-4e0e-b31a-23e2d7d5f9ef"
+  },
+  {
+    "label": "POLQ - POLQ - POLAR QUEEN",
+    "value": "e8855bcb-bfdf-4abd-bef4-1f1f1a91f253"
+  },
+  {
+    "label": "PONY - POLAR ONYX",
+    "value": "26be606f-83db-45e5-8243-55cd98e653df"
+  },
+  {
+    "label": "PORTO ALEGRE - PORTO ALEGRE",
+    "value": "234f3940-ec1c-436d-8d1f-e857d9297c98"
+  },
+  {
+    "label": "PORTO CARVO - PORTO CARVO - PORTO CALVO",
+    "value": "d09abaeb-39cc-4147-ac1e-8464f34d5bfa"
+  },
+  {
+    "label": "PORTO DA FOLHA - PORTO DA FOLHA",
+    "value": "0358f7f2-f3ec-4fc3-a2f2-617c00d03417"
+  },
+  {
+    "label": "PORTO DANTAS - PORTO DANTAS",
+    "value": "ed3fbd18-d2e4-4372-ae9a-9c2d96317598"
+  },
+  {
+    "label": "PORTO DE TRAMANDAI - TRAMANDAI",
+    "value": "337246c8-98a0-48cb-a48b-1953b23a7280"
+  },
+  {
+    "label": "PORTO DO PECEM - PORTO DO PECEM",
+    "value": "5a804570-ccd0-4318-9d8c-3319a71d2a8f"
+  },
+  {
+    "label": "PORTO SEGURO - PORTO SEGURO",
+    "value": "fd1a5585-d76f-4bf1-8496-ae992b624375"
+  },
+  {
+    "label": "PORTOCEL - PORTO DE PORTOCEL",
+    "value": "6d8bef84-8710-4dab-9eb2-1c7e6fba929e"
+  },
+  {
+    "label": "POUB-1 - POUB-1 - PLATAFORMA OESTE DE UBARANA 1",
+    "value": "f5316134-427a-4636-ae01-b2e41ff30bb3"
+  },
+  {
+    "label": "POUB-2 - POUB-2 - PLATAFORMA OESTE DE UBARANA 2",
+    "value": "32821ead-e800-483c-9b23-d09c61bd2819"
+  },
+  {
+    "label": "PPAR - PORTO DE PARANAGUA",
+    "value": "e4bb5df4-8085-48f0-8192-a71409e0ba0b"
+  },
+  {
+    "label": "PPAS - PORTO PASSARINHO",
+    "value": "11c60b03-b2ca-42d5-b4e8-26dc39870fd0"
+  },
+  {
+    "label": "PPCU - PPCU - PORTO DE PARACURU",
+    "value": "715f3dd5-d1fb-4a0d-a0ed-27d217ae5539"
+  },
+  {
+    "label": "PPEC - PPEC - PORTO DE PECÉM",
+    "value": "d9b2c1fa-cc2f-4e1c-978d-474ba76614e5"
+  },
+  {
+    "label": "PPE-1A - PPE-1A - PLATAFORMA DE PESCADA 01A",
+    "value": "51a8110d-14c8-48ff-b308-73a570e00da3"
+  },
+  {
+    "label": "PPE-1B - PPE-1B - PLATAFORMA DE PESCADA 01B",
+    "value": "138ff170-3abf-4ccd-9e68-3d8b2c37d0f9"
+  },
+  {
+    "label": "PPE-2 - PPE-2 - PLATAFORMA DE PESCADA 2",
+    "value": "79129f5a-57d9-46ac-922a-9d473357ad51"
+  },
+  {
+    "label": "PPE-3 - PPE-3 - PLATAFORMA DE PESCADA 3",
+    "value": "7585a141-7e6f-49d6-a785-42563e7b3512"
+  },
+  {
+    "label": "PPG1 - PLATAFORMA PARGO 1",
+    "value": "b99c06a8-2685-4d9f-8e74-b44963c962f0"
+  },
+  {
+    "label": "PPM1 - PLATAFORMA PAMPO 1",
+    "value": "5c543032-32d0-4c24-9b27-1c72efa66525"
+  },
+  {
+    "label": "PPR1 - PPR1 - PLATAFORMA PEROA 01",
+    "value": "4915b786-b4c8-46ef-ae95-8c6c255c21ba"
+  },
+  {
+    "label": "PRAG - PORTO DE ANGRA DOS REIS",
+    "value": "48d79f19-f8c3-4818-ba29-352cf1ae8307"
+  },
+  {
+    "label": "PRAIA DO FLAMENGO - PRAIA DO FLAMENGO",
+    "value": "f9345c3b-d547-4cbb-950f-aadfc20f55b8"
+  },
+  {
+    "label": "PRA-1 - PLATAFORMA DE REBOMBEIO AUTONOMA",
+    "value": "d1979bb6-5ad1-4a54-b0e5-525af1c7207d"
+  },
+  {
+    "label": "PRBA - PORTO DE BARBADOS",
+    "value": "acf6eacd-5407-4a87-85ec-afe2973a99dc"
+  },
+  {
+    "label": "PRB-1 - PRB-1 - PLATAFORMA DE ROBALO 1",
+    "value": "aed1547c-530b-4851-af7b-4717af48d4fb"
+  },
+  {
+    "label": "PREDIO SANTA MONICA - PREDIO SANTA MONICA",
+    "value": "82540ffd-74d9-4210-a4c1-26f0aad8813f"
+  },
+  {
+    "label": "PRIG - PORTO DO RIO GRANDE DO SUL",
+    "value": "82515e72-2a42-497d-8b3d-bd592807c65f"
+  },
+  {
+    "label": "PRIO - PORTO RIO POLIPORTOS",
+    "value": "1d8d158d-9f5d-40ec-8934-94b9c311f1ae"
+  },
+  {
+    "label": "PRIZ - PORTO RIOZINHO",
+    "value": "cfb613d3-2f91-4851-bc49-21f35d4f28fd"
+  },
+  {
+    "label": "PRM - PRM - PLATAFORMA FPSO PIRANEMA",
+    "value": "0f9a9a57-82e6-48b9-a783-d153e35041c6"
+  },
+  {
+    "label": "PSALVADOR - PSALVADOR - PORTO DE SALVADOR",
+    "value": "22fe22c5-ac7c-4e0f-a3d9-5ed6c7e314d6"
+  },
+  {
+    "label": "PSAN - PORTO DE SANTOS",
+    "value": "099ba0b4-1c63-4220-a7ec-5cbab0ecf8f7"
+  },
+  {
+    "label": "PSANTOS - PORTO DE SANTOS",
+    "value": "3a3be2e0-9dec-420e-b595-63885388f75b"
+  },
+  {
+    "label": "PSEMP - NT SEA EMPEROR",
+    "value": "c41cb38c-a88a-4782-855d-272f6dfe4494"
+  },
+  {
+    "label": "PSFS - PORTO DE SÃO FRACISCO DO SUL",
+    "value": "37eb4074-5770-4c38-9d44-f2684004e8ec"
+  },
+  {
+    "label": "PSKING - NT SEA KING",
+    "value": "a7395fc7-d4ca-47bb-96f4-9465925d7875"
+  },
+  {
+    "label": "PSMT - PORTO SÃO MATEUS",
+    "value": "054714cc-18b4-40ac-9f8b-bac38378f3c3"
+  },
+  {
+    "label": "PSRA - PORTO SÃO RAIMUNDO",
+    "value": "01f5d57d-7591-4bdb-b9c3-7293e9bcc727"
+  },
+  {
+    "label": "PSROQUE - PSROQUE - PORTO DE SÃO ROQUE DO PARAGUAÇÚ",
+    "value": "ec3446a6-b646-4ff6-8f04-7980d1f351f5"
+  },
+  {
+    "label": "PSSA - PORTO DE SALVADOR",
+    "value": "70b5f792-e493-4cbf-b8a0-674990ef33fe"
+  },
+  {
+    "label": "PSSB - PORTO DE SÃO SEBASTIÃO",
+    "value": "5dfadb9c-8f9f-4637-920e-77c075576231"
+  },
+  {
+    "label": "PSUAPE - PSUAPE - PORTO DE SUAPE",
+    "value": "50c942b8-cb65-404e-b96f-4b57db5c6cbc"
+  },
+  {
+    "label": "PSVS - PORTO DE SILVES",
+    "value": "6b470bcb-35dd-4b22-a12a-a2a35668b344"
+  },
+  {
+    "label": "PS2 - PIER SECUNDÁRIO 2",
+    "value": "7f9fffb2-e61a-4667-9a1e-4316f0badf3d"
+  },
+  {
+    "label": "PT - PARQUE DE TUBOS",
+    "value": "b6b8c9df-7a8e-472f-8d2d-51d3c151a413"
+  },
+  {
+    "label": "PTAC - PORTO TARACUÁ",
+    "value": "68a86995-6de0-496e-9361-b17382036f44"
+  },
+  {
+    "label": "PTAPANA - PTAPANA - PORTO DE TAPANA",
+    "value": "1bd5acaa-4cec-44c8-8b0c-5c2a3867d38f"
+  },
+  {
+    "label": "PTETRA SCHLUMBERGER   - TETRA (GRAN SÓLIDOS E FLUIDOS) ",
+    "value": "942a7f28-ebbc-4350-8af4-2284ef3e08a4"
+  },
+  {
+    "label": "PTFF - PORTO DE TEFÉ",
+    "value": "49cb2afa-b47a-48c5-a4f3-fcc88b67e90c"
+  },
+  {
+    "label": "PTH - PORTO HÉLIO",
+    "value": "c5945b1e-bca0-4cfe-87e3-1ece74ee831d"
+  },
+  {
+    "label": "PTLX - PORTO TRANSALEX",
+    "value": "1796842d-3619-42de-a0e5-4d239ea3ad88"
+  },
+  {
+    "label": "PTRAM - PORTO DE TRAMANDAI",
+    "value": "9428e50f-323b-417f-bc2c-7e1c2cbe1ac2"
+  },
+  {
+    "label": "PTSO - PORTO TERMINAL SOLIMÕES",
+    "value": "03ab416e-d595-496c-9f8f-bc024d87669f"
+  },
+  {
+    "label": "PTTE - PORTO TERMINAL TEFÉ",
+    "value": "07fb653b-0dad-46aa-85d4-a571f0dfb80e"
+  },
+  {
+    "label": "PUBU - PORTO DE UBU",
+    "value": "dc381997-3370-46bd-99db-922897f31754"
+  },
+  {
+    "label": "PUB-01 - PUB-01 - PLATAFORMA DE UBARANA 1",
+    "value": "cb842a64-fee6-426a-8469-ecb83074a502"
+  },
+  {
+    "label": "PUB-02 - PUB-02 - PLATAFORMA DE UBARANA 2",
+    "value": "21c014f6-f159-439d-abbf-599fb43321ca"
+  },
+  {
+    "label": "PUB-03 - PUB-03 - PLATAFORMA DE UBARANA 3",
+    "value": "e290ac9e-6527-4eea-b8e6-15eb7e172f97"
+  },
+  {
+    "label": "PUB-04 - PUB-04 - PLATAFORMA DE UBARANA 4",
+    "value": "3c2ad8ba-3446-47ea-84bb-afa95967edce"
+  },
+  {
+    "label": "PUB-05 - PUB-05 - PLATAFORMA DE UBARANA 5",
+    "value": "14566bb5-ae5b-4a96-b7d4-97ef56381f64"
+  },
+  {
+    "label": "PUB-06 - PUB-06 - PLATAFORMA DE UBARANA 6",
+    "value": "bda84d3d-cdf0-4bb2-9990-988684ad23a4"
+  },
+  {
+    "label": "PUB-07 - PUB-07 - PLATAFORMA DE UBARANA 7",
+    "value": "14de3eec-cf4b-4e3b-b5bc-a382c447e40c"
+  },
+  {
+    "label": "PUB-08 - PUB-08 - PLATAFORMA DE UBARANA 8",
+    "value": "5874eed0-90d1-46d8-b3bd-fa8e4645173b"
+  },
+  {
+    "label": "PUB-09 - PUB-09 - PLATAFORMA DE UBARANA 9",
+    "value": "ff222846-7dcf-4f12-a593-f67996e6e0c4"
+  },
+  {
+    "label": "PUB-10 - PUB-10 - PLATAFORMA DE UBARANA 10",
+    "value": "9d9ea9eb-4244-4565-968a-4c19cd236082"
+  },
+  {
+    "label": "PUB-11 - PUB-11 - PLATAFORMA DE UBARANA 11",
+    "value": "a6f7b29c-b9ab-4d99-8931-0b91906c1fbe"
+  },
+  {
+    "label": "PUB-12 - PUB-12 - PLATAFORMA DE UBARANA 12",
+    "value": "dac0be0e-9fc7-48ee-ba87-237b926db62b"
+  },
+  {
+    "label": "PUB-13 - PUB-13 - PLATAFORMA DE UBARANA 13",
+    "value": "cba57f66-a04f-49c4-8f2a-141a6f1ea03e"
+  },
+  {
+    "label": "PUB-14 - PUB-14 - PLATAFORMA DE UBARANA 14",
+    "value": "e31c5b01-e132-487c-b24a-9c55640b7c66"
+  },
+  {
+    "label": "PUB-15 - PUB-15 - PLATAFORMA DE UBARANA 15",
+    "value": "d875d419-b1ae-44ee-ae3f-1216bda5f7f5"
+  },
+  {
+    "label": "PUC - PORTO URUCU",
+    "value": "39c8e086-c904-409b-bdb5-1a3ad1293e94"
+  },
+  {
+    "label": "PUPANEMA - PORTO DE UPANEMA",
+    "value": "47d9ee7d-390e-47fc-81aa-5de9a99f672e"
+  },
+  {
+    "label": "P-V - P-V - PLATAFORMA PETROBRAS V",
+    "value": "d4cb742a-d990-471a-9b9a-b137dd082a16"
+  },
+  {
+    "label": "P-VI - P-VI - PLATAFORMA PETROBRAS VI",
+    "value": "448da8f8-735f-4711-9460-435400ceae5c"
+  },
+  {
+    "label": "PVM1 - PLATAFORMA VERMELHO 1",
+    "value": "afc0450e-f389-497d-9222-3cecff27b09e"
+  },
+  {
+    "label": "PVM2 - PLATAFORMA VERMELHO 2",
+    "value": "017a7544-f4c8-4303-b57b-acceea2b3ac4"
+  },
+  {
+    "label": "PVM3 - PLATAFORMA VERMELHO 3",
+    "value": "6da05552-1d25-464a-91e2-8e5a248fa16c"
+  },
+  {
+    "label": "PXA-01 - PXA-01 - PLATAFORMA DE XAREU 1",
+    "value": "54661079-d79f-4691-9bf9-f852fa41cd42"
+  },
+  {
+    "label": "PXA-02 - PXA-02 - PLATAFORMA DE XAREU 2",
+    "value": "cd9e9f92-684e-484b-b28c-ee8a2843a07f"
+  },
+  {
+    "label": "PXA-03 - PXA-03 - PLATAFORMA DE XAREU 3",
+    "value": "bf144582-bdbb-48e1-9aca-2fc606ea4365"
+  },
+  {
+    "label": "P-XX - P-XX - PONTO DE TESTE",
+    "value": "b766d447-fa90-439f-80bd-3906592d4c5d"
+  },
+  {
+    "label": "PYZL - SEALIAN AMAZONIA",
+    "value": "a5d50ac2-c90a-4858-8bb6-267f723ce689"
+  },
+  {
+    "label": "PZMAX - PORTO ZEMAX",
+    "value": "db1acdd9-2570-4b17-b854-96dfb1175217"
+  },
+  {
+    "label": "P-03 - P-03 - PLATAFORMA PETROBRAS 3",
+    "value": "184c45be-1e3e-4057-b0af-baf2700323e6"
+  },
+  {
+    "label": "P-07 - P-07 - PLATAFORMA PETROBRAS 7",
+    "value": "89504831-43b4-48e2-a233-1e156f1ad34e"
+  },
+  {
+    "label": "P-08 - P-08 - PLATAFORMA PETROBRAS 8",
+    "value": "4ab52080-8ba5-461b-8699-04a1cb3f61d3"
+  },
+  {
+    "label": "P-09 - P-09 - PLATAFORMA PETROBRAS 9",
+    "value": "c6221bce-b7c6-40a0-ab86-8fedfa27e174"
+  },
+  {
+    "label": "P-10 - PLATAFORMA PETROBRAS 10",
+    "value": "60a0ccd2-4e3c-4883-8fa2-3b0f1edddabb"
+  },
+  {
+    "label": "P-12 - PLATAFORMA PETROBRAS 12",
+    "value": "2497465e-fed1-4b9f-a46f-8481ea7c2d2c"
+  },
+  {
+    "label": "P-14 - PLATAFORMA  PETROBRAS 14",
+    "value": "4e380e3c-26de-4143-bde9-e559e3f0d20a"
+  },
+  {
+    "label": "P-15 - PLATAFORMA PETROBRAS 15",
+    "value": "7f716813-3ec4-4e41-86b9-8766b97245e3"
+  },
+  {
+    "label": "P-16 - PLATAFORMA PETROBRAS 16",
+    "value": "f9ab17dd-6f60-41f6-9814-956423fb176e"
+  },
+  {
+    "label": "P-17 - PLATAFORMA PETROBRAS 17",
+    "value": "6bb9d33a-6da9-4e13-a12d-630e4e45240d"
+  },
+  {
+    "label": "P-18 - PLATAFORMA PETROBRAS 18",
+    "value": "d76b4785-30db-4be4-9a1a-e9700dcd2af0"
+  },
+  {
+    "label": "P-19 - PLATAFORMA PETROBRAS 19",
+    "value": "6e1c2f43-0c28-4bcd-b677-a959456ad747"
+  },
+  {
+    "label": "P-20 - PLATAFORMA PETROBRAS 20",
+    "value": "7538f48a-9777-401a-8232-9a755486f24d"
+  },
+  {
+    "label": "P-21 - PLATAFORMA PETROBRAS 21",
+    "value": "d064cb3d-f622-4029-ba4d-8e8c3da248d4"
+  },
+  {
+    "label": "P-22 - PLATAFORMA PETROBRAS 22",
+    "value": "2cdab4ed-b91d-471f-a682-545bc122bc5c"
+  },
+  {
+    "label": "P-23 - PLATAFORMA PETROBRAS 23",
+    "value": "3f3f9ce3-8173-4460-989e-33b68d2ea845"
+  },
+  {
+    "label": "P-25 - PLATAFORMA PETROBRAS 25",
+    "value": "9658663a-9cec-40c2-93b4-ecfaca92616a"
+  },
+  {
+    "label": "P-26 - PLATAFORMA PETROBRAS 26",
+    "value": "1e5ed1b0-4a15-411e-b4be-98e542a0649b"
+  },
+  {
+    "label": "P-27 - PLATAFORMA PETROBRAS 27",
+    "value": "dd3e37de-48b0-4a5b-886f-eb04919d47c3"
+  },
+  {
+    "label": "P-31 - PLATAFORMA PETROBRAS 31",
+    "value": "fef0b0ae-09f8-49a3-a668-ce528b366951"
+  },
+  {
+    "label": "P-32 - PLATAFORMA PETROBRAS 32",
+    "value": "aa97f105-1e08-4dd4-af28-610ccd3f1aeb"
+  },
+  {
+    "label": "P-33 - PLATAFORMA PETROBRAS 33",
+    "value": "10f5a1bd-1e9f-435c-92f1-e2e0e37225d1"
+  },
+  {
+    "label": "P-34 - PLATAFORMA PETROBRAS 34",
+    "value": "15f872b6-7357-41ee-b515-6ccfd1c8c85c"
+  },
+  {
+    "label": "P-35 - PLATAFORMA PETROBRAS 35",
+    "value": "85feba90-4d09-47b2-89b7-8a6292060ccb"
+  },
+  {
+    "label": "P-37 - PLATAFORMA PETROBRAS 37",
+    "value": "e00d0114-0ee8-44a1-8517-56292902cdc8"
+  },
+  {
+    "label": "P-38 - PLATAFORMA PETROBRAS 38",
+    "value": "e49f6701-f2b7-4556-a83f-184c440d83bf"
+  },
+  {
+    "label": "P-40 - PLATAFORMA PETROBRAS 40",
+    "value": "042606fc-b30d-4f95-b96c-afe9b5bf4923"
+  },
+  {
+    "label": "P-43 - PLATAFORMA PETROBRAS 43",
+    "value": "c2fd012a-ecb4-4338-bd50-a862af8a9135"
+  },
+  {
+    "label": "P-47 - PLATAFORMA PETROBRAS 47",
+    "value": "82e07822-a63e-46b6-b518-b36b386a9142"
+  },
+  {
+    "label": "P-48 - PLATAFORMA PETROBRAS 48",
+    "value": "6c2d4331-69e2-42c9-9339-6cb5d2d67f34"
+  },
+  {
+    "label": "P-50 - PLATAFORMA PETROBRAS 50",
+    "value": "9dc6839d-d390-4a62-8873-15a233957b5b"
+  },
+  {
+    "label": "P-51 - PLATAFORMA PETROBRAS 51",
+    "value": "db71990b-3317-4c32-b20e-2661445b50ff"
+  },
+  {
+    "label": "P-52 - PLATAFORMA PETROBRAS 52",
+    "value": "267e9d39-e46d-413c-bc15-d63fd6429304"
+  },
+  {
+    "label": "P-53 - PLATAFORMA PETROBRAS 53",
+    "value": "3f9eae87-fdeb-4d44-b6da-96aae3c44c4e"
+  },
+  {
+    "label": "P-54 - PLATAFORMA PETROBRAS 54",
+    "value": "2b2b61af-713c-415c-ab74-141de0ee422f"
+  },
+  {
+    "label": "P-55 - PLATAFORMA PETROBRAS 55",
+    "value": "c0de619c-7671-4de5-8b0c-16fd8e0f5da4"
+  },
+  {
+    "label": "P-56 - PLATAFORMA PETROBRAS 56",
+    "value": "b9f8b924-db18-462b-9a8b-037356f3e4eb"
+  },
+  {
+    "label": "P-57 - PLATAFORMA PETROBRAS 57",
+    "value": "aca923a4-0b5a-4ba2-b788-79dfcc2da43a"
+  },
+  {
+    "label": "P-58 - PLATAFORMA PETROBRAS 58",
+    "value": "8cdc8443-c3cd-410e-8dd2-673f0df1e278"
+  },
+  {
+    "label": "P-59 - PLATAFORMA PETROBRAS 59",
+    "value": "170d49f4-500d-40b8-9ef5-f74707d7b3a4"
+  },
+  {
+    "label": "P-60 - PLATAFORMA PETROBRAS 60",
+    "value": "40535774-d48c-4d21-bb77-3787db5f80aa"
+  },
+  {
+    "label": "P-61 - PLATAFORMA PETROBRAS 61",
+    "value": "062a380d-a4f5-46cb-a4c5-ae7633f0ef5a"
+  },
+  {
+    "label": "P-62 - PLATAFORMA PETROBRAS 62",
+    "value": "cb5784e8-3702-47c9-ba43-7c683bfffb6a"
+  },
+  {
+    "label": "P-63 - PLATAFORMA PETROBRAS 63",
+    "value": "bfa9b3e7-23d1-4c18-9a24-bd51deb10925"
+  },
+  {
+    "label": "P-65 - PLATAFORMA PETROBRAS 65",
+    "value": "76ef3b7b-1745-46fd-b2b1-0dcd11d690b2"
+  },
+  {
+    "label": "P-66 - PLATAFORMA PETROBRAS 66",
+    "value": "9bfc9d33-c051-4394-8d79-e5a6e90455e2"
+  },
+  {
+    "label": "P-67 - P-67",
+    "value": "10c6387e-df5f-41d7-a02e-d5c85e6843a7"
+  },
+  {
+    "label": "P-68 - PLATAFORMA PETROBRAS 68",
+    "value": "d8bb0be7-5819-42d0-80d8-5ef398dff93a"
+  },
+  {
+    "label": "P-69 - PLATAFORMA P-69",
+    "value": "d2ee07d5-e9ff-47d1-90b0-50583ea479e5"
+  },
+  {
+    "label": "P-70 - PLATAFORMA PETROBRAS 70",
+    "value": "be6dbf4a-f70d-48d0-9eb3-26f428641ba3"
+  },
+  {
+    "label": "P-71 - PLATAFORMA PETROBRAS 71",
+    "value": "4e8bd817-610d-4cd1-90cf-acc6227b87b2"
+  },
+  {
+    "label": "P-74 - PETROBRAS 74",
+    "value": "8df04a2e-1e65-47ac-9a4a-6148036edd8b"
+  },
+  {
+    "label": "P-75 - P-75",
+    "value": "7bb268e7-d522-4d70-bc9a-ae949062804e"
+  },
+  {
+    "label": "P-75 - PLATAFORMA PETROBRAS 75",
+    "value": "4684320e-519d-44ea-9c7e-17c998e2904e"
+  },
+  {
+    "label": "P-75 - P-75",
+    "value": "9431e453-2947-4488-94f7-d8ac3b5a72e5"
+  },
+  {
+    "label": "P-76 - PLATAFORMA PETROBRAS 76",
+    "value": "e107eb15-92af-4994-bb7f-982afa072ee2"
+  },
+  {
+    "label": "P-77 - PLATAFORMA PETROBRAS 77",
+    "value": "34d257c5-7440-4c3e-9956-c2c121a2de17"
+  },
+  {
+    "label": "RACH - RAMFORM CHARLLENGER",
+    "value": "f7548563-014b-4aa0-bc8a-0e9cef4ad96c"
+  },
+  {
+    "label": "RAFA - RAFA -  VALIENT",
+    "value": "3e7ea672-609b-4f6a-92ad-705085db2967"
+  },
+  {
+    "label": "RANC - RETROAREA DA ANCORAGEM PORTO TRIUNFO",
+    "value": "59169a64-8652-4ab1-97ab-9e1305e5bb3b"
+  },
+  {
+    "label": "RASH - GREATSHIP RASHI",
+    "value": "f17f7f31-f27b-47c2-8d9e-44eff8565d53"
+  },
+  {
+    "label": "RASO - RAMFORM SOVEREIGN",
+    "value": "9e7cd1e3-3fdb-4f7d-a4f3-3036833c72ae"
+  },
+  {
+    "label": "RAVA - RAMFORM VALIENTE",
+    "value": "7759259d-3e32-44e7-a5e4-b50baf3c72c0"
+  },
+  {
+    "label": "RCBC - CBO CAMPOS",
+    "value": "8048a00d-0bc6-4a45-8c36-ea7265fcff9f"
+  },
+  {
+    "label": "RCBI - CBO ISABELLA.",
+    "value": "198e89a7-80ee-4231-a155-dfe8f97cbc34"
+  },
+  {
+    "label": "RCOM - REM COMMANDER",
+    "value": "f090dfa2-ce16-4349-ab1e-6c9cd1436daf"
+  },
+  {
+    "label": "REBOC - EMBARCAÇÃO SENDO REBOCADA",
+    "value": "ed00318c-43f4-41a2-8f83-690ced47d7db"
+  },
+  {
+    "label": "RECIFE - RECIFE - RECIFE - PE",
+    "value": "e93e3d79-8998-4ad2-b145-6a2d0b67903e"
+  },
+  {
+    "label": "REPA - LOCAL DE REPASSE DE RANCHO",
+    "value": "ed11b3a5-9c70-40b4-bbda-3171f1ce5366"
+  },
+  {
+    "label": "RGEO - RSV GEOGRAPH",
+    "value": "e942d829-000e-4179-9c4e-0bb108f44e9d"
+  },
+  {
+    "label": "RIO DE JANEIRO - RIO DE JANEIRO - RIO JANEIRO - RJ",
+    "value": "2e5f31f1-bc41-4dfa-9d42-5d6871ba5289"
+  },
+  {
+    "label": "RIO GRANDE - RIO GRANDE - RIO GRANDE - RS",
+    "value": "c66eee57-05ff-4ed6-b11b-d10850ca9cce"
+  },
+  {
+    "label": "RNS-62 - RNS-62 - POCO 1-RNS-62-RN",
+    "value": "857dec8d-b272-4e38-a268-90d266ea5e4a"
+  },
+  {
+    "label": "ROHI - RSV GREATSHIP ROHINI",
+    "value": "3effd0eb-afb7-4e47-8a7d-af050f788a69"
+  },
+  {
+    "label": "ROTA-3 - GASODUTO ROTA 3",
+    "value": "1baea35e-f591-4b33-9fdf-447a056e482a"
+  },
+  {
+    "label": "RSFS - RSV FAR SCOTIA",
+    "value": "12901329-17c7-4bf7-840f-38f183b7ee46"
+  },
+  {
+    "label": "S 7000 - SAIPEM 7000",
+    "value": "63eb4c85-f9a8-467c-a3f4-8bf3c2e4c9bb"
+  },
+  {
+    "label": "SADI - SAPURA DIAMANTE",
+    "value": "bc62ded2-2018-4bb8-89cd-27fe49d53906"
+  },
+  {
+    "label": "SADS - SADS - 12800M FDS 2",
+    "value": "431101f9-d6ac-4367-9ccc-149556c1c183"
+  },
+  {
+    "label": "SAES - SAPURA ESMERALDA",
+    "value": "5d5febfb-2d7f-46e0-8a8f-def6cb30690b"
+  },
+  {
+    "label": "SAIP - SAIPEM FDS",
+    "value": "ea1747ae-bf55-4162-8899-b02dc4d6b5ca"
+  },
+  {
+    "label": "SAJA - SAPURA JADE",
+    "value": "6989d128-9d2f-42ca-b551-cc7480ed9bd8"
+  },
+  {
+    "label": "SALG - SALGUEIRO",
+    "value": "6f684f66-5d57-49aa-9b4d-0b7f1111f932"
+  },
+  {
+    "label": "SALVADOR - SALVADOR - SALVADOR - BA",
+    "value": "2fd0d32c-4dbb-4997-807a-84427ae2f84f"
+  },
+  {
+    "label": "SANTOS - SANTOS - SANTOS - SP",
+    "value": "9860c772-a620-4dbd-80b1-505a34515067"
+  },
+  {
+    "label": "SAON - SAPURA ONIX",
+    "value": "8d7ac816-15fc-443e-ae7f-ada14155c53d"
+  },
+  {
+    "label": "SARU - SAPURA RUBI",
+    "value": "e16071cf-cd9f-48c2-bc3f-834a877aa31c"
+  },
+  {
+    "label": "SATO - SAPURA TOPAZIO",
+    "value": "e4c0824f-0d6c-4b5e-b70e-1608c3a8adec"
+  },
+  {
+    "label": "SBM1 - MONOBOIA MB03AB",
+    "value": "89f45900-aa80-4506-89a7-5d685f4c408a"
+  },
+  {
+    "label": "SBM2 - MONOBOIA",
+    "value": "d0d39c4c-ab7b-45e0-afa9-180ab48d71fc"
+  },
+  {
+    "label": "SBM4 - MONOBOIA MB01CP",
+    "value": "8c3b3903-8477-4789-a53b-92f5c665b2fe"
+  },
+  {
+    "label": "SBM5 - MONOBOIA MB01MRL",
+    "value": "b56f3b37-a0e1-4541-b5e1-11442148bbf0"
+  },
+  {
+    "label": "SBST - SBST - BASE AÉREA DE SANTOS",
+    "value": "e0e5200b-8c56-4ce0-b250-46fac2f2acc1"
+  },
+  {
+    "label": "SCHI - RSV SKANDI CHIEFTAIN",
+    "value": "5bfb9ee9-c93c-49a1-ae99-73567f99c205"
+  },
+  {
+    "label": "SEAM - SEALION AMAZONIA",
+    "value": "4f4181e8-45d5-4379-a60f-e772ef9a629d"
+  },
+  {
+    "label": "SECO - SEAWAY CONDOR",
+    "value": "c3ade740-482d-4d78-b1de-eb5adc0642f6"
+  },
+  {
+    "label": "SECR - SEVEN CRUZEIRO",
+    "value": "eb5b7cd8-e7a5-4a04-8557-9c82fb604c1e"
+  },
+  {
+    "label": "SEHA - SEHA - SEAWAY HARRIER",
+    "value": "92f7dd6b-405f-4d36-b501-06dd076b511e"
+  },
+  {
+    "label": "SEIL - SEILLAN",
+    "value": "8a08a128-3e20-47a6-b29b-6b4a7ab329cd"
+  },
+  {
+    "label": "SEIS - SEISRANGER",
+    "value": "a1259cf4-ce25-4b34-8998-e43afe39f008"
+  },
+  {
+    "label": "SEMA - SEVEN MAR",
+    "value": "b0a80c9d-d9a2-46d8-a0bb-6bc0b5fad68e"
+  },
+  {
+    "label": "SEOC - SEVEN OCEANS",
+    "value": "65269a91-147a-4496-a240-0b2cf4aee842"
+  },
+  {
+    "label": "SEPO - SEVEN PHOENIX",
+    "value": "c237c434-a9dd-4310-81a5-72488ad21e17"
+  },
+  {
+    "label": "SESU - SEVEN SUN",
+    "value": "4b5d7b6d-48db-43e9-a4e7-54383db3b842"
+  },
+  {
+    "label": "SEVO - SEVEN POLARIS",
+    "value": "c5ea702e-799a-483c-8cd2-8a3e3c81573a"
+  },
+  {
+    "label": "SFDS - SAIPEM FDS",
+    "value": "75c435f5-21f6-4c31-9dc2-6ac11aa285e0"
+  },
+  {
+    "label": "SHIP - SHIP TO SHIP",
+    "value": "19212eaa-ab82-4c63-bd5a-cbb46d6c12be"
+  },
+  {
+    "label": "SHIP TO SHIP - SHIP TO SHIP",
+    "value": "3ce18aec-00af-4f63-b9ba-539b3aeca848"
+  },
+  {
+    "label": "SKAC - SKANDI ACHIEVER",
+    "value": "c379b11d-bab6-4e7a-aa18-a5b76f4abf3f"
+  },
+  {
+    "label": "SKAN - SKANDINAVICA",
+    "value": "e0e0688f-f12d-4bd2-9abc-c75b87a504c0"
+  },
+  {
+    "label": "SKAU - SKANDI AÇU",
+    "value": "7c8a6368-8eb2-4c5c-8a5d-895b3e0bd1a9"
+  },
+  {
+    "label": "SKBE - SKANDI BERGEN",
+    "value": "67659a5e-18a8-4eff-8566-cf612f3836c2"
+  },
+  {
+    "label": "SKBU - SKANDI BÚZIOS",
+    "value": "0d2597a3-f7a4-43c7-b8df-6254520082fe"
+  },
+  {
+    "label": "SKCO - RSV SKANDI COMMANDER",
+    "value": "a1b6a2c1-8dc7-4e07-b11a-c23fddd94cd1"
+  },
+  {
+    "label": "SKNE - SKANDI NEPTUNE",
+    "value": "33561f40-df86-4c92-a19f-d759cf9f4c18"
+  },
+  {
+    "label": "SKNT - SKANDI NITEROI",
+    "value": "2aebdd79-90e7-452e-8698-31012fdee10f"
+  },
+  {
+    "label": "SKOL - SKANDI OLINDA",
+    "value": "8241ad4d-2597-4650-a04d-c8dc55e35abf"
+  },
+  {
+    "label": "SKRE - SKANDI RECIFE",
+    "value": "10cd7ac7-23a2-4282-b2b0-699b1a041b50"
+  },
+  {
+    "label": "SKSA - SKANDI SALVADOR",
+    "value": "5a52a241-6b97-4d27-8d8d-53646b57724b"
+  },
+  {
+    "label": "SKST - SKANDI SANTOS",
+    "value": "80ba9d7d-fc67-40fb-8960-10958e6c6a94"
+  },
+  {
+    "label": "SKVI - SKANDI VITORIA",
+    "value": "b2362789-8a1e-4e9b-976b-c75b3667dacf"
+  },
+  {
+    "label": "SMAT - SMAT - FPSO - SÃO MATEUS",
+    "value": "f7d1dd82-b8cd-4c21-a7eb-915722b718d4"
+  },
+  {
+    "label": "SMKM - RSV 13 SMIT KAMARA",
+    "value": "347c6bb7-d8da-40a2-b4bf-13c6d7d08b13"
+  },
+  {
+    "label": "SM05 - SONDA MODULAR 05",
+    "value": "3a1e0379-fc90-463d-a238-778f058d435c"
+  },
+  {
+    "label": "SM09 - SONDA MODULAR 09",
+    "value": "431595fe-68a1-4b02-8b9f-58490da69b8a"
+  },
+  {
+    "label": "SM12 - SONDA MODULAR 12",
+    "value": "f35d8cb4-2d76-49f9-b0e7-e845c42f93d1"
+  },
+  {
+    "label": "SNEP - SKANDI NEPTUNE",
+    "value": "10f0204f-f016-483e-b0fa-41a10c7e5d25"
+  },
+  {
+    "label": "SOS A EXTREMO NORTE - SOS AREA EXTREMO NORTE, P-52 COORDEN.",
+    "value": "e57021c1-5174-459e-912f-f1a044e61428"
+  },
+  {
+    "label": "SOS A NORDESTE - SOS AREA NORDEST, P-27 COORDENADORA",
+    "value": "50c32b57-6a38-4079-906f-a6d79a58a20d"
+  },
+  {
+    "label": "SOS A NOROESTE - SOS AREA NOROESTE, PPG1 - COORDENADORA",
+    "value": "f61c988a-572d-494a-806b-058456958138"
+  },
+  {
+    "label": "SOS A NORTE - SOS AREA NORTE - P-25 COORDENADORA",
+    "value": "57816bfa-cfde-4dbd-b19c-ca2c8b7a1265"
+  },
+  {
+    "label": "SOS A PAPATERRA - SOS AREA PAPA TERRA, NS38 COORDENADORA",
+    "value": "363fda6b-fc7f-4096-af50-51d5c2d0c236"
+  },
+  {
+    "label": "SOS A SUDESTE - SOS AREA SULDESTE, P-48 COORDENADORA",
+    "value": "40cf8a48-7df7-42da-9d39-cb3b5c3aaec5"
+  },
+  {
+    "label": "SOS A SUL - SOS AREA SUL, PPM-1 COORDENADORA",
+    "value": "40e63d36-0674-42c2-b666-272aa82e46a1"
+  },
+  {
+    "label": "SOS AREA-1 - SOS AREA 1 SS49 COORDENADORA",
+    "value": "3a89f2f7-eb4b-4068-ab23-9046f2c505df"
+  },
+  {
+    "label": "SOS AREA-2 - SOS AREA2 PCP1 COORDENADORA",
+    "value": "f1ccbcbd-e86d-471e-95f0-23e55b21ccdf"
+  },
+  {
+    "label": "SOS AREA-3 - SOS AREA 3 P27 COORDENADORA",
+    "value": "559dca33-b4b4-442c-bca6-dde8d97c4cbb"
+  },
+  {
+    "label": "SOS AREA-4 - SOS AREA4 PGP1 COORDENADORA",
+    "value": "7a29be2e-60c7-4013-ad4f-dedf20d88e95"
+  },
+  {
+    "label": "SOS AREA-5 - SOS AREA5 PPM1 COORDENADORA",
+    "value": "504cff9e-f2da-4daf-a39b-1125e5f7658d"
+  },
+  {
+    "label": "SOS AREA-6 - SOS AREA6 P25 COORDENADORA",
+    "value": "6d1e327f-d2b1-4017-8f1e-b06a31f09530"
+  },
+  {
+    "label": "SPH-01 - SPH-01 - SONDA SPH-01",
+    "value": "366f846e-e318-4f8b-a7b7-a65970c18a7d"
+  },
+  {
+    "label": "SPH-02 - SPH-02 - SONDA SPH-02",
+    "value": "032e618c-4937-4397-a5a6-02ae3a9bbf70"
+  },
+  {
+    "label": "SPH-04 - SPH-04 - SONDA SPH-04",
+    "value": "f8dccf34-b787-499e-be9e-6a7bca8bc7d7"
+  },
+  {
+    "label": "SPH-1 - SONDA SPH-01",
+    "value": "d18b2217-f1a2-4dc8-8f6b-497a9dd235a6"
+  },
+  {
+    "label": "SPII - SPII - BALSA SUPERPESA II",
+    "value": "663b3b9c-6f49-4fe1-8fe3-13d720fb85af"
+  },
+  {
+    "label": "SPIRIT - ISLAND SPIRIT",
+    "value": "bc018599-5a7b-464a-b599-b184556cd129"
+  },
+  {
+    "label": "SPM-015 - SPM-015 - SONDA DE PRODUÇÃO MARITIMA-015",
+    "value": "f1093f3e-f84f-4950-823f-c3cf5dd0d8e9"
+  },
+  {
+    "label": "SPM02 - SONDA MODULAR 02",
+    "value": "33f76dd4-1c62-4a89-9358-f0819babb23f"
+  },
+  {
+    "label": "SPM03 - SONDA MODULAR 03",
+    "value": "dbccb117-a601-439e-abd2-d40ae16aeccd"
+  },
+  {
+    "label": "SPM12 - SONDA MODULAR 12",
+    "value": "2f909c6c-1040-4a9b-ae46-b72ccf72145e"
+  },
+  {
+    "label": "SPM13 - SPM13 - SPM13",
+    "value": "85d1f8be-815b-4367-b52e-2c87d4d0966c"
+  },
+  {
+    "label": "SPM14 - SONDA MODULAR 14",
+    "value": "59c620ce-bb76-4264-b760-321e95dc6104"
+  },
+  {
+    "label": "SPM15 - SPM15 - SONDA MODULAR 15",
+    "value": "b7585714-d336-410e-b260-01cffa5fa732"
+  },
+  {
+    "label": "SPM18 - SPM18 - SONDA MODULAR 18",
+    "value": "1492a3d7-5962-462e-a9ef-76ceda7eadb8"
+  },
+  {
+    "label": "SPM19 - SPM19 - SPM19",
+    "value": "10a8702b-12f6-4dd5-8cc7-b47aa47f5723"
+  },
+  {
+    "label": "SPM2 - SPM2 - SPM2",
+    "value": "ae9720a6-3bea-4d97-bb8c-e18511ab47f0"
+  },
+  {
+    "label": "SPM-20 - SPM-20 - SONDA SPM-20",
+    "value": "38ff8e7e-70b4-43af-8a1e-1e0e8179f4d9"
+  },
+  {
+    "label": "SPM-25 - SPM-25 - SONDA DE PRODUÇÃO MARITIMA-25",
+    "value": "898a7532-6015-4a0e-b604-bdd9900b74e6"
+  },
+  {
+    "label": "SPM-26 - SPM-26 - SONDA SPM-26",
+    "value": "765f694c-413b-403f-a611-72c1129443f1"
+  },
+  {
+    "label": "SRIO - SEVEN RIO",
+    "value": "ae5876a5-7324-46c8-87e5-363f89565bc9"
+  },
+  {
+    "label": "SS 75 - OCEAN COURAGE",
+    "value": "da1a06c9-1817-46c7-8f7e-dfee26efccd9"
+  },
+  {
+    "label": "SSEA - SEVEN SEAS",
+    "value": "b3e1ee6d-7597-4583-affc-1c5408939095"
+  },
+  {
+    "label": "SS06 - SS06 - SEDCO 135 D",
+    "value": "42d1a8d0-ad36-4e16-90f7-33e0edd8ccfd"
+  },
+  {
+    "label": "SS11 - ZEPHIR I",
+    "value": "91f0297d-6fd1-4635-9147-340a527c55f9"
+  },
+  {
+    "label": "SS15 - SONDA SEMISUBMERSÍVEL 15",
+    "value": "d83361a1-9996-464f-aeb8-343b0d914c44"
+  },
+  {
+    "label": "SS20 - OLINDA STAR",
+    "value": "77e11330-7d62-4f8c-bb51-2657cdd53291"
+  },
+  {
+    "label": "SS37 - ARETHUZA YATZY",
+    "value": "72b9dfee-5929-4ed1-a4c9-29a0b0bf0ed5"
+  },
+  {
+    "label": "SS39 - ALASKAN STAR",
+    "value": "24269068-3f0d-4b8d-a306-ab3ace70f31b"
+  },
+  {
+    "label": "SS40 - OCEAN YORKTOWN",
+    "value": "3c510606-b2a5-4c5e-bb7f-f501480f1d26"
+  },
+  {
+    "label": "SS41 - TREASURE LEGEND",
+    "value": "6afbf8a7-992f-4f08-98e7-23909b99f7f8"
+  },
+  {
+    "label": "SS43 - SEDCO 710",
+    "value": "d43915ba-85e3-47bf-851d-263e463b51e9"
+  },
+  {
+    "label": "SS45 - ATLANTIC STAR",
+    "value": "0cea2d54-1d31-4233-92d6-a19fbbeca98c"
+  },
+  {
+    "label": "SS46 - OCEAN BARONESS",
+    "value": "db082ecc-f307-45a1-9f5f-df9ce94787b1"
+  },
+  {
+    "label": "SS47 - ENSCO 6000",
+    "value": "e2aa5f11-6099-4f57-a399-cc1740c404cd"
+  },
+  {
+    "label": "SS48 - PRIDE SOUTH ATLANTIC",
+    "value": "e49201eb-6879-43ee-8b2e-9ee174e3b275"
+  },
+  {
+    "label": "SS49 - SEDCO 707",
+    "value": "1d9de07d-f64d-4f39-85f7-af66e19f6dc5"
+  },
+  {
+    "label": "SS50 - TRANSOCEAN DRILLER",
+    "value": "c2ff0453-b557-493d-b3d8-fe479d09dd3e"
+  },
+  {
+    "label": "SS51 - LOUISIANIA",
+    "value": "4610c1c8-fb91-42d1-a6f5-60ea0cfa34a9"
+  },
+  {
+    "label": "SS52 - OCEAN WHITTINGTON",
+    "value": "e79db270-9155-4de9-b1ea-79f5e272f80e"
+  },
+  {
+    "label": "SS53 - PAUL WOLF",
+    "value": "6c98de94-7285-49e0-8cf5-c6a5c46937b2"
+  },
+  {
+    "label": "SS54 - OCEAN WINNER",
+    "value": "3b0e5bc4-9ef4-4646-b855-6cdbb735d60b"
+  },
+  {
+    "label": "SS55 - OCEAN ALLIANCE",
+    "value": "6a82d349-6cb3-4674-8fb6-567842d23589"
+  },
+  {
+    "label": "SS56 - ENSCO 6001 ANTIGA PRIDE CARLOS WALTER",
+    "value": "4553087e-c2d6-4a23-bb96-a952c039d026"
+  },
+  {
+    "label": "SS57 - ENSCO 6002 PRIDE BRAZIL",
+    "value": "ec365b59-dc7f-4131-b46f-c0aa657da72a"
+  },
+  {
+    "label": "SS58 - ODN TAY IV DELBA IV",
+    "value": "0bf9b1a3-0223-477a-97b2-f8c6de160889"
+  },
+  {
+    "label": "SS59 - SEDCO EXPRESS",
+    "value": "3dccee54-a0cf-428e-8ae1-5df616503ff0"
+  },
+  {
+    "label": "SS60 - ENSCO 6003 ANTIGA PRIDE RIO DE JANEIRO",
+    "value": "3ce04fe4-39c9-4e41-a67c-fcea85c8e7d3"
+  },
+  {
+    "label": "SS61 - ENSCO 6004 ANTIGA PRIDE PORTLAND",
+    "value": "6300b536-427d-43a7-9aa4-61be393ada24"
+  },
+  {
+    "label": "SS62 - NOBLE THERALD MARTIN",
+    "value": "8b6c9a9e-fcfc-4b60-be92-f0553ba42523"
+  },
+  {
+    "label": "SS63 - FALCON 100",
+    "value": "b531e75a-8ad4-48d2-9a88-960d0c814b07"
+  },
+  {
+    "label": "SS64 - OCEAN CONCORD",
+    "value": "fec632b4-04c6-4c88-bf4e-14a097963d83"
+  },
+  {
+    "label": "SS-65 - SS-65 - BORGNY DOLPHIN",
+    "value": "9f753de2-6c24-472a-87f1-eeb1f05395af"
+  },
+  {
+    "label": "SS65 - BORGNY DOLPHIN",
+    "value": "409bfd6c-54de-4c0d-99be-fa242ac7468d"
+  },
+  {
+    "label": "SS66 - ENSCO 5000 PRIDE MEXICO",
+    "value": "cf73cca8-0afb-4ca3-af11-488f8e987dba"
+  },
+  {
+    "label": "SS67 - OCEAN WORKER",
+    "value": "62b9fd30-13a9-42e4-8792-b6a9f58674df"
+  },
+  {
+    "label": "SS-68 - SS-68 - WEST TAURUS",
+    "value": "6699abb9-6fbd-45c1-bd5c-31e00528bbe5"
+  },
+  {
+    "label": "SS68 - WEST TAURUS",
+    "value": "9f4bb7f0-05e6-4be3-9320-b537acd54869"
+  },
+  {
+    "label": "SS69 - WEST EMINENCE",
+    "value": "cc1dc6c3-3406-4e8e-a366-4b473e97ee74"
+  },
+  {
+    "label": "SS70 - SSV VICTORIA",
+    "value": "f30583af-e6b6-4207-8d46-5f02b26d2120"
+  },
+  {
+    "label": "SS71 - DAVE BEARD",
+    "value": "586b2b26-8568-4171-87c9-b63967ecabc0"
+  },
+  {
+    "label": "SS72 - CELTIC SEA",
+    "value": "532fc57b-ed2e-47ff-9e2e-32626a3f9d07"
+  },
+  {
+    "label": "SS73 - GOLD STAR",
+    "value": "1864322e-282a-4050-8b67-8f48b295195f"
+  },
+  {
+    "label": "SS74 - SEVAN DRILLER",
+    "value": "621cd7c1-c748-4972-867e-96f8ad417ef6"
+  },
+  {
+    "label": "SS-75 - SS-75",
+    "value": "b50defdf-caf8-4620-8d53-dc78f7332396"
+  },
+  {
+    "label": "SS75 - SS75",
+    "value": "41fe1b57-db57-4e89-9a98-6292acff24e5"
+  },
+  {
+    "label": "SS76 - CAJUN EXPRESS",
+    "value": "a103e654-cb4f-46f5-a54d-ab8fa367c00a"
+  },
+  {
+    "label": "SS77 - OCEAN VALOR",
+    "value": "6543c907-9a92-47e6-8a60-c8a1e224374a"
+  },
+  {
+    "label": "SS78 - WEST ORION",
+    "value": "72e7e01d-1da9-4f9a-b3b8-d9430707487b"
+  },
+  {
+    "label": "SS79 - LONE STAR",
+    "value": "c27fda32-2267-4b52-8593-f3502362cece"
+  },
+  {
+    "label": "SS80 - SCHAHIN I PANTANAL",
+    "value": "f17dc440-9775-42ef-8e98-68d010561358"
+  },
+  {
+    "label": "SS81 - NORBE VI",
+    "value": "5d21e75e-0f23-46e1-a923-095b3110cbd3"
+  },
+  {
+    "label": "SS82 - ENSCO 7500",
+    "value": "8dc6f891-c8b6-4ae5-9bc2-e3ff7803ab59"
+  },
+  {
+    "label": "SS83 - ALPHA STAR",
+    "value": "7878beed-2f44-4ffe-a7e0-62953fece5fc"
+  },
+  {
+    "label": "SS84 - SS AMAZONIA",
+    "value": "80fb475e-7c96-455c-8905-20f2ccb59867"
+  },
+  {
+    "label": "SS85 - ODN DELBA III",
+    "value": "151415a6-1c52-42ad-a090-d9d958909362"
+  },
+  {
+    "label": "SS86 - SEVAN BRASIL",
+    "value": "28ca59fa-dc79-4448-808d-43787ae6b8fe"
+  },
+  {
+    "label": "SS87 - SEDCO 706",
+    "value": "efb66d05-fa4c-4d05-b156-fac407742254"
+  },
+  {
+    "label": "SS88 - BASSDRILL BETA",
+    "value": "2f5b3f85-8017-4d78-ad86-343479ee6633"
+  },
+  {
+    "label": "STAR - SANCO STAR",
+    "value": "a1f989c3-1fd5-44e2-85c9-d578878c7403"
+  },
+  {
+    "label": "STIN - STINGRAY",
+    "value": "cf4a32b2-d545-4d2a-9bfa-2650f01c1e52"
+  },
+  {
+    "label": "STMA - STENA MARIANOS",
+    "value": "2a1c8a0a-0d71-4b34-8da7-1785d066f2a6"
+  },
+  {
+    "label": "SUBS - TERMINAL PETROBRAS SÃO SEBASTIÃO",
+    "value": "578b9026-8597-48c7-9779-41983f8d88cc"
+  },
+  {
+    "label": "SUNR - SUNRISE 2000",
+    "value": "ccbdab91-a822-4c9b-88cc-7a12606d4465"
+  },
+  {
+    "label": "TCON - TOISA CONQUEROR",
+    "value": "0b96f959-5614-4d4a-a239-0794042357fb"
+  },
+  {
+    "label": "TEMA - TOP ESTRELA DO MAR",
+    "value": "b0817bcd-7d5a-4b65-931f-3c7f4c40fc38"
+  },
+  {
+    "label": "TEMADRE - TEMADRE - TERMINAL DE MADRE DEUS",
+    "value": "6991885f-58b8-4e85-b269-e8846f415edf"
+  },
+  {
+    "label": "TEMAN - TERMINAL MANAUS",
+    "value": "879e8ce1-b8b1-49d1-a66d-f98dd8b581cd"
+  },
+  {
+    "label": "TESTE - TESTE",
+    "value": "0afd044e-979d-43ad-90a4-0bc416ed7ced"
+  },
+  {
+    "label": "TGL - PORTO DE TUBARAO, GRANEIS-BR",
+    "value": "c0b82196-f551-4f0f-8543-44195203531b"
+  },
+  {
+    "label": "THIA - BALSA GUINDASTE THIALF",
+    "value": "95bc66c5-cfbb-4cec-a13f-3f57f253099e"
+  },
+  {
+    "label": "TIMS - TIMS - DEPOSITO TIMS",
+    "value": "c1f6f632-d046-4b53-ba30-5690ef576cf0"
+  },
+  {
+    "label": "TMAR - TOISA MARINER",
+    "value": "d81e644b-bb44-431d-abac-13cd3dd84507"
+  },
+  {
+    "label": "TMIB - TMIB - TERMINAL MARÍTIMO INÁCIO BARBOSA",
+    "value": "3eed705c-765c-4e65-933d-2c25327aa561"
+  },
+  {
+    "label": "TMLP - TEMINAL MARITIMO LAGOA PARDA",
+    "value": "0b7a9d0a-3611-455e-979c-fe0a40dc5001"
+  },
+  {
+    "label": "TNC - TERMINAL NORTE CAPIXABA",
+    "value": "d5608bd0-4b22-4333-99e5-296b5671b90d"
+  },
+  {
+    "label": "TOCO - RSV 15 TOISA CORAL",
+    "value": "23c1f6e9-a3f5-4321-9216-4a50f3a92644"
+  },
+  {
+    "label": "TOPE - TOISA PEGASUS",
+    "value": "8065c4e6-3b4c-45e7-86d3-6645bb5d0420"
+  },
+  {
+    "label": "TOVA - TOISA VALIANT",
+    "value": "cc5bb9ae-ebf5-4197-b8d2-12ee6a548377"
+  },
+  {
+    "label": "TOVO - TOISA VOYAGER",
+    "value": "9a1d8f12-3fea-49d5-be50-f719918a8350"
+  },
+  {
+    "label": "TOWA - TOISA WARRIOR",
+    "value": "c6acd2a0-5861-434d-8d64-12fdd71dcf01"
+  },
+  {
+    "label": "TRAMANDAI - TRAMANDAI - TRAMANDAI - RS",
+    "value": "afb30eae-dc15-4984-bdd0-338bc51ae28c"
+  },
+  {
+    "label": "TRIUNFO - TRIUNFO - TRIUNFO - RS",
+    "value": "07721d57-5542-4fcb-b1d4-03f21fe1bf41"
+  },
+  {
+    "label": "TSEN - TOISA SENTINEL",
+    "value": "2595b4f8-6810-41b8-9ba9-f317eaa600df"
+  },
+  {
+    "label": "UBU - UBU - PORTO DE UBU",
+    "value": "80349faf-b45d-4454-be5b-0a78feed4c3c"
+  },
+  {
+    "label": "U.M SESU - SEVEN SUN",
+    "value": "b795b2b8-2411-44da-bff4-4692c361bd9a"
+  },
+  {
+    "label": "UMAR - UMS CIDADE ARARUAMA",
+    "value": "cc5d33fa-39bb-4152-ac1f-55c250809999"
+  },
+  {
+    "label": "UMCA - UMS CIDADE CASIMIRO DE ABREU",
+    "value": "c841e1c8-8ffe-4586-8c41-184be5039682"
+  },
+  {
+    "label": "UMCF - UMS CIDADE CABO FRIO",
+    "value": "f07beebb-7fe8-4a5e-9cfc-b1bf6b107d01"
+  },
+  {
+    "label": "UMCP - UMS CIDADE CARAPEBUS",
+    "value": "ae7aabaa-38c3-4ac7-9d69-c42fd20865cf"
+  },
+  {
+    "label": "UMGR - UMS GUARAPARI",
+    "value": "88fe61d8-eda7-454c-a858-4a5b7e6ef493"
+  },
+  {
+    "label": "UMHB - UMSHOS BRASSRING",
+    "value": "f7537e7e-478e-4a3e-bef6-81321fbf4bcb"
+  },
+  {
+    "label": "UMLI - UMS LAGOA DE IMBOASSICA",
+    "value": "94f370ea-6d12-4690-9a7a-2eec050897e6"
+  },
+  {
+    "label": "UMMA - UMS MARACANÃ",
+    "value": "ae0cedf0-b30d-4f81-9f1d-4a5b03031764"
+  },
+  {
+    "label": "UMOL - UMS OLYMPIA",
+    "value": "b123d01a-333f-4e71-8738-a4572a497f94"
+  },
+  {
+    "label": "UMPA - UMS PRAIA DO ARPOADOR",
+    "value": "5c6d702b-c993-45ac-8bb1-36cd18b8e701"
+  },
+  {
+    "label": "UMPI - UMS PRAIA DE ITAIPU",
+    "value": "f80fa62f-b4da-42dd-bd41-c8d3bfb03d08"
+  },
+  {
+    "label": "UMPT - UMS PRAIA DA TARTARUGA",
+    "value": "a86838c0-7370-4394-a305-b85ac9c9e158"
+  },
+  {
+    "label": "UMQS - UMS CIDADE DE QUISSAMÃ",
+    "value": "25e79950-8192-4d28-ac88-3484cbb1e839"
+  },
+  {
+    "label": "UMSC - UMSC SAFE CONCORDIA",
+    "value": "a88bddf7-c790-4f55-b462-9db927350fb0"
+  },
+  {
+    "label": "UMSC  - UMS SAFE CONCORDIA",
+    "value": "7b51f013-6344-4202-9e07-bf5ec994e620"
+  },
+  {
+    "label": "UMSJ - UMS CIDADE SÃO JOÃO DA BARRA",
+    "value": "6fc1a681-1270-44cb-a749-4cfa8119d3ee"
+  },
+  {
+    "label": "UMTJ  - UNIDADE MANUTENÇÃO TIJUCA",
+    "value": "7daabfaf-b03e-46b1-b9a3-5bff8361257a"
+  },
+  {
+    "label": "UMVE - UMS VENUS",
+    "value": "b4847a60-3711-4ad3-bb73-6975f44d6e30"
+  },
+  {
+    "label": "UPPE - UP PEARL",
+    "value": "bf6475ba-39ae-402a-9e2c-cfbb42701c87"
+  },
+  {
+    "label": "VIKI - RAMFORM VIKING",
+    "value": "0e493bbf-cc39-47fa-8e7b-e81252d33ea4"
+  },
+  {
+    "label": "VITORIA - VITORIA - VITÓRIA - ES",
+    "value": "f5aac603-dd06-4440-bdbf-751aaa8a58aa"
+  },
+  {
+    "label": "WAVE - SEVEN WAVES",
+    "value": "1fcf73aa-1337-4446-9564-8114c1539289"
+  },
+  {
+    "label": "WAYF - AKER WAYFARER",
+    "value": "d2830d8b-0d97-4c7c-964a-442748d1565d"
+  },
+  {
+    "label": "WEMO - WESTERN MONARCH",
+    "value": "07df1c14-208e-4426-94f1-8381d62b147d"
+  },
+  {
+    "label": "WENE - WESTERN NEPTUNE",
+    "value": "38c80860-7767-4297-b0a3-0dfd68a60c47"
+  },
+  {
+    "label": "WESP - WESTERN PRIDE",
+    "value": "087fa033-fdc4-4371-9973-4200be59e172"
+  },
+  {
+    "label": "WYCA - WYATT CANDIES",
+    "value": "bcc4548c-da8a-47fe-b801-c0a332dbf55f"
+  },
+  {
+    "label": "30045649 - C-AMBASSADOR",
+    "value": "60c65b8d-b890-4538-aad8-c6f5dbc937b3"
+  },
+  {
+    "label": "30045650 - C-ESCORT",
+    "value": "6b930c36-d618-44d9-b8db-ec847816b7f5"
+  },
+  {
+    "label": "30056849 - MAR LIMPO IV",
+    "value": "cbfa74bd-9343-4921-88a3-ea6d9c0085cd"
+  },
+  {
+    "label": "30058360 - ASTRO TUPI",
+    "value": "9ced221e-3502-47bb-af6d-d48a09be0658"
+  },
+  {
+    "label": "33333333 - UMTJ - UNIDADE MANUTENÇÃO TIJUCA",
+    "value": "e32c7449-86b1-4594-9df4-f7981382f8b2"
+  },
+  {
+    "label": "87412365 - UMTJ - UNIDADE DE MANUTENÇÃO TIJUCA",
+    "value": "3f35b1ad-ad29-4325-a4a1-9530ceae986f"
+  }
+]

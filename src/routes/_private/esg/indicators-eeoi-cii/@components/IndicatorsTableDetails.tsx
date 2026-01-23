@@ -38,7 +38,7 @@ export function IndicatorsTableDetails({ data }: IndicatorsTableDetailsProps) {
     },
     {
       key: 'timeInVoyage',
-      header: `${t('speed')} * ${t('average')} (kn)`,
+      header: `${t('speed')} * ${t('medium')} (kn)`,
       render: (value, row) => (Number(value) > 0 ? (row.distanceInVoyage / Number(value)).toFixed(1) : '0.0'),
     },
     {
@@ -54,7 +54,7 @@ export function IndicatorsTableDetails({ data }: IndicatorsTableDetailsProps) {
               .map(([fuel, amount]) => (
                 <div key={fuel} className="flex items-center gap-2">
                   <span className="font-bold">{amount.toFixed(1)}</span>
-                  <Badge variant="secondary" className="text-[10px] px-1 py-0 h-4">
+                  <Badge variant="secondary" className="h-4 px-1 py-0 text-[10px]">
                     {FUEL_TYPES_MAP[fuel] || fuel}
                   </Badge>
                 </div>
@@ -109,7 +109,7 @@ export function IndicatorsTableDetails({ data }: IndicatorsTableDetailsProps) {
     },
   ];
 
-  return <DataTable data={data} columns={columns} bordered={false} className="border-none shadow-none py-0" />;
+  return <DataTable data={data} columns={columns} bordered={false} className="border-none py-0 shadow-none" />;
 }
 
 interface IndicatorsTableDetailsProps {

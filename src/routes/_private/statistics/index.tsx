@@ -14,31 +14,31 @@ function StatisticsHubPage() {
   const menuItems = [
     {
       title: t('tracking.activity'),
-      description: t('tracking.activity.description', { defaultValue: 'Estatísticas de acesso e ações dos usuários no sistema.' }),
+      description: t('tracking.activity.description'),
       icon: Activity,
       to: '/statistics/tracking-activity' as const,
     },
     {
       title: t('time.operation'),
-      description: t('time.operation.description', { defaultValue: 'Análise detalhada do tempo de operação dos ativos.' }),
+      description: t('time.operation.description'),
       icon: Timer,
       to: '/statistics/time-operation' as const,
     },
     {
-      title: t('rve.dashboard', { defaultValue: 'RVE Dashboard' }),
-      description: t('rve.dashboard.description', { defaultValue: 'Painel de controle com indicadores RVE.' }),
+      title: t('rve.dashboard'),
+      description: t('rve.dashboard.description'),
       icon: LayoutDashboard,
       to: '/statistics/rve-dashboard' as const,
     },
     {
-      title: t('kpis.cmms', { defaultValue: "KPI's CMMS" }),
-      description: t('kpis.cmms.description', { defaultValue: 'Indicadores chave de desempenho de manutenção.' }),
+      title: t('kpis.cmms'),
+      description: t('kpis.cmms.description'),
       icon: BarChart3,
       to: '/statistics/kpis-cmms' as const,
     },
     {
       title: t('integration'),
-      description: t('integration.description', { defaultValue: 'Estatísticas e logs de integrações com sistemas externos.' }),
+      description: t('integration.description'),
       icon: Network,
       to: '/statistics/integration' as const,
     },
@@ -49,7 +49,7 @@ function StatisticsHubPage() {
       <CardHeader title={t('statistics')} />
       <CardContent className="grid gap-4 md:grid-cols-2">
         {menuItems.map((item) => (
-          <Item key={item.to} variant="outline" className="cursor-pointer h-full" asChild>
+          <Item key={item.to} variant="outline" className="h-full cursor-pointer" asChild>
             <Link to={item.to}>
               <ItemMedia variant="icon">
                 <item.icon className="size-5" />

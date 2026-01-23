@@ -81,7 +81,7 @@ function ContractFormContent({ initialData, id, isDuplicate }: { initialData?: a
     if (!id) return;
     try {
       await deleteContract.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/contracts', search: { page: 1, size: 10 } });
     } catch {
       toast.error(t('error.delete'));
@@ -114,14 +114,14 @@ function ContractFormContent({ initialData, id, isDuplicate }: { initialData?: a
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90 text-background">
+                    <AlertDialogAction onClick={handleDelete} className="bg-destructive text-background hover:bg-destructive/90">
                       {t('delete')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
             )}
-            <div className="flex gap-2 ml-auto">
+            <div className="ml-auto flex gap-2">
               <Button variant="outline" type="button" onClick={() => navigate({ to: '/register/contracts', search: { page: 1, size: 10 } })} disabled={isPending}>
                 {t('cancel')}
               </Button>

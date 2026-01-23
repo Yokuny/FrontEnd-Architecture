@@ -18,7 +18,7 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
   const id = useId();
   const query = useCmmsEquipmentSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
   const displayLabel = label || t('equipment');
 
   if (mode === 'multi') {
@@ -40,7 +40,7 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -66,7 +66,7 @@ export function CmmsEquipmentSelect(props: CmmsEquipmentSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

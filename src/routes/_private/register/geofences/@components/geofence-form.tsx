@@ -128,7 +128,7 @@ export function GeofenceForm() {
             </FormItem>
           )}
         />,
-        <div key="row-type-code" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-type-code" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="type"
@@ -165,7 +165,7 @@ export function GeofenceForm() {
       title: t('location.details'),
       description: t('geofence.location.description'),
       fields: [
-        <div key="row-city-state" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-city-state" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="city"
@@ -173,7 +173,7 @@ export function GeofenceForm() {
               <FormItem>
                 <FormLabel>{t('city')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value ?? ''} placeholder={t('city.label')} />
+                  <Input {...field} value={field.value ?? ''} placeholder={t('city')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -193,15 +193,15 @@ export function GeofenceForm() {
             )}
           />
         </div>,
-        <div key="row-country-tz" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-country-tz" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="country"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('country.label')}</FormLabel>
+                <FormLabel>{t('country')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value ?? ''} placeholder={t('country.label')} />
+                  <Input {...field} value={field.value ?? ''} placeholder={t('country')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -273,15 +273,15 @@ export function GeofenceForm() {
           name="link"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('link.label')}</FormLabel>
+              <FormLabel>{t('link')}</FormLabel>
               <FormControl>
-                <Input {...field} value={field.value ?? ''} placeholder={t('link.label')} />
+                <Input {...field} value={field.value ?? ''} placeholder={t('link')} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />,
-        <div key="row-checks" className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div key="row-checks" className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-2">
           <FormField
             control={form.control}
             name="initializeTravel"

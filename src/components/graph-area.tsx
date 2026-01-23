@@ -138,8 +138,8 @@ export function GraphArea() {
               <ItemTitle>
                 {item.name} <span className="font-normal text-muted-foreground">({item.tickerSymbol})</span>
               </ItemTitle>
-              <div className="flex items-baseline justify-between w-full">
-                <ItemTitle className="text-lg font-semibold" style={{ color: color }}>
+              <div className="flex w-full items-baseline justify-between">
+                <ItemTitle className="font-semibold text-lg" style={{ color: color }}>
                   {item.value}
                 </ItemTitle>
                 <div className="flex items-center space-x-1 text-sm">
@@ -151,7 +151,7 @@ export function GraphArea() {
 
             <div className="h-16">
               <ChartContainer
-                className="w-full h-full"
+                className="h-full w-full"
                 config={{
                   [item.name]: {
                     label: item.name,

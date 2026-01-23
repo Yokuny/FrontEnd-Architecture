@@ -38,9 +38,9 @@ export function UsersRMChart({ filters }: UsersRMChartProps) {
   const isEmpty = !data || data.length === 0;
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full">
-      <ItemHeader className="flex-col items-start gap-1 mb-6">
-        <ItemTitle className="text-xl font-semibold">{t('users')} RM</ItemTitle>
+    <Item variant="outline" className="w-full flex-col items-stretch">
+      <ItemHeader className="mb-6 flex-col items-start gap-1">
+        <ItemTitle className="font-semibold text-xl">{t('users')} RM</ItemTitle>
         <ItemDescription>{t('tracking.activity.users.rm.description', 'Distribuição de atividades RM por usuário')}</ItemDescription>
       </ItemHeader>
       <ItemContent>

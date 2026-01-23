@@ -1,0 +1,30 @@
+
+.popup-adjust .leaflet-popup-content {
+  margin: 0px;
+}
+
+.popup-adjust .leaflet-popup-content-wrapper {
+  border-radius: 5px;
+}
+
+.popup-adjust .leaflet-popup-content-wrapper, .popup-adjust .leaflet-popup-tip {
+  background: none;
+  box-shadow: none;
+  border-radius: 5px;
+}
+
+.popup-adjust .progress-container {
+  height: 0.3rem !important;
+}
+
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+  visibility: hidden;
+  display: none;
+}
+
+.leaflet-tooltip-right {
+    margin-left: -6px;
+}

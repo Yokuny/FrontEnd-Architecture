@@ -38,16 +38,16 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
             </FormItem>
           )}
         />,
-        <div key="row-sensor" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-sensor" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="sensorId"
             render={({ field }) => (
               <FormItem>
                 <Field className="gap-2">
-                  <FieldLabel>{t('sensor.id.placeholder')} *</FieldLabel>
+                  <FieldLabel>{t('sensor.id.label')} *</FieldLabel>
                   <FormControl>
-                    <Input placeholder={t('sensor.id.placeholder')} disabled={isEdit} {...field} />
+                    <Input placeholder={t('sensor.id.label')} disabled={isEdit} {...field} />
                   </FormControl>
                   <FormMessage />
                 </Field>
@@ -60,9 +60,9 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
             render={({ field }) => (
               <FormItem>
                 <Field className="gap-2">
-                  <FieldLabel>{t('sensor.name.placeholder')} *</FieldLabel>
+                  <FieldLabel>{t('sensor.name')} *</FieldLabel>
                   <FormControl>
-                    <Input placeholder={t('sensor.name.placeholder')} {...field} />
+                    <Input placeholder={t('sensor.name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </Field>
@@ -92,7 +92,7 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
       title: t('configuration'),
       description: t('sensors.configuration.description'),
       fields: [
-        <div key="row-type-unit" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div key="row-type-unit" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={control}
             name="type"
@@ -138,7 +138,7 @@ export function SensorForm({ isEdit }: { isEdit?: boolean }) {
           )}
         </div>,
         ['int', 'decimal'].includes(sensorType || '') && (
-          <div key="row-min-max" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div key="row-min-max" className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField
               control={control}
               name="valueMin"

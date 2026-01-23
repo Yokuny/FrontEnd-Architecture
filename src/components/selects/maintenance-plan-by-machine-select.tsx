@@ -19,7 +19,7 @@ export function MaintenancePlanByMachineSelect(props: MaintenancePlanByMachineSe
     data: query.data?.filter((x) => !filtered.includes(x.id)) || [],
   } as typeof query;
 
-  const noOptionsMessage = !idMachine ? t('select.machine.first') : t('noresults.message');
+  const noOptionsMessage = !idMachine ? t('select.machine.first') : t('not.found');
 
   if (mode === 'multi') {
     const displayLabel = label || t('maintenance.plan');
@@ -41,7 +41,7 @@ export function MaintenancePlanByMachineSelect(props: MaintenancePlanByMachineSe
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -68,7 +68,7 @@ export function MaintenancePlanByMachineSelect(props: MaintenancePlanByMachineSe
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

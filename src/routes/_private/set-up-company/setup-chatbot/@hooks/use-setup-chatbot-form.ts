@@ -54,7 +54,7 @@ export function useSetupChatbotForm({ idEnterprise }: UseSetupChatbotFormOptions
           messageWelcome: data.messageWelcome || '',
         },
       });
-      toast.success(t('success.save'));
+      toast.success(t('save.success'));
       navigate({ to: '..' });
     } catch (_error) {
       toast.error(t('error.save'));

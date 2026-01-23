@@ -38,11 +38,11 @@ export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps)
     if (stringValue) {
       updateMutation.mutate(stringValue, {
         onSuccess: () => {
-          toast.success(t('enterprise.preferred.updated', { defaultValue: 'Empresa preferencial atualizada!' }));
+          toast.success(t('enterprise.preferred.updated'));
           props.onChange?.(stringValue);
         },
         onError: () => {
-          toast.error(t('enterprise.preferred.failed', { defaultValue: 'Falha ao atualizar empresa preferencial.' }));
+          toast.error(t('enterprise.preferred.failed'));
         },
       });
     } else {
@@ -70,7 +70,7 @@ export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps)
         clearable={false}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

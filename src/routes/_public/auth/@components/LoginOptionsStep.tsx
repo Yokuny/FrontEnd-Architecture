@@ -33,7 +33,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
 
   return (
     <div className="space-y-5">
-      {hasPassword && ssoOption && <p className="text-center text-sm text-muted-foreground">{t('login.with')}</p>}
+      {hasPassword && ssoOption && <p className="text-center text-muted-foreground text-sm">{t('login.with')}</p>}
 
       {ssoOption && <SSOButton onSuccess={onSSOLogin} />}
 
@@ -59,13 +59,13 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
                   <FormLabel className="font-medium">{t('login.password')}</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input {...field} type={showPassword ? 'text' : 'password'} placeholder={t('login.password.placeholder')} className="pr-12 h-14" autoFocus />
+                      <Input {...field} type={showPassword ? 'text' : 'password'} placeholder={t('login.password.placeholder')} className="h-14 pr-12" autoFocus />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
                         onClick={onTogglePassword}
-                        className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        className="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                       >
                         {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                       </Button>
@@ -76,7 +76,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
               )}
             />
 
-            <Button type="submit" variant="green" className="w-full mt-4 font-semibold text-base" size="lg">
+            <Button type="submit" variant="green" className="mt-4 w-full font-semibold text-base" size="lg">
               {t('login.button-text')}
             </Button>
           </form>
@@ -90,7 +90,7 @@ export function LoginOptionsStep({ loginOptions, showPassword, onTogglePassword,
         </Button>
 
         {hasPassword && (
-          <Button type="button" variant="link" onClick={() => navigate({ to: '/auth/reset-password' })} className="h-auto p-0 text-primary hover:text-primary/80 font-medium">
+          <Button type="button" variant="link" onClick={() => navigate({ to: '/auth/reset-password' })} className="h-auto p-0 font-medium text-primary hover:text-primary/80">
             {t('lost.password')}
           </Button>
         )}

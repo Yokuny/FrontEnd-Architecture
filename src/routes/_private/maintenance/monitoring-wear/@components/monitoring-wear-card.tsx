@@ -21,8 +21,8 @@ export function MonitoringWearCard({ data }: MonitoringWearCardProps) {
     .slice(0, 2);
 
   return (
-    <Item variant="outline" className="flex-col items-stretch! overflow-hidden group/card">
-      <button type="button" className="flex items-center justify-between cursor-pointer w-full text-left" onClick={() => setIsExpanded(!isExpanded)}>
+    <Item variant="outline" className="items-stretch! group/card flex-col overflow-hidden">
+      <button type="button" className="flex w-full cursor-pointer items-center justify-between text-left" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="flex items-center gap-4">
           <Avatar className="size-12">
             <AvatarImage src={data.machine.image?.url} alt={data.machine.name} />

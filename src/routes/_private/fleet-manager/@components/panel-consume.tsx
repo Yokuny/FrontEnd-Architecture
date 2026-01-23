@@ -25,8 +25,8 @@ export function FleetConsumePanel() {
 
   if (!consumeData) {
     return (
-      <ItemGroup className="p-4 flex-1">
-        <div className="flex-1 flex flex-col items-center justify-center min-h-96">
+      <ItemGroup className="flex-1 p-4">
+        <div className="flex min-h-96 flex-1 flex-col items-center justify-center">
           <DefaultEmptyData />
         </div>
       </ItemGroup>
@@ -34,8 +34,8 @@ export function FleetConsumePanel() {
   }
 
   return (
-    <ItemGroup className="p-4 flex flex-col h-full gap-4">
-      <div className="flex-1 grid grid-cols-2 gap-4">
+    <ItemGroup className="flex h-full flex-col gap-4 p-4">
+      <div className="grid flex-1 grid-cols-2 gap-4">
         <MetricItem
           icon={<Gauge className="size-4 text-blue-500" />}
           label={t('speed')}
@@ -57,14 +57,14 @@ export function FleetConsumePanel() {
 
 function MetricItem({ icon, label, value, subValue }: { icon: React.ReactNode; label: string; value: string; subValue?: string }) {
   return (
-    <Item variant="muted" size="sm" className="flex-col items-start gap-2 p-4 rounded-xl border border-primary/5 bg-accent/30">
+    <Item variant="muted" size="sm" className="flex-col items-start gap-2 rounded-xl border border-primary/5 bg-accent/30 p-4">
       <ItemHeader className="flex items-center gap-2">
         <ItemMedia>{icon}</ItemMedia>
-        <ItemTitle className="text-[10px] uppercase font-bold tracking-tight text-muted-foreground">{label}</ItemTitle>
+        <ItemTitle className="font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{label}</ItemTitle>
       </ItemHeader>
       <ItemContent className="flex flex-col gap-1">
-        <div className="text-xl font-bold tracking-tight">{value}</div>
-        {subValue && <ItemDescription className="text-[10px] text-muted-foreground font-medium">{subValue}</ItemDescription>}
+        <div className="font-bold text-xl tracking-tight">{value}</div>
+        {subValue && <ItemDescription className="font-medium text-[10px] text-muted-foreground">{subValue}</ItemDescription>}
       </ItemContent>
     </Item>
   );

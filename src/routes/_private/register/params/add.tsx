@@ -77,7 +77,7 @@ function ParamAddFormContent({ initialData }: { initialData?: any }) {
     if (!initialData?.id) return;
     try {
       await deleteParam.mutateAsync(initialData.id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/params', search: { page: 1, size: 20 } });
     } catch {
       toast.error(t('error.delete'));

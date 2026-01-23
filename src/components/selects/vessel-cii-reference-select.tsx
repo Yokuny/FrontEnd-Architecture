@@ -20,7 +20,7 @@ export function VesselCIIReferenceSelect(props: VesselCIIReferenceSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = VESSEL_CII_TYPES.map((opt) => ({
     ...opt,
-    label: t(`vessel.type.${opt.value.toLowerCase()}`, { defaultValue: opt.label }),
+    label: t(`vessel.type.${opt.value.toLowerCase()}`),
   }));
 
   // Simulated query object
@@ -60,7 +60,7 @@ export function VesselCIIReferenceSelect(props: VesselCIIReferenceSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -87,7 +87,7 @@ export function VesselCIIReferenceSelect(props: VesselCIIReferenceSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

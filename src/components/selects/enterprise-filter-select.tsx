@@ -42,7 +42,7 @@ export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
 
   return (
     <div className={cn('flex items-center gap-4', className)}>
-      {logoSource && <img src={logoSource} alt={selectedEnterprise?.name || 'Logo'} className="max-h-10 max-w-[120px] object-contain hidden sm:block" />}
+      {logoSource && <img src={logoSource} alt={selectedEnterprise?.name || 'Logo'} className="hidden max-h-10 max-w-[120px] object-contain sm:block" />}
       <DataSelect<Enterprise>
         id={id}
         query={query}
@@ -53,7 +53,7 @@ export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
         placeholder={t('enterprise')}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

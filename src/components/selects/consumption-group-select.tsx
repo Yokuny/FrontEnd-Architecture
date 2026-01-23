@@ -12,10 +12,10 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
   const id = useId();
   const query = useConsumptionGroupsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || t('operation.consumptiongroup.placeholder');
+    const displayLabel = label || t('group.consumption');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -26,7 +26,7 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
         )}
         <DataMultiSelect<ConsumptionGroup>
           id={id}
-          placeholder={t('operation.consumptiongroup.placeholder')}
+          placeholder={t('group.consumption')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
@@ -34,14 +34,14 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || t('operation.consumptiongroup.placeholder');
+  const displayLabel = label || t('group.consumption');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -52,7 +52,7 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
       )}
       <DataSelect<ConsumptionGroup>
         id={id}
-        placeholder={t('operation.consumptiongroup.placeholder')}
+        placeholder={t('group.consumption')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
@@ -62,7 +62,7 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
         clearable={false}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

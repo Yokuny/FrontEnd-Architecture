@@ -128,7 +128,7 @@ export function FleetStatusTable({ data }: FleetStatusTableProps) {
         return (
           <ItemContent>
             {row.typeIntegration && (
-              <Badge variant={row.typeIntegration === 'MIDDLEWARE' ? 'default' : 'secondary'} className="w-fit h-4 px-2 py-0 text-[10px]">
+              <Badge variant={row.typeIntegration === 'MIDDLEWARE' ? 'default' : 'secondary'} className="h-4 w-fit px-2 py-0 text-[10px]">
                 {row.typeIntegration}
               </Badge>
             )}
@@ -171,7 +171,7 @@ export function FleetStatusTable({ data }: FleetStatusTableProps) {
 
   return (
     <DataTable
-      className="p-0 border-none"
+      className="border-none p-0"
       compact
       bordered={false}
       data={displayData}

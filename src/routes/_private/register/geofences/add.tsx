@@ -88,7 +88,7 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
     if (!initialData?.id) return;
     try {
       await deleteGeofence.mutateAsync(initialData.id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/geofences' } satisfies { to: string });
     } catch {
       toast.error(t('error.delete'));

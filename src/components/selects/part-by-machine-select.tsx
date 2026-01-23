@@ -23,7 +23,7 @@ export function PartByMachineSelect({
   const id = useId();
   const query = usePartsByMachineSelect(idMachine);
 
-  const noOptionsMessage = !idMachine ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idMachine ? t('select.enterprise.first') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -36,7 +36,7 @@ export function PartByMachineSelect({
         )}
         <DataMultiSelect
           id={id}
-          placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
+          placeholder={placeholder || t('part.placeholder')}
           value={values}
           onChange={(newValues) => onChangeMulti?.(newValues as string[])}
           query={query}
@@ -45,7 +45,7 @@ export function PartByMachineSelect({
           className={className}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     );
@@ -61,7 +61,7 @@ export function PartByMachineSelect({
       )}
       <DataSelect
         id={id}
-        placeholder={placeholder || t('part.placeholder', { defaultValue: 'Selecione uma peça...' })}
+        placeholder={placeholder || t('part.placeholder')}
         value={value}
         onChange={(val) => onChange?.(val)}
         query={query}
@@ -71,7 +71,7 @@ export function PartByMachineSelect({
         className={className}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

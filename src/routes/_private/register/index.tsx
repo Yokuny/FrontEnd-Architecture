@@ -70,7 +70,7 @@ function RegisterHubPage() {
       to: '/register/platform' as const,
     },
     {
-      title: t('buoys'),
+      title: t('monobuoys'),
       description: t('buoys.description', 'Gerencie as boias e sua localização.'),
       icon: Radio,
       to: '/register/buoy' as const,
@@ -112,7 +112,7 @@ function RegisterHubPage() {
       to: '/register/forms' as const,
     },
     {
-      title: t('params'),
+      title: t('parameters'),
       description: t('params.description', 'Configure os parâmetros globais do sistema.'),
       icon: Sliders,
       to: '/register/params' as const,
@@ -124,7 +124,7 @@ function RegisterHubPage() {
       <CardHeader title={t('register')} />
       <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {menuItems.map((item) => (
-          <Item key={item.to} variant="outline" className="bg-card hover:bg-muted/50 transition-colors cursor-pointer h-full" asChild>
+          <Item key={item.to} variant="outline" className="h-full cursor-pointer bg-card transition-colors hover:bg-muted/50" asChild>
             <Link to={item.to}>
               <ItemMedia variant="icon">
                 <item.icon className="size-5" />

@@ -29,7 +29,7 @@ export function ExtraLayers() {
         geofences
           ?.filter((f) => f.location?.coordinates?.length)
           ?.map((f, i) => (
-            <Polygon key={`${i}-fence`} color={f.color} positions={f.location.coordinates} weight={1} dashArray="5,5">
+            <Polygon key={`${f.id}-${i}-fence`} color={f.color} positions={f.location.coordinates} weight={1} dashArray="5,5">
               {showNameFence && <Tooltip permanent>{f.name}</Tooltip>}
               <Popup>{f.name}</Popup>
             </Polygon>
@@ -40,7 +40,7 @@ export function ExtraLayers() {
           ?.filter((f) => f.location?.properties?.radius && f.location?.geometry?.coordinates)
           ?.map((f, i) => (
             <Circle
-              key={`${i}-fence-circle`}
+              key={`${f.id}-${i}-fence-circle`}
               color={f.color}
               weight={1}
               dashArray="5,5"

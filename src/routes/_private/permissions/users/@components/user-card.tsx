@@ -45,7 +45,7 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
       </ItemMedia>
 
       <ItemContent>
-        <ItemTitle className="font-semibold block truncate">{user.name}</ItemTitle>
+        <ItemTitle className="block truncate font-semibold">{user.name}</ItemTitle>
         <ItemDescription className="block truncate">{user.email}</ItemDescription>
       </ItemContent>
 

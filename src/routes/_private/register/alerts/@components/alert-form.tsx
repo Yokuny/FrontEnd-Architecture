@@ -92,7 +92,7 @@ export function AlertForm() {
             )}
             <TabsTrigger value="notifications" className="flex items-center gap-2">
               <Users className="size-4" />
-              {t('notifications')}
+              {t('alerts')}
             </TabsTrigger>
             <TabsTrigger value="permissions" className="flex items-center gap-2">
               <Shield className="size-4" />
@@ -163,7 +163,7 @@ export function AlertForm() {
             <DefaultFormLayout
               sections={[
                 {
-                  title: t('notifications'),
+                  title: t('alerts'),
                   description: t('who.receives'),
                   fields: [
                     <div key="notif-container" className="space-y-6">

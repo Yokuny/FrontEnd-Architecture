@@ -4,11 +4,11 @@ import { Item, ItemTitle } from '@/components/ui/item';
 
 export function DetailGridItem({ label, value, icon: Icon }: { label: string; value: React.ReactNode; icon?: LucideIcon | any }) {
   return (
-    <div className="space-y-1 flex flex-col items-center w-full">
-      <ItemTitle className="text-[10px] text-muted-foreground truncate uppercase font-bold tracking-tight text-center">{label}</ItemTitle>
-      <div className="text-xs font-semibold flex items-center gap-1.5">
-        {Icon && <Icon className="size-3 text-muted-foreground shrink-0" />}
-        <div className="truncate text-center text-ellipsis">{value}</div>
+    <div className="flex w-full flex-col items-center space-y-1">
+      <ItemTitle className="truncate text-center font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{label}</ItemTitle>
+      <div className="flex items-center gap-1.5 font-semibold text-xs">
+        {Icon && <Icon className="size-3 shrink-0 text-muted-foreground" />}
+        <div className="truncate text-ellipsis text-center">{value}</div>
       </div>
     </div>
   );
@@ -16,12 +16,12 @@ export function DetailGridItem({ label, value, icon: Icon }: { label: string; va
 
 export function DetailItemCard({ label, icon: Icon, value, color }: { label: string; icon: LucideIcon | any; value: string; color?: string }) {
   return (
-    <Item className="flex-col items-start p-3 bg-accent/30 rounded-lg border border-primary/5 space-y-1">
+    <Item className="flex-col items-start space-y-1 rounded-lg border border-primary/5 bg-accent/30 p-3">
       <div className="flex items-center gap-2">
         <Icon className={`size-3 text-primary ${color}`} />
-        <span className="text-[10px] text-muted-foreground uppercase font-bold">{label}</span>
+        <span className="font-bold text-[10px] text-muted-foreground uppercase">{label}</span>
       </div>
-      <p className="text-sm font-semibold">{value}</p>
+      <p className="font-semibold text-sm">{value}</p>
     </Item>
   );
 }

@@ -47,10 +47,10 @@ export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }
         ) : !data || !data?.plataform.length || !data?.fence.length || !data?.atAnchor.length ? (
           <DefaultEmpty />
         ) : (
-          <div className="flex md:flex-row flex-col gap-4">
+          <div className="flex flex-col gap-4 md:flex-row">
             {hasDP && (
               <Item variant="outline" className="flex-col items-stretch">
-                <ItemHeader className="items-center flex-col pb-0">
+                <ItemHeader className="flex-col items-center pb-0">
                   <ItemTitle>{t('dp')}</ItemTitle>
                 </ItemHeader>
                 <ItemContent>
@@ -67,7 +67,7 @@ export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }
 
             {data?.fence && data?.fence.length > 0 && (
               <Item variant="outline" className="flex-col items-stretch">
-                <ItemHeader className="items-center flex-col pb-0">
+                <ItemHeader className="flex-col items-center pb-0">
                   <ItemTitle>{t('fence')}</ItemTitle>
                 </ItemHeader>
                 <ItemContent>
@@ -84,7 +84,7 @@ export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }
 
             {data?.atAnchor && data?.atAnchor.length > 0 && (
               <Item variant="outline" className="flex-col items-stretch">
-                <ItemHeader className="items-center flex-col pb-0">
+                <ItemHeader className="flex-col items-center pb-0">
                   <ItemTitle>{t('at.anchor')}</ItemTitle>
                 </ItemHeader>
                 <ItemContent>

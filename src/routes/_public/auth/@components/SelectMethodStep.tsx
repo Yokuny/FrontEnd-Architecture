@@ -27,11 +27,11 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
   return (
     <FieldGroup className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1 text-center">
-        <div className="mx-auto mb-4 bg-amber-500/10 p-4 rounded-2xl w-fit border border-amber-500/20">
+        <div className="mx-auto mb-4 w-fit rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
           <Shield className="h-12 w-12 text-amber-500" />
         </div>
-        <h1 className="text-2xl font-bold">{t('unlock.title')}</h1>
-        <p className="text-muted-foreground text-sm text-balance">{t('unlock.subtitle')}</p>
+        <h1 className="font-bold text-2xl">{t('unlock.title')}</h1>
+        <p className="text-balance text-muted-foreground text-sm">{t('unlock.subtitle')}</p>
       </div>
 
       <Form {...form}>
@@ -45,11 +45,11 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
                 <FormControl>
                   <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="space-y-3">
                     {options.map((option) => (
-                      <Field key={option.type} orientation="horizontal" className="p-4 rounded-xl border bg-muted/30 hover:bg-muted/50 transition-all cursor-pointer group">
+                      <Field key={option.type} orientation="horizontal" className="group cursor-pointer rounded-xl border bg-muted/30 p-4 transition-all hover:bg-muted/50">
                         <RadioGroupItem value={option.type} id={option.type} className="border-2" />
                         <Label htmlFor={option.type} className="flex-1 cursor-pointer font-normal">
                           <div className="flex items-center gap-4">
-                            <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground group-hover:text-foreground transition-colors">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors group-hover:text-foreground">
                               {option.type === 'email' ? <Mail className="size-5" /> : <Shield className="size-5" />}
                             </div>
                             <div>
@@ -67,7 +67,7 @@ export function SelectMethodStep({ options, onSubmit, onBack }: SelectMethodStep
             )}
           />
 
-          <Button type="submit" variant="blue" className="w-full mt-4 font-semibold text-base" size="lg">
+          <Button type="submit" variant="blue" className="mt-4 w-full font-semibold text-base" size="lg">
             {t('unlock.send-code')}
             <ArrowRight className="ml-2 size-5" />
           </Button>

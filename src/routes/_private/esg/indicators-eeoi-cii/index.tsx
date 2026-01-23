@@ -68,7 +68,7 @@ function IndicatorsEEOICIIPage() {
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('justify-start text-left font-normal w-40 bg-background', !dateMin && 'text-muted-foreground')}>
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
@@ -83,7 +83,7 @@ function IndicatorsEEOICIIPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('justify-start text-left font-normal w-40 bg-background', !dateMax && 'text-muted-foreground')}>
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
@@ -94,7 +94,7 @@ function IndicatorsEEOICIIPage() {
             </Popover>
           </div>
 
-          <Button variant="outline" className="gap-2 bg-background ml-auto">
+          <Button variant="outline" className="ml-auto gap-2 bg-background">
             <Search className="size-4" />
             {t('search')}
           </Button>

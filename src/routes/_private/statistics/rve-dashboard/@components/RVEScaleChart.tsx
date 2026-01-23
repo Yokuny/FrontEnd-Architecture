@@ -27,8 +27,8 @@ export function RVEScaleChart({ data }: RVEScaleChartProps) {
   if (data.length === 0) return null;
 
   return (
-    <Item variant="outline" className="flex-col items-stretch h-full">
-      <ItemHeader className="items-center flex-col">
+    <Item variant="outline" className="h-full flex-col items-stretch">
+      <ItemHeader className="flex-col items-center">
         <ItemTitle>{t('rve.dashboard.scales')}</ItemTitle>
       </ItemHeader>
       <ItemContent className="flex-1">
@@ -39,7 +39,7 @@ export function RVEScaleChart({ data }: RVEScaleChartProps) {
                 <ChartTooltipContent
                   hideLabel
                   formatter={(value, name, item) => (
-                    <div className="flex flex-col gap-1 w-full">
+                    <div className="flex w-full flex-col gap-1">
                       <div className="flex items-center gap-2">
                         <div className="size-3" style={{ backgroundColor: item.color }} />
                         <ItemTitle className="text-xs uppercase tracking-tight">{name}</ItemTitle>
@@ -63,7 +63,7 @@ export function RVEScaleChart({ data }: RVEScaleChartProps) {
                   if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                     return (
                       <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-3xl font-bold">
+                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground font-bold text-3xl">
                           {totalQuantity.toLocaleString()}
                         </tspan>
                         <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground text-xs uppercase">
@@ -75,7 +75,7 @@ export function RVEScaleChart({ data }: RVEScaleChartProps) {
                 }}
               />
             </Pie>
-            <ChartLegend content={<ChartLegendContent nameKey="name" />} className="flex-wrap gap-2 justify-center mt-4" />
+            <ChartLegend content={<ChartLegendContent nameKey="name" />} className="mt-4 flex-wrap justify-center gap-2" />
           </PieChart>
         </ChartContainer>
       </ItemContent>

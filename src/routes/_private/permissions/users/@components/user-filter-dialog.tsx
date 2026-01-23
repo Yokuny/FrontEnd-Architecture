@@ -1,4 +1,4 @@
-import { Filter } from 'lucide-react';
+import { BrushCleaning, Filter } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RoleSelect, UserTypeSelect } from '@/components/selects';
@@ -57,8 +57,8 @@ export function UserFilterDialog({ initialFilters, onFilter, onClear }: UserFilt
           />
         </div>
         <DialogFooter className="flex justify-between sm:justify-between">
-          <Button variant="ghost" onClick={handleClear} className="text-destructive hover:text-destructive">
-            {t('clear.filter')}
+          <Button onClick={handleClear} className="text-amber-700 hover:text-amber-800">
+            <BrushCleaning className="size-4" />
           </Button>
           <Button onClick={handleApply}>{t('filter')}</Button>
         </DialogFooter>

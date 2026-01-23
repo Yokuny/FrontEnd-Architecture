@@ -19,7 +19,7 @@ export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
   const id = useId();
   const query = useFleetVesselsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (mode === 'multi') {
     const displayLabel = label || t('vessels.select.placeholder');
@@ -41,7 +41,7 @@ export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -68,7 +68,7 @@ export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
         clearable
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

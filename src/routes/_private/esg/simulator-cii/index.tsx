@@ -58,7 +58,7 @@ function SimulatorCIIPage() {
         <div key="vessel-main" className="grid grid-cols-1 gap-6">
           <VesselCIIReferenceSelect mode="single" value={formData.typeVessel} onChange={(v) => handleChange('typeVessel', v)} />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <Field className="gap-2">
               <FieldLabel className="flex items-center gap-2">
                 <Scale className="size-4" />
@@ -94,7 +94,7 @@ function SimulatorCIIPage() {
       title: t('performance'),
       fields: [
         <div key="performance-data" className="grid grid-cols-1 gap-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <Field className="gap-2">
               <FieldLabel className="flex items-center gap-2">
                 <Droplet className="size-4" />
@@ -148,39 +148,39 @@ function SimulatorCIIPage() {
   return (
     <Card>
       <CardHeader title={t('simulator.cii')} />
-      <CardContent className="p-0 flex flex-col">
+      <CardContent className="flex flex-col p-0">
         <DefaultFormLayout sections={formSections} />
 
         {/* Results Section */}
-        <div className="flex flex-col gap-6 px-6 md:px-10 pb-10">
+        <div className="flex flex-col gap-6 px-6 pb-10 md:px-10">
           <div className="flex items-center gap-2 border-b pb-2">
             <Navigation className="size-5 text-primary" />
             <h3 className="font-bold text-lg">{t('results')}</h3>
           </div>
 
           {!results ? (
-            <div className="flex flex-col items-center justify-center min-h-80 text-muted-foreground space-y-4 rounded-xl border border-dashed bg-secondary/5">
+            <div className="flex min-h-80 flex-col items-center justify-center space-y-4 rounded-xl border border-dashed bg-secondary/5 text-muted-foreground">
               <Navigation className="size-12 opacity-20" />
               <p className="italic">{t('enter.data.to.see.results')}</p>
             </div>
           ) : (
-            <div className="space-y-8 animate-in fade-in duration-500">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-6 rounded-xl border bg-card shadow-sm flex flex-col items-center justify-center text-center">
-                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mb-1">CII Reference</p>
-                  <p className="text-3xl font-mono font-bold text-primary">
+            <div className="fade-in animate-in space-y-8 duration-500">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center shadow-sm">
+                  <p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">CII Reference</p>
+                  <p className="font-bold font-mono text-3xl text-primary">
                     {new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(results.ciiRef)}
                   </p>
                 </div>
-                <div className="p-6 rounded-xl border bg-card shadow-sm flex flex-col items-center justify-center text-center">
-                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mb-1">CII Attained</p>
-                  <p className="text-3xl font-mono font-bold text-primary">
+                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center shadow-sm">
+                  <p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">CII Attained</p>
+                  <p className="font-bold font-mono text-3xl text-primary">
                     {new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(results.ciiAttained)}
                   </p>
                 </div>
               </div>
 
-              <div className="rounded-xl border shadow-sm overflow-hidden">
+              <div className="overflow-hidden rounded-xl border shadow-sm">
                 <Table>
                   <TableHeader className="bg-secondary/30">
                     <TableRow>
@@ -198,24 +198,24 @@ function SimulatorCIIPage() {
                         const rating = calculateRating(results.ciiAttained, results.ciiRef, `${yf.year}-01-01`, results.dd);
 
                         return (
-                          <TableCell key={yf.year} className="text-center py-10">
+                          <TableCell key={yf.year} className="py-10 text-center">
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <div className="cursor-help flex flex-col items-center gap-3">
-                                    <Badge className={cn('text-xl px-8 py-2 font-bold shadow-md', getRatingColor(rating))}>{rating}</Badge>
-                                    <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">RED. {yf.factor}%</p>
+                                  <div className="flex cursor-help flex-col items-center gap-3">
+                                    <Badge className={cn('px-8 py-2 font-bold text-xl shadow-md', getRatingColor(rating))}>{rating}</Badge>
+                                    <p className="font-bold text-[10px] text-muted-foreground uppercase tracking-tighter">RED. {yf.factor}%</p>
                                   </div>
                                 </TooltipTrigger>
-                                <TooltipContent className="p-4 space-y-2">
-                                  <p className="text-xs font-bold border-b pb-2 mb-2">
+                                <TooltipContent className="space-y-2 p-4">
+                                  <p className="mb-2 border-b pb-2 font-bold text-xs">
                                     {yf.year} Analysis ({yf.factor}% Reduction)
                                   </p>
                                   <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                                    <span className="text-[10px] text-muted-foreground uppercase font-bold">CII Required:</span>
-                                    <span className="text-[10px] font-mono font-bold text-primary">{ciiReq.toFixed(4)}</span>
-                                    <span className="text-[10px] text-muted-foreground uppercase font-bold">CII Attained:</span>
-                                    <span className="text-[10px] font-mono font-bold text-primary">{results.ciiAttained.toFixed(4)}</span>
+                                    <span className="font-bold text-[10px] text-muted-foreground uppercase">CII Required:</span>
+                                    <span className="font-bold font-mono text-[10px] text-primary">{ciiReq.toFixed(4)}</span>
+                                    <span className="font-bold text-[10px] text-muted-foreground uppercase">CII Attained:</span>
+                                    <span className="font-bold font-mono text-[10px] text-primary">{results.ciiAttained.toFixed(4)}</span>
                                   </div>
                                 </TooltipContent>
                               </Tooltip>
@@ -232,7 +232,7 @@ function SimulatorCIIPage() {
         </div>
       </CardContent>
       <CardFooter>
-        <div className="w-full flex justify-between items-center text-[10px] text-muted-foreground uppercase font-bold tracking-widest">
+        <div className="flex w-full items-center justify-between font-bold text-[10px] text-muted-foreground uppercase tracking-widest">
           <span>Carbon Intensity Indicator Simulator</span>
           <span>IMO MARPOL Annex VI</span>
         </div>

@@ -117,7 +117,7 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
           await deleteFile.mutateAsync({ idModelMachine: id, filename });
         }
 
-        toast.success(t('save.successfull'));
+        toast.success(t('save.success'));
         navigate({ to: '/register/model-machine', search: { page: 1, size: 10 } });
       }
     } catch {
@@ -129,7 +129,7 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
     if (!initialData?.id) return;
     try {
       await deleteModelMachine.mutateAsync(initialData.id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/model-machine', search: { page: 1, size: 10 } });
     } catch {
       toast.error(t('error.delete'));
@@ -170,16 +170,16 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
 
   const attachmentFields = [
     <div key="attachments" className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div>
-          <h4 className="text-sm font-medium mb-2">{t('image')}</h4>
+          <h4 className="mb-2 font-medium text-sm">{t('image')}</h4>
           <Dropzone onDrop={onDropImage} accept={{ 'image/*': [] }} multiple={false}>
             {({ getRootProps, getInputProps }) => (
               <div
                 {...getRootProps()}
                 className={cn(
-                  'relative h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center transition-colors cursor-pointer',
-                  'hover:bg-muted/50 border-muted-foreground/20',
+                  'relative flex h-48 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors',
+                  'border-muted-foreground/20 hover:bg-muted/50',
                 )}
               >
                 <input {...getInputProps()} />
@@ -187,8 +187,8 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
                   <img src={imagePreview} alt="Preview" className="h-full w-full object-contain p-2" />
                 ) : (
                   <>
-                    <ImagePlus className="size-10 text-muted-foreground mb-2" />
-                    <p className="text-xs text-muted-foreground">{t('drag.image')}</p>
+                    <ImagePlus className="mb-2 size-10 text-muted-foreground" />
+                    <p className="text-muted-foreground text-xs">{t('drag.image')}</p>
                   </>
                 )}
               </div>
@@ -197,14 +197,14 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
         </div>
 
         <div>
-          <h4 className="text-sm font-medium mb-2">{t('icon')}</h4>
+          <h4 className="mb-2 font-medium text-sm">{t('icon')}</h4>
           <Dropzone onDrop={onDropIcon} accept={{ 'image/svg+xml': ['.svg'] }} multiple={false}>
             {({ getRootProps, getInputProps }) => (
               <div
                 {...getRootProps()}
                 className={cn(
-                  'relative h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center transition-colors cursor-pointer',
-                  'hover:bg-muted/50 border-muted-foreground/20',
+                  'relative flex h-48 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors',
+                  'border-muted-foreground/20 hover:bg-muted/50',
                 )}
               >
                 <input {...getInputProps()} />
@@ -212,8 +212,8 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
                   <img src={iconPreview} alt="Icon Preview" className="h-full w-full object-contain p-2" />
                 ) : (
                   <>
-                    <Upload className="size-10 text-muted-foreground mb-2" />
-                    <p className="text-xs text-muted-foreground">{t('drag.icon')}</p>
+                    <Upload className="mb-2 size-10 text-muted-foreground" />
+                    <p className="text-muted-foreground text-xs">{t('add.icon')}</p>
                   </>
                 )}
               </div>
@@ -222,19 +222,19 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
         </div>
 
         <div>
-          <h4 className="text-sm font-medium mb-2">{t('files')}</h4>
+          <h4 className="mb-2 font-medium text-sm">{t('files')}</h4>
           <Dropzone onDrop={onDropFiles}>
             {({ getRootProps, getInputProps }) => (
               <div
                 {...getRootProps()}
                 className={cn(
-                  'h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center transition-colors cursor-pointer',
-                  'hover:bg-muted/50 border-muted-foreground/20',
+                  'flex h-48 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors',
+                  'border-muted-foreground/20 hover:bg-muted/50',
                 )}
               >
                 <input {...getInputProps()} />
-                <FileIcon className="size-10 text-muted-foreground mb-2" />
-                <p className="text-xs text-muted-foreground text-center px-4">{t('drag.files')}</p>
+                <FileIcon className="mb-2 size-10 text-muted-foreground" />
+                <p className="px-4 text-center text-muted-foreground text-xs">{t('drag.files')}</p>
               </div>
             )}
           </Dropzone>
@@ -242,14 +242,14 @@ function ModelMachineAddFormContent({ initialData }: { initialData?: ModelMachin
       </div>
 
       {additionalFiles.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {additionalFiles.map((file, index) => (
-            <Item key={file.id || file.filename || file.name || index} variant="outline" className="p-2 flex items-center gap-3">
+            <Item key={file.id || file.filename || file.name || index} variant="outline" className="flex items-center gap-3 p-2">
               <ItemMedia>
                 <FileIcon className="size-4" />
               </ItemMedia>
               <ItemContent className="flex-1 overflow-hidden">
-                <ItemTitle className="text-xs truncate">{file.name || file.filename}</ItemTitle>
+                <ItemTitle className="truncate text-xs">{file.name || file.filename}</ItemTitle>
               </ItemContent>
               <Button type="button" variant="ghost" size="icon" className="size-6" onClick={() => removeFile(index)}>
                 <X className="size-3" />

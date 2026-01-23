@@ -29,29 +29,29 @@ export function SetupFleetForm({ isEnterpriseDisabled }: { isEnterpriseDisabled:
               mode="single"
               value={watch('idEnterprise')}
               onChange={(val) => setValue('idEnterprise', val || '')}
-              placeholder={t('enterprise.placeholder')}
+              placeholder={t('select.company')}
               disabled={isLoading || isPending || isEnterpriseDisabled}
             />
           </FormControl>
-          {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
+          {errors.idEnterprise && <p className="text-destructive text-sm">{t(errors.idEnterprise.message as string)}</p>}
         </Field>,
       ],
     },
     {
       title: t('setup.fleet.coordinates'),
-      description: t('setup.fleet.coordinates.description'),
+      description: t('setup.fleet.description'),
       fields: [
-        <div key="coords" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="coords" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={control}
             name="latitude"
             render={({ field }) => (
               <FormItem>
                 <Field className="gap-2">
-                  <FieldLabel>{t('lat.label')}</FieldLabel>
+                  <FieldLabel>{t('latitude')}</FieldLabel>
                   <FormControl>
                     <Input
-                      placeholder={t('lat.label')}
+                      placeholder={t('latitude')}
                       {...field}
                       onChange={(e) => field.onChange(e.target.value.replace(/[^(\-)(\d+).(\d+)]/g, ''))}
                       disabled={isLoading || isPending}
@@ -68,10 +68,10 @@ export function SetupFleetForm({ isEnterpriseDisabled }: { isEnterpriseDisabled:
             render={({ field }) => (
               <FormItem>
                 <Field className="gap-2">
-                  <FieldLabel>{t('lon.label')}</FieldLabel>
+                  <FieldLabel>{t('longitude')}</FieldLabel>
                   <FormControl>
                     <Input
-                      placeholder={t('lon.label')}
+                      placeholder={t('longitude')}
                       {...field}
                       onChange={(e) => field.onChange(e.target.value.replace(/[^(\-)(\d+).(\d+)]/g, ''))}
                       disabled={isLoading || isPending}

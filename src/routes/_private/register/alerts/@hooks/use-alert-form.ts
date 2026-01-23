@@ -142,7 +142,7 @@ export function useAlertForm(initialData?: AlertFormData) {
         return false;
       }
       if (!data.description?.trim()) {
-        toast.warning(t('description.required'));
+        toast.warning(t('message.description.placeholder'));
         return false;
       }
     }
@@ -154,7 +154,7 @@ export function useAlertForm(initialData?: AlertFormData) {
         return false;
       }
       if (!e?.description?.trim()) {
-        toast.warning(t('description.required'));
+        toast.warning(t('message.description.placeholder'));
         return false;
       }
     }

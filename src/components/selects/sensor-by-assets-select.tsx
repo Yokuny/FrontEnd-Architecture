@@ -19,7 +19,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
 
   const query = useSensorsByAssetsSelect(idAssets);
 
-  const noOptionsMessage = !idAssets || idAssets.length === 0 ? t('select.first.assets', { defaultValue: 'Selecione pelo menos um ativo primeiro.' }) : t('nooptions.message');
+  const noOptionsMessage = !idAssets || idAssets.length === 0 ? t('select.first.assets') : t('nooptions.message');
 
   const filterOptions = (sensors: SensorByAsset[]) => {
     const options = mapSensorsByAssetsToOptions(sensors);
@@ -49,7 +49,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -76,7 +76,7 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

@@ -45,7 +45,7 @@ export function usePlatformForm(initialData?: Partial<PlatformFormData>) {
       } else {
         await createPlatform.mutateAsync(data as any);
       }
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/platform', search: { page: 1, size: 20 } });
     } catch {
       toast.error(t('error.save'));

@@ -58,8 +58,8 @@ export function UserTypeForm() {
               <Field className="gap-2">
                 <FieldLabel>{t('color')}</FieldLabel>
                 <FormControl>
-                  <div className="flex gap-2 items-center">
-                    <Input type="color" className="p-1 h-10 w-20" {...field} />
+                  <div className="flex items-center gap-2">
+                    <Input type="color" className="h-10 w-20 p-1" {...field} />
                     <Input type="text" placeholder="#000000" className="flex-1" {...field} />
                   </div>
                 </FormControl>

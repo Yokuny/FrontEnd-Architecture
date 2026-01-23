@@ -40,7 +40,7 @@ export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps)
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -67,7 +67,7 @@ export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps)
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

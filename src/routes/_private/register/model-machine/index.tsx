@@ -52,7 +52,7 @@ function ModelMachineListPage() {
   const handleDelete = async (id: string) => {
     try {
       await deleteModelMachine.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
     } catch {
       toast.error(t('error.delete'));
     }
@@ -61,9 +61,9 @@ function ModelMachineListPage() {
   return (
     <Card>
       <CardHeader title={t('models.machine')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"
@@ -85,7 +85,7 @@ function ModelMachineListPage() {
             />
           </div>
           <Button onClick={() => navigate({ to: '/register/model-machine/add' })}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
         </div>
@@ -110,12 +110,12 @@ function ModelMachineListPage() {
                   })
                 }
               >
-                <div className="flex items-center gap-4 flex-1">
+                <div className="flex flex-1 items-center gap-4">
                   <ItemMedia variant="image">
                     {item.image?.url ? (
                       <img src={item.image.url} alt={item.description} className="size-full object-cover" />
                     ) : (
-                      <div className="size-full bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground uppercase">
+                      <div className="flex size-full items-center justify-center bg-muted font-bold text-muted-foreground text-xs uppercase">
                         {item.description?.substring(0, 2) || 'MM'}
                       </div>
                     )}
@@ -148,7 +148,7 @@ function ModelMachineListPage() {
                             });
                           }}
                         >
-                          <Pencil className="size-4 mr-2" />
+                          <Pencil className="mr-2 size-4" />
                           {t('edit')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
@@ -158,7 +158,7 @@ function ModelMachineListPage() {
                             handleDelete(item.id);
                           }}
                         >
-                          <Trash2 className="size-4 mr-2" />
+                          <Trash2 className="mr-2 size-4" />
                           {t('delete')}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -173,7 +173,7 @@ function ModelMachineListPage() {
 
       {totalCount > 0 && (
         <CardFooter layout="multi">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+          <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">

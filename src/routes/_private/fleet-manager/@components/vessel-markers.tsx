@@ -103,7 +103,7 @@ export function VesselMarkers() {
               }
             }}
             icon={
-              <div className={`flex flex-col items-center transition-transform ${isSelected ? 'scale-125 z-50' : ''}`}>
+              <div className={`flex flex-col items-center transition-transform ${isSelected ? 'z-50 scale-125' : ''}`}>
                 <div className="p-0.5 transition-transform">
                   <SendHorizontal
                     className="size-6 drop-shadow-md transition-all"
@@ -129,11 +129,11 @@ export function VesselMarkers() {
                 permanent
                 direction="top"
                 sideOffset={10}
-                className={cn('border shadow-sm rounded-sm backdrop-blur-[2px]', isDarkMap ? 'bg-black! text-white!' : 'bg-white! text-black!')}
+                className={cn('rounded-sm border shadow-sm backdrop-blur-[2px]', isDarkMap ? 'bg-black! text-white!' : 'bg-white! text-black!')}
               >
                 <div className="flex items-baseline gap-1.5 whitespace-nowrap">
                   {showNames && <span className="font-semibold">{machine?.machine.name}</span>}
-                  {showNames && showCodes && <span className="opacity-50 text-[8px]">|</span>}
+                  {showNames && showCodes && <span className="text-[8px] opacity-50">|</span>}
                   {showCodes && <span className="font-mono text-[9px]">{machine?.machine.code || machine?.machine.id}</span>}
                 </div>
               </MapTooltip>

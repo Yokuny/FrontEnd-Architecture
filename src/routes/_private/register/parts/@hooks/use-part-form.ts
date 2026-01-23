@@ -52,7 +52,7 @@ export function usePartForm(initialData?: PartFormData, initialImage?: any) {
         await uploadImage.mutateAsync({ id: savedPart.id, file: image });
       }
 
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/parts', search: { page: 1, size: 10 } });
     } catch {
       // API client usually handles toast for errors

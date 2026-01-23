@@ -52,7 +52,7 @@ function ParamsListPage() {
   const handleDelete = async (id: string) => {
     try {
       await deleteParam.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
     } catch {
       toast.error(t('error.delete'));
     }
@@ -60,10 +60,10 @@ function ParamsListPage() {
 
   return (
     <Card>
-      <CardHeader title={t('params')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+      <CardHeader title={t('parameters')}>
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"
@@ -85,7 +85,7 @@ function ParamsListPage() {
             />
           </div>
           <Button onClick={() => navigate({ to: '/register/params/add' })}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
         </div>
@@ -110,7 +110,7 @@ function ParamsListPage() {
                   })
                 }
               >
-                <div className="flex items-center gap-4 flex-1">
+                <div className="flex flex-1 items-center gap-4">
                   <ItemMedia variant="image">
                     <List className="size-5" />
                   </ItemMedia>
@@ -163,7 +163,7 @@ function ParamsListPage() {
 
       {totalCount > 0 && (
         <CardFooter layout="multi">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+          <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev: ParamsSearch) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">

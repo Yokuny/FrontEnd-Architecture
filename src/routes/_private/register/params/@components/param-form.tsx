@@ -72,7 +72,7 @@ export function ParamForm() {
             <FormItem>
               <Field className="gap-2">
                 <FieldLabel>{t('description')}</FieldLabel>
-                <Input {...field} placeholder={t('description.placeholder')} maxLength={150} />
+                <Input {...field} placeholder={t('description')} maxLength={150} />
               </Field>
               <FormMessage />
             </FormItem>
@@ -115,7 +115,7 @@ export function ParamForm() {
               <TableRow>
                 <TableHead>{t('value')}</TableHead>
                 <TableHead>{t('label')}</TableHead>
-                <TableHead className="text-center w-20">{t('actions')}</TableHead>
+                <TableHead className="w-20 text-center">{t('actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -137,7 +137,7 @@ export function ParamForm() {
               ))}
               {fields.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={3} className="text-center py-4 text-muted-foreground">
+                  <TableCell colSpan={3} className="py-4 text-center text-muted-foreground">
                     {t('no.options')}
                   </TableCell>
                 </TableRow>

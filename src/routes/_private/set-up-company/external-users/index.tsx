@@ -56,17 +56,6 @@ function ExternalUsersContent({ idEnterprise }: { idEnterprise: string }) {
     setShowToken((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
 
-  if (isLoading) {
-    return (
-      <Card>
-        <CardHeader title={t('usernames.external')} />
-        <CardContent className="p-12">
-          <DefaultLoading />
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card>
       <CardHeader title={t('usernames.external')}>
@@ -76,15 +65,17 @@ function ExternalUsersContent({ idEnterprise }: { idEnterprise: string }) {
         </Button>
       </CardHeader>
       <CardContent>
-        {!users || users.length === 0 ? (
+        {isLoading ? (
+          <DefaultLoading />
+        ) : !users || users.length === 0 ? (
           <EmptyData />
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{t('username')}</TableHead>
+                <TableHead>{t('user')}</TableHead>
                 <TableHead>Token</TableHead>
-                <TableHead className="w-[100px] text-center">{t('active.check')}</TableHead>
+                <TableHead className="w-[100px] text-center">{t('machine')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -93,7 +84,7 @@ function ExternalUsersContent({ idEnterprise }: { idEnterprise: string }) {
                   <TableCell className="font-medium">{user.username}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <Input type={showToken.includes(user.id) ? 'text' : 'password'} value={user.token} readOnly className="bg-muted max-w-[400px]" />
+                      <Input type={showToken.includes(user.id) ? 'text' : 'password'} value={user.token} readOnly className="max-w-[400px] bg-muted" />
                       <Button variant="ghost" size="icon" onClick={() => toggleToken(user.id)}>
                         {showToken.includes(user.id) ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                       </Button>

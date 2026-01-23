@@ -49,7 +49,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
     }));
   };
 
-  const activityFilterLabel = t('activity.filter', { defaultValue: 'Filtrar pela atividade (Opcional)' });
+  const activityFilterLabel = t('activity.filter');
 
   if (mode === 'multi') {
     const displayLabel = label || t('supplier');
@@ -63,7 +63,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
             </Label>
             <DataSelect<string, string>
               id={activityId}
-              placeholder={t('select.activity', { defaultValue: 'Selecione uma atividade...' })}
+              placeholder={t('select.activity')}
               value={activityFilter}
               onChange={(val) => setActivityFilter(val as string)}
               query={activitiesQuery}
@@ -91,7 +91,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
             disabled={disabled}
             searchPlaceholder={t('search.placeholder')}
             noOptionsMessage={t('nooptions.message')}
-            noResultsMessage={t('noresults.message')}
+            noResultsMessage={t('not.found')}
           />
         </div>
       </div>
@@ -109,7 +109,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
           </Label>
           <DataSelect<string, string>
             id={activityId}
-            placeholder={t('select.activity', { defaultValue: 'Selecione uma atividade...' })}
+            placeholder={t('select.activity')}
             value={activityFilter}
             onChange={(val) => setActivityFilter(val as string)}
             query={activitiesQuery}
@@ -139,7 +139,7 @@ export function SupplierSelect(props: SupplierSelectProps) {
           clearable={true}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     </div>

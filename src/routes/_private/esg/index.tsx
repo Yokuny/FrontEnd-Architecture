@@ -14,25 +14,25 @@ function ESGHubPage() {
   const menuItems = [
     {
       title: t('esg.co2'),
-      description: t('esg.co2.description', { defaultValue: 'Monitoramento de emissões de CO₂ e consumo de combustível.' }),
+      description: t('esg.co2.description'),
       icon: Flame,
       to: '/esg/consumption-co2' as const,
     },
     {
       title: t('menu.eeoi.cii'),
-      description: t('esg.indicators.description', { defaultValue: 'Indicadores de eficiência operacional e conformidade CII.' }),
+      description: t('esg.indicators.description'),
       icon: BarChart3,
       to: '/esg/indicators-eeoi-cii' as const,
     },
     {
       title: t('esg.fleet'),
-      description: t('esg.fleet.description', { defaultValue: 'Visão geral da conformidade CII em toda a frota.' }),
+      description: t('esg.fleet.description'),
       icon: Ship,
       to: '/esg/cii-fleet' as const,
     },
     {
       title: t('simulator.cii'),
-      description: t('esg.simulator.description', { defaultValue: 'Simulação de cenários de conformidade CII para futuras viagens.' }),
+      description: t('esg.simulator.description'),
       icon: Activity,
       to: '/esg/simulator-cii' as const,
     },
@@ -40,10 +40,10 @@ function ESGHubPage() {
 
   return (
     <Card>
-      <CardHeader title={t('esg.upper')} />
+      <CardHeader title={t('esg')} />
       <CardContent className="grid gap-4 md:grid-cols-2">
         {menuItems.map((item) => (
-          <Item key={item.to} variant="outline" className="cursor-pointer h-full" asChild>
+          <Item key={item.to} variant="outline" className="h-full cursor-pointer" asChild>
             <Link to={item.to}>
               <ItemMedia variant="icon">
                 <item.icon className="size-5" />

@@ -11,13 +11,11 @@ export function MaintenancePlanSelect(props: MaintenancePlanSelectProps) {
   const { mode, idEnterprise, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
   const { t } = useTranslation();
-
   const query = useMaintenancePlansSelect(idEnterprise);
-
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const displayLabel = label || t('maintenance.plan');
 
   if (mode === 'multi') {
-    const displayLabel = label || t('maintenance.plan');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -36,14 +34,13 @@ export function MaintenancePlanSelect(props: MaintenancePlanSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || t('maintenance.plan');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -63,7 +60,7 @@ export function MaintenancePlanSelect(props: MaintenancePlanSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

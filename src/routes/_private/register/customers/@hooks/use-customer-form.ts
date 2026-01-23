@@ -29,7 +29,7 @@ export function useCustomerForm({ id, redirect }: { id?: string; redirect?: () =
   const onSubmit = async (data: CustomerFormData) => {
     try {
       await createUpdate.mutateAsync(data);
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       redirect?.();
     } catch {
       toast.error(t('error.save'));
@@ -39,7 +39,7 @@ export function useCustomerForm({ id, redirect }: { id?: string; redirect?: () =
   const onDelete = async (id: string) => {
     try {
       await remove.mutateAsync(id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       redirect?.();
     } catch {
       toast.error(t('error.delete'));

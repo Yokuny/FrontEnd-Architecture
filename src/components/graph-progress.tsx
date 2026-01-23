@@ -29,7 +29,7 @@ export function GraphProgress() {
         <Item key={item.name} variant="outline">
           <ItemContent>
             <ItemDescription>{item.name}</ItemDescription>
-            <ItemTitle className="text-2xl font-semibold break-all">{item.stat}</ItemTitle>
+            <ItemTitle className="break-all font-semibold text-2xl">{item.stat}</ItemTitle>
             <Progress value={item.percentage} className="h-6" />
             <div className="mt-2 flex items-center justify-between text-sm">
               <span>{item.percentage}&#37;</span>

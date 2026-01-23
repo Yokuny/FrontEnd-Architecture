@@ -30,7 +30,7 @@ export function DevicesChart({ filters }: DevicesChartProps) {
   const isEmpty = tableData.length === 0;
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full">
+    <Item variant="outline" className="w-full flex-col items-stretch">
       <ItemHeader className="flex-col items-start gap-1">
         <ItemTitle>{t('devices')}</ItemTitle>
         <ItemDescription>{t('devices.description', 'Dispositivos utilizados para acesso')}</ItemDescription>

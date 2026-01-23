@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { ItemTitle } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
@@ -60,7 +61,7 @@ function IntegrationListPage() {
 
     try {
       await saveMachineIntegrations.mutateAsync(payload);
-      toast.success(t('success.save'));
+      toast.success(t('save.success'));
     } catch (_error) {
       toast.error(t('error.save'));
     }
@@ -87,24 +88,24 @@ function IntegrationListPage() {
                   <TableHead className="w-[160px] text-center">{t('type')}</TableHead>
                   <TableHead className="w-[120px] text-center">{t('interval')}</TableHead>
                   <TableHead className="text-center">{t('options')}</TableHead>
-                  <TableHead className="w-[80px] text-center">{t('active')}</TableHead>
+                  <TableHead className="w-[80px] text-center">{t('machine')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {localData.map((item, index) => (
                   <TableRow key={item.id} className={item.disabled ? 'opacity-50' : ''}>
                     <TableCell>
-                      <Avatar>
+                      <Avatar className="size-10">
                         <AvatarImage src={item.image?.url} alt={item.name} />
                         <AvatarFallback>{item.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <span className={item.disabled ? 'text-muted-foreground' : ''}>{item.name}</span>
+                        <ItemTitle className={item.disabled ? 'text-muted-foreground' : ''}>{item.name}</ItemTitle>
                         {item.disabled && (
                           <Badge variant="secondary" className="text-xs">
-                            <WifiOff className="size-3 mr-1" />
+                            <WifiOff className="mr-1 size-3" />
                             {t('deactivate')}
                           </Badge>
                         )}
@@ -112,7 +113,7 @@ function IntegrationListPage() {
                     </TableCell>
                     <TableCell>
                       <Select value={item.type || ''} onValueChange={(value) => handleChange(index, 'type', value)} disabled={item.disabled}>
-                        <SelectTrigger>
+                        <SelectTrigger size="sm">
                           <SelectValue placeholder={t('type')} />
                         </SelectTrigger>
                         <SelectContent>
@@ -128,7 +129,7 @@ function IntegrationListPage() {
                     </TableCell>
                     <TableCell>
                       <Select value={item.updateTime?.toString() || ''} onValueChange={(value) => handleChange(index, 'updateTime', parseInt(value, 10))} disabled={item.disabled}>
-                        <SelectTrigger>
+                        <SelectTrigger size="sm">
                           <SelectValue placeholder={t('interval')} />
                         </SelectTrigger>
                         <SelectContent>
@@ -143,10 +144,11 @@ function IntegrationListPage() {
                     <TableCell>
                       <div className="flex gap-2">
                         {item.type === 'MOON' && (
-                          <div className="space-y-1">
+                          <div className="flex flex-row items-baseline gap-2 space-y-1">
                             <Label className="text-xs">ID Moon</Label>
                             <Input
                               type="text"
+                              size="sm"
                               placeholder="ID"
                               value={item.idMoon || ''}
                               onChange={(e) => handleChange(index, 'idMoon', e.target.value)}
@@ -156,10 +158,11 @@ function IntegrationListPage() {
                           </div>
                         )}
                         {TYPES_WITH_IMO.some((t) => t === item.type) && (
-                          <div className="space-y-1">
+                          <div className="flex flex-row items-baseline gap-2 space-y-1">
                             <Label className="text-xs">IMO</Label>
                             <Input
                               type="number"
+                              size="sm"
                               placeholder="IMO"
                               value={item.imo || ''}
                               onChange={(e) => handleChange(index, 'imo', e.target.value)}
@@ -169,10 +172,11 @@ function IntegrationListPage() {
                           </div>
                         )}
                         {TYPES_WITH_MMSI.some((t) => t === item.type) && (
-                          <div className="space-y-1">
+                          <div className="flex flex-row items-baseline gap-2 space-y-1">
                             <Label className="text-xs">MMSI</Label>
                             <Input
                               type="number"
+                              size="sm"
                               placeholder="MMSI"
                               value={item.mmsi || ''}
                               onChange={(e) => handleChange(index, 'mmsi', e.target.value)}

@@ -26,7 +26,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
   const sections = [
     {
       title: t('identification'),
-      description: t('setup.email.identification.description', { defaultValue: 'Selecione a empresa para configurar o e-mail.' }),
+      description: t('setup.email.identification.description'),
       fields: [
         <Field key="idEnterprise" className="gap-2">
           <FormControl>
@@ -34,17 +34,17 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
               mode="single"
               value={watch('idEnterprise')}
               onChange={(val) => setValue('idEnterprise', val || '')}
-              placeholder={t('enterprise.placeholder')}
+              placeholder={t('select.company')}
               disabled={isLoading || isPending || !!isEnterpriseDisabled}
             />
           </FormControl>
-          {errors.idEnterprise && <p className="text-sm text-destructive">{t(errors.idEnterprise.message as string)}</p>}
+          {errors.idEnterprise && <p className="text-destructive text-sm">{t(errors.idEnterprise.message as string)}</p>}
         </Field>,
       ],
     },
     {
-      title: t('setup.email.connection'),
-      description: t('setup.email.connection.description', { defaultValue: 'Configure as informações de conexão do servidor SMTP.' }),
+      title: t('connection'),
+      description: t('setup.email.connection.description'),
       fields: [
         <FormField
           key="host"
@@ -91,7 +91,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
     },
     {
       title: t('setup.email.authentication'),
-      description: t('setup.email.authentication.description', { defaultValue: 'Configure as credenciais de acesso para envio de e-mail.' }),
+      description: t('setup.email.authentication.description'),
       fields: [
         <FormField
           key="accountname"
@@ -136,7 +136,7 @@ export function EmailConfigForm({ isEnterpriseDisabled }: { isEnterpriseDisabled
                 <FormControl>
                   <div className="relative">
                     <Input type={showPass ? 'text' : 'password'} placeholder="••••••••" {...field} disabled={isLoading || isPending} className="pr-10" />
-                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                       {showPass ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                     </button>
                   </div>

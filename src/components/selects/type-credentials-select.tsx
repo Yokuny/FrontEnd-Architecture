@@ -23,7 +23,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
   const mapToOptions = (options: CredentialsOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
-      label: t(opt.labelKey, { defaultValue: opt.labelKey }),
+      label: t(opt.labelKey),
       data: opt,
     }));
   };
@@ -48,7 +48,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -75,7 +75,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
         clearable={false}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

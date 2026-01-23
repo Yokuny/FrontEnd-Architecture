@@ -18,13 +18,13 @@ export function FormFieldItemView({ field, onEdit, onRemove, dragHandleProps }: 
   const typeOption = datatypeOptions.find((opt) => opt.value === (field.datatype || field.type));
 
   return (
-    <div className="flex items-center gap-4 p-4 mb-3 border rounded-lg bg-card hover:bg-accent/50 transition-colors group">
-      <div {...dragHandleProps} className="cursor-grab active:cursor-grabbing p-1 text-muted-foreground hover:text-foreground">
+    <div className="group mb-3 flex items-center gap-4 rounded-lg border bg-card p-4 transition-colors hover:bg-accent/50">
+      <div {...dragHandleProps} className="cursor-grab p-1 text-muted-foreground hover:text-foreground active:cursor-grabbing">
         <GripVertical className="size-5" />
       </div>
 
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1">
+      <div className="min-w-0 flex-1">
+        <div className="mb-1 flex items-center gap-2">
           <Badge
             variant="outline"
             style={{
@@ -36,20 +36,20 @@ export function FormFieldItemView({ field, onEdit, onRemove, dragHandleProps }: 
             {typeOption?.label || field.type || field.datatype}
           </Badge>
           {field.isRequired && (
-            <Badge variant="destructive" className="h-5 px-1 bg-destructive/10 text-destructive text-[10px] uppercase font-bold">
+            <Badge variant="destructive" className="h-5 bg-destructive/10 px-1 font-bold text-[10px] text-destructive uppercase">
               {t('required')}
             </Badge>
           )}
         </div>
-        <p className="font-medium truncate">{field.description || field.name || t('no.description')}</p>
-        <p className="text-xs text-muted-foreground font-mono">ID: {field.name}</p>
+        <p className="truncate font-medium">{field.description || field.name || t('no.description')}</p>
+        <p className="font-mono text-muted-foreground text-xs">ID: {field.name}</p>
       </div>
 
-      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
         <Button variant="ghost" size="icon" onClick={onEdit}>
           <Edit2 className="size-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={onRemove}>
+        <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10 hover:text-destructive" onClick={onRemove}>
           <Trash2 className="size-4" />
         </Button>
       </div>

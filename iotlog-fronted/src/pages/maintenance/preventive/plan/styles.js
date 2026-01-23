@@ -1,0 +1,44 @@
+import { Col, Row, Spinner } from "@paljs/ui";
+import styled, { css } from "styled-components";
+
+export const ColFlex = styled(Col)`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const RowFlexCenter = styled(Row)`
+  ${({ theme }) => css`
+    background-color: ${theme.backgroundBasicColor1};
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+  `}
+`;
+
+export const SpinnerStyled = styled(Spinner)`
+  ${({ theme }) => css`
+    background-color: ${theme.backgroundBasicColor1};
+  `}
+`;
+
+export const ContainerRow = styled(Row)`
+  z-index: 9;
+  display: flex;
+  flex-direction: row;
+
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+
+  input {
+    line-height: 1.2rem;
+  }
+
+  a svg {
+    top: -6px;
+    position: absolute;
+    right: -5px;
+  }
+`;

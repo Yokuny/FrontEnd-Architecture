@@ -23,7 +23,7 @@ export function VisibilitySettings({ form }: VisibilitySettingsProps) {
           description: t('roles.visibility.description', 'Configure quem pode visualizar e editar este perfil de acesso'),
           fields: [
             <div key="visibility-content" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <VisibilitySelect mode="single" value={visibility} onChange={(value) => form.setValue('visibility', value as Visibility)} />
                 <EditPermissionSelect mode="single" value={editPermission} onChange={(value) => form.setValue('edit', value as EditPermission)} />
               </div>

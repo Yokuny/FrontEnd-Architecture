@@ -21,7 +21,7 @@ export function FleetNavigation() {
   ];
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 p-2 bg-background/90 backdrop-blur-md border-t border-primary/10 z-20">
+    <div className="absolute right-0 bottom-0 left-0 z-20 border-primary/10 border-t bg-background/90 p-2 backdrop-blur-md">
       <div className="grid grid-cols-4 gap-1">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -32,11 +32,11 @@ export function FleetNavigation() {
               key={item.id}
               variant={isActive ? 'secondary' : 'default'}
               size="sm"
-              className="flex flex-col items-center justify-center gap-1 h-12 px-1 rounded-md"
+              className="flex h-12 flex-col items-center justify-center gap-1 rounded-md px-1"
               onClick={() => setSelectedPanel(item.id as any)}
             >
               <Icon className={`size-3.5 ${item.color}`} />
-              <span className="text-[8px] font-bold uppercase tracking-tighter truncate w-full text-center">{item.label}</span>
+              <span className="w-full truncate text-center font-bold text-[8px] uppercase tracking-tighter">{item.label}</span>
             </Button>
           );
         })}

@@ -44,7 +44,7 @@ export function useParamForm(initialData?: Partial<ParamFormData>) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['params'] });
-      toast.success('save.successfull');
+      toast.success('save.success');
       navigate({ to: '/register/params', search: { page: 1, size: 20 } });
     },
     onError: () => {

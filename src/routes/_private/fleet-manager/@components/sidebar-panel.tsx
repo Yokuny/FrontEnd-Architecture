@@ -61,10 +61,10 @@ export function MenuPanel({ idEnterprise }: PanelContainerProps) {
   };
 
   return (
-    <div className={cn('pointer-events-none z-1000', isMobile ? 'absolute inset-0 flex flex-col p-2 gap-2' : 'absolute inset-0 ml-13')}>
-      <div className={cn('pointer-events-none', isMobile ? 'flex-1 min-h-0' : 'absolute top-4 bottom-4 left-4 w-96')}>
-        <ItemGroup className="w-full h-full flex flex-col pointer-events-auto bg-background/95 backdrop-blur-md border border-primary/10 rounded-xl shadow-2xl overflow-hidden gap-0">
-          <Item size="sm" className="p-2 px-4 border-b bg-muted/30 shrink-0 rounded-none">
+    <div className={cn('pointer-events-none z-1000', isMobile ? 'absolute inset-0 flex flex-col gap-2 p-2' : 'absolute inset-0 ml-13')}>
+      <div className={cn('pointer-events-none', isMobile ? 'min-h-0 flex-1' : 'absolute top-4 bottom-4 left-4 w-96')}>
+        <ItemGroup className="pointer-events-auto flex h-full w-full flex-col gap-0 overflow-hidden rounded-xl border border-primary/10 bg-background/95 shadow-2xl backdrop-blur-md">
+          <Item size="sm" className="shrink-0 rounded-none border-b bg-muted/30 p-2 px-4">
             <ItemHeader>
               <ItemTitle className="font-semibold text-sm uppercase tracking-wider">{getTitle()}</ItemTitle>
               <ItemActions>
@@ -86,8 +86,8 @@ export function MenuPanel({ idEnterprise }: PanelContainerProps) {
             </ItemHeader>
           </Item>
 
-          <div className="w-full h-full pb-20">
-            <ScrollArea className="flex-1 w-full h-full">
+          <div className="h-full w-full pb-20">
+            <ScrollArea className="h-full w-full flex-1">
               {activeView === 'search' && <FleetManagerPanel idEnterprise={idEnterprise} />}
               {activeView === 'summary' && selectedMachineId && <MachineSummaryPanel />}
               {activeView === 'details' && selectedMachineId && <MachineDetailsPanel />}

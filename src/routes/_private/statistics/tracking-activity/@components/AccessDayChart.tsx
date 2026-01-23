@@ -68,9 +68,9 @@ export function AccessDayChart({ filters }: AccessDayChartProps) {
   const isEmpty = !data || (data.acessDay.length === 0 && data.acessDayWhatsapp.length === 0);
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full">
-      <ItemHeader className="flex-col items-start gap-1 mb-6">
-        <ItemTitle className="text-xl font-semibold">{t('access.day')}</ItemTitle>
+    <Item variant="outline" className="w-full flex-col items-stretch">
+      <ItemHeader className="mb-6 flex-col items-start gap-1">
+        <ItemTitle className="font-semibold text-xl">{t('access.day')}</ItemTitle>
         <ItemDescription>{t('tracking.activity.description', 'Atividades de acesso ao sistema e aplicativos')}</ItemDescription>
       </ItemHeader>
       <ItemContent>

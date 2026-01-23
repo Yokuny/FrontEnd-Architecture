@@ -44,7 +44,7 @@ function CIIFleetPage() {
 
           <MachineByEnterpriseSelect mode="multi" label={t('machines')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
 
-          <Button variant="outline" className="gap-2 bg-background ml-auto">
+          <Button variant="outline" className="ml-auto gap-2 bg-background">
             <Search className="size-4" />
             {t('search')}
           </Button>

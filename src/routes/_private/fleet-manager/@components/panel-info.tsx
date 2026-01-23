@@ -28,8 +28,8 @@ export function FleetInfoPanel() {
 
   if (!dsData) {
     return (
-      <ItemGroup className="p-4 flex-1">
-        <div className="flex-1 flex flex-col items-center justify-center min-h-96">
+      <ItemGroup className="flex-1 p-4">
+        <div className="flex min-h-96 flex-1 flex-col items-center justify-center">
           <DefaultEmptyData />
         </div>
       </ItemGroup>
@@ -41,15 +41,15 @@ export function FleetInfoPanel() {
     : null;
 
   return (
-    <ItemGroup className="p-4 flex flex-col h-full gap-4">
-      <div className="flex-1 overflow-auto space-y-6">
+    <ItemGroup className="flex h-full flex-col gap-4 p-4">
+      <div className="flex-1 space-y-6 overflow-auto">
         {/* Basic Identification */}
         <div className="space-y-3">
-          <ItemHeader className="text-primary font-bold uppercase tracking-wider gap-2">
+          <ItemHeader className="gap-2 font-bold text-primary uppercase tracking-wider">
             <Anchor className="size-3" />
-            <ItemTitle className="text-[11px] font-mono">{t('identification')}</ItemTitle>
+            <ItemTitle className="font-mono text-[11px]">{t('identification')}</ItemTitle>
           </ItemHeader>
-          <div className="grid grid-cols-3 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
+          <div className="grid grid-cols-3 gap-x-2 gap-y-4 rounded-md border border-accent bg-accent/50 p-2">
             <DetailGridItem label={t('name')} value={dsData?.name || '-'} icon={Ship} />
             <DetailGridItem label={t('code')} value={dsData?.code || '-'} />
             <DetailGridItem label="IMO" value={dsData?.dataSheet?.imo || '-'} />
@@ -60,11 +60,11 @@ export function FleetInfoPanel() {
 
         {/* Dimensions */}
         <div className="space-y-3">
-          <ItemHeader className="text-primary font-bold uppercase tracking-wider gap-2">
+          <ItemHeader className="gap-2 font-bold text-primary uppercase tracking-wider">
             <Ruler className="size-3" />
-            <ItemTitle className="text-[11px] font-mono">{t('dimensions')}</ItemTitle>
+            <ItemTitle className="font-mono text-[11px]">{t('dimensions')}</ItemTitle>
           </ItemHeader>
-          <div className="grid grid-cols-2 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-4 rounded-md border border-accent bg-accent/50 p-2">
             <DetailGridItem label={t('length.loa')} value={dsData?.dataSheet?.lengthLoa ? `${dsData.dataSheet.lengthLoa}m` : '-'} />
             <DetailGridItem label={t('width.vessel')} value={dsData?.dataSheet?.width ? `${dsData.dataSheet.width}m` : '-'} />
           </div>
@@ -72,11 +72,11 @@ export function FleetInfoPanel() {
 
         {/* Capacity */}
         <div className="space-y-3">
-          <ItemHeader className="text-primary font-bold uppercase tracking-wider gap-2">
+          <ItemHeader className="gap-2 font-bold text-primary uppercase tracking-wider">
             <Weight className="size-3" />
-            <ItemTitle className="text-[11px] font-mono">{t('capacity')}</ItemTitle>
+            <ItemTitle className="font-mono text-[11px]">{t('capacity')}</ItemTitle>
           </ItemHeader>
-          <div className="grid grid-cols-2 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-4 rounded-md border border-accent bg-accent/50 p-2">
             <DetailGridItem label="Deadweight" value={dsData?.dataSheet?.deadWeight ? `${dsData.dataSheet.deadWeight} t` : '-'} />
             <DetailGridItem label="Gross Tonnage" value={dsData?.dataSheet?.grossTonnage ? `${dsData.dataSheet.grossTonnage} GT` : '-'} />
             <DetailGridItem label="CII Reference" value={ciiRef ? ciiRef.toFixed(4) : '-'} />
@@ -87,11 +87,11 @@ export function FleetInfoPanel() {
 
         {/* Registration */}
         <div className="space-y-3">
-          <ItemHeader className="text-primary font-bold uppercase tracking-wider gap-2">
+          <ItemHeader className="gap-2 font-bold text-primary uppercase tracking-wider">
             <Globe className="size-3" />
-            <ItemTitle className="text-[11px] font-mono">{t('registration')}</ItemTitle>
+            <ItemTitle className="font-mono text-[11px]">{t('registration')}</ItemTitle>
           </ItemHeader>
-          <div className="grid grid-cols-3 gap-y-4 gap-x-2 p-2 bg-accent/50 rounded-md border-accent border">
+          <div className="grid grid-cols-3 gap-x-2 gap-y-4 rounded-md border border-accent bg-accent/50 p-2">
             <DetailGridItem label={t('year.build')} value={dsData?.dataSheet?.yearBuilt || '-'} icon={Calendar} />
             <DetailGridItem label={t('flag')} value={dsData?.dataSheet?.flag || '-'} icon={Flag} />
             <DetailGridItem label={t('create.at')} value={dsData?.createAt ? format(new Date(dsData.createAt), 'dd MMM yyyy') : '-'} />

@@ -137,7 +137,7 @@ function FormAddFormContent({ initialData, pendingData, formId }: FormAddFormCon
   const handleSave = async () => {
     try {
       await onSubmit();
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/forms', search: { page: 1, size: 10 } });
     } catch {
       // Error handled by API client
@@ -151,7 +151,7 @@ function FormAddFormContent({ initialData, pendingData, formId }: FormAddFormCon
       // Clear from localStorage too
       const forms = JSON.parse(localStorage.getItem('forms') || '[]');
       localStorage.setItem('forms', JSON.stringify(forms.filter((f: { id: string }) => f.id !== initialData.id)));
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/forms', search: { page: 1, size: 10 } });
     } catch {
       toast.error(t('error.delete'));
@@ -166,7 +166,7 @@ function FormAddFormContent({ initialData, pendingData, formId }: FormAddFormCon
         <CardHeader title={t('config.form')}>
           {fields.length > 0 && (
             <Button variant="outline" onClick={() => setShowPreview(true)}>
-              <Eye className="size-4 mr-2" />
+              <Eye className="mr-2 size-4" />
               Preview
             </Button>
           )}

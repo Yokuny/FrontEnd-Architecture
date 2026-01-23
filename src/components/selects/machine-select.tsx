@@ -32,14 +32,11 @@ export function MachineSelect(props: MachineSelectProps) {
   const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
   const id = useId();
-
-  // Only fetch if idEnterprise is provided
   const query = useMachinesByEnterpriseSelect(idEnterprise);
-
   const isDisabled = disabled || !idEnterprise;
+  const displayLabel = label || t('machine');
 
   if (mode === 'multi') {
-    const displayLabel = label; // || t('machine'); // Optional default label
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -58,14 +55,13 @@ export function MachineSelect(props: MachineSelectProps) {
           disabled={isDisabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={!idEnterprise ? t('select.enterprise.first') : t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label; // || t('machine');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -85,7 +81,7 @@ export function MachineSelect(props: MachineSelectProps) {
         clearable={true}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={!idEnterprise ? t('select.enterprise.first') : t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

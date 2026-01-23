@@ -20,8 +20,6 @@ const alertsSearchSchema = z.object({
   search: z.string().optional(),
 });
 
-type AlertsSearch = z.infer<typeof alertsSearchSchema>;
-
 export const Route = createFileRoute('/_private/register/alerts/')({
   component: AlertsListPage,
   validateSearch: (search: Record<string, unknown>): AlertsSearch => alertsSearchSchema.parse(search),
@@ -47,9 +45,9 @@ function AlertsListPage() {
   return (
     <Card>
       <CardHeader title={t('rule.alerts')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"
@@ -71,7 +69,7 @@ function AlertsListPage() {
             />
           </div>
           <Button onClick={() => navigate({ to: '/register/alerts/add' })}>
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
         </div>
@@ -121,7 +119,7 @@ function AlertsListPage() {
                     })
                   }
                 >
-                  <div className="flex items-center gap-4 flex-1">
+                  <div className="flex flex-1 items-center gap-4">
                     <ItemMedia variant="image">
                       <Bell className={`size-5 ${iconColorClass}`} />
                     </ItemMedia>
@@ -137,7 +135,7 @@ function AlertsListPage() {
                       <ItemDescription className="capitalize">{t(alert.visibility)}</ItemDescription>
                     </div>
 
-                    <div className="flex items-center justify-end border-l pl-2 ml-2">
+                    <div className="ml-2 flex items-center justify-end border-l pl-2">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
@@ -176,7 +174,7 @@ function AlertsListPage() {
 
       {totalCount > 0 && (
         <CardFooter layout="multi">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+          <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">
@@ -254,3 +252,5 @@ function AlertsListPage() {
     </Card>
   );
 }
+
+type AlertsSearch = z.infer<typeof alertsSearchSchema>;

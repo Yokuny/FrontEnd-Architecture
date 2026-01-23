@@ -20,7 +20,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
   // Mapping options to translated ones
   const translatedOptions = MACHINE_TYPES.map((opt) => ({
     ...opt,
-    label: t(`machine.type.${opt.value}`, { defaultValue: opt.label }),
+    label: t(`machine.type.${opt.value}`),
   }));
 
   // Simulated query object
@@ -60,7 +60,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -87,7 +87,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

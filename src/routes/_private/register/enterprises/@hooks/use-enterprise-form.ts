@@ -91,7 +91,7 @@ export function useEnterpriseForm(initialData?: EnterpriseFormData) {
         }
       }
 
-      toast.success(t('save.successfull'));
+      toast.success(t('save.success'));
       navigate({ to: '/register/enterprises', search: { page: 1, size: 10 } });
     } catch (_error) {
       // Error handling is managed by API client

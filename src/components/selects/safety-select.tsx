@@ -14,7 +14,7 @@ export function SafetySelect(props: SafetySelectProps) {
   // Mapping options to translated ones
   const translatedOptions = SAFETY_AREAS.map((opt) => ({
     ...opt,
-    label: t(`safety.${opt.value}`, { defaultValue: opt.label }),
+    label: t(`safety.${opt.value}`),
   }));
 
   // Simulated query object
@@ -54,7 +54,7 @@ export function SafetySelect(props: SafetySelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
@@ -81,7 +81,7 @@ export function SafetySelect(props: SafetySelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

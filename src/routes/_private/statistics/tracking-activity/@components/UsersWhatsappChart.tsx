@@ -80,9 +80,9 @@ export function UsersWhatsappChart({ filters }: UsersWhatsappChartProps) {
   const isEmpty = !data || data.length === 0;
 
   return (
-    <Item variant="outline" className="flex-col items-stretch w-full">
-      <ItemHeader className="items-center flex-col">
-        <ItemTitle className="text-xl font-semibold">{t('users.whatsapp')}</ItemTitle>
+    <Item variant="outline" className="w-full flex-col items-stretch">
+      <ItemHeader className="flex-col items-center">
+        <ItemTitle className="font-semibold text-xl">{t('users.whatsapp')}</ItemTitle>
         <ItemDescription>{t('users.whatsapp.breakdown.description', 'Distribuição de atividades de WhatsApp por usuário')}</ItemDescription>
       </ItemHeader>
       <ItemContent>
@@ -96,7 +96,7 @@ export function UsersWhatsappChart({ filters }: UsersWhatsappChartProps) {
                   <Tooltip key={`${d.key}-${index}`}>
                     <TooltipTrigger asChild>
                       <div
-                        className="absolute transition-all duration-300 hover:brightness-110 hover:z-10 group cursor-help"
+                        className="group absolute cursor-help transition-all duration-300 hover:z-10 hover:brightness-110"
                         style={{
                           width: `${d.width}%`,
                           height: `${barHeight}px`,
@@ -104,7 +104,7 @@ export function UsersWhatsappChart({ filters }: UsersWhatsappChartProps) {
                         }}
                       >
                         <div
-                          className="w-full h-full shadow-sm border-y border-white/5 first:border-l last:border-r"
+                          className="h-full w-full border-white/5 border-y shadow-sm first:border-l last:border-r"
                           style={{
                             backgroundColor: d.color,
                             borderRadius: d.borderRadius,
@@ -114,24 +114,24 @@ export function UsersWhatsappChart({ filters }: UsersWhatsappChartProps) {
                         {d.width > 10 && (
                           <>
                             <div
-                              className="absolute pointer-events-none text-white font-semibold text-center w-full"
+                              className="pointer-events-none absolute w-full text-center font-semibold text-white"
                               style={{
                                 top: `${barHeight / 5}px`,
                                 left: '50%',
                                 transform: 'translateX(-50%)',
                               }}
                             >
-                              <ItemDescription className="text-white font-semibold leading-none">{d.label}</ItemDescription>
+                              <ItemDescription className="font-semibold text-white leading-none">{d.label}</ItemDescription>
                             </div>
                             <div
-                              className="absolute pointer-events-none text-white text-center w-full"
+                              className="pointer-events-none absolute w-full text-center text-white"
                               style={{
                                 top: `${barHeight * 0.45}px`,
                                 left: '50%',
                                 transform: 'translateX(-50%)',
                               }}
                             >
-                              <p className="text-white text-lg font-bold font-mono tabular-nums">{d.value}</p>
+                              <p className="font-bold font-mono text-lg text-white tabular-nums">{d.value}</p>
                             </div>
                           </>
                         )}
@@ -142,9 +142,9 @@ export function UsersWhatsappChart({ filters }: UsersWhatsappChartProps) {
                         <div className="size-3" style={{ backgroundColor: d.color }} />
                         <ItemTitle className="font-bold text-xs uppercase tracking-tight">{d.label}</ItemTitle>
                       </div>
-                      <div className="flex items-baseline gap-1 mt-1">
-                        <ItemTitle className="text-lg font-black tabular-nums">{d.value.toLocaleString()}</ItemTitle>
-                        <ItemDescription className="text-xs font-normal uppercase">{t('actions')}</ItemDescription>
+                      <div className="mt-1 flex items-baseline gap-1">
+                        <ItemTitle className="font-black text-lg tabular-nums">{d.value.toLocaleString()}</ItemTitle>
+                        <ItemDescription className="font-normal text-xs uppercase">{t('actions')}</ItemDescription>
                       </div>
                     </TooltipContent>
                   </Tooltip>
@@ -158,15 +158,15 @@ export function UsersWhatsappChart({ filters }: UsersWhatsappChartProps) {
                 <div key={item.key} className="flex flex-col items-center">
                   <div className="flex items-baseline gap-2">
                     <div className="size-2" style={{ backgroundColor: item.color }} />
-                    <ItemTitle className="text-xs font-semibold text-muted-foreground uppercase">{item.label}</ItemTitle>
+                    <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{item.label}</ItemTitle>
                   </div>
-                  <ItemTitle className="tabular-nums font-semibold text-lg">{item.value.toLocaleString()}</ItemTitle>
+                  <ItemTitle className="font-semibold text-lg tabular-nums">{item.value.toLocaleString()}</ItemTitle>
                 </div>
               ))}
               <div className="flex flex-col items-center">
                 <div className="flex items-baseline gap-2">
-                  <ItemTitle className="text-xs font-semibold text-muted-foreground uppercase">{t('total')}</ItemTitle>
-                  <ItemTitle className="tabular-nums font-semibold text-lg">{totalActions.toLocaleString()}</ItemTitle>
+                  <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total')}</ItemTitle>
+                  <ItemTitle className="font-semibold text-lg tabular-nums">{totalActions.toLocaleString()}</ItemTitle>
                 </div>
               </div>
             </ItemFooter>

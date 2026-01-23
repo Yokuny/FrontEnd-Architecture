@@ -59,14 +59,14 @@ export function MaintenancePlanForm() {
               <Field className="gap-2">
                 <FieldLabel>{t('description')} *</FieldLabel>
                 <FormControl>
-                  <Input {...field} placeholder={t('maintenance.description.placeholder')} maxLength={150} />
+                  <Input {...field} placeholder={t('description')} maxLength={150} />
                 </FormControl>
               </Field>
               <FormMessage />
             </FormItem>
           )}
         />,
-        <div key="row-duration-notice-type" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div key="row-duration-notice-type" className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={control}
             name="durationDays"
@@ -132,7 +132,7 @@ export function MaintenancePlanForm() {
             title: t('time.cycle'),
             description: t('maintenance.plan.cycle.description'),
             fields: [
-              <div key="row-cycle" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div key="row-cycle" className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <FormField
                   control={control}
                   name="maintanceCycle.value"
@@ -154,11 +154,11 @@ export function MaintenancePlanForm() {
                   render={({ field }) => (
                     <FormItem>
                       <Field className="gap-2">
-                        <FieldLabel>{t('unity.cycle')} *</FieldLabel>
+                        <FieldLabel>{t('unit')} *</FieldLabel>
                         <Select value={field.value} onValueChange={field.onChange}>
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder={t('unity.cycle')} />
+                              <SelectValue placeholder={t('unit')} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -185,7 +185,7 @@ export function MaintenancePlanForm() {
             title: t('wear'),
             description: t('maintenance.plan.wear.description'),
             fields: [
-              <div key="row-wear" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div key="row-wear" className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <FormField
                   control={control}
                   name="maintanceWear.value"

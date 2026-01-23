@@ -56,7 +56,7 @@ export function useSetupFleetForm({ idEnterprise }: UseSetupFleetFormOptions) {
           zoom: data.zoom || 0,
         },
       });
-      toast.success(t('success.save'));
+      toast.success(t('save.success'));
       navigate({ to: '..' });
     } catch (_error) {
       toast.error(t('error.save'));

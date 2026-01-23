@@ -32,41 +32,41 @@ export function KPISummary({ filters }: { filters: KPISCMMSFilters & { min: stri
   if (!kpis || kpis.total === 0) return null;
 
   return (
-    <div className="flex justify-between gap-4 w-full flex-wrap">
-      <Item variant="outline" className="border-l-4 border-l-muted min-w-[200px] flex-1">
+    <div className="flex w-full flex-wrap justify-between gap-4">
+      <Item variant="outline" className="min-w-[200px] flex-1 border-l-4 border-l-muted">
         <ItemContent className="flex flex-col">
-          <ItemDescription className="uppercase text-xs font-bold">{t('kpis.cmms.total.os')}</ItemDescription>
-          <ItemTitle className="text-3xl font-bold">{kpis.total}</ItemTitle>
+          <ItemDescription className="font-bold text-xs uppercase">{t('kpis.cmms.total.os')}</ItemDescription>
+          <ItemTitle className="font-bold text-3xl">{kpis.total}</ItemTitle>
         </ItemContent>
       </Item>
 
-      <Item variant="outline" className="border-l-4 border-l-amber-500 min-w-[200px] flex-1">
+      <Item variant="outline" className="min-w-[200px] flex-1 border-l-4 border-l-amber-500">
         <ItemContent className="flex flex-col">
-          <div className="flex justify-between items-center">
-            <ItemDescription className="uppercase text-xs font-bold">{t('kpis.cmms.open.os')}</ItemDescription>
-            <Badge className="bg-amber-100 text-amber-700 font-bold rounded-sm border-none shadow-none">{kpis.openPercent.toFixed(1)}%</Badge>
+          <div className="flex items-center justify-between">
+            <ItemDescription className="font-bold text-xs uppercase">{t('kpis.cmms.open.os')}</ItemDescription>
+            <Badge className="rounded-sm border-none bg-amber-100 font-bold text-amber-700 shadow-none">{kpis.openPercent.toFixed(1)}%</Badge>
           </div>
-          <ItemTitle className="text-3xl font-bold text-amber-600">{kpis.open}</ItemTitle>
+          <ItemTitle className="font-bold text-3xl text-amber-600">{kpis.open}</ItemTitle>
         </ItemContent>
       </Item>
 
-      <Item variant="outline" className="border-l-4 border-l-emerald-500 min-w-[200px] flex-1">
+      <Item variant="outline" className="min-w-[200px] flex-1 border-l-4 border-l-emerald-500">
         <ItemContent className="flex flex-col">
-          <div className="flex justify-between items-center">
-            <ItemDescription className="uppercase text-xs font-bold">{t('kpis.cmms.closed.os')}</ItemDescription>
-            <Badge className="bg-emerald-100 text-emerald-700 font-bold rounded-sm border-none shadow-none">{kpis.closedPercent.toFixed(1)}%</Badge>
+          <div className="flex items-center justify-between">
+            <ItemDescription className="font-bold text-xs uppercase">{t('kpis.cmms.closed.os')}</ItemDescription>
+            <Badge className="rounded-sm border-none bg-emerald-100 font-bold text-emerald-700 shadow-none">{kpis.closedPercent.toFixed(1)}%</Badge>
           </div>
-          <ItemTitle className="text-3xl font-bold text-emerald-600">{kpis.closed}</ItemTitle>
+          <ItemTitle className="font-bold text-3xl text-emerald-600">{kpis.closed}</ItemTitle>
         </ItemContent>
       </Item>
 
-      <Item variant="outline" className="border-l-4 border-l-red-500 min-w-[200px] flex-1">
+      <Item variant="outline" className="min-w-[200px] flex-1 border-l-4 border-l-red-500">
         <ItemContent className="flex flex-col">
-          <div className="flex justify-between items-center">
-            <ItemDescription className="uppercase text-xs font-bold">{t('kpis.cmms.expired.os')}</ItemDescription>
-            <Badge className="bg-red-100 text-red-700 font-bold rounded-sm border-none shadow-none">{kpis.expiredPercent.toFixed(1)}%</Badge>
+          <div className="flex items-center justify-between">
+            <ItemDescription className="font-bold text-xs uppercase">{t('predictive.deviation')}</ItemDescription>
+            <Badge className="rounded-sm border-none bg-red-100 font-bold text-red-700 shadow-none">{kpis.expiredPercent.toFixed(1)}%</Badge>
           </div>
-          <ItemTitle className="text-3xl font-bold text-red-600">{kpis.expired}</ItemTitle>
+          <ItemTitle className="font-bold text-3xl text-red-600">{kpis.expired}</ItemTitle>
         </ItemContent>
       </Item>
     </div>

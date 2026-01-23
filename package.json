@@ -2,12 +2,18 @@
   "name": "front-end-architecture",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=10.0.0",
+    "pnpm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "vite --port 3000",
     "build": "vite build && tsc --noEmit",
     "preview": "vite preview",
     "start": "vite",
     "lint": "biome check --write .",
+    "lint:fix": "biome check --write --unsafe",
     "format": "biome format --write .",
     "check": "tsc --noEmit",
     "routes": "npx tsx src/config/extractRoutes.ts && pnpm run format"

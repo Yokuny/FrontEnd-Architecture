@@ -51,11 +51,11 @@ function UpdatePasswordPage() {
   return (
     <Card>
       <CardContent>
-        <div className="flex flex-col items-center justify-center text-center space-y-6">
+        <div className="flex flex-col items-center justify-center space-y-6 text-center">
           {status === 'loading' && (
             <>
-              <div className="h-16 w-16 rounded-full bg-muted animate-pulse flex items-center justify-center">
-                <RefreshCw className="h-8 w-8 text-muted-foreground animate-spin" />
+              <div className="flex h-16 w-16 animate-pulse items-center justify-center rounded-full bg-muted">
+                <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
               <p className="text-muted-foreground">{t('loading')}</p>
             </>
@@ -63,7 +63,7 @@ function UpdatePasswordPage() {
 
           {status === 'success' && (
             <>
-              <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
                 <CheckCircle2 className="h-10 w-10 text-green-600" />
               </div>
               <p className="text-muted-foreground">{t('send.password.email')}</p>
@@ -76,7 +76,7 @@ function UpdatePasswordPage() {
 
           {status === 'error' && (
             <>
-              <div className="h-16 w-16 rounded-full bg-red-100 flex items-center justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
                 <XCircle className="h-10 w-10 text-red-600" />
               </div>
               <p className="text-muted-foreground">{t('error.sent.email')}</p>

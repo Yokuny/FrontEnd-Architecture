@@ -37,7 +37,7 @@ export function TypeServiceMaintenanceSelect(props: TypeServiceMaintenanceSelect
       )}
       <DataSelect<any, any>
         id={id}
-        placeholder={placeholder || t('select.type.service.placeholder')}
+        placeholder={placeholder || t('type.service')}
         value={value}
         onChange={onChange}
         query={query}
@@ -46,7 +46,7 @@ export function TypeServiceMaintenanceSelect(props: TypeServiceMaintenanceSelect
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

@@ -26,10 +26,10 @@ export function FormPreviewModal({ open, onOpenChange, fields, idEnterprise }: F
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="flex h-full w-full flex-col gap-0 p-0 sm:max-w-2xl">
         <SheetHeader className="border-b p-6">
-          <SheetTitle className="text-xl font-bold">{t('form.preview', 'Pré visualização do formulário')}</SheetTitle>
+          <SheetTitle className="font-bold text-xl">{t('form.preview', 'Pré visualização do formulário')}</SheetTitle>
         </SheetHeader>
 
-        <ScrollArea className="flex-1 h-[calc(100vh-12rem)]">
+        <ScrollArea className="h-[calc(100vh-12rem)] flex-1">
           <div className="p-6">
             <div className="grid grid-cols-12 gap-x-6 gap-y-4">
               {fields.length > 0 ? (
@@ -43,7 +43,7 @@ export function FormPreviewModal({ open, onOpenChange, fields, idEnterprise }: F
                   />
                 ))
               ) : (
-                <div className="col-span-12 py-24 text-center text-muted-foreground border-2 border-dashed rounded-lg">{t('no.fields', 'Nenhum campo adicionado')}</div>
+                <div className="col-span-12 rounded-lg border-2 border-dashed py-24 text-center text-muted-foreground">{t('no.fields', 'Nenhum campo adicionado')}</div>
               )}
             </div>
           </div>

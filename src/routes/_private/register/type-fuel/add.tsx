@@ -79,7 +79,7 @@ function FuelTypeAddFormContent({ initialData }: { initialData?: any }) {
     if (!initialData?.id) return;
     try {
       await deleteFuelType.mutateAsync(initialData.id);
-      toast.success(t('delete.successfull'));
+      toast.success(t('delete.success'));
       navigate({ to: '/register/type-fuel' });
     } catch {
       toast.error(t('error.delete'));

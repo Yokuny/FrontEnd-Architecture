@@ -58,7 +58,7 @@ export function TasksVesselChart({ filters }: { filters: KPISCMMSFilters & { min
   return (
     <Item variant="outline" className="w-full min-w-80">
       <ItemHeader className="flex-col items-center gap-1">
-        <ItemTitle className="text-lg font-bold">{t('kpis.cmms.open.tasks.by.vessel')}</ItemTitle>
+        <ItemTitle className="font-bold text-lg">{t('kpis.cmms.open.tasks.by.vessel')}</ItemTitle>
         <ItemDescription>{t('kpis.cmms.open.tasks.by.vessel.description')}</ItemDescription>
       </ItemHeader>
       <ItemContent>

@@ -55,7 +55,7 @@ function FleetMapPage() {
   }, [selectedMachineId, positionsData]);
 
   return (
-    <div className={cn('h-[calc(100dvh - 64px)] overflow-hidden', isMobile ? 'flex flex-col' : 'relative')}>
+    <div className={cn('- 64px)] h-[calc(100dvh overflow-hidden', isMobile ? 'flex flex-col' : 'relative')}>
       <BaseMap
         center={mapCenter}
         zoom={zoom}
@@ -64,7 +64,7 @@ function FleetMapPage() {
         minZoom={3}
         worldCopyJump
         doubleClickZoom={false}
-        className={cn('text-foreground flex-1 min-h-0', isMobile ? 'h-[80dvh] relative shrink-0' : 'fixed inset-0 z-0')}
+        className={cn('min-h-0 flex-1 text-foreground', isMobile ? 'relative h-[80dvh] shrink-0' : 'fixed inset-0 z-0')}
       >
         <MapLayers defaultTileLayer={mapTheme}>
           <MapTileLayer name="default" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

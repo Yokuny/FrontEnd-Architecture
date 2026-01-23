@@ -13,10 +13,10 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
   const id = useId();
   const query = useUserTeamSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.first.enterprise') : t('nooptions.message');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const displayLabel = label || t('group');
 
   if (mode === 'multi') {
-    const displayLabel = label || t('team');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -27,7 +27,7 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
         )}
         <DataMultiSelect<UserTeamMember, UserTeamMember>
           id={id}
-          placeholder={placeholder || t('team')}
+          placeholder={placeholder || t('group')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
@@ -35,14 +35,13 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
           disabled={disabled}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
           className={className}
         />
       </div>
     );
   }
 
-  const displayLabel = label || t('team');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -53,7 +52,7 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
       )}
       <DataSelect<UserTeamMember, UserTeamMember>
         id={id}
-        placeholder={placeholder || t('team')}
+        placeholder={placeholder || t('group')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}
@@ -62,7 +61,7 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
         clearable={clearable}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
         className={className}
       />
     </div>

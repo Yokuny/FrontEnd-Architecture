@@ -23,7 +23,7 @@ export function SensorByMachineSelect({
   const id = useId();
   const query = useSensorsByMachineSelect(idMachine);
 
-  const noOptionsMessage = !idMachine ? t('select.first.machine', { defaultValue: 'Selecione uma máquina primeiro.' }) : t('nooptions.message');
+  const noOptionsMessage = !idMachine ? t('select.first.machine') : t('nooptions.message');
 
   if (multi) {
     return (
@@ -45,7 +45,7 @@ export function SensorByMachineSelect({
           className={className}
           searchPlaceholder={t('search.placeholder')}
           noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('noresults.message')}
+          noResultsMessage={t('not.found')}
         />
       </div>
     );
@@ -71,7 +71,7 @@ export function SensorByMachineSelect({
         className={className}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('noresults.message')}
+        noResultsMessage={t('not.found')}
       />
     </div>
   );

@@ -50,7 +50,7 @@ function EnterprisesListPage() {
   const renderEnterpriseItem = (item: Enterprise) => {
     return (
       <Item key={item.id} variant="outline" className="cursor-pointer" onClick={() => navigate({ to: '/register/enterprises/add', search: { id: item.id } })}>
-        <div className="flex items-center gap-4 flex-1">
+        <div className="flex flex-1 items-center gap-4">
           <ItemMedia variant="image">
             {item.image?.url ? <img src={item.image.url} alt={item.name} className="size-full object-cover" /> : <Building2 className="size-5" />}
           </ItemMedia>
@@ -78,7 +78,7 @@ function EnterprisesListPage() {
                     navigate({ to: '/register/enterprises/add', search: { id: item.id } });
                   }}
                 >
-                  <Pencil className="size-4 mr-2" />
+                  <Pencil className="mr-2 size-4" />
                   {t('edit')}
                 </DropdownMenuItem>
 
@@ -88,7 +88,7 @@ function EnterprisesListPage() {
                     navigate({ to: '/set-up-company/setup-email', search: { id: item.id } });
                   }}
                 >
-                  <Mail className="size-4 mr-2" />
+                  <Mail className="mr-2 size-4" />
                   {t('setup.email')}
                 </DropdownMenuItem>
 
@@ -98,7 +98,7 @@ function EnterprisesListPage() {
                     navigate({ to: '/set-up-company/setup-chatbot', search: { id: item.id } });
                   }}
                 >
-                  <MessageSquare className="size-4 mr-2" />
+                  <MessageSquare className="mr-2 size-4" />
                   {t('setup.chatbot')}
                 </DropdownMenuItem>
 
@@ -108,7 +108,7 @@ function EnterprisesListPage() {
                     navigate({ to: '/set-up-company/external-users', search: { id: item.id } });
                   }}
                 >
-                  <Users className="size-4 mr-2" />
+                  <Users className="mr-2 size-4" />
                   {t('usernames.external')}
                 </DropdownMenuItem>
 
@@ -118,7 +118,7 @@ function EnterprisesListPage() {
                     navigate({ to: '/set-up-company/setup-limits', search: { id: item.id } });
                   }}
                 >
-                  <Settings className="size-4 mr-2" />
+                  <Settings className="mr-2 size-4" />
                   {t('setup.limits')}
                 </DropdownMenuItem>
 
@@ -130,8 +130,8 @@ function EnterprisesListPage() {
                     navigate({ to: '/set-up-company/setup-fleet', search: { id: item.id } });
                   }}
                 >
-                  <Settings className="size-4 mr-2" />
-                  {t('setup')} Fleet
+                  <Settings className="mr-2 size-4" />
+                  {t('config')} Fleet
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -144,9 +144,9 @@ function EnterprisesListPage() {
   return (
     <Card>
       <CardHeader title={t('enterprises')}>
-        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={t('search')}
               className="pl-9"
@@ -169,7 +169,7 @@ function EnterprisesListPage() {
           </div>
           {hasPermissionAdd && (
             <Button onClick={() => navigate({ to: '/register/enterprises/add' })}>
-              <Plus className="size-4 mr-2" />
+              <Plus className="mr-2 size-4" />
               {t('add')}
             </Button>
           )}
@@ -182,7 +182,7 @@ function EnterprisesListPage() {
 
       {total > 0 && (
         <CardFooter layout="multi">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground order-2 sm:order-1">
+          <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
             <span>{t('show')}</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">

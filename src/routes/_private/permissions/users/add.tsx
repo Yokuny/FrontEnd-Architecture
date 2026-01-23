@@ -52,25 +52,25 @@ function AddUserPage() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             <div>
               <h2 className="font-semibold text-foreground">{t('user_profile')}</h2>
-              <p className="mt-1 text-sm text-muted-foreground">{t('users.profile.description')}</p>
+              <p className="mt-1 text-muted-foreground text-sm">{t('users.profile.description')}</p>
             </div>
-            <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-6 md:col-span-2">
               <div className="col-span-full">
                 <Field className="gap-2">
                   <EnterpriseWithSetupSelect mode="single" value={idEnterprise} onChange={handleEnterpriseChange} placeholder={t('select.placeholder')} />
-                  {form.formState.errors.idEnterprise && <p className="text-sm text-destructive">{t(form.formState.errors.idEnterprise.message as string)}</p>}
+                  {form.formState.errors.idEnterprise && <p className="text-destructive text-sm">{t(form.formState.errors.idEnterprise.message as string)}</p>}
                 </Field>
               </div>
 
               <div className="col-span-full sm:col-span-4">
                 <Field className="gap-2">
-                  <FieldLabel htmlFor="name">{t('account.name')} *</FieldLabel>
-                  <Input id="name" {...form.register('name')} placeholder={t('account.name.placeholder')} maxLength={150} />
-                  {form.formState.errors.name && <p className="text-sm text-destructive">{t(form.formState.errors.name.message as string)}</p>}
+                  <FieldLabel htmlFor="name">{t('name')} *</FieldLabel>
+                  <Input id="name" {...form.register('name')} placeholder={t('name.placeholder')} maxLength={150} />
+                  {form.formState.errors.name && <p className="text-destructive text-sm">{t(form.formState.errors.name.message as string)}</p>}
                 </Field>
               </div>
 
-              <div className="col-span-full sm:col-span-2 pt-8">
+              <div className="col-span-full pt-8 sm:col-span-2">
                 <div className="flex items-center space-x-2">
                   <Checkbox id="isUser" checked={isUser} onCheckedChange={(checked) => form.setValue('isUser', !!checked)} />
                   <FieldLabel htmlFor="isUser" className="cursor-pointer font-normal">
@@ -82,10 +82,10 @@ function AddUserPage() {
               <div className="col-span-full sm:col-span-4">
                 <Field className="gap-2">
                   <FieldLabel htmlFor="email">
-                    {t('login.email')} {isUser && '*'}
+                    {t('email')} {isUser && '*'}
                   </FieldLabel>
                   <Input id="email" type="email" {...form.register('email')} placeholder={t('login.email.placeholder')} />
-                  {form.formState.errors.email && <p className="text-sm text-destructive">{t(form.formState.errors.email.message as string)}</p>}
+                  {form.formState.errors.email && <p className="text-destructive text-sm">{t(form.formState.errors.email.message as string)}</p>}
                 </Field>
               </div>
 
@@ -110,9 +110,9 @@ function AddUserPage() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             <div>
               <h2 className="font-semibold text-foreground">{t('permissions_access')}</h2>
-              <p className="mt-1 text-sm text-muted-foreground">{t('users.access.description')}</p>
+              <p className="mt-1 text-muted-foreground text-sm">{t('users.access.description')}</p>
             </div>
-            <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-6 md:col-span-2">
               <div className="col-span-full sm:col-span-3">
                 <Field className="gap-2">
                   <RoleSelect isAll mode="multi" value={form.watch('roles')} onChange={(vals) => form.setValue('roles', vals)} placeholder={t('select.placeholder')} />
@@ -150,9 +150,9 @@ function AddUserPage() {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             <div>
               <h2 className="font-semibold text-foreground">{t('preferences_config')}</h2>
-              <p className="mt-1 text-sm text-muted-foreground">{t('users.preferences.description')}</p>
+              <p className="mt-1 text-muted-foreground text-sm">{t('users.preferences.description')}</p>
             </div>
-            <div className="md:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-6 md:col-span-2">
               {phone && (
                 <div className="col-span-full mb-4">
                   <div className="flex items-center space-x-2">

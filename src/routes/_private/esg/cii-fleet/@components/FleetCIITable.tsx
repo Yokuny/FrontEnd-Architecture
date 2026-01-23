@@ -39,7 +39,7 @@ export function FleetCIITable({ data }: FleetCIITableProps) {
       render: (_, row) => (
         <div className="flex flex-col">
           <span className="font-bold">{row.machineName}</span>
-          <span className="text-xs text-muted-foreground">{row.code}</span>
+          <span className="text-muted-foreground text-xs">{row.code}</span>
         </div>
       ),
       sortable: true,
@@ -115,5 +115,5 @@ export function FleetCIITable({ data }: FleetCIITableProps) {
     }),
   ];
 
-  return <DataTable data={data} columns={columns} bordered={false} className="border-none shadow-none py-0" />;
+  return <DataTable data={data} columns={columns} bordered={false} className="border-none py-0 shadow-none" />;
 }

@@ -20,9 +20,9 @@ export function ServicesGroupedField() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">{t('services.grouped')}</h3>
+        <h3 className="font-medium text-lg">{t('services.grouped')}</h3>
         <Button type="button" onClick={() => append({ groupName: '', itens: [] })}>
-          <Plus className="size-4 mr-2" />
+          <Plus className="mr-2 size-4" />
           {t('add.group')}
         </Button>
       </div>
@@ -41,8 +41,8 @@ function GroupItem({ index, onRemove }: { index: number; onRemove: () => void })
   const { control } = useFormContext<MaintenancePlanFormData>();
 
   return (
-    <Item variant="outline" className="flex p-0 overflow-auto bg-secondary">
-      <ItemHeader className="px-4 py-2 border-b flex items-center">
+    <Item variant="outline" className="flex overflow-auto bg-secondary p-0">
+      <ItemHeader className="flex items-center border-b px-4 py-2">
         <ItemTitle className="uppercase tracking-wider">
           {t('group')} {index + 1}
         </ItemTitle>
@@ -52,7 +52,7 @@ function GroupItem({ index, onRemove }: { index: number; onRemove: () => void })
           </Button>
         </ItemActions>
       </ItemHeader>
-      <div className="p-4 space-y-4 w-full">
+      <div className="w-full space-y-4 p-4">
         <FormField
           control={control}
           name={`servicesGrouped.${index}.groupName`}
@@ -66,7 +66,7 @@ function GroupItem({ index, onRemove }: { index: number; onRemove: () => void })
             </FormItem>
           )}
         />
-        <div className="pt-2 border-t">
+        <div className="border-t pt-2">
           <ServiceItemsField groupIndex={index} />
         </div>
       </div>
@@ -85,7 +85,7 @@ function ServiceItemsField({ groupIndex }: { groupIndex: number }) {
   return (
     <div className="space-y-4">
       {fields.map((field, index) => (
-        <div key={field.id} className="grid grid-cols-1 w-full gap-4 border-l pl-4 py-4 relative">
+        <div key={field.id} className="relative grid w-full grid-cols-1 gap-4 border-l py-4 pl-4">
           <div className="grid grid-cols-1 gap-4">
             <FormField
               control={control}
@@ -107,7 +107,7 @@ function ServiceItemsField({ groupIndex }: { groupIndex: number }) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <TypeServiceMaintenanceSelect value={field.value} onChange={field.onChange} label={undefined} placeholder={t('select.type.service.placeholder')} />
+                    <TypeServiceMaintenanceSelect value={field.value} onChange={field.onChange} label={undefined} placeholder={t('type.service')} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -120,7 +120,7 @@ function ServiceItemsField({ groupIndex }: { groupIndex: number }) {
                 <FormItem>
                   <FormLabel>{t('observation')}</FormLabel>
                   <FormControl>
-                    <Textarea {...field} placeholder={t('observation.optional')} rows={2} className="bg-background min-h-[60px] resize-none" />
+                    <Textarea {...field} placeholder={t('observation.optional')} rows={2} className="min-h-[60px] resize-none bg-background" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -135,7 +135,7 @@ function ServiceItemsField({ groupIndex }: { groupIndex: number }) {
         </div>
       ))}
       <Button type="button" onClick={() => append({ description: '', observation: '', typeService: undefined })}>
-        <Plus className="size-4 mr-2" />
+        <Plus className="mr-2 size-4" />
         {t('add.service')}
       </Button>
     </div>

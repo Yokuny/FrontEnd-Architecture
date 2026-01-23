@@ -65,14 +65,14 @@ export function FormFieldEditorModal({ open, onOpenChange, field, onSave, idEnte
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-auto">
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-auto">
         <DialogHeader>
           <DialogTitle>
             {data?.id ? t('edit') : t('add')} {t('field')}
           </DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+        <div className="grid grid-cols-1 gap-6 py-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label>{t('field.name')} *</Label>
             <Input value={data.description || ''} onChange={(e) => handleChange('description', e.target.value)} placeholder={t('field.name')} />
@@ -130,7 +130,7 @@ export function FormFieldEditorModal({ open, onOpenChange, field, onSave, idEnte
                 <Input
                   value={optionInput}
                   onChange={(e) => setOptionInput(e.target.value)}
-                  placeholder={t('add.option')}
+                  placeholder={t('add.options')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();

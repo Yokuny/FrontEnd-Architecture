@@ -52,7 +52,7 @@ function SetupCompanyHubPage() {
       to: '/set-up-company/setup-limits' as const,
     },
     {
-      title: `${t('setup')} Fleet`,
+      title: `${t('config')} Fleet`,
       description: t('setup.fleet.description'),
       icon: MapPin,
       to: '/set-up-company/setup-fleet' as const,
@@ -64,7 +64,7 @@ function SetupCompanyHubPage() {
       <CardHeader title={t('setup.company')} />
       <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {menuItems.map((item) => (
-          <Item key={item.to} variant="outline" className="bg-card hover:bg-muted/50 transition-colors cursor-pointer h-full" asChild>
+          <Item key={item.to} variant="outline" className="h-full cursor-pointer bg-card transition-colors hover:bg-muted/50" asChild>
             <Link to={item.to}>
               <ItemMedia variant="icon">
                 <item.icon className="size-5" />

@@ -44,11 +44,11 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
   return (
     <FieldGroup className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1 text-center">
-        <div className="mx-auto mb-4 bg-amber-500/10 p-4 rounded-2xl w-fit border border-amber-500/20">
+        <div className="mx-auto mb-4 w-fit rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
           <Shield className="h-12 w-12 text-amber-500" />
         </div>
-        <h1 className="text-2xl font-bold">{t('unlock.code.title')}</h1>
-        <p className="text-muted-foreground text-sm text-balance">{t('unlock.code.subtitle', { destination })}</p>
+        <h1 className="font-bold text-2xl">{t('unlock.code.title')}</h1>
+        <p className="text-balance text-muted-foreground text-sm">{t('unlock.code.subtitle', { destination })}</p>
       </div>
 
       <Form {...form}>
@@ -58,12 +58,12 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
             name="code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-medium text-center block">{t('unlock.code.label')}</FormLabel>
+                <FormLabel className="block text-center font-medium">{t('unlock.code.label')}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder={t('unlock.code.placeholder')}
-                    className="h-14 text-center text-3xl font-bold tracking-[0.5em]"
+                    placeholder={t('add.code')}
+                    className="h-14 text-center font-bold text-3xl tracking-[0.5em]"
                     autoComplete="one-time-code"
                     autoFocus
                     maxLength={10}
@@ -74,7 +74,7 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
             )}
           />
 
-          <Button type="submit" variant="green" className="w-full mt-4 font-semibold text-base" size="lg">
+          <Button type="submit" variant="green" className="mt-4 w-full font-semibold text-base" size="lg">
             {t('verify.code')}
           </Button>
         </form>
@@ -89,7 +89,7 @@ export function VerifyCodeStep({ destination, onSubmit, onBack, onResend }: Veri
           variant="link"
           onClick={handleResend}
           disabled={resendCooldown > 0}
-          className="text-primary hover:text-primary/80 font-medium disabled:text-muted-foreground disabled:cursor-not-allowed"
+          className="font-medium text-primary hover:text-primary/80 disabled:cursor-not-allowed disabled:text-muted-foreground"
         >
           {resendCooldown > 0 ? t('resend.in', { seconds: resendCooldown }) : t('resend.code')}
         </Button>

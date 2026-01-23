@@ -48,21 +48,21 @@ export function MachineDetailsPanel() {
   const columnsClass = gridItems.length === 4 ? 'grid-cols-2' : 'grid-cols-3';
 
   return (
-    <ItemGroup className="p-4 space-y-2">
-      <ItemContent className="flex flex-row justify-between items-center gap-2">
+    <ItemGroup className="space-y-2 p-4">
+      <ItemContent className="flex flex-row items-center justify-between gap-2">
         <div className="flex flex-col items-start">
-          <ItemTitle className="text-[10px] text-muted-foreground truncate uppercase font-bold tracking-tight text-center">{t('departure')}</ItemTitle>
-          <div className="text-xs font-semibold flex items-center justify-center">
+          <ItemTitle className="truncate text-center font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{t('departure')}</ItemTitle>
+          <div className="flex items-center justify-center font-semibold text-xs">
             {data.travel?.dateTimeStart ? format(new Date(data.travel.dateTimeStart), 'dd MMM yy') : '-'}
           </div>
-          <span className="text-[10px] text-muted-foreground font-semibold tabular-nums">
+          <span className="font-semibold text-[10px] text-muted-foreground tabular-nums">
             {data.travel?.dateTimeStart ? format(new Date(data.travel.dateTimeStart), 'HH:mm') : '-'}
           </span>
         </div>
 
         <div className="flex flex-col items-center">
-          <ItemTitle className="text-[10px] text-muted-foreground truncate uppercase font-bold tracking-tight text-center">{t('proximity')}</ItemTitle>
-          <div className="text-xs font-semibold flex items-center justify-center">
+          <ItemTitle className="truncate text-center font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{t('proximity')}</ItemTitle>
+          <div className="flex items-center justify-center font-semibold text-xs">
             {data?.data?.position ? <Proximity latitude={data.data.position[0]} longitude={data.data.position[1]} /> : '-'}
           </div>
           <span className="text-[10px] text-muted-foreground tabular-nums">
@@ -71,9 +71,9 @@ export function MachineDetailsPanel() {
         </div>
 
         <div className="flex flex-col items-end">
-          <ItemTitle className="text-[10px] text-muted-foreground truncate uppercase font-bold tracking-tight text-center">{t('arrival')}</ItemTitle>
-          <div className="text-xs font-semibold flex items-center justify-center">{data.travel?.dateTimeEnd ? format(new Date(data.travel.dateTimeEnd), 'dd MMM yy') : '-'}</div>
-          <span className="text-[10px] text-muted-foreground font-semibold tabular-nums">
+          <ItemTitle className="truncate text-center font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{t('arrival')}</ItemTitle>
+          <div className="flex items-center justify-center font-semibold text-xs">{data.travel?.dateTimeEnd ? format(new Date(data.travel.dateTimeEnd), 'dd MMM yy') : '-'}</div>
+          <span className="font-semibold text-[10px] text-muted-foreground tabular-nums">
             {data.travel?.dateTimeEnd ? format(new Date(data.travel.dateTimeEnd), 'HH:mm') : '-'}
           </span>
         </div>
@@ -81,41 +81,41 @@ export function MachineDetailsPanel() {
 
       {data?.travel && (
         <ItemContent>
-          <ItemTitle className=" text-muted-foreground uppercase font-bold tracking-tight">{data.travel.code}</ItemTitle>
+          <ItemTitle className="font-bold text-muted-foreground uppercase tracking-tight">{data.travel.code}</ItemTitle>
           <ItemContent>
-            <div className="flex justify-between text-xs items-center">
+            <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">{t('source')}</span>
-              <div className="w-full h-px mx-3 bg-muted-foreground" />
+              <div className="mx-3 h-px w-full bg-muted-foreground" />
               <span className="text-muted-foreground">{t('destiny.port')}</span>
             </div>
-            <div className="flex justify-between text-xs items-start">
-              <div className="flex flex-col gap-1 w-1/2">
+            <div className="flex items-start justify-between text-xs">
+              <div className="flex w-1/2 flex-col gap-1">
                 <span className="font-medium">{data.travel.portPointStart?.code || '-'}</span>
                 <span className="text-muted-foreground">{data.travel.portPointStart?.description || '-'}</span>
               </div>
-              <div className="flex flex-col text-right gap-1 w-1/2">
+              <div className="flex w-1/2 flex-col gap-1 text-right">
                 <span className="font-medium">{data.travel.portPointEnd?.code || '-'}</span>
-                <span className="text-muted-foreground text-right">{data.travel.portPointEnd?.description || '-'}</span>
+                <span className="text-right text-muted-foreground">{data.travel.portPointEnd?.description || '-'}</span>
               </div>
             </div>
           </ItemContent>
         </ItemContent>
       )}
 
-      <ItemContent className={cn('grid gap-y-4 gap-x-2 p-2 py-4 bg-accent/50 rounded-md border-accent border', columnsClass)}>
+      <ItemContent className={cn('grid gap-x-2 gap-y-4 rounded-md border border-accent bg-accent/50 p-2 py-4', columnsClass)}>
         {gridItems.map((item) => (
           <DetailGridItem key={item.id} label={item.label} icon={item.icon} value={item.value} />
         ))}
       </ItemContent>
 
       <ItemContent className="border-b pb-4">
-        <div className="flex items-center gap-2 mb-2">
+        <div className="mb-2 flex items-center gap-2">
           <TrendingUp className="size-3 text-primary" />
-          <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('speed.history')}</ItemTitle>
+          <ItemTitle className="font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{t('speed.history')}</ItemTitle>
         </div>
-        <div className="h-32 w-full bg-accent rounded-lg border">
+        <div className="h-32 w-full rounded-lg border bg-accent">
           {chartData.length === 0 ? (
-            <div className="w-full h-full flex items-center justify-center text-muted-foreground underline decoration-dotted">{t('no.data')}</div>
+            <div className="flex h-full w-full items-center justify-center text-muted-foreground underline decoration-dotted">{t('no.data')}</div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
@@ -129,7 +129,7 @@ export function MachineDetailsPanel() {
                   content={({ active, payload }) => {
                     if (active && payload?.[0]) {
                       return (
-                        <div className="bg-background border rounded-lg p-2 shadow-lg text-[10px]">
+                        <div className="rounded-lg border bg-background p-2 text-[10px] shadow-lg">
                           <div className="font-bold">{format(new Date(payload[0].payload.time), 'HH:mm')}</div>
                           <div className="font-bold" style={{ color: getChartColor(0) }}>
                             {payload[0].value} kn
@@ -152,17 +152,17 @@ export function MachineDetailsPanel() {
       <ItemContent className="border-b pb-4">
         <div className="flex items-center gap-2">
           <ListTree className="size-3 text-primary" />
-          <ItemTitle className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">{t('timeline')}</ItemTitle>
+          <ItemTitle className="font-bold text-[10px] text-muted-foreground uppercase tracking-tight">{t('timeline')}</ItemTitle>
         </div>
-        <div className="space-y-3 relative pl-5 before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-px before:bg-border">
+        <div className="relative space-y-3 pl-5 before:absolute before:top-2 before:bottom-2 before:left-[19px] before:w-px before:bg-border">
           {timeline.length === 0 ? (
-            <div className="text-xs text-muted-foreground italic pl-5">{t('no.events.recorded')}</div>
+            <div className="pl-5 text-muted-foreground text-xs italic">{t('no.events.recorded')}</div>
           ) : (
             timeline.slice(0, 5).map((event: any) => (
-              <div key={event.id} className="relative flex items-start gap-4 group">
-                <div className="absolute mt-1.5 size-1 bg-primary z-10" />
+              <div key={event.id} className="group relative flex items-start gap-4">
+                <div className="absolute z-10 mt-1.5 size-1 bg-primary" />
                 <div className="flex flex-col gap-0.5 pl-2">
-                  <span className="text-[10px] text-muted-foreground font-medium">{format(new Date(event.date), 'dd MMM, HH:mm')}</span>
+                  <span className="font-medium text-[10px] text-muted-foreground">{format(new Date(event.date), 'dd MMM, HH:mm')}</span>
                   <ItemTitle className="text-xs">{event.data?.status || event.type}</ItemTitle>
                 </div>
               </div>

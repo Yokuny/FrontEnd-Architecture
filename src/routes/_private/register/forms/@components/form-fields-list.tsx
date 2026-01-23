@@ -78,9 +78,9 @@ export function FormFieldsList({ form, idEnterprise, markAsChanged }: FormFields
           description: t('form.fields.desc', 'Gerencie os campos do formulário e sua ordem de exibição'),
           fields: [
             <div key="fields-container" className="space-y-4">
-              <div className="flex justify-end mb-4">
+              <div className="mb-4 flex justify-end">
                 <Button type="button" size="sm" onClick={handleAddField}>
-                  <Plus className="size-4 mr-2" />
+                  <Plus className="mr-2 size-4" />
                   {t('add.field')}
                 </Button>
               </div>
@@ -104,7 +104,7 @@ export function FormFieldsList({ form, idEnterprise, markAsChanged }: FormFields
                   ))}
                 </div>
               ) : (
-                <div className="p-12 border-2 border-dashed rounded-lg text-center text-muted-foreground bg-accent/20">
+                <div className="rounded-lg border-2 border-dashed bg-accent/20 p-12 text-center text-muted-foreground">
                   <p>{t('no.fields', 'Nenhum campo adicionado ainda.')}</p>
                 </div>
               )}
