@@ -12,7 +12,7 @@ function HeatmapPanelPage() {
   return (
     <Card>
       <CardHeader title={t('telemetry.heatmap.panel')} />
-      <CardContent>{/* TODO: Migrate content from iotlog-fronted/src/pages/heatmap/panel/HeatmapPanel.jsx */}</CardContent>
+      <CardContent>{/* TODO: Migrate content from iotlog-fronted */}</CardContent>
     </Card>
   );
 }

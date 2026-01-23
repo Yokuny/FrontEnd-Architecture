@@ -12,7 +12,7 @@ function DownloadDataAssetRequestPage() {
   return (
     <Card>
       <CardHeader title={t('telemetry.download.data.asset.request')} />
-      <CardContent>{/* TODO: Migrate content from iotlog-fronted/src/pages/download/asset/index.jsx */}</CardContent>
+      <CardContent>{/* TODO: Migrate content from iotlog-fronted */}</CardContent>
     </Card>
   );
 }

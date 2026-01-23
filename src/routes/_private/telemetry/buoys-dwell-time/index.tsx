@@ -12,7 +12,7 @@ function BuoysDwellTimePage() {
   return (
     <Card>
       <CardHeader title={t('telemetry.buoys.dwell.time')} />
-      <CardContent>{/* TODO: Migrate content from iotlog-fronted/src/pages/buoys-dwell-time/index.jsx */}</CardContent>
+      <CardContent>{/* TODO: Migrate content from iotlog-fronted */}</CardContent>
     </Card>
   );
 }

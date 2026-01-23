@@ -13,9 +13,11 @@ import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateVoyageIndexRouteImport } from './routes/_private/voyage/index';
 import { Route as PrivateTelemetryIndexRouteImport } from './routes/_private/telemetry/index';
 import { Route as PrivateStatisticsIndexRouteImport } from './routes/_private/statistics/index';
 import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
+import { Route as PrivateServiceManagementIndexRouteImport } from './routes/_private/service-management/index';
 import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
 import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
 import { Route as PrivateOperationIndexRouteImport } from './routes/_private/operation/index';
@@ -23,11 +25,16 @@ import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/m
 import { Route as PrivateIaIndexRouteImport } from './routes/_private/ia/index';
 import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/fleet-manager/index';
 import { Route as PrivateEsgIndexRouteImport } from './routes/_private/esg/index';
+import { Route as PrivateContractsIndexRouteImport } from './routes/_private/contracts/index';
 import { Route as PrivateConsumptionIndexRouteImport } from './routes/_private/consumption/index';
 import { Route as PrivateCalendarMaintenanceIndexRouteImport } from './routes/_private/calendar-maintenance/index';
 import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
 import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
 import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PrivateVoyageVoyageIntegrationIndexRouteImport } from './routes/_private/voyage/voyage-integration/index';
+import { Route as PrivateVoyageRoutePlannerIndexRouteImport } from './routes/_private/voyage/route-planner/index';
+import { Route as PrivateVoyageListTravelIndexRouteImport } from './routes/_private/voyage/list-travel/index';
+import { Route as PrivateVoyageKpisTravelIndexRouteImport } from './routes/_private/voyage/kpis-travel/index';
 import { Route as PrivateTelemetryRemoteIhmIndexRouteImport } from './routes/_private/telemetry/remote-ihm/index';
 import { Route as PrivateTelemetryPerformanceIndexRouteImport } from './routes/_private/telemetry/performance/index';
 import { Route as PrivateTelemetryListDashboardIndexRouteImport } from './routes/_private/telemetry/list-dashboard/index';
@@ -49,6 +56,9 @@ import { Route as PrivateSetUpCompanySetupChatbotIndexRouteImport } from './rout
 import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
 import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
 import { Route as PrivateSetUpCompanyExternalUsersIndexRouteImport } from './routes/_private/set-up-company/external-users/index';
+import { Route as PrivateServiceManagementFasIndexRouteImport } from './routes/_private/service-management/fas/index';
+import { Route as PrivateServiceManagementFasContactsIndexRouteImport } from './routes/_private/service-management/fas-contacts/index';
+import { Route as PrivateServiceManagementFasAnalyticsIndexRouteImport } from './routes/_private/service-management/fas-analytics/index';
 import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
 import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_private/register/type-fuel/index';
 import { Route as PrivateRegisterSensorsIndexRouteImport } from './routes/_private/register/sensors/index';
@@ -83,12 +93,19 @@ import { Route as PrivateEsgSimulatorCiiIndexRouteImport } from './routes/_priva
 import { Route as PrivateEsgIndicatorsEeoiCiiIndexRouteImport } from './routes/_private/esg/indicators-eeoi-cii/index';
 import { Route as PrivateEsgConsumptionCo2IndexRouteImport } from './routes/_private/esg/consumption-co2/index';
 import { Route as PrivateEsgCiiFleetIndexRouteImport } from './routes/_private/esg/cii-fleet/index';
+import { Route as PrivateContractsDashboardRveIndexRouteImport } from './routes/_private/contracts/dashboard-rve/index';
+import { Route as PrivateContractsDashboardRveSoundingIndexRouteImport } from './routes/_private/contracts/dashboard-rve-sounding/index';
+import { Route as PrivateContractsDashboardRveRdoIndexRouteImport } from './routes/_private/contracts/dashboard-rve-rdo/index';
+import { Route as PrivateContractsContractListIndexRouteImport } from './routes/_private/contracts/contract-list/index';
 import { Route as PrivateConsumptionTimeOperationIndexRouteImport } from './routes/_private/consumption/time-operation/index';
 import { Route as PrivateConsumptionRveSoundingIndexRouteImport } from './routes/_private/consumption/rve-sounding/index';
 import { Route as PrivateConsumptionRveRdoIndexRouteImport } from './routes/_private/consumption/rve-rdo/index';
 import { Route as PrivateConsumptionRelatorioIndexRouteImport } from './routes/_private/consumption/relatorio/index';
 import { Route as PrivateConsumptionDailyIndexRouteImport } from './routes/_private/consumption/daily/index';
 import { Route as PrivateConsumptionComparativeIndexRouteImport } from './routes/_private/consumption/comparative/index';
+import { Route as PrivateCmmsKpisCmmsIndexRouteImport } from './routes/_private/cmms/kpis-cmms/index';
+import { Route as PrivateCmmsFilledFormCmmsIndexRouteImport } from './routes/_private/cmms/filled-form-cmms/index';
+import { Route as PrivateCmmsDiagramListIndexRouteImport } from './routes/_private/cmms/diagram-list/index';
 import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
 import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
 import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
@@ -135,6 +152,11 @@ const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   path: '/auth/',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateVoyageIndexRoute = PrivateVoyageIndexRouteImport.update({
+  id: '/voyage/',
+  path: '/voyage/',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PrivateTelemetryIndexRoute = PrivateTelemetryIndexRouteImport.update({
   id: '/telemetry/',
   path: '/telemetry/',
@@ -149,6 +171,12 @@ const PrivateSetUpCompanyIndexRoute =
   PrivateSetUpCompanyIndexRouteImport.update({
     id: '/set-up-company/',
     path: '/set-up-company/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateServiceManagementIndexRoute =
+  PrivateServiceManagementIndexRouteImport.update({
+    id: '/service-management/',
+    path: '/service-management/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateRegisterIndexRoute = PrivateRegisterIndexRouteImport.update({
@@ -187,6 +215,11 @@ const PrivateEsgIndexRoute = PrivateEsgIndexRouteImport.update({
   path: '/esg/',
   getParentRoute: () => PrivateRoute,
 } as any);
+const PrivateContractsIndexRoute = PrivateContractsIndexRouteImport.update({
+  id: '/contracts/',
+  path: '/contracts/',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PrivateConsumptionIndexRoute = PrivateConsumptionIndexRouteImport.update({
   id: '/consumption/',
   path: '/consumption/',
@@ -213,6 +246,30 @@ const PublicAuthRegisterRoute = PublicAuthRegisterRouteImport.update({
   path: '/auth/register',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateVoyageVoyageIntegrationIndexRoute =
+  PrivateVoyageVoyageIntegrationIndexRouteImport.update({
+    id: '/voyage/voyage-integration/',
+    path: '/voyage/voyage-integration/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateVoyageRoutePlannerIndexRoute =
+  PrivateVoyageRoutePlannerIndexRouteImport.update({
+    id: '/voyage/route-planner/',
+    path: '/voyage/route-planner/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateVoyageListTravelIndexRoute =
+  PrivateVoyageListTravelIndexRouteImport.update({
+    id: '/voyage/list-travel/',
+    path: '/voyage/list-travel/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateVoyageKpisTravelIndexRoute =
+  PrivateVoyageKpisTravelIndexRouteImport.update({
+    id: '/voyage/kpis-travel/',
+    path: '/voyage/kpis-travel/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateTelemetryRemoteIhmIndexRoute =
   PrivateTelemetryRemoteIhmIndexRouteImport.update({
     id: '/telemetry/remote-ihm/',
@@ -337,6 +394,24 @@ const PrivateSetUpCompanyExternalUsersIndexRoute =
   PrivateSetUpCompanyExternalUsersIndexRouteImport.update({
     id: '/set-up-company/external-users/',
     path: '/set-up-company/external-users/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateServiceManagementFasIndexRoute =
+  PrivateServiceManagementFasIndexRouteImport.update({
+    id: '/service-management/fas/',
+    path: '/service-management/fas/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateServiceManagementFasContactsIndexRoute =
+  PrivateServiceManagementFasContactsIndexRouteImport.update({
+    id: '/service-management/fas-contacts/',
+    path: '/service-management/fas-contacts/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateServiceManagementFasAnalyticsIndexRoute =
+  PrivateServiceManagementFasAnalyticsIndexRouteImport.update({
+    id: '/service-management/fas-analytics/',
+    path: '/service-management/fas-analytics/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateRegisterUserTypeIndexRoute =
@@ -541,6 +616,30 @@ const PrivateEsgCiiFleetIndexRoute = PrivateEsgCiiFleetIndexRouteImport.update({
   path: '/esg/cii-fleet/',
   getParentRoute: () => PrivateRoute,
 } as any);
+const PrivateContractsDashboardRveIndexRoute =
+  PrivateContractsDashboardRveIndexRouteImport.update({
+    id: '/contracts/dashboard-rve/',
+    path: '/contracts/dashboard-rve/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateContractsDashboardRveSoundingIndexRoute =
+  PrivateContractsDashboardRveSoundingIndexRouteImport.update({
+    id: '/contracts/dashboard-rve-sounding/',
+    path: '/contracts/dashboard-rve-sounding/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateContractsDashboardRveRdoIndexRoute =
+  PrivateContractsDashboardRveRdoIndexRouteImport.update({
+    id: '/contracts/dashboard-rve-rdo/',
+    path: '/contracts/dashboard-rve-rdo/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateContractsContractListIndexRoute =
+  PrivateContractsContractListIndexRouteImport.update({
+    id: '/contracts/contract-list/',
+    path: '/contracts/contract-list/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateConsumptionTimeOperationIndexRoute =
   PrivateConsumptionTimeOperationIndexRouteImport.update({
     id: '/consumption/time-operation/',
@@ -575,6 +674,24 @@ const PrivateConsumptionComparativeIndexRoute =
   PrivateConsumptionComparativeIndexRouteImport.update({
     id: '/consumption/comparative/',
     path: '/consumption/comparative/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateCmmsKpisCmmsIndexRoute =
+  PrivateCmmsKpisCmmsIndexRouteImport.update({
+    id: '/cmms/kpis-cmms/',
+    path: '/cmms/kpis-cmms/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateCmmsFilledFormCmmsIndexRoute =
+  PrivateCmmsFilledFormCmmsIndexRouteImport.update({
+    id: '/cmms/filled-form-cmms/',
+    path: '/cmms/filled-form-cmms/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateCmmsDiagramListIndexRoute =
+  PrivateCmmsDiagramListIndexRouteImport.update({
+    id: '/cmms/diagram-list/',
+    path: '/cmms/diagram-list/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateRegisterUserTypeAddRoute =
@@ -744,6 +861,7 @@ export interface FileRoutesByFullPath {
   '/auth/unlock': typeof PublicAuthUnlockRoute;
   '/calendar-maintenance': typeof PrivateCalendarMaintenanceIndexRoute;
   '/consumption': typeof PrivateConsumptionIndexRoute;
+  '/contracts': typeof PrivateContractsIndexRoute;
   '/esg': typeof PrivateEsgIndexRoute;
   '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/ia': typeof PrivateIaIndexRoute;
@@ -751,9 +869,11 @@ export interface FileRoutesByFullPath {
   '/operation': typeof PrivateOperationIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/register': typeof PrivateRegisterIndexRoute;
+  '/service-management': typeof PrivateServiceManagementIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/statistics': typeof PrivateStatisticsIndexRoute;
   '/telemetry': typeof PrivateTelemetryIndexRoute;
+  '/voyage': typeof PrivateVoyageIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/operation/goals/add': typeof PrivateOperationGoalsAddRoute;
   '/operation/groups/add': typeof PrivateOperationGroupsAddRoute;
@@ -777,12 +897,19 @@ export interface FileRoutesByFullPath {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/cmms/diagram-list': typeof PrivateCmmsDiagramListIndexRoute;
+  '/cmms/filled-form-cmms': typeof PrivateCmmsFilledFormCmmsIndexRoute;
+  '/cmms/kpis-cmms': typeof PrivateCmmsKpisCmmsIndexRoute;
   '/consumption/comparative': typeof PrivateConsumptionComparativeIndexRoute;
   '/consumption/daily': typeof PrivateConsumptionDailyIndexRoute;
   '/consumption/relatorio': typeof PrivateConsumptionRelatorioIndexRoute;
   '/consumption/rve-rdo': typeof PrivateConsumptionRveRdoIndexRoute;
   '/consumption/rve-sounding': typeof PrivateConsumptionRveSoundingIndexRoute;
   '/consumption/time-operation': typeof PrivateConsumptionTimeOperationIndexRoute;
+  '/contracts/contract-list': typeof PrivateContractsContractListIndexRoute;
+  '/contracts/dashboard-rve-rdo': typeof PrivateContractsDashboardRveRdoIndexRoute;
+  '/contracts/dashboard-rve-sounding': typeof PrivateContractsDashboardRveSoundingIndexRoute;
+  '/contracts/dashboard-rve': typeof PrivateContractsDashboardRveIndexRoute;
   '/esg/cii-fleet': typeof PrivateEsgCiiFleetIndexRoute;
   '/esg/consumption-co2': typeof PrivateEsgConsumptionCo2IndexRoute;
   '/esg/indicators-eeoi-cii': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
@@ -817,6 +944,9 @@ export interface FileRoutesByFullPath {
   '/register/sensors': typeof PrivateRegisterSensorsIndexRoute;
   '/register/type-fuel': typeof PrivateRegisterTypeFuelIndexRoute;
   '/register/user-type': typeof PrivateRegisterUserTypeIndexRoute;
+  '/service-management/fas-analytics': typeof PrivateServiceManagementFasAnalyticsIndexRoute;
+  '/service-management/fas-contacts': typeof PrivateServiceManagementFasContactsIndexRoute;
+  '/service-management/fas': typeof PrivateServiceManagementFasIndexRoute;
   '/set-up-company/external-users': typeof PrivateSetUpCompanyExternalUsersIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
@@ -838,6 +968,10 @@ export interface FileRoutesByFullPath {
   '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
   '/telemetry/performance': typeof PrivateTelemetryPerformanceIndexRoute;
   '/telemetry/remote-ihm': typeof PrivateTelemetryRemoteIhmIndexRoute;
+  '/voyage/kpis-travel': typeof PrivateVoyageKpisTravelIndexRoute;
+  '/voyage/list-travel': typeof PrivateVoyageListTravelIndexRoute;
+  '/voyage/route-planner': typeof PrivateVoyageRoutePlannerIndexRoute;
+  '/voyage/voyage-integration': typeof PrivateVoyageVoyageIntegrationIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -851,6 +985,7 @@ export interface FileRoutesByTo {
   '/auth/unlock': typeof PublicAuthUnlockRoute;
   '/calendar-maintenance': typeof PrivateCalendarMaintenanceIndexRoute;
   '/consumption': typeof PrivateConsumptionIndexRoute;
+  '/contracts': typeof PrivateContractsIndexRoute;
   '/esg': typeof PrivateEsgIndexRoute;
   '/fleet-manager': typeof PrivateFleetManagerIndexRoute;
   '/ia': typeof PrivateIaIndexRoute;
@@ -858,9 +993,11 @@ export interface FileRoutesByTo {
   '/operation': typeof PrivateOperationIndexRoute;
   '/permissions': typeof PrivatePermissionsIndexRoute;
   '/register': typeof PrivateRegisterIndexRoute;
+  '/service-management': typeof PrivateServiceManagementIndexRoute;
   '/set-up-company': typeof PrivateSetUpCompanyIndexRoute;
   '/statistics': typeof PrivateStatisticsIndexRoute;
   '/telemetry': typeof PrivateTelemetryIndexRoute;
+  '/voyage': typeof PrivateVoyageIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/operation/goals/add': typeof PrivateOperationGoalsAddRoute;
   '/operation/groups/add': typeof PrivateOperationGroupsAddRoute;
@@ -884,12 +1021,19 @@ export interface FileRoutesByTo {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/cmms/diagram-list': typeof PrivateCmmsDiagramListIndexRoute;
+  '/cmms/filled-form-cmms': typeof PrivateCmmsFilledFormCmmsIndexRoute;
+  '/cmms/kpis-cmms': typeof PrivateCmmsKpisCmmsIndexRoute;
   '/consumption/comparative': typeof PrivateConsumptionComparativeIndexRoute;
   '/consumption/daily': typeof PrivateConsumptionDailyIndexRoute;
   '/consumption/relatorio': typeof PrivateConsumptionRelatorioIndexRoute;
   '/consumption/rve-rdo': typeof PrivateConsumptionRveRdoIndexRoute;
   '/consumption/rve-sounding': typeof PrivateConsumptionRveSoundingIndexRoute;
   '/consumption/time-operation': typeof PrivateConsumptionTimeOperationIndexRoute;
+  '/contracts/contract-list': typeof PrivateContractsContractListIndexRoute;
+  '/contracts/dashboard-rve-rdo': typeof PrivateContractsDashboardRveRdoIndexRoute;
+  '/contracts/dashboard-rve-sounding': typeof PrivateContractsDashboardRveSoundingIndexRoute;
+  '/contracts/dashboard-rve': typeof PrivateContractsDashboardRveIndexRoute;
   '/esg/cii-fleet': typeof PrivateEsgCiiFleetIndexRoute;
   '/esg/consumption-co2': typeof PrivateEsgConsumptionCo2IndexRoute;
   '/esg/indicators-eeoi-cii': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
@@ -924,6 +1068,9 @@ export interface FileRoutesByTo {
   '/register/sensors': typeof PrivateRegisterSensorsIndexRoute;
   '/register/type-fuel': typeof PrivateRegisterTypeFuelIndexRoute;
   '/register/user-type': typeof PrivateRegisterUserTypeIndexRoute;
+  '/service-management/fas-analytics': typeof PrivateServiceManagementFasAnalyticsIndexRoute;
+  '/service-management/fas-contacts': typeof PrivateServiceManagementFasContactsIndexRoute;
+  '/service-management/fas': typeof PrivateServiceManagementFasIndexRoute;
   '/set-up-company/external-users': typeof PrivateSetUpCompanyExternalUsersIndexRoute;
   '/set-up-company/integration-list': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/set-up-company/setup-api-external': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
@@ -945,6 +1092,10 @@ export interface FileRoutesByTo {
   '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
   '/telemetry/performance': typeof PrivateTelemetryPerformanceIndexRoute;
   '/telemetry/remote-ihm': typeof PrivateTelemetryRemoteIhmIndexRoute;
+  '/voyage/kpis-travel': typeof PrivateVoyageKpisTravelIndexRoute;
+  '/voyage/list-travel': typeof PrivateVoyageListTravelIndexRoute;
+  '/voyage/route-planner': typeof PrivateVoyageRoutePlannerIndexRoute;
+  '/voyage/voyage-integration': typeof PrivateVoyageVoyageIntegrationIndexRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -961,6 +1112,7 @@ export interface FileRoutesById {
   '/_public/auth/unlock': typeof PublicAuthUnlockRoute;
   '/_private/calendar-maintenance/': typeof PrivateCalendarMaintenanceIndexRoute;
   '/_private/consumption/': typeof PrivateConsumptionIndexRoute;
+  '/_private/contracts/': typeof PrivateContractsIndexRoute;
   '/_private/esg/': typeof PrivateEsgIndexRoute;
   '/_private/fleet-manager/': typeof PrivateFleetManagerIndexRoute;
   '/_private/ia/': typeof PrivateIaIndexRoute;
@@ -968,9 +1120,11 @@ export interface FileRoutesById {
   '/_private/operation/': typeof PrivateOperationIndexRoute;
   '/_private/permissions/': typeof PrivatePermissionsIndexRoute;
   '/_private/register/': typeof PrivateRegisterIndexRoute;
+  '/_private/service-management/': typeof PrivateServiceManagementIndexRoute;
   '/_private/set-up-company/': typeof PrivateSetUpCompanyIndexRoute;
   '/_private/statistics/': typeof PrivateStatisticsIndexRoute;
   '/_private/telemetry/': typeof PrivateTelemetryIndexRoute;
+  '/_private/voyage/': typeof PrivateVoyageIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/operation/goals/add': typeof PrivateOperationGoalsAddRoute;
   '/_private/operation/groups/add': typeof PrivateOperationGroupsAddRoute;
@@ -994,12 +1148,19 @@ export interface FileRoutesById {
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/_private/cmms/diagram-list/': typeof PrivateCmmsDiagramListIndexRoute;
+  '/_private/cmms/filled-form-cmms/': typeof PrivateCmmsFilledFormCmmsIndexRoute;
+  '/_private/cmms/kpis-cmms/': typeof PrivateCmmsKpisCmmsIndexRoute;
   '/_private/consumption/comparative/': typeof PrivateConsumptionComparativeIndexRoute;
   '/_private/consumption/daily/': typeof PrivateConsumptionDailyIndexRoute;
   '/_private/consumption/relatorio/': typeof PrivateConsumptionRelatorioIndexRoute;
   '/_private/consumption/rve-rdo/': typeof PrivateConsumptionRveRdoIndexRoute;
   '/_private/consumption/rve-sounding/': typeof PrivateConsumptionRveSoundingIndexRoute;
   '/_private/consumption/time-operation/': typeof PrivateConsumptionTimeOperationIndexRoute;
+  '/_private/contracts/contract-list/': typeof PrivateContractsContractListIndexRoute;
+  '/_private/contracts/dashboard-rve-rdo/': typeof PrivateContractsDashboardRveRdoIndexRoute;
+  '/_private/contracts/dashboard-rve-sounding/': typeof PrivateContractsDashboardRveSoundingIndexRoute;
+  '/_private/contracts/dashboard-rve/': typeof PrivateContractsDashboardRveIndexRoute;
   '/_private/esg/cii-fleet/': typeof PrivateEsgCiiFleetIndexRoute;
   '/_private/esg/consumption-co2/': typeof PrivateEsgConsumptionCo2IndexRoute;
   '/_private/esg/indicators-eeoi-cii/': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
@@ -1034,6 +1195,9 @@ export interface FileRoutesById {
   '/_private/register/sensors/': typeof PrivateRegisterSensorsIndexRoute;
   '/_private/register/type-fuel/': typeof PrivateRegisterTypeFuelIndexRoute;
   '/_private/register/user-type/': typeof PrivateRegisterUserTypeIndexRoute;
+  '/_private/service-management/fas-analytics/': typeof PrivateServiceManagementFasAnalyticsIndexRoute;
+  '/_private/service-management/fas-contacts/': typeof PrivateServiceManagementFasContactsIndexRoute;
+  '/_private/service-management/fas/': typeof PrivateServiceManagementFasIndexRoute;
   '/_private/set-up-company/external-users/': typeof PrivateSetUpCompanyExternalUsersIndexRoute;
   '/_private/set-up-company/integration-list/': typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   '/_private/set-up-company/setup-api-external/': typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
@@ -1055,6 +1219,10 @@ export interface FileRoutesById {
   '/_private/telemetry/list-dashboard/': typeof PrivateTelemetryListDashboardIndexRoute;
   '/_private/telemetry/performance/': typeof PrivateTelemetryPerformanceIndexRoute;
   '/_private/telemetry/remote-ihm/': typeof PrivateTelemetryRemoteIhmIndexRoute;
+  '/_private/voyage/kpis-travel/': typeof PrivateVoyageKpisTravelIndexRoute;
+  '/_private/voyage/list-travel/': typeof PrivateVoyageListTravelIndexRoute;
+  '/_private/voyage/route-planner/': typeof PrivateVoyageRoutePlannerIndexRoute;
+  '/_private/voyage/voyage-integration/': typeof PrivateVoyageVoyageIntegrationIndexRoute;
   '/_private/maintenance/list-os-done/view/': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/_private/permissions/roles/edit/': typeof PrivatePermissionsRolesEditIndexRoute;
   '/_private/permissions/roles/users/': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -1070,6 +1238,7 @@ export interface FileRouteTypes {
     | '/auth/unlock'
     | '/calendar-maintenance'
     | '/consumption'
+    | '/contracts'
     | '/esg'
     | '/fleet-manager'
     | '/ia'
@@ -1077,9 +1246,11 @@ export interface FileRouteTypes {
     | '/operation'
     | '/permissions'
     | '/register'
+    | '/service-management'
     | '/set-up-company'
     | '/statistics'
     | '/telemetry'
+    | '/voyage'
     | '/auth'
     | '/operation/goals/add'
     | '/operation/groups/add'
@@ -1103,12 +1274,19 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/cmms/diagram-list'
+    | '/cmms/filled-form-cmms'
+    | '/cmms/kpis-cmms'
     | '/consumption/comparative'
     | '/consumption/daily'
     | '/consumption/relatorio'
     | '/consumption/rve-rdo'
     | '/consumption/rve-sounding'
     | '/consumption/time-operation'
+    | '/contracts/contract-list'
+    | '/contracts/dashboard-rve-rdo'
+    | '/contracts/dashboard-rve-sounding'
+    | '/contracts/dashboard-rve'
     | '/esg/cii-fleet'
     | '/esg/consumption-co2'
     | '/esg/indicators-eeoi-cii'
@@ -1143,6 +1321,9 @@ export interface FileRouteTypes {
     | '/register/sensors'
     | '/register/type-fuel'
     | '/register/user-type'
+    | '/service-management/fas-analytics'
+    | '/service-management/fas-contacts'
+    | '/service-management/fas'
     | '/set-up-company/external-users'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
@@ -1164,6 +1345,10 @@ export interface FileRouteTypes {
     | '/telemetry/list-dashboard'
     | '/telemetry/performance'
     | '/telemetry/remote-ihm'
+    | '/voyage/kpis-travel'
+    | '/voyage/list-travel'
+    | '/voyage/route-planner'
+    | '/voyage/voyage-integration'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -1177,6 +1362,7 @@ export interface FileRouteTypes {
     | '/auth/unlock'
     | '/calendar-maintenance'
     | '/consumption'
+    | '/contracts'
     | '/esg'
     | '/fleet-manager'
     | '/ia'
@@ -1184,9 +1370,11 @@ export interface FileRouteTypes {
     | '/operation'
     | '/permissions'
     | '/register'
+    | '/service-management'
     | '/set-up-company'
     | '/statistics'
     | '/telemetry'
+    | '/voyage'
     | '/auth'
     | '/operation/goals/add'
     | '/operation/groups/add'
@@ -1210,12 +1398,19 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/cmms/diagram-list'
+    | '/cmms/filled-form-cmms'
+    | '/cmms/kpis-cmms'
     | '/consumption/comparative'
     | '/consumption/daily'
     | '/consumption/relatorio'
     | '/consumption/rve-rdo'
     | '/consumption/rve-sounding'
     | '/consumption/time-operation'
+    | '/contracts/contract-list'
+    | '/contracts/dashboard-rve-rdo'
+    | '/contracts/dashboard-rve-sounding'
+    | '/contracts/dashboard-rve'
     | '/esg/cii-fleet'
     | '/esg/consumption-co2'
     | '/esg/indicators-eeoi-cii'
@@ -1250,6 +1445,9 @@ export interface FileRouteTypes {
     | '/register/sensors'
     | '/register/type-fuel'
     | '/register/user-type'
+    | '/service-management/fas-analytics'
+    | '/service-management/fas-contacts'
+    | '/service-management/fas'
     | '/set-up-company/external-users'
     | '/set-up-company/integration-list'
     | '/set-up-company/setup-api-external'
@@ -1271,6 +1469,10 @@ export interface FileRouteTypes {
     | '/telemetry/list-dashboard'
     | '/telemetry/performance'
     | '/telemetry/remote-ihm'
+    | '/voyage/kpis-travel'
+    | '/voyage/list-travel'
+    | '/voyage/route-planner'
+    | '/voyage/voyage-integration'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -1286,6 +1488,7 @@ export interface FileRouteTypes {
     | '/_public/auth/unlock'
     | '/_private/calendar-maintenance/'
     | '/_private/consumption/'
+    | '/_private/contracts/'
     | '/_private/esg/'
     | '/_private/fleet-manager/'
     | '/_private/ia/'
@@ -1293,9 +1496,11 @@ export interface FileRouteTypes {
     | '/_private/operation/'
     | '/_private/permissions/'
     | '/_private/register/'
+    | '/_private/service-management/'
     | '/_private/set-up-company/'
     | '/_private/statistics/'
     | '/_private/telemetry/'
+    | '/_private/voyage/'
     | '/_public/auth/'
     | '/_private/operation/goals/add'
     | '/_private/operation/groups/add'
@@ -1319,12 +1524,19 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
     | '/_private/register/user-type/add'
+    | '/_private/cmms/diagram-list/'
+    | '/_private/cmms/filled-form-cmms/'
+    | '/_private/cmms/kpis-cmms/'
     | '/_private/consumption/comparative/'
     | '/_private/consumption/daily/'
     | '/_private/consumption/relatorio/'
     | '/_private/consumption/rve-rdo/'
     | '/_private/consumption/rve-sounding/'
     | '/_private/consumption/time-operation/'
+    | '/_private/contracts/contract-list/'
+    | '/_private/contracts/dashboard-rve-rdo/'
+    | '/_private/contracts/dashboard-rve-sounding/'
+    | '/_private/contracts/dashboard-rve/'
     | '/_private/esg/cii-fleet/'
     | '/_private/esg/consumption-co2/'
     | '/_private/esg/indicators-eeoi-cii/'
@@ -1359,6 +1571,9 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/'
     | '/_private/register/type-fuel/'
     | '/_private/register/user-type/'
+    | '/_private/service-management/fas-analytics/'
+    | '/_private/service-management/fas-contacts/'
+    | '/_private/service-management/fas/'
     | '/_private/set-up-company/external-users/'
     | '/_private/set-up-company/integration-list/'
     | '/_private/set-up-company/setup-api-external/'
@@ -1380,6 +1595,10 @@ export interface FileRouteTypes {
     | '/_private/telemetry/list-dashboard/'
     | '/_private/telemetry/performance/'
     | '/_private/telemetry/remote-ihm/'
+    | '/_private/voyage/kpis-travel/'
+    | '/_private/voyage/list-travel/'
+    | '/_private/voyage/route-planner/'
+    | '/_private/voyage/voyage-integration/'
     | '/_private/maintenance/list-os-done/view/'
     | '/_private/permissions/roles/edit/'
     | '/_private/permissions/roles/users/'
@@ -1423,6 +1642,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
     };
+    '/_private/voyage/': {
+      id: '/_private/voyage/';
+      path: '/voyage';
+      fullPath: '/voyage';
+      preLoaderRoute: typeof PrivateVoyageIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/telemetry/': {
       id: '/_private/telemetry/';
       path: '/telemetry';
@@ -1442,6 +1668,13 @@ declare module '@tanstack/react-router' {
       path: '/set-up-company';
       fullPath: '/set-up-company';
       preLoaderRoute: typeof PrivateSetUpCompanyIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/service-management/': {
+      id: '/_private/service-management/';
+      path: '/service-management';
+      fullPath: '/service-management';
+      preLoaderRoute: typeof PrivateServiceManagementIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/register/': {
@@ -1493,6 +1726,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateEsgIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/contracts/': {
+      id: '/_private/contracts/';
+      path: '/contracts';
+      fullPath: '/contracts';
+      preLoaderRoute: typeof PrivateContractsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/consumption/': {
       id: '/_private/consumption/';
       path: '/consumption';
@@ -1527,6 +1767,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/register';
       preLoaderRoute: typeof PublicAuthRegisterRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/voyage/voyage-integration/': {
+      id: '/_private/voyage/voyage-integration/';
+      path: '/voyage/voyage-integration';
+      fullPath: '/voyage/voyage-integration';
+      preLoaderRoute: typeof PrivateVoyageVoyageIntegrationIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/voyage/route-planner/': {
+      id: '/_private/voyage/route-planner/';
+      path: '/voyage/route-planner';
+      fullPath: '/voyage/route-planner';
+      preLoaderRoute: typeof PrivateVoyageRoutePlannerIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/voyage/list-travel/': {
+      id: '/_private/voyage/list-travel/';
+      path: '/voyage/list-travel';
+      fullPath: '/voyage/list-travel';
+      preLoaderRoute: typeof PrivateVoyageListTravelIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/voyage/kpis-travel/': {
+      id: '/_private/voyage/kpis-travel/';
+      path: '/voyage/kpis-travel';
+      fullPath: '/voyage/kpis-travel';
+      preLoaderRoute: typeof PrivateVoyageKpisTravelIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/telemetry/remote-ihm/': {
       id: '/_private/telemetry/remote-ihm/';
@@ -1673,6 +1941,27 @@ declare module '@tanstack/react-router' {
       path: '/set-up-company/external-users';
       fullPath: '/set-up-company/external-users';
       preLoaderRoute: typeof PrivateSetUpCompanyExternalUsersIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/service-management/fas/': {
+      id: '/_private/service-management/fas/';
+      path: '/service-management/fas';
+      fullPath: '/service-management/fas';
+      preLoaderRoute: typeof PrivateServiceManagementFasIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/service-management/fas-contacts/': {
+      id: '/_private/service-management/fas-contacts/';
+      path: '/service-management/fas-contacts';
+      fullPath: '/service-management/fas-contacts';
+      preLoaderRoute: typeof PrivateServiceManagementFasContactsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/service-management/fas-analytics/': {
+      id: '/_private/service-management/fas-analytics/';
+      path: '/service-management/fas-analytics';
+      fullPath: '/service-management/fas-analytics';
+      preLoaderRoute: typeof PrivateServiceManagementFasAnalyticsIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/register/user-type/': {
@@ -1913,6 +2202,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateEsgCiiFleetIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/contracts/dashboard-rve/': {
+      id: '/_private/contracts/dashboard-rve/';
+      path: '/contracts/dashboard-rve';
+      fullPath: '/contracts/dashboard-rve';
+      preLoaderRoute: typeof PrivateContractsDashboardRveIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/contracts/dashboard-rve-sounding/': {
+      id: '/_private/contracts/dashboard-rve-sounding/';
+      path: '/contracts/dashboard-rve-sounding';
+      fullPath: '/contracts/dashboard-rve-sounding';
+      preLoaderRoute: typeof PrivateContractsDashboardRveSoundingIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/contracts/dashboard-rve-rdo/': {
+      id: '/_private/contracts/dashboard-rve-rdo/';
+      path: '/contracts/dashboard-rve-rdo';
+      fullPath: '/contracts/dashboard-rve-rdo';
+      preLoaderRoute: typeof PrivateContractsDashboardRveRdoIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/contracts/contract-list/': {
+      id: '/_private/contracts/contract-list/';
+      path: '/contracts/contract-list';
+      fullPath: '/contracts/contract-list';
+      preLoaderRoute: typeof PrivateContractsContractListIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/consumption/time-operation/': {
       id: '/_private/consumption/time-operation/';
       path: '/consumption/time-operation';
@@ -1953,6 +2270,27 @@ declare module '@tanstack/react-router' {
       path: '/consumption/comparative';
       fullPath: '/consumption/comparative';
       preLoaderRoute: typeof PrivateConsumptionComparativeIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/cmms/kpis-cmms/': {
+      id: '/_private/cmms/kpis-cmms/';
+      path: '/cmms/kpis-cmms';
+      fullPath: '/cmms/kpis-cmms';
+      preLoaderRoute: typeof PrivateCmmsKpisCmmsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/cmms/filled-form-cmms/': {
+      id: '/_private/cmms/filled-form-cmms/';
+      path: '/cmms/filled-form-cmms';
+      fullPath: '/cmms/filled-form-cmms';
+      preLoaderRoute: typeof PrivateCmmsFilledFormCmmsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/cmms/diagram-list/': {
+      id: '/_private/cmms/diagram-list/';
+      path: '/cmms/diagram-list';
+      fullPath: '/cmms/diagram-list';
+      preLoaderRoute: typeof PrivateCmmsDiagramListIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/register/user-type/add': {
@@ -2150,6 +2488,7 @@ declare module '@tanstack/react-router' {
 interface PrivateRouteChildren {
   PrivateCalendarMaintenanceIndexRoute: typeof PrivateCalendarMaintenanceIndexRoute;
   PrivateConsumptionIndexRoute: typeof PrivateConsumptionIndexRoute;
+  PrivateContractsIndexRoute: typeof PrivateContractsIndexRoute;
   PrivateEsgIndexRoute: typeof PrivateEsgIndexRoute;
   PrivateFleetManagerIndexRoute: typeof PrivateFleetManagerIndexRoute;
   PrivateIaIndexRoute: typeof PrivateIaIndexRoute;
@@ -2157,9 +2496,11 @@ interface PrivateRouteChildren {
   PrivateOperationIndexRoute: typeof PrivateOperationIndexRoute;
   PrivatePermissionsIndexRoute: typeof PrivatePermissionsIndexRoute;
   PrivateRegisterIndexRoute: typeof PrivateRegisterIndexRoute;
+  PrivateServiceManagementIndexRoute: typeof PrivateServiceManagementIndexRoute;
   PrivateSetUpCompanyIndexRoute: typeof PrivateSetUpCompanyIndexRoute;
   PrivateStatisticsIndexRoute: typeof PrivateStatisticsIndexRoute;
   PrivateTelemetryIndexRoute: typeof PrivateTelemetryIndexRoute;
+  PrivateVoyageIndexRoute: typeof PrivateVoyageIndexRoute;
   PrivateOperationGoalsAddRoute: typeof PrivateOperationGoalsAddRoute;
   PrivateOperationGroupsAddRoute: typeof PrivateOperationGroupsAddRoute;
   PrivatePermissionsRolesAddRoute: typeof PrivatePermissionsRolesAddRoute;
@@ -2182,12 +2523,19 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
+  PrivateCmmsDiagramListIndexRoute: typeof PrivateCmmsDiagramListIndexRoute;
+  PrivateCmmsFilledFormCmmsIndexRoute: typeof PrivateCmmsFilledFormCmmsIndexRoute;
+  PrivateCmmsKpisCmmsIndexRoute: typeof PrivateCmmsKpisCmmsIndexRoute;
   PrivateConsumptionComparativeIndexRoute: typeof PrivateConsumptionComparativeIndexRoute;
   PrivateConsumptionDailyIndexRoute: typeof PrivateConsumptionDailyIndexRoute;
   PrivateConsumptionRelatorioIndexRoute: typeof PrivateConsumptionRelatorioIndexRoute;
   PrivateConsumptionRveRdoIndexRoute: typeof PrivateConsumptionRveRdoIndexRoute;
   PrivateConsumptionRveSoundingIndexRoute: typeof PrivateConsumptionRveSoundingIndexRoute;
   PrivateConsumptionTimeOperationIndexRoute: typeof PrivateConsumptionTimeOperationIndexRoute;
+  PrivateContractsContractListIndexRoute: typeof PrivateContractsContractListIndexRoute;
+  PrivateContractsDashboardRveRdoIndexRoute: typeof PrivateContractsDashboardRveRdoIndexRoute;
+  PrivateContractsDashboardRveSoundingIndexRoute: typeof PrivateContractsDashboardRveSoundingIndexRoute;
+  PrivateContractsDashboardRveIndexRoute: typeof PrivateContractsDashboardRveIndexRoute;
   PrivateEsgCiiFleetIndexRoute: typeof PrivateEsgCiiFleetIndexRoute;
   PrivateEsgConsumptionCo2IndexRoute: typeof PrivateEsgConsumptionCo2IndexRoute;
   PrivateEsgIndicatorsEeoiCiiIndexRoute: typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
@@ -2222,6 +2570,9 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsIndexRoute: typeof PrivateRegisterSensorsIndexRoute;
   PrivateRegisterTypeFuelIndexRoute: typeof PrivateRegisterTypeFuelIndexRoute;
   PrivateRegisterUserTypeIndexRoute: typeof PrivateRegisterUserTypeIndexRoute;
+  PrivateServiceManagementFasAnalyticsIndexRoute: typeof PrivateServiceManagementFasAnalyticsIndexRoute;
+  PrivateServiceManagementFasContactsIndexRoute: typeof PrivateServiceManagementFasContactsIndexRoute;
+  PrivateServiceManagementFasIndexRoute: typeof PrivateServiceManagementFasIndexRoute;
   PrivateSetUpCompanyExternalUsersIndexRoute: typeof PrivateSetUpCompanyExternalUsersIndexRoute;
   PrivateSetUpCompanyIntegrationListIndexRoute: typeof PrivateSetUpCompanyIntegrationListIndexRoute;
   PrivateSetUpCompanySetupApiExternalIndexRoute: typeof PrivateSetUpCompanySetupApiExternalIndexRoute;
@@ -2243,6 +2594,10 @@ interface PrivateRouteChildren {
   PrivateTelemetryListDashboardIndexRoute: typeof PrivateTelemetryListDashboardIndexRoute;
   PrivateTelemetryPerformanceIndexRoute: typeof PrivateTelemetryPerformanceIndexRoute;
   PrivateTelemetryRemoteIhmIndexRoute: typeof PrivateTelemetryRemoteIhmIndexRoute;
+  PrivateVoyageKpisTravelIndexRoute: typeof PrivateVoyageKpisTravelIndexRoute;
+  PrivateVoyageListTravelIndexRoute: typeof PrivateVoyageListTravelIndexRoute;
+  PrivateVoyageRoutePlannerIndexRoute: typeof PrivateVoyageRoutePlannerIndexRoute;
+  PrivateVoyageVoyageIntegrationIndexRoute: typeof PrivateVoyageVoyageIntegrationIndexRoute;
   PrivateMaintenanceListOsDoneViewIndexRoute: typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   PrivatePermissionsRolesEditIndexRoute: typeof PrivatePermissionsRolesEditIndexRoute;
   PrivatePermissionsRolesUsersIndexRoute: typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -2253,6 +2608,7 @@ interface PrivateRouteChildren {
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateCalendarMaintenanceIndexRoute: PrivateCalendarMaintenanceIndexRoute,
   PrivateConsumptionIndexRoute: PrivateConsumptionIndexRoute,
+  PrivateContractsIndexRoute: PrivateContractsIndexRoute,
   PrivateEsgIndexRoute: PrivateEsgIndexRoute,
   PrivateFleetManagerIndexRoute: PrivateFleetManagerIndexRoute,
   PrivateIaIndexRoute: PrivateIaIndexRoute,
@@ -2260,9 +2616,11 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateOperationIndexRoute: PrivateOperationIndexRoute,
   PrivatePermissionsIndexRoute: PrivatePermissionsIndexRoute,
   PrivateRegisterIndexRoute: PrivateRegisterIndexRoute,
+  PrivateServiceManagementIndexRoute: PrivateServiceManagementIndexRoute,
   PrivateSetUpCompanyIndexRoute: PrivateSetUpCompanyIndexRoute,
   PrivateStatisticsIndexRoute: PrivateStatisticsIndexRoute,
   PrivateTelemetryIndexRoute: PrivateTelemetryIndexRoute,
+  PrivateVoyageIndexRoute: PrivateVoyageIndexRoute,
   PrivateOperationGoalsAddRoute: PrivateOperationGoalsAddRoute,
   PrivateOperationGroupsAddRoute: PrivateOperationGroupsAddRoute,
   PrivatePermissionsRolesAddRoute: PrivatePermissionsRolesAddRoute,
@@ -2288,6 +2646,9 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
   PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
+  PrivateCmmsDiagramListIndexRoute: PrivateCmmsDiagramListIndexRoute,
+  PrivateCmmsFilledFormCmmsIndexRoute: PrivateCmmsFilledFormCmmsIndexRoute,
+  PrivateCmmsKpisCmmsIndexRoute: PrivateCmmsKpisCmmsIndexRoute,
   PrivateConsumptionComparativeIndexRoute:
     PrivateConsumptionComparativeIndexRoute,
   PrivateConsumptionDailyIndexRoute: PrivateConsumptionDailyIndexRoute,
@@ -2297,6 +2658,14 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateConsumptionRveSoundingIndexRoute,
   PrivateConsumptionTimeOperationIndexRoute:
     PrivateConsumptionTimeOperationIndexRoute,
+  PrivateContractsContractListIndexRoute:
+    PrivateContractsContractListIndexRoute,
+  PrivateContractsDashboardRveRdoIndexRoute:
+    PrivateContractsDashboardRveRdoIndexRoute,
+  PrivateContractsDashboardRveSoundingIndexRoute:
+    PrivateContractsDashboardRveSoundingIndexRoute,
+  PrivateContractsDashboardRveIndexRoute:
+    PrivateContractsDashboardRveIndexRoute,
   PrivateEsgCiiFleetIndexRoute: PrivateEsgCiiFleetIndexRoute,
   PrivateEsgConsumptionCo2IndexRoute: PrivateEsgConsumptionCo2IndexRoute,
   PrivateEsgIndicatorsEeoiCiiIndexRoute: PrivateEsgIndicatorsEeoiCiiIndexRoute,
@@ -2338,6 +2707,11 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsIndexRoute: PrivateRegisterSensorsIndexRoute,
   PrivateRegisterTypeFuelIndexRoute: PrivateRegisterTypeFuelIndexRoute,
   PrivateRegisterUserTypeIndexRoute: PrivateRegisterUserTypeIndexRoute,
+  PrivateServiceManagementFasAnalyticsIndexRoute:
+    PrivateServiceManagementFasAnalyticsIndexRoute,
+  PrivateServiceManagementFasContactsIndexRoute:
+    PrivateServiceManagementFasContactsIndexRoute,
+  PrivateServiceManagementFasIndexRoute: PrivateServiceManagementFasIndexRoute,
   PrivateSetUpCompanyExternalUsersIndexRoute:
     PrivateSetUpCompanyExternalUsersIndexRoute,
   PrivateSetUpCompanyIntegrationListIndexRoute:
@@ -2375,6 +2749,11 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateTelemetryListDashboardIndexRoute,
   PrivateTelemetryPerformanceIndexRoute: PrivateTelemetryPerformanceIndexRoute,
   PrivateTelemetryRemoteIhmIndexRoute: PrivateTelemetryRemoteIhmIndexRoute,
+  PrivateVoyageKpisTravelIndexRoute: PrivateVoyageKpisTravelIndexRoute,
+  PrivateVoyageListTravelIndexRoute: PrivateVoyageListTravelIndexRoute,
+  PrivateVoyageRoutePlannerIndexRoute: PrivateVoyageRoutePlannerIndexRoute,
+  PrivateVoyageVoyageIntegrationIndexRoute:
+    PrivateVoyageVoyageIntegrationIndexRoute,
   PrivateMaintenanceListOsDoneViewIndexRoute:
     PrivateMaintenanceListOsDoneViewIndexRoute,
   PrivatePermissionsRolesEditIndexRoute: PrivatePermissionsRolesEditIndexRoute,

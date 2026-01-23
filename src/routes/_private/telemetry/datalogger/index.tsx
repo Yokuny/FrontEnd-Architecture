@@ -12,7 +12,7 @@ function DataloggerPage() {
   return (
     <Card>
       <CardHeader title={t('telemetry.datalogger')} />
-      <CardContent>{/* TODO: Migrate content from iotlog-fronted/src/pages/datalogger/index.jsx */}</CardContent>
+      <CardContent>{/* TODO: Migrate content from iotlog-fronted */}</CardContent>
     </Card>
   );
 }

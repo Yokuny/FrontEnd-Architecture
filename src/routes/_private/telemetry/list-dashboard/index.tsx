@@ -12,7 +12,7 @@ function ListDashboardPage() {
   return (
     <Card>
       <CardHeader title={t('telemetry.list.dashboard')} />
-      <CardContent>{/* TODO: Migrate content from iotlog-fronted/src/pages/dashboard/ListDashboard.jsx */}</CardContent>
+      <CardContent>{/* TODO: Migrate content from iotlog-fronted */}</CardContent>
     </Card>
   );
 }

@@ -12,7 +12,7 @@ function RemoteIHMPage() {
   return (
     <Card>
       <CardHeader title={t('telemetry.remote.ihm')} />
-      <CardContent>{/* TODO: Migrate content from iotlog-fronted/src/pages/remote-ihm/RemoteIHMView.jsx */}</CardContent>
+      <CardContent>{/* TODO: Migrate content from iotlog-fronted */}</CardContent>
     </Card>
   );
 }

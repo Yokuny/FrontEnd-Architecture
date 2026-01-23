@@ -12,7 +12,7 @@ function PerformancePage() {
   return (
     <Card>
       <CardHeader title={t('telemetry.performance')} />
-      <CardContent>{/* TODO: Migrate content from iotlog-fronted/src/pages/performance/PerformancePanel.jsx */}</CardContent>
+      <CardContent>{/* TODO: Migrate content from iotlog-fronted */}</CardContent>
     </Card>
   );
 }

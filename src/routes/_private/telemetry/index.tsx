@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Activity, BarChart3, Download, Gauge, LayoutDashboard, MapPin, Monitor, Timer } from 'lucide-react';
+import { Activity, BarChart3, FileText, LayoutDashboard, MapPin, MonitorCog, Network, Timer } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
@@ -21,7 +21,7 @@ function TelemetryHubPage() {
     {
       title: t('telemetry.performance'),
       description: t('telemetry.performance.description'),
-      icon: Gauge,
+      icon: BarChart3,
       to: '/telemetry/performance' as const,
     },
     {
@@ -33,7 +33,7 @@ function TelemetryHubPage() {
     {
       title: t('telemetry.remote.ihm'),
       description: t('telemetry.remote.ihm.description'),
-      icon: Monitor,
+      icon: MonitorCog,
       to: '/telemetry/remote-ihm' as const,
     },
     {
@@ -57,13 +57,13 @@ function TelemetryHubPage() {
     {
       title: t('telemetry.download.data.asset.request'),
       description: t('telemetry.download.data.asset.request.description'),
-      icon: Download,
+      icon: FileText,
       to: '/telemetry/download-data-asset-request' as const,
     },
     {
       title: t('telemetry.diagram.list'),
       description: t('telemetry.diagram.list.description'),
-      icon: BarChart3,
+      icon: Network,
       to: '/telemetry/diagram-list' as const,
     },
   ];
