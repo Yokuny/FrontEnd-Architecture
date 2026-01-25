@@ -40,7 +40,7 @@ export function OsDoneItem({ item, hasViewPermission }: OsDoneItemProps) {
         <div className="flex items-center gap-1.5 rounded-md border border-green-100 bg-green-50 px-2 py-1 text-green-600">
           <CheckCircle2 className="size-3.5" />
           <span className="font-bold text-[11px] uppercase tracking-tight">
-            {t('done.at')} {item.doneAt ? format(new Date(item.doneAt), 'dd/MM/yyyy') : '-'}
+            {t('done.at')} {item.doneAt ? format(new Date(item.doneAt), 'dd MM yyyy') : '-'}
           </span>
         </div>
       </div>

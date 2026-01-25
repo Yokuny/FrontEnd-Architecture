@@ -2421,5 +2421,11 @@
   "new.trip": "New Voyage",
   "pick.date": "Pick a date",
   "success.save": "Saved successfully",
-  "unit.type": "Unidad"
+  "unit.type": "Unidad",
+  "travel.type": "Travel type",
+  "select.machine": "Select asset",
+  "select.status": "Select status",
+  "manual.voyage": "Manual voyage",
+  "clear.filters": "Clear filters",
+  "finished.travel": "Travel finished"
 }

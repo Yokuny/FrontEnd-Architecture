@@ -9,10 +9,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import type { VoyageFormValues } from '../@interface/schema';
-import { CompositionCard } from './composition-card';
-import { CrewCard } from './crew-card';
-import { GroupEventList } from './group-event-list';
-import { ListItinerary } from './list-itinerary';
+import { AddComposition } from './add-composition';
+import { AddCrew } from './add-crew';
+import { AddGroup } from './add-event';
+import { AddItinerary } from './add-itinerary';
 
 export function VoyageForm() {
   const { t } = useTranslation();
@@ -108,22 +108,22 @@ export function VoyageForm() {
       title: t('itinerary'),
       description: t('data.maritme'),
       layout: 'vertical' as const,
-      fields: [<ListItinerary key="itinerary" itinerary={watch('itinerary') || []} onChange={(val) => setValue('itinerary', val)} idEnterprise={idEnterprise} />],
+      fields: [<AddItinerary key="itinerary" itinerary={watch('itinerary') || []} onChange={(val) => setValue('itinerary', val)} idEnterprise={idEnterprise} />],
     },
     {
       title: t('additional.info'),
       layout: 'vertical' as const,
       fields: [
         <div key="additional-row" className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <CompositionCard compositionAsset={watch('compositionAsset') || []} onChange={(val) => setValue('compositionAsset', val)} />
-          <CrewCard crew={watch('crew') || []} onChange={(val) => setValue('crew', val)} />
+          <AddComposition compositionAsset={watch('compositionAsset') || []} onChange={(val) => setValue('compositionAsset', val)} />
+          <AddCrew crew={watch('crew') || []} onChange={(val) => setValue('crew', val)} />
         </div>,
       ],
     },
     {
       title: t('events'),
       layout: 'vertical' as const,
-      fields: [<GroupEventList key="events" events={watch('events') || []} onChange={(val) => setValue('events', val)} />],
+      fields: [<AddGroup key="events" events={watch('events') || []} onChange={(val) => setValue('events', val)} />],
     },
     {
       title: t('observation'),

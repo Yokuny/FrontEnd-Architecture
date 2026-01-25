@@ -240,7 +240,7 @@ export function DialogItinerary({ index, data, onChangeData, onDelete, disabled,
             <div key={dateKey}>
               <ItemTitle>{t(dateKey.toUpperCase())}</ItemTitle>
               <ItemDescription>
-                {data[`${dateKey}Date`] ? format(new Date(data[`${dateKey}Date`]), 'dd/MM/yyyy') : '-'} {data[`${dateKey}Time`] || ''}
+                {data[`${dateKey}Date`] ? format(new Date(data[`${dateKey}Date`]), 'dd MM yyyy') : '-'} {data[`${dateKey}Time`] || ''}
               </ItemDescription>
             </div>
           ))}

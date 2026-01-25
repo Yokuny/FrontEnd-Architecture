@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { DialogItinerary } from './dialog-itinerary';
 
-export function ListItinerary({ itinerary, onChange, disabled, idEnterprise }: ListItineraryProps) {
+export function AddItinerary({ itinerary, onChange, disabled, idEnterprise }: ItineraryCardProps) {
   const { t } = useTranslation();
 
   const handleAdd = () => {
@@ -51,7 +51,7 @@ export function ListItinerary({ itinerary, onChange, disabled, idEnterprise }: L
   );
 }
 
-interface ListItineraryProps {
+interface ItineraryCardProps {
   itinerary: any[];
   onChange: (value: any[]) => void;
   idEnterprise?: string;

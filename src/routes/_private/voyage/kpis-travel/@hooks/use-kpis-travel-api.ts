@@ -14,6 +14,7 @@ async function fetchVoyages(filters?: any) {
   const params = {
     page: 0,
     size: 100,
+    showAnalytics: 'true',
     ...filters,
   };
   const response = await api.get('/travel/list', { params });
@@ -35,7 +36,7 @@ export function useVoyages(filters?: any) {
 export function useVoyage(id: string | null) {
   return useQuery({
     queryKey: voyageKeys.detail(id || ''),
-    queryFn: () => fetchVoyage(id!),
+    queryFn: () => (id ? fetchVoyage(id) : Promise.reject('No ID')),
     enabled: !!id,
   });
 }

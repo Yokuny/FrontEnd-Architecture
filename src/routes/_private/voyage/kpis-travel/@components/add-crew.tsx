@@ -4,13 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 
-interface CrewCardProps {
-  crew: string[];
-  onChange: (value: string[]) => void;
-  disabled?: boolean;
-}
-
-export function CrewCard({ crew, onChange, disabled }: CrewCardProps) {
+export function AddCrew({ crew, onChange, disabled }: CrewCardProps) {
   const { t } = useTranslation();
 
   const handleAdd = () => {
@@ -54,4 +48,10 @@ export function CrewCard({ crew, onChange, disabled }: CrewCardProps) {
       </ItemFooter>
     </Item>
   );
+}
+
+interface CrewCardProps {
+  crew: string[];
+  onChange: (value: string[]) => void;
+  disabled?: boolean;
 }

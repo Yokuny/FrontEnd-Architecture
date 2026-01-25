@@ -4,13 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 
-interface CompositionCardProps {
-  compositionAsset: string[];
-  onChange: (value: string[]) => void;
-  disabled?: boolean;
-}
-
-export function CompositionCard({ compositionAsset, onChange, disabled }: CompositionCardProps) {
+export function AddComposition({ compositionAsset, onChange, disabled }: CompositionCardProps) {
   const { t } = useTranslation();
 
   const handleAdd = () => {
@@ -54,4 +48,10 @@ export function CompositionCard({ compositionAsset, onChange, disabled }: Compos
       </ItemFooter>
     </Item>
   );
+}
+
+interface CompositionCardProps {
+  compositionAsset: string[];
+  onChange: (value: string[]) => void;
+  disabled?: boolean;
 }

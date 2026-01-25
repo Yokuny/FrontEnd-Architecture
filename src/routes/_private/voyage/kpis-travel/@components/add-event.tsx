@@ -8,13 +8,7 @@ import { Item, ItemContent, ItemFooter } from '@/components/ui/item';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DialogEvent } from './dialog-event';
 
-interface GroupEventListProps {
-  events: any[];
-  onChange: (events: any[]) => void;
-  disabled?: boolean;
-}
-
-export function GroupEventList({ events, onChange, disabled }: GroupEventListProps) {
+export function AddGroup({ events, onChange, disabled }: GroupCardProps) {
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -69,7 +63,7 @@ export function GroupEventList({ events, onChange, disabled }: GroupEventListPro
             <TableBody>
               {events.map((event, index) => (
                 <TableRow key={`${index}-${event}`}>
-                  <TableCell>{event.datetime ? format(new Date(event.datetime), 'dd/MM/yyyy HH:mm') : '-'}</TableCell>
+                  <TableCell>{event.datetime ? format(new Date(event.datetime), 'dd MM yyyy HH:mm') : '-'}</TableCell>
                   <TableCell>{event.status}</TableCell>
                   <TableCell className="text-right">{event.speed}</TableCell>
                   <TableCell className="text-right">{event.engine?.rpmBB}</TableCell>
@@ -107,4 +101,10 @@ export function GroupEventList({ events, onChange, disabled }: GroupEventListPro
       {modalOpen && <DialogEvent open={modalOpen} onOpenChange={setModalOpen} data={editingIndex !== null ? events[editingIndex] : undefined} onSave={handleSaveEvent} />}
     </Item>
   );
+}
+
+interface GroupCardProps {
+  events: any[];
+  onChange: (events: any[]) => void;
+  disabled?: boolean;
 }

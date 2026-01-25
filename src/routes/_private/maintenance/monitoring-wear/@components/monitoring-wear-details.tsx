@@ -82,7 +82,7 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                 <TableCell className="text-center text-[10px] text-muted-foreground leading-tight">
                   {part.lastModified ? (
                     <>
-                      <div className="font-medium text-foreground">{format(new Date(part.lastModified), 'dd/MM/yyyy')}</div>
+                      <div className="font-medium text-foreground">{format(new Date(part.lastModified), 'dd MM yyyy')}</div>
                       <div>{format(new Date(part.lastModified), 'HH:mm')}</div>
                     </>
                   ) : (
