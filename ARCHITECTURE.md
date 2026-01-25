@@ -51,7 +51,7 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
   - [***`GraphPizza`***](./src/components/graph-pizza.tsx): Modelo para gráfico de pizza.
   - [***`GraphProgress`***](./src/components/graph-progress.tsx): Modelo para gráfico de progresso do total.
   - [***`GraphRadial`***](./src/components/graph-radial.tsx): Modelo para gráfico radial.
-  - [***`DefaultNumbersRender`***](./src/components/default-numbers-render.tsx): Modelo para exibição de números e KPIs.
+  - [***`DefaultKPI`***](./src/components/default-KPI.tsx): Modelo para exibição de números e KPIs.
   - [***`DefaultTable`***](./src/components/default-table.tsx): Modelo para tabelas com paginação e filtros.
 
 - **Dicas para Gráficos**:

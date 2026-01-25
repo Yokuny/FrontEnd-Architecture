@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { FORM_TYPE_OPTIONS, type FormTypeOption } from '@/lib/constants/select-options';
+import { FORM_TYPE_OPTIONS, type SelectOptionWithKey } from '@/lib/constants/select-options';
 
 interface FormTypeSelectBaseProps {
   disabled?: boolean;
@@ -41,7 +41,7 @@ export function FormTypeSelect(props: FormTypeSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: FormTypeOption[]) => {
+  const mapToOptions = (options: SelectOptionWithKey[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: t(opt.labelKey),
@@ -60,7 +60,7 @@ export function FormTypeSelect(props: FormTypeSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<FormTypeOption, FormTypeOption>
+        <DataMultiSelect<SelectOptionWithKey, SelectOptionWithKey>
           id={id}
           placeholder={placeholder || t('type.form')}
           value={props.value}
@@ -85,7 +85,7 @@ export function FormTypeSelect(props: FormTypeSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<FormTypeOption, FormTypeOption>
+      <DataSelect<SelectOptionWithKey, SelectOptionWithKey>
         id={id}
         placeholder={placeholder || t('type.form')}
         value={props.value}

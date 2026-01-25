@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { VESSEL_CII_TYPES, type VesselCiiTypeOption } from '@/lib/constants/select-options';
+import { type SelectOption, VESSEL_CII_TYPES } from '@/lib/constants/select-options';
 
 /**
  * VesselCIIReferenceSelect Component
@@ -32,7 +32,7 @@ export function VesselCIIReferenceSelect(props: VesselCIIReferenceSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: VesselCiiTypeOption[]) => {
+  const mapToOptions = (options: SelectOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: opt.label,
@@ -50,7 +50,7 @@ export function VesselCIIReferenceSelect(props: VesselCIIReferenceSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<VesselCiiTypeOption, VesselCiiTypeOption>
+        <DataMultiSelect<SelectOption, SelectOption>
           id={id}
           placeholder={placeholder || t('select.vessel.type')}
           value={props.value}
@@ -76,7 +76,7 @@ export function VesselCIIReferenceSelect(props: VesselCIIReferenceSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<VesselCiiTypeOption, VesselCiiTypeOption>
+      <DataSelect<SelectOption, SelectOption>
         id={id}
         placeholder={placeholder || t('select.vessel.type')}
         value={props.value}

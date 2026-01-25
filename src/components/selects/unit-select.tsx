@@ -1,18 +1,19 @@
-import { ClipboardCheck } from 'lucide-react';
+import { Group } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { OS_OPTIONS, type SelectOption } from '@/lib/constants/select-options';
+import { type SelectOption, UNIT_OPTIONS } from '@/lib/constants/select-options';
+import { cn } from '@/lib/utils';
 
-export function OsOptionSelect(props: OsOptionSelectProps) {
+export function UnitSelect(props: UnitSelectProps) {
   const { t } = useTranslation();
-  const { disabled = false, className, label, placeholder } = props;
+  const { disabled = false, className, label, placeholder, value, onChange } = props;
   const id = useId();
 
   // Simulated query object
   const query = {
-    data: OS_OPTIONS,
+    data: UNIT_OPTIONS,
     isLoading: false,
     isError: false,
     isSuccess: true,
@@ -27,20 +28,20 @@ export function OsOptionSelect(props: OsOptionSelectProps) {
     }));
   };
 
-  const displayLabel = label || t('select.option');
+  const displayLabel = label || t('unit.type');
   return (
     <div className="space-y-2">
       {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
-          <ClipboardCheck className="size-4" />
+          <Group className="size-4" />
           {displayLabel}
         </Label>
       )}
       <DataSelect<SelectOption, SelectOption>
         id={id}
-        placeholder={placeholder || t('select.option')}
-        value={props.value}
-        onChange={(val) => props.onChange(val)}
+        placeholder={placeholder || t('unit.type')}
+        value={value}
+        onChange={(val) => onChange?.(val as string)}
         query={query as any}
         mapToOptions={mapToOptions}
         disabled={disabled}
@@ -48,15 +49,15 @@ export function OsOptionSelect(props: OsOptionSelectProps) {
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}
         noResultsMessage={t('not.found')}
-        className={className}
+        className={cn('w-20', className)}
       />
     </div>
   );
 }
 
-interface OsOptionSelectProps {
+interface UnitSelectProps {
   value?: string;
-  onChange: (value: string | number | undefined) => void;
+  onChange?: (value: string | undefined) => void;
   disabled?: boolean;
   className?: string;
   label?: string;

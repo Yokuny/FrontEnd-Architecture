@@ -12,7 +12,7 @@ import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { DownloadOperationalAssetCSV } from './@components/csv-download';
 import { DailyOperabilityChart } from './@components/daily-operability-chart';
 import { EventTypesChart } from './@components/event-types-chart';
-import { MiniDashboards } from './@components/mini-dashboards';
+import { KPI } from './@components/KPI';
 import { MonthlyStatusChart } from './@components/monthly-status-chart';
 import { OperationalAssetFilter } from './@components/page-filter';
 import { RevenueChart } from './@components/revenue-chart';
@@ -91,7 +91,7 @@ function OperationalAssetPage() {
           <DefaultEmptyData />
         ) : (
           <ItemGroup className="flex w-full flex-col space-y-6">
-            <MiniDashboards data={data.statusList} totalLoss={data.totalLoss} totalRevenue={data.totalRevenue} viewFinancial={viewFinancial} />
+            <KPI data={data.statusList} totalLoss={data.totalLoss} totalRevenue={data.totalRevenue} viewFinancial={viewFinancial} />
 
             <DailyOperabilityChart data={data.dailyList} isLoading={isLoading} />
 

@@ -86,36 +86,36 @@ export function ConsumptionCard({ data, filters }: ConsumptionCardProps) {
             <DefaultLoading />
           ) : readings && readings.length > 0 ? (
             <div className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-4">
-                <Item variant="outline">
-                  <ItemContent>
-                    <ItemDescription>{t('manual')}</ItemDescription>
-                    <ItemTitle>
-                      {manual.value.toFixed(2)} {manual.unit}
-                    </ItemTitle>
+              <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
+                <Item className="flex-col rounded-none border-0 bg-background">
+                  <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+                    <ItemDescription className="font-medium">{t('manual')}</ItemDescription>
                   </ItemContent>
+                  <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">
+                    {manual.value.toFixed(2)} {manual.unit}
+                  </ItemTitle>
                 </Item>
-                <Item variant="outline">
-                  <ItemContent>
-                    <ItemDescription>{t('telemetry')}</ItemDescription>
-                    <ItemTitle>
-                      {telemetry.value.toFixed(2)} {telemetry.unit}
-                    </ItemTitle>
+                <Item className="flex-col rounded-none border-0 bg-background">
+                  <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+                    <ItemDescription className="font-medium">{t('telemetry')}</ItemDescription>
                   </ItemContent>
+                  <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">
+                    {telemetry.value.toFixed(2)} {telemetry.unit}
+                  </ItemTitle>
                 </Item>
-                <Item variant="outline">
-                  <ItemContent>
-                    <ItemDescription>{t('diff')}</ItemDescription>
-                    <ItemTitle className={cn(diffPercent > 0 && 'text-red-500')}>
-                      {diffValue.toFixed(2)} {manual.unit}
-                    </ItemTitle>
+                <Item className="flex-col rounded-none border-0 bg-background">
+                  <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+                    <ItemDescription className="font-medium">{t('diff')}</ItemDescription>
                   </ItemContent>
+                  <ItemTitle className={cn('ml-6 font-bold text-2xl tracking-tight', diffPercent > 0 && 'text-red-500')}>
+                    {diffValue.toFixed(2)} {manual.unit}
+                  </ItemTitle>
                 </Item>
-                <Item variant="outline">
-                  <ItemContent>
-                    <ItemDescription>{t('percent')}</ItemDescription>
-                    <ItemTitle className={cn(diffPercent > 0 && 'text-red-500')}>{diffPercent.toFixed(1)}%</ItemTitle>
+                <Item className="flex-col rounded-none border-0 bg-background">
+                  <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+                    <ItemDescription className="font-medium">{t('percent')}</ItemDescription>
                   </ItemContent>
+                  <ItemTitle className={cn('ml-6 font-bold text-2xl tracking-tight', diffPercent > 0 && 'text-red-500')}>{diffPercent.toFixed(1)}%</ItemTitle>
                 </Item>
               </div>
               <ChartComparative data={readings} unit={filters.unit || 'm³'} />

@@ -124,6 +124,7 @@ import { Route as PrivateTelemetryListDashboardIndexRouteImport } from './routes
 import { Route as PrivateTelemetryPerformanceIndexRouteImport } from './routes/_private/telemetry/performance/index';
 import { Route as PrivateTelemetryRemoteIhmIndexRouteImport } from './routes/_private/telemetry/remote-ihm/index';
 import { Route as PrivateVoyageIndexRouteImport } from './routes/_private/voyage/index';
+import { Route as PrivateVoyageKpisTravelAddRouteImport } from './routes/_private/voyage/kpis-travel/add';
 import { Route as PrivateVoyageKpisTravelIndexRouteImport } from './routes/_private/voyage/kpis-travel/index';
 import { Route as PrivateVoyageListTravelIndexRouteImport } from './routes/_private/voyage/list-travel/index';
 import { Route as PrivateVoyageRoutePlannerIndexRouteImport } from './routes/_private/voyage/route-planner/index';
@@ -700,6 +701,12 @@ const PrivateCmmsDiagramListIndexRoute =
     path: '/cmms/diagram-list/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateVoyageKpisTravelAddRoute =
+  PrivateVoyageKpisTravelAddRouteImport.update({
+    id: '/voyage/kpis-travel/add',
+    path: '/voyage/kpis-travel/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateRegisterUserTypeAddRoute =
   PrivateRegisterUserTypeAddRouteImport.update({
     id: '/register/user-type/add',
@@ -904,6 +911,7 @@ export interface FileRoutesByFullPath {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/voyage/kpis-travel/add': typeof PrivateVoyageKpisTravelAddRoute;
   '/cmms/diagram-list': typeof PrivateCmmsDiagramListIndexRoute;
   '/cmms/filled-form-cmms': typeof PrivateCmmsFilledFormCmmsIndexRoute;
   '/cmms/kpis-cmms': typeof PrivateCmmsKpisCmmsIndexRoute;
@@ -1029,6 +1037,7 @@ export interface FileRoutesByTo {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/voyage/kpis-travel/add': typeof PrivateVoyageKpisTravelAddRoute;
   '/cmms/diagram-list': typeof PrivateCmmsDiagramListIndexRoute;
   '/cmms/filled-form-cmms': typeof PrivateCmmsFilledFormCmmsIndexRoute;
   '/cmms/kpis-cmms': typeof PrivateCmmsKpisCmmsIndexRoute;
@@ -1157,6 +1166,7 @@ export interface FileRoutesById {
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/_private/voyage/kpis-travel/add': typeof PrivateVoyageKpisTravelAddRoute;
   '/_private/cmms/diagram-list/': typeof PrivateCmmsDiagramListIndexRoute;
   '/_private/cmms/filled-form-cmms/': typeof PrivateCmmsFilledFormCmmsIndexRoute;
   '/_private/cmms/kpis-cmms/': typeof PrivateCmmsKpisCmmsIndexRoute;
@@ -1284,6 +1294,7 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/voyage/kpis-travel/add'
     | '/cmms/diagram-list'
     | '/cmms/filled-form-cmms'
     | '/cmms/kpis-cmms'
@@ -1409,6 +1420,7 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/voyage/kpis-travel/add'
     | '/cmms/diagram-list'
     | '/cmms/filled-form-cmms'
     | '/cmms/kpis-cmms'
@@ -1536,6 +1548,7 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
     | '/_private/register/user-type/add'
+    | '/_private/voyage/kpis-travel/add'
     | '/_private/cmms/diagram-list/'
     | '/_private/cmms/filled-form-cmms/'
     | '/_private/cmms/kpis-cmms/'
@@ -2312,6 +2325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateCmmsDiagramListIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/voyage/kpis-travel/add': {
+      id: '/_private/voyage/kpis-travel/add';
+      path: '/voyage/kpis-travel/add';
+      fullPath: '/voyage/kpis-travel/add';
+      preLoaderRoute: typeof PrivateVoyageKpisTravelAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/register/user-type/add': {
       id: '/_private/register/user-type/add';
       path: '/register/user-type/add';
@@ -2543,6 +2563,7 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
+  PrivateVoyageKpisTravelAddRoute: typeof PrivateVoyageKpisTravelAddRoute;
   PrivateCmmsDiagramListIndexRoute: typeof PrivateCmmsDiagramListIndexRoute;
   PrivateCmmsFilledFormCmmsIndexRoute: typeof PrivateCmmsFilledFormCmmsIndexRoute;
   PrivateCmmsKpisCmmsIndexRoute: typeof PrivateCmmsKpisCmmsIndexRoute;
@@ -2667,6 +2688,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
   PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
+  PrivateVoyageKpisTravelAddRoute: PrivateVoyageKpisTravelAddRoute,
   PrivateCmmsDiagramListIndexRoute: PrivateCmmsDiagramListIndexRoute,
   PrivateCmmsFilledFormCmmsIndexRoute: PrivateCmmsFilledFormCmmsIndexRoute,
   PrivateCmmsKpisCmmsIndexRoute: PrivateCmmsKpisCmmsIndexRoute,

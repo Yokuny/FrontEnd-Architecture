@@ -27,7 +27,7 @@ As seguintes regras são **INVIOLÁVEIS** e devem ser verificadas em todas as su
 - **Arquivos Modelo (NÃO IMPORTAR)**:
     - Estes arquivos são apenas templates. Copie o código, não faça importação:
     - `GraphArea`, `GraphBarStacked`, `GraphLines`, `GraphPizza`, `GraphProgress`, `GraphRadial`.
-    - `DefaultNumbersRender`, `DefaultTable`.
+    - `DefaultKPI`, `DefaultTable`.
 - **Estados Visuais**:
     - **Loading**: Use `DefaultLoading` (`src/components/default-loading.tsx`).
     - **Vazio**: Use `default-empty-data.tsx` se `data.length === 0`.

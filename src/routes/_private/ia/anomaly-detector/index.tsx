@@ -6,8 +6,8 @@ import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { AnomalyDetectorList } from './@components/anomaly-detector-list';
-import { Benchmark } from './@components/benchmark';
 import { InputFileCsv } from './@components/input-file-csv';
+import { KPI } from './@components/KPI';
 import { ModalAnomaly } from './@components/modal-anomaly';
 import { useAnomalyDetector } from './@hooks/use-anomaly-detector';
 
@@ -37,7 +37,7 @@ function AnomalyDetectorPage() {
           <DefaultEmptyData />
         ) : (
           <>
-            <Benchmark data={normalizedData} />
+            <KPI data={normalizedData} />
             <AnomalyDetectorList data={normalizedData} onShowDetails={setModalSensors} />
           </>
         )}

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { MACHINE_TYPES, type MachineTypeOption } from '@/lib/constants/select-options';
+import { MACHINE_TYPES, type SelectOption } from '@/lib/constants/select-options';
 
 /**
  * TypeMachineSelect Component
@@ -32,7 +32,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: MachineTypeOption[]) => {
+  const mapToOptions = (options: SelectOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: opt.label,
@@ -50,7 +50,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<MachineTypeOption, MachineTypeOption>
+        <DataMultiSelect<SelectOption, SelectOption>
           id={id}
           placeholder={placeholder || t('type.machine')}
           value={props.value}
@@ -76,7 +76,7 @@ export function TypeMachineSelect(props: TypeMachineSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<MachineTypeOption, MachineTypeOption>
+      <DataSelect<SelectOption, SelectOption>
         id={id}
         placeholder={placeholder || t('type.machine')}
         value={props.value}

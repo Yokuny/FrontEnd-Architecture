@@ -6,7 +6,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { CURRENCY_CONFIG, OPERATIONAL_ASSET_STATUS, STATUS_COLORS } from '../@consts/operational-asset.constants';
 import type { StatusDataItem } from '../@services/operational-asset.service';
 
-export function MiniDashboards({ data, totalLoss, totalRevenue, viewFinancial }: MiniDashboardsProps) {
+export function KPI({ data, totalLoss, totalRevenue, viewFinancial }: MiniDashboardsProps) {
   const { t } = useTranslation();
 
   const totalHours = data.reduce((acc, curr) => acc + curr.totalHours, 0);
@@ -67,63 +67,62 @@ export function MiniDashboards({ data, totalLoss, totalRevenue, viewFinancial }:
   }, [data, t]);
 
   return (
-    <div className="flex w-full flex-wrap justify-between gap-4">
-      <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-emerald-500">
-        <ItemContent className="flex flex-row items-center gap-2">
-          <Clock className="size-5 text-emerald-500" />
-          <ItemDescription className="font-bold text-xs uppercase">{t('time.operational')}</ItemDescription>
-        </ItemContent>
-        <ItemTitle className="font-bold text-2xl text-emerald-600">{operationalHours.toFixed(1)}h</ItemTitle>
-      </Item>
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
+        <Item className="flex-col rounded-none border-0 bg-background">
+          <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+            <Clock className="size-5 text-emerald-500" />
+            <ItemDescription className="font-medium">{t('time.operational')}</ItemDescription>
+          </ItemContent>
+          <ItemTitle className="ml-6 font-bold text-2xl text-emerald-600 tracking-tight">{operationalHours.toFixed(1)}h</ItemTitle>
+        </Item>
 
-      <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-red-500">
-        <ItemContent className="flex flex-row items-center gap-2">
-          <TriangleAlert className="size-5 text-red-500" />
-          <ItemDescription className="font-bold text-xs uppercase">{t('time.inoperability')}</ItemDescription>
-        </ItemContent>
-        <ItemTitle className="font-bold text-2xl text-red-600">{downtimeHours.toFixed(1)}h</ItemTitle>
-      </Item>
+        <Item className="flex-col rounded-none border-0 bg-background">
+          <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+            <TriangleAlert className="size-5 text-red-500" />
+            <ItemDescription className="font-medium">{t('time.inoperability')}</ItemDescription>
+          </ItemContent>
+          <ItemTitle className="ml-6 font-bold text-2xl text-red-600 tracking-tight">{downtimeHours.toFixed(1)}h</ItemTitle>
+        </Item>
 
-      {/* OPERABILITY RATE */}
-      <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-blue-500">
-        <ItemContent className="flex flex-row items-center gap-2">
-          <Activity className="size-5 text-blue-500" />
-          <ItemDescription className="font-bold text-xs uppercase">{t('operating.rate')}</ItemDescription>
-        </ItemContent>
-        <ItemContent className="flex flex-col">
-          <ItemTitle className="font-bold text-2xl text-blue-600">{operabilityRate.toFixed(1)}%</ItemTitle>
-        </ItemContent>
-      </Item>
+        <Item className="flex-col rounded-none border-0 bg-background">
+          <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+            <Activity className="size-5 text-blue-500" />
+            <ItemDescription className="font-medium">{t('operating.rate')}</ItemDescription>
+          </ItemContent>
+          <ItemTitle className="ml-6 font-bold text-2xl text-blue-600 tracking-tight">{operabilityRate.toFixed(1)}%</ItemTitle>
+        </Item>
 
-      <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-indigo-500">
-        <ItemContent className="flex flex-row items-center gap-2">
-          <BarChart3 className="size-5 text-indigo-500" />
-          <ItemDescription className="font-bold text-xs uppercase">{t('avg.daily.operational')}</ItemDescription>
-        </ItemContent>
-        <ItemTitle className="font-bold text-2xl text-indigo-600">{avgDailyOperational.toFixed(1)}h</ItemTitle>
-      </Item>
+        <Item className="flex-col rounded-none border-0 bg-background">
+          <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+            <BarChart3 className="size-5 text-indigo-500" />
+            <ItemDescription className="font-medium">{t('avg.daily.operational')}</ItemDescription>
+          </ItemContent>
+          <ItemTitle className="ml-6 font-bold text-2xl text-indigo-600 tracking-tight">{avgDailyOperational.toFixed(1)}h</ItemTitle>
+        </Item>
+      </div>
 
       {viewFinancial && (
-        <>
-          <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-emerald-600">
-            <ItemContent className="flex flex-row items-center gap-2">
+        <div className="grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2">
+          <Item className="flex-col rounded-none border-0 bg-background">
+            <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
               <TrendingUp className="size-5 text-emerald-600" />
-              <ItemDescription className="font-bold text-xs uppercase">{t('revenue')}</ItemDescription>
+              <ItemDescription className="font-medium">{t('revenue')}</ItemDescription>
             </ItemContent>
-            <ItemTitle className="font-bold text-emerald-600 text-xl">{currencyFormatter.format(totalRevenue)}</ItemTitle>
+            <ItemTitle className="ml-6 font-bold text-emerald-600 text-xl tracking-tight">{currencyFormatter.format(totalRevenue)}</ItemTitle>
           </Item>
-          <Item variant="outline" className="min-w-[200px] flex-1 flex-col border-l-4 border-l-rose-600">
-            <ItemContent className="flex flex-row items-center gap-2">
+          <Item className="flex-col rounded-none border-0 bg-background">
+            <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
               <TrendingDown className="size-5 text-rose-600" />
-              <ItemDescription className="font-bold text-xs uppercase">{t('loss')}</ItemDescription>
+              <ItemDescription className="font-medium">{t('loss')}</ItemDescription>
             </ItemContent>
-            <ItemTitle className="font-bold text-rose-600 text-xl">{currencyFormatter.format(totalLoss)}</ItemTitle>
+            <ItemTitle className="ml-6 font-bold text-rose-600 text-xl tracking-tight">{currencyFormatter.format(totalLoss)}</ItemTitle>
           </Item>
-        </>
+        </div>
       )}
 
       <Item variant="outline" className="flex-1">
-        <ItemDescription className="font-bold text-xs uppercase">{t('last.status')}</ItemDescription>
+        <ItemDescription className="font-medium">{t('last.status')}</ItemDescription>
         <div className="relative flex h-8 w-full items-center overflow-hidden rounded-md bg-muted">
           <TooltipProvider>
             {breakdownData.map((d, index) => (
@@ -144,7 +143,7 @@ export function MiniDashboards({ data, totalLoss, totalRevenue, viewFinancial }:
                 <TooltipContent side="top" className="flex min-w-32 flex-col gap-1">
                   <div className="flex items-center gap-2">
                     <div className="size-3" style={{ backgroundColor: d.color }} />
-                    <ItemTitle className="font-bold text-xs uppercase tracking-tight">{d.label}</ItemTitle>
+                    <ItemTitle className="font-medium uppercase tracking-tight">{d.label}</ItemTitle>
                   </div>
                   <div className="mt-1 flex items-baseline gap-1">
                     <ItemTitle className="font-black text-lg tabular-nums">{d.value.toFixed(1)}</ItemTitle>

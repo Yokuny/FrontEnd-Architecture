@@ -88,7 +88,7 @@ export function AppSidebar() {
         </div>
         <SidebarSeparator />
       </SidebarHeader>
-      <SidebarContent className="px-2 py-1">
+      <SidebarContent className="px-2 py-1 text-muted-foreground">
         <AppNavigation routes={filteredRoutes} />
       </SidebarContent>
       <SidebarFooter className="px-2 pb-3">

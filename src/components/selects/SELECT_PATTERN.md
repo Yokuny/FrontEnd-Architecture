@@ -156,15 +156,24 @@ Para componentes que utilizam dados fixos (opções que não vêm da API), segui
 ### Exemplo de Constante (`select-options.ts`)
 
 ```typescript
-export interface PriorityOption {
-  value: string;
-  labelKey: string; // Chave para tradução
+export interface SelectOption<T = string> {
+  value: T;
+  label: string;
+}
+
+export interface SelectOptionWithKey<T = string> {
+  value: T;
+  labelKey: string;
+}
+
+export interface PriorityOption extends SelectOption<string> {
+  labelKey: string; // Key for translation
 }
 
 export const PRIORITY_OPTIONS: PriorityOption[] = [
-  { value: "low", labelKey: "priority.low" },
-  { value: "medium", labelKey: "priority.medium" },
-  { value: "high", labelKey: "priority.high" },
+  { value: "low", label: "Low", labelKey: "priority.low" },
+  { value: "medium", label: "Medium", labelKey: "priority.medium" },
+  { value: "high", label: "High", labelKey: "priority.high" },
 ];
 ```
 

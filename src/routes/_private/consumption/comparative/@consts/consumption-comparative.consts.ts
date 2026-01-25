@@ -1,8 +1,6 @@
-export const UNIT_OPTIONS = [
-  { label: 'Ton', value: 'T' },
-  { label: 'L', value: 'L' },
-  { label: 'm³', value: 'm³' },
-];
+import { UNIT_OPTIONS as SHARED_UNIT_OPTIONS } from '@/lib/constants/select-options';
+
+export const UNIT_OPTIONS = SHARED_UNIT_OPTIONS;
 
 export const VIEW_TYPE_OPTIONS = [
   { label: 'Consumo', value: 'consumption' },

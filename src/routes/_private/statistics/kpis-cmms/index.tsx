@@ -16,7 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { cn } from '@/lib/utils';
 import { DeviationsChart } from './@components/DeviationsChart';
-import { KPISummary } from './@components/KPISummary';
+import { KPI } from './@components/KPI';
 import { ReliabilityGroupChart } from './@components/ReliabilityGroupChart';
 import { ReliabilityVesselChart } from './@components/ReliabilityVesselChart';
 import { StatusChart } from './@components/StatusChart';
@@ -166,7 +166,7 @@ function KPISCMMSPage() {
           </Button>
         </div>
 
-        <KPISummary filters={appliedFilters} />
+        <KPI filters={appliedFilters} />
 
         {/* Charts Grid */}
         <ItemGroup className="gap-6">

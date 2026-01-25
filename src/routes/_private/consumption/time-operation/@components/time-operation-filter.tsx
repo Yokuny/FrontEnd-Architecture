@@ -2,14 +2,13 @@ import { format } from 'date-fns';
 import { BrushCleaning, CalendarIcon, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enterprise-select';
+import { MachineByEnterpriseSelect, UnitSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Item, ItemContent } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import type { TimeOperationSearchParams } from '../@interface/time-operation.types';
 
@@ -126,16 +125,7 @@ export function TimeOperationFilter({ idEnterprise, filters, onFilterChange, isL
       </ItemContent>
 
       <ItemContent className="min-w-[100px]">
-        <Label>{t('unit')}</Label>
-        <Select value={localFilters.unit} onValueChange={(val) => setLocalFilters({ ...localFilters, unit: val })}>
-          <SelectTrigger className="bg-background">
-            <SelectValue placeholder={t('unit')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="m³">m³</SelectItem>
-            <SelectItem value="L">L</SelectItem>
-          </SelectContent>
-        </Select>
+        <UnitSelect value={localFilters.unit} onChange={(val) => setLocalFilters({ ...localFilters, unit: val || 'm³' })} />
       </ItemContent>
 
       <div className="flex items-center space-x-2 pb-3">

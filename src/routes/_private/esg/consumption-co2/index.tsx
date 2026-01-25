@@ -4,7 +4,7 @@ import { CalendarIcon, Search } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DefaultLoading from '@/components/default-loading';
-import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enterprise-select';
+import { MachineByEnterpriseSelect, UnitSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -12,7 +12,6 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useConsumptionCO2 } from '@/hooks/use-esg-api';
 import { cn } from '@/lib/utils';
@@ -22,12 +21,6 @@ import { ConsumptionCO2Totals } from './@components/ConsumptionCO2Totals';
 export const Route = createFileRoute('/_private/esg/consumption-co2/')({
   component: ConsumptionCO2Page,
 });
-
-const unitOptions = [
-  { label: 'Ton', value: 'T' },
-  { label: 'L', value: 'L' },
-  { label: 'm³', value: 'm³' },
-];
 
 function ConsumptionCO2Page() {
   const { t } = useTranslation();
@@ -98,21 +91,7 @@ function ConsumptionCO2Page() {
         <Item variant="outline" className="bg-secondary">
           <MachineByEnterpriseSelect mode="multi" label={t('machines')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
 
-          <div className="flex flex-col gap-1.5">
-            <Label>{t('unit')}</Label>
-            <Select value={selectedUnit} onValueChange={setSelectedUnit}>
-              <SelectTrigger className="w-32 bg-background">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {unitOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <UnitSelect value={selectedUnit} onChange={(val) => val && setSelectedUnit(val)} />
 
           <div className="flex flex-col gap-1.5">
             <Label>{t('date.start')}</Label>

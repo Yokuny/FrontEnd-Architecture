@@ -56,6 +56,7 @@ export { TypeProblemSelect } from './type-problem-select';
 export { TypeSensorSelect } from './type-sensor-select';
 // TODO: DEPRECATED ??
 export { TypeServiceMaintenanceSelect } from './type-service-maintenance-select';
+export { UnitSelect } from './unit-select';
 export { UserCodeIntegrationSelect } from './user-code-integration-select';
 export { UserRoleSelect } from './user-role-select';
 export { UserSamePermissionSelect } from './user-same-permission-select';

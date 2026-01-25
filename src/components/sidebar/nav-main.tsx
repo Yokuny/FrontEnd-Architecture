@@ -39,7 +39,7 @@ export default function AppNavigation({ routes }: { routes: Route[] }) {
                   <SidebarMenuButton
                     className={cn(
                       'flex w-full items-center transition-colors',
-                      isOpen ? 'bg-sidebar-muted' : 'hover:bg-sidebar-muted hover:text-muted-foreground',
+                      isOpen ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
                       isCollapsed && 'justify-center',
                     )}
                   >
@@ -55,7 +55,7 @@ export default function AppNavigation({ routes }: { routes: Route[] }) {
                       {route.subs?.map((subRoute) => (
                         <SidebarMenuSubItem key={`${route.id}-${subRoute.title}`} className="h-auto">
                           <SidebarMenuSubButton size="sm" asChild>
-                            <Link to={subRoute.link} className="text-muted-foreground hover:bg-sidebar-muted hover:text-foreground">
+                            <Link to={subRoute.link} className="text-foreground hover:bg-sidebar-muted hover:text-muted-foreground">
                               {subRoute.title}
                             </Link>
                           </SidebarMenuSubButton>
@@ -66,7 +66,11 @@ export default function AppNavigation({ routes }: { routes: Route[] }) {
                 )}
               </Collapsible>
             ) : (
-              <SidebarMenuButton className={cn('hover:bg-sidebar-muted hover:text-muted-foreground', isCollapsed && 'justify-center')} tooltip={route.title} asChild>
+              <SidebarMenuButton
+                className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', isCollapsed && 'justify-center')}
+                tooltip={route.title}
+                asChild
+              >
                 <Link to={route.link} className={cn('flex items-center rounded-lg px-2', isCollapsed && 'justify-center')}>
                   {route.icon}
                   {!isCollapsed && <span className="ml-2">{route.title}</span>}

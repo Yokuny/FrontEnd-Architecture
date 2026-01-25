@@ -9,9 +9,8 @@ import DefaultLoading from '@/components/default-loading';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useRVEDashboard } from '@/hooks/use-cmms-rve-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-
+import { KPI } from './@components/KPI';
 import { RVEFilter } from './@components/RVEFilter';
-import { RVEKPIs } from './@components/RVEKPIs';
 import { RVEOperationalChart } from './@components/RVEOperationalChart';
 import { RVEScaleChart } from './@components/RVEScaleChart';
 
@@ -95,7 +94,7 @@ function RVEDashboardPage() {
         {!hasData && !isLoading && <DefaultEmptyData />}
         {!isLoading && hasData && (
           <>
-            <RVEKPIs data={data?.codigosOperacionais || []} />
+            <KPI data={data?.codigosOperacionais || []} />
             <RVEOperationalChart data={data?.codigosOperacionais || []} />
             <RVEScaleChart data={data?.escalas || []} />
           </>
