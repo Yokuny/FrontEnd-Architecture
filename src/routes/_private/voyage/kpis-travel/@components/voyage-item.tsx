@@ -1,10 +1,10 @@
 import { format, isValid } from 'date-fns';
-import { ArrowRight, Building2, Clock, Flag, MapPin, MoreVertical, Pencil, Ship } from 'lucide-react';
+import { ArrowRight, Badge, BadgeCheck, Building2, Clock, Flag, MapPin, MoreVertical, Pencil, Ship } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 export function VoyageItem({ voyage }: VoyageItemProps) {
   const { t } = useTranslation();
@@ -34,11 +34,14 @@ export function VoyageItem({ voyage }: VoyageItemProps) {
           </ItemDescription>
         </ItemContent>
       </div>
-
       <div className="flex items-center gap-4">
-        <Badge variant={isFinished ? 'default' : 'secondary'} className="h-5 px-1.5 text-xs uppercase tracking-wider">
-          {isFinished ? t('finished') : t('in.progress')}
-        </Badge>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>{isFinished ? <BadgeCheck className="size-5 text-green-600" /> : <Badge className="size-5 text-amber-600" />}</TooltipTrigger>
+            <TooltipContent>{t(isFinished ? 'finished' : 'in.progress')}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         {voyage.travel && <div className="font-semibold text-muted-foreground text-xs uppercase tracking-wider">{voyage.travel.code}</div>}
       </div>
 
