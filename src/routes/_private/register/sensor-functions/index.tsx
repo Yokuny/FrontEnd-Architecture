@@ -105,7 +105,7 @@ function SensorFunctionsListPage() {
                   <ItemMedia variant="image">
                     <FunctionSquare className={`size-5 ${item.enabled ? 'text-primary' : 'text-muted-foreground'}`} />
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
                     <ItemDescription className="font-mono text-xs">{replacePlaceholdersWithArray(item.algorithm, item.sensorsIn)}</ItemDescription>
                   </ItemContent>

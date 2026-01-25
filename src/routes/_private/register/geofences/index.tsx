@@ -122,7 +122,7 @@ function GeofenceListPage() {
                     <ItemMedia variant="image">
                       <TypeIcon className={`size-5 ${config.color}`} />
                     </ItemMedia>
-                    <ItemContent>
+                    <ItemContent className="gap-0">
                       <ItemTitle className="text-base">{item.description}</ItemTitle>
                       <ItemDescription>{item.code}</ItemDescription>
                     </ItemContent>

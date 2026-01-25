@@ -120,7 +120,7 @@ function PartsListPage() {
                       </AvatarFallback>
                     </Avatar>
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{item.name}</ItemTitle>
                     <ItemDescription>SKU: {item.sku}</ItemDescription>
                   </ItemContent>

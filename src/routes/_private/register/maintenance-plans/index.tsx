@@ -137,7 +137,7 @@ function MaintenancePlansListPage() {
                   <ItemMedia variant="image">
                     <Settings className="size-5" />
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
                     <ItemDescription className="flex items-center gap-2">
                       <Building2 className="size-3" /> {item.enterprise?.name}

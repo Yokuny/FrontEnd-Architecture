@@ -90,7 +90,7 @@ function ContractsListPage() {
                   <ItemMedia variant="image">
                     <FileText className="size-5" />
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{contract.description}</ItemTitle>
                     <ItemDescription>{contract.customer}</ItemDescription>
                   </ItemContent>

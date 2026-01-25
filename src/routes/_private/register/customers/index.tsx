@@ -96,7 +96,7 @@ function CustomersListPage() {
                     <ItemMedia variant="image">
                       <User className="size-5" />
                     </ItemMedia>
-                    <ItemContent>
+                    <ItemContent className="gap-0">
                       <ItemTitle className="text-base">{customer.name}</ItemTitle>
                       {customer.enterprise && (
                         <div className="flex items-center gap-2">

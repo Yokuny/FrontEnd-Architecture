@@ -78,7 +78,7 @@ function FormsListPage() {
           <ItemMedia variant="image">
             <FileText className={`size-5 ${isPending ? 'text-muted-foreground' : 'text-primary'}`} />
           </ItemMedia>
-          <ItemContent>
+          <ItemContent className="gap-0">
             <ItemTitle className="text-base">{item.description}</ItemTitle>
             <ItemDescription className="flex items-center gap-1">
               <User className="size-3" />
