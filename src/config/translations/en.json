@@ -1790,6 +1790,7 @@
   "schedule.to": "Schedule for",
   "scheduled": "Scheduled",
   "search": "Search",
+  "no.data.found": "No data found",
   "search.placeholder": "Write here to search",
   "search.sensor.description": "Filter by ID or Description",
   "seconds": "seconds",

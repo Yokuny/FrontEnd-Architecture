@@ -1821,6 +1821,7 @@
   "schedule.to": "Agendado para",
   "scheduled": "Previsto",
   "search": "Buscar",
+  "no.data.found": "Nenhum dado encontrado,",
   "search.placeholder": "Digite aqui para buscar",
   "search.sensor.description": "Fitrar por ID ou Descrição",
   "seconds": "segundos",

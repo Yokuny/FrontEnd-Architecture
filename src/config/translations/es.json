@@ -1774,6 +1774,7 @@
   "schedule.to": "Agendado para",
   "scheduled": "Programado",
   "search": "Búsqueda",
+  "no.data.found": "No se encontraron datos",
   "search.placeholder": "Escriba aquí para buscar",
   "search.sensor.description": "Filtrar por ID o Descripción",
   "seconds": "segundos",
