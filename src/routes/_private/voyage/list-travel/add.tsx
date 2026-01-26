@@ -16,7 +16,7 @@ const voyageAddSearchSchema = z.object({
 
 type VoyageAddSearch = z.infer<typeof voyageAddSearchSchema>;
 
-export const Route = createFileRoute('/_private/voyage/kpis-travel/add')({
+export const Route = createFileRoute('/_private/voyage/list-travel/add')({
   component: VoyageAddPage,
   validateSearch: (search: Record<string, unknown>): VoyageAddSearch => voyageAddSearchSchema.parse(search),
 });
@@ -28,7 +28,7 @@ function VoyageAddPage() {
 
   const { form, onSubmit, onDelete, isLoadingData } = useVoyageForm({
     id,
-    redirect: () => navigate({ to: '/voyage/kpis-travel', search: { page: 1, size: 10 } }),
+    redirect: () => navigate({ to: '/voyage/list-travel', search: { page: 1, size: 10 } }),
   });
 
   const title = id ? t('edit.trip') : t('new.trip');
@@ -63,7 +63,7 @@ function VoyageAddPage() {
               )}
             </div>
             <div className="flex gap-2">
-              <Button type="button" variant="outline" onClick={() => navigate({ to: '/voyage/kpis-travel', search: { page: 1, size: 10 } })}>
+              <Button type="button" variant="outline" onClick={() => navigate({ to: '/voyage/list-travel', search: { page: 1, size: 10 } })}>
                 {t('cancel')}
               </Button>
               <Button onClick={form.handleSubmit(onSubmit)} disabled={form.formState.isSubmitting}>

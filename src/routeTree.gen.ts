@@ -9,132 +9,131 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as PrivateRouteImport } from './routes/_private';
-import { Route as PrivateCalendarMaintenanceIndexRouteImport } from './routes/_private/calendar-maintenance/index';
-import { Route as PrivateCmmsDiagramListIndexRouteImport } from './routes/_private/cmms/diagram-list/index';
-import { Route as PrivateCmmsFilledFormCmmsIndexRouteImport } from './routes/_private/cmms/filled-form-cmms/index';
-import { Route as PrivateCmmsIndexRouteImport } from './routes/_private/cmms/index';
-import { Route as PrivateCmmsKpisCmmsIndexRouteImport } from './routes/_private/cmms/kpis-cmms/index';
-import { Route as PrivateConsumptionComparativeIndexRouteImport } from './routes/_private/consumption/comparative/index';
-import { Route as PrivateConsumptionDailyIndexRouteImport } from './routes/_private/consumption/daily/index';
-import { Route as PrivateConsumptionIndexRouteImport } from './routes/_private/consumption/index';
-import { Route as PrivateConsumptionRelatorioIndexRouteImport } from './routes/_private/consumption/relatorio/index';
-import { Route as PrivateConsumptionRveRdoIndexRouteImport } from './routes/_private/consumption/rve-rdo/index';
-import { Route as PrivateConsumptionRveSoundingIndexRouteImport } from './routes/_private/consumption/rve-sounding/index';
-import { Route as PrivateConsumptionTimeOperationIndexRouteImport } from './routes/_private/consumption/time-operation/index';
-import { Route as PrivateContractsContractListIndexRouteImport } from './routes/_private/contracts/contract-list/index';
-import { Route as PrivateContractsDashboardRveIndexRouteImport } from './routes/_private/contracts/dashboard-rve/index';
-import { Route as PrivateContractsDashboardRveRdoIndexRouteImport } from './routes/_private/contracts/dashboard-rve-rdo/index';
-import { Route as PrivateContractsDashboardRveSoundingIndexRouteImport } from './routes/_private/contracts/dashboard-rve-sounding/index';
-import { Route as PrivateContractsIndexRouteImport } from './routes/_private/contracts/index';
-import { Route as PrivateEsgCiiFleetIndexRouteImport } from './routes/_private/esg/cii-fleet/index';
-import { Route as PrivateEsgConsumptionCo2IndexRouteImport } from './routes/_private/esg/consumption-co2/index';
-import { Route as PrivateEsgIndexRouteImport } from './routes/_private/esg/index';
-import { Route as PrivateEsgIndicatorsEeoiCiiIndexRouteImport } from './routes/_private/esg/indicators-eeoi-cii/index';
-import { Route as PrivateEsgSimulatorCiiIndexRouteImport } from './routes/_private/esg/simulator-cii/index';
-import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/fleet-manager/index';
-import { Route as PrivateIaAnomalyDetectorIndexRouteImport } from './routes/_private/ia/anomaly-detector/index';
-import { Route as PrivateIaIndexRouteImport } from './routes/_private/ia/index';
-import { Route as PrivateIaPromptIndexRouteImport } from './routes/_private/ia/prompt/index';
-import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
-import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
-import { Route as PrivateMaintenanceListOsDoneViewIndexRouteImport } from './routes/_private/maintenance/list-os-done/view/index';
-import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
-import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
-import { Route as PrivateOperationDowntimeIndexRouteImport } from './routes/_private/operation/downtime/index';
-import { Route as PrivateOperationGoalsAddRouteImport } from './routes/_private/operation/goals/add';
-import { Route as PrivateOperationGoalsIndexRouteImport } from './routes/_private/operation/goals/index';
-import { Route as PrivateOperationGroupsAddRouteImport } from './routes/_private/operation/groups/add';
-import { Route as PrivateOperationGroupsIndexRouteImport } from './routes/_private/operation/groups/index';
-import { Route as PrivateOperationIndexRouteImport } from './routes/_private/operation/index';
-import { Route as PrivateOperationOperationalAssetIndexRouteImport } from './routes/_private/operation/operational-asset/index';
-import { Route as PrivateOperationOperationalFleetIndexRouteImport } from './routes/_private/operation/operational-fleet/index';
-import { Route as PrivateOperationPtaxIndexRouteImport } from './routes/_private/operation/ptax/index';
-import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
-import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
-import { Route as PrivatePermissionsRolesEditIndexRouteImport } from './routes/_private/permissions/roles/edit/index';
-import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
-import { Route as PrivatePermissionsRolesUsersIndexRouteImport } from './routes/_private/permissions/roles/users/index';
-import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
-import { Route as PrivatePermissionsUsersEditIndexRouteImport } from './routes/_private/permissions/users/edit/index';
-import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
-import { Route as PrivatePermissionsUsersPasswordIndexRouteImport } from './routes/_private/permissions/users/password/index';
-import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
-import { Route as PrivateRegisterAlertsAddRouteImport } from './routes/_private/register/alerts/add';
-import { Route as PrivateRegisterAlertsIndexRouteImport } from './routes/_private/register/alerts/index';
-import { Route as PrivateRegisterBuoyAddRouteImport } from './routes/_private/register/buoy/add';
-import { Route as PrivateRegisterBuoyIndexRouteImport } from './routes/_private/register/buoy/index';
-import { Route as PrivateRegisterContractsAddRouteImport } from './routes/_private/register/contracts/add';
-import { Route as PrivateRegisterContractsIndexRouteImport } from './routes/_private/register/contracts/index';
-import { Route as PrivateRegisterCustomersAddRouteImport } from './routes/_private/register/customers/add';
-import { Route as PrivateRegisterCustomersIndexRouteImport } from './routes/_private/register/customers/index';
-import { Route as PrivateRegisterEnterprisesAddRouteImport } from './routes/_private/register/enterprises/add';
-import { Route as PrivateRegisterEnterprisesIndexRouteImport } from './routes/_private/register/enterprises/index';
-import { Route as PrivateRegisterFormsAddRouteImport } from './routes/_private/register/forms/add';
-import { Route as PrivateRegisterFormsIndexRouteImport } from './routes/_private/register/forms/index';
-import { Route as PrivateRegisterGeofencesAddRouteImport } from './routes/_private/register/geofences/add';
-import { Route as PrivateRegisterGeofencesIndexRouteImport } from './routes/_private/register/geofences/index';
-import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
-import { Route as PrivateRegisterMachinesAddRouteImport } from './routes/_private/register/machines/add';
-import { Route as PrivateRegisterMachinesIndexRouteImport } from './routes/_private/register/machines/index';
-import { Route as PrivateRegisterMaintenancePlansAddRouteImport } from './routes/_private/register/maintenance-plans/add';
-import { Route as PrivateRegisterMaintenancePlansIndexRouteImport } from './routes/_private/register/maintenance-plans/index';
-import { Route as PrivateRegisterModelMachineAddRouteImport } from './routes/_private/register/model-machine/add';
-import { Route as PrivateRegisterModelMachineIndexRouteImport } from './routes/_private/register/model-machine/index';
-import { Route as PrivateRegisterParamsAddRouteImport } from './routes/_private/register/params/add';
-import { Route as PrivateRegisterParamsIndexRouteImport } from './routes/_private/register/params/index';
-import { Route as PrivateRegisterPartsAddRouteImport } from './routes/_private/register/parts/add';
-import { Route as PrivateRegisterPartsIndexRouteImport } from './routes/_private/register/parts/index';
-import { Route as PrivateRegisterPlatformAddRouteImport } from './routes/_private/register/platform/add';
-import { Route as PrivateRegisterPlatformIndexRouteImport } from './routes/_private/register/platform/index';
-import { Route as PrivateRegisterSensorFunctionsAddRouteImport } from './routes/_private/register/sensor-functions/add';
-import { Route as PrivateRegisterSensorFunctionsIndexRouteImport } from './routes/_private/register/sensor-functions/index';
-import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
-import { Route as PrivateRegisterSensorsIndexRouteImport } from './routes/_private/register/sensors/index';
-import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
-import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_private/register/type-fuel/index';
-import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
-import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
-import { Route as PrivateServiceManagementFasIndexRouteImport } from './routes/_private/service-management/fas/index';
-import { Route as PrivateServiceManagementFasAnalyticsIndexRouteImport } from './routes/_private/service-management/fas-analytics/index';
-import { Route as PrivateServiceManagementFasContactsIndexRouteImport } from './routes/_private/service-management/fas-contacts/index';
-import { Route as PrivateServiceManagementIndexRouteImport } from './routes/_private/service-management/index';
-import { Route as PrivateSetUpCompanyExternalUsersIndexRouteImport } from './routes/_private/set-up-company/external-users/index';
-import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
-import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
-import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
-import { Route as PrivateSetUpCompanySetupChatbotIndexRouteImport } from './routes/_private/set-up-company/setup-chatbot/index';
-import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
-import { Route as PrivateSetUpCompanySetupFleetIndexRouteImport } from './routes/_private/set-up-company/setup-fleet/index';
-import { Route as PrivateSetUpCompanySetupLimitsIndexRouteImport } from './routes/_private/set-up-company/setup-limits/index';
-import { Route as PrivateStatisticsIndexRouteImport } from './routes/_private/statistics/index';
-import { Route as PrivateStatisticsIntegrationIndexRouteImport } from './routes/_private/statistics/integration/index';
-import { Route as PrivateStatisticsKpisCmmsIndexRouteImport } from './routes/_private/statistics/kpis-cmms/index';
-import { Route as PrivateStatisticsRveDashboardIndexRouteImport } from './routes/_private/statistics/rve-dashboard/index';
-import { Route as PrivateStatisticsTimeOperationIndexRouteImport } from './routes/_private/statistics/time-operation/index';
-import { Route as PrivateStatisticsTrackingActivityIndexRouteImport } from './routes/_private/statistics/tracking-activity/index';
-import { Route as PrivateTelemetryBuoysDwellTimeIndexRouteImport } from './routes/_private/telemetry/buoys-dwell-time/index';
-import { Route as PrivateTelemetryDataloggerIndexRouteImport } from './routes/_private/telemetry/datalogger/index';
-import { Route as PrivateTelemetryDiagramListIndexRouteImport } from './routes/_private/telemetry/diagram-list/index';
-import { Route as PrivateTelemetryDownloadDataAssetRequestIndexRouteImport } from './routes/_private/telemetry/download-data-asset-request/index';
-import { Route as PrivateTelemetryHeatmapFleetIndexRouteImport } from './routes/_private/telemetry/heatmap-fleet/index';
-import { Route as PrivateTelemetryHeatmapPanelIndexRouteImport } from './routes/_private/telemetry/heatmap-panel/index';
-import { Route as PrivateTelemetryIndexRouteImport } from './routes/_private/telemetry/index';
-import { Route as PrivateTelemetryListDashboardIndexRouteImport } from './routes/_private/telemetry/list-dashboard/index';
-import { Route as PrivateTelemetryPerformanceIndexRouteImport } from './routes/_private/telemetry/performance/index';
-import { Route as PrivateTelemetryRemoteIhmIndexRouteImport } from './routes/_private/telemetry/remote-ihm/index';
-import { Route as PrivateVoyageIndexRouteImport } from './routes/_private/voyage/index';
-import { Route as PrivateVoyageKpisTravelAddRouteImport } from './routes/_private/voyage/kpis-travel/add';
-import { Route as PrivateVoyageKpisTravelIndexRouteImport } from './routes/_private/voyage/kpis-travel/index';
-import { Route as PrivateVoyageListTravelIndexRouteImport } from './routes/_private/voyage/list-travel/index';
-import { Route as PrivateVoyageRoutePlannerIndexRouteImport } from './routes/_private/voyage/route-planner/index';
-import { Route as PrivateVoyageVoyageIntegrationIndexRouteImport } from './routes/_private/voyage/voyage-integration/index';
 import { Route as PublicRouteImport } from './routes/_public';
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
-import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
-import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
+import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateVoyageIndexRouteImport } from './routes/_private/voyage/index';
+import { Route as PrivateTelemetryIndexRouteImport } from './routes/_private/telemetry/index';
+import { Route as PrivateStatisticsIndexRouteImport } from './routes/_private/statistics/index';
+import { Route as PrivateSetUpCompanyIndexRouteImport } from './routes/_private/set-up-company/index';
+import { Route as PrivateServiceManagementIndexRouteImport } from './routes/_private/service-management/index';
+import { Route as PrivateRegisterIndexRouteImport } from './routes/_private/register/index';
+import { Route as PrivatePermissionsIndexRouteImport } from './routes/_private/permissions/index';
+import { Route as PrivateOperationIndexRouteImport } from './routes/_private/operation/index';
+import { Route as PrivateMaintenanceIndexRouteImport } from './routes/_private/maintenance/index';
+import { Route as PrivateIaIndexRouteImport } from './routes/_private/ia/index';
+import { Route as PrivateFleetManagerIndexRouteImport } from './routes/_private/fleet-manager/index';
+import { Route as PrivateEsgIndexRouteImport } from './routes/_private/esg/index';
+import { Route as PrivateContractsIndexRouteImport } from './routes/_private/contracts/index';
+import { Route as PrivateConsumptionIndexRouteImport } from './routes/_private/consumption/index';
+import { Route as PrivateCmmsIndexRouteImport } from './routes/_private/cmms/index';
+import { Route as PrivateCalendarMaintenanceIndexRouteImport } from './routes/_private/calendar-maintenance/index';
+import { Route as PublicAuthUnlockRouteImport } from './routes/_public/auth/unlock';
+import { Route as PublicAuthResetPasswordRouteImport } from './routes/_public/auth/reset-password';
+import { Route as PublicAuthRegisterRouteImport } from './routes/_public/auth/register';
+import { Route as PrivateVoyageVoyageIntegrationIndexRouteImport } from './routes/_private/voyage/voyage-integration/index';
+import { Route as PrivateVoyageRoutePlannerIndexRouteImport } from './routes/_private/voyage/route-planner/index';
+import { Route as PrivateVoyageListTravelIndexRouteImport } from './routes/_private/voyage/list-travel/index';
+import { Route as PrivateTelemetryRemoteIhmIndexRouteImport } from './routes/_private/telemetry/remote-ihm/index';
+import { Route as PrivateTelemetryPerformanceIndexRouteImport } from './routes/_private/telemetry/performance/index';
+import { Route as PrivateTelemetryListDashboardIndexRouteImport } from './routes/_private/telemetry/list-dashboard/index';
+import { Route as PrivateTelemetryHeatmapPanelIndexRouteImport } from './routes/_private/telemetry/heatmap-panel/index';
+import { Route as PrivateTelemetryHeatmapFleetIndexRouteImport } from './routes/_private/telemetry/heatmap-fleet/index';
+import { Route as PrivateTelemetryDownloadDataAssetRequestIndexRouteImport } from './routes/_private/telemetry/download-data-asset-request/index';
+import { Route as PrivateTelemetryDiagramListIndexRouteImport } from './routes/_private/telemetry/diagram-list/index';
+import { Route as PrivateTelemetryDataloggerIndexRouteImport } from './routes/_private/telemetry/datalogger/index';
+import { Route as PrivateTelemetryBuoysDwellTimeIndexRouteImport } from './routes/_private/telemetry/buoys-dwell-time/index';
+import { Route as PrivateStatisticsTrackingActivityIndexRouteImport } from './routes/_private/statistics/tracking-activity/index';
+import { Route as PrivateStatisticsTimeOperationIndexRouteImport } from './routes/_private/statistics/time-operation/index';
+import { Route as PrivateStatisticsRveDashboardIndexRouteImport } from './routes/_private/statistics/rve-dashboard/index';
+import { Route as PrivateStatisticsKpisCmmsIndexRouteImport } from './routes/_private/statistics/kpis-cmms/index';
+import { Route as PrivateStatisticsIntegrationIndexRouteImport } from './routes/_private/statistics/integration/index';
+import { Route as PrivateSetUpCompanySetupLimitsIndexRouteImport } from './routes/_private/set-up-company/setup-limits/index';
+import { Route as PrivateSetUpCompanySetupFleetIndexRouteImport } from './routes/_private/set-up-company/setup-fleet/index';
+import { Route as PrivateSetUpCompanySetupEmailIndexRouteImport } from './routes/_private/set-up-company/setup-email/index';
+import { Route as PrivateSetUpCompanySetupChatbotIndexRouteImport } from './routes/_private/set-up-company/setup-chatbot/index';
+import { Route as PrivateSetUpCompanySetupApiExternalIndexRouteImport } from './routes/_private/set-up-company/setup-api-external/index';
+import { Route as PrivateSetUpCompanyIntegrationListIndexRouteImport } from './routes/_private/set-up-company/integration-list/index';
+import { Route as PrivateSetUpCompanyExternalUsersIndexRouteImport } from './routes/_private/set-up-company/external-users/index';
+import { Route as PrivateServiceManagementFasIndexRouteImport } from './routes/_private/service-management/fas/index';
+import { Route as PrivateServiceManagementFasContactsIndexRouteImport } from './routes/_private/service-management/fas-contacts/index';
+import { Route as PrivateServiceManagementFasAnalyticsIndexRouteImport } from './routes/_private/service-management/fas-analytics/index';
+import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
+import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_private/register/type-fuel/index';
+import { Route as PrivateRegisterSensorsIndexRouteImport } from './routes/_private/register/sensors/index';
+import { Route as PrivateRegisterSensorFunctionsIndexRouteImport } from './routes/_private/register/sensor-functions/index';
+import { Route as PrivateRegisterPlatformIndexRouteImport } from './routes/_private/register/platform/index';
+import { Route as PrivateRegisterPartsIndexRouteImport } from './routes/_private/register/parts/index';
+import { Route as PrivateRegisterParamsIndexRouteImport } from './routes/_private/register/params/index';
+import { Route as PrivateRegisterModelMachineIndexRouteImport } from './routes/_private/register/model-machine/index';
+import { Route as PrivateRegisterMaintenancePlansIndexRouteImport } from './routes/_private/register/maintenance-plans/index';
+import { Route as PrivateRegisterMachinesIndexRouteImport } from './routes/_private/register/machines/index';
+import { Route as PrivateRegisterGeofencesIndexRouteImport } from './routes/_private/register/geofences/index';
+import { Route as PrivateRegisterFormsIndexRouteImport } from './routes/_private/register/forms/index';
+import { Route as PrivateRegisterEnterprisesIndexRouteImport } from './routes/_private/register/enterprises/index';
+import { Route as PrivateRegisterCustomersIndexRouteImport } from './routes/_private/register/customers/index';
+import { Route as PrivateRegisterContractsIndexRouteImport } from './routes/_private/register/contracts/index';
+import { Route as PrivateRegisterBuoyIndexRouteImport } from './routes/_private/register/buoy/index';
+import { Route as PrivateRegisterAlertsIndexRouteImport } from './routes/_private/register/alerts/index';
+import { Route as PrivatePermissionsUsersIndexRouteImport } from './routes/_private/permissions/users/index';
+import { Route as PrivatePermissionsRolesIndexRouteImport } from './routes/_private/permissions/roles/index';
+import { Route as PrivateOperationPtaxIndexRouteImport } from './routes/_private/operation/ptax/index';
+import { Route as PrivateOperationOperationalFleetIndexRouteImport } from './routes/_private/operation/operational-fleet/index';
+import { Route as PrivateOperationOperationalAssetIndexRouteImport } from './routes/_private/operation/operational-asset/index';
+import { Route as PrivateOperationGroupsIndexRouteImport } from './routes/_private/operation/groups/index';
+import { Route as PrivateOperationGoalsIndexRouteImport } from './routes/_private/operation/goals/index';
+import { Route as PrivateOperationDowntimeIndexRouteImport } from './routes/_private/operation/downtime/index';
+import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
+import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
+import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
+import { Route as PrivateIaPromptIndexRouteImport } from './routes/_private/ia/prompt/index';
+import { Route as PrivateIaAnomalyDetectorIndexRouteImport } from './routes/_private/ia/anomaly-detector/index';
+import { Route as PrivateEsgSimulatorCiiIndexRouteImport } from './routes/_private/esg/simulator-cii/index';
+import { Route as PrivateEsgIndicatorsEeoiCiiIndexRouteImport } from './routes/_private/esg/indicators-eeoi-cii/index';
+import { Route as PrivateEsgConsumptionCo2IndexRouteImport } from './routes/_private/esg/consumption-co2/index';
+import { Route as PrivateEsgCiiFleetIndexRouteImport } from './routes/_private/esg/cii-fleet/index';
+import { Route as PrivateContractsDashboardRveIndexRouteImport } from './routes/_private/contracts/dashboard-rve/index';
+import { Route as PrivateContractsDashboardRveSoundingIndexRouteImport } from './routes/_private/contracts/dashboard-rve-sounding/index';
+import { Route as PrivateContractsDashboardRveRdoIndexRouteImport } from './routes/_private/contracts/dashboard-rve-rdo/index';
+import { Route as PrivateContractsContractListIndexRouteImport } from './routes/_private/contracts/contract-list/index';
+import { Route as PrivateConsumptionTimeOperationIndexRouteImport } from './routes/_private/consumption/time-operation/index';
+import { Route as PrivateConsumptionRveSoundingIndexRouteImport } from './routes/_private/consumption/rve-sounding/index';
+import { Route as PrivateConsumptionRveRdoIndexRouteImport } from './routes/_private/consumption/rve-rdo/index';
+import { Route as PrivateConsumptionRelatorioIndexRouteImport } from './routes/_private/consumption/relatorio/index';
+import { Route as PrivateConsumptionDailyIndexRouteImport } from './routes/_private/consumption/daily/index';
+import { Route as PrivateConsumptionComparativeIndexRouteImport } from './routes/_private/consumption/comparative/index';
+import { Route as PrivateCmmsKpisCmmsIndexRouteImport } from './routes/_private/cmms/kpis-cmms/index';
+import { Route as PrivateCmmsFilledFormCmmsIndexRouteImport } from './routes/_private/cmms/filled-form-cmms/index';
+import { Route as PrivateCmmsDiagramListIndexRouteImport } from './routes/_private/cmms/diagram-list/index';
+import { Route as PrivateVoyageListTravelAddRouteImport } from './routes/_private/voyage/list-travel/add';
+import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
+import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
+import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
+import { Route as PrivateRegisterSensorFunctionsAddRouteImport } from './routes/_private/register/sensor-functions/add';
+import { Route as PrivateRegisterPlatformAddRouteImport } from './routes/_private/register/platform/add';
+import { Route as PrivateRegisterPartsAddRouteImport } from './routes/_private/register/parts/add';
+import { Route as PrivateRegisterParamsAddRouteImport } from './routes/_private/register/params/add';
+import { Route as PrivateRegisterModelMachineAddRouteImport } from './routes/_private/register/model-machine/add';
+import { Route as PrivateRegisterMaintenancePlansAddRouteImport } from './routes/_private/register/maintenance-plans/add';
+import { Route as PrivateRegisterMachinesAddRouteImport } from './routes/_private/register/machines/add';
+import { Route as PrivateRegisterGeofencesAddRouteImport } from './routes/_private/register/geofences/add';
+import { Route as PrivateRegisterFormsAddRouteImport } from './routes/_private/register/forms/add';
+import { Route as PrivateRegisterEnterprisesAddRouteImport } from './routes/_private/register/enterprises/add';
+import { Route as PrivateRegisterCustomersAddRouteImport } from './routes/_private/register/customers/add';
+import { Route as PrivateRegisterContractsAddRouteImport } from './routes/_private/register/contracts/add';
+import { Route as PrivateRegisterBuoyAddRouteImport } from './routes/_private/register/buoy/add';
+import { Route as PrivateRegisterAlertsAddRouteImport } from './routes/_private/register/alerts/add';
+import { Route as PrivatePermissionsUsersPermissionsAddRouteImport } from './routes/_private/permissions/users/permissions-add';
+import { Route as PrivatePermissionsUsersAddRouteImport } from './routes/_private/permissions/users/add';
+import { Route as PrivatePermissionsRolesAddRouteImport } from './routes/_private/permissions/roles/add';
+import { Route as PrivateOperationGroupsAddRouteImport } from './routes/_private/operation/groups/add';
+import { Route as PrivateOperationGoalsAddRouteImport } from './routes/_private/operation/goals/add';
+import { Route as PrivatePermissionsUsersPasswordIndexRouteImport } from './routes/_private/permissions/users/password/index';
+import { Route as PrivatePermissionsUsersEditIndexRouteImport } from './routes/_private/permissions/users/edit/index';
+import { Route as PrivatePermissionsRolesUsersIndexRouteImport } from './routes/_private/permissions/roles/users/index';
+import { Route as PrivatePermissionsRolesEditIndexRouteImport } from './routes/_private/permissions/roles/edit/index';
+import { Route as PrivateMaintenanceListOsDoneViewIndexRouteImport } from './routes/_private/maintenance/list-os-done/view/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -269,12 +268,6 @@ const PrivateVoyageListTravelIndexRoute =
   PrivateVoyageListTravelIndexRouteImport.update({
     id: '/voyage/list-travel/',
     path: '/voyage/list-travel/',
-    getParentRoute: () => PrivateRoute,
-  } as any);
-const PrivateVoyageKpisTravelIndexRoute =
-  PrivateVoyageKpisTravelIndexRouteImport.update({
-    id: '/voyage/kpis-travel/',
-    path: '/voyage/kpis-travel/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateTelemetryRemoteIhmIndexRoute =
@@ -701,10 +694,10 @@ const PrivateCmmsDiagramListIndexRoute =
     path: '/cmms/diagram-list/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateVoyageKpisTravelAddRoute =
-  PrivateVoyageKpisTravelAddRouteImport.update({
-    id: '/voyage/kpis-travel/add',
-    path: '/voyage/kpis-travel/add',
+const PrivateVoyageListTravelAddRoute =
+  PrivateVoyageListTravelAddRouteImport.update({
+    id: '/voyage/list-travel/add',
+    path: '/voyage/list-travel/add',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateRegisterUserTypeAddRoute =
@@ -911,7 +904,7 @@ export interface FileRoutesByFullPath {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
-  '/voyage/kpis-travel/add': typeof PrivateVoyageKpisTravelAddRoute;
+  '/voyage/list-travel/add': typeof PrivateVoyageListTravelAddRoute;
   '/cmms/diagram-list': typeof PrivateCmmsDiagramListIndexRoute;
   '/cmms/filled-form-cmms': typeof PrivateCmmsFilledFormCmmsIndexRoute;
   '/cmms/kpis-cmms': typeof PrivateCmmsKpisCmmsIndexRoute;
@@ -983,7 +976,6 @@ export interface FileRoutesByFullPath {
   '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
   '/telemetry/performance': typeof PrivateTelemetryPerformanceIndexRoute;
   '/telemetry/remote-ihm': typeof PrivateTelemetryRemoteIhmIndexRoute;
-  '/voyage/kpis-travel': typeof PrivateVoyageKpisTravelIndexRoute;
   '/voyage/list-travel': typeof PrivateVoyageListTravelIndexRoute;
   '/voyage/route-planner': typeof PrivateVoyageRoutePlannerIndexRoute;
   '/voyage/voyage-integration': typeof PrivateVoyageVoyageIntegrationIndexRoute;
@@ -1037,7 +1029,7 @@ export interface FileRoutesByTo {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
-  '/voyage/kpis-travel/add': typeof PrivateVoyageKpisTravelAddRoute;
+  '/voyage/list-travel/add': typeof PrivateVoyageListTravelAddRoute;
   '/cmms/diagram-list': typeof PrivateCmmsDiagramListIndexRoute;
   '/cmms/filled-form-cmms': typeof PrivateCmmsFilledFormCmmsIndexRoute;
   '/cmms/kpis-cmms': typeof PrivateCmmsKpisCmmsIndexRoute;
@@ -1109,7 +1101,6 @@ export interface FileRoutesByTo {
   '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
   '/telemetry/performance': typeof PrivateTelemetryPerformanceIndexRoute;
   '/telemetry/remote-ihm': typeof PrivateTelemetryRemoteIhmIndexRoute;
-  '/voyage/kpis-travel': typeof PrivateVoyageKpisTravelIndexRoute;
   '/voyage/list-travel': typeof PrivateVoyageListTravelIndexRoute;
   '/voyage/route-planner': typeof PrivateVoyageRoutePlannerIndexRoute;
   '/voyage/voyage-integration': typeof PrivateVoyageVoyageIntegrationIndexRoute;
@@ -1166,7 +1157,7 @@ export interface FileRoutesById {
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
-  '/_private/voyage/kpis-travel/add': typeof PrivateVoyageKpisTravelAddRoute;
+  '/_private/voyage/list-travel/add': typeof PrivateVoyageListTravelAddRoute;
   '/_private/cmms/diagram-list/': typeof PrivateCmmsDiagramListIndexRoute;
   '/_private/cmms/filled-form-cmms/': typeof PrivateCmmsFilledFormCmmsIndexRoute;
   '/_private/cmms/kpis-cmms/': typeof PrivateCmmsKpisCmmsIndexRoute;
@@ -1238,7 +1229,6 @@ export interface FileRoutesById {
   '/_private/telemetry/list-dashboard/': typeof PrivateTelemetryListDashboardIndexRoute;
   '/_private/telemetry/performance/': typeof PrivateTelemetryPerformanceIndexRoute;
   '/_private/telemetry/remote-ihm/': typeof PrivateTelemetryRemoteIhmIndexRoute;
-  '/_private/voyage/kpis-travel/': typeof PrivateVoyageKpisTravelIndexRoute;
   '/_private/voyage/list-travel/': typeof PrivateVoyageListTravelIndexRoute;
   '/_private/voyage/route-planner/': typeof PrivateVoyageRoutePlannerIndexRoute;
   '/_private/voyage/voyage-integration/': typeof PrivateVoyageVoyageIntegrationIndexRoute;
@@ -1294,7 +1284,7 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
-    | '/voyage/kpis-travel/add'
+    | '/voyage/list-travel/add'
     | '/cmms/diagram-list'
     | '/cmms/filled-form-cmms'
     | '/cmms/kpis-cmms'
@@ -1366,7 +1356,6 @@ export interface FileRouteTypes {
     | '/telemetry/list-dashboard'
     | '/telemetry/performance'
     | '/telemetry/remote-ihm'
-    | '/voyage/kpis-travel'
     | '/voyage/list-travel'
     | '/voyage/route-planner'
     | '/voyage/voyage-integration'
@@ -1420,7 +1409,7 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
-    | '/voyage/kpis-travel/add'
+    | '/voyage/list-travel/add'
     | '/cmms/diagram-list'
     | '/cmms/filled-form-cmms'
     | '/cmms/kpis-cmms'
@@ -1492,7 +1481,6 @@ export interface FileRouteTypes {
     | '/telemetry/list-dashboard'
     | '/telemetry/performance'
     | '/telemetry/remote-ihm'
-    | '/voyage/kpis-travel'
     | '/voyage/list-travel'
     | '/voyage/route-planner'
     | '/voyage/voyage-integration'
@@ -1548,7 +1536,7 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
     | '/_private/register/user-type/add'
-    | '/_private/voyage/kpis-travel/add'
+    | '/_private/voyage/list-travel/add'
     | '/_private/cmms/diagram-list/'
     | '/_private/cmms/filled-form-cmms/'
     | '/_private/cmms/kpis-cmms/'
@@ -1620,7 +1608,6 @@ export interface FileRouteTypes {
     | '/_private/telemetry/list-dashboard/'
     | '/_private/telemetry/performance/'
     | '/_private/telemetry/remote-ihm/'
-    | '/_private/voyage/kpis-travel/'
     | '/_private/voyage/list-travel/'
     | '/_private/voyage/route-planner/'
     | '/_private/voyage/voyage-integration/'
@@ -1819,13 +1806,6 @@ declare module '@tanstack/react-router' {
       path: '/voyage/list-travel';
       fullPath: '/voyage/list-travel';
       preLoaderRoute: typeof PrivateVoyageListTravelIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
-    '/_private/voyage/kpis-travel/': {
-      id: '/_private/voyage/kpis-travel/';
-      path: '/voyage/kpis-travel';
-      fullPath: '/voyage/kpis-travel';
-      preLoaderRoute: typeof PrivateVoyageKpisTravelIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/telemetry/remote-ihm/': {
@@ -2325,11 +2305,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateCmmsDiagramListIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/voyage/kpis-travel/add': {
-      id: '/_private/voyage/kpis-travel/add';
-      path: '/voyage/kpis-travel/add';
-      fullPath: '/voyage/kpis-travel/add';
-      preLoaderRoute: typeof PrivateVoyageKpisTravelAddRouteImport;
+    '/_private/voyage/list-travel/add': {
+      id: '/_private/voyage/list-travel/add';
+      path: '/voyage/list-travel/add';
+      fullPath: '/voyage/list-travel/add';
+      preLoaderRoute: typeof PrivateVoyageListTravelAddRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/register/user-type/add': {
@@ -2563,7 +2543,7 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
-  PrivateVoyageKpisTravelAddRoute: typeof PrivateVoyageKpisTravelAddRoute;
+  PrivateVoyageListTravelAddRoute: typeof PrivateVoyageListTravelAddRoute;
   PrivateCmmsDiagramListIndexRoute: typeof PrivateCmmsDiagramListIndexRoute;
   PrivateCmmsFilledFormCmmsIndexRoute: typeof PrivateCmmsFilledFormCmmsIndexRoute;
   PrivateCmmsKpisCmmsIndexRoute: typeof PrivateCmmsKpisCmmsIndexRoute;
@@ -2635,7 +2615,6 @@ interface PrivateRouteChildren {
   PrivateTelemetryListDashboardIndexRoute: typeof PrivateTelemetryListDashboardIndexRoute;
   PrivateTelemetryPerformanceIndexRoute: typeof PrivateTelemetryPerformanceIndexRoute;
   PrivateTelemetryRemoteIhmIndexRoute: typeof PrivateTelemetryRemoteIhmIndexRoute;
-  PrivateVoyageKpisTravelIndexRoute: typeof PrivateVoyageKpisTravelIndexRoute;
   PrivateVoyageListTravelIndexRoute: typeof PrivateVoyageListTravelIndexRoute;
   PrivateVoyageRoutePlannerIndexRoute: typeof PrivateVoyageRoutePlannerIndexRoute;
   PrivateVoyageVoyageIntegrationIndexRoute: typeof PrivateVoyageVoyageIntegrationIndexRoute;
@@ -2688,7 +2667,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
   PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
-  PrivateVoyageKpisTravelAddRoute: PrivateVoyageKpisTravelAddRoute,
+  PrivateVoyageListTravelAddRoute: PrivateVoyageListTravelAddRoute,
   PrivateCmmsDiagramListIndexRoute: PrivateCmmsDiagramListIndexRoute,
   PrivateCmmsFilledFormCmmsIndexRoute: PrivateCmmsFilledFormCmmsIndexRoute,
   PrivateCmmsKpisCmmsIndexRoute: PrivateCmmsKpisCmmsIndexRoute,
@@ -2792,7 +2771,6 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateTelemetryListDashboardIndexRoute,
   PrivateTelemetryPerformanceIndexRoute: PrivateTelemetryPerformanceIndexRoute,
   PrivateTelemetryRemoteIhmIndexRoute: PrivateTelemetryRemoteIhmIndexRoute,
-  PrivateVoyageKpisTravelIndexRoute: PrivateVoyageKpisTravelIndexRoute,
   PrivateVoyageListTravelIndexRoute: PrivateVoyageListTravelIndexRoute,
   PrivateVoyageRoutePlannerIndexRoute: PrivateVoyageRoutePlannerIndexRoute,
   PrivateVoyageVoyageIntegrationIndexRoute:
