@@ -37,6 +37,7 @@ export function AlertForm() {
           name="idEnterprise"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>{t('enterprise')}</FormLabel>
               <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
               <FormMessage />
             </FormItem>
@@ -70,12 +71,12 @@ export function AlertForm() {
   ];
 
   if (!idEnterprise) {
-    return <DefaultFormLayout sections={identificationSections} layout="vertical" />;
+    return <DefaultFormLayout sections={identificationSections} />;
   }
 
   return (
     <>
-      <DefaultFormLayout sections={identificationSections} layout="vertical" />
+      <DefaultFormLayout sections={identificationSections} />
 
       <div className="px-6 pb-6 md:px-10 md:pb-10">
         <Tabs defaultValue="config" className="w-full">

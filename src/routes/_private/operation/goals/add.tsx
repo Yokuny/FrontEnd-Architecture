@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import {
   AlertDialog,
@@ -82,13 +83,29 @@ function GoalAddFormContent({ initialData }: { initialData: any }) {
       <CardHeader title={initialData.id ? t('edit.goal') : t('add.goal')} />
       <Form {...form}>
         <form onSubmit={onSubmit}>
-          <CardContent>
-            <GoalFormMeta />
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-medium text-lg">{t('goals')}</h3>
-              <GoalAddMachineModal />
-            </div>
-            <GoalFormTable />
+          <CardContent className="p-0">
+            <DefaultFormLayout
+              sections={[
+                {
+                  title: t('identification'),
+                  description: t('basic.info'),
+                  fields: [<GoalFormMeta key="meta" />],
+                },
+                {
+                  title: t('goals'),
+                  description: t('manage.goals.description'),
+                  layout: 'vertical',
+                  fields: [
+                    <div key="goals-container" className="space-y-4">
+                      <div className="flex items-center justify-end">
+                        <GoalAddMachineModal />
+                      </div>
+                      <GoalFormTable />
+                    </div>,
+                  ],
+                },
+              ]}
+            />
           </CardContent>
 
           <CardFooter layout="multi">

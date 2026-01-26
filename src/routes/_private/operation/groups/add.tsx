@@ -3,6 +3,7 @@ import { Plus, Trash2 } from 'lucide-react';
 import { useFieldArray } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import { EnterpriseSelect } from '@/components/selects/enterprise-select';
 import {
@@ -89,71 +90,86 @@ function GroupFormContent({ initialData }: { initialData: any }) {
       <CardHeader title={initialData.id || initialData._id ? t('edit.group') : t('add.group')} />
       <Form {...form}>
         <form onSubmit={onSubmit}>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="idEnterprise"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} disabled={!!initialData.id || !!initialData._id} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+          <CardContent className="p-0">
+            <DefaultFormLayout
+              sections={[
+                {
+                  title: t('identification'),
+                  description: t('basic.info'),
+                  fields: [
+                    <FormField
+                      key="idEnterprise"
+                      control={form.control}
+                      name="idEnterprise"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('enterprise')}</FormLabel>
+                          <FormControl>
+                            <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} disabled={!!initialData.id || !!initialData._id} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />,
+                    <FormField
+                      key="name"
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('group')}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t('group')} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />,
+                  ],
+                },
+                {
+                  title: t('subgroups'),
+                  description: t('manage.subgroups'),
+                  layout: 'vertical',
+                  fields: [
+                    <div key="subgroups-container" className="space-y-4">
+                      <div className="flex items-center justify-end">
+                        <Button type="button" variant="outline" onClick={() => append({ name: '', description: '', details: [] })}>
+                          <Plus className="mr-2 size-4" />
+                          {t('add')}
+                        </Button>
+                      </div>
 
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('group')}</FormLabel>
-                    <FormControl>
-                      <Input placeholder={t('group')} {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                      <div className="space-y-4">
+                        {fields.map((field, index) => (
+                          <div key={field.id} className="relative flex items-end gap-4 rounded-lg border p-4">
+                            <div className="grid flex-1 grid-cols-1 gap-4">
+                              <FormField
+                                control={form.control}
+                                name={`subgroup.${index}.name`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>{t('subgroup')}</FormLabel>
+                                    <FormControl>
+                                      <Input placeholder={t('name')} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-medium text-lg">{t('subgroups')}</h3>
-                <Button type="button" variant="outline" size="sm" onClick={() => append({ name: '', description: '', details: [] })}>
-                  <Plus className="mr-2 size-4" />
-                  {t('add')}
-                </Button>
-              </div>
-
-              <div className="space-y-4">
-                {fields.map((field, index) => (
-                  <div key={field.id} className="relative flex items-end gap-4 rounded-lg border p-4">
-                    <div className="grid flex-1 grid-cols-1 gap-4">
-                      <FormField
-                        control={form.control}
-                        name={`subgroup.${index}.name`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>{t('subgroup')}</FormLabel>
-                            <FormControl>
-                              <Input placeholder={t('name')} {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <Button type="button" variant="ghost" size="icon" className="h-10 w-10 shrink-0 text-destructive" onClick={() => remove(index)} disabled={fields.length === 1}>
-                      <Trash2 className="size-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
+                            <Button type="button" className="size-10 shrink-0 text-destructive" onClick={() => remove(index)} disabled={fields.length === 1}>
+                              <Trash2 className="size-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>,
+                  ],
+                },
+              ]}
+            />
           </CardContent>
 
           <CardFooter layout="multi">
