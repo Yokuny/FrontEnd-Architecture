@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { api } from '@/lib/api/client';
+import { formatDate } from '@/lib/formatDate';
 import type { ConsumptionDailyData, UpdateOilPayload, UpdatePollingPayload } from '../@interface/consumption-daily.types';
 
 export const consumptionDailyKeys = {
@@ -21,11 +21,11 @@ export function useConsumptionDailyData(params: ConsumptionDailyQueryParams) {
       const queryParams: string[] = [];
 
       if (params.dateMin) {
-        queryParams.push(`min=${format(params.dateMin, "yyyy-MM-dd'T'00:00:00'Z'")}`);
+        queryParams.push(`min=${formatDate(params.dateMin, "yyyy-MM-dd'T'00:00:00'Z'")}`);
       }
 
       if (params.dateMax) {
-        queryParams.push(`max=${format(params.dateMax, "yyyy-MM-dd'T'23:59:59'Z'")}`);
+        queryParams.push(`max=${formatDate(params.dateMax, "yyyy-MM-dd'T'23:59:59'Z'")}`);
       }
 
       if (params.unit) {

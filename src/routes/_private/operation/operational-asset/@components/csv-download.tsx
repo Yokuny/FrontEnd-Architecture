@@ -1,7 +1,7 @@
-import { format } from 'date-fns';
 import { Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import { formatDate } from '@/lib/formatDate';
 import { DATE_FORMATS, FILENAME_PREFIX } from '../@consts/operational-asset.constants';
 import type { RawChartData } from '../@services/operational-asset.service';
 
@@ -32,10 +32,10 @@ export function DownloadOperationalAssetCSV({ data, hasPermissionViewFinancial }
 
       return [
         x.status,
-        startedAt ? format(startedAt, DATE_FORMATS.ISO) : '',
-        startedAt ? format(startedAt, DATE_FORMATS.TIME) : '',
-        endedAt ? format(endedAt, DATE_FORMATS.ISO) : '',
-        endedAt ? format(endedAt, DATE_FORMATS.TIME) : '',
+        startedAt ? formatDate(startedAt, DATE_FORMATS.ISO) : '',
+        startedAt ? formatDate(startedAt, DATE_FORMATS.TIME) : '',
+        endedAt ? formatDate(endedAt, DATE_FORMATS.ISO) : '',
+        endedAt ? formatDate(endedAt, DATE_FORMATS.TIME) : '',
         ((endedAt.getTime() - (startedAt?.getTime() || 0)) / (1000 * 60 * 60 * 24)).toFixed(2),
         ...(hasPermissionViewFinancial ? [(x.revenueValueBRL || 0).toFixed(2), (x.lossValueBRL || 0).toFixed(2), (x.ptax || 0).toString()] : []),
       ];
@@ -47,7 +47,7 @@ export function DownloadOperationalAssetCSV({ data, hasPermissionViewFinancial }
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `${FILENAME_PREFIX}${format(new Date(), DATE_FORMATS.FILENAME)}.csv`);
+    link.setAttribute('download', `${FILENAME_PREFIX}${formatDate(new Date(), DATE_FORMATS.FILENAME)}.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();

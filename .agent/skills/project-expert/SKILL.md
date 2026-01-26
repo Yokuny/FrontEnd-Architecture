@@ -69,7 +69,7 @@ Toda nova página DEVE seguir esta estrutura hierárquica:
 - **Centralização**: Hooks de API devem ficar em `src/hooks/` se reutilizáveis.
 - **Query Keys**: Devem ser objetos centralizados (ex: `usersKeys.all`, `usersKeys.list`).
 - **Formulários**: `react-hook-form` + `zod` resolver.
-- **Datas**: Use EXCLUSIVAMENTE `date-fns`. Formatos: `dd MM yy` ou `dd MM yyyy HH:mm`.
+- **Datas**: Toda formatação para exibição DEVE usar [***`@/lib/formatDate`***](./src/lib/formatDate.ts). EVITE importar `format` ou `formatDistanceToNow` do `date-fns` diretamente nos componentes para não perder a internacionalização de locale.
 
 ### 7. Seletores (Selects)
 Use os componentes prontos em `src/components/selects` ao invés de criar `Select` do zero:
@@ -92,6 +92,7 @@ Verifique agressivamente:
 - [ ] Criou `style={{...}}` ou classes arbitrárias? -> Mande usar ShadCN.
 - [ ] Chave i18n faltando em `en.json`? -> Alerte erro crítico.
 - [ ] Usou `momentjs` ou `Dayjs`? -> Mande trocar por `date-fns`.
+- [ ] Usou `format()` do `date-fns` direto? -> Mande trocar pelo utilitário `@/lib/formatDate`.
 - [ ] Rota com nome `edit.user`? -> Mande corrigir para `edit/user`.
 
 ## Exemplo de Resposta Esperada

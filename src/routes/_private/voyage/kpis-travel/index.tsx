@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { format } from 'date-fns';
 import { BrushCleaning, CalendarIcon, Plus, Search } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +15,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { KPI } from './@components/KPI';
 import { VoyageItem } from './@components/voyage-item';
@@ -152,7 +152,7 @@ function KpisTravelListPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-full justify-start bg-background text-left font-normal', !dateInit && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateInit ? format(dateInit, 'dd MM yyyy') : <span>{t('pick.date')}</span>}
+                  {dateInit ? formatDate(dateInit, 'dd MM yyyy') : <span>{t('pick.date')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -175,7 +175,7 @@ function KpisTravelListPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('justify-start bg-background text-left font-normal', !dateEnd && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 size-4" />
-                  {dateEnd ? format(dateEnd, 'dd MM yyyy') : <span>{t('pick.date')}</span>}
+                  {dateEnd ? formatDate(dateEnd, 'dd MM yyyy') : <span>{t('pick.date')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">

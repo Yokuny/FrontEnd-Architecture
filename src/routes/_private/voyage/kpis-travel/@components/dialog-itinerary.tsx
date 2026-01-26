@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { Edit2, Eye, Plus, Save, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,7 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } 
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
+import { formatDate } from '@/lib/formatDate';
 import { DATES_VOYAGE } from '../@consts';
 
 export function DialogItinerary({ index, data, onChangeData, onDelete, disabled, idEnterprise, idsFences }: ItineraryDialogProps) {
@@ -240,7 +240,7 @@ export function DialogItinerary({ index, data, onChangeData, onDelete, disabled,
             <div key={dateKey}>
               <ItemTitle>{t(dateKey.toUpperCase())}</ItemTitle>
               <ItemDescription>
-                {data[`${dateKey}Date`] ? format(new Date(data[`${dateKey}Date`]), 'dd MM yyyy') : '-'} {data[`${dateKey}Time`] || ''}
+                {data[`${dateKey}Date`] ? formatDate(data[`${dateKey}Date`], 'dd MM yyyy') : '-'} {data[`${dateKey}Time`] || ''}
               </ItemDescription>
             </div>
           ))}

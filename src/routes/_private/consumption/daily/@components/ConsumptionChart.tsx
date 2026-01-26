@@ -1,11 +1,10 @@
-import { format } from 'date-fns';
-import { pt } from 'date-fns/locale';
 import ReactECharts from 'echarts-for-react';
 import { Eye } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { formatDate } from '@/lib/formatDate';
 import type { ConsumptionDailyData } from '../@interface/consumption-daily.types';
 
 export function ConsumptionChart({ data, showReal, showEstimated, onToggleReal, onToggleEstimated }: ConsumptionChartProps) {
@@ -13,7 +12,7 @@ export function ConsumptionChart({ data, showReal, showEstimated, onToggleReal, 
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const categories = data?.map((item) => format(new Date(item.date), 'dd/MMM', { locale: pt })) || [];
+  const categories = data?.map((item) => formatDate(item.date, 'dd MMM')) || [];
 
   const realData =
     data?.map((item) => {

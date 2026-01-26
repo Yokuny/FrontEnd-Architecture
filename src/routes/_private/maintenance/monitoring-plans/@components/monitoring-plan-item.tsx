@@ -1,11 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { Badge } from '@/components/ui/badge';
 import { getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
+import { formatDate } from '@/lib/formatDate';
 import type { MonitoringPlanItem as MonitoringPlanItemType } from '../@interface/monitoring-plan.types';
 import { EditEventScheduleDialog } from './edit-event-schedule-dialog';
 
@@ -67,7 +67,7 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
           {/* Data */}
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center gap-1">
-              <ItemDescription className="font-semibold text-lg">{planItem.dateWindowEnd ? format(new Date(planItem.dateWindowEnd), 'dd MM yyyy') : '-'}</ItemDescription>
+              <ItemDescription className="font-semibold text-lg">{planItem.dateWindowEnd ? formatDate(planItem.dateWindowEnd, 'dd MM yyyy') : '-'}</ItemDescription>
               <div className="flex items-center gap-2">
                 <Calendar className="size-4 shrink-0" />
                 {t('date.window.end')}

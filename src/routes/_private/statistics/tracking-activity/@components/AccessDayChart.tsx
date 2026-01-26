@@ -37,7 +37,7 @@ export function AccessDayChart({ filters }: AccessDayChartProps) {
 
       return {
         key: dateStr,
-        date: format(parseISO(dateStr.length === 7 ? `${dateStr}-01` : dateStr), filterDateSize === 10 ? 'dd/MM' : 'MM/yyyy'),
+        date: format(parseISO(dateStr.length === 7 ? `${dateStr}-01` : dateStr), filterDateSize === 10 ? 'dd MM' : 'MM yyyy'),
         system: systemTotal,
         whatsapp: whatsappTotal,
       };

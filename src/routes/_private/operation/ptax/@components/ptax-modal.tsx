@@ -1,10 +1,10 @@
-import { format } from 'date-fns';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { formatDate } from '@/lib/formatDate';
 import { useCotation } from '../@hooks/use-cotation';
 import { usePtaxForm } from '../@hooks/use-ptax-form';
 import type { PtaxFormData } from '../@interface/ptax.schema';
@@ -64,7 +64,7 @@ export function PtaxModal({ open, onOpenChange, initialData }: PtaxModalProps) {
                     <Input
                       type="date"
                       {...field}
-                      value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
+                      value={field.value ? formatDate(field.value, 'yyyy-MM-dd') : ''}
                       onChange={(e) => field.onChange(new Date(e.target.value).toISOString())}
                     />
                   </FormControl>
@@ -84,7 +84,7 @@ export function PtaxModal({ open, onOpenChange, initialData }: PtaxModalProps) {
                   </FormControl>
                   {cotationDate && (
                     <p className="mt-1 text-muted-foreground text-xs">
-                      {t('quote.day')} {format(cotationDate, 'dd MMM yyyy')}
+                      {t('quote.day')} {formatDate(cotationDate, 'dd MMM yyyy')}
                     </p>
                   )}
                   <FormMessage />

@@ -1,10 +1,10 @@
 import { useNavigate } from '@tanstack/react-router';
-import { format } from 'date-fns';
 import { CheckCircle2, Eye, FileText, MoreVertical } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { formatDate } from '@/lib/formatDate';
 import type { OrderServiceDone } from '../@interface/list-os-done.types';
 
 interface OsDoneItemProps {
@@ -40,7 +40,7 @@ export function OsDoneItem({ item, hasViewPermission }: OsDoneItemProps) {
         <div className="flex items-center gap-1.5 rounded-md border border-green-100 bg-green-50 px-2 py-1 text-green-600">
           <CheckCircle2 className="size-3.5" />
           <span className="font-bold text-[11px] uppercase tracking-tight">
-            {t('done.at')} {item.doneAt ? format(new Date(item.doneAt), 'dd MM yyyy') : '-'}
+            {t('done.at')} {item.doneAt ? formatDate(item.doneAt, 'dd MM yyyy') : '-'}
           </span>
         </div>
       </div>

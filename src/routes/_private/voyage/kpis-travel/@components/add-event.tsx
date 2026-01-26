@@ -1,11 +1,10 @@
-import { format } from 'date-fns';
 import { Edit2, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { Button } from '@/components/ui/button';
 import { Item, ItemContent, ItemFooter } from '@/components/ui/item';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { formatDate } from '@/lib/formatDate';
 import { DialogEvent } from './dialog-event';
 
 export function AddGroup({ events, onChange, disabled }: GroupCardProps) {
@@ -63,7 +62,7 @@ export function AddGroup({ events, onChange, disabled }: GroupCardProps) {
             <TableBody>
               {events.map((event, index) => (
                 <TableRow key={`${index}-${event}`}>
-                  <TableCell>{event.datetime ? format(new Date(event.datetime), 'dd MM yyyy HH:mm') : '-'}</TableCell>
+                  <TableCell>{event.datetime ? formatDate(event.datetime, 'dd MM yyyy HH:mm') : '-'}</TableCell>
                   <TableCell>{event.status}</TableCell>
                   <TableCell className="text-right">{event.speed}</TableCell>
                   <TableCell className="text-right">{event.engine?.rpmBB}</TableCell>

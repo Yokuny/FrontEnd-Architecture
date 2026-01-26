@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { CalendarIcon, Loader2, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 
 export function RVEFilter({ idEnterprise, initialValues, onSearch, isLoading }: Omit<RVEFilterProps, 'onClear'>) {
@@ -46,7 +46,7 @@ export function RVEFilter({ idEnterprise, initialValues, onSearch, isLoading }: 
           <PopoverTrigger asChild>
             <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
+              {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
@@ -61,7 +61,7 @@ export function RVEFilter({ idEnterprise, initialValues, onSearch, isLoading }: 
           <PopoverTrigger asChild>
             <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
+              {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">

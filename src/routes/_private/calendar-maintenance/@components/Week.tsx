@@ -7,7 +7,6 @@ import {
   eachDayOfInterval,
   eachHourOfInterval,
   endOfWeek,
-  format,
   getDay,
   getHours,
   getMinutes,
@@ -20,18 +19,14 @@ import {
 import { type CSSProperties, type MouseEvent, useMemo } from 'react';
 import { Item, ItemContent, ItemTitle } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useLocale } from '@/hooks/use-locale';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
-import { getDateLocale } from '@/routes/_private/calendar-maintenance/@utils/locale';
 import { EndHour, StartHour, WeekCellsHeight } from '../@consts/calendar';
 import type { PartialSchedule } from '../@interface/schedule';
 import { isMultiDayEvent } from '../@utils/calendar.utils';
 import { EventItem } from './Event';
 
 const Header = ({ days }: { days: Date[] }) => {
-  const { locale: appLocale } = useLocale();
-  const dateLocale = getDateLocale(appLocale);
-
   return (
     <Item
       variant="outline"
@@ -39,7 +34,7 @@ const Header = ({ days }: { days: Date[] }) => {
       size="sm"
     >
       <ItemContent className="flex items-center justify-center border-r py-2 text-center">
-        <ItemTitle className="max-[479px]:sr-only">{format(new Date(), 'O', { locale: dateLocale })}</ItemTitle>
+        <ItemTitle className="max-[479px]:sr-only">{formatDate(new Date(), 'O')}</ItemTitle>
       </ItemContent>
       {days.map((day) => (
         <ItemContent
@@ -48,7 +43,7 @@ const Header = ({ days }: { days: Date[] }) => {
           data-today={isToday(day) || undefined}
           data-outside-cell={(getDay(day) === 0 && days.indexOf(day) === 6) || undefined}
         >
-          <ItemTitle className="text-xs">{format(day, 'EEEEEE dd', { locale: dateLocale })}</ItemTitle>
+          <ItemTitle className="text-xs">{formatDate(day, 'EEEEEE dd')}</ItemTitle>
         </ItemContent>
       ))}
     </Item>
@@ -56,9 +51,6 @@ const Header = ({ days }: { days: Date[] }) => {
 };
 
 export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: WeekViewProps) {
-  const { locale: appLocale } = useLocale();
-  const dateLocale = getDateLocale(appLocale);
-
   const days = useMemo(() => {
     const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 });
     const weekEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
@@ -273,7 +265,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
               <ItemContent key={hour.toString()} className="relative min-h-(--week-cells-height) border-accent border-b p-0 last:border-b-0">
                 {index > 0 && (
                   <ItemTitle className="absolute -top-3 right-0 flex h-6 w-full items-center justify-end px-2 font-normal text-[10px] text-muted-foreground sm:pe-4 sm:text-xs">
-                    {format(hour, 'p', { locale: dateLocale })}
+                    {formatDate(hour, 'p')}
                   </ItemTitle>
                 )}
               </ItemContent>

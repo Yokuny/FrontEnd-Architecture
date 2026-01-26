@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { api } from '@/lib/api/client';
+import { formatDate } from '@/lib/formatDate';
 import type { ConsumptionIntervalData } from '../@interface/consumption-interval.types';
 
 export const consumptionIntervalKeys = {
@@ -15,11 +15,11 @@ export function useConsumptionIntervalData(params: ConsumptionIntervalQueryParam
       const queryParams: string[] = [];
 
       if (params.dateMin) {
-        queryParams.push(`dateMin=${format(params.dateMin, "yyyy-MM-dd'T'00:00:00'Z'")}`);
+        queryParams.push(`dateMin=${formatDate(params.dateMin, "yyyy-MM-dd'T'00:00:00'Z'")}`);
       }
 
       if (params.dateMax) {
-        queryParams.push(`dateMax=${format(params.dateMax, "yyyy-MM-dd'T'23:59:59'Z'")}`);
+        queryParams.push(`dateMax=${formatDate(params.dateMax, "yyyy-MM-dd'T'23:59:59'Z'")}`);
       }
 
       if (params.unit) {

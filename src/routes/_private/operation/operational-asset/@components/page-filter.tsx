@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { CalendarIcon, Eye, Search } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +7,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { DATE_FORMATS, OPERATIONAL_ASSET_VIEW } from '../@consts/operational-asset.constants';
 import type { OperationalAssetSearch } from '../@interface/operational-asset.types';
@@ -35,14 +35,14 @@ export function OperationalAssetFilter({ idEnterprise, filter, onFilterChange, i
           <PopoverTrigger asChild>
             <Button variant="outline" className={cn('w-full justify-start text-left font-normal', !dateStart && 'text-muted-foreground')}>
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {dateStart ? format(dateStart, DATE_FORMATS.DISPLAY) : <span>{t('date.start')}</span>}
+              {dateStart ? formatDate(dateStart, DATE_FORMATS.DISPLAY) : <span>{t('date.start')}</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
             <Calendar
               mode="single"
               selected={dateStart}
-              onSelect={(date) => setLocalFilter({ ...localFilter, dateStart: date ? format(date, DATE_FORMATS.ISO) : undefined })}
+              onSelect={(date) => setLocalFilter({ ...localFilter, dateStart: date ? formatDate(date, DATE_FORMATS.ISO) : undefined })}
               initialFocus
             />
           </PopoverContent>
@@ -58,14 +58,14 @@ export function OperationalAssetFilter({ idEnterprise, filter, onFilterChange, i
           <PopoverTrigger asChild>
             <Button variant="outline" className={cn('w-full justify-start text-left font-normal', !dateEnd && 'text-muted-foreground')}>
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {dateEnd ? format(dateEnd, DATE_FORMATS.DISPLAY) : <span>{t('date.end')}</span>}
+              {dateEnd ? formatDate(dateEnd, DATE_FORMATS.DISPLAY) : <span>{t('date.end')}</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
             <Calendar
               mode="single"
               selected={dateEnd}
-              onSelect={(date) => setLocalFilter({ ...localFilter, dateEnd: date ? format(date, DATE_FORMATS.ISO) : undefined })}
+              onSelect={(date) => setLocalFilter({ ...localFilter, dateEnd: date ? formatDate(date, DATE_FORMATS.ISO) : undefined })}
               initialFocus
             />
           </PopoverContent>

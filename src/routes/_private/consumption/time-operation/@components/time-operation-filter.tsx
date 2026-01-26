@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { BrushCleaning, CalendarIcon, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Item, ItemContent } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import type { TimeOperationSearchParams } from '../@interface/time-operation.types';
 
@@ -60,7 +60,7 @@ export function TimeOperationFilter({ idEnterprise, filters, onFilterChange, isL
           <PopoverTrigger asChild>
             <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {dateMin ? format(dateMin, DATE_FORMAT_DISPLAY) : <span>{t('date.start')}</span>}
+              {dateMin ? formatDate(dateMin, DATE_FORMAT_DISPLAY) : <span>{t('date.start')}</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
@@ -70,7 +70,7 @@ export function TimeOperationFilter({ idEnterprise, filters, onFilterChange, isL
               onSelect={(date) =>
                 setLocalFilters({
                   ...localFilters,
-                  dateMin: date ? `${format(date, 'yyyy-MM-dd')}T00:00:00${format(new Date(), 'XXX')}` : undefined,
+                  dateMin: date ? `${formatDate(date, 'yyyy-MM-dd')}T00:00:00${formatDate(new Date(), 'XXX')}` : undefined,
                 })
               }
               initialFocus
@@ -91,7 +91,7 @@ export function TimeOperationFilter({ idEnterprise, filters, onFilterChange, isL
           <PopoverTrigger asChild>
             <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {dateMax ? format(dateMax, DATE_FORMAT_DISPLAY) : <span>{t('date.end')}</span>}
+              {dateMax ? formatDate(dateMax, DATE_FORMAT_DISPLAY) : <span>{t('date.end')}</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
@@ -101,7 +101,7 @@ export function TimeOperationFilter({ idEnterprise, filters, onFilterChange, isL
               onSelect={(date) =>
                 setLocalFilters({
                   ...localFilters,
-                  dateMax: date ? `${format(date, 'yyyy-MM-dd')}T23:59:59${format(new Date(), 'XXX')}` : undefined,
+                  dateMax: date ? `${formatDate(date, 'yyyy-MM-dd')}T23:59:59${formatDate(new Date(), 'XXX')}` : undefined,
                 })
               }
               initialFocus

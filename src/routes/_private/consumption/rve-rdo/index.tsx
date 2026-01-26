@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { format, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 import { BrushCleaning, CalendarIcon, Download, Search } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import { Item, ItemContent } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { downloadCSV } from '../daily/@helpers/consumption-daily.helpers';
 import { RVERDOItem } from './@components/RVERDOItem';
@@ -43,8 +44,8 @@ function RVERDODashboardPage() {
     () => ({
       idEnterprise,
       machines: machineIds.join(','),
-      dateStart: format(dateMin, "yyyy-MM-dd'T'00:00:00'Z'"),
-      dateEnd: format(dateMax, "yyyy-MM-dd'T'23:59:59'Z'"),
+      dateStart: formatDate(dateMin, "yyyy-MM-dd'T'00:00:00'Z'"),
+      dateEnd: formatDate(dateMax, "yyyy-MM-dd'T'23:59:59'Z'"),
       showInoperabilities,
     }),
     [idEnterprise, machineIds, dateMin, dateMax, showInoperabilities],
@@ -55,8 +56,8 @@ function RVERDODashboardPage() {
   const handleSearch = useCallback(() => {
     navigate({
       search: {
-        initialDate: format(dateMin, "yyyy-MM-dd'T'00:00:00'Z'"),
-        finalDate: format(dateMax, "yyyy-MM-dd'T'23:59:59'Z'"),
+        initialDate: formatDate(dateMin, "yyyy-MM-dd'T'00:00:00'Z'"),
+        finalDate: formatDate(dateMax, "yyyy-MM-dd'T'23:59:59'Z'"),
         machines: machineIds.join(','),
         showInoperabilities: showInoperabilities ? 'true' : 'false',
       } as any,
@@ -91,13 +92,13 @@ function RVERDODashboardPage() {
           const assetName = data.assets.find((x) => x.id === item.idAsset)?.name;
           return {
             vessel: opIndex === 0 ? assetName : '',
-            date: opIndex === 0 ? format(item.date, 'yyyy-MM-dd') : '',
+            date: opIndex === 0 ? formatDate(item.date, 'yyyy-MM-dd') : '',
             consumptionEstimated: opIndex === 0 ? (item.consumptionEstimated !== undefined ? item.consumptionEstimated.toFixed(2) : t('not.provided')) : '',
             consumptionMaxDay: opIndex === 0 ? maxInThisDay.toFixed(2) : '',
             diff: opIndex === 0 && item.consumptionEstimated !== undefined ? (item.consumptionEstimated - maxInThisDay).toFixed(2) : '',
             operation: operation.code,
-            start: format(operation.dateStart, 'HH:mm'),
-            end: format(operation.dateEnd, 'HH:mm'),
+            start: formatDate(operation.dateStart, 'HH:mm'),
+            end: formatDate(operation.dateEnd, 'HH:mm'),
             duration: operation.diffInHours.toFixed(2),
             consumptionMaxOperation: operation.consumptionDailyContract ? ((operation.consumptionDailyContract / 24) * operation.diffInHours).toFixed(2) : '0',
           };
@@ -136,7 +137,7 @@ function RVERDODashboardPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
+                  {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -159,7 +160,7 @@ function RVERDODashboardPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
+                  {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">

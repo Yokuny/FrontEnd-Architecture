@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-import { pt } from 'date-fns/locale';
 import { AlertTriangle, Calendar, ChevronDown, Clock, Download, Flame, Fuel, Pencil, RulerDimensionLine, Stone, Warehouse } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { downloadCSV, sortByDateDesc } from '../@helpers/consumption-daily.helpers';
 import { useConsumptionDailyApi } from '../@hooks/use-consumption-daily-api';
@@ -55,7 +54,7 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
   const exportToCSV = () => {
     const csvData = data.map((x) => ({
       vessel: machineName,
-      date: format(new Date(x?.pollingEndDateTime || x.date), 'yyyy-MM-dd'),
+      date: formatDate(x?.pollingEndDateTime || x.date, 'yyyy-MM-dd'),
       hours: x?.hours?.toFixed(2),
       consumptionReal: x?.consumptionReal?.value,
       consumptionUnit: x?.consumptionReal?.unit,
@@ -114,7 +113,7 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
                   <Button variant="ghost" className="w-full items-center justify-between outline-none hover:bg-secondary focus-visible:ring-2">
                     <div className="flex items-center gap-3">
                       <Calendar className="size-4" />
-                      <ItemTitle className="text-base">{format(new Date(date), 'dd MMM yyyy', { locale: pt })}</ItemTitle>
+                      <ItemTitle className="text-base">{formatDate(date, 'dd MMM yyyy')}</ItemTitle>
                       <div className="ml-2 flex items-center gap-2">
                         {item.isNeedRegeneration && <AlertTriangle className="size-4 text-amber-500" />}
                         <Badge variant={isConsumptionReal ? 'default' : 'secondary'}>{isConsumptionReal ? 'SON*' : 'FLM*'}</Badge>
@@ -243,7 +242,7 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
               <ItemTitle className="text-muted-foreground">{t('date')}</ItemTitle>
               <ItemContent className="flex-row items-center gap-2">
                 <Calendar className="size-4" />
-                <ItemDescription className="text-lg">{selectedItem?.date ? format(new Date(selectedItem.date), 'dd MMM yyyy', { locale: pt }) : '-'}</ItemDescription>
+                <ItemDescription className="text-lg">{selectedItem?.date ? formatDate(selectedItem.date, 'dd MMM yyyy') : '-'}</ItemDescription>
               </ItemContent>
             </div>
 

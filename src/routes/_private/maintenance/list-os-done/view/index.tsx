@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { format } from 'date-fns';
 import { CheckCircle2, FileText, Printer, XCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import EmptyData from '@/components/default-empty-data';
@@ -7,6 +6,7 @@ import DefaultLoading from '@/components/default-loading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { formatDate } from '@/lib/formatDate';
 import { useOsDetails } from './@hooks/use-os-details-api';
 import { osDetailsSearchSchema } from './@interface/os-details.types';
 
@@ -84,7 +84,7 @@ function OsDetailsPage() {
           </div>
           <div className="space-y-2 px-0 pt-8 md:pt-0 md:pl-12">
             <span className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('done.at')}</span>
-            <h3 className="font-semibold text-3xl leading-tight tracking-tighter">{data.doneAt ? format(new Date(data.doneAt), 'dd MM yyyy') : '-'}</h3>
+            <h3 className="font-semibold text-3xl leading-tight tracking-tighter">{data.doneAt ? formatDate(data.doneAt, 'dd MM yyyy') : '-'}</h3>
           </div>
         </div>
 
@@ -160,7 +160,7 @@ function OsDetailsPage() {
             </div>
             <div className="space-y-2">
               <h3 className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('fill.at')}</h3>
-              <p className="font-medium text-muted-foreground text-xl tabular-nums tracking-tight">{data.createAt ? format(new Date(data.createAt), 'dd MM yyyy HH:mm') : '-'}</p>
+              <p className="font-medium text-muted-foreground text-xl tabular-nums tracking-tight">{data.createAt ? formatDate(data.createAt, 'dd MM yyyy HH:mm') : '-'}</p>
             </div>
           </div>
         </div>

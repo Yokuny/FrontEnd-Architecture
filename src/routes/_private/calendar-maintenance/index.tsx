@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { format } from 'date-fns';
 import { BrushCleaning, ChevronDown, ChevronLeft, ChevronRight, Plus, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
@@ -14,8 +13,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuShortc
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useLocale } from '@/hooks/use-locale';
-import { getDateLocale } from '@/routes/_private/calendar-maintenance/@utils/locale';
+import { formatDate } from '@/lib/formatDate';
+
 import { EditEventDialog } from './@components/EditEventDialog';
 import { MonthView } from './@components/Month';
 import { WeekView } from './@components/Week';
@@ -54,8 +53,6 @@ function CalendarMaintenancePage() {
 
 function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) {
   const { t } = useTranslation();
-  const { locale: appLocale } = useLocale();
-  const dateLocale = getDateLocale(appLocale);
   const {
     currentDate,
     setCurrentDate,
@@ -82,7 +79,7 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
         <Item className="items-center p-0">
           <ItemContent className="flex-row items-baseline gap-2">
             <ItemTitle className="font-semibold text-xl">{String(currentDate.getDate()).padStart(2, '0')}</ItemTitle>
-            <ItemTitle className="font-semibold text-xl">{format(currentDate, 'EEE.', { locale: dateLocale })}</ItemTitle>
+            <ItemTitle className="font-semibold text-xl">{formatDate(currentDate, 'EEE.')}</ItemTitle>
             <ItemDescription className="text-lg">{headerTitle}</ItemDescription>
           </ItemContent>
           <ItemContent className="flex-row items-center gap-2">

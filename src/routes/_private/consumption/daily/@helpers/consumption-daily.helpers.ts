@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { formatDate } from '@/lib/formatDate';
 
 /**
  * Downloads data as CSV file
@@ -22,7 +22,7 @@ export function downloadCSV(data: Record<string, unknown>[], filename: string): 
   const url = URL.createObjectURL(blob);
 
   link.setAttribute('href', url);
-  link.setAttribute('download', `${filename}_${format(new Date(), 'yyyyMMddHHmmss')}.csv`);
+  link.setAttribute('download', `${filename}_${formatDate(new Date(), 'yyyyMMddHHmmss')}.csv`);
   link.style.visibility = 'hidden';
 
   document.body.appendChild(link);

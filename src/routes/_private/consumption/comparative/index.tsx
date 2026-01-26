@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { format, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 import { BrushCleaning, CalendarIcon, Search } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { ConsumptionCard } from './@components/ConsumptionCard';
 import { DEFAULT_UNIT, DEFAULT_VIEW_TYPE, UNIT_OPTIONS, VIEW_TYPE_OPTIONS } from './@consts/consumption-comparative.consts';
@@ -40,8 +41,8 @@ function ConsumptionComparativePage() {
   const apiFilters = useMemo(
     () => ({
       idEnterprise,
-      dateMin: format(dateMin, "yyyy-MM-dd'T'00:00:00xxx"),
-      dateMax: format(dateMax, "yyyy-MM-dd'T'23:59:59xxx"),
+      dateMin: formatDate(dateMin, "yyyy-MM-dd'T'00:00:00xxx"),
+      dateMax: formatDate(dateMax, "yyyy-MM-dd'T'23:59:59xxx"),
       unit,
       viewType: viewType as 'consumption' | 'stock',
       machines: machineIds.join(','),
@@ -54,8 +55,8 @@ function ConsumptionComparativePage() {
   const handleSearch = useCallback(() => {
     navigate({
       search: {
-        dateMin: format(dateMin, "yyyy-MM-dd'T'00:00:00xxx"),
-        dateMax: format(dateMax, "yyyy-MM-dd'T'23:59:59xxx"),
+        dateMin: formatDate(dateMin, "yyyy-MM-dd'T'00:00:00xxx"),
+        dateMax: formatDate(dateMax, "yyyy-MM-dd'T'23:59:59xxx"),
         unit,
         viewType: viewType as any,
         machines: machineIds.join(','),
@@ -87,7 +88,7 @@ function ConsumptionComparativePage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
+                  {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -110,7 +111,7 @@ function ConsumptionComparativePage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
+                  {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">

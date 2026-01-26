@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { format, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 import { Eye, EyeOff } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ItemGroup } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { formatDate } from '@/lib/formatDate';
 import { DownloadOperationalAssetCSV } from './@components/csv-download';
 import { DailyOperabilityChart } from './@components/daily-operability-chart';
 import { EventTypesChart } from './@components/event-types-chart';
@@ -37,8 +38,8 @@ function OperationalAssetPage() {
   const filter: OperationalAssetSearch = useMemo(
     () => ({
       idMachine: search.idMachine,
-      dateStart: search.dateStart || format(subDays(new Date(), DEFAULT_FILTER_DAYS), DATE_FORMATS.ISO),
-      dateEnd: search.dateEnd || format(new Date(), DATE_FORMATS.ISO),
+      dateStart: search.dateStart || formatDate(subDays(new Date(), DEFAULT_FILTER_DAYS), DATE_FORMATS.ISO),
+      dateEnd: search.dateEnd || formatDate(new Date(), DATE_FORMATS.ISO),
       view: search.view || OPERATIONAL_ASSET_VIEW.OPERATIONAL,
     }),
     [search],

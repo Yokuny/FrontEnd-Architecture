@@ -1,20 +1,13 @@
-import { format, isValid } from 'date-fns';
 import { ArrowRight, Badge, BadgeCheck, Building2, Clock, Flag, MapPin, MoreVertical, Pencil, Ship } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { formatDate } from '@/lib/formatDate';
 
 export function VoyageItem({ voyage }: VoyageItemProps) {
   const { t } = useTranslation();
-
-  const formatDateSafely = (date: any, formatStr: string) => {
-    if (!date) return '-';
-    const d = new Date(date);
-    if (!isValid(d)) return '-';
-    return format(d, formatStr);
-  };
 
   const portFinal = voyage?.portPointDestiny || voyage?.portPointEnd;
   const isFinished = !!voyage?.dateTimeEnd;
@@ -53,7 +46,7 @@ export function VoyageItem({ voyage }: VoyageItemProps) {
               <ItemDescription className="truncate text-xs">{voyage.portPointStart?.description}</ItemDescription>
               <div className="flex items-center gap-2 text-xs">
                 <MapPin className="size-3" />
-                <ItemDescription className="text-xs tabular-nums">{formatDateSafely(voyage.metadata?.dateTimeArrival || voyage.dateTimeStart, 'HH:mm, dd MMM')}</ItemDescription>
+                <ItemDescription className="text-xs tabular-nums">{formatDate(voyage.metadata?.dateTimeArrival || voyage.dateTimeStart, 'HH:mm, dd MMM', '-')}</ItemDescription>
               </div>
             </ItemContent>
 
@@ -64,7 +57,7 @@ export function VoyageItem({ voyage }: VoyageItemProps) {
                   <ItemTitle className="text-xs">
                     <Flag className="size-3" /> ETA:
                   </ItemTitle>
-                  <ItemDescription className="text-xs tabular-nums">{formatDateSafely(voyage.metadata.eta, 'HH:mm, dd MMM')}</ItemDescription>
+                  <ItemDescription className="text-xs tabular-nums">{formatDate(voyage.metadata.eta, 'HH:mm, dd MMM', '-')}</ItemDescription>
                 </ItemContent>
               )}
             </ItemContent>
@@ -75,7 +68,7 @@ export function VoyageItem({ voyage }: VoyageItemProps) {
               {(voyage?.metadata?.dateTimeArrival || voyage.dateTimeEnd) && (
                 <div className="flex items-center gap-2 font-medium text-green-600 text-xs">
                   <Clock className="size-3" />
-                  <ItemDescription className="text-xs tabular-nums">{formatDateSafely(voyage.metadata?.dateTimeArrival || voyage.dateTimeEnd, 'HH:mm, dd MMM')}</ItemDescription>
+                  <ItemDescription className="text-xs tabular-nums">{formatDate(voyage.metadata?.dateTimeArrival || voyage.dateTimeEnd, 'HH:mm, dd MMM', '-')}</ItemDescription>
                 </div>
               )}
             </ItemContent>

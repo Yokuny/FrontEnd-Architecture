@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { Calendar, Loader2, Save, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { api } from '@/lib/api/client';
+import { formatDate } from '@/lib/formatDate';
 import type { EventScheduleEvent } from '../@interface/monitoring-plan.types';
 
 interface EditEventScheduleDialogProps {
@@ -61,8 +61,8 @@ export function EditEventScheduleDialog({
 
           const events = response.data;
           const foundEvent = events.find((e) => {
-            const eventEnd = e.dateWindowEnd ? format(new Date(e.dateWindowEnd), 'yyyy-MM-dd') : null;
-            const targetEnd = format(new Date(dateWindowEnd), 'yyyy-MM-dd');
+            const eventEnd = e.dateWindowEnd ? formatDate(e.dateWindowEnd, 'yyyy-MM-dd') : null;
+            const targetEnd = formatDate(dateWindowEnd, 'yyyy-MM-dd');
             return eventEnd === targetEnd;
           });
 
@@ -84,12 +84,12 @@ export function EditEventScheduleDialog({
   const populateForm = (data: EventScheduleEvent) => {
     setFormData({
       ...data,
-      dateWindowInit: data.dateWindowInit ? format(new Date(data.dateWindowInit), 'yyyy-MM-dd') : null,
-      dateWindowEnd: data.dateWindowEnd ? format(new Date(data.dateWindowEnd), 'yyyy-MM-dd') : null,
-      datePlanInit: data.datePlanInit ? format(new Date(data.datePlanInit), 'yyyy-MM-dd') : null,
-      datePlanEnd: data.datePlanEnd ? format(new Date(data.datePlanEnd), 'yyyy-MM-dd') : null,
-      dateDoneInit: data.dateDoneInit ? format(new Date(data.dateDoneInit), 'yyyy-MM-dd') : null,
-      dateDoneEnd: data.dateDoneEnd ? format(new Date(data.dateDoneEnd), 'yyyy-MM-dd') : null,
+      dateWindowInit: data.dateWindowInit ? formatDate(data.dateWindowInit, 'yyyy-MM-dd') : null,
+      dateWindowEnd: data.dateWindowEnd ? formatDate(data.dateWindowEnd, 'yyyy-MM-dd') : null,
+      datePlanInit: data.datePlanInit ? formatDate(data.datePlanInit, 'yyyy-MM-dd') : null,
+      datePlanEnd: data.datePlanEnd ? formatDate(data.datePlanEnd, 'yyyy-MM-dd') : null,
+      dateDoneInit: data.dateDoneInit ? formatDate(data.dateDoneInit, 'yyyy-MM-dd') : null,
+      dateDoneEnd: data.dateDoneEnd ? formatDate(data.dateDoneEnd, 'yyyy-MM-dd') : null,
     });
   };
 

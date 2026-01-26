@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { format } from 'date-fns';
 import { CalendarIcon, Search } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,12 +7,12 @@ import { MachineByEnterpriseSelect, UnitSelect } from '@/components/selects';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-
 import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useConsumptionCO2 } from '@/hooks/use-esg-api';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { ConsumptionCO2Table } from './@components/ConsumptionCO2Table';
 import { ConsumptionCO2Totals } from './@components/ConsumptionCO2Totals';
@@ -34,8 +33,8 @@ function ConsumptionCO2Page() {
   // Use a state for applied filters to make search manual like legacy
   const [appliedFilters, setAppliedFilters] = useState<any>({
     idEnterprise,
-    dateMin: format(dateMin, "yyyy-MM-dd'T'00:00:00XXX"),
-    dateMax: format(dateMax, "yyyy-MM-dd'T'00:00:00XXX"),
+    dateMin: formatDate(dateMin, "yyyy-MM-dd'T'00:00:00XXX"),
+    dateMax: formatDate(dateMax, "yyyy-MM-dd'T'00:00:00XXX"),
     unit: selectedUnit,
     'idMachine[]': selectedMachines.length > 0 ? selectedMachines : undefined,
   });
@@ -45,8 +44,8 @@ function ConsumptionCO2Page() {
   const handleSearch = useCallback(() => {
     setAppliedFilters({
       idEnterprise,
-      dateMin: format(dateMin, "yyyy-MM-dd'T'00:00:00XXX"),
-      dateMax: format(dateMax, "yyyy-MM-dd'T'00:00:00XXX"),
+      dateMin: formatDate(dateMin, "yyyy-MM-dd'T'00:00:00XXX"),
+      dateMax: formatDate(dateMax, "yyyy-MM-dd'T'00:00:00XXX"),
       unit: selectedUnit,
       'idMachine[]': selectedMachines.length > 0 ? selectedMachines : undefined,
     });
@@ -99,7 +98,7 @@ function ConsumptionCO2Page() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
+                  {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -122,7 +121,7 @@ function ConsumptionCO2Page() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
+                  {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">

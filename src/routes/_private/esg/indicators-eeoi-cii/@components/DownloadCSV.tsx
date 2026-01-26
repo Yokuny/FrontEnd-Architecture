@@ -1,8 +1,8 @@
-import { format } from 'date-fns';
 import { Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import type { EEOICIIIndicator } from '@/hooks/use-esg-api';
+import { formatDate } from '@/lib/formatDate';
 import { calculateCiiReq, calculateRating } from '../@consts/cii.utils';
 import { FUEL_TYPES_MAP } from '../@consts/fuel.consts';
 
@@ -64,7 +64,7 @@ export function DownloadCSV({ data, isShowDetails }: DownloadCSVProps) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `eeoi_cii_${format(new Date(), 'yyyy-MM-dd-HHmmss')}.csv`);
+    link.setAttribute('download', `eeoi_cii_${formatDate(new Date(), 'yyyy-MM-dd-HHmmss')}.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();

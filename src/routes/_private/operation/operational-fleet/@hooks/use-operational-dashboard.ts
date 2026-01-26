@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { api } from '@/lib/api/client';
+import { formatDate } from '@/lib/formatDate';
 import type { AssetOperationalRanking } from '../@interface/operational-dashboard.types';
 
 export interface OperationalDashboardResponse {
@@ -13,7 +13,7 @@ export function useOperationalDashboard(idEnterprise: string) {
     queryKey: ['operational-dashboard', idEnterprise],
     queryFn: async () => {
       if (!idEnterprise) return { data: [] };
-      const finalDate = format(new Date(), "yyyy-MM-dd'T'HH:mm:ssXXX");
+      const finalDate = formatDate(new Date(), "yyyy-MM-dd'T'HH:mm:ssXXX");
 
       const response = await api.get(`/assetstatus/ranking/operational?idEnterprise=${idEnterprise}&date=${finalDate}`);
 

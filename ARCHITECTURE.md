@@ -32,7 +32,9 @@
 
 - **Roteamento**: As rotas são baseadas em **diretórios**. Cada pasta de rota deve conter obrigatoriamente um arquivo `index.tsx` com a estrutura principal. É proibido o uso do caractere `.` para criar rotas aninhadas. Isso garante a integridade funcional do `Breadcrumb` e da `Sidebar`.
 
-- **Tratamento de data**: Exclusivamente por `date-fns`, utilizando sempre o formato `dd MM yy` ou `dd MM yyyy HH:mm`.
+- **Tratamento de Data**: Toda formatação de data para exibição em tela deve ser feita obrigatoriamente através da função utilitária [***`@/lib/formatDate`***](./src/lib/formatDate.ts). Ela garante a internacionalização correta baseada no idioma selecionado.
+  - **Funções**: `formatDate(date, pattern)` e `formatDistanceToNow(date, options)`.
+  - **Evite**: Importar `format` ou `formatDistanceToNow` diretamente do `date-fns` em componentes, pois isso ignora o locale do sistema.
 
 - **Gerenciamento de Estado**: Utilize **Zustand** para estados globais complexos. Não utilize `localStorage.setItem` diretamente. Utilize o middleware `persist` do Zustand para persistência de dados.
 

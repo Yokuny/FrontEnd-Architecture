@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { endOfDay, format, parseISO, startOfDay, subDays } from 'date-fns';
+import { endOfDay, parseISO, startOfDay, subDays } from 'date-fns';
 import { CalendarIcon, Search } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useTimeOperation } from '@/hooks/use-statistics-api';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { TimeOperationTable } from './@components/TimeOperationTable';
 import { LIST_STATUS_ORDERED } from './@consts/status-order';
@@ -50,8 +51,8 @@ function TimeOperationPage() {
   const apiFilters = useMemo(
     () => ({
       idEnterprise,
-      min: search.min || format(dateMin, "yyyy-MM-dd'T'00:00:00XXX"),
-      max: search.max || format(dateMax, "yyyy-MM-dd'T'23:59:59XXX"),
+      min: search.min || formatDate(dateMin, "yyyy-MM-dd'T'00:00:00XXX"),
+      max: search.max || formatDate(dateMax, "yyyy-MM-dd'T'23:59:59XXX"),
       'idMachine[]': search['idMachine[]'],
       'idModel[]': search['idModel[]'],
     }),
@@ -129,8 +130,8 @@ function TimeOperationPage() {
   const handleSearch = useCallback(() => {
     navigate({
       search: {
-        min: format(dateMin, "yyyy-MM-dd'T'00:00:00XXX"),
-        max: format(endOfDay(dateMax), "yyyy-MM-dd'T'23:59:59XXX"),
+        min: formatDate(dateMin, "yyyy-MM-dd'T'00:00:00XXX"),
+        max: formatDate(endOfDay(dateMax), "yyyy-MM-dd'T'23:59:59XXX"),
         'idMachine[]': selectedMachines.length > 0 ? selectedMachines : undefined,
         'idModel[]': selectedModels.length > 0 ? selectedModels : undefined,
       },
@@ -164,7 +165,7 @@ function TimeOperationPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
+                  {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -187,7 +188,7 @@ function TimeOperationPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
+                  {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">

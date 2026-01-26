@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { Ship } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';
@@ -6,6 +5,7 @@ import DefaultLoading from '@/components/default-loading';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { getIconStatusOperation, getStatusColor } from '../@consts/status.consts';
 import type { AssetOperationalRanking } from '../@interface/operational-dashboard.types';
@@ -51,7 +51,7 @@ export function AssetOperationalList({ data, isLoading }: AssetOperationalListPr
                   <span className="text-xl">{statusConfig.icon}</span>
                   <div className="flex flex-col">
                     <ItemTitle>{statusConfig.label}</ItemTitle>
-                    {item.status?.includes('downtime') && <ItemDescription>{format(new Date(item.startedAt), 'dd/MMM HH:mm')}</ItemDescription>}
+                    {item.status?.includes('downtime') && <ItemDescription>{formatDate(item.startedAt, 'dd MMM HH:mm')}</ItemDescription>}
                   </div>
                 </div>
               </TableCell>
