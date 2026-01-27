@@ -5,9 +5,9 @@ import { Marker, TileLayer, useMapEvents } from 'react-leaflet';
 import { Card, CardContent } from '@/components/ui/card';
 import { Map as MapRoot } from '@/components/ui/map';
 import { useTicketNAV } from '../../fleet-manager/@hooks/use-nautical-api';
-import { MapCoordinatesLocal } from './@components/MapCoordinatesLocal';
+import { MapCoordinates } from './@components/MapCoordinates';
+import { Panel } from './@components/Panel';
 import { RouteGeometry } from './@components/RouteGeometry';
-import { RoutePlannerPanel } from './@components/RoutePlannerPanel';
 import { useCalculateRoute } from './@hooks/use-route-planner-api';
 import { routePlannerSearchSchema } from './@interface/schema';
 
@@ -136,10 +136,10 @@ function RoutePlannerPage() {
           {filterParams.destination && <Marker position={[filterParams.destination.lat, filterParams.destination.lng]} icon={endIcon} />}
 
           <RouteGeometry routeGeoJson={routeGeoJson} />
-          <MapCoordinatesLocal />
+          <MapCoordinates />
         </MapRoot>
 
-        <RoutePlannerPanel
+        <Panel
           filterParams={filterParams}
           onChange={onChange}
           calculateRoute={handleCalculateRoute}

@@ -50,7 +50,7 @@ export class DmsCoordinates {
   }
 }
 
-export function MapCoordinatesLocal() {
+export function MapCoordinates() {
   const { t } = useTranslation();
   const [coords, setCoords] = useState<[number, number] | null>(null);
   const map = useMap();

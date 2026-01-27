@@ -2,8 +2,10 @@ import { BrushCleaning, MapPin, Minus, Plus, Save, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { InputGroup } from '@/components/ui/input-group';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -11,31 +13,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { formatDate } from '@/lib/formatDate';
 import { useRouteApi, useRouteHistory } from '../@hooks/use-route-planner-api';
 
-interface RoutePlannerPanelProps {
-  filterParams: any;
-  onChange: (field: string, value: any) => void;
-  calculateRoute: () => void;
-  canRoute: boolean;
-  isRouting: boolean;
-  setSelectTarget: (target: 'origin' | 'destination' | null) => void;
-  selectTarget: 'origin' | 'destination' | null;
-  resetRoute: () => void;
-  routeGeoJson: any;
-  loadRouteFromHistory: (data: any) => void;
-}
-
-export function RoutePlannerPanel({
-  filterParams,
-  onChange,
-  calculateRoute,
-  canRoute,
-  isRouting,
-  setSelectTarget,
-  selectTarget,
-  resetRoute,
-  routeGeoJson,
-  loadRouteFromHistory,
-}: RoutePlannerPanelProps) {
+export function Panel({ filterParams, onChange, calculateRoute, canRoute, isRouting, setSelectTarget, selectTarget, resetRoute, routeGeoJson, loadRouteFromHistory }: PanelProps) {
   const { t } = useTranslation();
   const { data: history, isLoading: loadingHistory } = useRouteHistory() as { data: any[]; isLoading: boolean };
   const { saveRoute, deleteRoute } = useRouteApi();
@@ -64,8 +42,8 @@ export function RoutePlannerPanel({
           {/* Origin */}
           <div className="flex flex-col gap-2">
             <Label className="text-xs">{t('departure')} (A)</Label>
-            <ItemContent className="flex-row">
-              <Button variant={selectTarget === 'origin' ? 'default' : 'outline'} onClick={() => setSelectTarget(selectTarget === 'origin' ? null : 'origin')}>
+            <InputGroup className="w-full">
+              <Button variant={selectTarget === 'origin' ? 'secondary' : 'default'} onClick={() => setSelectTarget(selectTarget === 'origin' ? null : 'origin')}>
                 <MapPin className="size-3" />
               </Button>
               <Input
@@ -82,14 +60,14 @@ export function RoutePlannerPanel({
                 value={filterParams.origin?.lng || ''}
                 onChange={(e) => onChange('origin', { ...filterParams.origin, lng: parseFloat(e.target.value) })}
               />
-            </ItemContent>
+            </InputGroup>
           </div>
 
           {/* Destination */}
           <div className="flex flex-col gap-2">
             <Label className="text-xs">{t('arrival')} (B)</Label>
-            <ItemContent className="flex-row">
-              <Button variant={selectTarget === 'destination' ? 'default' : 'outline'} onClick={() => setSelectTarget(selectTarget === 'destination' ? null : 'destination')}>
+            <ButtonGroup className="w-full">
+              <Button variant={selectTarget === 'destination' ? 'secondary' : 'default'} onClick={() => setSelectTarget(selectTarget === 'destination' ? null : 'destination')}>
                 <MapPin className="size-3" />
               </Button>
               <Input
@@ -106,20 +84,20 @@ export function RoutePlannerPanel({
                 value={filterParams.destination?.lng || ''}
                 onChange={(e) => onChange('destination', { ...filterParams.destination, lng: parseFloat(e.target.value) })}
               />
-            </ItemContent>
+            </ButtonGroup>
           </div>
 
-          <ItemContent className="flex-row justify-center gap-2">
+          <ButtonGroup className="w-full justify-center">
             <Button className="text-amber-700 text-xs hover:text-amber-800" onClick={resetRoute}>
               <BrushCleaning className="size-4" />
             </Button>
-            <Button variant="outline" className="text-xs" onClick={() => setShowRestrictions(true)}>
+            <Button className="text-xs" onClick={() => setShowRestrictions(true)}>
               {t('restrictions')}
             </Button>
-            <Button className="text-xs" variant={'secondary'} disabled={!canRoute || isRouting} onClick={calculateRoute}>
+            <Button className="text-xs" disabled={!canRoute || isRouting} onClick={calculateRoute}>
               {isRouting ? <Spinner className="size-3" /> : t('route')}
             </Button>
-          </ItemContent>
+          </ButtonGroup>
 
           {routeGeoJson && (
             <div className="border-t pt-2">
@@ -203,4 +181,17 @@ export function RoutePlannerPanel({
       </Dialog>
     </div>
   );
+}
+
+interface PanelProps {
+  filterParams: any;
+  onChange: (field: string, value: any) => void;
+  calculateRoute: () => void;
+  canRoute: boolean;
+  isRouting: boolean;
+  setSelectTarget: (target: 'origin' | 'destination' | null) => void;
+  selectTarget: 'origin' | 'destination' | null;
+  resetRoute: () => void;
+  routeGeoJson: any;
+  loadRouteFromHistory: (data: any) => void;
 }
