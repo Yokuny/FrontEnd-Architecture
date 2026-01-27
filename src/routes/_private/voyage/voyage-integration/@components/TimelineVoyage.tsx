@@ -55,7 +55,7 @@ export function TimelineVoyage({ events }: TimelineVoyageProps) {
           const isLast = i === events.length - 1;
 
           return (
-            <div key={i} className="relative flex gap-4">
+            <div key={`${event.type}-${event.dateTimeStart}`} className="relative flex gap-4">
               {!isLast && <div className="absolute top-[20px] bottom-0 left-[7px] w-[2px] bg-muted/50" />}
 
               <div className={cn('relative z-10 flex size-4 shrink-0 items-center justify-center rounded-full border border-border bg-background p-1', color)}>

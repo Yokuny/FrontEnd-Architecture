@@ -111,7 +111,7 @@ const LanguagesIcon = forwardRef<LanguagesIconHandle, HTMLAttributes<HTMLDivElem
   );
 
   return (
-    <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <motion.svg
         animate={svgControls}
         fill="none"

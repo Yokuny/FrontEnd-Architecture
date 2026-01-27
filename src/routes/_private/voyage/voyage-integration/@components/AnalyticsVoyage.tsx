@@ -85,8 +85,8 @@ export function AnalyticsVoyage({ voyages }: AnalyticsVoyageProps) {
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        {analytics.map((item, i) => (
-          <div key={i} className="flex flex-col gap-1 rounded-md border border-border/50 bg-muted/30 p-3">
+        {analytics.map((item) => (
+          <div key={`analytics-${item.description}`} className="flex flex-col gap-1 rounded-md border border-border/50 bg-muted/30 p-3">
             <span className="truncate font-medium text-[10px] text-muted-foreground uppercase tracking-tighter">{item.description}</span>
             <div className="flex items-baseline gap-1">
               <span className="font-bold font-mono text-lg tracking-tighter">{item.value.toFixed(item.isInt ? 0 : 1)}</span>

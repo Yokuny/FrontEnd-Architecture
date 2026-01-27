@@ -50,11 +50,11 @@ export function StatusOperational({ idMachine, voyages }: StatusOperationalProps
         <div className="flex flex-col gap-2">
           {eventStatus
             ?.sort((a, b) => b.minutes - a.minutes)
-            ?.map((x, i) => {
+            ?.map((x) => {
               const info = getStatusInfo(x.status);
               const Icon = info.icon;
               return (
-                <div key={i} className="flex items-center justify-between text-xs">
+                <div key={x.status} className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
                     <div className={cn('rounded-sm bg-muted/50 p-1', info.color)}>
                       <Icon className="size-3.5" />

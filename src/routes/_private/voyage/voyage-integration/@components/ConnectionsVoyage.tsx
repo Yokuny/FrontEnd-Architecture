@@ -81,10 +81,10 @@ export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
         <div className="flex items-center gap-2">
           <ItemTitle className="text-xs uppercase tracking-wider opacity-70">{t('kick.voyage')}</ItemTitle>
         </div>
-        <div className="flex cursor-pointer select-none items-center gap-2" onClick={handleToggleComplete}>
+        <span className="flex cursor-pointer select-none items-center gap-2">
           <Checkbox checked={!kickVoyageFilter} onCheckedChange={handleToggleComplete} />
           <span className="text-[11px] text-muted-foreground">{t('voyage.complete')}</span>
-        </div>
+        </span>
       </div>
 
       <div className="flex flex-col gap-1.5">
@@ -92,7 +92,7 @@ export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
           const isSelected = kickVoyageFilter?.index === i;
           return (
             <Item
-              key={i}
+              key={`${x.source?.port}-${x.destiny?.port}-${i}`}
               size="sm"
               variant={isSelected ? 'muted' : 'default'}
               className={cn('cursor-pointer border border-transparent p-2 transition-colors', isSelected && 'border-primary/50')}

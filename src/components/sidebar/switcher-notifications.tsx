@@ -120,7 +120,7 @@ const MailCheckIcon = forwardRef<MailCheckIconHandle, HTMLAttributes<HTMLDivElem
   );
 
   return (
-    <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
         height="28"
@@ -201,7 +201,7 @@ const MessageSquareIcon = forwardRef<MessageSquareIconHandle, HTMLAttributes<HTM
   );
 
   return (
-    <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <motion.svg
         animate={controls}
         fill="none"

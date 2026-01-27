@@ -70,7 +70,7 @@ const Maximize2Icon = forwardRef<Maximize2IconHandle, HTMLAttributes<HTMLDivElem
   );
 
   return (
-    <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
         height="28"
@@ -143,7 +143,7 @@ const MaximizeIcon = forwardRef<MaximizeIconHandle, HTMLAttributes<HTMLDivElemen
   );
 
   return (
-    <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg fill="none" height="28" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
         <motion.path
           animate={controls}
@@ -225,7 +225,7 @@ const MinimizeIcon = forwardRef<MinimizeIconHandle, HTMLAttributes<HTMLDivElemen
   );
 
   return (
-    <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
         height="28"
