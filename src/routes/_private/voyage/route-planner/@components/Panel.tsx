@@ -48,14 +48,14 @@ export function Panel({ filterParams, onChange, calculateRoute, canRoute, isRout
               </Button>
               <Input
                 placeholder="Lat"
-                className="text-xs"
+                className="text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 type="number"
                 value={filterParams.origin?.lat || ''}
                 onChange={(e) => onChange('origin', { ...filterParams.origin, lat: parseFloat(e.target.value) })}
               />
               <Input
                 placeholder="Lon"
-                className="text-xs"
+                className="text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 type="number"
                 value={filterParams.origin?.lng || ''}
                 onChange={(e) => onChange('origin', { ...filterParams.origin, lng: parseFloat(e.target.value) })}
@@ -72,14 +72,14 @@ export function Panel({ filterParams, onChange, calculateRoute, canRoute, isRout
               </Button>
               <Input
                 placeholder="Lat"
-                className="text-xs"
+                className="text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 type="number"
                 value={filterParams.destination?.lat || ''}
                 onChange={(e) => onChange('destination', { ...filterParams.destination, lat: parseFloat(e.target.value) })}
               />
               <Input
                 placeholder="Lon"
-                className="text-xs"
+                className="text-xs [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 type="number"
                 value={filterParams.destination?.lng || ''}
                 onChange={(e) => onChange('destination', { ...filterParams.destination, lng: parseFloat(e.target.value) })}
@@ -110,7 +110,7 @@ export function Panel({ filterParams, onChange, calculateRoute, canRoute, isRout
               {showSaveRoute && (
                 <div className="mt-2 flex flex-col gap-2">
                   <Input placeholder={t('route.description')} className="h-8 text-xs" value={routeDescription} onChange={(e) => setRouteDescription(e.target.value)} />
-                  <Button size="sm" className="h-8 gap-2 text-xs" disabled={!routeDescription.trim() || saveRoute.isPending} onClick={handleSaveRoute}>
+                  <Button className="h-8 gap-2 text-xs" disabled={!routeDescription.trim() || saveRoute.isPending} onClick={handleSaveRoute}>
                     {saveRoute.isPending ? <Spinner className="size-3" /> : <Save className="size-3" />}
                     {t('save')}
                   </Button>
@@ -131,7 +131,7 @@ export function Panel({ filterParams, onChange, calculateRoute, canRoute, isRout
               ) : (
                 <ItemGroup>
                   {history?.map((route: any) => (
-                    <Item key={route.id} size="sm" className="cursor-pointer bg-secondary" onClick={() => loadRouteFromHistory(route)}>
+                    <Item key={route.id} className="cursor-pointer bg-secondary" onClick={() => loadRouteFromHistory(route)}>
                       <ItemContent>
                         <ItemTitle className="truncate text-xs">{route.description}</ItemTitle>
                         <ItemDescription className="text-xs">{formatDate(new Date(route.createdAt), 'dd MMM yy')}</ItemDescription>
