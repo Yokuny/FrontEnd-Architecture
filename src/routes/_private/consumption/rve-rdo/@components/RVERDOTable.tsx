@@ -18,7 +18,7 @@ export function RVERDOTable({ data }: RVERDOTableProps) {
   return (
     <div className="overflow-x-auto">
       <Table>
-        <TableHeader className="bg-secondary/50">
+        <TableHeader className="bg-secondary">
           <TableRow>
             <TableHead className="text-center">{t('date')}</TableHead>
             <TableHead className="text-right">

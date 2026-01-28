@@ -22,7 +22,7 @@ export function ConsumptionTable({ data, unit, isReal, isEstimated }: Consumptio
       <CardContent className="p-0">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-secondary/50">
+            <TableHeader className="bg-secondary">
               <TableRow>
                 <TableHead className="text-center">{t('date')}</TableHead>
                 <TableHead className="text-center">{t('vessel')}</TableHead>

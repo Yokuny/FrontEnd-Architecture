@@ -82,7 +82,7 @@ function OperationalAssetPage() {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <div className="rounded-lg border bg-secondary/50 p-4">
+        <div className="rounded-lg border bg-secondary p-4">
           <OperationalAssetFilter idEnterprise={idEnterprise || ''} filter={filter} onFilterChange={handleFilterChange} isLoading={isLoading} />
         </div>
 

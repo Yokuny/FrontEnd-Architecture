@@ -87,7 +87,7 @@ function KPISCMMSPage() {
     <Card>
       <CardHeader title="KPI's CMMS" />
       <CardContent className="flex flex-col gap-6">
-        <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary/50 p-4">
+        <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary p-4">
           <MachineByEnterpriseSelect mode="multi" idEnterprise={idEnterprise} value={selectedMachines} onChange={setSelectedMachines} label={t('vessels')} className="w-64" />
 
           <div className="flex flex-col gap-1.5">

@@ -31,7 +31,7 @@ export function RVEFilter({ idEnterprise, initialValues, onSearch, isLoading }: 
   };
 
   return (
-    <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary/50 p-4">
+    <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary p-4">
       <MachineByEnterpriseSelect
         idEnterprise={idEnterprise}
         mode="multi"
