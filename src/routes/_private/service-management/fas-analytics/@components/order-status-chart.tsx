@@ -5,7 +5,6 @@ import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
-import { Skeleton } from '@/components/ui/skeleton';
 import type { FasAnalyticsFilters } from '@/hooks/use-fas-analytics-api';
 import { useFasOrderStatusGrouped, useFasOrderStatusTotal } from '@/hooks/use-fas-analytics-api';
 import type { FasAnalyticsSearch } from '../@interface/fas-analytics.schema';
@@ -43,9 +42,21 @@ export function OrderStatusChart({ search }: OrderStatusChartProps) {
   const barData = useMemo(() => {
     if (!groupedData) return [];
     return groupedData.map((item) => {
-      const baseObj: Record<string, string | number> = {
-        name: filters.dependantAxis === 'vessel' ? item.vesselName || item.vessel || t('undefined') : item.month || t('undefined'),
-      };
+      let name = t('undefined');
+
+      if (typeof item._id === 'string') {
+        name = item._id;
+      } else if (item._id && typeof item._id === 'object') {
+        if (filters.dependantAxis === 'vessel') {
+          name = item._id.vesselName || item._id.vessel || t('undefined');
+        } else {
+          const month = item._id.month || t('undefined');
+          const year = item._id.year ? ` ${item._id.year}` : '';
+          name = `${month}${year}`;
+        }
+      }
+
+      const baseObj: Record<string, string | number> = { name };
       if (item.data) {
         for (const d of item.data) {
           const statusKey = d.status ? t(`status.${d.status.toLowerCase()}`) : t('undefined');

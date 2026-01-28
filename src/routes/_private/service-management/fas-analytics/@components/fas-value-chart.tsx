@@ -32,12 +32,19 @@ export function FasValueChart({ search }: FasValueChartProps) {
     if (!data) return [];
     return data.map((item) => {
       let name = t('undefined');
-      if (filters.dependantAxis === 'vessel') {
-        name = item.vesselName || item.vessel || t('undefined');
-      } else if (filters.dependantAxis === 'year') {
-        name = item.year?.toString() || t('undefined');
-      } else {
-        name = item.month || t('undefined');
+
+      if (typeof item._id === 'string') {
+        name = item._id;
+      } else if (item._id && typeof item._id === 'object') {
+        if (filters.dependantAxis === 'vessel') {
+          name = item._id.vesselName || item._id.vessel || t('undefined');
+        } else if (filters.dependantAxis === 'year') {
+          name = item._id.year?.toString() || t('undefined');
+        } else {
+          const month = item._id.month || t('undefined');
+          const year = item._id.year ? ` ${item._id.year}` : '';
+          name = `${month}${year}`;
+        }
       }
       return {
         name,

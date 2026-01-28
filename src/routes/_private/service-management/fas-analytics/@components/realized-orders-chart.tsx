@@ -9,10 +9,6 @@ import type { FasAnalyticsFilters } from '@/hooks/use-fas-analytics-api';
 import { useFasRealizedOrders } from '@/hooks/use-fas-analytics-api';
 import type { FasAnalyticsSearch } from '../@interface/fas-analytics.schema';
 
-interface RealizedOrdersChartProps {
-  search: FasAnalyticsSearch;
-}
-
 export function RealizedOrdersChart({ search }: RealizedOrdersChartProps) {
   const { t } = useTranslation();
 
@@ -32,11 +28,27 @@ export function RealizedOrdersChart({ search }: RealizedOrdersChartProps) {
   const chartData = useMemo(() => {
     if (!data) return [];
 
-    return data.map((item) => ({
-      name: filters.dependantAxis === 'vessel' ? item.vesselName || item.vessel || t('undefined') : item.month || t('undefined'),
-      [t('completed')]: item.completedCount,
-      [t('not.completed')]: item.notCompletedCount,
-    }));
+    return data.map((item) => {
+      let name = '-';
+
+      if (typeof item._id === 'string') {
+        name = item._id;
+      } else if (item._id && typeof item._id === 'object') {
+        if (filters.dependantAxis === 'vessel') {
+          name = item._id.vesselName || item._id.vessel || t('undefined');
+        } else {
+          const month = item._id.month || t('undefined');
+          const year = item._id.year ? ` ${item._id.year}` : '';
+          name = `${month}${year}`;
+        }
+      }
+
+      return {
+        name,
+        [t('completed')]: item.completedCount,
+        [t('not.completed')]: item.notCompletedCount,
+      };
+    });
   }, [data, filters.dependantAxis, t]);
 
   const chartConfig: ChartConfig = {
@@ -78,4 +90,8 @@ export function RealizedOrdersChart({ search }: RealizedOrdersChartProps) {
       </ItemContent>
     </Item>
   );
+}
+
+interface RealizedOrdersChartProps {
+  search: FasAnalyticsSearch;
 }

@@ -43,11 +43,17 @@ function buildParams(filters: FasAnalyticsFilters): URLSearchParams {
 
 // Realized Orders Chart
 export interface RealizedOrdersData {
+  _id?:
+    | string
+    | null
+    | {
+        month?: string;
+        year?: number;
+        vessel?: string;
+        vesselName?: string;
+      };
   completedCount: number;
   notCompletedCount: number;
-  month?: string;
-  vessel?: string;
-  vesselName?: string;
 }
 
 export function useFasRealizedOrders(filters: FasAnalyticsFilters) {
@@ -69,9 +75,15 @@ export interface HeaderTypesTotalData {
 }
 
 export interface HeaderTypesGroupedData {
-  month?: string;
-  vessel?: string;
-  vesselName?: string;
+  _id?:
+    | string
+    | null
+    | {
+        month?: string;
+        year?: number;
+        vessel?: string;
+        vesselName?: string;
+      };
   data: { type: string; count: number }[];
 }
 
@@ -106,9 +118,15 @@ export interface OrderStatusTotalData {
 }
 
 export interface OrderStatusGroupedData {
-  month?: string;
-  vessel?: string;
-  vesselName?: string;
+  _id?:
+    | string
+    | null
+    | {
+        month?: string;
+        year?: number;
+        vessel?: string;
+        vesselName?: string;
+      };
   data: { status: string; count: number }[];
 }
 
@@ -138,10 +156,15 @@ export function useFasOrderStatusGrouped(filters: FasAnalyticsFilters) {
 
 // FAS Value Chart
 export interface FasValueData {
-  month?: string;
-  year?: number;
-  vessel?: string;
-  vesselName?: string;
+  _id?:
+    | string
+    | null
+    | {
+        month?: string;
+        year?: number;
+        vessel?: string;
+        vesselName?: string;
+      };
   totalWithPaymentDate: number;
   totalWithoutPaymentDate: number;
   count: number;
@@ -161,11 +184,16 @@ export function useFasValueGroupedCount(filters: FasAnalyticsFilters) {
 
 // Order Value Chart
 export interface OrderValueData {
-  month?: string;
-  year?: number;
-  vessel?: string;
-  vesselName?: string;
-  supplier?: string;
+  _id?:
+    | string
+    | null
+    | {
+        month?: string;
+        year?: number;
+        vessel?: string;
+        vesselName?: string;
+        supplier?: string;
+      };
   totalWithPaymentDate: number;
   totalWithoutPaymentDate: number;
   count: number;

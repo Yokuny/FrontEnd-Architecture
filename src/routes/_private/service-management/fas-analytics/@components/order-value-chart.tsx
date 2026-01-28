@@ -5,7 +5,6 @@ import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Item, ItemContent, ItemHeader, ItemTitle } from '@/components/ui/item';
-import { Skeleton } from '@/components/ui/skeleton';
 import type { FasAnalyticsFilters } from '@/hooks/use-fas-analytics-api';
 import { useOrderValueByPaymentDate, useOrderValueGroupedCount } from '@/hooks/use-fas-analytics-api';
 import type { FasAnalyticsSearch } from '../@interface/fas-analytics.schema';
@@ -33,14 +32,21 @@ export function OrderValueChart({ search }: OrderValueChartProps) {
     if (!data) return [];
     return data.map((item, index) => {
       let name = t('undefined');
-      if (filters.dependantAxis === 'vessel') {
-        name = item.vesselName || item.vessel || t('undefined');
-      } else if (filters.dependantAxis === 'supplier') {
-        name = item.supplier || t('undefined');
-      } else if (filters.dependantAxis === 'year') {
-        name = item.year?.toString() || t('undefined');
-      } else {
-        name = item.month || t('undefined');
+
+      if (typeof item._id === 'string') {
+        name = item._id;
+      } else if (item._id && typeof item._id === 'object') {
+        if (filters.dependantAxis === 'vessel') {
+          name = item._id.vesselName || item._id.vessel || t('undefined');
+        } else if (filters.dependantAxis === 'supplier') {
+          name = item._id.supplier || t('undefined');
+        } else if (filters.dependantAxis === 'year') {
+          name = item._id.year?.toString() || t('undefined');
+        } else {
+          const month = item._id.month || t('undefined');
+          const year = item._id.year ? ` ${item._id.year}` : '';
+          name = `${month}${year}`;
+        }
       }
 
       const result: Record<string, string | number> = {
