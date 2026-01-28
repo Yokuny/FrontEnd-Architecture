@@ -65,6 +65,7 @@ export interface VoyageAnalytics {
   inVoyage?: {
     distance: number;
     speedAvg: number;
+    speedAvgInOcean: number;
     avgData?: {
       speedInOcean?: {
         distance: number;
@@ -86,7 +87,11 @@ export interface VoyageAnalytics {
 
 export interface IntegrationVoyageDetail extends IntegrationVoyage {
   analytics: VoyageAnalytics;
-  // Add other detail specific fields if needed
+  dateTimeArrival: string;
+  dateTimeDeparture: string;
+  port: string;
+  sequence: number;
+  operations: string;
 }
 
 export interface MachineEventStatus {

@@ -1,12 +1,8 @@
 import { PieChart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ItemTitle } from '@/components/ui/item';
+import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { useVoyageIntegrationStore } from '../@hooks/use-voyage-integration-store';
 import type { IntegrationVoyageDetail } from '../@interface/voyage-integration';
-
-interface AnalyticsVoyageProps {
-  voyages: IntegrationVoyageDetail[];
-}
 
 export function AnalyticsVoyage({ voyages }: AnalyticsVoyageProps) {
   const { t } = useTranslation();
@@ -17,18 +13,29 @@ export function AnalyticsVoyage({ voyages }: AnalyticsVoyageProps) {
   const getVoyagesFiltered = () => {
     if (kickVoyageFilter) {
       return voyages
-        .filter(
+        ?.filter(
           (x) =>
-            new Date(x.dateTimeStart).getTime() >= new Date(kickVoyageFilter.dateTimeDeparture).getTime() &&
-            new Date(x.dateTimeEnd).getTime() <= new Date(kickVoyageFilter.dateTimeArrival).getTime(),
+            new Date(x.dateTimeDeparture).getTime() >= new Date(kickVoyageFilter.dateTimeDeparture).getTime() &&
+            new Date(x.dateTimeArrival).getTime() >= new Date(kickVoyageFilter.dateTimeDeparture).getTime() &&
+            new Date(x.dateTimeArrival).getTime() <= new Date(kickVoyageFilter.dateTimeArrival).getTime(),
         )
-        .map((x) => x.analytics);
+        ?.map((x) => x.analytics);
     }
     return voyages.map((x) => x.analytics);
   };
 
   const voyagesFiltered = getVoyagesFiltered();
-  const sums = voyagesFiltered.reduce(
+  const sums = voyagesFiltered.reduce<{
+    distance: number;
+    speedAvg: number;
+    speedAvgInOcean: number;
+    ifo: number;
+    ifoPort: number;
+    ifoVoyage: number;
+    mdo: number;
+    lsf: number;
+    mgo: number;
+  }>(
     (a, b) => ({
       distance: a.distance + (b?.inVoyage?.distance || 0),
       speedAvg: a.speedAvg + (b?.inVoyage?.speedAvg || 0),
@@ -52,8 +59,9 @@ export function AnalyticsVoyage({ voyages }: AnalyticsVoyageProps) {
   };
 
   const getValueAvgSpeed = (propName: 'speedAvg' | 'speedAvgInOcean') => {
-    const filter = voyages.filter((x) => ((x.analytics?.inVoyage as any)?.[propName] || 0) > 0);
-    return filter.length ? sums[propName] / filter.length : 0;
+    const filteredAnalytics = kickVoyageFilter ? voyagesFiltered : voyages.map((v) => v.analytics);
+    const filter = filteredAnalytics.filter((x) => ((x?.inVoyage as any)?.[propName] || 0) > 0);
+    return filter.length ? (sums as any)[propName] / filter.length : 0;
   };
 
   const analytics: { description: string; value: number; unit: string; isInt?: boolean }[] = [
@@ -78,23 +86,27 @@ export function AnalyticsVoyage({ voyages }: AnalyticsVoyageProps) {
   }
 
   return (
-    <div className="flex flex-col gap-3 border-b py-4">
-      <div className="flex items-center gap-2">
-        <PieChart className="size-4 text-primary" />
-        <ItemTitle className="text-xs uppercase tracking-wider opacity-70">{t('indicators')}</ItemTitle>
-      </div>
+    <div className="flex flex-col gap-3 border-b py-3">
+      <ItemContent className="flex-row text-muted-foreground">
+        <PieChart className="size-3 text-primary" />
+        <ItemTitle className="text-xs uppercase tracking-wide">{t('indicators')}</ItemTitle>
+      </ItemContent>
 
       <div className="grid grid-cols-2 gap-3">
         {analytics.map((item) => (
-          <div key={`analytics-${item.description}`} className="flex flex-col gap-1 rounded-md border border-border/50 bg-muted/30 p-3">
-            <span className="truncate font-medium text-[10px] text-muted-foreground uppercase tracking-tighter">{item.description}</span>
+          <ItemContent key={`analytics-${item.description}`} className="gap-0 rounded-md border border-border/50 bg-secondary p-2">
+            <ItemTitle className="truncate text-[10px] text-muted-foreground uppercase tracking-tighter">{item.description}</ItemTitle>
             <div className="flex items-baseline gap-1">
-              <span className="font-bold font-mono text-lg tracking-tighter">{item.value.toFixed(item.isInt ? 0 : 1)}</span>
-              <span className="font-medium text-[10px] uppercase opacity-60">{item.unit}</span>
+              <ItemTitle className="font-medium text-lg">{item.value.toFixed(item.isInt ? 0 : 1)}</ItemTitle>
+              <ItemDescription className="font-medium text-xs uppercase">{item.unit}</ItemDescription>
             </div>
-          </div>
+          </ItemContent>
         ))}
       </div>
     </div>
   );
+}
+
+interface AnalyticsVoyageProps {
+  voyages: IntegrationVoyageDetail[];
 }

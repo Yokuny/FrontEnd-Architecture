@@ -11,10 +11,8 @@ import { useEnterprisesSelect } from '@/hooks/use-enterprises-api';
 import { cn } from '@/lib/utils';
 import { useIntegrationAssets } from '../@hooks/use-voyage-integration-api';
 import { useVoyageIntegrationStore } from '../@hooks/use-voyage-integration-store';
-import type { IntegrationAsset } from '../@interface/voyage-integration';
-import { VoyageSidebar } from './VoyageSidebar';
 
-export function Sidebar() {
+export function AssetsPanel() {
   const { t } = useTranslation();
   const idEnterprise = useEnterpriseFilter((state) => state.idEnterprise);
   const setIdEnterprise = useEnterpriseFilter((state) => state.setIdEnterprise);
@@ -31,42 +29,35 @@ export function Sidebar() {
   const [search, setSearch] = useState('');
   const deferredSearch = useDeferredValue(search);
 
-  const selectedAsset = useVoyageIntegrationStore((state) => state.selectedAsset);
   const setSelectedAsset = useVoyageIntegrationStore((state) => state.setSelectedAsset);
+  const selectedVoyage = useVoyageIntegrationStore((state) => state.selectedVoyage);
 
   const { data: assets, isLoading } = useIntegrationAssets(idEnterprise || '', deferredSearch);
 
-  if (selectedAsset) {
-    return <VoyageSidebar />;
-  }
-
-  const assetList = assets as IntegrationAsset[] | undefined;
-
   return (
-    <div className="flex h-full w-72 flex-col border-r bg-background/95 backdrop-blur-sm">
+    <div
+      className={cn(
+        'flex h-full w-72 flex-col border-r bg-background/95 backdrop-blur-sm transition-opacity duration-300',
+        selectedVoyage ? 'opacity-60 hover:opacity-100' : 'opacity-100',
+      )}
+    >
       <div className="p-4">
         <div className="relative">
-          <Search className="absolute top-3.5 left-2 size-4 text-muted-foreground" />
-          <Input placeholder={t('search')} className="pl-8 text-sm" value={search} onChange={(e) => setSearch(e.target.value)} />
+          <Search className="absolute top-4 left-2 size-3 text-muted-foreground" />
+          <Input placeholder={t('search')} className="pl-6 text-sm" value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
       </div>
 
-      <ScrollArea className="flex-1">
-        <div className="flex flex-col gap-1 p-2">
-          {isLoading ? (
-            <DefaultLoading />
-          ) : !assetList || assetList.length === 0 ? (
-            <EmptyData />
-          ) : (
-            assetList.map((asset) => {
-              const isActive = (selectedAsset as any)?.idMachine === asset.idMachine;
-              return (
-                <Item
-                  key={asset.idMachine}
-                  variant={isActive ? 'muted' : 'default'}
-                  className={cn('cursor-pointer items-center transition-colors hover:bg-secondary', isActive && 'border-primary')}
-                  onClick={() => setSelectedAsset(asset)}
-                >
+      <div className="min-h-0 flex-1">
+        <ScrollArea className="h-full">
+          <div className="flex flex-col gap-1 p-2">
+            {isLoading ? (
+              <DefaultLoading />
+            ) : !assets || assets.length === 0 ? (
+              <EmptyData />
+            ) : (
+              assets.map((asset) => (
+                <Item key={asset.idMachine} className="cursor-pointer items-center transition-colors hover:bg-secondary" onClick={() => setSelectedAsset(asset)}>
                   <ItemMedia variant="image">
                     <div className="items-center justify-center text-xs uppercase">{asset.machine.name.trim().substring(0, 2)}</div>
                   </ItemMedia>
@@ -76,11 +67,11 @@ export function Sidebar() {
                   </ItemContent>
                   <ChevronRight className="ml-auto size-4" />
                 </Item>
-              );
-            })
-          )}
-        </div>
-      </ScrollArea>
+              ))
+            )}
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 }

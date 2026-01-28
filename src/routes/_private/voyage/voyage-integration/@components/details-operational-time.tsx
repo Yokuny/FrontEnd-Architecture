@@ -1,17 +1,12 @@
 import { Anchor, Navigation, Radio, Settings, Ship, TrendingDown, TrendingUp, Warehouse } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ItemTitle } from '@/components/ui/item';
-import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 import { useOperationalStatus } from '../@hooks/use-voyage-integration-api';
 import { useVoyageIntegrationStore } from '../@hooks/use-voyage-integration-store';
 import type { IntegrationVoyageDetail } from '../@interface/voyage-integration';
 
-interface StatusOperationalProps {
-  idMachine: string;
-  voyages: IntegrationVoyageDetail[];
-}
-
-export function StatusOperational({ idMachine, voyages }: StatusOperationalProps) {
+export function OperationalTime({ idMachine, voyages }: StatusOperationalProps) {
   const { t } = useTranslation();
   const kickVoyageFilter = useVoyageIntegrationStore((state) => state.kickVoyageFilter);
 
@@ -33,6 +28,8 @@ export function StatusOperational({ idMachine, voyages }: StatusOperationalProps
     return { icon: Ship, color: 'text-muted-foreground', label: t('other') };
   };
 
+  if (isLoading || !eventStatus) return;
+
   return (
     <div className="flex flex-col gap-3 border-b py-4">
       <div className="flex items-center gap-2">
@@ -40,43 +37,35 @@ export function StatusOperational({ idMachine, voyages }: StatusOperationalProps
         <ItemTitle className="text-xs uppercase tracking-wider opacity-70">{t('time.operation')}</ItemTitle>
       </div>
 
-      {isLoading ? (
-        <div className="flex flex-col gap-2">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-full" />
-        </div>
-      ) : (
-        <div className="flex flex-col gap-2">
-          {eventStatus
-            ?.sort((a, b) => b.minutes - a.minutes)
-            ?.map((x) => {
-              const info = getStatusInfo(x.status);
-              const Icon = info.icon;
-              return (
-                <div key={x.status} className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <div className={cn('rounded-sm bg-muted/50 p-1', info.color)}>
-                      <Icon className="size-3.5" />
-                    </div>
-                    <span className="text-muted-foreground">{info.label}</span>
+      <div className="flex flex-col gap-2">
+        {eventStatus
+          ?.sort((a, b) => b.minutes - a.minutes)
+          ?.map((x) => {
+            const info = getStatusInfo(x.status);
+            const Icon = info.icon;
+            return (
+              <div key={x.status} className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <div className={cn('rounded-sm bg-muted/50 p-1', info.color)}>
+                    <Icon className="size-3.5" />
                   </div>
-                  <span className="font-bold">{(x.minutes / 60).toFixed(1)} hrs</span>
+                  <span className="text-muted-foreground">{info.label}</span>
                 </div>
-              );
-            })}
+                <span className="font-bold">{(x.minutes / 60).toFixed(1)} hrs</span>
+              </div>
+            );
+          })}
 
-          {!!eventStatus?.length && (
-            <div className="mt-1 flex items-center justify-between border-t border-dashed pt-1 font-bold text-xs">
-              <span className="ml-7 text-[10px] uppercase opacity-70">{t('total')}</span>
-              <span>{(eventStatus.reduce((a, b) => a + b.minutes, 0) / 60).toFixed(1)} hrs</span>
-            </div>
-          )}
+        <div className="mt-1 flex items-center justify-between border-t border-dashed pt-1 font-bold text-xs">
+          <span className="ml-7 text-[10px] uppercase opacity-70">{t('total')}</span>
+          <span>{(eventStatus.reduce((a, b) => a + b.minutes, 0) / 60).toFixed(1)} hrs</span>
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
-// Add cn helper since it's used
-import { cn } from '@/lib/utils';
+interface StatusOperationalProps {
+  idMachine: string;
+  voyages: IntegrationVoyageDetail[];
+}

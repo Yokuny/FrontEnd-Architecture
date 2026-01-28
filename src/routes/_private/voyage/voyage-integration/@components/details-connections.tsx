@@ -1,14 +1,11 @@
 import { ArrowDownCircle, ArrowUpCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Item, ItemTitle } from '@/components/ui/item';
+import { Item, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { useVoyageIntegrationStore } from '../@hooks/use-voyage-integration-store';
-
-interface ConnectionsVoyageProps {
-  voyages: any[]; // The legacy code receives 'data' which is typed as 'IntegrationVoyageDetail[]' in my new hook
-}
+import type { IntegrationVoyageDetail } from '../@interface/voyage-integration';
 
 export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
   const { t } = useTranslation();
@@ -51,10 +48,10 @@ export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
       setKickVoyageFilter(null);
     } else if (travels.length > 0) {
       setKickVoyageFilter({
-        dateTimeDeparture: travels[0].source?.dateTimeDeparture,
-        dateTimeArrival: travels[0].destiny?.dateTimeArrival,
-        dateTimeSourceArrival: travels[0].source?.dateTimeArrival,
-        dateTimeDestinyDeparture: travels[0].destiny?.dateTimeDeparture,
+        dateTimeDeparture: String(travels[0].source?.dateTimeDeparture),
+        dateTimeArrival: String(travels[0].destiny?.dateTimeArrival),
+        dateTimeSourceArrival: String(travels[0].source?.dateTimeArrival),
+        dateTimeDestinyDeparture: String(travels[0].destiny?.dateTimeDeparture),
         index: 0,
       });
     }
@@ -76,18 +73,18 @@ export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
   };
 
   return (
-    <div className="flex flex-col gap-3 border-b py-4">
+    <div className="flex flex-col gap-3 border-b py-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <ItemTitle className="text-xs uppercase tracking-wider opacity-70">{t('kick.voyage')}</ItemTitle>
         </div>
         <span className="flex cursor-pointer select-none items-center gap-2">
           <Checkbox checked={!kickVoyageFilter} onCheckedChange={handleToggleComplete} />
-          <span className="text-[11px] text-muted-foreground">{t('voyage.complete')}</span>
+          <ItemDescription className="text-[11px] text-muted-foreground">{t('voyage.complete')}</ItemDescription>
         </span>
       </div>
 
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1">
         {travels.map((x, i) => {
           const isSelected = kickVoyageFilter?.index === i;
           return (
@@ -95,26 +92,26 @@ export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
               key={`${x.source?.port}-${x.destiny?.port}-${i}`}
               size="sm"
               variant={isSelected ? 'muted' : 'default'}
-              className={cn('cursor-pointer border border-transparent p-2 transition-colors', isSelected && 'border-primary/50')}
+              className={cn('cursor-pointer border border-transparent p-1 transition-colors', isSelected && 'border-primary/30')}
               onClick={() => handleSelectKick(x, i)}
             >
               <div className="grid w-full grid-cols-2 gap-4">
-                <div className="flex items-start gap-2">
-                  <ArrowUpCircle className="mt-0.5 size-4 shrink-0 text-destructive" />
+                <div className="flex items-center gap-1">
+                  <ArrowUpCircle className="size-4 shrink-0 text-destructive" />
                   <div className="flex flex-col truncate">
-                    <span className="truncate font-bold text-xs leading-none">{x.source?.port}</span>
-                    <span className="mt-1 text-[10px] text-muted-foreground">
+                    <ItemTitle className="truncate leading-none">{x.source?.port}</ItemTitle>
+                    <ItemDescription className="text-[10px] text-muted-foreground">
                       {x.source?.dateTimeDeparture ? formatDate(new Date(x.source.dateTimeDeparture), 'dd MMM, HH:mm') : '-'}
-                    </span>
+                    </ItemDescription>
                   </div>
                 </div>
-                <div className="flex items-start gap-2">
-                  <ArrowDownCircle className="mt-0.5 size-4 shrink-0 text-success" />
+                <div className="flex items-start gap-1">
+                  <ArrowDownCircle className="size-4 shrink-0 text-green-600" />
                   <div className="flex flex-col truncate">
-                    <span className="truncate font-bold text-xs leading-none">{x.destiny?.port}</span>
-                    <span className="mt-1 text-[10px] text-muted-foreground">
+                    <ItemTitle className="truncate leading-none">{x.destiny?.port}</ItemTitle>
+                    <ItemDescription className="text-[10px] text-muted-foreground">
                       {x.destiny?.dateTimeArrival ? formatDate(new Date(x.destiny.dateTimeArrival), 'dd MMM, HH:mm') : '-'}
-                    </span>
+                    </ItemDescription>
                   </div>
                 </div>
               </div>
@@ -124,4 +121,8 @@ export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
       </div>
     </div>
   );
+}
+
+interface ConnectionsVoyageProps {
+  voyages: IntegrationVoyageDetail[];
 }
