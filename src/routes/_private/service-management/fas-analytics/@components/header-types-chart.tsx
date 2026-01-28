@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Label, Pie, PieChart, XAxis, YAxis } from 'recharts';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
@@ -8,10 +8,6 @@ import { Item, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/component
 import type { FasAnalyticsFilters } from '@/hooks/use-fas-analytics-api';
 import { useFasHeaderTypesGrouped, useFasHeaderTypesTotal } from '@/hooks/use-fas-analytics-api';
 import type { FasAnalyticsSearch } from '../@interface/fas-analytics.schema';
-
-interface HeaderTypesChartProps {
-  search: FasAnalyticsSearch;
-}
 
 export function HeaderTypesChart({ search }: HeaderTypesChartProps) {
   const { t } = useTranslation();
@@ -29,70 +25,76 @@ export function HeaderTypesChart({ search }: HeaderTypesChartProps) {
   const { data: totalData, isLoading: isLoadingTotal } = useFasHeaderTypesTotal(filters);
   const { data: groupedData, isLoading: isLoadingGrouped } = useFasHeaderTypesGrouped(filters);
 
-  const pieData = useMemo(() => {
+  const radialData = useMemo(() => {
     if (!totalData) return [];
     return totalData.map((item, index) => ({
-      name: item.type || t('undefined'),
+      name: item._id || '-',
       value: item.count,
-      fill: getChartColor(index * 4),
+      fill: getChartColor(index * 3),
     }));
-  }, [totalData, t]);
+  }, [totalData]);
+
+  const totalValue = useMemo(() => {
+    if (!totalData) return 0;
+    return totalData.reduce((acc, item) => acc + item.count, 0);
+  }, [totalData]);
+
+  const uniqueTypes = useMemo(() => {
+    if (groupedData && groupedData.length > 0 && groupedData[0].type) {
+      return Object.keys(groupedData[0].type);
+    }
+    if (totalData) {
+      return totalData.map((item) => item._id);
+    }
+    return [];
+  }, [groupedData, totalData]);
 
   const barData = useMemo(() => {
     if (!groupedData) return [];
     return groupedData.map((item) => {
-      let name = t('undefined');
+      let name = '-';
 
       if (typeof item._id === 'string') {
         name = item._id;
       } else if (item._id && typeof item._id === 'object') {
         if (filters.dependantAxis === 'vessel') {
-          name = item._id.vesselName || item._id.vessel || t('undefined');
+          name = item._id.vesselName || item._id.vessel || '-';
         } else {
-          const month = item._id.month || t('undefined');
+          const month = item._id.month || '-';
           const year = item._id.year ? ` ${item._id.year}` : '';
           name = `${month}${year}`;
         }
       }
 
       const baseObj: Record<string, string | number> = { name };
-      if (item.data) {
-        for (const d of item.data) {
-          baseObj[d.type] = d.count;
+      if (item.type) {
+        for (const [type, count] of Object.entries(item.type)) {
+          baseObj[type] = count;
         }
       }
       return baseObj;
     });
-  }, [groupedData, filters.dependantAxis, t]);
-
-  const uniqueTypes = useMemo(() => {
-    if (!groupedData) return [];
-    const types = new Set<string>();
-    for (const item of groupedData) {
-      if (item.data) {
-        for (const d of item.data) {
-          types.add(d.type);
-        }
-      }
-    }
-    return Array.from(types);
-  }, [groupedData]);
+  }, [groupedData, filters.dependantAxis]);
 
   const chartConfig: ChartConfig = useMemo(() => {
-    const config: ChartConfig = {};
+    const config: ChartConfig = {
+      total: {
+        label: t('total'),
+      },
+    };
     uniqueTypes.forEach((type, index) => {
       config[type] = {
         label: type,
-        color: getChartColor(index),
+        color: getChartColor(index * 2),
       };
     });
     return config;
-  }, [uniqueTypes]);
+  }, [uniqueTypes, t]);
 
   const isLoading = isLoadingTotal || isLoadingGrouped;
   if (isLoading) return <DefaultLoading />;
 
-  const isEmpty = (!pieData || pieData.length === 0) && (!barData || barData.length === 0);
+  const isEmpty = (!radialData || radialData.length === 0) && (!barData || barData.length === 0);
   if (isEmpty) return <DefaultEmptyData />;
 
   return (
@@ -102,15 +104,28 @@ export function HeaderTypesChart({ search }: HeaderTypesChartProps) {
           <ItemTitle className="font-bold text-lg">{t('fas.types.total')}</ItemTitle>
         </ItemHeader>
         <ItemContent>
-          <ChartContainer config={chartConfig} className="mx-auto aspect-square h-[50vh]">
+          <ChartContainer config={chartConfig} className="h-[50vh]">
             <PieChart>
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
-                {pieData.map((entry, index) => (
-                  <Cell key={`cell-${entry.name}`} fill={getChartColor(index)} />
-                ))}
+              <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+              <Pie data={radialData} dataKey="value" nameKey="name" innerRadius={80} strokeWidth={5}>
+                <Label
+                  content={({ viewBox }) => {
+                    if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                      return (
+                        <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                          <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground font-bold text-4xl">
+                            {totalValue.toLocaleString()}
+                          </tspan>
+                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground">
+                            {t('total')}
+                          </tspan>
+                        </text>
+                      );
+                    }
+                  }}
+                />
               </Pie>
-              <ChartLegend content={<ChartLegendContent />} />
+              <ChartLegend content={<ChartLegendContent nameKey="name" />} className="-translate-y-2 flex-wrap gap-2 *:basis-1/4 *:justify-center" />
             </PieChart>
           </ChartContainer>
         </ItemContent>
@@ -129,7 +144,7 @@ export function HeaderTypesChart({ search }: HeaderTypesChartProps) {
               <ChartTooltip content={<ChartTooltipContent />} />
               <ChartLegend content={<ChartLegendContent />} />
               {uniqueTypes.map((type, index) => (
-                <Bar key={type} dataKey={type} stackId="a" fill={getChartColor(index)} radius={index === uniqueTypes.length - 1 ? [4, 4, 0, 0] : [0, 0, 0, 0]} />
+                <Bar key={type} dataKey={type} stackId="a" fill={getChartColor(index * 2)} radius={index === uniqueTypes.length - 1 ? [4, 4, 0, 0] : [0, 0, 0, 0]} />
               ))}
             </BarChart>
           </ChartContainer>
@@ -137,4 +152,8 @@ export function HeaderTypesChart({ search }: HeaderTypesChartProps) {
       </Item>
     </ItemGroup>
   );
+}
+
+interface HeaderTypesChartProps {
+  search: FasAnalyticsSearch;
 }

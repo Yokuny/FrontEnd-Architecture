@@ -9,10 +9,6 @@ import type { FasAnalyticsFilters } from '@/hooks/use-fas-analytics-api';
 import { useFasValueGroupedCount } from '@/hooks/use-fas-analytics-api';
 import type { FasAnalyticsSearch } from '../@interface/fas-analytics.schema';
 
-interface FasValueChartProps {
-  search: FasAnalyticsSearch;
-}
-
 export function FasValueChart({ search }: FasValueChartProps) {
   const { t } = useTranslation();
 
@@ -58,15 +54,15 @@ export function FasValueChart({ search }: FasValueChartProps) {
   const chartConfig: ChartConfig = {
     [t('value.with.payment')]: {
       label: t('value.with.payment'),
-      color: getChartColor(0),
+      color: getChartColor(1),
     },
     [t('value.without.payment')]: {
       label: t('value.without.payment'),
-      color: getChartColor(5),
+      color: getChartColor(14),
     },
     [t('fas.quantity')]: {
       label: t('fas.quantity'),
-      color: getChartColor(10),
+      color: getChartColor(7),
     },
   };
 
@@ -87,12 +83,16 @@ export function FasValueChart({ search }: FasValueChartProps) {
             <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} fontSize={12} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
-            <Bar yAxisId="left" dataKey={t('value.with.payment')} stackId="a" fill={getChartColor(0)} radius={[0, 0, 0, 0]} />
-            <Bar yAxisId="left" dataKey={t('value.without.payment')} stackId="a" fill={getChartColor(1)} radius={[4, 4, 0, 0]} />
-            <Line yAxisId="right" type="monotone" dataKey={t('fas.quantity')} stroke={getChartColor(2)} strokeWidth={2} dot />
+            <Bar yAxisId="left" dataKey={t('value.with.payment')} stackId="a" fill={getChartColor(1)} radius={[0, 0, 0, 0]} />
+            <Bar yAxisId="left" dataKey={t('value.without.payment')} stackId="a" fill={getChartColor(14)} radius={[4, 4, 0, 0]} />
+            <Line yAxisId="right" type="monotone" dataKey={t('fas.quantity')} stroke={getChartColor(7)} strokeWidth={3} />
           </ComposedChart>
         </ChartContainer>
       </ItemContent>
     </Item>
   );
+}
+
+interface FasValueChartProps {
+  search: FasAnalyticsSearch;
 }

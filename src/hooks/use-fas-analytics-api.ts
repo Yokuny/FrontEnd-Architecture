@@ -70,7 +70,7 @@ export function useFasRealizedOrders(filters: FasAnalyticsFilters) {
 
 // Header Types Charts
 export interface HeaderTypesTotalData {
-  type: string;
+  _id: string;
   count: number;
 }
 
@@ -84,7 +84,8 @@ export interface HeaderTypesGroupedData {
         vessel?: string;
         vesselName?: string;
       };
-  data: { type: string; count: number }[];
+  count: number;
+  type: Record<string, number>;
 }
 
 export function useFasHeaderTypesTotal(filters: FasAnalyticsFilters) {
@@ -92,7 +93,7 @@ export function useFasHeaderTypesTotal(filters: FasAnalyticsFilters) {
     queryKey: fasAnalyticsKeys.headerTypesTotal(filters),
     queryFn: async () => {
       const params = buildParams(filters);
-      const response = await api.get<HeaderTypesTotalData[]>(`/fas/analytics/header-types-total?${params.toString()}`);
+      const response = await api.get<HeaderTypesTotalData[]>(`/fas/analytics/fas-type-count?${params.toString()}`);
       return response.data;
     },
     enabled: Object.keys(filters).length > 0,
@@ -104,7 +105,7 @@ export function useFasHeaderTypesGrouped(filters: FasAnalyticsFilters) {
     queryKey: fasAnalyticsKeys.headerTypesGrouped(filters),
     queryFn: async () => {
       const params = buildParams(filters);
-      const response = await api.get<HeaderTypesGroupedData[]>(`/fas/analytics/header-types-grouped?${params.toString()}`);
+      const response = await api.get<HeaderTypesGroupedData[]>(`/fas/analytics/fas-type-grouped-count?${params.toString()}`);
       return response.data;
     },
     enabled: Object.keys(filters).length > 0,
@@ -113,7 +114,7 @@ export function useFasHeaderTypesGrouped(filters: FasAnalyticsFilters) {
 
 // Order Status Charts
 export interface OrderStatusTotalData {
-  status: string;
+  _id: string;
   count: number;
 }
 
@@ -127,7 +128,8 @@ export interface OrderStatusGroupedData {
         vessel?: string;
         vesselName?: string;
       };
-  data: { status: string; count: number }[];
+  count: number;
+  status: Record<string, number>;
 }
 
 export function useFasOrderStatusTotal(filters: FasAnalyticsFilters) {
@@ -135,7 +137,7 @@ export function useFasOrderStatusTotal(filters: FasAnalyticsFilters) {
     queryKey: fasAnalyticsKeys.orderStatusTotal(filters),
     queryFn: async () => {
       const params = buildParams(filters);
-      const response = await api.get<OrderStatusTotalData[]>(`/fas/analytics/order-status-total?${params.toString()}`);
+      const response = await api.get<OrderStatusTotalData[]>(`/fas/analytics/order-status-count?${params.toString()}`);
       return response.data;
     },
     enabled: Object.keys(filters).length > 0,
@@ -147,7 +149,7 @@ export function useFasOrderStatusGrouped(filters: FasAnalyticsFilters) {
     queryKey: fasAnalyticsKeys.orderStatusGrouped(filters),
     queryFn: async () => {
       const params = buildParams(filters);
-      const response = await api.get<OrderStatusGroupedData[]>(`/fas/analytics/order-status-grouped?${params.toString()}`);
+      const response = await api.get<OrderStatusGroupedData[]>(`/fas/analytics/order-status-grouped-count?${params.toString()}`);
       return response.data;
     },
     enabled: Object.keys(filters).length > 0,
@@ -222,7 +224,7 @@ export function useOrderValueByPaymentDate(filters: FasAnalyticsFilters) {
     queryKey: fasAnalyticsKeys.orderValueByPayment(filters),
     queryFn: async () => {
       const params = buildParams(filters);
-      const response = await api.get<OrderValueByPaymentData[]>(`fas/analytics/order-value-grouped-count-by-payment-date?${params.toString()}`);
+      const response = await api.get<OrderValueByPaymentData[]>(`/fas/analytics/order-value-grouped-count-by-payment-date?${params.toString()}`);
       return response.data;
     },
     enabled: Object.keys(filters).length > 0 && (filters.dependantAxis === 'month' || filters.dependantAxis === 'year'),
