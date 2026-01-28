@@ -69,7 +69,7 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                 <TableCell className="text-center">
                   <div className="flex justify-center">
                     {part.percentual >= 100 ? (
-                      <Badge variant="destructive" className="h-6 whitespace-nowrap">
+                      <Badge variant="error" className="h-6 whitespace-nowrap">
                         {t('late')}
                       </Badge>
                     ) : part.percentual > 90 ? (

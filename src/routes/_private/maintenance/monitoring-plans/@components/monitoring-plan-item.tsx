@@ -49,7 +49,7 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
               <div className="flex shrink-0 gap-1.5">
                 {planItem.expired && <Badge className="h-4.5 bg-red-400/80 px-1.5 font-bold text-[9px] uppercase hover:bg-red-400">{t('expired')}</Badge>}
                 {planItem.next && !planItem.expired && (
-                  <Badge variant="destructive" className="h-4.5 px-1.5 font-bold text-[9px] uppercase">
+                  <Badge variant="error" className="h-4.5 px-1.5 font-bold text-[9px] uppercase">
                     {t('next')}
                   </Badge>
                 )}

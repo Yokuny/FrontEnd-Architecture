@@ -258,37 +258,40 @@ Exemplo:
   ```
 
 ### Organização de Rotas e Pastas
-As subpastas `@hooks`, `@interface`, `@components` e `@consts` devem ser criadas na pasta da rota, elas seguem o seguinte proposito:
+As subpastas `@hooks`, `@interface`, `@components`, `@consts` e `@utils` devem ser criadas na pasta da rota, elas seguem o seguinte propósito:
 
 | Pasta | Conteúdo | Quando Usar |
 |-------|----------|-------------|
 | `@components/` | Componentes React | Elementos visuais utilizados exclusivamente nesta rota. |
-| `@consts/` | Arrays, objetos, enums | Valores `hardcoded` ou que não mudam em runtime |
+| `@consts/` | Arrays, objetos, enums | Valores `hardcoded` ou que não mudam em runtime. |
 | `@hooks/` | Hooks de API e lógica de formulário | Lógica de formulários (useForm) ou queries/mutations de API específicas. |
 | `@interface/` | Types, Interfaces, Schemas Zod | Tipagens TypeScript (Interfaces/Types) e Schemas de validação (Zod). |
+| `@utils/` | Funções puras e auxiliares | Lógica de processamento de dados que não depende de estado React ou hooks. |
 
 ```markdown
 src/routes/_private/{module}/
-├── index.tsx                # `Página principal da rota`
+├── index.tsx                # Página principal da rota
 │
-├── {subroute}/              # `Outra pasta`
-│   ├── @components/         # `Componentes específicos da rota`
+├── {subroute}/              # Outra pasta
+│   ├── @components/         # Componentes específicos da rota
 │   │   └── {ComponentName}.tsx
 │   │
-│   ├── @consts/             # `Valores fixos, enums`
+│   ├── @consts/             # Valores fixos, enums
 │   │   └── {feature}.consts.ts
 │   │
-│   ├── @hooks/              # `Hooks específicos da rota`
+│   ├── @hooks/              # Hooks específicos da rota
 │   │   ├── use-{feature}-form.ts
 │   │   └── use-{feature}-api.ts
 │   │
-│   ├── @interface/          # `Tipos, Interfaces, Schemas Zod`
+│   ├── @interface/          # Tipos, Interfaces, Schemas Zod
 │   │   ├── {feature}.types.ts
 │   │   └── {feature}.schema.ts
 │   │
-│   └── index.tsx            # `Página da subrota`
+│   ├── @utils/              # Funções auxiliares e processamento
+│   │   └── {feature}.utils.ts
+│   │
+│   └── index.tsx            # Página da subrota
 ```
-
 
  --------- 
 

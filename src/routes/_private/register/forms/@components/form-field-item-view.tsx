@@ -36,7 +36,7 @@ export function FormFieldItemView({ field, onEdit, onRemove, dragHandleProps }: 
             {typeOption?.label || field.type || field.datatype}
           </Badge>
           {field.isRequired && (
-            <Badge variant="destructive" className="h-5 bg-destructive/10 px-1 font-bold text-[10px] text-destructive uppercase">
+            <Badge variant="error" className="h-5 px-1 font-bold text-[10px] uppercase">
               {t('required')}
             </Badge>
           )}
