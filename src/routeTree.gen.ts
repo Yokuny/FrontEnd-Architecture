@@ -41,6 +41,7 @@ import { Route as PrivateTelemetryPerformanceIndexRouteImport } from './routes/_
 import { Route as PrivateTelemetryListDashboardIndexRouteImport } from './routes/_private/telemetry/list-dashboard/index';
 import { Route as PrivateTelemetryHeatmapPanelIndexRouteImport } from './routes/_private/telemetry/heatmap-panel/index';
 import { Route as PrivateTelemetryHeatmapFleetIndexRouteImport } from './routes/_private/telemetry/heatmap-fleet/index';
+import { Route as PrivateTelemetryFleetPanelIndexRouteImport } from './routes/_private/telemetry/fleet-panel/index';
 import { Route as PrivateTelemetryDownloadDataAssetRequestIndexRouteImport } from './routes/_private/telemetry/download-data-asset-request/index';
 import { Route as PrivateTelemetryDiagramListIndexRouteImport } from './routes/_private/telemetry/diagram-list/index';
 import { Route as PrivateTelemetryDataloggerIndexRouteImport } from './routes/_private/telemetry/datalogger/index';
@@ -305,6 +306,12 @@ const PrivateTelemetryHeatmapFleetIndexRoute =
   PrivateTelemetryHeatmapFleetIndexRouteImport.update({
     id: '/telemetry/heatmap-fleet/',
     path: '/telemetry/heatmap-fleet/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetryFleetPanelIndexRoute =
+  PrivateTelemetryFleetPanelIndexRouteImport.update({
+    id: '/telemetry/fleet-panel/',
+    path: '/telemetry/fleet-panel/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateTelemetryDownloadDataAssetRequestIndexRoute =
@@ -978,6 +985,7 @@ export interface FileRoutesByFullPath {
   '/telemetry/datalogger': typeof PrivateTelemetryDataloggerIndexRoute;
   '/telemetry/diagram-list': typeof PrivateTelemetryDiagramListIndexRoute;
   '/telemetry/download-data-asset-request': typeof PrivateTelemetryDownloadDataAssetRequestIndexRoute;
+  '/telemetry/fleet-panel': typeof PrivateTelemetryFleetPanelIndexRoute;
   '/telemetry/heatmap-fleet': typeof PrivateTelemetryHeatmapFleetIndexRoute;
   '/telemetry/heatmap-panel': typeof PrivateTelemetryHeatmapPanelIndexRoute;
   '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
@@ -1104,6 +1112,7 @@ export interface FileRoutesByTo {
   '/telemetry/datalogger': typeof PrivateTelemetryDataloggerIndexRoute;
   '/telemetry/diagram-list': typeof PrivateTelemetryDiagramListIndexRoute;
   '/telemetry/download-data-asset-request': typeof PrivateTelemetryDownloadDataAssetRequestIndexRoute;
+  '/telemetry/fleet-panel': typeof PrivateTelemetryFleetPanelIndexRoute;
   '/telemetry/heatmap-fleet': typeof PrivateTelemetryHeatmapFleetIndexRoute;
   '/telemetry/heatmap-panel': typeof PrivateTelemetryHeatmapPanelIndexRoute;
   '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
@@ -1233,6 +1242,7 @@ export interface FileRoutesById {
   '/_private/telemetry/datalogger/': typeof PrivateTelemetryDataloggerIndexRoute;
   '/_private/telemetry/diagram-list/': typeof PrivateTelemetryDiagramListIndexRoute;
   '/_private/telemetry/download-data-asset-request/': typeof PrivateTelemetryDownloadDataAssetRequestIndexRoute;
+  '/_private/telemetry/fleet-panel/': typeof PrivateTelemetryFleetPanelIndexRoute;
   '/_private/telemetry/heatmap-fleet/': typeof PrivateTelemetryHeatmapFleetIndexRoute;
   '/_private/telemetry/heatmap-panel/': typeof PrivateTelemetryHeatmapPanelIndexRoute;
   '/_private/telemetry/list-dashboard/': typeof PrivateTelemetryListDashboardIndexRoute;
@@ -1361,6 +1371,7 @@ export interface FileRouteTypes {
     | '/telemetry/datalogger'
     | '/telemetry/diagram-list'
     | '/telemetry/download-data-asset-request'
+    | '/telemetry/fleet-panel'
     | '/telemetry/heatmap-fleet'
     | '/telemetry/heatmap-panel'
     | '/telemetry/list-dashboard'
@@ -1487,6 +1498,7 @@ export interface FileRouteTypes {
     | '/telemetry/datalogger'
     | '/telemetry/diagram-list'
     | '/telemetry/download-data-asset-request'
+    | '/telemetry/fleet-panel'
     | '/telemetry/heatmap-fleet'
     | '/telemetry/heatmap-panel'
     | '/telemetry/list-dashboard'
@@ -1615,6 +1627,7 @@ export interface FileRouteTypes {
     | '/_private/telemetry/datalogger/'
     | '/_private/telemetry/diagram-list/'
     | '/_private/telemetry/download-data-asset-request/'
+    | '/_private/telemetry/fleet-panel/'
     | '/_private/telemetry/heatmap-fleet/'
     | '/_private/telemetry/heatmap-panel/'
     | '/_private/telemetry/list-dashboard/'
@@ -1861,6 +1874,13 @@ declare module '@tanstack/react-router' {
       path: '/telemetry/heatmap-fleet';
       fullPath: '/telemetry/heatmap-fleet';
       preLoaderRoute: typeof PrivateTelemetryHeatmapFleetIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/fleet-panel/': {
+      id: '/_private/telemetry/fleet-panel/';
+      path: '/telemetry/fleet-panel';
+      fullPath: '/telemetry/fleet-panel';
+      preLoaderRoute: typeof PrivateTelemetryFleetPanelIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/telemetry/download-data-asset-request/': {
@@ -2630,6 +2650,7 @@ interface PrivateRouteChildren {
   PrivateTelemetryDataloggerIndexRoute: typeof PrivateTelemetryDataloggerIndexRoute;
   PrivateTelemetryDiagramListIndexRoute: typeof PrivateTelemetryDiagramListIndexRoute;
   PrivateTelemetryDownloadDataAssetRequestIndexRoute: typeof PrivateTelemetryDownloadDataAssetRequestIndexRoute;
+  PrivateTelemetryFleetPanelIndexRoute: typeof PrivateTelemetryFleetPanelIndexRoute;
   PrivateTelemetryHeatmapFleetIndexRoute: typeof PrivateTelemetryHeatmapFleetIndexRoute;
   PrivateTelemetryHeatmapPanelIndexRoute: typeof PrivateTelemetryHeatmapPanelIndexRoute;
   PrivateTelemetryListDashboardIndexRoute: typeof PrivateTelemetryListDashboardIndexRoute;
@@ -2784,6 +2805,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateTelemetryDiagramListIndexRoute: PrivateTelemetryDiagramListIndexRoute,
   PrivateTelemetryDownloadDataAssetRequestIndexRoute:
     PrivateTelemetryDownloadDataAssetRequestIndexRoute,
+  PrivateTelemetryFleetPanelIndexRoute: PrivateTelemetryFleetPanelIndexRoute,
   PrivateTelemetryHeatmapFleetIndexRoute:
     PrivateTelemetryHeatmapFleetIndexRoute,
   PrivateTelemetryHeatmapPanelIndexRoute:

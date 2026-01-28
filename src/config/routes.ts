@@ -303,6 +303,7 @@ export const MAIN_ROUTES = [
   '/telemetry/datalogger',
   '/telemetry/diagram-list',
   '/telemetry/download-data-asset-request',
+  '/telemetry/fleet-panel',
   '/telemetry/heatmap-fleet',
   '/telemetry/heatmap-panel',
   '/telemetry/list-dashboard',
