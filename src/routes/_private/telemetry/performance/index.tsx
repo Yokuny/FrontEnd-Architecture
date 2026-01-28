@@ -194,7 +194,7 @@ function PerformancePage() {
               </ItemContent>
 
               {/* Sensors Y */}
-              <ItemContent className="min-w-[300px] flex-[2]">
+              <ItemContent className="min-w-[300px] flex-2">
                 <SensorByMachineSelect
                   label={`${t('sensor')} Y`}
                   idMachine={selectedMachine}
