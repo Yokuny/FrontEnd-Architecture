@@ -124,6 +124,7 @@ import { Route as PrivateTelemetryIndexRouteImport } from './routes/_private/tel
 import { Route as PrivateTelemetryListDashboardIndexRouteImport } from './routes/_private/telemetry/list-dashboard/index';
 import { Route as PrivateTelemetryPerformanceIndexRouteImport } from './routes/_private/telemetry/performance/index';
 import { Route as PrivateTelemetryRemoteIhmIndexRouteImport } from './routes/_private/telemetry/remote-ihm/index';
+import { Route as PrivateTelemetrySensorMinMaxIndexRouteImport } from './routes/_private/telemetry/sensor-min-max/index';
 import { Route as PrivateVoyageIndexRouteImport } from './routes/_private/voyage/index';
 import { Route as PrivateVoyageKpisTravelIndexRouteImport } from './routes/_private/voyage/kpis-travel/index';
 import { Route as PrivateVoyageListTravelAddRouteImport } from './routes/_private/voyage/list-travel/add';
@@ -276,6 +277,12 @@ const PrivateVoyageKpisTravelIndexRoute =
   PrivateVoyageKpisTravelIndexRouteImport.update({
     id: '/voyage/kpis-travel/',
     path: '/voyage/kpis-travel/',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateTelemetrySensorMinMaxIndexRoute =
+  PrivateTelemetrySensorMinMaxIndexRouteImport.update({
+    id: '/telemetry/sensor-min-max/',
+    path: '/telemetry/sensor-min-max/',
     getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateTelemetryRemoteIhmIndexRoute =
@@ -991,6 +998,7 @@ export interface FileRoutesByFullPath {
   '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
   '/telemetry/performance': typeof PrivateTelemetryPerformanceIndexRoute;
   '/telemetry/remote-ihm': typeof PrivateTelemetryRemoteIhmIndexRoute;
+  '/telemetry/sensor-min-max': typeof PrivateTelemetrySensorMinMaxIndexRoute;
   '/voyage/kpis-travel': typeof PrivateVoyageKpisTravelIndexRoute;
   '/voyage/list-travel': typeof PrivateVoyageListTravelIndexRoute;
   '/voyage/route-planner': typeof PrivateVoyageRoutePlannerIndexRoute;
@@ -1118,6 +1126,7 @@ export interface FileRoutesByTo {
   '/telemetry/list-dashboard': typeof PrivateTelemetryListDashboardIndexRoute;
   '/telemetry/performance': typeof PrivateTelemetryPerformanceIndexRoute;
   '/telemetry/remote-ihm': typeof PrivateTelemetryRemoteIhmIndexRoute;
+  '/telemetry/sensor-min-max': typeof PrivateTelemetrySensorMinMaxIndexRoute;
   '/voyage/kpis-travel': typeof PrivateVoyageKpisTravelIndexRoute;
   '/voyage/list-travel': typeof PrivateVoyageListTravelIndexRoute;
   '/voyage/route-planner': typeof PrivateVoyageRoutePlannerIndexRoute;
@@ -1248,6 +1257,7 @@ export interface FileRoutesById {
   '/_private/telemetry/list-dashboard/': typeof PrivateTelemetryListDashboardIndexRoute;
   '/_private/telemetry/performance/': typeof PrivateTelemetryPerformanceIndexRoute;
   '/_private/telemetry/remote-ihm/': typeof PrivateTelemetryRemoteIhmIndexRoute;
+  '/_private/telemetry/sensor-min-max/': typeof PrivateTelemetrySensorMinMaxIndexRoute;
   '/_private/voyage/kpis-travel/': typeof PrivateVoyageKpisTravelIndexRoute;
   '/_private/voyage/list-travel/': typeof PrivateVoyageListTravelIndexRoute;
   '/_private/voyage/route-planner/': typeof PrivateVoyageRoutePlannerIndexRoute;
@@ -1377,6 +1387,7 @@ export interface FileRouteTypes {
     | '/telemetry/list-dashboard'
     | '/telemetry/performance'
     | '/telemetry/remote-ihm'
+    | '/telemetry/sensor-min-max'
     | '/voyage/kpis-travel'
     | '/voyage/list-travel'
     | '/voyage/route-planner'
@@ -1504,6 +1515,7 @@ export interface FileRouteTypes {
     | '/telemetry/list-dashboard'
     | '/telemetry/performance'
     | '/telemetry/remote-ihm'
+    | '/telemetry/sensor-min-max'
     | '/voyage/kpis-travel'
     | '/voyage/list-travel'
     | '/voyage/route-planner'
@@ -1633,6 +1645,7 @@ export interface FileRouteTypes {
     | '/_private/telemetry/list-dashboard/'
     | '/_private/telemetry/performance/'
     | '/_private/telemetry/remote-ihm/'
+    | '/_private/telemetry/sensor-min-max/'
     | '/_private/voyage/kpis-travel/'
     | '/_private/voyage/list-travel/'
     | '/_private/voyage/route-planner/'
@@ -1839,6 +1852,13 @@ declare module '@tanstack/react-router' {
       path: '/voyage/kpis-travel';
       fullPath: '/voyage/kpis-travel';
       preLoaderRoute: typeof PrivateVoyageKpisTravelIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/telemetry/sensor-min-max/': {
+      id: '/_private/telemetry/sensor-min-max/';
+      path: '/telemetry/sensor-min-max';
+      fullPath: '/telemetry/sensor-min-max';
+      preLoaderRoute: typeof PrivateTelemetrySensorMinMaxIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/telemetry/remote-ihm/': {
@@ -2656,6 +2676,7 @@ interface PrivateRouteChildren {
   PrivateTelemetryListDashboardIndexRoute: typeof PrivateTelemetryListDashboardIndexRoute;
   PrivateTelemetryPerformanceIndexRoute: typeof PrivateTelemetryPerformanceIndexRoute;
   PrivateTelemetryRemoteIhmIndexRoute: typeof PrivateTelemetryRemoteIhmIndexRoute;
+  PrivateTelemetrySensorMinMaxIndexRoute: typeof PrivateTelemetrySensorMinMaxIndexRoute;
   PrivateVoyageKpisTravelIndexRoute: typeof PrivateVoyageKpisTravelIndexRoute;
   PrivateVoyageListTravelIndexRoute: typeof PrivateVoyageListTravelIndexRoute;
   PrivateVoyageRoutePlannerIndexRoute: typeof PrivateVoyageRoutePlannerIndexRoute;
@@ -2814,6 +2835,8 @@ const PrivateRouteChildren: PrivateRouteChildren = {
     PrivateTelemetryListDashboardIndexRoute,
   PrivateTelemetryPerformanceIndexRoute: PrivateTelemetryPerformanceIndexRoute,
   PrivateTelemetryRemoteIhmIndexRoute: PrivateTelemetryRemoteIhmIndexRoute,
+  PrivateTelemetrySensorMinMaxIndexRoute:
+    PrivateTelemetrySensorMinMaxIndexRoute,
   PrivateVoyageKpisTravelIndexRoute: PrivateVoyageKpisTravelIndexRoute,
   PrivateVoyageListTravelIndexRoute: PrivateVoyageListTravelIndexRoute,
   PrivateVoyageRoutePlannerIndexRoute: PrivateVoyageRoutePlannerIndexRoute,

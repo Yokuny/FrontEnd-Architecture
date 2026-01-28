@@ -309,6 +309,7 @@ export const MAIN_ROUTES = [
   '/telemetry/list-dashboard',
   '/telemetry/performance',
   '/telemetry/remote-ihm',
+  '/telemetry/sensor-min-max',
   '/voyage/kpis-travel',
   '/voyage/list-travel',
   '/voyage/route-planner',
