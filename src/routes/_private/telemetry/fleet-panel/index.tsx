@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useVesselPanelData } from '@/hooks/use-telemetry-api';
 import { ItemVessel } from './@components/item-vessel';
+import { MachinePanel } from './@components/machine-panel';
 import { fleetPanelSearchSchema } from './@interface/vessel-panel.schema';
 import type { VesselPanelItem } from './@interface/vessel-panel.types';
 
@@ -24,6 +25,9 @@ function FleetPanelPage() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
   const { idEnterprise } = useEnterpriseFilter();
+
+  const idMachine = search.idMachine;
+  const name = search.name;
 
   const [localFilters, setLocalFilters] = useState({
     idMachines: search.idMachines || [],
@@ -46,10 +50,18 @@ function FleetPanelPage() {
 
   const handleVesselClick = (id: string, name: string) => {
     navigate({
-      to: '/telemetry/list-dashboard',
-      search: { idMachine: id, name },
+      to: '/telemetry/fleet-panel',
+      search: (prev) => ({
+        ...prev,
+        idMachine: id,
+        name,
+      }),
     });
   };
+
+  if (idMachine) {
+    return <MachinePanel idMachine={idMachine} name={name} idEnterprise={idEnterprise || ''} />;
+  }
 
   return (
     <Card>

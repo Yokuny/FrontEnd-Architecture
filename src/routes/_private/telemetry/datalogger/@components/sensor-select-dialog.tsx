@@ -1,4 +1,4 @@
-import { Search, X, Zap } from 'lucide-react';
+import { BrushCleaning, Search, X, Zap } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
@@ -135,18 +135,18 @@ export function SensorSelectDialog({ idMachine, selectedSensors, onSensorsChange
           </ScrollArea>
 
           <DialogFooter className="flex-row justify-between sm:justify-between">
-            <Button variant="ghost" size="sm" onClick={handleClose}>
+            <Button onClick={handleClose}>
               <X className="size-4" />
               {t('cancel')}
             </Button>
-            {localSelection.length > 0 && (
-              <Button variant="ghost" size="sm" onClick={handleClearAll} className="text-amber-600">
-                {t('clear.checked.all')}
-              </Button>
-            )}
-            <Button size="sm" onClick={handleSave}>
-              {t('save')}
-            </Button>
+            <div className="flex gap-2">
+              {localSelection.length > 0 && (
+                <Button className="text-amber-700 hover:text-amber-800" onClick={handleClearAll}>
+                  <BrushCleaning />
+                </Button>
+              )}
+              <Button onClick={handleSave}>{t('save')}</Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>

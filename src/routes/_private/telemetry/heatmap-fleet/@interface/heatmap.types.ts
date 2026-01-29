@@ -88,3 +88,20 @@ export interface EquipmentType {
   subgroups: Array<{ subgroupName: string }>;
   options?: string[];
 }
+
+export interface HeatmapAlert {
+  idSensor: string;
+  idAlert: string;
+  minValue?: number;
+  maxValue?: number;
+  onOffValue?: 'on' | 'off';
+  alertMin: boolean;
+  alertMax: boolean;
+  alertOnOff: boolean;
+  idMachine?: string;
+}
+
+export interface HeatmapAlertsResponse {
+  idMachine: string;
+  alerts: HeatmapAlert[];
+}

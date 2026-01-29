@@ -1,4 +1,5 @@
 {
+  "telemetry.list.dashboard": "Lista de Tableros",
   "Limitado": "Limitado",
   "Noon Report": "Noon Report",
   "Privado": "Privado",
@@ -2450,5 +2451,9 @@
   "predictive_deviations": "Desviaciones predictivas",
   "deviation.open": "Desviación abierta",
   "deviation.executed": "Desviación ejecutada",
-  "reliability.chart.placeholder": "Gráfico de confiabilidad (pronto)"
+  "reliability.chart.placeholder": "Gráfico de confiabilidad (próximamente)",
+  "permissions.visibility": "Permisos y Visibilidad",
+  "select.first.enterprise": "Seleccione primero una empresa",
+  "dashboard.migration.in.progress": "Migración del Dashboard en progreso",
+  "panel.vessel": "Panel del Activo"
 }

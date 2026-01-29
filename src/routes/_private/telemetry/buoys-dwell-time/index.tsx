@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Clock, Radio } from 'lucide-react';
+import { Clock, MinusIcon, PlusIcon, Radio } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
@@ -32,26 +32,30 @@ function BuoysDwellTimePage() {
         ) : !data?.length ? (
           <DefaultEmptyData />
         ) : (
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible className="flex w-full flex-col gap-2">
             {data.map((buoy) => (
-              <AccordionItem key={buoy.id} value={buoy.id}>
-                <AccordionTrigger className="hover:no-underline">
-                  <div className="flex w-full items-center justify-between pr-4">
+              <AccordionItem key={buoy.id} value={buoy.id} className="overflow-hidden rounded-lg border bg-background px-4 last:border-b">
+                <AccordionTrigger className="group hover:no-underline [&>svg]:hidden">
+                  <div className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-3">
+                      <div className="relative size-4 shrink-0">
+                        <PlusIcon className="absolute inset-0 size-4 text-muted-foreground transition-opacity duration-200 group-data-[state=open]:opacity-0" />
+                        <MinusIcon className="absolute inset-0 size-4 text-muted-foreground opacity-0 transition-opacity duration-200 group-data-[state=open]:opacity-100" />
+                      </div>
                       <Radio className="size-4" />
                       <div className="flex flex-col items-start">
                         <ItemTitle>{buoy.name}</ItemTitle>
                         <ItemDescription>{buoy.proximity}</ItemDescription>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm">
+                    <div className="flex items-center gap-2 pr-4 text-sm">
                       <Clock className="size-4 text-muted-foreground" />
                       <ItemTitle>{calculateTotalTimeSpent(buoy.dwellTimes)}</ItemTitle>
                       <ItemDescription>HR</ItemDescription>
                     </div>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="ps-14">
                   <div className="overflow-x-auto">
                     <Table>
                       <TableHeader>

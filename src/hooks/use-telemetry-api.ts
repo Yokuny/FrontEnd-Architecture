@@ -28,6 +28,31 @@ export function useVesselPanelData(enterpriseId: string | null, filters: { idMac
   });
 }
 
+export function useVesselStatus(idMachine: string | undefined) {
+  return useQuery({
+    queryKey: [...telemetryKeys.all, 'status', idMachine],
+    queryFn: async () => {
+      if (!idMachine) return null;
+      const response = await api.get<any>(`/assetstatus/lastoperation/${idMachine}`);
+      return response.data;
+    },
+    enabled: !!idMachine,
+  });
+}
+
+export function useVesselsLastState(idEnterprise: string | undefined) {
+  return useQuery({
+    queryKey: [...telemetryKeys.all, 'last-state', idEnterprise],
+    queryFn: async () => {
+      if (!idEnterprise) return [];
+      const response = await api.get<any[]>(`/sensorstate/enterprise/${idEnterprise}/laststate`);
+      return response.data;
+    },
+    enabled: !!idEnterprise,
+    refetchInterval: 30000, // Polling for live updates
+  });
+}
+
 export interface ProximityData {
   name: string;
   state?: {

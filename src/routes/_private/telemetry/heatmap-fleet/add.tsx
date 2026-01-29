@@ -4,11 +4,22 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import DefaultFormLayout from '@/components/default-form-layout';
+import DefaultFormLayout, { type FormSection } from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import { EnterpriseSelect } from '@/components/selects/enterprise-select';
 import { MachineSelect } from '@/components/selects/machine-select';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Item, ItemDescription, ItemTitle } from '@/components/ui/item';
@@ -101,7 +112,7 @@ function HeatmapConfigPage() {
   };
 
   const handleDelete = () => {
-    if (!id || !window.confirm(t('delete.message.default'))) return;
+    if (!id) return;
     deleteMutation.mutate(id, {
       onSuccess: () => {
         toast.success(t('delete.successfull'));
@@ -111,10 +122,11 @@ function HeatmapConfigPage() {
     });
   };
 
-  const sections = [
+  const sections: FormSection[] = [
     {
       title: t('basic.info'),
       description: t('machine.basic.description'),
+      layout: 'horizontal',
       fields: [
         <div key="selects-row" className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <EnterpriseSelect value={enterprise?.value} onChange={(v) => setEnterprise(v ? { label: v, value: v } : undefined)} mode="single" disabled={isEdit} />
@@ -139,7 +151,7 @@ function HeatmapConfigPage() {
               const equipmentData = equipmentList.find((e) => e.code === equipment.code);
               return (
                 <AccordionItem key={equipment.code} value={equipment.code} className="overflow-hidden rounded-lg border bg-background px-4">
-                  <AccordionTrigger className="group py-4 hover:no-underline [&>svg]:hidden">
+                  <AccordionTrigger className="group hover:no-underline [&>svg]:hidden">
                     <div className="flex w-full items-center gap-3">
                       <div className="relative size-4 shrink-0">
                         <PlusIcon className="absolute inset-0 size-4 text-muted-foreground transition-opacity duration-200 group-data-[state=open]:opacity-0" />
@@ -149,7 +161,7 @@ function HeatmapConfigPage() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="ps-7">
-                    <Accordion type="single" collapsible className="flex w-full flex-col gap-2 pt-2">
+                    <Accordion type="single" collapsible className="flex w-full flex-col gap-2">
                       {equipment.subgroups.map((subgroup, subIndex) => {
                         const subgroupData = equipmentData?.subgroups?.[subIndex];
                         const subId = `${equipment.code}-${subIndex}`;
@@ -194,16 +206,30 @@ function HeatmapConfigPage() {
     },
   ];
 
-  if (isLoadingConfig) return <DefaultLoading />;
-
   return (
     <Card>
       <CardHeader title={t(isEdit ? 'machine.edit' : 'add.machine')}>
         <div className="flex items-center gap-2">
           {isEdit && hasPermissionDelete && (
-            <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={handleDelete} disabled={isLoading}>
-              <Trash2 className="size-4" />
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" disabled={isLoading}>
+                  <Trash2 className="size-4" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{t('delete.confirmation')}</AlertDialogTitle>
+                  <AlertDialogDescription>{t('delete.message.default')}</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
+                    {t('confirm')}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           )}
           <Button onClick={handleSave} disabled={!enterprise?.value || !machine?.value || isLoading} className="h-10 px-6">
             <Save className="mr-2 size-4" />
@@ -212,7 +238,7 @@ function HeatmapConfigPage() {
         </div>
       </CardHeader>
 
-      <DefaultFormLayout sections={sections} />
+      {isLoadingConfig ? <DefaultLoading /> : <DefaultFormLayout sections={sections} />}
     </Card>
   );
 }

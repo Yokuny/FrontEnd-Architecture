@@ -154,10 +154,9 @@ export function HeatmapTable({ data, availableEquipments, hasPermissionAdd }: He
                       <Edit className="mr-2 size-4" />
                       {t('edit')}
                     </DropdownMenuItem>
-                    {/* TODO: Notifications route not yet migrated */}
-                    <DropdownMenuItem disabled>
+                    <DropdownMenuItem onClick={() => navigate({ to: '/telemetry/heatmap-fleet/notifications', search: { id: fleet.id } })}>
                       <Bell className="mr-2 size-4 text-muted-foreground" />
-                      <span className="text-muted-foreground">{t('notifications')}</span>
+                      {t('notifications')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
