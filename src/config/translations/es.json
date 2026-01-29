@@ -2436,5 +2436,13 @@
   "telemetry.download.data.asset.request": "Descarga de Datos",
   "telemetry.download.data.asset.request.description": "Solicitud y descarga de datos históricos.",
   "telemetry.diagram.list": "Diagramas",
-  "telemetry.diagram.list.description": "Listado de diagramas de sistemas."
+  "telemetry.diagram.list.description": "Listado de diagramas de sistemas.",
+  "upload.image": "Subir imagen",
+  "last.update": "Última actualización",
+  "corrective_from_predictive": "Correctivo de predictivo",
+  "tasks.open_vs_closed": "Tareas Abiertas vs Cerradas",
+  "predictive_deviations": "Desviaciones predictivas",
+  "deviation.open": "Desviación abierta",
+  "deviation.executed": "Desviación ejecutada",
+  "reliability.chart.placeholder": "Gráfico de confiabilidad (pronto)"
 }
