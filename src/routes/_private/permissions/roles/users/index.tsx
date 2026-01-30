@@ -64,7 +64,7 @@ function RoleUsersPage() {
         }
       >
         <div className="flex flex-col items-end gap-1">
-          <Button onClick={() => toast.info(t('feature.coming.soon'))}>
+          <Button onClick={() => toast.info(t('remove'))}>
             <UserPlus className="mr-2 size-4" />
             {t('role.user.permission')}
           </Button>
@@ -107,7 +107,7 @@ function RoleUsersPage() {
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>{t('remove.role.confirmation.user')}</AlertDialogTitle>
-                          <AlertDialogDescription>{t('remove.role.message')}</AlertDialogDescription>
+                          <AlertDialogDescription>{t('remove')}</AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
@@ -123,7 +123,7 @@ function RoleUsersPage() {
             })}
           </div>
         ) : (
-          <div className="py-8 text-center text-muted-foreground">{t('no.users.found')}</div>
+          <div className="py-8 text-center text-muted-foreground">{t('remove')}</div>
         )}
       </CardContent>
     </Card>

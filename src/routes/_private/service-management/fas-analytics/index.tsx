@@ -214,7 +214,7 @@ function FasAnalyticsPage() {
                 <Label>{t('month')}</Label>
                 <Select value={month} onValueChange={setMonth}>
                   <SelectTrigger className="w-48 bg-background">
-                    <SelectValue placeholder={t('select.month')} />
+                    <SelectValue placeholder={t('select.year')} />
                   </SelectTrigger>
                   <SelectContent>
                     {MONTHS.map((m) => (

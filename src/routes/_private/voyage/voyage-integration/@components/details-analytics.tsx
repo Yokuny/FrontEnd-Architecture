@@ -80,8 +80,8 @@ export function AnalyticsVoyage({ voyages }: AnalyticsVoyageProps) {
   if (sums.ifoVoyage && kickVoyageFilter) {
     const timesSums = voyagesFiltered.reduce((a, b) => a + (b?.inVoyage?.avgData?.speed?.time || 0), 0);
     if (timesSums > 0) {
-      analytics.push({ description: `${t('average')} IFO/h`, value: (sums.ifoVoyage / timesSums) * 1000, unit: 'kg/h', isInt: true });
-      analytics.push({ description: `${t('average')} IFO/${t('day')}`, value: (sums.ifoVoyage / timesSums) * 24, unit: `ton/${t('day')}`, isInt: false });
+      analytics.push({ description: `${t('medium')} IFO/h`, value: (sums.ifoVoyage / timesSums) * 1000, unit: 'kg/h', isInt: true });
+      analytics.push({ description: `${t('medium')} IFO/${t('day')}`, value: (sums.ifoVoyage / timesSums) * 24, unit: `ton/${t('day')}`, isInt: false });
     }
   }
 

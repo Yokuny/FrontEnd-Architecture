@@ -163,8 +163,8 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">{t('all')}</SelectItem>
-                  <SelectItem value="next">{t('status.next')}</SelectItem>
-                  <SelectItem value="late">{t('status.late')}</SelectItem>
+                  <SelectItem value="next">{t('managers')}</SelectItem>
+                  <SelectItem value="late">{t('managers')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>

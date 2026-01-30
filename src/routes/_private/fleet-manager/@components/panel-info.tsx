@@ -89,7 +89,7 @@ export function FleetInfoPanel() {
         <div className="space-y-3">
           <ItemHeader className="gap-2 font-bold text-primary uppercase tracking-wider">
             <Globe className="size-3" />
-            <ItemTitle className="font-mono text-[11px]">{t('registration')}</ItemTitle>
+            <ItemTitle className="font-mono text-[11px]">{t('capacity')}</ItemTitle>
           </ItemHeader>
           <div className="grid grid-cols-3 gap-x-2 gap-y-4 rounded-md border border-accent bg-accent/50 p-2">
             <DetailGridItem label={t('year.build')} value={dsData?.dataSheet?.yearBuilt || '-'} icon={Calendar} />

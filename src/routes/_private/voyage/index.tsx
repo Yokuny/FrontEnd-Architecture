@@ -14,25 +14,25 @@ function VoyageHubPage() {
   const menuItems = [
     {
       title: t('voyage.list'),
-      description: t('voyage.list.description') || t('voyage.list'),
+      description: t('voyage') || t('voyage.list'),
       icon: List,
       to: '/voyage/list-travel' as const,
     },
     {
       title: t('voyage.kpis'),
-      description: t('voyage.kpis.description'),
+      description: t('voyage'),
       icon: BarChart3,
       to: '/voyage/kpis-travel' as const,
     },
     {
       title: t('voyage.integration'),
-      description: t('voyage.integration.description') || t('voyage.integration'),
+      description: t('voyage') || t('voyage.integration'),
       icon: Network,
       to: '/voyage/voyage-integration' as const,
     },
     {
       title: t('route.planner'),
-      description: t('route.planner.description'),
+      description: t('voyage'),
       icon: MapPin,
       to: '/voyage/route-planner' as const,
     },

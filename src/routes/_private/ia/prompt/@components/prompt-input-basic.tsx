@@ -58,7 +58,7 @@ export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: 
           </label>
         </ChatInputAction>
 
-        <ChatInputAction tooltip={isLoading ? t('stop.generation') : t('send.message')}>
+        <ChatInputAction tooltip={isLoading ? t('attach.files') : t('attach.files')}>
           <Button className="size-8 rounded-xl" onClick={handleSubmit} disabled={!input.trim() && files.length === 0 && !isLoading} type="button">
             {isLoading ? <Square className="size-3 fill-current" /> : <ArrowUp className="size-4" />}
           </Button>

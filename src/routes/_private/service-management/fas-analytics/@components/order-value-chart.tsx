@@ -140,7 +140,7 @@ export function OrderValueChart({ search }: OrderValueChartProps) {
             <ChartTooltip content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar yAxisId="left" dataKey={t('value.with.payment')} stackId="a" fill={chartConfig[t('value.with.payment')].color} radius={[0, 0, 0, 0]} />
-            <Bar yAxisId="left" dataKey={t('value.without.payment')} stackId="a" fill={chartConfig[t('value.without.payment')].color} radius={[4, 4, 0, 0]} />
+            <Bar yAxisId="left" dataKey={t('value.with.payment')} stackId="a" fill={chartConfig[t('value.with.payment')].color} radius={[4, 4, 0, 0]} />
             <Line yAxisId="right" type="monotone" dataKey={t('os.quantity')} stroke={chartConfig[t('os.quantity')].color} strokeWidth={4} dot={false} />
             {showPaymentLine && (
               <Line yAxisId="left" type="monotone" dataKey={t('value.by.payment.date')} stroke={chartConfig[t('value.by.payment.date')].color} strokeWidth={4} dot={false} />

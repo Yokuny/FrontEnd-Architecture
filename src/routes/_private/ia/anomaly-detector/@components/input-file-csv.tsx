@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 
 const csvStringToJson = (csvString: string) => {
-  const lines = csvString.split('\n').filter((x) => x !== '' && x !== null);
+  const lines = csvString.split('upload.csv').filter((x) => x !== '' && x !== null);
   const headers = lines[0].split(',');
   const result: any[] = [];
 

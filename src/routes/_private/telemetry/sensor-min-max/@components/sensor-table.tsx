@@ -35,7 +35,7 @@ export function SensorTable({ data, sensorsMinMax, onChangeMinMax, isLoading }: 
             <TableHead className="text-center">{t('type')}</TableHead>
             <TableHead className="text-center">{t('unit')}</TableHead>
             <TableHead className="text-center">{t('sensor.min')}</TableHead>
-            <TableHead className="text-center">{t('sensor.max')}</TableHead>
+            <TableHead className="text-center">{t('maximum')}</TableHead>
             <TableHead className="text-center">{t('copy')}</TableHead>
             <TableHead className="text-center">{t('sensor.minInput')}</TableHead>
             <TableHead className="text-center">{t('sensor.maxInput')}</TableHead>

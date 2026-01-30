@@ -54,7 +54,7 @@ export function EditEventDialog({ isOpen, onOpenChange, event, idEnterprise }: E
         toast.success(t('success.update'));
       } else {
         await api.post(`/event-schedule`, payload);
-        toast.success(t('success.create'));
+        toast.success(t('edit.event'));
       }
 
       queryClient.invalidateQueries({ queryKey: ['event-schedule'] });
@@ -99,7 +99,7 @@ export function EditEventDialog({ isOpen, onOpenChange, event, idEnterprise }: E
                   <SelectValue placeholder={t('type.event')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="maintenance">{t('event.maintenance')}</SelectItem>
+                  <SelectItem value="maintenance">{t('maintenance')}</SelectItem>
                   <SelectItem value="teamChange">{t('event.team.change')}</SelectItem>
                   <SelectItem value="event">{t('event')}</SelectItem>
                 </SelectContent>

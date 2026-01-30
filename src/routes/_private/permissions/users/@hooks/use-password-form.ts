@@ -31,7 +31,7 @@ export function usePasswordForm(id: string): UsePasswordFormReturn {
       toast.success(t('password.updated'));
       navigate({ to: '/permissions/users', search: { page: 1, pageSize: 10 } });
     } catch (_error) {
-      toast.error(t('error.update.password'));
+      toast.error(t('password.updated'));
     }
   };
 

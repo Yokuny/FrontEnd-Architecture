@@ -108,7 +108,7 @@ export function ItemPeriodSounding({ data }: ItemPeriodSoundingProps) {
 
                 {/* Consumption */}
                 <div className="flex flex-col md:col-span-2">
-                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('consumption')}</span>
+                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('consume')}</span>
                   <div className="flex items-center gap-1 font-bold text-lg">
                     <Droplet className={isExcess ? 'text-red-500' : 'text-green-500'} size={16} />
                     {formatNumber(consumed, 3)}

@@ -22,7 +22,7 @@ export function DownloadOperationalAssetCSV({ data, hasPermissionViewFinancial }
       t('hour.start'),
       t('date.end'),
       t('hour.end'),
-      t('duration.in.days'),
+      t('profit'),
       ...(hasPermissionViewFinancial ? [t('profit'), t('loss'), 'PTAX'] : []),
     ];
 

@@ -48,7 +48,7 @@ export function KPI({ data }: VoyageKPIProps) {
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
           <Activity className="size-5 text-blue-600" />
           <ItemDescription className="font-medium">
-            {t('average')} ({t('travel')} HR)
+            {t('medium')} ({t('travel')} HR)
           </ItemDescription>
         </ItemContent>
         <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{kpis.travelAverage.toFixed(2)}</ItemTitle>
@@ -76,7 +76,7 @@ export function KPI({ data }: VoyageKPIProps) {
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
           <Activity className="size-5 text-red-600" />
           <ItemDescription className="font-medium">
-            {t('average')} ({t('port')} HR)
+            {t('medium')} ({t('port')} HR)
           </ItemDescription>
         </ItemContent>
         <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{kpis.maneuverAverage.toFixed(2)}</ItemTitle>

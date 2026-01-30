@@ -47,7 +47,7 @@ export function DashboardForm({ form }: DashboardFormProps) {
             <FormItem>
               <FormLabel>{t('description')} *</FormLabel>
               <FormControl>
-                <Input placeholder={t('description.placeholder')} {...field} />
+                <Input placeholder={t('description')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

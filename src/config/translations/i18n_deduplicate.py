@@ -53,16 +53,28 @@ def analyze_duplicates() -> Dict[str, str]:
     refactor_map = {}
     duplicate_count = 0
     
+    # Technical/False positive keys that should never be the 'official' key
+    # or should even be forbidden from deduplication.
+    TECHNICAL_KEYS = {'\\n', 'index', 'normal', 'alert', 'close'}
+
     for value, keys in value_to_keys.items():
+        # NEVER deduplicate placeholder values
+        if not value or value.strip() == "" or value == "TODO":
+            continue
+
         if len(keys) > 1:
-            # Sort keys to ensure deterministic selection (e.g., by length then alphabet)
-            # Shortest key usually best? Or just alphabetical?
-            # User requirement: "organize... com menores nomes na parte de cima". 
-            # So let's pick the shortest key as the 'official' one.
-            sorted_keys = sorted(keys, key=lambda k: (len(k), k.lower()))
+            # Filter out technical keys from being candidates for official_key
+            candidates = [k for k in keys if k not in TECHNICAL_KEYS]
+            if not candidates:
+                # All keys for this value are technical? Just skip.
+                continue
+
+            # Sort keys to ensure deterministic selection (shortest key first)
+            sorted_keys = sorted(candidates, key=lambda k: (len(k), k.lower()))
             
             official_key = sorted_keys[0]
-            duplicates = sorted_keys[1:]
+            # All other keys (including technical ones if they happened to have this value)
+            duplicates = [k for k in keys if k != official_key]
             
             for dup in duplicates:
                 refactor_map[dup] = official_key

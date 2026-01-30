@@ -22,7 +22,7 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
   const filterId = idMachine || idEnterprise;
   const query = useSensorSignalsSelect(filterId, sensorId);
 
-  const noOptionsMessage = !filterId ? t('identifier.not.provided') : !sensorId ? t('select.sensor.first') : t('not.found');
+  const noOptionsMessage = !filterId ? t('select.sensor.first') : !sensorId ? t('select.sensor.first') : t('not.found');
 
   if (mode === 'multi') {
     const displayLabel = label || t('signals');
@@ -36,7 +36,7 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
         )}
         <DataMultiSelect<SensorSignal, SensorSignal>
           id={id}
-          placeholder={placeholder || t('signals.placeholder')}
+          placeholder={placeholder || t('select.sensor.first')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}

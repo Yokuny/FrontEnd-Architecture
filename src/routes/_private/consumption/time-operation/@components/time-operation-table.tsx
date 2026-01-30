@@ -185,7 +185,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
               <TableCell className="sticky left-0 z-10 bg-secondary">
                 <div className="flex flex-col gap-6">
                   <ItemTitle className="text-muted-foreground uppercase">{t('total')}</ItemTitle>
-                  <ItemTitle className="text-muted-foreground uppercase">{t('average')}</ItemTitle>
+                  <ItemTitle className="text-muted-foreground uppercase">{t('medium')}</ItemTitle>
                 </div>
               </TableCell>
 

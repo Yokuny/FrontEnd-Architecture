@@ -76,7 +76,7 @@ export function UserRMDayChart({ filters }: UserRMDayChartProps) {
             </ChartContainer>
             <ItemFooter className="mt-4 flex-wrap items-center justify-center gap-6 p-4">
               <div className="flex flex-col items-center">
-                <ItemDescription className="font-semibold text-muted-foreground text-xs uppercase">{t('total.accesses')}</ItemDescription>
+                <ItemDescription className="font-semibold text-muted-foreground text-xs uppercase">{t('total.users')}</ItemDescription>
                 <ItemTitle className="font-semibold text-lg tabular-nums">{totals.accesses.toLocaleString()}</ItemTitle>
               </div>
               <div className="flex flex-col items-center">

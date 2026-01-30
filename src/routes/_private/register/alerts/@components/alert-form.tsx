@@ -207,14 +207,7 @@ export function AlertForm() {
                         name="users"
                         render={({ field }) => (
                           <FormItem>
-                            <UserSelect
-                              multi
-                              label={t('users')}
-                              idEnterprise={idEnterprise}
-                              values={field.value as any}
-                              onChangeMulti={field.onChange}
-                              placeholder={t('users.placeholder')}
-                            />
+                            <UserSelect multi label={t('users')} idEnterprise={idEnterprise} values={field.value as any} onChangeMulti={field.onChange} placeholder={t('assets')} />
                             <FormMessage />
                           </FormItem>
                         )}
@@ -225,7 +218,7 @@ export function AlertForm() {
                         name="scales"
                         render={({ field }) => (
                           <FormItem>
-                            <ScaleSelect label={t('scales')} mode="multi" value={field.value} onChange={field.onChange} />
+                            <ScaleSelect label={t('assets')} mode="multi" value={field.value} onChange={field.onChange} />
                             <FormMessage />
                           </FormItem>
                         )}
@@ -285,7 +278,7 @@ export function AlertForm() {
                           name="usersPermissionView"
                           render={({ field }) => (
                             <FormItem>
-                              <UserSelect multi label={t('users.permission.view')} idEnterprise={idEnterprise} values={field.value as any} onChangeMulti={field.onChange} />
+                              <UserSelect multi label={t('assets')} idEnterprise={idEnterprise} values={field.value as any} onChangeMulti={field.onChange} />
                               <FormMessage />
                             </FormItem>
                           )}

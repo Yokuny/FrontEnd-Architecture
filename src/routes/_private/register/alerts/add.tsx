@@ -45,7 +45,7 @@ function AlertAddPage() {
   if (id && isLoading) {
     return (
       <Card>
-        <CardHeader title={t('edit.alert')} />
+        <CardHeader title={t('new.alert')} />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -95,7 +95,7 @@ function AlertAddFormContent({ initialData }: { initialData?: any }) {
 
   return (
     <Card>
-      <CardHeader title={isEditing ? t('edit.alert') : t('new.alert')} />
+      <CardHeader title={isEditing ? t('new.alert') : t('new.alert')} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSave)}>
           <CardContent className="p-0">

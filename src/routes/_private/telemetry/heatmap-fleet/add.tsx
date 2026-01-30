@@ -103,7 +103,7 @@ function HeatmapConfigPage() {
       { id, idEnterprise: enterprise.value, idMachine: machine.value, equipments: equipmentList.filter((e) => e.subgroups.length > 0) },
       {
         onSuccess: () => {
-          toast.success(t('save.successfull'));
+          toast.success(t('save.success'));
           navigate({ to: '/telemetry/heatmap-fleet', search: { page: 0 } });
         },
         onError: () => toast.error(t('save.error')),
@@ -115,17 +115,17 @@ function HeatmapConfigPage() {
     if (!id) return;
     deleteMutation.mutate(id, {
       onSuccess: () => {
-        toast.success(t('delete.successfull'));
+        toast.success(t('delete.success'));
         navigate({ to: '/telemetry/heatmap-fleet', search: { page: 0 } });
       },
-      onError: () => toast.error(t('delete.error')),
+      onError: () => toast.error(t('save.error')),
     });
   };
 
   const sections: FormSection[] = [
     {
       title: t('basic.info'),
-      description: t('machine.basic.description'),
+      description: t('save.error'),
       layout: 'horizontal',
       fields: [
         <div key="selects-row" className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -142,7 +142,7 @@ function HeatmapConfigPage() {
     },
     {
       title: t('machine.equipment'),
-      description: t('machine.equipment.description'),
+      description: t('save.error'),
       layout: 'vertical',
       fields: [
         machine?.value ? (
@@ -199,7 +199,7 @@ function HeatmapConfigPage() {
           </Accordion>
         ) : (
           <Item key="no-machine" variant="muted" className="justify-center border-dashed">
-            <ItemDescription>{t('select.machine.to.configure')}</ItemDescription>
+            <ItemDescription>{t('save.error')}</ItemDescription>
           </Item>
         ),
       ],

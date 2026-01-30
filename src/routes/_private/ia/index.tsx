@@ -14,13 +14,13 @@ function IAHubPage() {
   const menuItems = [
     {
       title: t('ai.prompt'),
-      description: t('ai.prompt.description'),
+      description: t('ai.anomaly.detector'),
       icon: MessageSquare,
       to: '/ia/prompt' as const,
     },
     {
       title: t('ai.anomaly.detector'),
-      description: t('ai.anomaly.detector.description'),
+      description: t('ai.anomaly.detector'),
       icon: ScanSearch,
       to: '/ia/anomaly-detector' as const,
     },
