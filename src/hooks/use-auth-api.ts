@@ -86,7 +86,7 @@ export function useLogin() {
       if (data?.token) {
         setAuth(data.token, 'normal');
         toast.success('Login successful!');
-        navigate({ to: '/' });
+        navigate({ to: '/fleet-manager' });
       }
     },
     onError: () => {
@@ -140,7 +140,7 @@ export function useLoginSSO() {
       if (data?.token) {
         setAuth(data.token, 'sso');
         toast.success('SSO login successful!');
-        navigate({ to: '/' });
+        navigate({ to: '/fleet-manager' });
       }
     },
     onError: () => {
@@ -169,7 +169,7 @@ export function useRegister() {
       if (data?.token) {
         setAuth(data.token, 'normal');
         toast.success('Account created successfully!');
-        navigate({ to: '/' });
+        navigate({ to: '/fleet-manager' });
       }
     },
     onError: () => {
