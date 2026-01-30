@@ -123,7 +123,7 @@ function AlertsListPage() {
                     <ItemMedia variant="image">
                       <Bell className={`size-5 ${iconColorClass}`} />
                     </ItemMedia>
-                    <ItemContent>
+                    <ItemContent className="gap-0">
                       <ItemTitle className="text-base">{description || '-'}</ItemTitle>
                       <ItemDescription className="capitalize">{t(type === 'min-max' ? 'min.max' : type)}</ItemDescription>
                     </ItemContent>

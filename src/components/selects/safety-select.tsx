@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { SAFETY_AREAS, type SafetyAreaOption } from '@/lib/constants/select-options';
+import { SAFETY_AREAS, type SelectOption } from '@/lib/constants/select-options';
 
 export function SafetySelect(props: SafetySelectProps) {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ export function SafetySelect(props: SafetySelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: SafetyAreaOption[]) => {
+  const mapToOptions = (options: SelectOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: opt.label,
@@ -44,7 +44,7 @@ export function SafetySelect(props: SafetySelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<SafetyAreaOption, SafetyAreaOption>
+        <DataMultiSelect<SelectOption, SelectOption>
           id={id}
           placeholder={placeholder || t('safety')}
           value={props.value}
@@ -70,7 +70,7 @@ export function SafetySelect(props: SafetySelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<SafetyAreaOption, SafetyAreaOption>
+      <DataSelect<SelectOption, SelectOption>
         id={id}
         placeholder={placeholder || t('safety')}
         value={props.value}

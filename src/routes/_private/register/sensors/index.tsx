@@ -109,7 +109,7 @@ function SensorListPage() {
                   <ItemMedia variant="image">
                     <Flashlight className="size-5" />
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{item.sensor}</ItemTitle>
                     <ItemDescription className="flex items-center gap-2">
                       <Building2 className="size-3" />

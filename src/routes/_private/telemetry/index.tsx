@@ -25,10 +25,10 @@ function TelemetryHubPage() {
       to: '/telemetry/performance' as const,
     },
     {
-      title: t('telemetry.list.dashboard'),
-      description: t('telemetry.list.dashboard.description'),
+      title: t('fleet.panel'),
+      description: t('telemetry.fleet-panel.description'),
       icon: LayoutDashboard,
-      to: '/telemetry/list-dashboard' as const,
+      to: '/telemetry/fleet-panel' as const,
     },
     {
       title: t('telemetry.remote.ihm'),

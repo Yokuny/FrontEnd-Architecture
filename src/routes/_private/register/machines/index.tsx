@@ -100,7 +100,7 @@ function MachineListPage() {
                   <ItemMedia variant="image">
                     {machine.image?.url ? <img src={machine.image.url} alt={machine.name} className="size-full object-cover" /> : <Ship className="size-5" />}
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{machine.name}</ItemTitle>
                     <ItemDescription className="flex items-center gap-2">
                       <Building2 className="size-3 shrink-0 text-muted-foreground" />

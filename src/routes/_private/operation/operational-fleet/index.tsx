@@ -1,5 +1,4 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { format } from 'date-fns';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +9,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ItemDescription } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { formatDate } from '@/lib/formatDate';
 import { AssetOperationalList } from './@components/asset-operational-list';
 import { useOperationalDashboard } from './@hooks/use-operational-dashboard';
 
@@ -51,7 +51,7 @@ function OperationalDashboardPage() {
         <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           {lastUpdate && (
             <ItemDescription>
-              {t('last.date.acronym')}: {format(lastUpdate, 'dd MM yyyy HH:mm')}
+              {t('last.date.acronym')}: {formatDate(lastUpdate, 'dd MM yyyy HH:mm')}
             </ItemDescription>
           )}
           <div className="relative w-full sm:max-w-64">

@@ -1,14 +1,14 @@
-import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
+import { formatDate } from '@/lib/formatDate';
 import type { TimeSeriesReading } from '../@interface/consumption-comparative.types';
 
 export function ChartComparative({ data, unit }: ChartComparativeProps) {
   const { t } = useTranslation();
 
   const chartData = data.map((reading) => ({
-    date: format(new Date((reading.timestamp as number) * 1000), 'dd/MM'),
+    date: formatDate((reading.timestamp as number) * 1000, 'dd/MM'),
     manual: reading.consumptionManual.value,
     telemetry: reading.consumptionTelemetry.value,
   }));

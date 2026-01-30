@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { addMonths, addWeeks, endOfWeek, format, isSameMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
+import { addMonths, addWeeks, endOfWeek, isSameMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
 import { useMemo, useState } from 'react';
-import { useLocale } from '@/hooks/use-locale';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { api } from '@/lib/api/client';
-import { getDateLocale } from '@/routes/_private/calendar-maintenance/@utils/locale';
+import { formatDate } from '@/lib/formatDate';
 import type { CalendarFilterParams, CalendarView, PartialSchedule } from '../@interface/schedule';
 import { transformLegacyEvent } from '../@utils/calendar.utils';
 
@@ -48,8 +47,6 @@ export function useEventScheduleCalendar(params: CalendarFilterParams) {
 
 export function useCalendarMaintenance(idEnterprise: string) {
   const isMobile = useIsMobile();
-  const { locale: appLocale } = useLocale();
-  const dateLocale = getDateLocale(appLocale);
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>('week');
@@ -59,8 +56,8 @@ export function useCalendarMaintenance(idEnterprise: string) {
 
   const { data: eventsRes = [], isLoading } = useEventScheduleCalendar({
     idEnterprise,
-    month: format(currentDate, 'MM'),
-    year: format(currentDate, 'yyyy'),
+    month: formatDate(currentDate, 'MM'),
+    year: formatDate(currentDate, 'yyyy'),
     ...filters,
   });
 
@@ -120,20 +117,20 @@ export function useCalendarMaintenance(idEnterprise: string) {
   };
 
   const headerTitle = useMemo(() => {
-    if (isMobile) return format(currentDate, 'MMMM', { locale: dateLocale });
+    if (isMobile) return formatDate(currentDate, 'MMMM');
     switch (view) {
       case 'week': {
         const startWeek = startOfWeek(currentDate, { weekStartsOn: 1 });
         const endWeek = endOfWeek(currentDate, { weekStartsOn: 1 });
         if (isSameMonth(startWeek, endWeek)) {
-          return format(startWeek, 'MMMM yyyy', { locale: dateLocale });
+          return formatDate(startWeek, 'MMMM yyyy');
         }
-        return `${format(startWeek, 'MMM', { locale: dateLocale })} - ${format(endWeek, 'MMM yyyy', { locale: dateLocale })}`;
+        return `${formatDate(startWeek, 'MMM')} - ${formatDate(endWeek, 'MMM yyyy')}`;
       }
       default:
-        return format(currentDate, 'MMMM yyyy', { locale: dateLocale });
+        return formatDate(currentDate, 'MMMM yyyy');
     }
-  }, [currentDate, view, isMobile, dateLocale]);
+  }, [currentDate, view, isMobile]);
 
   return {
     currentDate,

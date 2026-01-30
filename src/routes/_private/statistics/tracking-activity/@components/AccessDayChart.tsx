@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
@@ -7,6 +7,7 @@ import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, Char
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTrackingAccessDay } from '@/hooks/use-tracking-activity-api';
+import { formatDate } from '@/lib/formatDate';
 import { CHART_HEIGHT } from '../@consts';
 import type { AccessDayData, TrackingFilters } from '../@interface';
 
@@ -37,7 +38,7 @@ export function AccessDayChart({ filters }: AccessDayChartProps) {
 
       return {
         key: dateStr,
-        date: format(parseISO(dateStr.length === 7 ? `${dateStr}-01` : dateStr), filterDateSize === 10 ? 'dd/MM' : 'MM/yyyy'),
+        date: formatDate(parseISO(dateStr.length === 7 ? `${dateStr}-01` : dateStr), filterDateSize === 10 ? 'dd MM' : 'MM yyyy'),
         system: systemTotal,
         whatsapp: whatsappTotal,
       };

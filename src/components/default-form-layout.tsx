@@ -4,18 +4,6 @@ import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
-export interface FormSection {
-  title: string;
-  description?: string;
-  fields: React.ReactNode[];
-  layout?: 'horizontal' | 'vertical';
-}
-
-interface DefaultFormLayoutProps {
-  sections: FormSection[];
-  layout?: 'horizontal' | 'vertical';
-}
-
 export default function DefaultFormLayout({ sections, layout = 'horizontal' }: DefaultFormLayoutProps) {
   return (
     <div className="flex flex-col gap-8 p-6 md:p-10">
@@ -49,4 +37,16 @@ export default function DefaultFormLayout({ sections, layout = 'horizontal' }: D
       </div>
     </div>
   );
+}
+
+export interface FormSection {
+  title: string;
+  description?: string;
+  fields: React.ReactNode[];
+  layout?: 'horizontal' | 'vertical';
+}
+
+interface DefaultFormLayoutProps {
+  sections: FormSection[];
+  layout?: 'horizontal' | 'vertical';
 }

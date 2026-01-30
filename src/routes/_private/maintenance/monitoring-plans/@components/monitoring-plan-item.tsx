@@ -1,11 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { Badge } from '@/components/ui/badge';
 import { getChartColor } from '@/components/ui/chart';
-import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemTitle } from '@/components/ui/item';
+import { formatDate } from '@/lib/formatDate';
 import type { MonitoringPlanItem as MonitoringPlanItemType } from '../@interface/monitoring-plan.types';
 import { EditEventScheduleDialog } from './edit-event-schedule-dialog';
 
@@ -24,7 +24,7 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
     if (planItem.next) return getChartColor(9); // Orange
     if (planItem.warning) return getChartColor(10); // Amber
     if (planItem.daysLeft) return getChartColor(13); // Green
-    return 'var(--color-slate-400)';
+    return getChartColor(14);
   };
 
   const handleSuccess = () => {
@@ -42,24 +42,23 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
     <EditEventScheduleDialog idMachine={idMachine} idMaintenancePlan={planItem.idMaintenancePlan} dateWindowEnd={planItem.dateWindowEnd} onSuccess={handleSuccess}>
       <Item variant="outline" className="cursor-pointer bg-secondary p-2 px-4">
         <ItemContent className="flex w-full flex-row items-center justify-between">
-          {/* Titulo e status */}
           <div className="flex flex-col gap-2">
             <ItemTitle className="font-medium text-base">{planItem.description}</ItemTitle>
-            <div className="flex items-center gap-4">
+            <div className="flex items-stretch gap-4">
               <div className="flex shrink-0 gap-1.5">
-                {planItem.expired && <Badge className="h-4.5 bg-red-400/80 px-1.5 font-bold text-[9px] uppercase hover:bg-red-400">{t('expired')}</Badge>}
+                {planItem.expired && <Badge className="bg-red-600 px-2 font-bold text-xs uppercase hover:bg-red-500">{t('expired')}</Badge>}
+                {planItem.warning && <Badge className="bg-amber-600 px-2 font-bold text-xs uppercase hover:bg-amber-500">{t('next')}</Badge>}
                 {planItem.next && !planItem.expired && (
-                  <Badge variant="destructive" className="h-4.5 px-1.5 font-bold text-[9px] uppercase">
+                  <Badge variant="error" className="px-2 font-bold text-xs uppercase">
                     {t('next')}
                   </Badge>
                 )}
-                {planItem.warning && <Badge className="h-4.5 bg-amber-400/80 px-1.5 font-bold text-[9px] uppercase hover:bg-amber-400">{t('next')}</Badge>}
               </div>
 
               {planItem.daysLeft !== null && (
-                <p className="font-semibold tabular-nums" style={{ color: statusColor }}>
+                <ItemTitle className="tabular-nums" style={{ color: statusColor }}>
                   {planItem.daysLeft} {t('days')}
-                </p>
+                </ItemTitle>
               )}
             </div>
           </div>
@@ -67,7 +66,7 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
           {/* Data */}
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-center gap-1">
-              <ItemDescription className="font-semibold text-lg">{planItem.dateWindowEnd ? format(new Date(planItem.dateWindowEnd), 'dd MM yyyy') : '-'}</ItemDescription>
+              <ItemTitle className="font-semibold text-lg">{planItem.dateWindowEnd ? formatDate(planItem.dateWindowEnd, 'dd MM yyyy') : '-'}</ItemTitle>
               <div className="flex items-center gap-2">
                 <Calendar className="size-4 shrink-0" />
                 {t('date.window.end')}
@@ -79,14 +78,12 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
                 <PieChart>
                   <Pie data={chartData} innerRadius="75%" outerRadius="100%" startAngle={90} endAngle={-270} paddingAngle={0} dataKey="value">
                     <Cell key="progress" fill={statusColor} stroke="none" />
-                    <Cell key="remaining" fill="hsl(var(--muted)/0.2)" stroke="none" />
+                    <Cell key="remaining" fill="var(--accent)" stroke="none" />
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span className="font-bold text-[11px] tracking-tighter" style={{ color: statusColor }}>
-                  {planItem.percentual}%
-                </span>
+                <ItemTitle className="font-bold text-xs">{planItem.percentual}%</ItemTitle>
               </div>
             </div>
           </div>

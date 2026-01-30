@@ -1,8 +1,8 @@
-import { format } from 'date-fns';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { formatDate } from '@/lib/formatDate';
 import type { ConsumptionIntervalData } from '../@interface/consumption-interval.types';
 
 interface ConsumptionTableProps {
@@ -22,7 +22,7 @@ export function ConsumptionTable({ data, unit, isReal, isEstimated }: Consumptio
       <CardContent className="p-0">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-secondary/50">
+            <TableHeader className="bg-secondary">
               <TableRow>
                 <TableHead className="text-center">{t('date')}</TableHead>
                 <TableHead className="text-center">{t('vessel')}</TableHead>
@@ -56,7 +56,7 @@ export function ConsumptionTable({ data, unit, isReal, isEstimated }: Consumptio
             <TableBody>
               {data.map((item, index) => (
                 <TableRow key={item._id || index}>
-                  <TableCell className="whitespace-nowrap text-center">{format(new Date(item.date), 'dd MMM yyyy')}</TableCell>
+                  <TableCell className="whitespace-nowrap text-center">{formatDate(item.date, 'dd MMM yyyy')}</TableCell>
                   <TableCell className="text-center font-medium">{item.machine.name}</TableCell>
                   {isReal && (
                     <>

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { EDIT_PERMISSION_OPTIONS, type EditPermissionOption } from '@/lib/constants/select-options';
+import { EDIT_PERMISSION_OPTIONS, type SelectOptionWithKey } from '@/lib/constants/select-options';
 
 export function EditPermissionSelect(props: EditPermissionSelectProps) {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ export function EditPermissionSelect(props: EditPermissionSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: EditPermissionOption[]) => {
+  const mapToOptions = (options: SelectOptionWithKey[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: t(opt.labelKey),
@@ -39,7 +39,7 @@ export function EditPermissionSelect(props: EditPermissionSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<EditPermissionOption, EditPermissionOption>
+        <DataMultiSelect<SelectOptionWithKey, SelectOptionWithKey>
           id={id}
           placeholder={placeholder || t('all')}
           value={props.value}
@@ -64,7 +64,7 @@ export function EditPermissionSelect(props: EditPermissionSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<EditPermissionOption, EditPermissionOption>
+      <DataSelect<SelectOptionWithKey, SelectOptionWithKey>
         id={id}
         placeholder={placeholder || t('all')}
         value={props.value}

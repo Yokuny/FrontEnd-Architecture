@@ -1,12 +1,11 @@
 'use client';
 
-import { eachDayOfInterval, endOfMonth, endOfWeek, format, getDay, isSameDay, isSameMonth, isToday, startOfMonth, startOfWeek } from 'date-fns';
+import { eachDayOfInterval, endOfMonth, endOfWeek, getDay, isSameDay, isSameMonth, isToday, startOfMonth, startOfWeek } from 'date-fns';
 import { type CSSProperties, type MouseEvent, useEffect, useMemo, useState } from 'react';
 import { Item, ItemContent, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useLocale } from '@/hooks/use-locale';
-import { getDateLocale } from '@/routes/_private/calendar-maintenance/@utils/locale';
+import { formatDate } from '@/lib/formatDate';
 import { DefaultStartHour, EventGap, EventHeight } from '../@consts/calendar';
 import { useEventVisibility } from '../@hooks/use-event-visibility';
 import type { PartialSchedule } from '../@interface/schedule';
@@ -14,9 +13,6 @@ import { getAllEventsForDay, getEventsForDay, getSpanningEventsForDay, sortEvent
 import { EventItem } from './Event';
 
 const Header = () => {
-  const { locale: appLocale } = useLocale();
-  const dateLocale = getDateLocale(appLocale);
-
   const weekDays = useMemo(() => {
     const start = startOfWeek(new Date(), { weekStartsOn: 1 });
     const end = endOfWeek(new Date(), { weekStartsOn: 1 });
@@ -29,8 +25,8 @@ const Header = () => {
         {weekDays.map((day, index) => (
           <ItemContent key={`${index}-${day.toString()}month-header-`} className="flex items-center justify-center border-r py-3 last:border-r-0">
             <ItemTitle className="font-semibold text-xs">
-              <span className="sm:hidden">{format(day, 'EEEEE', { locale: dateLocale })}</span>
-              <span className="max-sm:hidden">{format(day, 'EEEE', { locale: dateLocale })}</span>
+              <span className="sm:hidden">{formatDate(day, 'EEEEE')}</span>
+              <span className="max-sm:hidden">{formatDate(day, 'EEEE')}</span>
             </ItemTitle>
           </ItemContent>
         ))}
@@ -40,9 +36,6 @@ const Header = () => {
 };
 
 export function MonthView({ currentDate, events, onEventSelect, onEventCreate }: MonthViewProps) {
-  const { locale: appLocale } = useLocale();
-  const dateLocale = getDateLocale(appLocale);
-
   const days = useMemo(() => {
     const monthStart = startOfMonth(currentDate);
     const monthEnd = endOfMonth(monthStart);
@@ -124,7 +117,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                     <ItemContent className="w-full">
                       <ItemHeader className="basis-auto justify-start">
                         <ItemTitle className="inline-flex size-5 items-center justify-center rounded-full font-mono text-xs group-data-today:bg-sky-blue group-data-today:font-bold group-data-today:text-white dark:group-data-today:bg-dark-blue">
-                          {format(day, 'd')}
+                          {formatDate(day, 'd')}
                         </ItemTitle>
                       </ItemHeader>
                       <ItemContent
@@ -143,7 +136,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                               <EventItem onClick={(e) => handleEventClick(event, e)} event={event} view="month" isFirstDay={isFirstDay} isLastDay={isLastDay}>
                                 {!isFirstDay && (
                                   <ItemContent className="invisible" aria-hidden={true}>
-                                    {!event.allDay && <span>{format(new Date(event.start), 'h:mm')} </span>}
+                                    {!event.allDay && <span>{formatDate(new Date(event.start), 'h:mm')} </span>}
                                     {event.title}
                                   </ItemContent>
                                 )}
@@ -164,7 +157,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                             </PopoverTrigger>
                             <PopoverContent align="center" className="max-w-52 p-3" style={{ '--event-height': `${EventHeight}px` } as CSSProperties}>
                               <ItemContent className="gap-2">
-                                <ItemTitle className="text-sm">{format(day, 'd MMMM, EEE', { locale: dateLocale })}</ItemTitle>
+                                <ItemTitle className="text-sm">{formatDate(day, 'd MMMM, EEE')}</ItemTitle>
                                 <ItemContent className="gap-1">
                                   {sortEvents(allEvents).map((event) => {
                                     const eventStart = new Date(event.start);

@@ -1,4 +1,4 @@
-import { format, isAfter } from 'date-fns';
+import { isAfter } from 'date-fns';
 import { AlertTriangle, Anchor, ArrowBigUpDash, CheckCircle2, Clock, Flag, Locate, MoveRight, Navigation, Route, Search, Ship, Wind, X, Zap } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { useFleetMachines, useFleetVoyages } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
@@ -125,7 +126,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                           {item.lastState?.eta && (
                             <div className="flex items-center gap-1.5">
                               <Flag className="size-3 shrink-0" />
-                              <span className="truncate">ETA: {format(new Date(item.lastState.eta), 'dd MMM HH:mm')}</span>
+                              <span className="truncate">ETA: {formatDate(item.lastState.eta, 'dd MMM HH:mm')}</span>
                             </div>
                           )}
 
@@ -229,8 +230,8 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                               const date = new Date(d);
                               return (
                                 <>
-                                  <div className="whitespace-nowrap">{format(date, 'dd MMM yy')}</div>
-                                  <div>{format(date, 'HH:mm')}</div>
+                                  <div className="whitespace-nowrap">{formatDate(date, 'dd MMM yy')}</div>
+                                  <div>{formatDate(date, 'HH:mm')}</div>
                                 </>
                               );
                             })()}
@@ -245,14 +246,14 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                             {item.metadata?.eta && (
                               <div className="flex flex-col items-end">
                                 <span className="font-bold text-muted-foreground">ETA</span>
-                                <div className="whitespace-nowrap">{format(new Date(item.metadata.eta), 'dd MMM yy')}</div>
-                                <div>{format(new Date(item.metadata.eta), 'HH:mm')}</div>
+                                <div className="whitespace-nowrap">{formatDate(item.metadata.eta, 'dd MMM yy')}</div>
+                                <div>{formatDate(item.metadata.eta, 'HH:mm')}</div>
                               </div>
                             )}
                             {(item.metadata?.dateTimeArrival || item.dateTimeEnd) && (
                               <div className="mt-1 flex flex-col items-end border-muted/20 border-t pt-1">
-                                <div className="whitespace-nowrap">{format(new Date(item.metadata?.dateTimeArrival || item.dateTimeEnd || ''), 'dd MMM yy')}</div>
-                                <div>{format(new Date(item.metadata?.dateTimeArrival || item.dateTimeEnd || ''), 'HH:mm')}</div>
+                                <div className="whitespace-nowrap">{formatDate(item.metadata?.dateTimeArrival || item.dateTimeEnd || '', 'dd MMM yy')}</div>
+                                <div>{formatDate(item.metadata?.dateTimeArrival || item.dateTimeEnd || '', 'HH:mm')}</div>
                               </div>
                             )}
                             {!item.metadata?.eta && !item.metadata?.dateTimeArrival && !item.dateTimeEnd && '-'}

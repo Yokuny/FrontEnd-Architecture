@@ -53,7 +53,7 @@ export function GoalAddMachineModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline">
           <Plus className="mr-2 size-4" />
           {t('add')}
         </Button>

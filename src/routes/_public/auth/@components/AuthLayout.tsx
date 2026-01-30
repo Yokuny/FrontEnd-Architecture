@@ -2,8 +2,8 @@ import { Outlet } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { RevealText } from '@/components/gsap/reveal-text';
-import { LanguageSwitcher } from '@/components/sidebar/switcher-language';
-import { ThemeSwitcher } from '@/components/sidebar/switcher-theme';
+import { LanguageSwitcher } from '@/components/sidebar/switch-language';
+import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { MorphingText } from '@/components/ui/morphing-text';
 import { useIsMobile } from '@/hooks/use-mobile';
 

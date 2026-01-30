@@ -21,7 +21,7 @@ export const OPERATIONAL_ASSET_VIEW = {
 
 export const DATE_FORMATS = {
   ISO: 'yyyy-MM-dd',
-  DISPLAY: 'dd/MM/yyyy',
+  DISPLAY: 'dd MM yyyy',
   CHART_DAY: 'dd/MM',
   TIME: 'HH:mm',
   FILENAME: 'yyyyMMddHHmmss',

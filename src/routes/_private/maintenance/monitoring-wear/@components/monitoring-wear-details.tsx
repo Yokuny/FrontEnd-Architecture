@@ -1,10 +1,10 @@
-import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { formatDate } from '@/lib/formatDate';
 import { useMonitoringWearDetails } from '../@hooks/use-monitoring-wear-api';
 import { AdjustManualWear } from './adjust-manual-wear';
 
@@ -69,7 +69,7 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                 <TableCell className="text-center">
                   <div className="flex justify-center">
                     {part.percentual >= 100 ? (
-                      <Badge variant="destructive" className="h-6 whitespace-nowrap">
+                      <Badge variant="error" className="h-6 whitespace-nowrap">
                         {t('late')}
                       </Badge>
                     ) : part.percentual > 90 ? (
@@ -82,8 +82,8 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                 <TableCell className="text-center text-[10px] text-muted-foreground leading-tight">
                   {part.lastModified ? (
                     <>
-                      <div className="font-medium text-foreground">{format(new Date(part.lastModified), 'dd/MM/yyyy')}</div>
-                      <div>{format(new Date(part.lastModified), 'HH:mm')}</div>
+                      <div className="font-medium text-foreground">{formatDate(part.lastModified, 'dd MM yyyy')}</div>
+                      <div>{formatDate(part.lastModified, 'HH:mm')}</div>
                     </>
                   ) : (
                     '-'

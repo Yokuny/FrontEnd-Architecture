@@ -12,7 +12,7 @@ export function GoalFormMeta() {
   const { goalTypes, years } = useGoalOptions();
 
   return (
-    <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div className="flex flex-row gap-4">
       <FormField
         control={control}
         name="name"
@@ -34,7 +34,7 @@ export function GoalFormMeta() {
           <FormItem>
             <FormLabel>{t('type')}</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
+              <FormControl className="min-w-20">
                 <SelectTrigger>
                   <SelectValue placeholder={t('select.type')} />
                 </SelectTrigger>

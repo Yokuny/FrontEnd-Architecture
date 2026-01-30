@@ -1,6 +1,7 @@
 'use client';
 
 import { Link } from '@tanstack/react-router';
+import { useState } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
@@ -8,11 +9,13 @@ import { cn } from '@/lib/utils';
 import type { Route } from './nav-main';
 import { ShipIcon } from './ship-icon';
 import { SparklesIcon } from './sparkles-icon';
+import { FavoritesSwitcher } from './switch-favorites';
 
 export function FooterNavigation({ routes }: { routes: Route[] }) {
   const { state } = useSidebar();
   const { setMenuOpen } = useSidebarToggle();
   const isCollapsed = state === 'collapsed';
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const getIconForRoute = (routeId: string) => {
     if (routeId === 'ia') return <SparklesIcon size={20} />;
@@ -29,9 +32,21 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
         return (
           <SidebarMenuItem key={route.id}>
             {hasSubRoutes ? (
-              <DropdownMenu onOpenChange={setMenuOpen}>
+              <DropdownMenu
+                onOpenChange={(open) => {
+                  setOpenDropdown(open ? route.id : null);
+                  setMenuOpen(open);
+                }}
+              >
                 <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton size="default" tooltip={route.title} className={cn('transition-all', isCollapsed ? 'justify-center' : 'justify-start')}>
+                  <SidebarMenuButton
+                    size="default"
+                    className={cn(
+                      'transition-all',
+                      openDropdown === route.id ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
+                      isCollapsed ? 'justify-center' : 'justify-start',
+                    )}
+                  >
                     {customIcon || route.icon}
                     {!isCollapsed && <span className="ml-2 flex-1 truncate text-left">{route.title}</span>}
                   </SidebarMenuButton>
@@ -48,7 +63,11 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <SidebarMenuButton size="default" tooltip={route.title} className={cn('transition-all', isCollapsed ? 'justify-center' : 'justify-start')} asChild>
+              <SidebarMenuButton
+                size="default"
+                className={cn('text-muted-foreground transition-all hover:bg-sidebar-muted hover:text-foreground', isCollapsed ? 'justify-center' : 'justify-start')}
+                asChild
+              >
                 <Link to={route.link}>
                   {customIcon || route.icon}
                   {!isCollapsed && <span className="ml-2 flex-1 truncate text-left">{route.title}</span>}
@@ -58,6 +77,7 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
           </SidebarMenuItem>
         );
       })}
+      <FavoritesSwitcher />
     </SidebarMenu>
   );
 }

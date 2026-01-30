@@ -71,17 +71,6 @@ Antes de codar, mapeie os arquivos originais.
 | `status="Warning"` | `amber-500` / `orange-500` | `getChartColor(10)` (Amber 400) |
 | `status="Danger"` | `red-500` / `rose-500` | `getChartColor(8)` (Red 400) |
 
-### 🎨 Cores do Sistema (Tailwind Default Colors)
-*Utilizar classes padrão do Tailwind (ex: `text-blue-500`, `bg-emerald-600`)*
-
-Sempre converta cores fixas ou status do legado para cores padrão do Tailwind:
-- **Sucesso / Positivo**: `emerald` ou `green`.
-- **Informativo / Neutro**: `blue` ou `cyan`.
-- **Alerta / Atenção**: `amber` ou `orange`.
-- **Crítico / Perigo**: `red` ou `rose`.
-- **Especiais**: Utilize a paleta estendida (violet, pink, indigo, teal, lime, etc).
-- **Gráficos Dinâmicos**: Use `getChartColor(index)` de `@/components/ui/chart` para obter cores automáticas.
-
 ---
 
 ## 3. 🚀 Guia de Implementação (Passo a Passo)

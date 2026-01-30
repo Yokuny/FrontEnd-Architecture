@@ -1,9 +1,10 @@
-import { format, intervalToDuration } from 'date-fns';
+import { intervalToDuration } from 'date-fns';
 import { Calendar, Clock, Flag, ListTree, Ship, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import DefaultLoading from '@/components/default-loading';
 import { ItemContent, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
+import { formatDate } from '@/lib/formatDate';
 import { useVoyageAnalytics, useVoyageDetails, useVoyageTimeline } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
 import { DetailGridItem, DetailItemCard } from './helpers/detail-items';
@@ -50,11 +51,11 @@ export function VoyageDetailsPanel() {
       <ItemTitle className="font-bold text-lg text-primary">{data.code}</ItemTitle>
 
       <div className="grid grid-cols-2 gap-3 border-b pb-4">
-        <DetailItemCard label={t('departure')} icon={Calendar} value={data.dateTimeStart ? format(new Date(data.dateTimeStart), 'dd MMM, HH:mm') : '-'} />
-        <DetailItemCard label="ETA" icon={Flag} value={data.metadata?.eta ? format(new Date(data.metadata.eta), 'dd MMM, HH:mm') : '-'} />
+        <DetailItemCard label={t('departure')} icon={Calendar} value={data.dateTimeStart ? formatDate(data.dateTimeStart, 'dd MMM, HH:mm') : '-'} />
+        <DetailItemCard label="ETA" icon={Flag} value={data.metadata?.eta ? formatDate(data.metadata.eta, 'dd MMM, HH:mm') : '-'} />
         {data.dateTimeEnd && (
           <>
-            <DetailItemCard label={t('arrival')} icon={Clock} value={format(new Date(data.dateTimeEnd), 'dd MMM, HH:mm')} color="text-green-600" />
+            <DetailItemCard label={t('arrival')} icon={Clock} value={formatDate(data.dateTimeEnd, 'dd MMM, HH:mm')} color="text-green-600" />
             <DetailItemCard label={t('duration')} icon={Clock} value={formatDuration(data.dateTimeStart, data.dateTimeEnd)} color="text-blue-600" />
           </>
         )}
@@ -120,7 +121,7 @@ export function VoyageDetailsPanel() {
                 <div className="flex flex-col gap-0.5">
                   <span className="font-bold text-[10px] text-muted-foreground uppercase">{event.type}</span>
                   <span className="font-medium text-xs">{event.data?.status || event.geofence?.description || event.type}</span>
-                  <span className="text-[10px] text-muted-foreground">{event.date ? format(new Date(event.date), 'dd MMM, HH:mm') : '-'}</span>
+                  <span className="text-[10px] text-muted-foreground">{event.date ? formatDate(event.date, 'dd MMM, HH:mm') : '-'}</span>
                 </div>
               </div>
             ))}

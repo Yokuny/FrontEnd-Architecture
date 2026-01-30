@@ -1,5 +1,6 @@
-import { format, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
+import { formatDate } from '@/lib/formatDate';
 
 interface CotationProps {
   date: string;
@@ -13,8 +14,8 @@ export function useCotation({ date, value }: CotationProps) {
   const getCotation = useCallback(async (targetDate: string) => {
     try {
       const dateObj = new Date(targetDate);
-      const min = format(subDays(dateObj, 5), 'MM-dd-yyyy');
-      const max = format(dateObj, 'MM-dd-yyyy');
+      const min = formatDate(subDays(dateObj, 5), 'MM-dd-yyyy');
+      const max = formatDate(dateObj, 'MM-dd-yyyy');
 
       const url = `https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='${min}'&@dataFinalCotacao='${max}'&$top=5&$orderby=dataHoraCotacao%20desc&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao`;
 

@@ -1,9 +1,8 @@
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ItemTitle } from '@/components/ui/item';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import type { NormalizedRVERDO } from '../@interface/rve-rdo.types';
 
@@ -19,7 +18,7 @@ export function RVERDOTable({ data }: RVERDOTableProps) {
   return (
     <div className="overflow-x-auto">
       <Table>
-        <TableHeader className="bg-secondary/50">
+        <TableHeader className="bg-secondary">
           <TableRow>
             <TableHead className="text-center">{t('date')}</TableHead>
             <TableHead className="text-right">
@@ -60,7 +59,7 @@ export function RVERDOTable({ data }: RVERDOTableProps) {
                 {opIndex === 0 && (
                   <>
                     <TableCell className="text-center" rowSpan={item.operations.length}>
-                      <ItemTitle className="text-sm">{format(item.date, 'dd MMM', { locale: ptBR })}</ItemTitle>
+                      <ItemTitle className="text-sm">{formatDate(item.date, 'dd MMM')}</ItemTitle>
                     </TableCell>
                     <TableCell className="text-right font-mono" rowSpan={item.operations.length}>
                       {consumptionEstimated === undefined ? (
@@ -84,8 +83,8 @@ export function RVERDOTable({ data }: RVERDOTableProps) {
                   </>
                 )}
                 <TableCell className="text-center">{operation.code}</TableCell>
-                <TableCell className="text-center font-mono">{format(operation.dateStart, 'HH:mm')}</TableCell>
-                <TableCell className="text-center font-mono">{format(operation.dateEnd, 'HH:mm')}</TableCell>
+                <TableCell className="text-center font-mono">{formatDate(operation.dateStart, 'HH:mm')}</TableCell>
+                <TableCell className="text-center font-mono">{formatDate(operation.dateEnd, 'HH:mm')}</TableCell>
                 <TableCell className="text-center font-mono">{operation.diffInHours.toFixed(2)} h</TableCell>
                 <TableCell className="text-right font-mono">{((operation.consumptionDailyContract / 24) * operation.diffInHours).toFixed(2)}</TableCell>
               </TableRow>

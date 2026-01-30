@@ -5,8 +5,8 @@ import { CircleAlert } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
-import { LanguageSwitcher } from '@/components/sidebar/switcher-language';
-import { ThemeSwitcher } from '@/components/sidebar/switcher-theme';
+import { LanguageSwitcher } from '@/components/sidebar/switch-language';
+import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
 

@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-import { pt } from 'date-fns/locale';
 import { Calendar, ChevronDown, Clock, Download, Loader2, Pencil } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { downloadCSV, sortByDateDesc, updateDateTime } from '../@helpers/consumption-daily.helpers';
 import { useConsumptionDailyApi } from '../@hooks/use-consumption-daily-api';
@@ -54,7 +53,7 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
       updatedEndTime = updateDateTime(selectedItem.pollingEndDateTime, selectedTimeEnd);
     }
 
-    const timezoneOffset = format(new Date(), 'XXX'); // Ex: +00:00
+    const timezoneOffset = formatDate(new Date(), 'XXX'); // Ex: +00:00
 
     await updatePolling.mutateAsync({
       idMachine: machineId,
@@ -73,9 +72,9 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
   const exportToCSV = () => {
     const csvData = items.map((x) => ({
       vessel: machineName,
-      date: x?.pollingEndDateTime ? format(new Date(x.pollingEndDateTime), 'yyyy-MM-dd') : '',
-      time: x?.pollingEndDateTime ? format(new Date(x.pollingEndDateTime), 'HH:mm') : '',
-      timezone: x?.pollingEndDateTime ? format(new Date(x.pollingEndDateTime), 'XXX') : '',
+      date: x?.pollingEndDateTime ? formatDate(x.pollingEndDateTime, 'yyyy-MM-dd') : '',
+      time: x?.pollingEndDateTime ? formatDate(x.pollingEndDateTime, 'HH:mm') : '',
+      timezone: x?.pollingEndDateTime ? formatDate(x.pollingEndDateTime, 'XXX') : '',
       ...x?.pollingEnd?.reduce(
         (acc, curr) => {
           acc[curr?.description] = curr?.value?.toFixed(curr?.unit?.toLowerCase() === 'hr' ? 2 : 3);
@@ -124,7 +123,7 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                   <Button variant="ghost" className="w-full items-center justify-between outline-none hover:bg-secondary focus-visible:ring-2">
                     <div className="flex items-center gap-3">
                       <Calendar className="size-4" />
-                      <ItemTitle className="text-base">{item?.pollingEndDateTime ? format(new Date(item.pollingEndDateTime), 'dd MMM HH:mm', { locale: pt }) : '-'}</ItemTitle>
+                      <ItemTitle className="text-base">{item?.pollingEndDateTime ? formatDate(item.pollingEndDateTime, 'dd MMM HH:mm') : '-'}</ItemTitle>
                       {item?.status === 'processing' && <Loader2 className="ml-2 size-4 animate-spin text-muted-foreground" />}
                     </div>
                     <div className="flex items-center gap-2">
@@ -189,16 +188,14 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                     <Calendar className="size-4" />
                     {t('date')}
                   </Label>
-                  <ItemDescription className="text-lg">
-                    {selectedItem?.pollingStartDateTime ? format(new Date(selectedItem.pollingStartDateTime), 'dd MMM yyyy', { locale: pt }) : '-'}
-                  </ItemDescription>
+                  <ItemDescription className="text-lg">{selectedItem?.pollingStartDateTime ? formatDate(selectedItem.pollingStartDateTime, 'dd MMM yyyy') : '-'}</ItemDescription>
                 </div>
                 <div>
                   <Label className="flex items-stretch gap-2">
                     <Clock className="size-4" />
                     {t('hour.unity')}
                   </Label>
-                  <ItemDescription className="text-lg">{selectedItem?.pollingStartDateTime ? format(new Date(selectedItem.pollingStartDateTime), 'HH:mm') : '-'}</ItemDescription>
+                  <ItemDescription className="text-lg">{selectedItem?.pollingStartDateTime ? formatDate(selectedItem.pollingStartDateTime, 'HH:mm') : '-'}</ItemDescription>
                 </div>
               </div>
               <div className="flex w-full max-w-30 flex-col gap-1">
@@ -221,16 +218,14 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                     <Calendar className="size-4" />
                     {t('date')}
                   </Label>
-                  <ItemDescription className="text-lg">
-                    {selectedItem?.pollingEndDateTime ? format(new Date(selectedItem.pollingEndDateTime), 'dd MMM yyyy', { locale: pt }) : '-'}
-                  </ItemDescription>
+                  <ItemDescription className="text-lg">{selectedItem?.pollingEndDateTime ? formatDate(selectedItem.pollingEndDateTime, 'dd MMM yyyy') : '-'}</ItemDescription>
                 </div>
                 <div>
                   <Label className="flex items-stretch gap-2">
                     <Clock className="size-4" />
                     {t('hour.unity')}
                   </Label>
-                  <ItemDescription className="text-lg">{selectedItem?.pollingEndDateTime ? format(new Date(selectedItem.pollingEndDateTime), 'HH:mm') : '-'}</ItemDescription>
+                  <ItemDescription className="text-lg">{selectedItem?.pollingEndDateTime ? formatDate(selectedItem.pollingEndDateTime, 'HH:mm') : '-'}</ItemDescription>
                 </div>
               </div>
               <div className="flex w-full max-w-30 flex-col gap-1">

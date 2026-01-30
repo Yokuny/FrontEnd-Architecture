@@ -54,7 +54,7 @@ function EnterprisesListPage() {
           <ItemMedia variant="image">
             {item.image?.url ? <img src={item.image.url} alt={item.name} className="size-full object-cover" /> : <Building2 className="size-5" />}
           </ItemMedia>
-          <ItemContent>
+          <ItemContent className="gap-0">
             <ItemTitle className="text-base">{item.name}</ItemTitle>
             <ItemDescription className="flex items-center gap-1">
               <MapPin className="size-3" />

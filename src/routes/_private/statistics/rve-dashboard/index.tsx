@@ -1,17 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { format, isValid, subMonths } from 'date-fns';
+import { isValid, subMonths } from 'date-fns';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useRVEDashboard } from '@/hooks/use-cmms-rve-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-
+import { formatDate } from '@/lib/formatDate';
+import { KPI } from './@components/KPI';
 import { RVEFilter } from './@components/RVEFilter';
-import { RVEKPIs } from './@components/RVEKPIs';
 import { RVEOperationalChart } from './@components/RVEOperationalChart';
 import { RVEScaleChart } from './@components/RVEScaleChart';
 
@@ -67,8 +66,8 @@ function RVEDashboardPage() {
       search: (prev: any) => ({
         ...prev,
         machines: values.machines?.length ? values.machines.join(',') : undefined,
-        initialDate: values.initialDate ? format(values.initialDate, 'yyyy-MM-dd') : undefined,
-        finalDate: values.finalDate ? format(values.finalDate, 'yyyy-MM-dd') : undefined,
+        initialDate: values.initialDate ? formatDate(values.initialDate, 'yyyy-MM-dd') : undefined,
+        finalDate: values.finalDate ? formatDate(values.finalDate, 'yyyy-MM-dd') : undefined,
       }),
     });
   };
@@ -95,7 +94,7 @@ function RVEDashboardPage() {
         {!hasData && !isLoading && <DefaultEmptyData />}
         {!isLoading && hasData && (
           <>
-            <RVEKPIs data={data?.codigosOperacionais || []} />
+            <KPI data={data?.codigosOperacionais || []} />
             <RVEOperationalChart data={data?.codigosOperacionais || []} />
             <RVEScaleChart data={data?.escalas || []} />
           </>

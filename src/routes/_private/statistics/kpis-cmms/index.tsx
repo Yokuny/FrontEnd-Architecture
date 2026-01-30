@@ -16,7 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { cn } from '@/lib/utils';
 import { DeviationsChart } from './@components/DeviationsChart';
-import { KPISummary } from './@components/KPISummary';
+import { KPI } from './@components/KPI';
 import { ReliabilityGroupChart } from './@components/ReliabilityGroupChart';
 import { ReliabilityVesselChart } from './@components/ReliabilityVesselChart';
 import { StatusChart } from './@components/StatusChart';
@@ -87,7 +87,7 @@ function KPISCMMSPage() {
     <Card>
       <CardHeader title="KPI's CMMS" />
       <CardContent className="flex flex-col gap-6">
-        <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary/50 p-4">
+        <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary p-4">
           <MachineByEnterpriseSelect mode="multi" idEnterprise={idEnterprise} value={selectedMachines} onChange={setSelectedMachines} label={t('vessels')} className="w-64" />
 
           <div className="flex flex-col gap-1.5">
@@ -96,7 +96,7 @@ function KPISCMMSPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMin ? format(dateMin, 'dd/MM/yyyy') : <span>{t('date.start')}</span>}
+                  {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -119,7 +119,7 @@ function KPISCMMSPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMax ? format(dateMax, 'dd/MM/yyyy') : <span>{t('date.end')}</span>}
+                  {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -166,7 +166,7 @@ function KPISCMMSPage() {
           </Button>
         </div>
 
-        <KPISummary filters={appliedFilters} />
+        <KPI filters={appliedFilters} />
 
         {/* Charts Grid */}
         <ItemGroup className="gap-6">

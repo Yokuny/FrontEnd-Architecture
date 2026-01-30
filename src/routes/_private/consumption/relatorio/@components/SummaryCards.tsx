@@ -40,16 +40,14 @@ export function SummaryCards({ data, unit, isReal }: SummaryCardsProps) {
   ];
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
       {cards.map((card, index) => (
-        <Item key={`${card.title}-${index}`} variant="outline">
-          <ItemContent>
-            <div className="flex items-center gap-2">
-              <card.icon className={cn('size-5', card.color)} />
-              <ItemDescription className="font-medium text-sm">{card.title}</ItemDescription>
-            </div>
-            <ItemTitle className="font-bold text-2xl">{card.value}</ItemTitle>
+        <Item key={`${card.title}-${index}`} className="flex-col rounded-none border-0 bg-background">
+          <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
+            <card.icon className={cn('size-5', card.color)} />
+            <ItemDescription className="font-medium">{card.title}</ItemDescription>
           </ItemContent>
+          <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{card.value}</ItemTitle>
         </Item>
       ))}
     </div>

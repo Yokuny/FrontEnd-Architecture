@@ -1,6 +1,4 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { MoreHorizontal, Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +26,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { usePtax, usePtaxApi } from '@/hooks/use-ptax-api';
+import { formatDate } from '@/lib/formatDate';
 import { PtaxModal } from './@components/ptax-modal';
 import type { PtaxFormData } from './@interface/ptax.schema';
 
@@ -60,7 +59,7 @@ function PtaxPage() {
     .filter((ptax) => {
       if (!search) return true;
       const s = search.toLowerCase();
-      const dateFormatted = format(new Date(ptax.date), 'dd MMM yyyy', { locale: ptBR }).toLowerCase();
+      const dateFormatted = formatDate(ptax.date, 'dd MMM yyyy').toLowerCase();
       const valueFormatted = Number(ptax.value).toString();
       return dateFormatted.includes(s) || valueFormatted.includes(s);
     })
@@ -156,7 +155,7 @@ function PtaxPage() {
                 {ptaxList.map((ptax) => (
                   <TableRow key={ptax.id}>
                     <TableCell>
-                      <ItemContent>{format(new Date(ptax.date), 'dd MMM yyyy', { locale: ptBR })}</ItemContent>
+                      <ItemContent>{formatDate(ptax.date, 'dd MMM yyyy')}</ItemContent>
                     </TableCell>
                     <TableCell>
                       <ItemContent>

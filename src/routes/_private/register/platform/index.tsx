@@ -114,7 +114,7 @@ function PlatformListPage() {
                   <ItemMedia variant="image">
                     <Ship className="size-5" />
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{item.name}</ItemTitle>
                     <ItemDescription>{`${item.acronym || '-'} / ${item.modelType || '-'}`}</ItemDescription>
                     <ItemDescription>{item.enterprise?.name}</ItemDescription>

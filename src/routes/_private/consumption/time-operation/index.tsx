@@ -1,10 +1,11 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { endOfDay, format, parseISO, startOfDay, subDays } from 'date-fns';
+import { endOfDay, parseISO, startOfDay, subDays } from 'date-fns';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ItemDescription } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { formatDate } from '@/lib/formatDate';
 import { TimeOperationFilter } from './@components/time-operation-filter';
 import { TimeOperationTable } from './@components/time-operation-table';
 import { useTimeOperationDashboard } from './@hooks/use-time-operation-api';
@@ -24,8 +25,8 @@ function TimeOperationDashboardPage() {
   const [orderColumn, setOrderColumn] = useState<{ column: string; order: 'asc' | 'desc' } | null>(null);
 
   // Initialize state from URL params or defaults
-  const dateMinStr = search.dateMin || format(startOfDay(subDays(new Date(), 8)), "yyyy-MM-dd'T'00:00:00XXX");
-  const dateMaxStr = search.dateMax || format(endOfDay(subDays(new Date(), 1)), "yyyy-MM-dd'T'23:59:59XXX");
+  const dateMinStr = search.dateMin || formatDate(startOfDay(subDays(new Date(), 8)), "yyyy-MM-dd'T'00:00:00XXX");
+  const dateMaxStr = search.dateMax || formatDate(endOfDay(subDays(new Date(), 1)), "yyyy-MM-dd'T'23:59:59XXX");
 
   const { data: rawData, isLoading } = useTimeOperationDashboard(idEnterprise, search.machines, dateMinStr, dateMaxStr, search.isShowDisabled, search.unit);
 
@@ -126,7 +127,7 @@ function TimeOperationDashboardPage() {
       <CardHeader title={t('consumption.time.operation')}>
         {dateMinStr && dateMaxStr && (
           <ItemDescription>
-            {format(parseISO(dateMinStr), 'dd MMM yyyy')} - {format(parseISO(dateMaxStr), 'dd MMM yyyy')}
+            {formatDate(parseISO(dateMinStr), 'dd MMM yyyy')} - {formatDate(parseISO(dateMaxStr), 'dd MMM yyyy')}
           </ItemDescription>
         )}
       </CardHeader>

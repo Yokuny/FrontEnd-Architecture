@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { format } from 'date-fns';
 import { CalendarIcon, List, ListChecks, Search } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useEEOICIIIndicators } from '@/hooks/use-esg-api';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { DownloadCSV } from './@components/DownloadCSV';
 import { IndicatorsTable } from './@components/IndicatorsTable';
@@ -35,8 +35,8 @@ function IndicatorsEEOICIIPage() {
 
   const filters: IndicatorsFilters = {
     idEnterprise,
-    dateTimeStart: dateMin ? format(dateMin, 'yyyy-MM-dd') : undefined,
-    dateTimeEnd: dateMax ? format(dateMax, 'yyyy-MM-dd') : undefined,
+    dateTimeStart: dateMin ? formatDate(dateMin, 'yyyy-MM-dd') : undefined,
+    dateTimeEnd: dateMax ? formatDate(dateMax, 'yyyy-MM-dd') : undefined,
     'idMachine[]': selectedMachines,
     search: search || undefined,
   };
@@ -70,7 +70,7 @@ function IndicatorsEEOICIIPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
+                  {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -85,7 +85,7 @@ function IndicatorsEEOICIIPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
+                  {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">

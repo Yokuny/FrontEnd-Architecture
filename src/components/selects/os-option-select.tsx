@@ -3,7 +3,7 @@ import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { OS_OPTIONS, type OsOption } from '@/lib/constants/select-options';
+import { OS_OPTIONS, type SelectOption } from '@/lib/constants/select-options';
 
 export function OsOptionSelect(props: OsOptionSelectProps) {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ export function OsOptionSelect(props: OsOptionSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: OsOption[]) => {
+  const mapToOptions = (options: SelectOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: opt.label,
@@ -36,7 +36,7 @@ export function OsOptionSelect(props: OsOptionSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<OsOption, OsOption>
+      <DataSelect<SelectOption, SelectOption>
         id={id}
         placeholder={placeholder || t('select.option')}
         value={props.value}

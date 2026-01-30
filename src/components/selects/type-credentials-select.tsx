@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { CREDENTIALS_OPTIONS, type CredentialsOption } from '@/lib/constants/select-options';
+import { CREDENTIALS_OPTIONS, type SelectOptionWithKey } from '@/lib/constants/select-options';
 
 export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: CredentialsOption[]) => {
+  const mapToOptions = (options: SelectOptionWithKey[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: t(opt.labelKey),
@@ -38,7 +38,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<CredentialsOption, CredentialsOption>
+        <DataMultiSelect<SelectOptionWithKey, SelectOptionWithKey>
           id={id}
           placeholder={placeholder || t('credentials.by')}
           value={props.value}
@@ -64,7 +64,7 @@ export function TypeCredentialsSelect(props: TypeCredentialsSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<CredentialsOption, CredentialsOption>
+      <DataSelect<SelectOptionWithKey, SelectOptionWithKey>
         id={id}
         placeholder={placeholder || t('login.password')}
         value={props.value}

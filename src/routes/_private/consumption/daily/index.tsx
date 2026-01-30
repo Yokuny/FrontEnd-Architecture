@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { format, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 import { CalendarIcon, Search } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { mapConsumptionMachinesToOptions, useConsumptionMachinesSelect } from '@/hooks/use-consumption-machines-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { ConsumptionChart } from './@components/ConsumptionChart';
 import { ListPolling } from './@components/ListPolling';
@@ -62,8 +63,8 @@ function ConsumptionDailyPage() {
   const handleSearch = useCallback(() => {
     navigate({
       search: {
-        dateMin: format(dateMin, 'yyyy-MM-dd'),
-        dateMax: format(dateMax, 'yyyy-MM-dd'),
+        dateMin: formatDate(dateMin, 'yyyy-MM-dd'),
+        dateMax: formatDate(dateMax, 'yyyy-MM-dd'),
         machine: machineId,
         unit,
       },
@@ -92,7 +93,7 @@ function ConsumptionDailyPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
+                  {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -115,7 +116,7 @@ function ConsumptionDailyPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
+                  {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">

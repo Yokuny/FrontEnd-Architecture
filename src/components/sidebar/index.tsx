@@ -4,10 +4,10 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FooterNavigation } from '@/components/sidebar/nav-footer';
 import AppNavigation, { type Route } from '@/components/sidebar/nav-main';
-import { LanguageSwitcher } from '@/components/sidebar/switcher-language';
-import { NotificationsSwitcher } from '@/components/sidebar/switcher-notifications';
-import { SidebarSwitcher } from '@/components/sidebar/switcher-sidebar';
-import { ThemeSwitcher } from '@/components/sidebar/switcher-theme';
+import { LanguageSwitcher } from '@/components/sidebar/switch-language';
+import { NotificationsSwitcher } from '@/components/sidebar/switch-notifications';
+import { SidebarSwitcher } from '@/components/sidebar/switch-sidebar';
+import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
 import { buildSidebarRoutes, type SidebarRoute } from '@/config/sidebarRoutes';
 import { cn } from '@/lib/utils';
@@ -88,7 +88,7 @@ export function AppSidebar() {
         </div>
         <SidebarSeparator />
       </SidebarHeader>
-      <SidebarContent className="px-2 py-1">
+      <SidebarContent className="px-2 py-1 text-muted-foreground">
         <AppNavigation routes={filteredRoutes} />
       </SidebarContent>
       <SidebarFooter className="px-2 pb-3">

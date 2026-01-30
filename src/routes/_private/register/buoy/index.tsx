@@ -114,7 +114,7 @@ function BuoyListPage() {
                   <ItemMedia variant="image">
                     <Radio className="size-5" />
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{item.name}</ItemTitle>
                     <ItemDescription className="flex items-center gap-1">
                       <MapPin className="size-3" />

@@ -1,10 +1,10 @@
-import { format } from 'date-fns';
 import { Anchor, Calendar, Flag, Globe, Ruler, Ship, Weight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
+import { formatDate } from '@/lib/formatDate';
 import { calculateCIIReference } from '../@hooks/fleet-utils';
 import { useMachineDatasheet } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
@@ -94,7 +94,7 @@ export function FleetInfoPanel() {
           <div className="grid grid-cols-3 gap-x-2 gap-y-4 rounded-md border border-accent bg-accent/50 p-2">
             <DetailGridItem label={t('year.build')} value={dsData?.dataSheet?.yearBuilt || '-'} icon={Calendar} />
             <DetailGridItem label={t('flag')} value={dsData?.dataSheet?.flag || '-'} icon={Flag} />
-            <DetailGridItem label={t('create.at')} value={dsData?.createAt ? format(new Date(dsData.createAt), 'dd MMM yyyy') : '-'} />
+            <DetailGridItem label={t('create.at')} value={dsData?.createAt ? formatDate(dsData.createAt, 'dd MMM yyyy') : '-'} />
           </div>
         </div>
       </div>

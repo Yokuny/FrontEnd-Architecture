@@ -1,16 +1,17 @@
 'use client';
 
-import { differenceInMinutes, format, getMinutes, isPast } from 'date-fns';
+import { differenceInMinutes, getMinutes, isPast } from 'date-fns';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ItemContent, ItemTitle } from '@/components/ui/item';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import type { PartialSchedule } from '../@interface/schedule';
 import { getBorderRadiusClasses, getEventColorClasses } from '../@utils/calendar.utils';
 
 const formatTimeWithOptionalMinutes = (date: Date) => {
-  return format(date, getMinutes(date) === 0 ? 'ha' : 'h:mma').toLowerCase();
+  return formatDate(date, getMinutes(date) === 0 ? 'ha' : 'h:mma').toLowerCase();
 };
 
 // Shared wrapper component for event styling

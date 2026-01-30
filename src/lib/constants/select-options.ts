@@ -1,8 +1,22 @@
 import type { Locale } from '@/hooks/use-locale';
 
-export interface LanguageOption {
-  value: Locale;
+// Base Interfaces
+export interface SelectOption<T = string> {
+  value: T;
   label: string;
+}
+
+export interface SelectOptionWithKey<T = string> {
+  value: T;
+  labelKey: string;
+}
+
+export interface IdNameOption {
+  id: string;
+  name: string;
+}
+
+export interface LanguageOption extends SelectOption<Locale> {
   locale: string;
 }
 
@@ -30,26 +44,19 @@ export const LANGUAGE_NAMES: Record<Locale, string> = {
   pt: 'Português Brasil',
 };
 
-export interface FasTypeOption {
-  id: string;
-  name: string;
-}
-
-export const FAS_TYPES: FasTypeOption[] = [
+export const FAS_TYPES: IdNameOption[] = [
   { id: 'Normal', name: 'Normal' },
   { id: 'Emergencial', name: 'Emergencial' },
   { id: 'Docagem - Normal', name: 'Docagem - Normal' },
   { id: 'Docagem - Emergencial', name: 'Docagem - Emergencial' },
 ];
 
-export const FAS_REGULARIZATION_TYPES: FasTypeOption[] = [
+export const FAS_REGULARIZATION_TYPES: IdNameOption[] = [
   { id: 'Regularizacao', name: 'Regularização' },
   { id: 'Docagem - Regularizacao', name: 'Docagem - Regularização' },
 ];
 
-export interface FenceTypeOption {
-  id: string;
-  name: string;
+export interface FenceTypeOption extends IdNameOption {
   color: string;
 }
 
@@ -68,9 +75,7 @@ export const FENCE_TYPES: FenceTypeOption[] = [
   { id: 'other', name: 'Outro', color: '#7F7F7F' },
 ];
 
-export interface LevelOption {
-  id: string;
-  name: string;
+export interface LevelOption extends IdNameOption {
   color: string;
   icon: string;
 }
@@ -81,45 +86,25 @@ export const LEVEL_OPTIONS: LevelOption[] = [
   { id: 'info', name: 'Informativo', color: '#66b83a', icon: 'Info' },
 ];
 
-export interface OsOption {
-  value: string;
-  label: string;
-}
-
-export const OS_OPTIONS: OsOption[] = [
+export const OS_OPTIONS: SelectOption[] = [
   { value: 'Sim', label: 'Sim' },
   { value: 'Não', label: 'Não' },
   { value: 'N/A', label: 'N/A' },
 ];
 
-export interface MachineTypeOption {
-  value: string;
-  label: string;
-}
-
-export const MACHINE_TYPES: MachineTypeOption[] = [
+export const MACHINE_TYPES: SelectOption[] = [
   { value: 'ship', label: 'Embarcação' },
   { value: 'truck', label: 'Caminhão' },
   { value: 'industrial', label: 'Máquina Industrial' },
 ];
 
-export interface SafetyAreaOption {
-  value: string;
-  label: string;
-}
-
-export const SAFETY_AREAS: SafetyAreaOption[] = [
+export const SAFETY_AREAS: SelectOption[] = [
   { value: 'invaded', label: 'Invasão' },
   { value: 'warn_1', label: 'Aviso 1' },
   { value: 'warn_2', label: 'Aviso 2' },
 ];
 
-export interface VariableTypeOption {
-  value: string;
-  label: string;
-}
-
-export const VARIABLE_TYPES: VariableTypeOption[] = [
+export const VARIABLE_TYPES: SelectOption[] = [
   { value: 'int', label: 'INT' },
   { value: 'decimal', label: 'DECIMAL' },
   { value: 'double', label: 'DOUBLE' },
@@ -131,9 +116,7 @@ export const VARIABLE_TYPES: VariableTypeOption[] = [
   { value: 'array', label: 'ARRAY' },
 ];
 
-export interface PriorityOption {
-  value: number;
-  label: string;
+export interface PriorityOption extends SelectOption<number> {
   color: string;
 }
 
@@ -143,22 +126,12 @@ export const PRIORITY_OPTIONS: PriorityOption[] = [
   { value: 2, label: 'Alta', color: '#c4183c' },
 ];
 
-export interface ViewOption {
-  value: string;
-  label: string;
-}
-
-export const VIEW_OPTIONS: ViewOption[] = [
+export const VIEW_OPTIONS: SelectOption[] = [
   { value: 'operational', label: 'Operacional' },
   { value: 'financial', label: 'Financeiro' },
 ];
 
-export interface ConditionOption {
-  value: string;
-  label: string;
-}
-
-export const CONDITION_OPTIONS: ConditionOption[] = [
+export const CONDITION_OPTIONS: SelectOption[] = [
   { value: 'lessThan', label: 'Menor que' },
   { value: 'lessThanOrEqual', label: 'Menor ou igual a' },
   { value: 'equal', label: 'Igual a' },
@@ -168,43 +141,24 @@ export const CONDITION_OPTIONS: ConditionOption[] = [
   { value: 'different', label: 'Diferente de' },
 ];
 
-export interface VisibilityOption {
-  value: string;
-  labelKey: string;
-}
-
-export const VISIBILITY_OPTIONS: VisibilityOption[] = [
+export const VISIBILITY_OPTIONS: SelectOptionWithKey[] = [
   { value: 'public', labelKey: 'visibility.public' },
   { value: 'private', labelKey: 'visibility.private' },
   { value: 'limited', labelKey: 'visibility.limited' },
 ];
 
-export interface EditPermissionOption {
-  value: string;
-  labelKey: string;
-}
-
-export const EDIT_PERMISSION_OPTIONS: EditPermissionOption[] = [
+export const EDIT_PERMISSION_OPTIONS: SelectOptionWithKey[] = [
   { value: 'all', labelKey: 'edit.permission.all' },
   { value: 'admin', labelKey: 'edit.permission.admin' },
   { value: 'owner', labelKey: 'edit.permission.owner' },
 ];
 
-export interface CredentialsOption {
-  value: string;
-  labelKey: string;
-}
-
-export const CREDENTIALS_OPTIONS: CredentialsOption[] = [
+export const CREDENTIALS_OPTIONS: SelectOptionWithKey[] = [
   { value: 'password', labelKey: 'login.password' },
   { value: 'sso', labelKey: 'SSO' },
 ];
-export interface FormTypeOption {
-  value: string;
-  labelKey: string;
-}
 
-export const FORM_TYPE_OPTIONS: FormTypeOption[] = [
+export const FORM_TYPE_OPTIONS: SelectOptionWithKey[] = [
   { value: 'RVE', labelKey: 'RVE' },
   { value: 'EVENT_REPORT', labelKey: 'Relatório de evento diário' },
   { value: 'FILL_ONBOARD', labelKey: 'fill.onboard' },
@@ -216,12 +170,7 @@ export const FORM_TYPE_OPTIONS: FormTypeOption[] = [
   { value: 'CMMS', labelKey: 'CMMS' },
 ];
 
-export interface VesselCiiTypeOption {
-  value: string;
-  label: string;
-}
-
-export const VESSEL_CII_TYPES: VesselCiiTypeOption[] = [
+export const VESSEL_CII_TYPES: SelectOption[] = [
   { value: 'BULK_CARRIER', label: 'Bulk Carrier' },
   { value: 'GAS_CARRIER', label: 'Gas Carrier' },
   { value: 'TANKER', label: 'Tanker' },
@@ -234,4 +183,10 @@ export const VESSEL_CII_TYPES: VesselCiiTypeOption[] = [
   { value: 'RO_RO_CARGO_SHIP_VC', label: 'Ro-ro cargo ship (VC)' },
   { value: 'RO_RO_PASSENGER_SHIP', label: 'Ro-ro passenger ship' },
   { value: 'CRUISE_PASSENGER_SHIP', label: 'Cruise passenger ship' },
+];
+
+export const UNIT_OPTIONS: SelectOption[] = [
+  { label: 'L', value: 'L' },
+  { label: 'm³', value: 'm³' },
+  { label: 'T', value: 'T' },
 ];

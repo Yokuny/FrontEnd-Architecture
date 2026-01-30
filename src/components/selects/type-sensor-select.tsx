@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { VARIABLE_TYPES, type VariableTypeOption } from '@/lib/constants/select-options';
+import { type SelectOption, VARIABLE_TYPES } from '@/lib/constants/select-options';
 
 /**
  * TypeSensorSelect Component
@@ -27,7 +27,7 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: VariableTypeOption[]) => {
+  const mapToOptions = (options: SelectOption[]) => {
     return options
       .map((opt) => ({
         value: opt.value,
@@ -47,7 +47,7 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<VariableTypeOption, VariableTypeOption>
+        <DataMultiSelect<SelectOption, SelectOption>
           id={id}
           placeholder={placeholder || t('variable.type')}
           value={props.value}
@@ -73,7 +73,7 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<VariableTypeOption, VariableTypeOption>
+      <DataSelect<SelectOption, SelectOption>
         id={id}
         placeholder={placeholder || t('variable.type')}
         value={props.value}

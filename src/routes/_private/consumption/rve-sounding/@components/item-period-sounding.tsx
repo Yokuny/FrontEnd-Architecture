@@ -50,7 +50,7 @@ export function ItemPeriodSounding({ data }: ItemPeriodSoundingProps) {
         const isOpen = openIndex === i;
 
         return (
-          <Card key={i} className="border shadow-none">
+          <Card key={`period-${first.date.getTime()}`} className="border shadow-none">
             <CardHeader className="p-4">
               <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-12">
                 {/* Start */}

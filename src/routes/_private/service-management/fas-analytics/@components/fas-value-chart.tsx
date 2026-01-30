@@ -1,0 +1,98 @@
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Bar, CartesianGrid, ComposedChart, Line, XAxis, YAxis } from 'recharts';
+import DefaultEmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
+import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
+import { Item, ItemContent, ItemHeader, ItemTitle } from '@/components/ui/item';
+import type { FasAnalyticsFilters } from '@/hooks/use-fas-analytics-api';
+import { useFasValueGroupedCount } from '@/hooks/use-fas-analytics-api';
+import type { FasAnalyticsSearch } from '../@interface/fas-analytics.schema';
+
+export function FasValueChart({ search }: FasValueChartProps) {
+  const { t } = useTranslation();
+
+  const filters: FasAnalyticsFilters = {
+    dependantAxis: (search.dependantAxis as 'month' | 'year' | 'vessel') || 'month',
+    service_date_gte: search.startDate,
+    service_date_lte: search.endDate,
+    service_date_month: search.month,
+    service_date_year: search.year,
+    vessel_id: search.vesselId,
+    type: search.fasType,
+  };
+
+  const { data, isLoading } = useFasValueGroupedCount(filters);
+
+  const chartData = useMemo(() => {
+    if (!data) return [];
+    return data.map((item) => {
+      let name = t('undefined');
+
+      if (typeof item._id === 'string') {
+        name = item._id;
+      } else if (item._id && typeof item._id === 'object') {
+        if (filters.dependantAxis === 'vessel') {
+          name = item._id.vesselName || item._id.vessel || t('undefined');
+        } else if (filters.dependantAxis === 'year') {
+          name = item._id.year?.toString() || t('undefined');
+        } else {
+          const month = item._id.month || t('undefined');
+          const year = item._id.year ? ` ${item._id.year}` : '';
+          name = `${month}${year}`;
+        }
+      }
+      return {
+        name,
+        [t('value.with.payment')]: item.totalWithPaymentDate,
+        [t('value.without.payment')]: item.totalWithoutPaymentDate,
+        [t('fas.quantity')]: item.count,
+      };
+    });
+  }, [data, filters.dependantAxis, t]);
+
+  const chartConfig: ChartConfig = {
+    [t('value.with.payment')]: {
+      label: t('value.with.payment'),
+      color: getChartColor(1),
+    },
+    [t('value.without.payment')]: {
+      label: t('value.without.payment'),
+      color: getChartColor(14),
+    },
+    [t('fas.quantity')]: {
+      label: t('fas.quantity'),
+      color: getChartColor(7),
+    },
+  };
+
+  if (isLoading) return <DefaultLoading />;
+  if (!chartData || chartData.length === 0) return <DefaultEmptyData />;
+
+  return (
+    <Item variant="outline">
+      <ItemHeader>
+        <ItemTitle className="font-bold text-lg">{t('fas.bms.value.chart')}</ItemTitle>
+      </ItemHeader>
+      <ItemContent>
+        <ChartContainer config={chartConfig} className="h-[50vh] w-full">
+          <ComposedChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
+            <XAxis dataKey="name" angle={-45} textAnchor="end" interval={0} height={80} tickLine={false} axisLine={false} fontSize={12} />
+            <YAxis yAxisId="left" tickLine={false} axisLine={false} fontSize={12} tickFormatter={(value) => (value >= 1000 ? `${value / 1000}K` : value)} />
+            <YAxis yAxisId="right" orientation="right" tickLine={false} axisLine={false} fontSize={12} />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <ChartLegend content={<ChartLegendContent />} />
+            <Bar yAxisId="left" dataKey={t('value.with.payment')} stackId="a" fill={getChartColor(1)} radius={[0, 0, 0, 0]} />
+            <Bar yAxisId="left" dataKey={t('value.without.payment')} stackId="a" fill={getChartColor(14)} radius={[4, 4, 0, 0]} />
+            <Line yAxisId="right" type="monotone" dataKey={t('fas.quantity')} stroke={getChartColor(7)} strokeWidth={3} />
+          </ComposedChart>
+        </ChartContainer>
+      </ItemContent>
+    </Item>
+  );
+}
+
+interface FasValueChartProps {
+  search: FasAnalyticsSearch;
+}

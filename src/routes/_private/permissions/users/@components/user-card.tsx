@@ -1,21 +1,13 @@
 import { Link } from '@tanstack/react-router';
 import { Edit, Lock, MoreVertical, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Status, StatusIndicator, StatusLabel } from '@/components/kibo-ui/status';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+import { Badge, Status, StatusIndicator, StatusLabel } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 import type { UserListItem } from '../@interface/user';
-
-interface UserCardProps {
-  user: UserListItem;
-  hasPermissionEdit?: boolean;
-  hasPermissionPermissions?: boolean;
-  hasPermissionPassword?: boolean;
-}
 
 export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, hasPermissionPassword }: UserCardProps) {
   const { t } = useTranslation();
@@ -28,9 +20,9 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
     .slice(0, 2);
 
   const getStatusConfig = () => {
-    if (isDisabled) return { status: 'offline' as const, label: 'user.disabled' };
-    if (user.isOnlyContact) return { status: 'maintenance' as const, label: 'just.contact' };
-    return { status: 'online' as const, label: 'user.system' };
+    if (isDisabled) return { status: 'error' as const, label: 'user.disabled' };
+    if (user.isOnlyContact) return { status: 'info' as const, label: 'just.contact' };
+    return { status: 'active' as const, label: 'user.system' };
   };
 
   const statusConfig = getStatusConfig();
@@ -101,4 +93,11 @@ export function UserCard({ user, hasPermissionEdit, hasPermissionPermissions, ha
       </ItemActions>
     </Item>
   );
+}
+
+interface UserCardProps {
+  user: UserListItem;
+  hasPermissionEdit?: boolean;
+  hasPermissionPermissions?: boolean;
+  hasPermissionPassword?: boolean;
 }

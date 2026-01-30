@@ -1,20 +1,17 @@
-import { format, formatDistanceToNow } from 'date-fns';
-import { enUS, es, ptBR } from 'date-fns/locale';
 import { Archive, Calendar, Clock, Compass, Flag, Gauge, Navigation2, Waves } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { formatDate, formatDistanceToNow } from '@/lib/formatDate';
 import { getNavigationStatusColor, getOperationStatusColor } from '../@hooks/status-utils';
 import { useFleetMachines, useMachineDetails } from '../@hooks/use-fleet-api';
 import { useFleetManagerStore } from '../@hooks/use-fleet-manager-store';
 import { DetailGridItem } from './helpers/detail-items';
 import { Proximity } from './helpers/proximity';
 
-const locales: Record<string, any> = { pt: ptBR, en: enUS, es: es, 'pt-BR': ptBR };
-
 export function MachineSummaryPanel() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { idEnterprise } = useEnterpriseFilter();
   const { selectedMachineId, statusMachine, operationMachines } = useFleetManagerStore();
   const { data: machineDetails, isLoading: isLoadingDetails } = useMachineDetails(selectedMachineId);
@@ -41,9 +38,6 @@ export function MachineSummaryPanel() {
 
   const navColor = getNavigationStatusColor(navStatus as string);
   const opColor = getOperationStatusColor(opStatusValue as string);
-
-  const language = i18n.language;
-  const currentLocale = locales[language] || locales[language.split('-')[0]] || enUS;
 
   return (
     <ItemGroup className="space-y-4 p-4">
@@ -105,8 +99,8 @@ export function MachineSummaryPanel() {
           value={
             travel?.dateTimeStart ? (
               <div className="flex flex-col items-center">
-                <span>{format(new Date(travel.dateTimeStart), 'dd MMM yy')}</span>
-                <span className="font-medium text-[10px] text-muted-foreground">{format(new Date(travel.dateTimeStart), 'HH:mm')}</span>
+                <span>{formatDate(travel.dateTimeStart, 'dd MMM yy')}</span>
+                <span className="font-medium text-[10px] text-muted-foreground">{formatDate(travel.dateTimeStart, 'HH:mm')}</span>
               </div>
             ) : (
               '-'
@@ -119,8 +113,8 @@ export function MachineSummaryPanel() {
           value={
             travel?.metadata?.eta || data.eta ? (
               <div className="flex flex-col items-center">
-                <span>{format(new Date(travel?.metadata?.eta || data.eta || ''), 'dd MMM yy')}</span>
-                <span className="font-medium text-[10px] text-muted-foreground">{format(new Date(travel?.metadata?.eta || data.eta || ''), 'HH:mm')}</span>
+                <span>{formatDate(travel?.metadata?.eta || data.eta || '', 'dd MMM yy')}</span>
+                <span className="font-medium text-[10px] text-muted-foreground">{formatDate(travel?.metadata?.eta || data.eta || '', 'HH:mm')}</span>
               </div>
             ) : (
               '-'
@@ -155,9 +149,9 @@ export function MachineSummaryPanel() {
               <>
                 <div className="flex items-center gap-1">
                   <Clock className="size-3 text-muted-foreground" />
-                  <span>{formatDistanceToNow(new Date(data.lastUpdate), { addSuffix: true, locale: currentLocale })}</span>
+                  <span>{formatDistanceToNow(data.lastUpdate, { addSuffix: true })}</span>
                 </div>
-                <span className="mt-0.5 text-[9px] text-muted-foreground">{format(new Date(data.lastUpdate), 'dd/MM/yy HH:mm')}</span>
+                <span className="mt-0.5 text-[9px] text-muted-foreground">{formatDate(data.lastUpdate, 'dd MM yy HH:mm')}</span>
               </>
             ) : (
               '-'

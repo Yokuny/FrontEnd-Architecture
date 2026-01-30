@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
@@ -7,6 +6,7 @@ import { type ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, Char
 import { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTrackingUserRMDay } from '@/hooks/use-tracking-activity-api';
+import { formatDate } from '@/lib/formatDate';
 import { CHART_HEIGHT } from '../@consts';
 import type { TrackingFilters, UserRMDayData } from '../@interface';
 
@@ -23,7 +23,7 @@ export function UserRMDayChart({ filters }: UserRMDayChartProps) {
     );
 
     const result = days.map((day) => ({
-      date: format(new Date(day), 'dd/MM'),
+      date: formatDate(new Date(day), 'dd MM'),
       accesses: data.accessRMDay?.find((x) => x.date.slice(0, 10) === day)?.total || 0,
       users: data.usersRMDay?.find((x) => x.date.slice(0, 10) === day)?.total || 0,
     }));

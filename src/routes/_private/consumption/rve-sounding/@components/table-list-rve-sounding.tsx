@@ -68,7 +68,7 @@ export function TableListRVESounding({ data }: TableListRVESoundingProps) {
             const isExcess = consumed > maxAllow && consumed > 0;
 
             return (
-              <tr key={index} className="hover:bg-muted/50">
+              <tr key={`sounding-${item.date.getTime()}`} className="hover:bg-muted/50">
                 <td className="whitespace-nowrap p-2 text-center">
                   <div className="text-sm">{format(item.date, 'dd MMM yyyy')}</div>
                   <div className="text-muted-foreground text-xs">{format(item.date, 'HH:mm')}</div>

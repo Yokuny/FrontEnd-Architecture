@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { FAS_REGULARIZATION_TYPES, FAS_TYPES, type FasTypeOption } from '@/lib/constants/select-options';
+import { FAS_REGULARIZATION_TYPES, FAS_TYPES, type IdNameOption } from '@/lib/constants/select-options';
 
 export function FasTypeSelect(props: FasTypeSelectProps) {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ export function FasTypeSelect(props: FasTypeSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: FasTypeOption[]) => {
+  const mapToOptions = (options: IdNameOption[]) => {
     return options.map((opt) => ({
       value: opt.id,
       label: opt.name,
@@ -44,7 +44,7 @@ export function FasTypeSelect(props: FasTypeSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<FasTypeOption, FasTypeOption>
+        <DataMultiSelect<IdNameOption, IdNameOption>
           id={id}
           placeholder={placeholder || t('select.option')}
           value={props.value}
@@ -70,7 +70,7 @@ export function FasTypeSelect(props: FasTypeSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<FasTypeOption, FasTypeOption>
+      <DataSelect<IdNameOption, IdNameOption>
         id={id}
         placeholder={placeholder || t('select.option')}
         value={props.value}

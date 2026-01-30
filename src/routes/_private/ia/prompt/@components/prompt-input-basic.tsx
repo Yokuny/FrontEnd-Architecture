@@ -40,7 +40,7 @@ export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: 
             <div key={`${file.name}-${index}`} className="flex items-center gap-2 rounded-lg bg-secondary px-3 py-2" onClick={(e) => e.stopPropagation()}>
               <FileDigit className="size-4" />
               <span className="max-w-32 truncate">{file.name}</span>
-              <button onClick={() => handleRemoveFile(index)} className="rounded-full p-1 hover:bg-secondary/50" type="button">
+              <button onClick={() => handleRemoveFile(index)} className="rounded-full p-1 hover:bg-secondary" type="button">
                 <X className="size-4" />
               </button>
             </div>

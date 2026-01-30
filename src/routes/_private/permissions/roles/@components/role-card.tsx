@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { DoorOpen, Edit, MoreVertical, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Status, StatusIndicator, StatusLabel } from '@/components/kibo-ui/status';
+import { Status, StatusIndicator, StatusLabel } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
@@ -17,9 +17,9 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
   const { t } = useTranslation();
   const getVisibilityBadge = (visibility: string) => {
     const variants = {
-      public: { status: 'online' as const, labelKey: 'visibility.public' },
-      private: { status: 'offline' as const, labelKey: 'visibility.private' },
-      limited: { status: 'maintenance' as const, labelKey: 'visibility.limited' },
+      public: { status: 'active' as const, labelKey: 'visibility.public' },
+      private: { status: 'error' as const, labelKey: 'visibility.private' },
+      limited: { status: 'info' as const, labelKey: 'visibility.limited' },
     };
 
     const config = variants[visibility as keyof typeof variants] || variants.public;

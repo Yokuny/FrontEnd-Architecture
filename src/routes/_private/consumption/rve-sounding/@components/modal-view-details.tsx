@@ -67,7 +67,7 @@ export function ModalViewDetails({ operations, rdo }: ModalViewDetailsProps) {
                 </thead>
                 <tbody className="divide-y">
                   {filteredRDO.map((x, i) => (
-                    <tr key={i} className={i % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
+                    <tr key={`rdo-${x.date.getTime()}`} className={i % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
                       <td className="p-2 text-center">{format(x.date, 'dd MMM yyyy')}</td>
                       <td className="p-2 text-center">{format(x.date, 'HH:mm')}</td>
                       <td className="p-2 text-right">{formatNumber(x.received, 3)}</td>
@@ -115,7 +115,7 @@ export function ModalViewDetails({ operations, rdo }: ModalViewDetailsProps) {
                       const contractMax = (x.consumptionDailyContract / 24) * diffInHours;
 
                       return (
-                        <tr key={`${day}-${opIndex}`} className={dayIndex % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
+                        <tr key={`${day}-${x.code}-${x.dateStart.getTime()}`} className={dayIndex % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
                           {opIndex === 0 && (
                             <td className="p-2 text-center align-middle" rowSpan={ops.length}>
                               {format(x.dateStart, 'dd MMM yyyy')}

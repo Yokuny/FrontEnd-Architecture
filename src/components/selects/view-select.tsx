@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { VIEW_OPTIONS, type ViewOption } from '@/lib/constants/select-options';
+import { type SelectOption, VIEW_OPTIONS } from '@/lib/constants/select-options';
 
 export function ViewSelect(props: ViewSelectProps) {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ export function ViewSelect(props: ViewSelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: ViewOption[]) => {
+  const mapToOptions = (options: SelectOption[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: opt.label,
@@ -44,7 +44,7 @@ export function ViewSelect(props: ViewSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<ViewOption, ViewOption>
+        <DataMultiSelect<SelectOption, SelectOption>
           id={id}
           placeholder={placeholder || t('view')}
           value={props.value}
@@ -70,7 +70,7 @@ export function ViewSelect(props: ViewSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<ViewOption, ViewOption>
+      <DataSelect<SelectOption, SelectOption>
         id={id}
         placeholder={placeholder || t('view')}
         value={props.value}

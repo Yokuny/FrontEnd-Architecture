@@ -103,7 +103,7 @@ function UserTypeListPage() {
                   <ItemMedia variant="image">
                     <User className="size-5" />
                   </ItemMedia>
-                  <ItemContent>
+                  <ItemContent className="gap-0">
                     <ItemTitle className="text-base">{item.description}</ItemTitle>
                     {item.enterprise && <ItemDescription>{item.enterprise.name}</ItemDescription>}
                   </ItemContent>

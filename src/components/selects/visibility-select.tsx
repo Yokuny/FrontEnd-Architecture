@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
-import { VISIBILITY_OPTIONS, type VisibilityOption } from '@/lib/constants/select-options';
+import { type SelectOptionWithKey, VISIBILITY_OPTIONS } from '@/lib/constants/select-options';
 
 export function VisibilitySelect(props: VisibilitySelectProps) {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ export function VisibilitySelect(props: VisibilitySelectProps) {
     status: 'success' as const,
   };
 
-  const mapToOptions = (options: VisibilityOption[]) => {
+  const mapToOptions = (options: SelectOptionWithKey[]) => {
     return options.map((opt) => ({
       value: opt.value,
       label: t(opt.labelKey),
@@ -39,7 +39,7 @@ export function VisibilitySelect(props: VisibilitySelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataMultiSelect<VisibilityOption, VisibilityOption>
+        <DataMultiSelect<SelectOptionWithKey, SelectOptionWithKey>
           id={id}
           placeholder={placeholder || t('visibility')}
           value={props.value}
@@ -64,7 +64,7 @@ export function VisibilitySelect(props: VisibilitySelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<VisibilityOption, VisibilityOption>
+      <DataSelect<SelectOptionWithKey, SelectOptionWithKey>
         id={id}
         placeholder={placeholder || t('visibility')}
         value={props.value}
