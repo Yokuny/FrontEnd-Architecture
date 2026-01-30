@@ -47,7 +47,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
 
       <Tabs defaultValue="assets">
         <TabsList className="grid h-9 w-full grid-cols-2">
-          <TabsTrigger value="assets">{t('machines')}</TabsTrigger>
+          <TabsTrigger value="assets">{t('assets')}</TabsTrigger>
           <TabsTrigger value="voyages">{t('travel')}</TabsTrigger>
         </TabsList>
 

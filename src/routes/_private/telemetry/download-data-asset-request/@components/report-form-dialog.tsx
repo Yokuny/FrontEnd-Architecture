@@ -121,10 +121,10 @@ export function ReportFormDialog({ open, onOpenChange, idEnterprise, onSubmit, i
             </div>
 
             <div className="space-y-2">
-              <Label>{t('interval')} *</Label>
+              <Label>{t('range')} *</Label>
               <Select value={interval} onValueChange={setInterval}>
                 <SelectTrigger>
-                  <SelectValue placeholder={t('interval')} />
+                  <SelectValue placeholder={t('range')} />
                 </SelectTrigger>
                 <SelectContent>
                   {INTERVAL_OPTIONS.map((opt) => (

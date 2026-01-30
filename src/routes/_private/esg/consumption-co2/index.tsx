@@ -88,7 +88,7 @@ function ConsumptionCO2Page() {
       <CardHeader title={t('esg.co2')} />
       <CardContent className="flex flex-col">
         <Item variant="outline" className="bg-secondary">
-          <MachineByEnterpriseSelect mode="multi" label={t('machines')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
+          <MachineByEnterpriseSelect mode="multi" label={t('assets')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
 
           <UnitSelect value={selectedUnit} onChange={(val) => val && setSelectedUnit(val)} />
 

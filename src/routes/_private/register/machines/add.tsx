@@ -40,14 +40,14 @@ function MachineAddPage() {
     try {
       if (machine?.isInactive) {
         await activateMachine.mutateAsync(search.id);
-        toast.success(t('activate'));
+        toast.success(t('enable'));
       } else {
         await deactivateMachine.mutateAsync(search.id);
         toast.success(t('deactivate.successfull'));
       }
       navigate({ to: '/register/machines' } satisfies { to: string });
     } catch {
-      toast.error(t('activate'));
+      toast.error(t('enable'));
     }
   };
 
@@ -86,13 +86,13 @@ function MachineAddPage() {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="outline" className={machine?.isInactive ? 'text-primary' : 'text-destructive'}>
-                    {machine?.isInactive ? t('activate') : t('deactivate')}
+                    {machine?.isInactive ? t('enable') : t('deactivate')}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>{machine?.isInactive ? t('activate') : t('activate')}</AlertDialogTitle>
-                    <AlertDialogDescription>{machine?.isInactive ? t('activate') : t('activate')}</AlertDialogDescription>
+                    <AlertDialogTitle>{machine?.isInactive ? t('enable') : t('enable')}</AlertDialogTitle>
+                    <AlertDialogDescription>{machine?.isInactive ? t('enable') : t('enable')}</AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>

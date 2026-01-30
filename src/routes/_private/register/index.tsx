@@ -40,7 +40,7 @@ function RegisterHubPage() {
       to: '/register/user-type' as const,
     },
     {
-      title: t('machines'),
+      title: t('assets'),
       description: t('machines.description', 'Gerencie os ativos e equipamentos da frota.'),
       icon: Cpu,
       to: '/register/machines' as const,

@@ -86,7 +86,7 @@ function IntegrationListPage() {
                   <TableHead className="w-[70px]">{t('image')}</TableHead>
                   <TableHead className="w-[250px]">{t('name')}</TableHead>
                   <TableHead className="w-[160px] text-center">{t('type')}</TableHead>
-                  <TableHead className="w-[120px] text-center">{t('interval')}</TableHead>
+                  <TableHead className="w-[120px] text-center">{t('range')}</TableHead>
                   <TableHead className="text-center">{t('options')}</TableHead>
                   <TableHead className="w-[80px] text-center">{t('machine')}</TableHead>
                 </TableRow>
@@ -130,7 +130,7 @@ function IntegrationListPage() {
                     <TableCell>
                       <Select value={item.updateTime?.toString() || ''} onValueChange={(value) => handleChange(index, 'updateTime', parseInt(value, 10))} disabled={item.disabled}>
                         <SelectTrigger size="sm">
-                          <SelectValue placeholder={t('interval')} />
+                          <SelectValue placeholder={t('range')} />
                         </SelectTrigger>
                         <SelectContent>
                           {UPDATE_INTERVAL_OPTIONS.map((opt) => (

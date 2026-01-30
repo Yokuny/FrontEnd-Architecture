@@ -42,7 +42,7 @@ function CIIFleetPage() {
             <Input id="search-input" placeholder={t('search.placeholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="w-64 bg-background" />
           </div>
 
-          <MachineByEnterpriseSelect mode="multi" label={t('machines')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
+          <MachineByEnterpriseSelect mode="multi" label={t('assets')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
 
           <Button variant="outline" className="ml-auto gap-2 bg-background">
             <Search className="size-4" />

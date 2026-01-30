@@ -14,25 +14,25 @@ function VoyageHubPage() {
   const menuItems = [
     {
       title: t('voyage.list'),
-      description: t('voyage') || t('voyage.list'),
+      description: t('travel') || t('voyage.list'),
       icon: List,
       to: '/voyage/list-travel' as const,
     },
     {
       title: t('voyage.kpis'),
-      description: t('voyage'),
+      description: t('travel'),
       icon: BarChart3,
       to: '/voyage/kpis-travel' as const,
     },
     {
       title: t('voyage.integration'),
-      description: t('voyage') || t('voyage.integration'),
+      description: t('travel') || t('voyage.integration'),
       icon: Network,
       to: '/voyage/voyage-integration' as const,
     },
     {
       title: t('route.planner'),
-      description: t('voyage'),
+      description: t('travel'),
       icon: MapPin,
       to: '/voyage/route-planner' as const,
     },
@@ -40,7 +40,7 @@ function VoyageHubPage() {
 
   return (
     <Card>
-      <CardHeader title={t('voyage')} />
+      <CardHeader title={t('travel')} />
       <CardContent className="grid gap-4 md:grid-cols-2">
         {menuItems.map((item) => (
           <Item key={item.to} variant="outline" className="h-full cursor-pointer" asChild>

@@ -133,7 +133,7 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
           <Item variant="outline" className="gap-4 bg-secondary">
             <MachineByEnterpriseSelect
               mode="multi"
-              label={t('machines')}
+              label={t('assets')}
               idEnterprise={idEnterprise}
               value={filters.idMachine || []}
               onChange={(vals) => setFilters((prev) => ({ ...prev, idMachine: vals }))}

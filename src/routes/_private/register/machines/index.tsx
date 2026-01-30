@@ -50,7 +50,7 @@ function MachineListPage() {
 
   return (
     <Card>
-      <CardHeader title={t('machines')}>
+      <CardHeader title={t('assets')}>
         <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
             <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />

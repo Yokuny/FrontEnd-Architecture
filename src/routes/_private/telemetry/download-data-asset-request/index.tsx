@@ -98,7 +98,7 @@ function DownloadDataAssetRequestPage() {
                     <TableHead className="text-center">{t('machine')}</TableHead>
                     <TableHead className="text-center">{t('date.start')}</TableHead>
                     <TableHead className="text-center">{t('date.end')}</TableHead>
-                    <TableHead className="text-center">{t('interval')}</TableHead>
+                    <TableHead className="text-center">{t('range')}</TableHead>
                     <TableHead className="text-center">{t('requested.by')}</TableHead>
                     <TableHead className="text-center">{t('created.at')}</TableHead>
                     <TableHead className="text-center">{t('days.remaining')}</TableHead>

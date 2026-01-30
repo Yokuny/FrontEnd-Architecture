@@ -146,7 +146,7 @@ export function AlertForm() {
                             name="idMachines"
                             render={({ field }) => (
                               <FormItem>
-                                <MachineSelect label={t('machines')} mode="multi" idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} />
+                                <MachineSelect label={t('assets')} mode="multi" idEnterprise={idEnterprise} value={field.value} onChange={field.onChange} />
                                 <FormMessage />
                               </FormItem>
                             )}
