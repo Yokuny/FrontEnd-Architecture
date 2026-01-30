@@ -4,8 +4,8 @@ i18n Translation Sorting Script
 Organizes translation keys by length (shortest first) and then alphabetically.
 
 Usage:
-    python3 sort_i18n.py              # Sort all translation files
-    python3 sort_i18n.py --dry-run    # Preview changes without modifying files
+    python3 src/config/translations/i18n_sort.py              # Sort all translation files
+    python3 src/config/translations/i18n_sort.py --dry-run    # Preview changes without modifying files
 """
 
 import json

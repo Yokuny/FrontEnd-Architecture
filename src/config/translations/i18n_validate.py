@@ -4,7 +4,7 @@ i18n Translation Validation Script
 Validates the results of the deduplication process
 
 Usage:
-    python3 validate_i18n.py
+    python3 src/config/translations/i18n_validate.py
 """
 
 import json

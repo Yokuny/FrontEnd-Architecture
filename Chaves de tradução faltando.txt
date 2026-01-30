@@ -1,0 +1,377 @@
+============================================================
+RELATÓRIO DE CHAVES DE TRADUÇÃO FALTANDO
+Base de comparação: pt.json
+============================================================
+
+Total de chaves faltando: 112
+
+🔑 'value.with.payment' (9 usos)
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:74
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:89
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:90
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:142
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:142
+   └─ ... e mais 4
+
+🔑 'value.without.payment' (9 usos)
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:75
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:93
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:94
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:143
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-value-chart.tsx:143
+   └─ ... e mais 4
+
+🔑 'average' (5 usos)
+   └─ src/routes/_private/consumption/time-operation/@components/time-operation-table.tsx:188
+   └─ src/routes/_private/voyage/voyage-integration/@components/details-analytics.tsx:83
+   └─ src/routes/_private/voyage/voyage-integration/@components/details-analytics.tsx:84
+   └─ src/routes/_private/voyage/list-travel/@components/KPI.tsx:51
+   └─ src/routes/_private/voyage/list-travel/@components/KPI.tsx:79
+
+🔑 'diagram' (5 usos)
+   └─ src/routes/_private/telemetry/diagram-list/index.tsx:44
+   └─ src/routes/_private/telemetry/diagram-list/index.tsx:88
+   └─ src/routes/_private/telemetry/diagram-list/diagram.tsx:170
+   └─ src/routes/_private/telemetry/diagram-list/diagram.tsx:180
+   └─ src/routes/_private/telemetry/diagram-list/diagram.tsx:180
+
+🔑 'completed' (4 usos)
+   └─ src/routes/_private/service-management/fas-analytics/@components/realized-orders-chart.tsx:48
+   └─ src/routes/_private/service-management/fas-analytics/@components/realized-orders-chart.tsx:55
+   └─ src/routes/_private/service-management/fas-analytics/@components/realized-orders-chart.tsx:56
+   └─ src/routes/_private/service-management/fas-analytics/@components/realized-orders-chart.tsx:85
+
+🔑 'not.completed' (4 usos)
+   └─ src/routes/_private/service-management/fas-analytics/@components/realized-orders-chart.tsx:49
+   └─ src/routes/_private/service-management/fas-analytics/@components/realized-orders-chart.tsx:59
+   └─ src/routes/_private/service-management/fas-analytics/@components/realized-orders-chart.tsx:60
+   └─ src/routes/_private/service-management/fas-analytics/@components/realized-orders-chart.tsx:86
+
+🔑 'reliability' (3 usos)
+   └─ src/routes/_private/statistics/kpis-cmms/@components/ReliabilityVesselChart.tsx:41
+   └─ src/routes/_private/statistics/kpis-cmms/@components/ReliabilityGroupChart.tsx:34
+   └─ src/routes/_private/telemetry/diagram-list/@components/cmms-charts.tsx:88
+
+🔑 'save.successfull' (3 usos)
+   └─ src/routes/_private/telemetry/sensor-min-max/index.tsx:95
+   └─ src/routes/_private/telemetry/heatmap-fleet/add.tsx:106
+   └─ src/routes/_private/telemetry/heatmap-fleet/notifications.tsx:77
+
+🔑 'maintenance.plan.placeholder' (2 usos)
+   └─ src/components/selects/maintenance-plan-select.tsx:54
+   └─ src/components/selects/maintenance-plan-by-machine-select.tsx:62
+
+🔑 'consumption' (2 usos)
+   └─ src/routes/_private/consumption/rve-sounding/@components/table-list-rve-sounding.tsx:40
+   └─ src/routes/_private/consumption/rve-sounding/@components/item-period-sounding.tsx:111
+
+🔑 'edit.alert' (2 usos)
+   └─ src/routes/_private/register/alerts/add.tsx:48
+   └─ src/routes/_private/register/alerts/add.tsx:98
+
+🔑 'assets' (2 usos)
+   └─ src/routes/_private/register/alerts/@components/alert-form.tsx:91
+   └─ src/routes/_private/register/alerts/@components/alert-form.tsx:127
+
+🔑 'edit.event' (2 usos)
+   └─ src/routes/_private/calendar-maintenance/@components/EditEventDialog.tsx:90
+   └─ src/routes/_private/voyage/list-travel/@components/dialog-event.tsx:64
+
+🔑 'save.error' (2 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/add.tsx:109
+   └─ src/routes/_private/telemetry/heatmap-fleet/notifications.tsx:80
+
+🔑 'user.enabled' (1 usos)
+   └─ src/routes/_private/permissions/users/@hooks/use-user-form.ts:79
+
+🔑 'password.updated' (1 usos)
+   └─ src/routes/_private/permissions/users/@hooks/use-password-form.ts:31
+
+🔑 'error.update.password' (1 usos)
+   └─ src/routes/_private/permissions/users/@hooks/use-password-form.ts:34
+
+🔑 'field.error' (1 usos)
+   └─ src/routes/_private/register/contracts/@hooks/use-contract-form.ts:48
+
+🔑 'realized.orders' (1 usos)
+   └─ src/routes/_private/service-management/fas-analytics/@interface/fas-analytics.schema.ts:4
+
+🔑 'range' (1 usos)
+   └─ src/routes/_private/service-management/fas-analytics/@interface/fas-analytics.schema.ts:5
+
+🔑 'No ID' (1 usos)
+   └─ src/routes/_private/voyage/list-travel/@hooks/use-kpis-travel-api.ts:39
+
+🔑 'success.delete' (1 usos)
+   └─ src/routes/_private/voyage/list-travel/@hooks/use-voyage-form.ts:69
+
+🔑 'identifier.not.provided' (1 usos)
+   └─ src/components/selects/sensor-signal-select.tsx:25
+
+🔑 'select.sensor.first' (1 usos)
+   └─ src/components/selects/sensor-signal-select.tsx:25
+
+🔑 'signals.placeholder' (1 usos)
+   └─ src/components/selects/sensor-signal-select.tsx:39
+
+🔑 'error.page' (1 usos)
+   └─ src/routes/__root.tsx:34
+
+🔑 'something.went.wrong' (1 usos)
+   └─ src/routes/__root.tsx:44
+
+🔑 'loading.page' (1 usos)
+   └─ src/routes/__root.tsx:58
+
+🔑 'total.accesses' (1 usos)
+   └─ src/routes/_private/statistics/tracking-activity/@components/UserRMDayChart.tsx:79
+
+🔑 'total.users' (1 usos)
+   └─ src/routes/_private/statistics/tracking-activity/@components/UserRMDayChart.tsx:83
+
+🔑 'edit.goal' (1 usos)
+   └─ src/routes/_private/operation/goals/add.tsx:83
+
+🔑 'manage.goals.description' (1 usos)
+   └─ src/routes/_private/operation/goals/add.tsx:96
+
+🔑 'manage.subgroups' (1 usos)
+   └─ src/routes/_private/operation/groups/add.tsx:132
+
+🔑 'percentage' (1 usos)
+   └─ src/routes/_private/operation/operational-asset/@components/event-types-chart.tsx:98
+
+🔑 'duration.in.days' (1 usos)
+   └─ src/routes/_private/operation/operational-asset/@components/csv-download.tsx:25
+
+🔑 'profit' (1 usos)
+   └─ src/routes/_private/operation/operational-asset/@components/csv-download.tsx:26
+
+🔑 'menu' (1 usos)
+   └─ src/routes/_private/fleet-manager/@components/sidebar-buttons.tsx:15
+
+🔑 'capacity' (1 usos)
+   └─ src/routes/_private/fleet-manager/@components/panel-info.tsx:77
+
+🔑 'registration' (1 usos)
+   └─ src/routes/_private/fleet-manager/@components/panel-info.tsx:92
+
+🔑 'no.image' (1 usos)
+   └─ src/routes/_private/fleet-manager/@components/panel-summary.tsx:72
+
+🔑 'show.disabled' (1 usos)
+   └─ src/routes/_private/consumption/time-operation/@components/time-operation-filter.tsx:134
+
+🔑 'maximum' (1 usos)
+   └─ src/routes/_private/consumption/rve-sounding/@components/item-period-sounding.tsx:101
+
+🔑 'ai.prompt.description' (1 usos)
+   └─ src/routes/_private/ia/index.tsx:17
+
+🔑 'ai.anomaly.detector' (1 usos)
+   └─ src/routes/_private/ia/index.tsx:22
+
+🔑 'ai.anomaly.detector.description' (1 usos)
+   └─ src/routes/_private/ia/index.tsx:23
+
+🔑 '\n' (1 usos)
+   └─ src/routes/_private/ia/anomaly-detector/@components/input-file-csv.tsx:8
+
+🔑 'upload.csv' (1 usos)
+   └─ src/routes/_private/ia/anomaly-detector/@components/input-file-csv.tsx:99
+
+🔑 'no.sensors.found' (1 usos)
+   └─ src/routes/_private/ia/anomaly-detector/@components/modal-anomaly.tsx:31
+
+🔑 'attach.files' (1 usos)
+   └─ src/routes/_private/ia/prompt/@components/prompt-input-basic.tsx:54
+
+🔑 'stop.generation' (1 usos)
+   └─ src/routes/_private/ia/prompt/@components/prompt-input-basic.tsx:61
+
+🔑 'send.message' (1 usos)
+   └─ src/routes/_private/ia/prompt/@components/prompt-input-basic.tsx:61
+
+🔑 'feature.coming.soon' (1 usos)
+   └─ src/routes/_private/permissions/roles/users/index.tsx:67
+
+🔑 'remove.role.message' (1 usos)
+   └─ src/routes/_private/permissions/roles/users/index.tsx:110
+
+🔑 'remove' (1 usos)
+   └─ src/routes/_private/permissions/roles/users/index.tsx:115
+
+🔑 'no.users.found' (1 usos)
+   └─ src/routes/_private/permissions/roles/users/index.tsx:126
+
+🔑 'confirmation' (1 usos)
+   └─ src/routes/_private/permissions/users/edit/index.tsx:132
+
+🔑 'select' (1 usos)
+   └─ src/routes/_private/register/forms/@components/form-field-preview.tsx:73
+
+🔑 'no.description' (1 usos)
+   └─ src/routes/_private/register/forms/@components/form-field-item-view.tsx:44
+
+🔑 'confirm.delete.description' (1 usos)
+   └─ src/routes/_private/register/maintenance-plans/index.tsx:193
+
+🔑 'new.alert' (1 usos)
+   └─ src/routes/_private/register/alerts/add.tsx:98
+
+🔑 'platform.proximity' (1 usos)
+   └─ src/routes/_private/register/alerts/@components/event-config.tsx:156
+
+🔑 'users.placeholder' (1 usos)
+   └─ src/routes/_private/register/alerts/@components/alert-form.tsx:216
+
+🔑 'scales' (1 usos)
+   └─ src/routes/_private/register/alerts/@components/alert-form.tsx:228
+
+🔑 'users.permission.view' (1 usos)
+   └─ src/routes/_private/register/alerts/@components/alert-form.tsx:288
+
+🔑 'vessel.include' (1 usos)
+   └─ src/routes/_private/register/machines/index.tsx:80
+
+🔑 'activate.successfull' (1 usos)
+   └─ src/routes/_private/register/machines/add.tsx:43
+
+🔑 'error.status' (1 usos)
+   └─ src/routes/_private/register/machines/add.tsx:50
+
+🔑 'activate' (1 usos)
+   └─ src/routes/_private/register/machines/add.tsx:89
+
+🔑 'activate.machine' (1 usos)
+   └─ src/routes/_private/register/machines/add.tsx:94
+
+🔑 'deactivate.machine' (1 usos)
+   └─ src/routes/_private/register/machines/add.tsx:94
+
+🔑 'activate.machine.description' (1 usos)
+   └─ src/routes/_private/register/machines/add.tsx:95
+
+🔑 'deactivate.machine.description' (1 usos)
+   └─ src/routes/_private/register/machines/add.tsx:95
+
+🔑 'finalize.travel' (1 usos)
+   └─ src/routes/_private/register/geofences/@components/geofence-form.tsx:308
+
+🔑 'managers' (1 usos)
+   └─ src/routes/_private/calendar-maintenance/index.tsx:152
+
+🔑 'status.next' (1 usos)
+   └─ src/routes/_private/calendar-maintenance/index.tsx:166
+
+🔑 'status.late' (1 usos)
+   └─ src/routes/_private/calendar-maintenance/index.tsx:167
+
+🔑 'success.create' (1 usos)
+   └─ src/routes/_private/calendar-maintenance/@components/EditEventDialog.tsx:57
+
+🔑 'event.maintenance' (1 usos)
+   └─ src/routes/_private/calendar-maintenance/@components/EditEventDialog.tsx:102
+
+🔑 'error.fetch.event' (1 usos)
+   └─ src/routes/_private/maintenance/monitoring-plans/@components/edit-event-schedule-dialog.tsx:74
+
+🔑 'inactive' (1 usos)
+   └─ src/routes/_private/telemetry/diagram-list/index.tsx:88
+
+🔑 'description.placeholder' (1 usos)
+   └─ src/routes/_private/telemetry/list-dashboard/@components/dashboard-form.tsx:50
+
+🔑 'sensor.min.max' (1 usos)
+   └─ src/routes/_private/telemetry/sensor-min-max/index.tsx:118
+
+🔑 'sensor.min' (1 usos)
+   └─ src/routes/_private/telemetry/sensor-min-max/@components/sensor-table.tsx:37
+
+🔑 'sensor.max' (1 usos)
+   └─ src/routes/_private/telemetry/sensor-min-max/@components/sensor-table.tsx:38
+
+🔑 'select.notify.condition' (1 usos)
+   └─ src/routes/_private/telemetry/sensor-min-max/@components/sensor-row.tsx:86
+
+🔑 'notify.when.true' (1 usos)
+   └─ src/routes/_private/telemetry/sensor-min-max/@components/sensor-row.tsx:89
+
+🔑 'notify.when.false' (1 usos)
+   └─ src/routes/_private/telemetry/sensor-min-max/@components/sensor-row.tsx:90
+
+🔑 'include.navigation.status' (1 usos)
+   └─ src/routes/_private/telemetry/download-data-asset-request/@components/report-form-dialog.tsx:144
+
+🔑 'delete.successfull' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/add.tsx:118
+
+🔑 'delete.error' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/add.tsx:121
+
+🔑 'machine.basic.description' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/add.tsx:128
+
+🔑 'machine.equipment.description' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/add.tsx:145
+
+🔑 'select.machine.to.configure' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/add.tsx:202
+
+🔑 'settings.heatmap.alerts' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/notifications.tsx:101
+
+🔑 'error.load' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/notifications.tsx:107
+
+🔑 'caution' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/notifications.tsx:181
+
+🔑 'off.on' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/@components/heatmap-notifications-form.tsx:97
+
+🔑 'notifications' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/@components/heatmap-table.tsx:159
+
+🔑 'machine.equipment.subgroup.onoff' (1 usos)
+   └─ src/routes/_private/telemetry/heatmap-fleet/@components/sensor-config.tsx:29
+
+🔑 'service-management' (1 usos)
+   └─ src/routes/_private/service-management/index.tsx:37
+
+🔑 'select.month' (1 usos)
+   └─ src/routes/_private/service-management/fas-analytics/index.tsx:217
+
+🔑 'select.year' (1 usos)
+   └─ src/routes/_private/service-management/fas-analytics/index.tsx:233
+
+🔑 'fas.types.total' (1 usos)
+   └─ src/routes/_private/service-management/fas-analytics/@components/header-types-chart.tsx:104
+
+🔑 'fas.status.total' (1 usos)
+   └─ src/routes/_private/service-management/fas-analytics/@components/order-status-chart.tsx:124
+
+🔑 'voyage.list.description' (1 usos)
+   └─ src/routes/_private/voyage/index.tsx:17
+
+🔑 'voyage.kpis.description' (1 usos)
+   └─ src/routes/_private/voyage/index.tsx:23
+
+🔑 'voyage.integration.description' (1 usos)
+   └─ src/routes/_private/voyage/index.tsx:29
+
+🔑 'route.planner.description' (1 usos)
+   └─ src/routes/_private/voyage/index.tsx:35
+
+🔑 'voyage' (1 usos)
+   └─ src/routes/_private/voyage/index.tsx:43
+
+🔑 'manual.voyage' (1 usos)
+   └─ src/routes/_private/voyage/list-travel/index.tsx:154
+
+🔑 'in.port' (1 usos)
+   └─ src/routes/_private/voyage/list-travel/@components/KPI.tsx:60
+
+🔑 'time' (1 usos)
+   └─ src/routes/_private/voyage/list-travel/@components/dialog-itinerary.tsx:121
+

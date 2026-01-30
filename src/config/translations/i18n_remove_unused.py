@@ -4,8 +4,8 @@ i18n Unused Keys Cleaner
 Finds translation keys that are not used in the source code and removes them.
 
 Usage:
-    python3 remove_unused_i18n.py              # Remove unused keys
-    python3 remove_unused_i18n.py --dry-run    # Preview keys to be removed
+    python3 src/config/translations/i18n_remove_unused.py              # Remove unused keys
+    python3 src/config/translations/i18n_remove_unused.py --dry-run    # Preview keys to be removed
 """
 
 import json
