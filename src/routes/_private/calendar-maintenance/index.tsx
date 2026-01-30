@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { BrushCleaning, ChevronDown, ChevronLeft, ChevronRight, Plus, Search } from 'lucide-react';
+import { BrushCleaning, ChevronDown, ChevronLeft, ChevronRight, Filter, Plus, Search } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import EmptyData from '@/components/default-empty-data';
@@ -73,6 +74,8 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
     selectedEvent,
   } = useCalendarMaintenance(idEnterprise);
 
+  const [showFilters, setShowFilters] = useState(false);
+
   return (
     <Card className="gap-1">
       <CardHeader title={t('calendar.maintenance')}>
@@ -115,6 +118,9 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button variant={showFilters ? 'secondary' : 'outline'} onClick={() => setShowFilters(!showFilters)}>
+              <Filter className="size-4" />
+            </Button>
             <Button onClick={handleAddEvent}>
               <Plus className="size-4" />
               <ItemContent className="max-sm:hidden">{t('add')}</ItemContent>
@@ -123,55 +129,57 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
         </Item>
       </CardHeader>
       <CardContent className="flex flex-col">
-        <Item variant="outline" className="gap-4 bg-secondary">
-          <MachineByEnterpriseSelect
-            mode="multi"
-            label={t('machines')}
-            idEnterprise={idEnterprise}
-            value={filters.idMachine || []}
-            onChange={(vals) => setFilters((prev) => ({ ...prev, idMachine: vals }))}
-          />
+        {showFilters && (
+          <Item variant="outline" className="gap-4 bg-secondary">
+            <MachineByEnterpriseSelect
+              mode="multi"
+              label={t('machines')}
+              idEnterprise={idEnterprise}
+              value={filters.idMachine || []}
+              onChange={(vals) => setFilters((prev) => ({ ...prev, idMachine: vals }))}
+            />
 
-          <MaintenancePlanSelect
-            mode="multi"
-            label={t('maintenance.plans')}
-            idEnterprise={idEnterprise}
-            value={filters.idMaintenancePlan || []}
-            onChange={(vals) => setFilters((prev) => ({ ...prev, idMaintenancePlan: vals }))}
-          />
+            <MaintenancePlanSelect
+              mode="multi"
+              label={t('maintenance.plans')}
+              idEnterprise={idEnterprise}
+              value={filters.idMaintenancePlan || []}
+              onChange={(vals) => setFilters((prev) => ({ ...prev, idMaintenancePlan: vals }))}
+            />
 
-          <MachineManagerSelect
-            mode="multi"
-            label={t('managers')}
-            idEnterprise={idEnterprise}
-            value={filters.managers || []}
-            onChange={(vals) => setFilters((prev) => ({ ...prev, managers: vals }))}
-          />
+            <MachineManagerSelect
+              mode="multi"
+              label={t('managers')}
+              idEnterprise={idEnterprise}
+              value={filters.managers || []}
+              onChange={(vals) => setFilters((prev) => ({ ...prev, managers: vals }))}
+            />
 
-          <div className="flex flex-col gap-1.5">
-            <span className="font-medium text-muted-foreground text-xs">{t('status')}</span>
-            <Select value={filters.status || 'all'} onValueChange={(val) => setFilters((prev) => ({ ...prev, status: val === 'all' ? undefined : (val as any) }))}>
-              <SelectTrigger className="h-10 bg-background">
-                <SelectValue placeholder={t('all')} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t('all')}</SelectItem>
-                <SelectItem value="next">{t('status.next')}</SelectItem>
-                <SelectItem value="late">{t('status.late')}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="font-medium text-muted-foreground text-xs">{t('status')}</span>
+              <Select value={filters.status || 'all'} onValueChange={(val) => setFilters((prev) => ({ ...prev, status: val === 'all' ? undefined : (val as any) }))}>
+                <SelectTrigger className="h-10 bg-background">
+                  <SelectValue placeholder={t('all')} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">{t('all')}</SelectItem>
+                  <SelectItem value="next">{t('status.next')}</SelectItem>
+                  <SelectItem value="late">{t('status.late')}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div className="ml-auto flex gap-2">
-            <Button className="text-amber-700 hover:text-amber-800" variant="outline" onClick={() => setFilters({})}>
-              <BrushCleaning className="size-4" />
-            </Button>
-            <Button variant="outline" className="flex-1 gap-2 bg-background">
-              <Search className="size-4" />
-              {t('search')}
-            </Button>
-          </div>
-        </Item>
+            <div className="ml-auto flex gap-2">
+              <Button className="text-amber-700 hover:text-amber-800" variant="outline" onClick={() => setFilters({})}>
+                <BrushCleaning className="size-4" />
+              </Button>
+              <Button variant="outline" className="flex-1 gap-2 bg-background">
+                <Search className="size-4" />
+                {t('search')}
+              </Button>
+            </div>
+          </Item>
+        )}
 
         <ItemContent className="h-full">
           {isLoading ? (
