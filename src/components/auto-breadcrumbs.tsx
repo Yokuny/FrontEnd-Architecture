@@ -10,7 +10,7 @@ export function AutoBreadcrumbs() {
 
   const breadcrumbs = useMemo(() => {
     const lastMatch = matches[matches.length - 1];
-    if (!lastMatch || lastMatch.pathname === '/') return [];
+    if (!lastMatch) return [];
 
     const segments = lastMatch.pathname.split('/').filter(Boolean);
     const crumbs = [];
