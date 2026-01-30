@@ -5,7 +5,10 @@ import { api } from '@/lib/api/client';
 export const fasKeys = {
   all: ['fas'] as const,
   suppliers: (params?: { page?: number; size?: number; search?: string }) => [...fasKeys.all, 'suppliers', params] as const,
+  list: (params?: unknown) => [...fasKeys.all, 'list', params] as const,
 };
+
+// ... existing interfaces ...
 
 interface FasSupplier {
   razao: string;
@@ -29,6 +32,48 @@ interface FasSupplierConfig {
 interface FasSuppliersPaginatedResponse {
   data: FasSupplier[];
   pageInfo: Array<{ count: number }>;
+}
+
+import type { FasPaginatedResponse, FasSearch } from '@/routes/_private/service-management/fas/@interface/fas.schema';
+
+export function useFasPaginated(params: FasSearch) {
+  return useQuery({
+    queryKey: fasKeys.list(params),
+    queryFn: async () => {
+      const response = await api.get<FasPaginatedResponse>('/fas/list/filter-os', { params });
+      return response.data;
+    },
+    enabled: !!params.idEnterprise,
+  });
+}
+
+export function useExportFas() {
+  return useMutation({
+    mutationFn: async (params: { idEnterprise: string; dateStart: string; dateEnd: string }) => {
+      const response = await api.get<Blob>('/fas/export-fas-csv', {
+        params,
+        responseType: 'blob',
+        headers: {
+          Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        },
+      });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(data);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `export_${new Date().toISOString().split('T')[0]}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success('Export completed successfully');
+    },
+    onError: () => {
+      toast.error('Error exporting data');
+    },
+  });
 }
 
 export function useFasSuppliersPaginated(params: { page: number; size: number; search?: string }) {

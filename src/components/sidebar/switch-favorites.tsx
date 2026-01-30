@@ -9,7 +9,7 @@ import { SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/
 import { useFavorites } from '@/hooks/use-favorites';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
 import { cn } from '@/lib/utils';
-import { ItemTitle } from '../ui/item';
+import { ItemDescription, ItemTitle } from '../ui/item';
 
 export function FavoritesSwitcher() {
   const { state } = useSidebar();
@@ -41,8 +41,8 @@ export function FavoritesSwitcher() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" side="right" className="min-w-48">
           {favorites.length === 0 ? (
-            <DropdownMenuItem disabled className="text-muted-foreground text-xs">
-              Nenhum favorito adicionado
+            <DropdownMenuItem disabled>
+              <ItemDescription>Nenhum favorito adicionado</ItemDescription>
             </DropdownMenuItem>
           ) : (
             favorites.map((fav) => (
