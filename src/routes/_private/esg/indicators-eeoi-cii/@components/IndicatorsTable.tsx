@@ -25,7 +25,7 @@ export function IndicatorsTable({ data }: IndicatorsTableProps) {
       header: t('travel'),
       render: (value, row) => (
         <a
-          href={`/voyage-integration?idMachine=${row.machine?.id}&search=${row.machine?.name}&code=${value as string}`}
+          href={`/voyage/voyage-integration?idMachine=${row.machine?.id}&search=${row.machine?.name}&code=${value as string}`}
           className="flex items-center gap-1 font-bold font-mono hover:underline"
           target="_blank"
           rel="noreferrer"

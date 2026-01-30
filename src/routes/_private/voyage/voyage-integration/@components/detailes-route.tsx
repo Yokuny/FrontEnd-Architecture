@@ -3,12 +3,19 @@ import { Flag, Radio } from 'lucide-react';
 import { useEffect, useMemo } from 'react';
 import { useMap } from 'react-leaflet';
 import { MapMarker, MapPolyline } from '@/components/ui/map';
-import { useVoyageRoute } from '../@hooks/use-voyage-integration-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useIntegrationVoyages, useVoyageRoute } from '../@hooks/use-voyage-integration-api';
 import { useVoyageIntegrationStore } from '../@hooks/use-voyage-integration-store';
+import { Route } from '../index';
 
 export function VoyageRoute() {
   const map = useMap();
-  const selectedVoyage = useVoyageIntegrationStore((state) => state.selectedVoyage);
+  const idEnterprise = useEnterpriseFilter((state) => state.idEnterprise);
+  const { idMachine, code } = Route.useSearch();
+
+  const { data: voyages } = useIntegrationVoyages(idEnterprise || '', idMachine || null);
+  const selectedVoyage = voyages?.find((v) => v.code === code);
+
   const kickVoyageFilter = useVoyageIntegrationStore((state) => state.kickVoyageFilter);
 
   const { data: rawPoints } = useVoyageRoute(selectedVoyage?.idVoyage || null);

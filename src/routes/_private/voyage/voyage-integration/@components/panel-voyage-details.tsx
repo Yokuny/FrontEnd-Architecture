@@ -5,10 +5,11 @@ import { ItemContent, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { formatDate } from '@/lib/formatDate';
-import { useIntegrationVoyageDetail } from '../@hooks/use-voyage-integration-api';
-import { useVoyageIntegrationStore } from '../@hooks/use-voyage-integration-store';
+import { useIntegrationVoyageDetail, useIntegrationVoyages } from '../@hooks/use-voyage-integration-api';
 import type { VoyageEvent } from '../@interface/voyage-integration';
+import { Route } from '../index';
 import { AnalyticsVoyage } from './details-analytics';
 import { ConnectionsVoyage } from './details-connections';
 import { OperationalTime } from './details-operational-time';
@@ -16,8 +17,13 @@ import { TimelineVoyage } from './details-timeline';
 
 export function VoyageDetailsPanel() {
   const { t } = useTranslation();
-  const selectedVoyage = useVoyageIntegrationStore((state) => state.selectedVoyage);
-  const setSelectedVoyage = useVoyageIntegrationStore((state) => state.setSelectedVoyage);
+  const idEnterprise = useEnterpriseFilter((state) => state.idEnterprise);
+  const navigate = Route.useNavigate();
+  const searchParams = Route.useSearch();
+  const { idMachine, code } = searchParams;
+
+  const { data: voyages } = useIntegrationVoyages(idEnterprise || '', idMachine || null);
+  const selectedVoyage = voyages?.find((v) => v.code === code);
 
   const { data: detailData, isLoading } = useIntegrationVoyageDetail(selectedVoyage?.idVoyage || null);
 
@@ -53,7 +59,7 @@ export function VoyageDetailsPanel() {
     <div className="pointer-events-auto min-h-0 max-w-80">
       <div className="flex h-full flex-col gap-2 overflow-hidden border-r-border p-4 pb-20 md:min-w-60">
         <ItemHeader className="flex-none border-b pb-2">
-          <Button size="icon-sm" onClick={() => setSelectedVoyage(null)}>
+          <Button size="icon-sm" onClick={() => navigate({ search: { ...searchParams, code: undefined } })}>
             <SidebarClose className="size-4" />
           </Button>
           <div className="flex flex-col gap-0.5">

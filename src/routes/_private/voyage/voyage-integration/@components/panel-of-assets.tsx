@@ -8,9 +8,8 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/comp
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useEnterprisesSelect } from '@/hooks/use-enterprises-api';
-import { cn } from '@/lib/utils';
 import { useIntegrationAssets } from '../@hooks/use-voyage-integration-api';
-import { useVoyageIntegrationStore } from '../@hooks/use-voyage-integration-store';
+import { Route } from '../index';
 
 export function AssetsPanel() {
   const { t } = useTranslation();
@@ -29,18 +28,13 @@ export function AssetsPanel() {
   const [search, setSearch] = useState('');
   const deferredSearch = useDeferredValue(search);
 
-  const setSelectedAsset = useVoyageIntegrationStore((state) => state.setSelectedAsset);
-  const selectedVoyage = useVoyageIntegrationStore((state) => state.selectedVoyage);
+  const navigate = Route.useNavigate();
+  const searchParams = Route.useSearch();
 
   const { data: assets, isLoading } = useIntegrationAssets(idEnterprise || '', deferredSearch);
 
   return (
-    <div
-      className={cn(
-        'flex h-full w-72 flex-col border-r bg-background/95 backdrop-blur-sm transition-opacity duration-300',
-        selectedVoyage ? 'opacity-60 hover:opacity-100' : 'opacity-100',
-      )}
-    >
+    <div className="flex h-full w-72 flex-col border-r bg-background/95 backdrop-blur-sm transition-opacity duration-300">
       <div className="p-4">
         <div className="relative">
           <Search className="absolute top-4 left-2 size-3 text-muted-foreground" />
@@ -57,7 +51,11 @@ export function AssetsPanel() {
               <EmptyData />
             ) : (
               assets.map((asset) => (
-                <Item key={asset.idMachine} className="cursor-pointer items-center transition-colors hover:bg-secondary" onClick={() => setSelectedAsset(asset)}>
+                <Item
+                  key={asset.idMachine}
+                  className="cursor-pointer items-center transition-colors hover:bg-secondary"
+                  onClick={() => navigate({ search: { ...searchParams, idMachine: asset.idMachine, search: asset.machine.name, code: undefined } })}
+                >
                   <ItemMedia variant="image">
                     <div className="items-center justify-center text-xs uppercase">{asset.machine.name.trim().substring(0, 2)}</div>
                   </ItemMedia>

@@ -1,25 +1,32 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { z } from 'zod';
 import { Card, CardContent } from '@/components/ui/card';
 import { Map as BaseMap, MapLayers, MapLayersControl, MapTileLayer } from '@/components/ui/map';
 import { VoyageRoute } from './@components/detailes-route';
 import { AssetsPanel } from './@components/panel-of-assets';
 import { VoyageDetailsPanel } from './@components/panel-voyage-details';
 import { VoyageSidebar } from './@components/panel-voyages';
-import { useVoyageIntegrationStore } from './@hooks/use-voyage-integration-store';
+
+const searchSchema = z.object({
+  idMachine: z.string().optional(),
+  search: z.string().optional(),
+  code: z.string().optional(),
+});
 
 export const Route = createFileRoute('/_private/voyage/voyage-integration/')({
   component: VoyageIntegrationPage,
+  validateSearch: (search) => searchSchema.parse(search),
 });
 
 function VoyageIntegrationPage() {
-  const selectedAsset = useVoyageIntegrationStore((state) => state.selectedAsset);
+  const { idMachine } = Route.useSearch();
 
   return (
     <Card className="flex h-[98vh] overflow-hidden p-0">
       <CardContent className="relative flex h-full w-full p-0">
         <div className="flex h-full w-full overflow-hidden">
           {/* Asset Selection / Voyages Sidebar */}
-          {selectedAsset ? <VoyageSidebar /> : <AssetsPanel />}
+          {idMachine ? <VoyageSidebar /> : <AssetsPanel />}
 
           {/* Details Panel Overlay (managed via absolute positioning in component) */}
           <VoyageDetailsPanel />

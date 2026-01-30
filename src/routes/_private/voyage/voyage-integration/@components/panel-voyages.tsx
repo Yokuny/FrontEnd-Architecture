@@ -10,8 +10,8 @@ import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { useIntegrationVoyages } from '../@hooks/use-voyage-integration-api';
-import { useVoyageIntegrationStore } from '../@hooks/use-voyage-integration-store';
 import type { IntegrationVoyage } from '../@interface/voyage-integration';
+import { Route } from '../index';
 
 interface ItemVoyageProps {
   item: IntegrationVoyage;
@@ -59,15 +59,13 @@ function ItemVoyage({ item, isActive, onClick }: ItemVoyageProps) {
 export function VoyageSidebar() {
   const { t } = useTranslation();
   const idEnterprise = useEnterpriseFilter((state) => state.idEnterprise);
+  const navigate = Route.useNavigate();
+  const { idMachine, code } = Route.useSearch();
+
   const [search, setSearch] = useState('');
   const deferredSearch = useDeferredValue(search);
 
-  const selectedAsset = useVoyageIntegrationStore((state) => state.selectedAsset);
-  const setSelectedAsset = useVoyageIntegrationStore((state) => state.setSelectedAsset);
-  const selectedVoyage = useVoyageIntegrationStore((state) => state.selectedVoyage);
-  const setSelectedVoyage = useVoyageIntegrationStore((state) => state.setSelectedVoyage);
-
-  const { data: voyages, isLoading } = useIntegrationVoyages(idEnterprise || '', selectedAsset?.idMachine || null);
+  const { data: voyages, isLoading } = useIntegrationVoyages(idEnterprise || '', idMachine || null);
 
   const filteredVoyages = voyages?.filter(
     (v) =>
@@ -78,13 +76,10 @@ export function VoyageSidebar() {
 
   return (
     <div
-      className={cn(
-        'flex h-full w-72 flex-col border-r bg-background/95 backdrop-blur-sm transition-opacity duration-300',
-        selectedVoyage ? 'opacity-50 hover:opacity-100' : 'opacity-100',
-      )}
+      className={cn('flex h-full w-72 flex-col border-r bg-background/95 backdrop-blur-sm transition-opacity duration-300', code ? 'opacity-50 hover:opacity-100' : 'opacity-100')}
     >
       <div className="flex items-center justify-between gap-2 border-b p-4">
-        <Button onClick={() => setSelectedAsset(null)}>
+        <Button onClick={() => navigate({ search: (prev: any) => ({ ...prev, idMachine: undefined, search: undefined, code: undefined }) })}>
           <ArrowLeft className="size-4" />
         </Button>
         <div className="relative flex-1">
@@ -94,7 +89,7 @@ export function VoyageSidebar() {
       </div>
 
       <div className="border-b bg-muted/30 px-4 py-2">
-        <p className="truncate font-bold text-[10px] text-muted-foreground uppercase tracking-wider">{selectedAsset?.machine.name}</p>
+        <p className="truncate font-bold text-[10px] text-muted-foreground uppercase tracking-wider">{voyages?.[0]?.machine?.name}</p>
       </div>
       <div className="min-h-0 flex-1">
         <ScrollArea className="h-full">
@@ -107,7 +102,7 @@ export function VoyageSidebar() {
               <div className="p-8 text-center text-muted-foreground text-xs">{t('no.data.found')}</div>
             ) : (
               filteredVoyages?.map((voyage) => (
-                <ItemVoyage key={voyage.idVoyage} item={voyage} isActive={selectedVoyage?.idVoyage === voyage.idVoyage} onClick={() => setSelectedVoyage(voyage)} />
+                <ItemVoyage key={voyage.idVoyage} item={voyage} isActive={code === voyage.code} onClick={() => navigate({ search: (prev) => ({ ...prev, code: voyage.code }) })} />
               ))
             )}
           </div>

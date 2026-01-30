@@ -73,15 +73,15 @@ export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
   };
 
   return (
-    <div className="flex flex-col gap-3 border-b py-3">
+    <div className="flex flex-col gap-2 border-b py-3">
       <div className="flex items-center justify-between">
+        <span className="flex cursor-pointer select-none items-center gap-2">
+          <Checkbox checked={!kickVoyageFilter} onCheckedChange={handleToggleComplete} />
+          <ItemDescription className="w-12 truncate text-muted-foreground text-xs leading-none">{t('voyage.complete')}</ItemDescription>
+        </span>
         <div className="flex items-center gap-2">
           <ItemTitle className="text-xs uppercase tracking-wider opacity-70">{t('kick.voyage')}</ItemTitle>
         </div>
-        <span className="flex cursor-pointer select-none items-center gap-2">
-          <Checkbox checked={!kickVoyageFilter} onCheckedChange={handleToggleComplete} />
-          <ItemDescription className="text-[11px] text-muted-foreground">{t('voyage.complete')}</ItemDescription>
-        </span>
       </div>
 
       <div className="flex flex-col gap-1">

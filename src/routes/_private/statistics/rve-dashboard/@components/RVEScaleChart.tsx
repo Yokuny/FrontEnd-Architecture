@@ -28,11 +28,11 @@ export function RVEScaleChart({ data }: RVEScaleChartProps) {
 
   return (
     <Item variant="outline" className="h-full flex-col items-stretch">
-      <ItemHeader className="flex-col items-center">
-        <ItemTitle>{t('rve.dashboard.scales')}</ItemTitle>
-      </ItemHeader>
-      <ItemContent className="flex-1">
-        <ChartContainer config={chartConfig} className="aspect-square max-h-80">
+      <ItemContent className="relative flex-1">
+        <ItemHeader className="absolute flex-col items-center">
+          <ItemTitle>{t('rve.dashboard.scales')}</ItemTitle>
+        </ItemHeader>
+        <ChartContainer config={chartConfig} className="aspect-square max-h-96">
           <PieChart>
             <ChartTooltip
               content={
