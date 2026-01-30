@@ -15,7 +15,7 @@ export function MachineEnterpriseSelect(props: MachineEnterpriseSelectProps) {
   const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   if (mode === 'multi') {
-    const displayLabel = label || t('machine.placeholder');
+    const displayLabel = label || t('select.machine');
     return (
       <div className="space-y-2">
         {displayLabel && (
@@ -26,7 +26,7 @@ export function MachineEnterpriseSelect(props: MachineEnterpriseSelectProps) {
         )}
         <DataMultiSelect<Machine, Machine>
           id={id}
-          placeholder={placeholder || t('machine.placeholder')}
+          placeholder={placeholder || t('select.machine')}
           value={props.value}
           onChange={(vals) => props.onChange(vals as string[])}
           query={query}
@@ -41,7 +41,7 @@ export function MachineEnterpriseSelect(props: MachineEnterpriseSelectProps) {
     );
   }
 
-  const displayLabel = label || t('machine.placeholder');
+  const displayLabel = label || t('select.machine');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -52,7 +52,7 @@ export function MachineEnterpriseSelect(props: MachineEnterpriseSelectProps) {
       )}
       <DataSelect<Machine, Machine>
         id={id}
-        placeholder={placeholder || t('machine.placeholder')}
+        placeholder={placeholder || t('select.machine')}
         value={props.value}
         onChange={(val) => props.onChange(val as string)}
         query={query}

@@ -28,7 +28,7 @@ export function UnitSelect(props: UnitSelectProps) {
     }));
   };
 
-  const displayLabel = label || t('unit.type');
+  const displayLabel = label || t('unit');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -39,7 +39,7 @@ export function UnitSelect(props: UnitSelectProps) {
       )}
       <DataSelect<SelectOption, SelectOption>
         id={id}
-        placeholder={placeholder || t('unit.type')}
+        placeholder={placeholder || t('unit')}
         value={value}
         onChange={(val) => onChange?.(val as string)}
         query={query as any}

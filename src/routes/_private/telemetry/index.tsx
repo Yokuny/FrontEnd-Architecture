@@ -19,7 +19,7 @@ function TelemetryHubPage() {
       to: '/telemetry/datalogger' as const,
     },
     {
-      title: t('telemetry.performance'),
+      title: t('performance'),
       description: t('telemetry.performance.description'),
       icon: BarChart3,
       to: '/telemetry/performance' as const,

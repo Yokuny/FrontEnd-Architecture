@@ -147,8 +147,8 @@ function TimeOperationPage() {
           <ItemContent className="min-w-[240px]">
             <MachineSelect
               mode="multi"
-              label={t('machine.placeholder')}
-              placeholder={t('machine.placeholder')}
+              label={t('select.machine')}
+              placeholder={t('select.machine')}
               idEnterprise={idEnterprise}
               value={selectedMachines}
               onChange={setSelectedMachines}

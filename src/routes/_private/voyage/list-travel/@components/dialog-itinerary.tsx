@@ -126,7 +126,7 @@ export function DialogItinerary({ index, data, onChangeData, onDelete, disabled,
                         <ItemContent>
                           <Label className="flex items-center gap-1">
                             <Eye className="size-3" />
-                            {t('display')}
+                            {t('show')}
                           </Label>
                           <ItemContent className="flex-row">
                             <Checkbox checked={!!formData[`showBot${dateKey}`]} onCheckedChange={(checked) => updateField(`showBot${dateKey}`, !!checked)} disabled={disabled} />

@@ -179,7 +179,7 @@ function DataloggerPage() {
             idEnterprise={idEnterprise}
             value={selectedMachine}
             onChange={(val: string | undefined) => setSelectedMachine(val)}
-            placeholder={t('machine.placeholder')}
+            placeholder={t('select.machine')}
           />
         </div>
       </CardHeader>

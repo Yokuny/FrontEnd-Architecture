@@ -143,14 +143,14 @@ function PerformancePage() {
 
   return (
     <Card>
-      <CardHeader title={t('telemetry.performance')}>
+      <CardHeader title={t('performance')}>
         <div className="w-64">
           <MachineByEnterpriseSelect
             mode="single"
             idEnterprise={idEnterprise}
             value={selectedMachine}
             onChange={(val: string | undefined) => setSelectedMachine(val)}
-            placeholder={t('machine.placeholder')}
+            placeholder={t('select.machine')}
           />
         </div>
       </CardHeader>

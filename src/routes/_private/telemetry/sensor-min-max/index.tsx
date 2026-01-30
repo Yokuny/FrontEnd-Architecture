@@ -124,7 +124,7 @@ function SensorMinMaxPage() {
               onChange={(v) => updateSearch({ idAsset: v })}
               idEnterprise={idEnterprise}
               label=""
-              placeholder={t('machine.placeholder')}
+              placeholder={t('select.machine')}
             />
           </div>
           <div className="flex flex-col gap-1">
