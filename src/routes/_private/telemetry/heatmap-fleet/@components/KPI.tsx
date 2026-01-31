@@ -4,10 +4,6 @@ import { Item, ItemDescription, ItemTitle } from '@/components/ui/item';
 import type { HeatmapStats } from '../@interface/heatmap.types';
 import { StatusTracker } from './heatmap-table';
 
-interface KpiCardsProps {
-  stats: HeatmapStats;
-}
-
 export function KPI({ stats }: KpiCardsProps) {
   const { t } = useTranslation();
 
@@ -59,4 +55,8 @@ export function KPI({ stats }: KpiCardsProps) {
       </Item>
     </div>
   );
+}
+
+interface KpiCardsProps {
+  stats: HeatmapStats;
 }

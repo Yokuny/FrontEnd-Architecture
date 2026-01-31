@@ -1110,5 +1110,18 @@
   "maintenance.plan.identification.description": "Maintenance plan identification description",
   "setup.api.external.identification.description": "Seleccione la empresa para configurar las API externas.",
   "telemetry.download.data.asset.request.description": "Solicitud y descarga de datos históricos.",
-  "interval.required.when.date.range.more.than.15.days": "O intervalo entre as datas é maior que 15 dias"
+  "interval.required.when.date.range.more.than.15.days": "O intervalo entre as datas é maior que 15 dias",
+  "filled.forms": "Formularios Rellenos",
+  "add.form": "Agregar Formulario",
+  "functionality.not.implemented": "Funcionalidad no implementada",
+  "os.code.job.id.label": "Cód OS / Job ID",
+  "os.code.job.id.placeholder": "Buscar por OS / Job ID",
+  "maintenance.type.label": "Tipo de Mantenimiento",
+  "status.label": "Estado",
+  "critical.equipment.label": "Equipo Crítico",
+  "finished.at.label": "Finalizado en",
+  "finished.at.placeholder": "Estado de Finalización",
+  "finished.at.true": "Finalizado",
+  "finished.at.false": "No Finalizado",
+  "critical": "Crítico"
 }

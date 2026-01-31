@@ -71,34 +71,34 @@ export function KPI({ data, totalLoss, totalRevenue, viewFinancial }: MiniDashbo
       <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
         <Item className="flex-col rounded-none border-0 bg-background">
           <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-            <Clock className="size-5 text-emerald-500" />
+            <Clock className="size-5" />
             <ItemDescription className="font-medium">{t('time.operational')}</ItemDescription>
           </ItemContent>
-          <ItemTitle className="ml-6 font-bold text-2xl text-emerald-600 tracking-tight">{operationalHours.toFixed(1)}h</ItemTitle>
+          <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{operationalHours.toFixed(1)}h</ItemTitle>
         </Item>
 
         <Item className="flex-col rounded-none border-0 bg-background">
           <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-            <TriangleAlert className="size-5 text-red-500" />
+            <TriangleAlert className="size-5" />
             <ItemDescription className="font-medium">{t('time.inoperability')}</ItemDescription>
           </ItemContent>
-          <ItemTitle className="ml-6 font-bold text-2xl text-red-600 tracking-tight">{downtimeHours.toFixed(1)}h</ItemTitle>
+          <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{downtimeHours.toFixed(1)}h</ItemTitle>
         </Item>
 
         <Item className="flex-col rounded-none border-0 bg-background">
           <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-            <Activity className="size-5 text-blue-500" />
+            <Activity className="size-5" />
             <ItemDescription className="font-medium">{t('operating.rate')}</ItemDescription>
           </ItemContent>
-          <ItemTitle className="ml-6 font-bold text-2xl text-blue-600 tracking-tight">{operabilityRate.toFixed(1)}%</ItemTitle>
+          <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{operabilityRate.toFixed(1)}%</ItemTitle>
         </Item>
 
         <Item className="flex-col rounded-none border-0 bg-background">
           <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-            <BarChart3 className="size-5 text-indigo-500" />
+            <BarChart3 className="size-5" />
             <ItemDescription className="font-medium">{t('avg.daily.operational')}</ItemDescription>
           </ItemContent>
-          <ItemTitle className="ml-6 font-bold text-2xl text-indigo-600 tracking-tight">{avgDailyOperational.toFixed(1)}h</ItemTitle>
+          <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{avgDailyOperational.toFixed(1)}h</ItemTitle>
         </Item>
       </div>
 

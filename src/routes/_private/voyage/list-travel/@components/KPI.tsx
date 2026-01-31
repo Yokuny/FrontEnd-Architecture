@@ -28,7 +28,7 @@ export function KPI({ data }: VoyageKPIProps) {
     <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-          <MapPin className="size-5 text-blue-600" />
+          <MapPin className="size-5" />
           <ItemDescription className="font-medium">{t('list.travel')}</ItemDescription>
         </ItemContent>
         <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{kpis.travelCount}</ItemTitle>
@@ -36,7 +36,7 @@ export function KPI({ data }: VoyageKPIProps) {
 
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-          <Clock className="size-5 text-blue-600" />
+          <Clock className="size-5" />
           <ItemDescription className="font-medium">
             {t('hour.unity')} ({t('travel')})
           </ItemDescription>
@@ -46,7 +46,7 @@ export function KPI({ data }: VoyageKPIProps) {
 
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-          <Activity className="size-5 text-blue-600" />
+          <Activity className="size-5" />
           <ItemDescription className="font-medium">
             {t('medium')} ({t('travel')} HR)
           </ItemDescription>
@@ -56,7 +56,7 @@ export function KPI({ data }: VoyageKPIProps) {
 
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-          <Ship className="size-5 text-red-600" />
+          <Ship className="size-5" />
           <ItemDescription className="font-medium">{t('in.port')}</ItemDescription>
         </ItemContent>
         <ItemTitle className="ml-6 font-bold text-2xl tracking-tight">{kpis.maneuverCount}</ItemTitle>
@@ -64,7 +64,7 @@ export function KPI({ data }: VoyageKPIProps) {
 
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-          <Clock className="size-5 text-red-600" />
+          <Clock className="size-5" />
           <ItemDescription className="font-medium">
             {t('hour.unity')} ({t('port')})
           </ItemDescription>
@@ -74,7 +74,7 @@ export function KPI({ data }: VoyageKPIProps) {
 
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-          <Activity className="size-5 text-red-600" />
+          <Activity className="size-5" />
           <ItemDescription className="font-medium">
             {t('medium')} ({t('port')} HR)
           </ItemDescription>

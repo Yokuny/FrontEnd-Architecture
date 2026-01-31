@@ -1110,5 +1110,18 @@
   "maintenance.plan.identification.description": "Basic information to identify the maintenance plan.",
   "setup.api.external.identification.description": "Select the enterprise to configure external APIs.",
   "telemetry.download.data.asset.request.description": "Request and download historical data.",
-  "interval.required.when.date.range.more.than.15.days": "The interval is required when the date range is more than 15 days"
+  "interval.required.when.date.range.more.than.15.days": "The interval is required when the date range is more than 15 days",
+  "filled.forms": "Filled Forms",
+  "add.form": "Add Form",
+  "functionality.not.implemented": "Functionality not implemented",
+  "os.code.job.id.label": "OS Code / Job ID",
+  "os.code.job.id.placeholder": "Search by OS / Job ID",
+  "maintenance.type.label": "Maintenance Type",
+  "status.label": "Status",
+  "critical.equipment.label": "Critical Equipment",
+  "finished.at.label": "Finished At",
+  "finished.at.placeholder": "Finished Status",
+  "finished.at.true": "Finished",
+  "finished.at.false": "Not Finished",
+  "critical": "Critical"
 }
