@@ -147,4 +147,45 @@ export function useCreateSupplierConfig() {
   });
 }
 
+export function useOpenFas() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (fas: any) => {
+      const response = await api.post('/fas/open-fas', fas);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: fasKeys.all });
+      toast.success('FAS aberto com sucesso');
+    },
+    onError: (error: any) => {
+      const message = error.response?.data?.message || 'Erro ao abrir FAS';
+      toast.error(message);
+    },
+  });
+}
+
+export function useFasExistsValidation(params: { dateOnly?: string; idVessel?: string; type?: string; timezone?: string }) {
+  return useQuery({
+    queryKey: [...fasKeys.all, 'exists-validation', params],
+    queryFn: async () => {
+      const response = await api.get<{ fasExists: boolean }>('/fas/exists-validation', { params });
+      return response.data;
+    },
+    enabled: !!(params.dateOnly && params.idVessel && params.type),
+  });
+}
+
+export function useFasOsExistsValidation(params: { search?: string; idEnterprise?: string; notId?: string }) {
+  return useQuery({
+    queryKey: [...fasKeys.all, 'os-exists-validation', params],
+    queryFn: async () => {
+      const response = await api.get<{ osExists: boolean }>('/fas/list/filter-os-create-validation', { params });
+      return response.data;
+    },
+    enabled: !!(params.search && params.idEnterprise),
+  });
+}
+
 export type { FasSupplier, FasContact, FasSupplierConfig };

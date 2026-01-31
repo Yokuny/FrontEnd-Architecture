@@ -9,7 +9,6 @@ export function FasStatusBadge({ status }: FasStatusBadgeProps) {
   const { t } = useTranslation();
 
   let variant: 'default' | 'secondary' | 'outline' | 'success' | 'warning' | 'error' | 'info' | 'neutral' = 'outline';
-  const _className = '';
 
   switch (status) {
     case 'fas.closed':

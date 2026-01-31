@@ -114,6 +114,7 @@ import { Route as PrivateTelemetryListDashboardAddRouteImport } from './routes/_
 import { Route as PrivateTelemetryHeatmapFleetNotificationsRouteImport } from './routes/_private/telemetry/heatmap-fleet/notifications';
 import { Route as PrivateTelemetryHeatmapFleetAddRouteImport } from './routes/_private/telemetry/heatmap-fleet/add';
 import { Route as PrivateTelemetryDiagramListDiagramRouteImport } from './routes/_private/telemetry/diagram-list/diagram';
+import { Route as PrivateServiceManagementFasAddRouteImport } from './routes/_private/service-management/fas/add';
 import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
 import { Route as PrivateRegisterTypeFuelAddRouteImport } from './routes/_private/register/type-fuel/add';
 import { Route as PrivateRegisterSensorsAddRouteImport } from './routes/_private/register/sensors/add';
@@ -749,6 +750,12 @@ const PrivateTelemetryDiagramListDiagramRoute =
     path: '/telemetry/diagram-list/diagram',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateServiceManagementFasAddRoute =
+  PrivateServiceManagementFasAddRouteImport.update({
+    id: '/service-management/fas/add',
+    path: '/service-management/fas/add',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 const PrivateRegisterUserTypeAddRoute =
   PrivateRegisterUserTypeAddRouteImport.update({
     id: '/register/user-type/add',
@@ -953,6 +960,7 @@ export interface FileRoutesByFullPath {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/service-management/fas/add': typeof PrivateServiceManagementFasAddRoute;
   '/telemetry/diagram-list/diagram': typeof PrivateTelemetryDiagramListDiagramRoute;
   '/telemetry/heatmap-fleet/add': typeof PrivateTelemetryHeatmapFleetAddRoute;
   '/telemetry/heatmap-fleet/notifications': typeof PrivateTelemetryHeatmapFleetNotificationsRoute;
@@ -1085,6 +1093,7 @@ export interface FileRoutesByTo {
   '/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/service-management/fas/add': typeof PrivateServiceManagementFasAddRoute;
   '/telemetry/diagram-list/diagram': typeof PrivateTelemetryDiagramListDiagramRoute;
   '/telemetry/heatmap-fleet/add': typeof PrivateTelemetryHeatmapFleetAddRoute;
   '/telemetry/heatmap-fleet/notifications': typeof PrivateTelemetryHeatmapFleetNotificationsRoute;
@@ -1220,6 +1229,7 @@ export interface FileRoutesById {
   '/_private/register/sensors/add': typeof PrivateRegisterSensorsAddRoute;
   '/_private/register/type-fuel/add': typeof PrivateRegisterTypeFuelAddRoute;
   '/_private/register/user-type/add': typeof PrivateRegisterUserTypeAddRoute;
+  '/_private/service-management/fas/add': typeof PrivateServiceManagementFasAddRoute;
   '/_private/telemetry/diagram-list/diagram': typeof PrivateTelemetryDiagramListDiagramRoute;
   '/_private/telemetry/heatmap-fleet/add': typeof PrivateTelemetryHeatmapFleetAddRoute;
   '/_private/telemetry/heatmap-fleet/notifications': typeof PrivateTelemetryHeatmapFleetNotificationsRoute;
@@ -1354,6 +1364,7 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/service-management/fas/add'
     | '/telemetry/diagram-list/diagram'
     | '/telemetry/heatmap-fleet/add'
     | '/telemetry/heatmap-fleet/notifications'
@@ -1486,6 +1497,7 @@ export interface FileRouteTypes {
     | '/register/sensors/add'
     | '/register/type-fuel/add'
     | '/register/user-type/add'
+    | '/service-management/fas/add'
     | '/telemetry/diagram-list/diagram'
     | '/telemetry/heatmap-fleet/add'
     | '/telemetry/heatmap-fleet/notifications'
@@ -1620,6 +1632,7 @@ export interface FileRouteTypes {
     | '/_private/register/sensors/add'
     | '/_private/register/type-fuel/add'
     | '/_private/register/user-type/add'
+    | '/_private/service-management/fas/add'
     | '/_private/telemetry/diagram-list/diagram'
     | '/_private/telemetry/heatmap-fleet/add'
     | '/_private/telemetry/heatmap-fleet/notifications'
@@ -2451,6 +2464,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateTelemetryDiagramListDiagramRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/service-management/fas/add': {
+      id: '/_private/service-management/fas/add';
+      path: '/service-management/fas/add';
+      fullPath: '/service-management/fas/add';
+      preLoaderRoute: typeof PrivateServiceManagementFasAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/register/user-type/add': {
       id: '/_private/register/user-type/add';
       path: '/register/user-type/add';
@@ -2683,6 +2703,7 @@ interface PrivateRouteChildren {
   PrivateRegisterSensorsAddRoute: typeof PrivateRegisterSensorsAddRoute;
   PrivateRegisterTypeFuelAddRoute: typeof PrivateRegisterTypeFuelAddRoute;
   PrivateRegisterUserTypeAddRoute: typeof PrivateRegisterUserTypeAddRoute;
+  PrivateServiceManagementFasAddRoute: typeof PrivateServiceManagementFasAddRoute;
   PrivateTelemetryDiagramListDiagramRoute: typeof PrivateTelemetryDiagramListDiagramRoute;
   PrivateTelemetryHeatmapFleetAddRoute: typeof PrivateTelemetryHeatmapFleetAddRoute;
   PrivateTelemetryHeatmapFleetNotificationsRoute: typeof PrivateTelemetryHeatmapFleetNotificationsRoute;
@@ -2815,6 +2836,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateRegisterSensorsAddRoute: PrivateRegisterSensorsAddRoute,
   PrivateRegisterTypeFuelAddRoute: PrivateRegisterTypeFuelAddRoute,
   PrivateRegisterUserTypeAddRoute: PrivateRegisterUserTypeAddRoute,
+  PrivateServiceManagementFasAddRoute: PrivateServiceManagementFasAddRoute,
   PrivateTelemetryDiagramListDiagramRoute:
     PrivateTelemetryDiagramListDiagramRoute,
   PrivateTelemetryHeatmapFleetAddRoute: PrivateTelemetryHeatmapFleetAddRoute,

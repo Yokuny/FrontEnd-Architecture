@@ -159,7 +159,7 @@ function FASPage() {
             </DialogContent>
           </Dialog>
 
-          <Button onClick={() => navigate({ to: '/_private/service-management/fas/add' } as any)}>
+          <Button onClick={() => navigate({ to: './add' } as any)}>
             <FilePlus className="size-4" />
             {t('new.fas')}
           </Button>

@@ -18,6 +18,7 @@
     "routes": "npx tsx src/config/extractRoutes.ts && pnpm run format",
     "i18n": "python3 src/config/translations/i18n_pipeline.py",
     "i18n:clean": "python3 src/config/translations/i18n_remove_unused.py",
+    "i18n:sort": "python3 src/config/translations/i18n_sort.py",
     "i18n:dedupe": "python3 src/config/translations/i18n_deduplicate.py",
     "i18n:check": "python3 src/config/translations/i18n_check_missing.py",
     "i18n:validate": "python3 src/config/translations/i18n_validate.py"
