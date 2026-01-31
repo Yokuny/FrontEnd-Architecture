@@ -257,12 +257,12 @@ function CMMSFilledFormsPage() {
             idEnterprise={idEnterprise}
             value={tipoManutencao}
             onChange={setTipoManutencao}
-            label={t('maintenance.type.label')}
+            label={t('maintenance.type')}
             className="w-48 bg-background"
           />
 
           {/* Status */}
-          <StatusSelect mode="single" idEnterprise={idEnterprise} value={status} onChange={setStatus} label={t('status.label')} className="w-48 bg-background" />
+          <StatusSelect mode="single" idEnterprise={idEnterprise} value={status} onChange={setStatus} label={t('status')} className="w-48 bg-background" />
 
           {/* Critical Equipment */}
           <div className="flex flex-col gap-1.5">

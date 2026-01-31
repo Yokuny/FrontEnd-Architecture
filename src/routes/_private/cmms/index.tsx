@@ -19,7 +19,7 @@ function CMMSHubPage() {
       to: '/cmms/kpis-cmms' as const,
     },
     {
-      title: t('filled-form-cmms'),
+      title: t('filled.forms'),
       description: t('filled-form-cmms.description'),
       icon: ClipboardCheck,
       to: '/cmms/filled-form-cmms' as const,

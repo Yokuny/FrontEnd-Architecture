@@ -57,8 +57,8 @@ export function FasTable({ data, isLoading, page = 1, pageSize = 10, totalItems 
 
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden">
-        <Table>
+      <div className="overflow-hidden rounded-lg">
+        <Table className="rounded-lg">
           <TableHeader className="bg-muted/30">
             <TableRow className="hover:bg-transparent">
               <TableHead className="w-64 py-4 text-center font-semibold text-muted-foreground text-sm">{t('fas')}</TableHead>
