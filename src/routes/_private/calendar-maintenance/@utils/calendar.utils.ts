@@ -28,47 +28,47 @@ export function getEventColorClasses(color?: EventColor | string): string {
 
   switch (eventColor) {
     case 'red':
-      return 'bg-red-200/50 hover:bg-red-200/40 text-red-950/80 dark:bg-red-400/25 dark:hover:bg-red-400/20 dark:text-red-200 shadow-red-700/10';
+      return 'bg-red-200/50 hover:bg-red-200/40 text-red-950/80 dark:bg-red-400/25 dark:hover:bg-red-400/20 dark:text-red-200 ';
     case 'orange':
-      return 'bg-orange-200/50 hover:bg-orange-200/40 text-orange-950/80 dark:bg-orange-400/25 dark:hover:bg-orange-400/20 dark:text-orange-200 shadow-orange-700/10';
+      return 'bg-orange-200/50 hover:bg-orange-200/40 text-orange-950/80 dark:bg-orange-400/25 dark:hover:bg-orange-400/20 dark:text-orange-200 ';
     case 'amber':
-      return 'bg-amber-200/50 hover:bg-amber-200/40 text-amber-950/80 dark:bg-amber-400/25 dark:hover:bg-amber-400/20 dark:text-amber-200 shadow-amber-700/10';
+      return 'bg-amber-200/50 hover:bg-amber-200/40 text-amber-950/80 dark:bg-amber-400/25 dark:hover:bg-amber-400/20 dark:text-amber-200 ';
     case 'yellow':
-      return 'bg-yellow-200/50 hover:bg-yellow-200/40 text-yellow-950/80 dark:bg-yellow-400/25 dark:hover:bg-yellow-400/20 dark:text-yellow-200 shadow-yellow-700/10';
+      return 'bg-yellow-200/50 hover:bg-yellow-200/40 text-yellow-950/80 dark:bg-yellow-400/25 dark:hover:bg-yellow-400/20 dark:text-yellow-200 ';
     case 'lime':
-      return 'bg-lime-200/50 hover:bg-lime-200/40 text-lime-950/80 dark:bg-lime-400/25 dark:hover:bg-lime-400/20 dark:text-lime-200 shadow-lime-700/10';
+      return 'bg-lime-200/50 hover:bg-lime-200/40 text-lime-950/80 dark:bg-lime-400/25 dark:hover:bg-lime-400/20 dark:text-lime-200 ';
     case 'green':
-      return 'bg-green-200/50 hover:bg-green-200/40 text-green-950/80 dark:bg-green-400/25 dark:hover:bg-green-400/20 dark:text-green-200 shadow-green-700/10';
+      return 'bg-green-200/50 hover:bg-green-200/40 text-green-950/80 dark:bg-green-400/25 dark:hover:bg-green-400/20 dark:text-green-200 ';
     case 'emerald':
-      return 'bg-emerald-200/50 hover:bg-emerald-200/40 text-emerald-950/80 dark:bg-emerald-400/25 dark:hover:bg-emerald-400/20 dark:text-emerald-200 shadow-emerald-700/10';
+      return 'bg-emerald-200/50 hover:bg-emerald-200/40 text-emerald-950/80 dark:bg-emerald-400/25 dark:hover:bg-emerald-400/20 dark:text-emerald-200 ';
     case 'teal':
-      return 'bg-teal-200/50 hover:bg-teal-200/40 text-teal-950/80 dark:bg-teal-400/25 dark:hover:bg-teal-400/20 dark:text-teal-200 shadow-teal-700/10';
+      return 'bg-teal-200/50 hover:bg-teal-200/40 text-teal-950/80 dark:bg-teal-400/25 dark:hover:bg-teal-400/20 dark:text-teal-200 ';
     case 'cyan':
-      return 'bg-cyan-200/50 hover:bg-cyan-200/40 text-cyan-950/80 dark:bg-cyan-400/25 dark:hover:bg-cyan-400/20 dark:text-cyan-200 shadow-cyan-700/10';
+      return 'bg-cyan-200/50 hover:bg-cyan-200/40 text-cyan-950/80 dark:bg-cyan-400/25 dark:hover:bg-cyan-400/20 dark:text-cyan-200 ';
     case 'sky':
-      return 'bg-sky-200/50 hover:bg-sky-200/40 text-sky-950/80 dark:bg-sky-400/25 dark:hover:bg-sky-400/20 dark:text-sky-200 shadow-sky-700/10';
+      return 'bg-sky-200/50 hover:bg-sky-200/40 text-sky-950/80 dark:bg-sky-400/25 dark:hover:bg-sky-400/20 dark:text-sky-200 ';
     case 'blue':
-      return 'bg-blue-200/50 hover:bg-blue-200/40 text-blue-950/80 dark:bg-blue-400/25 dark:hover:bg-blue-400/20 dark:text-blue-200 shadow-blue-700/10';
+      return 'bg-blue-200/50 hover:bg-blue-200/40 text-blue-950/80 dark:bg-blue-400/25 dark:hover:bg-blue-400/20 dark:text-blue-200 ';
     case 'indigo':
-      return 'bg-indigo-200/50 hover:bg-indigo-200/40 text-indigo-950/80 dark:bg-indigo-400/25 dark:hover:bg-indigo-400/20 dark:text-indigo-200 shadow-indigo-700/10';
+      return 'bg-indigo-200/50 hover:bg-indigo-200/40 text-indigo-950/80 dark:bg-indigo-400/25 dark:hover:bg-indigo-400/20 dark:text-indigo-200 ';
     case 'violet':
-      return 'bg-violet-200/50 hover:bg-violet-200/40 text-violet-950/80 dark:bg-violet-400/25 dark:hover:bg-violet-400/20 dark:text-violet-200 shadow-violet-700/10';
+      return 'bg-violet-200/50 hover:bg-violet-200/40 text-violet-950/80 dark:bg-violet-400/25 dark:hover:bg-violet-400/20 dark:text-violet-200 ';
     case 'purple':
-      return 'bg-purple-200/50 hover:bg-purple-200/40 text-purple-950/80 dark:bg-purple-400/25 dark:hover:bg-purple-400/20 dark:text-purple-200 shadow-purple-700/10';
+      return 'bg-purple-200/50 hover:bg-purple-200/40 text-purple-950/80 dark:bg-purple-400/25 dark:hover:bg-purple-400/20 dark:text-purple-200 ';
     case 'fuchsia':
-      return 'bg-fuchsia-200/50 hover:bg-fuchsia-200/40 text-fuchsia-950/80 dark:bg-fuchsia-400/25 dark:hover:bg-fuchsia-400/20 dark:text-fuchsia-200 shadow-fuchsia-700/10';
+      return 'bg-fuchsia-200/50 hover:bg-fuchsia-200/40 text-fuchsia-950/80 dark:bg-fuchsia-400/25 dark:hover:bg-fuchsia-400/20 dark:text-fuchsia-200 ';
     case 'pink':
-      return 'bg-pink-200/50 hover:bg-pink-200/40 text-pink-950/80 dark:bg-pink-400/25 dark:hover:bg-pink-400/20 dark:text-pink-200 shadow-pink-700/10';
+      return 'bg-pink-200/50 hover:bg-pink-200/40 text-pink-950/80 dark:bg-pink-400/25 dark:hover:bg-pink-400/20 dark:text-pink-200 ';
     case 'rose':
-      return 'bg-rose-200/50 hover:bg-rose-200/40 text-rose-950/80 dark:bg-rose-400/25 dark:hover:bg-rose-400/20 dark:text-rose-200 shadow-rose-700/10';
+      return 'bg-rose-200/50 hover:bg-rose-200/40 text-rose-950/80 dark:bg-rose-400/25 dark:hover:bg-rose-400/20 dark:text-rose-200 ';
     case 'slate':
-      return 'bg-slate-200/50 hover:bg-slate-200/40 text-slate-950/80 dark:bg-slate-400/25 dark:hover:bg-slate-400/20 dark:text-slate-200 shadow-slate-700/10';
+      return 'bg-slate-200/50 hover:bg-slate-200/40 text-slate-950/80 dark:bg-slate-400/25 dark:hover:bg-slate-400/20 dark:text-slate-200 ';
     case 'stone':
-      return 'bg-stone-200/50 hover:bg-stone-200/40 text-stone-950/80 dark:bg-stone-400/25 dark:hover:bg-stone-400/20 dark:text-stone-200 shadow-stone-700/10';
+      return 'bg-stone-200/50 hover:bg-stone-200/40 text-stone-950/80 dark:bg-stone-400/25 dark:hover:bg-stone-400/20 dark:text-stone-200 ';
     case 'muted':
-      return 'border border-accent bg-slate-200/10 dark:bg-slate-400/10 dark:hover:bg-slate-400/20 text-gray-950/40 dark:text-gray-300 shadow-stone-700/10';
+      return 'border border-accent bg-slate-200/10 dark:bg-slate-400/10 dark:hover:bg-slate-400/20 text-gray-950/40 dark:text-gray-300 ';
     default:
-      return 'bg-sky-200/50 hover:bg-sky-200/40 text-sky-950/80 dark:bg-sky-400/25 dark:hover:bg-sky-400/20 dark:text-sky-200 shadow-sky-700/10';
+      return 'bg-sky-200/50 hover:bg-sky-200/40 text-sky-950/80 dark:bg-sky-400/25 dark:hover:bg-sky-400/20 dark:text-sky-200 ';
   }
 }
 

@@ -48,7 +48,7 @@ function SetupApiExternalFormContent({ idEnterprise }: { idEnterprise?: string }
           <Form {...form}>
             <form onSubmit={onSubmit}>
               <ApiExternalForm showEnterpriseSelect={!idEnterprise} />
-              <CardFooter className="mt-6 border-t px-0 pt-6">
+              <CardFooter className="mt-6 px-0 pt-6">
                 <Button type="submit" disabled={isPending || isLoading || isKeyMasked} className="min-w-[120px]">
                   {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
                   {t('save')}

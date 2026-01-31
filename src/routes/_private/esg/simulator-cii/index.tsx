@@ -166,13 +166,13 @@ function SimulatorCIIPage() {
           ) : (
             <div className="fade-in animate-in space-y-8 duration-500">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center shadow-sm">
+                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center">
                   <p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">CII Reference</p>
                   <p className="font-bold font-mono text-3xl text-primary">
                     {new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(results.ciiRef)}
                   </p>
                 </div>
-                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center shadow-sm">
+                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center">
                   <p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">CII Attained</p>
                   <p className="font-bold font-mono text-3xl text-primary">
                     {new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(results.ciiAttained)}
@@ -180,7 +180,7 @@ function SimulatorCIIPage() {
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-xl border shadow-sm">
+              <div className="overflow-hidden rounded-xl border">
                 <Table>
                   <TableHeader className="bg-secondary/30">
                     <TableRow>
@@ -203,7 +203,7 @@ function SimulatorCIIPage() {
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <div className="flex cursor-help flex-col items-center gap-3">
-                                    <Badge className={cn('px-8 py-2 font-bold text-xl shadow-md', getRatingColor(rating))}>{rating}</Badge>
+                                    <Badge className={cn('px-8 py-2 font-bold text-xl', getRatingColor(rating))}>{rating}</Badge>
                                     <p className="font-bold text-[10px] text-muted-foreground uppercase tracking-tighter">RED. {yf.factor}%</p>
                                   </div>
                                 </TooltipTrigger>

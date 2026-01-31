@@ -47,7 +47,7 @@ export function AnomalyDetectorList({ data, onShowDetails }: AnomalyDetectorList
             })
           }
         >
-          <Avatar className="size-12 rounded-full border-2 border-background shadow-sm transition-all group-hover/item:border-primary/20">
+          <Avatar className="size-12 rounded-full border-2 border-background transition-all group-hover/item:border-primary/20">
             <AvatarImage src={row.asset.image?.url} alt={row.asset.name} />
             <AvatarFallback className="bg-primary/5 text-primary">{row.asset.name.substring(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>

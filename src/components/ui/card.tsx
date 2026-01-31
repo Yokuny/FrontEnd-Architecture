@@ -6,13 +6,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      data-slot="card"
-      className={cn('flex flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground shadow-sm md:border', className)}
-      {...props}
-    />
-  );
+  return <div data-slot="card" className={cn('flex flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground md:border', className)} {...props} />;
 }
 
 interface CardHeaderProps extends Omit<React.ComponentProps<'div'>, 'title'> {

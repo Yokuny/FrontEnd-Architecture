@@ -405,7 +405,7 @@ function MapPopup({ className, ...props }: Omit<PopupProps, 'content'> & { ref?:
   return (
     <LeafletPopup
       className={cn(
-        'fade-out-0 fade-in-0 zoom-out-95 zoom-in-95 slide-in-from-bottom-2 z-50 w-72 animate-in rounded-md border bg-popover p-4 font-sans text-popover-foreground shadow-md outline-hidden',
+        'fade-out-0 fade-in-0 zoom-out-95 zoom-in-95 slide-in-from-bottom-2 z-50 w-72 animate-in rounded-md border bg-popover p-4 font-sans text-popover-foreground outline-hidden',
         className,
       )}
       {...props}

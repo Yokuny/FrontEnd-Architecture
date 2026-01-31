@@ -46,7 +46,7 @@ export function FleetCamerasPanel() {
 
       <div className="space-y-4">
         {/* Video Player Container */}
-        <div className="group relative aspect-video overflow-hidden rounded-xl border border-primary/10 bg-black shadow-2xl">
+        <div className="group relative aspect-video overflow-hidden rounded-xl border border-primary/10 bg-black">
           {currentCamera ? (
             <video key={currentCamera.link} src={currentCamera.link} autoPlay controls className="h-full w-full object-contain">
               {t('no.support.video')}

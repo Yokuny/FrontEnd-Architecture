@@ -167,13 +167,7 @@ export function DataTable<T extends Record<string, any>>({
   }
 
   return (
-    <div
-      className={cn(
-        'flex flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground shadow-sm md:border',
-        className,
-        !bordered && 'border-0 shadow-none',
-      )}
-    >
+    <div className={cn('flex flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground md:border', className, !bordered && 'border-0')}>
       {/* Search and Filters */}
       {searchable && (
         <ItemHeader className="justify-end px-6">
@@ -306,7 +300,7 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Pagination */}
       {showPagination && sortedData.length > 0 && (
-        <ItemFooter className="flex flex-col items-center justify-between gap-4 border-t px-6 py-4 sm:flex-row">
+        <ItemFooter className="flex flex-col items-center justify-between gap-4 px-6 py-4 sm:flex-row">
           <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
             <span>{t('show')}</span>
             <Select

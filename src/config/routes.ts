@@ -58,6 +58,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {
   cmms: Wrench,
   'service-management': Briefcase,
   contracts: NotebookPen,
+  form: FileText,
 };
 
 // Ícones para sub-rotas específicas
@@ -134,6 +135,7 @@ export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {
   'dashboard-rve': LayoutDashboard,
   'dashboard-rve-rdo': LayoutDashboard,
   'dashboard-rve-sounding': LayoutDashboard,
+  form: FileText,
 };
 
 // Chaves i18n para tradução de rotas
@@ -256,6 +258,7 @@ export const MAIN_ROUTES = [
   '/esg/indicators-eeoi-cii',
   '/esg/simulator-cii',
   '/fleet-manager',
+  '/form',
   '/ia/anomaly-detector',
   '/ia/prompt',
   '/maintenance/list-os-done',

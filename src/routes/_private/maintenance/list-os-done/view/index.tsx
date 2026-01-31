@@ -187,7 +187,6 @@ function OsDetailsPage() {
           .pb-20, .py-6, .pt-12 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
           .space-y-12 { margin-top: 0 !important; margin-bottom: 0 !important; }
           
-          /* Forçar bordas e shadows para sumirem no Card */
           .card, .border { 
             border: none !important; 
             box-shadow: none !important; 

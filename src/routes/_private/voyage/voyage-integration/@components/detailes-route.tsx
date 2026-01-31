@@ -62,7 +62,7 @@ export function VoyageRoute() {
       <MapMarker
         position={startPoint}
         icon={
-          <div className="flex size-6 items-center justify-center rounded-full border-2 border-white bg-success shadow-lg">
+          <div className="flex size-6 items-center justify-center rounded-full border-2 border-white bg-success">
             <Radio className="size-3 text-white" />
           </div>
         }
@@ -72,7 +72,7 @@ export function VoyageRoute() {
       <MapMarker
         position={endPoint}
         icon={
-          <div className="flex size-6 items-center justify-center rounded-full border-2 border-white bg-primary shadow-lg">
+          <div className="flex size-6 items-center justify-center rounded-full border-2 border-white bg-primary">
             <Flag className="size-3 text-white" />
           </div>
         }

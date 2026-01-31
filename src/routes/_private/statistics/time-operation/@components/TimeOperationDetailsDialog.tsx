@@ -5,7 +5,7 @@ import DefaultEmpty from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, getChartColor } from '@/components/ui/chart';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Item, ItemContent, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { useTimeOperationDetails } from '@/hooks/use-statistics-api';
 
 const chartConfig = {
@@ -37,8 +37,10 @@ export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }
         <DialogHeader>
           <DialogTitle>{item?.machine?.name}</DialogTitle>
           <DialogDescription>
-            {filters.min && format(new Date(filters.min), 'dd MMM yyyy, HH:mm')}
-            {filters.max && ` - ${format(new Date(filters.max), 'dd MMM yyyy, HH:mm')}`}
+            <ItemDescription>
+              {filters.min && format(new Date(filters.min), 'dd MMM yyyy, HH:mm')}
+              {filters.max && ` - ${format(new Date(filters.max), 'dd MMM yyyy, HH:mm')}`}
+            </ItemDescription>
           </DialogDescription>
         </DialogHeader>
 

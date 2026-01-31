@@ -88,7 +88,7 @@ export function GraphBreakParts() {
                     }}
                   >
                     <div
-                      className="h-full w-full border-white/5 border-y shadow-sm first:border-l last:border-r"
+                      className="h-full w-full border-white/5 border-y first:border-l last:border-r"
                       style={{
                         backgroundColor: d.color,
                         borderRadius: d.borderRadius,

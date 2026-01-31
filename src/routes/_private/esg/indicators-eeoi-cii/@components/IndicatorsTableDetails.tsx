@@ -109,7 +109,7 @@ export function IndicatorsTableDetails({ data }: IndicatorsTableDetailsProps) {
     },
   ];
 
-  return <DataTable data={data} columns={columns} bordered={false} className="border-none py-0 shadow-none" />;
+  return <DataTable data={data} columns={columns} bordered={false} className="border-none py-0" />;
 }
 
 interface IndicatorsTableDetailsProps {

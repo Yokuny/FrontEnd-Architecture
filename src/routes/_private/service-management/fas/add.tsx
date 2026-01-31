@@ -27,7 +27,7 @@ function FasAddPage() {
           <CardContent className="p-0">
             <FasForm />
           </CardContent>
-          <CardFooter className="border-t bg-muted/5">
+          <CardFooter className="mt-6 bg-muted/5">
             <Button type="submit" disabled={isPending} className="ml-auto min-w-[120px]">
               {isPending ? <Spinner className="mr-2 size-4" /> : <Check className="mr-2 size-4" />}
               {isPending ? t('saving') : t('save')}

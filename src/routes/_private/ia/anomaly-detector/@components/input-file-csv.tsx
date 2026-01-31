@@ -108,7 +108,7 @@ export function InputFileCsv({ onHandleData }: InputFileCsvProps) {
           )}
 
           {file && (
-            <Button variant="default" onClick={handleUpload} className="animate-pulse gap-2 shadow-lg shadow-primary/20">
+            <Button variant="default" onClick={handleUpload} className="animate-pulse gap-2">
               <Play className="size-4" />
               {t('start.monitoring')}
             </Button>

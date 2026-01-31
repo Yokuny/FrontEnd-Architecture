@@ -87,7 +87,7 @@ export function MapCoordinates() {
   const dms = new DmsCoordinates(coords[0], coords[1]);
 
   return (
-    <div className={cn('pointer-events-none fixed right-20 bottom-6 select-none drop-shadow-sm transition-colors duration-300', textColor)} style={{ zIndex: 9999 }}>
+    <div className={cn('pointer-events-none fixed right-20 bottom-6 select-none transition-colors duration-300', textColor)} style={{ zIndex: 9999 }}>
       <div className="flex flex-col">
         <ItemTitle className={cn('mb-1.5 font-bold text-[10px] uppercase leading-none tracking-tighter opacity-70', textColor)}>{t('setup.fleet.coordinates')}</ItemTitle>
         <div className="flex gap-2">

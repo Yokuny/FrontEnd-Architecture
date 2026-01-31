@@ -278,15 +278,6 @@ code {
   --font-mono: "League Spartan", var(--font-fallback-mono);
   --font-bebas: "Bebas Neue", var(--font-fallback-sans);
   --font-serif: var(--font-serif);
-
-  --shadow-2xs: var(--shadow-2xs);
-  --shadow-xs: var(--shadow-xs);
-  --shadow-sm: var(--shadow-sm);
-  --shadow: var(--shadow);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-2xl: var(--shadow-2xl);
 }
 
 @utility no-scrollbar {
@@ -732,7 +723,7 @@ code {
     @apply ring-offset-background focus:ring-ring bg-secondary rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:outline-hidden;
   }
   .leaflet-tooltip, .leaflet-draw-tooltip {
-    @apply animate-none !rounded-sm !border-none !p-0 !px-2 !py-1 !shadow-none;
+    @apply animate-none !rounded-sm !border-none !p-0 !px-2 !py-1;
   }
   .leaflet-draw-tooltip:before {
     @apply bg-foreground !top-1/2 !right-0.5 size-2.5 translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] !border-none;

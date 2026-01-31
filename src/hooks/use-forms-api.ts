@@ -69,6 +69,7 @@ export interface Form {
   };
   appliedPermissions?: {
     canEdit: boolean;
+    canFill?: boolean;
   };
 }
 
