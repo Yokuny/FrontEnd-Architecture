@@ -128,3 +128,114 @@ export const preUploadAttachments = async ({ files, supplierCanView = false }: {
 
   return [];
 };
+
+// ============================================
+// FAS DETAILS PAGE UTILITIES
+// ============================================
+
+import type { FasDetailsOrder } from '@/hooks/use-fas-api';
+
+/**
+ * Filter orders by text search and status
+ */
+export const filterOrders = (orders: FasDetailsOrder[], textFilter: string, statusFilter: string[]) => {
+  if (!orders?.length) return [];
+
+  return orders.filter((order) => {
+    const matchesText = textFilter
+      ? order.name?.toLowerCase().includes(textFilter.toLowerCase()) ||
+        order.job?.toLowerCase().includes(textFilter.toLowerCase()) ||
+        order.description?.toLowerCase().includes(textFilter.toLowerCase()) ||
+        order.supplierData?.razao?.toLowerCase().includes(textFilter.toLowerCase()) ||
+        order.recommendedSupplier?.toLowerCase().includes(textFilter.toLowerCase())
+      : true;
+
+    const matchesStatus = statusFilter.length > 0 ? statusFilter.includes(order.state) : true;
+
+    return matchesText && matchesStatus;
+  });
+};
+
+/**
+ * Get supplier display text for orders table
+ */
+export const getSupplierDisplay = (order: FasDetailsOrder) => {
+  const isNonSupplierState = ['supplier.canceled', 'not.realized', 'awaiting.create.confirm', 'awaiting.request'].includes(order.state);
+
+  if (!isNonSupplierState && !order.supplierData?.cancelled && order.supplierData?.razao) {
+    return order.supplierData.razao;
+  }
+
+  if (order.recommendedSupplier) {
+    return `${order.recommendedSupplier} (${i18n.t('suggested')})`;
+  }
+
+  return 'N/A';
+};
+
+/**
+ * Check if add service button should be disabled
+ */
+export const disableAddService = ({ type, serviceDate }: { type?: string; serviceDate?: string }) => {
+  // Regularization type can always add service
+  if (isRegularizationHeader(type)) {
+    return false;
+  }
+
+  // If service date has passed, disable add service
+  if (serviceDate) {
+    const date = new Date(serviceDate);
+    const now = new Date();
+    return date < now;
+  }
+
+  return false;
+};
+
+/**
+ * Check if order can be edited based on FAS data and permissions
+ */
+export const canEditOS = (fasData: { type?: string }, order: FasDetailsOrder, permissions: string[]) => {
+  if (!permissions.includes('/fas-add-qsms')) return false;
+
+  const editableStates = ['awaiting.create.confirm', 'awaiting.request', 'not.approved', 'awaiting.collaborators', 'awaiting.rating', 'supplier.canceled', 'not.realized'];
+
+  return editableStates.includes(order.state) && !isRegularizationHeader(fasData.type);
+};
+
+/**
+ * Check if FAS header can be edited
+ */
+export const canEditFAS = (fasData: { orders?: FasDetailsOrder[] }, permissions: string[], editMode: boolean) => {
+  if (!permissions.includes('/fas-add-qsms')) return false;
+  if (editMode) return true;
+
+  // Can only edit if any order is in editable state
+  const editableStates = ['awaiting.create.confirm', 'awaiting.request', 'not.approved'];
+  return fasData.orders?.some((order) => editableStates.includes(order.state)) ?? false;
+};
+
+/**
+ * Check if order can be transferred
+ */
+export const canTransferService = (fasData: { type?: string }, order: FasDetailsOrder, permissions: string[]) => {
+  if (!permissions.includes('/fas-remove')) return false;
+
+  const transferableStates = ['not.realized', 'not.approved', 'awaiting.create.confirm', 'awaiting.request', 'supplier.canceled', 'awaiting.collaborators', 'awaiting.rating'];
+
+  return transferableStates.includes(order.state) && !isRegularizationHeader(fasData.type);
+};
+
+/**
+ * Check if recommended supplier can be edited
+ */
+export const canEditRecSupplier = (order: FasDetailsOrder, permissions: string[]) => {
+  return permissions.includes('/fas-add-qsms') && order.state === 'supplier.canceled';
+};
+
+/**
+ * Check if rating can be edited
+ */
+export const canEditRating = (order: FasDetailsOrder) => {
+  return ['not.realized', 'awaiting.rating'].includes(order.state);
+};

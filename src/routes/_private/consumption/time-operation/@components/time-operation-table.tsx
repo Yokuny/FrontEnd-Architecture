@@ -61,8 +61,8 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
   if (!data || data.length === 0) return <DefaultEmptyData />;
 
   return (
-    <div className="flex">
-      <Table className="min-w-0">
+    <div className="w-full min-w-0">
+      <Table>
         <TableHeader className="sticky top-0 z-20 bg-secondary">
           <TableRow className="hover:bg-transparent">
             <TableHead className="sticky left-0 z-30 min-w-[160px] bg-background/95 p-4 backdrop-blur">

@@ -190,7 +190,6 @@ function TimeOperationDashboardPage() {
                       dateMin: date ? `${formatDate(date, 'yyyy-MM-dd')}T00:00:00${formatDate(new Date(), 'XXX')}` : undefined,
                     })
                   }
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -221,7 +220,6 @@ function TimeOperationDashboardPage() {
                       dateMax: date ? `${formatDate(date, 'yyyy-MM-dd')}T23:59:59${formatDate(new Date(), 'XXX')}` : undefined,
                     })
                   }
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}

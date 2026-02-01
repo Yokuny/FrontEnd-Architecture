@@ -160,7 +160,7 @@ export function FasTable({ data, isLoading, page = 1, pageSize = 10, totalItems 
                     {!order.empty0 && (
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button size="sm" onClick={() => navigate({ to: '/_private/service-management/os/details/$id', params: { id: order.id } } as any)}>
+                          <Button size="sm" onClick={() => navigate({ to: './filled-os/$id', params: { id: order.id } } as any)}>
                             <ExternalLink className="size-4" />
                           </Button>
                         </TooltipTrigger>

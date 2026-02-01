@@ -6,7 +6,9 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div data-slot="card" className={cn('flex flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground md:border', className)} {...props} />;
+  return (
+    <div data-slot="card" className={cn('flex min-w-0 flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground md:border', className)} {...props} />
+  );
 }
 
 interface CardHeaderProps extends Omit<React.ComponentProps<'div'>, 'title'> {
@@ -47,7 +49,7 @@ function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div data-slot="card-content" className={cn('space-y-6 p-6', className)} {...props} />;
+  return <div data-slot="card-content" className={cn('min-w-0 space-y-6 p-6', className)} {...props} />;
 }
 
 function CardHeaderActions({ className, ...props }: React.ComponentProps<'div'>) {

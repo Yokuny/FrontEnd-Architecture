@@ -98,6 +98,8 @@ import { Route as PrivateRegisterTypeFuelIndexRouteImport } from './routes/_priv
 import { Route as PrivateRegisterUserTypeAddRouteImport } from './routes/_private/register/user-type/add';
 import { Route as PrivateRegisterUserTypeIndexRouteImport } from './routes/_private/register/user-type/index';
 import { Route as PrivateServiceManagementFasAddRouteImport } from './routes/_private/service-management/fas/add';
+import { Route as PrivateServiceManagementFasDetailsIdRouteImport } from './routes/_private/service-management/fas/details/$id';
+import { Route as PrivateServiceManagementFasFilledOsIdRouteImport } from './routes/_private/service-management/fas/filled-os/$id';
 import { Route as PrivateServiceManagementFasIndexRouteImport } from './routes/_private/service-management/fas/index';
 import { Route as PrivateServiceManagementFasAnalyticsIndexRouteImport } from './routes/_private/service-management/fas-analytics/index';
 import { Route as PrivateServiceManagementFasContactsIndexRouteImport } from './routes/_private/service-management/fas-contacts/index';
@@ -921,6 +923,18 @@ const PrivateMaintenanceListOsDoneViewIndexRoute =
     path: '/maintenance/list-os-done/view/',
     getParentRoute: () => PrivateRoute,
   } as any);
+const PrivateServiceManagementFasFilledOsIdRoute =
+  PrivateServiceManagementFasFilledOsIdRouteImport.update({
+    id: '/service-management/fas/filled-os/$id',
+    path: '/service-management/fas/filled-os/$id',
+    getParentRoute: () => PrivateRoute,
+  } as any);
+const PrivateServiceManagementFasDetailsIdRoute =
+  PrivateServiceManagementFasDetailsIdRouteImport.update({
+    id: '/service-management/fas/details/$id',
+    path: '/service-management/fas/details/$id',
+    getParentRoute: () => PrivateRoute,
+  } as any);
 
 export interface FileRoutesByFullPath {
   '/': typeof PrivateIndexRoute;
@@ -1050,6 +1064,8 @@ export interface FileRoutesByFullPath {
   '/voyage/list-travel': typeof PrivateVoyageListTravelIndexRoute;
   '/voyage/route-planner': typeof PrivateVoyageRoutePlannerIndexRoute;
   '/voyage/voyage-integration': typeof PrivateVoyageVoyageIntegrationIndexRoute;
+  '/service-management/fas/details/$id': typeof PrivateServiceManagementFasDetailsIdRoute;
+  '/service-management/fas/filled-os/$id': typeof PrivateServiceManagementFasFilledOsIdRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -1184,6 +1200,8 @@ export interface FileRoutesByTo {
   '/voyage/list-travel': typeof PrivateVoyageListTravelIndexRoute;
   '/voyage/route-planner': typeof PrivateVoyageRoutePlannerIndexRoute;
   '/voyage/voyage-integration': typeof PrivateVoyageVoyageIntegrationIndexRoute;
+  '/service-management/fas/details/$id': typeof PrivateServiceManagementFasDetailsIdRoute;
+  '/service-management/fas/filled-os/$id': typeof PrivateServiceManagementFasFilledOsIdRoute;
   '/maintenance/list-os-done/view': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/permissions/roles/edit': typeof PrivatePermissionsRolesEditIndexRoute;
   '/permissions/roles/users': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -1321,6 +1339,8 @@ export interface FileRoutesById {
   '/_private/voyage/list-travel/': typeof PrivateVoyageListTravelIndexRoute;
   '/_private/voyage/route-planner/': typeof PrivateVoyageRoutePlannerIndexRoute;
   '/_private/voyage/voyage-integration/': typeof PrivateVoyageVoyageIntegrationIndexRoute;
+  '/_private/service-management/fas/details/$id': typeof PrivateServiceManagementFasDetailsIdRoute;
+  '/_private/service-management/fas/filled-os/$id': typeof PrivateServiceManagementFasFilledOsIdRoute;
   '/_private/maintenance/list-os-done/view/': typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   '/_private/permissions/roles/edit/': typeof PrivatePermissionsRolesEditIndexRoute;
   '/_private/permissions/roles/users/': typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -1457,6 +1477,8 @@ export interface FileRouteTypes {
     | '/voyage/list-travel'
     | '/voyage/route-planner'
     | '/voyage/voyage-integration'
+    | '/service-management/fas/details/$id'
+    | '/service-management/fas/filled-os/$id'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -1591,6 +1613,8 @@ export interface FileRouteTypes {
     | '/voyage/list-travel'
     | '/voyage/route-planner'
     | '/voyage/voyage-integration'
+    | '/service-management/fas/details/$id'
+    | '/service-management/fas/filled-os/$id'
     | '/maintenance/list-os-done/view'
     | '/permissions/roles/edit'
     | '/permissions/roles/users'
@@ -1727,6 +1751,8 @@ export interface FileRouteTypes {
     | '/_private/voyage/list-travel/'
     | '/_private/voyage/route-planner/'
     | '/_private/voyage/voyage-integration/'
+    | '/_private/service-management/fas/details/$id'
+    | '/_private/service-management/fas/filled-os/$id'
     | '/_private/maintenance/list-os-done/view/'
     | '/_private/permissions/roles/edit/'
     | '/_private/permissions/roles/users/'
@@ -2679,6 +2705,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateMaintenanceListOsDoneViewIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
+    '/_private/service-management/fas/filled-os/$id': {
+      id: '/_private/service-management/fas/filled-os/$id';
+      path: '/service-management/fas/filled-os/$id';
+      fullPath: '/service-management/fas/filled-os/$id';
+      preLoaderRoute: typeof PrivateServiceManagementFasFilledOsIdRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/service-management/fas/details/$id': {
+      id: '/_private/service-management/fas/details/$id';
+      path: '/service-management/fas/details/$id';
+      fullPath: '/service-management/fas/details/$id';
+      preLoaderRoute: typeof PrivateServiceManagementFasDetailsIdRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
   }
 }
 
@@ -2806,6 +2846,8 @@ interface PrivateRouteChildren {
   PrivateVoyageListTravelIndexRoute: typeof PrivateVoyageListTravelIndexRoute;
   PrivateVoyageRoutePlannerIndexRoute: typeof PrivateVoyageRoutePlannerIndexRoute;
   PrivateVoyageVoyageIntegrationIndexRoute: typeof PrivateVoyageVoyageIntegrationIndexRoute;
+  PrivateServiceManagementFasDetailsIdRoute: typeof PrivateServiceManagementFasDetailsIdRoute;
+  PrivateServiceManagementFasFilledOsIdRoute: typeof PrivateServiceManagementFasFilledOsIdRoute;
   PrivateMaintenanceListOsDoneViewIndexRoute: typeof PrivateMaintenanceListOsDoneViewIndexRoute;
   PrivatePermissionsRolesEditIndexRoute: typeof PrivatePermissionsRolesEditIndexRoute;
   PrivatePermissionsRolesUsersIndexRoute: typeof PrivatePermissionsRolesUsersIndexRoute;
@@ -2976,6 +3018,10 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateVoyageRoutePlannerIndexRoute: PrivateVoyageRoutePlannerIndexRoute,
   PrivateVoyageVoyageIntegrationIndexRoute:
     PrivateVoyageVoyageIntegrationIndexRoute,
+  PrivateServiceManagementFasDetailsIdRoute:
+    PrivateServiceManagementFasDetailsIdRoute,
+  PrivateServiceManagementFasFilledOsIdRoute:
+    PrivateServiceManagementFasFilledOsIdRoute,
   PrivateMaintenanceListOsDoneViewIndexRoute:
     PrivateMaintenanceListOsDoneViewIndexRoute,
   PrivatePermissionsRolesEditIndexRoute: PrivatePermissionsRolesEditIndexRoute,
