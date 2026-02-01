@@ -119,24 +119,22 @@ function RVERDODashboardPage() {
       </CardHeader>
       <CardContent>
         {/* Filters */}
-        <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
-          <ItemContent className="min-w-[300px]">
-            <ConsumptionMachineSelect
-              mode="multi"
-              label={t('vessels')}
-              placeholder={t('vessels.select.placeholder')}
-              idEnterprise={idEnterprise}
-              value={machineIds}
-              onChange={(ids) => setMachineIds(ids)}
-            />
-          </ItemContent>
+        <Item variant="outline" className="bg-secondary">
+          <ConsumptionMachineSelect
+            mode="multi"
+            label={t('vessels')}
+            placeholder={t('vessels.select.placeholder')}
+            idEnterprise={idEnterprise}
+            value={machineIds}
+            onChange={(ids) => setMachineIds(ids)}
+          />
 
           <ItemContent className="flex-none">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -145,7 +143,6 @@ function RVERDODashboardPage() {
                   mode="single"
                   selected={dateMin}
                   onSelect={(date) => date && setDateMin(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -158,8 +155,8 @@ function RVERDODashboardPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -168,7 +165,6 @@ function RVERDODashboardPage() {
                   mode="single"
                   selected={dateMax}
                   onSelect={(date) => date && setDateMax(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -177,11 +173,8 @@ function RVERDODashboardPage() {
             </Popover>
           </ItemContent>
 
-          <ItemContent className="flex-none">
-            <Label className="mb-2 flex items-center gap-2">
-              <span className="size-1" /> {/* Spacer to align with icons */}
-              {t('consume')}
-            </Label>
+          <ItemContent className="flex-none items-center">
+            <Label className="mb-2 flex items-center gap-2">{t('consume')}</Label>
             <div className="flex h-10 items-center gap-2 pb-2">
               <Checkbox id="inoperabilities" checked={showInoperabilities} onCheckedChange={(val) => setShowInoperabilities(!!val)} />
               <Label htmlFor="inoperabilities" className="font-normal text-xs leading-tight">
@@ -190,9 +183,9 @@ function RVERDODashboardPage() {
             </div>
           </ItemContent>
 
-          <div className="flex flex-row items-center gap-2 pb-1">
+          <div className="ml-auto flex justify-end gap-2">
             {hasFilter && (
-              <Button onClick={clearFilter} className="text-amber-700 hover:text-amber-800">
+              <Button onClick={clearFilter}>
                 <BrushCleaning className="size-4" />
               </Button>
             )}

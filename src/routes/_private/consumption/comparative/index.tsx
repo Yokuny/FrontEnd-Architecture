@@ -81,13 +81,13 @@ function ConsumptionComparativePage() {
       <CardHeader title={t('consumption.comparative')} />
       <CardContent>
         {/* Filters */}
-        <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
+        <Item variant="outline" className="bg-secondary">
           <ItemContent className="flex-none">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -96,7 +96,6 @@ function ConsumptionComparativePage() {
                   mode="single"
                   selected={dateMin}
                   onSelect={(date) => date && setDateMin(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -109,8 +108,8 @@ function ConsumptionComparativePage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -119,7 +118,6 @@ function ConsumptionComparativePage() {
                   mode="single"
                   selected={dateMax}
                   onSelect={(date) => date && setDateMax(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -128,18 +126,16 @@ function ConsumptionComparativePage() {
             </Popover>
           </ItemContent>
 
-          <ItemContent className="min-w-[250px]">
-            <ConsumptionMachineSelect
-              mode="multi"
-              label={t('vessels')}
-              placeholder={t('vessels.select.placeholder')}
-              idEnterprise={idEnterprise}
-              value={machineIds}
-              onChange={setMachineIds}
-            />
-          </ItemContent>
+          <ConsumptionMachineSelect
+            mode="multi"
+            label={t('vessels')}
+            placeholder={t('vessels.select.placeholder')}
+            idEnterprise={idEnterprise}
+            value={machineIds}
+            onChange={setMachineIds}
+          />
 
-          <ItemContent className="w-32 flex-none">
+          <div className="flex min-w-32 flex-col gap-1.5">
             <Label>{t('type')}</Label>
             <Select value={viewType} onValueChange={setViewType}>
               <SelectTrigger className="bg-background">
@@ -153,7 +149,7 @@ function ConsumptionComparativePage() {
                 ))}
               </SelectContent>
             </Select>
-          </ItemContent>
+          </div>
 
           <ItemContent className="w-24 flex-none">
             <Label>{t('unit')}</Label>
@@ -173,7 +169,7 @@ function ConsumptionComparativePage() {
 
           <div className="ml-auto flex gap-2">
             {hasFilter && (
-              <Button onClick={clearFilter} className="text-amber-700 hover:text-amber-800">
+              <Button onClick={clearFilter}>
                 <BrushCleaning className="size-4" />
               </Button>
             )}

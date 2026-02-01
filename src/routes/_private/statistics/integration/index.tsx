@@ -191,16 +191,7 @@ function FleetStatusListPage() {
         ) : !data || data.length === 0 ? (
           <EmptyData />
         ) : (
-          <DataTable
-            className="border-none p-0"
-            compact
-            bordered={false}
-            data={displayData}
-            columns={columns}
-            searchable={true}
-            searchPlaceholder={t('search.placeholder')}
-            itemsPerPage={20}
-          />
+          <DataTable className="border-none p-0" compact data={displayData} columns={columns} searchable={true} searchPlaceholder={t('search.placeholder')} itemsPerPage={20} />
         )}
       </CardContent>
     </Card>

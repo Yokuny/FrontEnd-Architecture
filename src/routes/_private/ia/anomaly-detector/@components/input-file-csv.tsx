@@ -103,7 +103,7 @@ export function InputFileCsv({ onHandleData }: InputFileCsvProps) {
               <Button variant="ghost" className="size-8 text-destructive" onClick={() => setFile(null)}>
                 <X className="size-4" />
               </Button>
-              <span className="max-w-[200px] truncate font-medium text-sm">{file.name}</span>
+              <span className="max-w-48 truncate font-medium text-sm">{file.name}</span>
             </div>
           )}
 

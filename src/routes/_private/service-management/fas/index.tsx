@@ -169,7 +169,7 @@ function FASPage() {
       <CardContent className="space-y-6">
         {/* Filters */}
         <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
-          <div>
+          <div className="max-w-52">
             <Label>{t('search')}</Label>
             <div className="relative">
               <Search className="absolute top-3 left-2 size-4 text-muted-foreground" />
@@ -177,23 +177,15 @@ function FASPage() {
             </div>
           </div>
 
-          <MachineByEnterpriseSelect
-            mode="multi"
-            idEnterprise={idEnterprise}
-            value={localVessels}
-            onChange={setLocalVessels}
-            label={t('vessels')}
-            placeholder={t('vessel')}
-            className="bg-background"
-          />
-          <FasStatusSelect value={localStatus} onChange={setLocalStatus} placeholder={t('status')} className="bg-background" />
-          <FasTypeSelect mode="multi" value={localType} onChange={setLocalType} label={t('type')} placeholder={t('type')} className="bg-background" />
+          <MachineByEnterpriseSelect mode="multi" idEnterprise={idEnterprise} value={localVessels} onChange={setLocalVessels} label={t('vessels')} placeholder={t('vessel')} />
+          <FasStatusSelect value={localStatus} onChange={setLocalStatus} placeholder={t('status')} />
+          <FasTypeSelect mode="multi" value={localType} onChange={setLocalType} label={t('type')} placeholder={t('type')} />
 
           <div className="flex flex-col gap-1.5">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !localDateStart && 'text-muted-foreground')}>
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !localDateStart && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {localDateStart ? formatDate(parseISO(localDateStart), 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
@@ -216,7 +208,7 @@ function FASPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !localDateEnd && 'text-muted-foreground')}>
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !localDateEnd && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {localDateEnd ? formatDate(parseISO(localDateEnd), 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
@@ -247,7 +239,7 @@ function FASPage() {
 
           <div className="ml-auto flex gap-2">
             {hasFilter && (
-              <Button onClick={clearFilters} className="text-amber-700 hover:text-amber-800">
+              <Button onClick={clearFilters}>
                 <BrushCleaning className="size-4" />
               </Button>
             )}

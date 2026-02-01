@@ -195,7 +195,7 @@ function ListTravelPage() {
           </div>
 
           <div className="ml-auto flex justify-end gap-2">
-            <Button className="text-amber-700 hover:text-amber-800" variant="outline" onClick={handleClear}>
+            <Button variant="outline" onClick={handleClear}>
               <BrushCleaning className="size-4" />
             </Button>
             <Button type="button" onClick={handleSearch} disabled={isLoading}>

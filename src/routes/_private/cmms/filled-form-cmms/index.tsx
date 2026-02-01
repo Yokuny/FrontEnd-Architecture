@@ -174,9 +174,9 @@ function CMMSFilledFormsPage() {
       )}
 
       <CardContent className="space-y-6">
-        <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
+        <Item variant="outline" className="bg-secondary">
           {/* Search */}
-          <div>
+          <div className="flex flex-col gap-1.5">
             <Label>{t('search')}</Label>
             <div className="relative">
               <Search className="absolute top-3 left-2 size-4 text-muted-foreground" />
@@ -184,7 +184,6 @@ function CMMSFilledFormsPage() {
             </div>
           </div>
 
-          {/* Machines */}
           <MachineByEnterpriseSelect
             mode="multi"
             idEnterprise={idEnterprise}
@@ -195,26 +194,17 @@ function CMMSFilledFormsPage() {
             className="w-48 bg-background"
           />
 
-          {/* Date Range */}
           <div className="flex flex-col gap-1.5">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !initialDate && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {initialDate ? formatDate(initialDate, 'dd/MM/yyyy') : <span>{t('date.start')}</span>}
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !initialDate && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
+                  {initialDate ? formatDate(initialDate, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={initialDate}
-                  onSelect={setInitialDate}
-                  initialFocus
-                  captionLayout="dropdown-years"
-                  startMonth={new Date(2010, 0)}
-                  endMonth={new Date()}
-                />
+                <Calendar mode="single" selected={initialDate} onSelect={setInitialDate} captionLayout="dropdown-years" startMonth={new Date(2010, 0)} endMonth={new Date()} />
               </PopoverContent>
             </Popover>
           </div>
@@ -223,27 +213,18 @@ function CMMSFilledFormsPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !finalDate && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {finalDate ? formatDate(finalDate, 'dd/MM/yyyy') : <span>{t('date.end')}</span>}
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !finalDate && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
+                  {finalDate ? formatDate(finalDate, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={finalDate}
-                  onSelect={setFinalDate}
-                  initialFocus
-                  captionLayout="dropdown-years"
-                  startMonth={new Date(2010, 0)}
-                  endMonth={new Date()}
-                />
+                <Calendar mode="single" selected={finalDate} onSelect={setFinalDate} captionLayout="dropdown-years" startMonth={new Date(2010, 0)} endMonth={new Date()} />
               </PopoverContent>
             </Popover>
           </div>
 
-          {/* OS Code Job ID */}
-          <div>
+          <div className="flex flex-col gap-1.5">
             <Label>{t('os.code.job.id.label')}</Label>
             <div className="relative">
               <Hash className="absolute top-3 left-2 size-4 text-muted-foreground" />
@@ -251,7 +232,6 @@ function CMMSFilledFormsPage() {
             </div>
           </div>
 
-          {/* Maintenance Type */}
           <MaintenanceTypeSelect
             mode="single"
             idEnterprise={idEnterprise}
@@ -261,17 +241,15 @@ function CMMSFilledFormsPage() {
             className="w-48 bg-background"
           />
 
-          {/* Status */}
-          <StatusSelect mode="single" idEnterprise={idEnterprise} value={status} onChange={setStatus} label={t('status')} className="w-48 bg-background" />
+          <StatusSelect mode="single" idEnterprise={idEnterprise} value={status} onChange={setStatus} label={t('status')} className="min-w-36 bg-background" />
 
-          {/* Critical Equipment */}
           <div className="flex flex-col gap-1.5">
             <Label className="flex items-center gap-2">
               <AlertCircle className="size-4" />
               {t('critical.equipment.label')}
             </Label>
             <Select value={equipmentCritical || ''} onValueChange={(val) => setEquipmentCritical(val === 'all' ? undefined : val)}>
-              <SelectTrigger className="w-48 bg-background">
+              <SelectTrigger className="min-w-40 bg-background">
                 <SelectValue placeholder={t('critical')} />
               </SelectTrigger>
               <SelectContent>
@@ -282,14 +260,13 @@ function CMMSFilledFormsPage() {
             </Select>
           </div>
 
-          {/* Finished At */}
           <div className="flex flex-col gap-1.5">
             <Label className="flex items-center gap-2">
               <CheckCircle className="size-4" />
               {t('finished.at.label')}
             </Label>
             <Select value={finishedAt || ''} onValueChange={(val) => setFinishedAt(val === 'all' ? undefined : val)}>
-              <SelectTrigger className="w-48 bg-background">
+              <SelectTrigger className="min-w-40 bg-background">
                 <SelectValue placeholder={t('finished.at.placeholder')} />
               </SelectTrigger>
               <SelectContent>
@@ -300,9 +277,8 @@ function CMMSFilledFormsPage() {
             </Select>
           </div>
 
-          {/* Actions */}
           <div className="ml-auto flex gap-2">
-            <Button onClick={handleClear} variant="ghost" className="text-amber-700 hover:bg-amber-100 hover:text-amber-800">
+            <Button onClick={handleClear} className="text-amber-700 hover:bg-amber-100 hover:text-amber-800">
               <BrushCleaning className="size-4" />
             </Button>
             <Button onClick={handleSearch} className="gap-2">

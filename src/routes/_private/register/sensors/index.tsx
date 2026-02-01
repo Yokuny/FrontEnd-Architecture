@@ -125,7 +125,7 @@ function SensorListPage() {
                       <ItemDescription>{item.sensorId}</ItemDescription>
                     </div>
                     {item.machines && item.machines.length > 0 && (
-                      <div className="flex max-w-[200px] items-center gap-2 truncate text-muted-foreground text-sm">
+                      <div className="flex max-w-48 items-center gap-2 truncate text-muted-foreground text-sm">
                         <Ship className="size-3 shrink-0" />
                         <ItemDescription>{item.machines.join(', ')}</ItemDescription>
                       </div>

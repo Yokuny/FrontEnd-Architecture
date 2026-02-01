@@ -16,7 +16,7 @@ export function HeatmapTable({ columns, rows, onTrackerItemClick }: HeatmapTable
       <Table className="min-w-[1280px]">
         <TableHeader>
           <TableRow>
-            <TableHead className="sticky left-0 z-10 w-[200px] bg-background">{t('vessel')}</TableHead>
+            <TableHead className="sticky left-0 z-10 w-48 bg-background">{t('vessel')}</TableHead>
             {columns.map((col, index) => (
               <TableHead key={index} className="min-w-[50px] max-w-[90px] text-center">
                 <div className="break-words font-semibold text-xs">{col.name}</div>
@@ -36,7 +36,7 @@ export function HeatmapTable({ columns, rows, onTrackerItemClick }: HeatmapTable
         <TableBody>
           {rows.map((row, rowIndex) => (
             <TableRow key={rowIndex}>
-              <TableCell className="sticky left-0 z-10 w-[200px] bg-background">
+              <TableCell className="sticky left-0 z-10 w-48 bg-background">
                 <div className="flex items-center gap-3">
                   <Avatar className="size-10">
                     <AvatarImage src={row.machine.image?.url} alt={row.machine.name} />

@@ -113,7 +113,7 @@ export function TimeOperationFilter({ idEnterprise, filters, onFilterChange, isL
         </Popover>
       </ItemContent>
 
-      <ItemContent className="min-w-[240px]">
+      <ItemContent className="min-w-60">
         <MachineByEnterpriseSelect
           mode="multi"
           label={t('vessels')}
@@ -136,7 +136,7 @@ export function TimeOperationFilter({ idEnterprise, filters, onFilterChange, isL
       </div>
 
       <div className="ml-auto flex shrink-0 gap-2 pb-1">
-        <Button className="text-amber-700 hover:text-amber-800" disabled={isLoading} onClick={handleClear}>
+        <Button disabled={isLoading} onClick={handleClear}>
           <BrushCleaning className="size-4" />
         </Button>
         <Button variant="outline" className="gap-2 bg-background" disabled={isLoading} onClick={handleSearch}>

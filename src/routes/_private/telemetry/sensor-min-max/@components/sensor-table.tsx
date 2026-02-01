@@ -46,7 +46,7 @@ export function SensorTable({ data, sensorsMinMax, onChangeMinMax, isLoading }: 
           {sortedData.map((sensor) => (
             <TableRow key={sensor.idSensor}>
               <TableCell className="max-w-[250px]">{sensor.label}</TableCell>
-              <TableCell className="max-w-[150px] break-all text-center">{sensor.idSensor}</TableCell>
+              <TableCell className="max-w-36 break-all text-center">{sensor.idSensor}</TableCell>
               <TableCell className="text-center">{getTypeLabel(sensor.type)}</TableCell>
               <TableCell className="text-center">{sensor.unit || '-'}</TableCell>
               <TableCell className="text-center">{formatSensorValue(sensor.min, sensor.type)}</TableCell>

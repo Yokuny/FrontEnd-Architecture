@@ -40,24 +40,22 @@ function KpisVoyagePage() {
       <CardHeader title={t('kpis.travel')} />
       <CardContent className="flex flex-col gap-4">
         <Item variant="outline" className="bg-secondary">
-          <div className="flex flex-1 flex-wrap gap-4">
-            <MachineByEnterpriseSelect
-              mode="multi"
-              label={t('vessels')}
-              idEnterprise={idEnterprise}
-              value={selectedMachines}
-              onChange={(vals) => setSelectedMachines(vals)}
-              className="min-w-[200px]"
-            />
-            <CustomerSelect
-              mode="multi"
-              label={t('customer')}
-              idEnterprise={idEnterprise}
-              value={selectedCustomers}
-              onChange={(vals) => setSelectedCustomers(vals)}
-              className="min-w-[200px]"
-            />
-          </div>
+          <MachineByEnterpriseSelect
+            mode="multi"
+            label={t('vessels')}
+            idEnterprise={idEnterprise}
+            value={selectedMachines}
+            onChange={(vals) => setSelectedMachines(vals)}
+            className="min-w-48"
+          />
+          <CustomerSelect
+            mode="multi"
+            label={t('customer')}
+            idEnterprise={idEnterprise}
+            value={selectedCustomers}
+            onChange={(vals) => setSelectedCustomers(vals)}
+            className="min-w-48"
+          />
 
           <Button variant="outline" className="ml-auto gap-2 bg-background" onClick={() => refetch()}>
             <Search className="size-4" />

@@ -170,7 +170,7 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
             </div>
 
             <div className="ml-auto flex gap-2">
-              <Button className="text-amber-700 hover:text-amber-800" variant="outline" onClick={() => setFilters({})}>
+              <Button variant="outline" onClick={() => setFilters({})}>
                 <BrushCleaning className="size-4" />
               </Button>
               <Button variant="outline" className="flex-1 gap-2 bg-background">

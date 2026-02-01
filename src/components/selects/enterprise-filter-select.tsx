@@ -22,7 +22,7 @@ export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
   };
 
   if (query.isLoading) {
-    return <Skeleton className="h-10 w-[300px]" />;
+    return <Skeleton className="h-10 w-72" />;
   }
 
   const enterprises = query.data || [];
@@ -49,7 +49,7 @@ export function EnterpriseFilterSelect(props: EnterpriseFilterSelectProps) {
         mapToOptions={mapFilterToOptions}
         value={value}
         onChange={(val) => onChange?.(val as string)}
-        className="min-w-[200px] md:min-w-[300px]"
+        className="min-w-48 md:min-w-72"
         placeholder={t('enterprise')}
         searchPlaceholder={t('search.placeholder')}
         noOptionsMessage={t('nooptions.message')}

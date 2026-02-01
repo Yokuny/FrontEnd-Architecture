@@ -7,6 +7,7 @@ import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enter
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -18,6 +19,7 @@ import { HeaderTypesChart } from './@components/header-types-chart';
 import { OrderStatusChart } from './@components/order-status-chart';
 import { OrderValueChart } from './@components/order-value-chart';
 import { RealizedOrdersChart } from './@components/realized-orders-chart';
+import { CHART_GROUPS, FAS_TYPES, FILTER_DEFAULTS, MONTHS, STATUS_OPTIONS, YEARS } from './@const/fas-analytics.const';
 import type { FasAnalyticsSearch } from './@interface/fas-analytics.schema';
 import { fasAnalyticsSearchSchema } from './@interface/fas-analytics.schema';
 
@@ -26,31 +28,6 @@ export const Route = createFileRoute('/_private/service-management/fas-analytics
   validateSearch: (search: Record<string, unknown>): FasAnalyticsSearch => fasAnalyticsSearchSchema.parse(search),
 });
 
-const CHART_GROUPS = [
-  { value: 'realized.orders', label: 'fas.completed.chart', orderFilter: true, dependantOptions: ['month', 'vessel'] },
-  { value: 'header.types', label: 'fas.types.chart', orderFilter: false, dependantOptions: ['month', 'vessel'] },
-  { value: 'order.status', label: 'fas.status.chart', orderFilter: true, dependantOptions: ['month', 'vessel'] },
-  { value: 'fas.bms.value.chart', label: 'fas.bms.value.chart', orderFilter: false, dependantOptions: ['month', 'year', 'vessel'] },
-  { value: 'order.bms.value.chart', label: 'order.bms.value.chart', orderFilter: true, dependantOptions: ['month', 'year', 'vessel', 'supplier'] },
-] as const;
-
-const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'] as const;
-const YEARS = [2023, 2024, 2025, 2026] as const;
-
-const FAS_TYPES = [
-  { value: 'BMS', label: 'BMS' },
-  { value: 'CLASSE', label: 'CLASSE' },
-  { value: 'REQUISICAO', label: 'REQUISICAO' },
-  { value: 'REGULARIZACAO', label: 'REGULARIZACAO' },
-] as const;
-
-const STATUS_OPTIONS = [
-  { value: 'OPEN', label: 'status.open' },
-  { value: 'IN_PROGRESS', label: 'status.in.progress' },
-  { value: 'COMPLETED', label: 'status.completed' },
-  { value: 'CANCELLED', label: 'status.cancelled' },
-] as const;
-
 function FasAnalyticsPage() {
   const { t } = useTranslation();
   const navigate = Route.useNavigate();
@@ -58,16 +35,16 @@ function FasAnalyticsPage() {
   const { idEnterprise } = useEnterpriseFilter();
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const [filterType, setFilterType] = useState<'range' | 'month'>(search.filterType || 'range');
+  const [filterType, setFilterType] = useState<'range' | 'month'>(search.filterType || FILTER_DEFAULTS.FILTER_TYPE);
   const [dateStart, setDateStart] = useState<Date | undefined>(search.startDate ? new Date(search.startDate) : undefined);
   const [dateEnd, setDateEnd] = useState<Date | undefined>(search.endDate ? new Date(search.endDate) : undefined);
   const [month, setMonth] = useState<string | undefined>(search.month);
   const [year, setYear] = useState<number | undefined>(search.year);
   const [vesselId, setVesselId] = useState<string | undefined>(search.vesselId);
-  const [dependantAxis, setDependantAxis] = useState<'month' | 'year' | 'vessel' | 'supplier'>(search.dependantAxis || 'month');
+  const [dependantAxis, setDependantAxis] = useState<'month' | 'year' | 'vessel' | 'supplier'>(search.dependantAxis || FILTER_DEFAULTS.DEPENDANT_AXIS);
   const [status, setStatus] = useState<string[]>(search.status || []);
   const [fasType, setFasType] = useState<string[]>(search.fasType || []);
-  const [showValueByPayment, setShowValueByPayment] = useState(search.showValueByPayment || false);
+  const [showValueByPayment, setShowValueByPayment] = useState(search.showValueByPayment || FILTER_DEFAULTS.SHOW_VALUE_BY_PAYMENT);
 
   const selectedChartGroup = CHART_GROUPS.find((g) => g.value === search.chartType) || CHART_GROUPS[0];
 
@@ -143,8 +120,9 @@ function FasAnalyticsPage() {
         </div>
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-6">
-        <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary p-4">
+      <CardContent className="flex flex-col">
+        {/* Filtros */}
+        <Item variant="outline" className="bg-secondary">
           <div className="flex flex-col gap-1.5">
             <Label>{t('filter.by.date')}</Label>
             <Select value={filterType} onValueChange={(value: 'range' | 'month') => setFilterType(value)}>
@@ -266,7 +244,7 @@ function FasAnalyticsPage() {
             <div className="flex flex-col gap-1.5">
               <Label>{t('status')}</Label>
               <Select value={status[0]} onValueChange={(val) => setStatus(val ? [val] : [])}>
-                <SelectTrigger className="w-48 bg-background">
+                <SelectTrigger className="w-40 bg-background">
                   <SelectValue placeholder={t('select.status')} />
                 </SelectTrigger>
                 <SelectContent>
@@ -283,7 +261,7 @@ function FasAnalyticsPage() {
           <div className="flex flex-col gap-1.5">
             <Label>{t('type')}</Label>
             <Select value={fasType[0]} onValueChange={(val) => setFasType(val ? [val] : [])}>
-              <SelectTrigger className="w-48 bg-background">
+              <SelectTrigger className="w-40 bg-background">
                 <SelectValue placeholder={t('select.type')} />
               </SelectTrigger>
               <SelectContent>
@@ -307,7 +285,7 @@ function FasAnalyticsPage() {
             <Search className="mr-2 size-4" />
             {t('search')}
           </Button>
-        </div>
+        </Item>
 
         {renderActiveChart()}
       </CardContent>

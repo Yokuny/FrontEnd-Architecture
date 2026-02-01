@@ -1,15 +1,22 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { endOfDay, parseISO, startOfDay, subDays } from 'date-fns';
-import { useCallback, useMemo, useState } from 'react';
+import { BrushCleaning, CalendarIcon, Search } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MachineByEnterpriseSelect, UnitSelect } from '@/components/selects';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { ItemDescription } from '@/components/ui/item';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Item, ItemContent, ItemDescription } from '@/components/ui/item';
+import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { formatDate } from '@/lib/formatDate';
-import { TimeOperationFilter } from './@components/time-operation-filter';
+import { cn } from '@/lib/utils';
 import { TimeOperationTable } from './@components/time-operation-table';
 import { useTimeOperationDashboard } from './@hooks/use-time-operation-api';
-import { OPERATION_MODES, timeOperationSearchParamsSchema } from './@interface/time-operation.types';
+import { OPERATION_MODES, type TimeOperationSearchParams, timeOperationSearchParamsSchema } from './@interface/time-operation.types';
 
 export const Route = createFileRoute('/_private/consumption/time-operation/')({
   component: TimeOperationDashboardPage,
@@ -27,6 +34,16 @@ function TimeOperationDashboardPage() {
   // Initialize state from URL params or defaults
   const dateMinStr = search.dateMin || formatDate(startOfDay(subDays(new Date(), 8)), "yyyy-MM-dd'T'00:00:00XXX");
   const dateMaxStr = search.dateMax || formatDate(endOfDay(subDays(new Date(), 1)), "yyyy-MM-dd'T'23:59:59XXX");
+
+  // Filter state
+  const [localFilters, setLocalFilters] = useState<TimeOperationSearchParams>({ ...search, dateMin: dateMinStr, dateMax: dateMaxStr });
+
+  useEffect(() => {
+    setLocalFilters({ ...search, dateMin: dateMinStr, dateMax: dateMaxStr });
+  }, [search, dateMinStr, dateMaxStr]);
+
+  const dateMin = localFilters.dateMin ? new Date(localFilters.dateMin) : undefined;
+  const dateMax = localFilters.dateMax ? new Date(localFilters.dateMax) : undefined;
 
   const { data: rawData, isLoading } = useTimeOperationDashboard(idEnterprise, search.machines, dateMinStr, dateMaxStr, search.isShowDisabled, search.unit);
 
@@ -122,6 +139,22 @@ function TimeOperationDashboardPage() {
     [navigate],
   );
 
+  const handleSearch = () => {
+    handleFilterChange(localFilters);
+  };
+
+  const handleClear = () => {
+    const clearedFilters: TimeOperationSearchParams = {
+      machines: undefined,
+      dateMin: undefined,
+      dateMax: undefined,
+      isShowDisabled: false,
+      unit: 'm³',
+    };
+    setLocalFilters(clearedFilters);
+    handleFilterChange(clearedFilters);
+  };
+
   return (
     <Card>
       <CardHeader title={t('consumption.time.operation')}>
@@ -133,12 +166,101 @@ function TimeOperationDashboardPage() {
       </CardHeader>
 
       <CardContent>
-        <TimeOperationFilter
-          idEnterprise={idEnterprise}
-          filters={{ ...search, dateMin: dateMinStr, dateMax: dateMaxStr }}
-          onFilterChange={handleFilterChange}
-          isLoading={isLoading}
-        />
+        {/* filters */}
+        <Item variant="outline" className="bg-secondary">
+          <ItemContent className="flex-none">
+            <Label className="flex items-center gap-2">
+              <CalendarIcon className="size-4" />
+              {t('date.start')}
+            </Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
+                  {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateMin}
+                  onSelect={(date) =>
+                    setLocalFilters({
+                      ...localFilters,
+                      dateMin: date ? `${formatDate(date, 'yyyy-MM-dd')}T00:00:00${formatDate(new Date(), 'XXX')}` : undefined,
+                    })
+                  }
+                  initialFocus
+                  captionLayout="dropdown-years"
+                  startMonth={new Date(2010, 0)}
+                  endMonth={new Date()}
+                />
+              </PopoverContent>
+            </Popover>
+          </ItemContent>
+
+          <ItemContent className="flex-none">
+            <Label className="flex items-center gap-2">
+              <CalendarIcon className="size-4" />
+              {t('date.end')}
+            </Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
+                  {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dateMax}
+                  onSelect={(date) =>
+                    setLocalFilters({
+                      ...localFilters,
+                      dateMax: date ? `${formatDate(date, 'yyyy-MM-dd')}T23:59:59${formatDate(new Date(), 'XXX')}` : undefined,
+                    })
+                  }
+                  initialFocus
+                  captionLayout="dropdown-years"
+                  startMonth={new Date(2010, 0)}
+                  endMonth={new Date()}
+                />
+              </PopoverContent>
+            </Popover>
+          </ItemContent>
+
+          <ItemContent className="min-w-44">
+            <MachineByEnterpriseSelect
+              mode="multi"
+              label={t('vessels')}
+              idEnterprise={idEnterprise}
+              value={localFilters.machines?.split(',').filter(Boolean)}
+              onChange={(val) => setLocalFilters({ ...localFilters, machines: val?.join(',') || undefined })}
+              placeholder={t('vessels')}
+            />
+          </ItemContent>
+
+          <UnitSelect value={localFilters.unit} onChange={(val) => setLocalFilters({ ...localFilters, unit: val || 'm³' })} />
+
+          <div className="flex items-center space-x-2 pb-3">
+            <Checkbox id="show-disabled" checked={localFilters.isShowDisabled} onCheckedChange={(checked) => setLocalFilters({ ...localFilters, isShowDisabled: !!checked })} />
+            <Label htmlFor="show-disabled" className="cursor-pointer font-medium text-sm leading-none">
+              {t('show.disabled')}
+            </Label>
+          </div>
+
+          <div className="ml-auto flex shrink-0 gap-2 pb-1">
+            <Button disabled={isLoading} onClick={handleClear}>
+              <BrushCleaning className="size-4" />
+            </Button>
+            <Button variant="outline" className="gap-2 bg-background" disabled={isLoading} onClick={handleSearch}>
+              <Search className="size-4" />
+              {t('filter')}
+            </Button>
+          </div>
+        </Item>
+
         <TimeOperationTable
           data={normalizedData}
           listStatusAllow={listStatusAllow}

@@ -196,7 +196,7 @@ export function FasForm() {
                       <TableRow key={`${order.name}-${index}`} className="group bg-background hover:bg-muted/30">
                         <TableCell className="text-center font-mono text-muted-foreground text-xs">{order.job || '-'}</TableCell>
                         <TableCell className="font-semibold text-xs">{order.name}</TableCell>
-                        <TableCell className="max-w-[200px]">
+                        <TableCell className="max-w-48">
                           <p className="line-clamp-2 text-[10px] text-muted-foreground">{order.description}</p>
                         </TableCell>
                         <TableCell className="text-center text-xs">{order.materialFas}</TableCell>

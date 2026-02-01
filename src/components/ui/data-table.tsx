@@ -8,8 +8,8 @@ import { Input } from '@/components/ui/input';
 import { ItemContent, ItemFooter, ItemHeader } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import DefaultLoading from '../default-loading';
 
 export type DataTableColumn<T> = {
   key: keyof T;
@@ -141,29 +141,7 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   if (loading) {
-    return (
-      <div className={cn('flex flex-col gap-6 rounded-lg bg-background py-6 text-card-foreground', className)}>
-        <ItemContent className="p-6">
-          {/* Search skeleton */}
-          {searchable && <Skeleton className="mb-6 h-10 w-full sm:w-64" />}
-          {/* Table skeleton */}
-          <div className="overflow-hidden rounded-md border border-border">
-            <div className="h-14 bg-muted/30" />
-            {Array.from({ length: 5 }).map((_, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: Skeleton items
-              <div key={i} className="h-14 border-border border-t bg-card">
-                <div className="flex h-full items-center gap-4 px-4">
-                  {columns.map((_, j) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: Skeleton items
-                    <Skeleton key={j} className="h-4 w-full" />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </ItemContent>
-      </div>
-    );
+    return <DefaultLoading />;
   }
 
   return (
@@ -265,7 +243,7 @@ export function DataTable<T extends Record<string, any>>({
                 ))}
               </tr>
             </thead>
-            <tbody className="bg-card">
+            <tbody>
               {paginatedData.length === 0 ? (
                 <tr>
                   <td colSpan={columns.length} className="bg-card">
@@ -278,7 +256,7 @@ export function DataTable<T extends Record<string, any>>({
                     // biome-ignore lint/suspicious/noArrayIndexKey: Data does not have a guaranteed unique ID
                     key={index}
                     className={cn(
-                      'border-border border-t bg-card transition-colors',
+                      'border-border border-t transition-colors',
                       striped && index % 2 === 0 && 'bg-muted/20',
                       hoverable && 'hover:bg-muted/30',
                       onRowClick && 'cursor-pointer',

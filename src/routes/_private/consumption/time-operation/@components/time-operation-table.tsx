@@ -101,7 +101,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
               );
             })}
 
-            <TableHead className="sticky right-0 z-30 min-w-[150px] bg-background/30 uppercase backdrop-blur">
+            <TableHead className="sticky right-0 z-30 min-w-36 bg-background/30 uppercase backdrop-blur">
               <ItemTitle className="text-muted-foreground uppercase">{t('total')}</ItemTitle>
             </TableHead>
           </TableRow>
@@ -110,7 +110,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
         <TableBody>
           {data.map((row, index) => (
             <TableRow key={`${index + 1}_${row.machine.id}`}>
-              <TableCell className="sticky left-0 z-10 min-w-[200px] bg-background/30 p-2 backdrop-blur">
+              <TableCell className="sticky left-0 z-10 min-w-48 bg-background/30 p-2 backdrop-blur">
                 <div className="flex items-center gap-3">
                   <Avatar className="size-10">
                     <AvatarImage src={row.machine.image?.url} alt={row.machine.name} />
@@ -158,7 +158,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                 );
               })}
 
-              <TableCell className="sticky right-0 z-10 min-w-[150px] bg-background/30 p-2 backdrop-blur">
+              <TableCell className="sticky right-0 z-10 min-w-36 bg-background/30 p-2 backdrop-blur">
                 <ItemContent className="items-end">
                   <ItemActions>
                     <ItemTitle>{formatNumber(row.listTimeStatus.reduce((acc: number, curr: any) => acc + (curr.minutes || 0), 0) / 60, 1)}</ItemTitle>

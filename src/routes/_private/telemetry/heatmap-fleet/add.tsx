@@ -142,7 +142,7 @@ function HeatmapConfigPage() {
     },
     {
       title: t('machine.equipment'),
-      description: t('save.error'),
+      description: t('select.machine.first'),
       layout: 'vertical',
       fields: [
         machine?.value ? (
@@ -199,7 +199,7 @@ function HeatmapConfigPage() {
           </Accordion>
         ) : (
           <Item key="no-machine" variant="muted" className="justify-center border-dashed">
-            <ItemDescription>{t('save.error')}</ItemDescription>
+            <ItemDescription>{t('select.machine.first')}</ItemDescription>
           </Item>
         ),
       ],
