@@ -61,7 +61,7 @@ export function OperationalKPI({ data, isLoading }: OperationalKPIProps) {
             <TrendingUp className="mr-1.5 inline size-4" />
             {t('operational.average')}
           </ItemDescription>
-          <Badge className={`rounded-sm border-none ${stats.badgeBgColor} font-bold ${stats.badgeTextColor}`}>{stats.average.toFixed(2)}%</Badge>
+          <Badge className={`rounded-sm ring-0 ${stats.badgeBgColor} font-bold ${stats.badgeTextColor}`}>{stats.average.toFixed(2)}%</Badge>
         </ItemContent>
         <ItemTitle className={`ml-6 font-bold text-2xl tracking-tight ${stats.averageColor}`}>{stats.average.toFixed(2)}%</ItemTitle>
       </Item>

@@ -1128,5 +1128,19 @@
   "maintenance.plan.identification.description": "Basic information to identify the maintenance plan.",
   "setup.api.external.identification.description": "Select the enterprise to configure external APIs.",
   "telemetry.download.data.asset.request.description": "Request and download historical data.",
-  "interval.required.when.date.range.more.than.15.days": "The interval is required when the date range is more than 15 days"
+  "interval.required.when.date.range.more.than.15.days": "The interval must be less than 15 days",
+  "materials": "Materials and Services",
+  "fas.info": "Additional Information",
+  "no.supplier.assigned": "No supplier assigned",
+  "date.of.payment": "Payment Date",
+  "not.informed": "Not informed",
+  "no.observations": "No observations recorded",
+  "emails": "Emails",
+  "cancel.fas": "Cancel FAS",
+  "cancel.fas.description": "This action will cancel the FAS. Please provide the reason for cancellation.",
+  "reason.required": "Reason is required",
+  "reason.placeholder": "Enter the reason...",
+  "transfer.service": "Transfer service",
+  "edit.recommended.supplier": "Edit recommended supplier",
+  "edit.rating": "Edit rating"
 }

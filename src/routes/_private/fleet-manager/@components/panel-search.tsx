@@ -115,7 +115,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                           {item.machine.code ? `${item.machine.code} - ` : ''}
                           {item.machine.name}
                         </ItemTitle>
-                        <Badge className={cn('flex h-4 px-1 font-bold text-[10px] text-white uppercase', statusConfig.color)}>
+                        <Badge className={cn('flex h-4 px-1 font-bold text-[10px] text-white uppercase ring-0', statusConfig.color)}>
                           <StatusIcon className="size-2.5 fill-white" />
                           {statusConfig.label}
                         </Badge>
@@ -210,7 +210,7 @@ export function FleetManagerPanel({ idEnterprise }: FleetSidebarProps) {
                     <ItemContent className="grow items-start gap-0">
                       <div className="flex w-full items-center justify-between">
                         <ItemTitle className="truncate font-semibold text-sm leading-tight">{item.code}</ItemTitle>
-                        <Badge className={cn('h-4 px-1 font-bold text-[10px] uppercase', statusConfig.color)}>{statusConfig.label}</Badge>
+                        <Badge className={cn('h-4 px-1 font-bold text-[10px] uppercase ring-0', statusConfig.color)}>{statusConfig.label}</Badge>
                       </div>
 
                       <div className="flex items-center gap-1 text-muted-foreground text-xs">

@@ -53,7 +53,7 @@ export function StatusCard({ idMachine }: StatusCardProps) {
         {navigationInfo && (
           <div className="flex items-center gap-2">
             <ItemDescription className="text-xs">{t('mode.navigation')}:</ItemDescription>
-            <Badge className={cn('gap-1 text-white', navigationInfo.color)}>
+            <Badge className={cn('gap-1 text-white ring-0', navigationInfo.color)}>
               <navigationInfo.icon className="size-3" />
               {t(navigationInfo.label)}
             </Badge>

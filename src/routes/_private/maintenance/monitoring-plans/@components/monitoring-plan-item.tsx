@@ -46,8 +46,8 @@ export function MonitoringPlanItem({ planItem, idMachine }: MonitoringPlanItemPr
             <ItemTitle className="font-medium text-base">{planItem.description}</ItemTitle>
             <div className="flex items-stretch gap-4">
               <div className="flex shrink-0 gap-1.5">
-                {planItem.expired && <Badge className="bg-red-600 px-2 font-bold text-xs uppercase hover:bg-red-500">{t('expired')}</Badge>}
-                {planItem.warning && <Badge className="bg-amber-600 px-2 font-bold text-xs uppercase hover:bg-amber-500">{t('next')}</Badge>}
+                {planItem.expired && <Badge className="bg-red-600 px-2 font-bold text-white text-xs uppercase ring-0 hover:bg-red-500">{t('expired')}</Badge>}
+                {planItem.warning && <Badge className="bg-amber-600 px-2 font-bold text-white text-xs uppercase ring-0 hover:bg-amber-500">{t('next')}</Badge>}
                 {planItem.next && !planItem.expired && (
                   <Badge variant="error" className="px-2 font-bold text-xs uppercase">
                     {t('next')}

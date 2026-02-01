@@ -801,3 +801,35 @@ export function useCheckFasExists() {
     },
   });
 }
+
+/**
+ * Export individual FAS to XLSX by ID
+ */
+export function useExportFasById() {
+  return useMutation({
+    mutationFn: async (params: { id: string; idEnterprise: string; dateStart: string; dateEnd: string }) => {
+      const response = await api.get<Blob>('/fas/export-fas-csv', {
+        params,
+        responseType: 'blob',
+        headers: {
+          Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        },
+      });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(data);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `export_fas_${new Date().toISOString().split('T')[0]}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success('Export realizado com sucesso');
+    },
+    onError: () => {
+      toast.error('Erro ao exportar FAS');
+    },
+  });
+}

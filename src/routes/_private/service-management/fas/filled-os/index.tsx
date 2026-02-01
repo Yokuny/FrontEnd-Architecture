@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { ArrowLeft, ClipboardClock, Download, Edit, Paperclip, RefreshCw, Send, ShieldCheck, Truck, X } from 'lucide-react';
+import { ClipboardClock, Download, Edit, Paperclip, Send, ShieldCheck, Truck, X } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
+import { ItemContent } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -39,10 +40,9 @@ import {
   useOrderNotRealized,
   useRefuseBMS,
 } from '@/hooks/use-fas-api';
-import { FasStatusBadge } from '../@components/fas-status-badge';
 import { OsAttachmentDialog } from './@components/os-attachment-dialog';
 import { OsCollaboratorsTable } from './@components/os-collaborators-table';
-import { OsDetailsSection } from './@components/os-details-section';
+import { OsDetails } from './@components/os-details';
 import { OsExpensesTable } from './@components/os-expenses-table';
 import { OsRatingSection } from './@components/os-rating-section';
 import { OsReasonsList } from './@components/os-reasons-list';
@@ -63,13 +63,13 @@ import {
   canValidateContract,
 } from './@utils/os-permissions';
 
-// Search params schema
 const filledOsSearchSchema = z.object({
+  id: z.string(),
   edit: z.boolean().optional(),
   transfer: z.boolean().optional(),
 });
 
-export const Route = createFileRoute('/_private/service-management/fas/filled-os/$id')({
+export const Route = createFileRoute('/_private/service-management/fas/filled-os/')({
   component: FilledOsPage,
   validateSearch: filledOsSearchSchema,
 });
@@ -77,7 +77,7 @@ export const Route = createFileRoute('/_private/service-management/fas/filled-os
 function FilledOsPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { id } = Route.useParams();
+  const { id } = Route.useSearch();
   useAuth();
   // TODO: Implement proper permission loading from API or user token
   // For now, using empty array - permissions should be loaded from user session or separate API
@@ -280,42 +280,29 @@ function FilledOsPage() {
   return (
     <Card>
       <CardHeader title={t('view.order.service')}>
-        <div className="flex items-center gap-2">
-          <FasStatusBadge status={data?.state || ''} />
-
-          <Button onClick={() => navigate({ to: -1 } as any)}>
-            <ArrowLeft className="size-4" />
-            {t('back')}
-          </Button>
-
-          <Button onClick={() => refetch()}>
-            <RefreshCw className="size-4" />
-          </Button>
-
-          {!!data?.events?.length && (
-            <Sheet open={showTimeline} onOpenChange={setShowTimeline}>
-              <SheetTrigger asChild>
-                <Button>
-                  <ClipboardClock className="size-4" />
-                  {t('timeline')}
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-96 overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>{t('timeline')}</SheetTitle>
-                </SheetHeader>
-                <div className="mt-6 space-y-4">
-                  {data.events.map((event) => (
-                    <div key={event.id} className="border-muted border-l-2 pb-4 pl-4">
-                      <div className="font-medium text-sm">{event.type}</div>
-                      <div className="text-muted-foreground text-xs">{event.createdAt}</div>
-                    </div>
-                  ))}
-                </div>
-              </SheetContent>
-            </Sheet>
-          )}
-        </div>
+        {!!data?.events?.length && (
+          <Sheet open={showTimeline} onOpenChange={setShowTimeline}>
+            <SheetTrigger asChild>
+              <Button variant="outline">
+                <ClipboardClock className="size-4" />
+                {t('timeline')}
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-96 overflow-y-auto">
+              <SheetHeader>
+                <SheetTitle>{t('timeline')}</SheetTitle>
+              </SheetHeader>
+              <div className="mt-6 space-y-4">
+                {data.events.map((event) => (
+                  <div key={event.id} className="border-muted border-l-2 pb-4 pl-4">
+                    <div className="font-medium text-sm">{event.type}</div>
+                    <div className="text-muted-foreground text-xs">{event.createdAt}</div>
+                  </div>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
+        )}
       </CardHeader>
 
       <CardContent>
@@ -324,26 +311,19 @@ function FilledOsPage() {
         ) : !data ? (
           <DefaultEmptyData />
         ) : (
-          <>
-            {/* Main Details */}
-            <OsDetailsSection data={data} />
+          <ItemContent className="gap-8">
+            <OsDetails data={data} />
 
             <Separator />
-
             {/* Collaborators */}
             <OsCollaboratorsTable collaborators={data.collaborators} />
-
             {/* Reasons History */}
             <OsReasonsList data={data} />
-
             {/* BMS Expenses */}
             <OsExpensesTable bms={data.bms} />
-
             {/* Rating */}
             <OsRatingSection data={data} />
-
             <Separator />
-
             {/* Confirm OS Fields */}
             {canConfirmOsAction && showConfirmOsFields && (
               <div className="space-y-4 rounded-lg border p-4">
@@ -393,7 +373,6 @@ function FilledOsPage() {
                 </div>
               </div>
             )}
-
             {/* Buy Request Field */}
             {(canAddBuyRequestAction || canEditBuyRequestAction) && (
               <div className="space-y-4 rounded-lg border p-4">
@@ -407,7 +386,6 @@ function FilledOsPage() {
                 </div>
               </div>
             )}
-
             {/* Payment Field */}
             {canConfirmPaymentAction && (
               <div className="space-y-4 rounded-lg border p-4">
@@ -423,7 +401,7 @@ function FilledOsPage() {
                 </div>
               </div>
             )}
-          </>
+          </ItemContent>
         )}
       </CardContent>
 

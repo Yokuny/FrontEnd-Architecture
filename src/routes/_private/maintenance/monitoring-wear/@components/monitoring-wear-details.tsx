@@ -73,7 +73,7 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                         {t('late')}
                       </Badge>
                     ) : part.percentual > 90 ? (
-                      <Badge className="h-6 whitespace-nowrap bg-yellow-500 text-white hover:bg-yellow-600">{t('next')}</Badge>
+                      <Badge className="h-6 whitespace-nowrap bg-yellow-500 text-white ring-0 hover:bg-yellow-600">{t('next')}</Badge>
                     ) : (
                       <div className="min-h-6" />
                     )}

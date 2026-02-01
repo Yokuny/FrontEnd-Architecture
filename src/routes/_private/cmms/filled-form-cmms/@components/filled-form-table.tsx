@@ -46,7 +46,7 @@ export function FilledFormTable({ data, isLoading, page, pageSize, totalItems, o
 
     // Boolean mapping
     if (typeof value === 'boolean') {
-      return value ? t('yes') : t('no');
+      return value ? t('yes') : t('not');
     }
 
     if (value === null || value === undefined) {

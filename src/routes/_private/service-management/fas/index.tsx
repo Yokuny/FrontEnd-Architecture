@@ -186,7 +186,7 @@ function FASPage() {
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !localDateStart && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  <CalendarIcon className="mr-1 size-4" />
                   {localDateStart ? formatDate(parseISO(localDateStart), 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -195,7 +195,6 @@ function FASPage() {
                   mode="single"
                   selected={localDateStart ? parseISO(localDateStart) : undefined}
                   onSelect={(date) => setLocalDateStart(date ? formatDate(date, 'yyyy-MM-dd') : '')}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -209,7 +208,7 @@ function FASPage() {
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !localDateEnd && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  <CalendarIcon className="mr-1 size-4" />
                   {localDateEnd ? formatDate(parseISO(localDateEnd), 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -218,7 +217,6 @@ function FASPage() {
                   mode="single"
                   selected={localDateEnd ? parseISO(localDateEnd) : undefined}
                   onSelect={(date) => setLocalDateEnd(date ? formatDate(date, 'yyyy-MM-dd') : '')}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}

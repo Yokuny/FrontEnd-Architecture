@@ -85,7 +85,7 @@ export function FasTable({ data, isLoading, page = 1, pageSize = 10, totalItems 
                       <TableCell rowSpan={sortedOrders.length} className="align-top">
                         <div
                           className="flex cursor-pointer items-center gap-3"
-                          onClick={() => navigate({ to: '/_private/service-management/fas/details/$id', params: { id: fas.id } } as any)}
+                          onClick={() => navigate({ to: './details', search: { id: fas.id } } satisfies { to: string; search: { id: string } })}
                         >
                           <Avatar className="size-12 border border-accent">
                             <AvatarImage src={fas.vessel?.image?.url} alt={fas.vessel?.name} />
@@ -104,7 +104,7 @@ export function FasTable({ data, isLoading, page = 1, pageSize = 10, totalItems 
                       <TableCell rowSpan={sortedOrders.length} className="text-center align-top">
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Button size="sm" onClick={() => navigate({ to: '/_private/service-management/fas/details/$id', params: { id: fas.id } } as any)}>
+                            <Button size="sm" onClick={() => navigate({ to: './details', search: { id: fas.id } } satisfies { to: string; search: { id: string } })}>
                               <BookOpen className="size-4" />
                             </Button>
                           </TooltipTrigger>
@@ -160,7 +160,7 @@ export function FasTable({ data, isLoading, page = 1, pageSize = 10, totalItems 
                     {!order.empty0 && (
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button size="sm" onClick={() => navigate({ to: './filled-os/$id', params: { id: order.id } } as any)}>
+                          <Button size="sm" onClick={() => navigate({ to: './filled-os', search: { id: order.id } } satisfies { to: string; search: { id: string } })}>
                             <ExternalLink className="size-4" />
                           </Button>
                         </TooltipTrigger>
