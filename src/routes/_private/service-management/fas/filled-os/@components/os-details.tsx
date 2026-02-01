@@ -1,10 +1,9 @@
-import { CalendarIcon, CreditCard, FileSearch, Info, Layers, Package, Truck, Users } from 'lucide-react';
+import { CreditCard, FileSearch, Layers, Package, Truck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Badge, StatusIndicator, type StatusVariant } from '@/components/ui/badge';
-import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
-import { Separator } from '@/components/ui/separator';
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { formatDate } from '@/lib/formatDate';
-import { cn } from '@/lib/utils';
 import type { FasOrderDetails } from '../@interface/os.schema';
 
 export function OsDetails({ data }: OsDetailsSectionProps) {
@@ -12,8 +11,133 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
 
   if (!data) return null;
 
+  const categories: SpecCategory[] = [
+    {
+      id: 'general',
+      name: t('general.info'),
+      icon: <FileSearch className="size-4" />,
+      specs: [
+        { label: 'JOB', value: data.job || '-' },
+        {
+          label: 'VOR',
+          value: data.vor ? <Badge variant="error">{data.vor}</Badge> : '-',
+        },
+        { label: t('add.request'), value: data.requestOrder || '-' },
+        {
+          label: t('description'),
+          value: <span className="whitespace-pre-wrap">{data.description || '-'}</span>,
+        },
+      ],
+    },
+    {
+      id: 'materials',
+      name: t('materials'),
+      icon: <Package className="size-4" />,
+      specs: [
+        {
+          label: t('materialFas.label'),
+          value: (
+            <div className="flex flex-col">
+              <ItemTitle>{data.materialFas || '-'}</ItemTitle>
+              {data.materialFasCode && <ItemDescription>{data.materialFasCode}</ItemDescription>}
+            </div>
+          ),
+        },
+        {
+          label: t('rmrbFas.label'),
+          value: (
+            <div className="flex flex-col">
+              <ItemTitle>{data.rmrb || '-'}</ItemTitle>
+              {data.rmrbCode && <ItemDescription>{data.rmrbCode}</ItemDescription>}
+            </div>
+          ),
+        },
+        { label: t('onboardMaterialFas.label'), value: data.onboardMaterial || '-' },
+      ],
+    },
+    {
+      id: 'supplier',
+      name: t('supplier'),
+      icon: <Truck className="size-4" />,
+      specs:
+        data.supplierData && !data.supplierData.cancelled && data.supplierData.codigoFornecedor
+          ? [
+              { label: t('name'), value: data.supplierData.razao || '-' },
+              { label: t('code'), value: data.supplierData.codigoFornecedor },
+              ...(data.supplierData.emails && data.supplierData.emails.length > 0
+                ? [
+                    {
+                      label: t('emails'),
+                      value: (
+                        <div className="flex flex-col gap-1">
+                          {data.supplierData.emails.map((email) => (
+                            <ItemTitle key={email}>{email}</ItemTitle>
+                          ))}
+                        </div>
+                      ),
+                    },
+                  ]
+                : []),
+            ]
+          : [{ label: t('supplier'), value: t('no.supplier.assigned') }],
+    },
+    {
+      id: 'status',
+      name: t('fas.info'),
+      icon: <Layers className="size-4" />,
+      specs: [
+        {
+          label: t('insurance.work.order'),
+          value: <Badge variant={data.osInsurance ? 'success' : 'secondary'}>{t(data.osInsurance ? 'yes' : 'not')}</Badge>,
+        },
+        {
+          label: t('event.team.change'),
+          value: <Badge variant={data.fasHeader?.teamChange ? 'success' : 'secondary'}>{t(data.fasHeader?.teamChange ? 'yes' : 'not')}</Badge>,
+        },
+        {
+          label: t('downtime.work.order'),
+          value: <Badge variant={data.osDowntime ? 'success' : 'secondary'}>{t(data.osDowntime ? 'yes' : 'not')}</Badge>,
+        },
+      ],
+    },
+    {
+      id: 'observation',
+      name: t('observation'),
+      icon: <FileSearch className="size-4" />,
+      specs: [
+        {
+          label: t('observation'),
+          value: <div className="whitespace-pre-wrap">{data.confirmObservation || <ItemDescription className="italic">{t('no.observations')}</ItemDescription>}</div>,
+        },
+      ],
+    },
+    {
+      id: 'financial',
+      name: t('financial'),
+      icon: <CreditCard className="size-4" />,
+      specs: [
+        {
+          label: t('buy.request'),
+          value: data.buyRequest ? (
+            <ItemTitle className="font-mono text-emerald-600">{data.buyRequest}</ItemTitle>
+          ) : (
+            <ItemDescription className="italic">{t('not.informed')}</ItemDescription>
+          ),
+        },
+        {
+          label: t('date.of.payment'),
+          value: data.paymentDate ? (
+            <ItemTitle className="text-emerald-600">{formatDate(data.paymentDate, 'dd MMM yyyy')}</ItemTitle>
+          ) : (
+            <ItemDescription className="italic">{t('not.informed')}</ItemDescription>
+          ),
+        },
+      ],
+    },
+  ];
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <Item className="justify-between">
         <div className="flex flex-col gap-4 md:flex-row md:gap-8">
           <div className="flex flex-col gap-1">
@@ -87,189 +211,45 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
           <ItemTitle className="text-2xl leading-none">{data.fasHeader?.local || '-'}</ItemTitle>
         </ItemContent>
       </Item>
-      {/* OS Main Info Header */}
-      <div className="rounded-xl border p-6 transition-all">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-          <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline" className="border-primary/20 bg-primary/5 font-mono text-[10px] text-primary uppercase tracking-wider">
-                {t('os')}
-              </Badge>
-              {data.job && (
-                <Badge variant="secondary" className="bg-secondary/50 font-mono text-[10px]">
-                  JOB: {data.job}
-                </Badge>
-              )}
-              {data.vor && (
-                <Badge variant="error" className="animate-pulse font-mono text-[10px]">
-                  VOR: {data.vor}
-                </Badge>
-              )}
-            </div>
-            <p className="max-w-3xl text-muted-foreground text-sm italic leading-relaxed">{data.description || t('no.description')}</p>
-          </div>
-        </div>
-      </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Materials and RMRB */}
-        <Item className="border-muted/40 bg-card/30 shadow-none lg:col-span-2">
-          <ItemHeader className="flex-row items-center gap-3 space-y-0 pb-4">
-            <div className="rounded-lg border border-primary/20 bg-primary/10 p-2">
-              <Package className="size-5 text-primary" />
-            </div>
-            <ItemTitle className="font-bold text-base text-primary/80 uppercase tracking-tight">{t('materials')}</ItemTitle>
-          </ItemHeader>
-          <ItemContent className="grid gap-4 sm:grid-cols-2">
-            <Item variant="muted" className="flex-col items-start rounded-xl border border-transparent p-4 transition-all hover:border-muted-foreground/20">
-              <ItemDescription className="mb-2 font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">{t('materialFas.label')}</ItemDescription>
-              <div className="flex flex-col">
-                <ItemTitle className="font-bold text-base">{data.materialFas || '-'}</ItemTitle>
-                {data.materialFasCode && <span className="mt-1 w-fit rounded bg-primary/5 px-1.5 py-0.5 font-mono text-[10px] text-primary/70">{data.materialFasCode}</span>}
-              </div>
-            </Item>
-            <Item variant="muted" className="flex-col items-start rounded-xl border border-transparent p-4 transition-all hover:border-muted-foreground/20">
-              <ItemDescription className="mb-2 font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">{t('rmrbFas.label')}</ItemDescription>
-              <div className="flex flex-col">
-                <ItemTitle className="font-bold text-base">{data.rmrb || '-'}</ItemTitle>
-                {data.rmrbCode && <span className="mt-1 w-fit rounded bg-primary/5 px-1.5 py-0.5 font-mono text-[10px] text-primary/70">{data.rmrbCode}</span>}
-              </div>
-            </Item>
-            <Item variant="muted" className="flex-col items-start rounded-xl border border-transparent p-4 transition-all hover:border-muted-foreground/20 sm:col-span-2">
-              <ItemDescription className="mb-2 font-semibold text-[10px] text-muted-foreground uppercase tracking-wider">{t('onboardMaterialFas.label')}</ItemDescription>
-              <ItemTitle className="font-bold text-base">{data.onboardMaterial || '-'}</ItemTitle>
-            </Item>
-          </ItemContent>
-        </Item>
-
-        {/* Supplier Section */}
-        <Item className="border-muted/40 bg-card/30 shadow-none">
-          <ItemHeader className="flex-row items-center gap-3 space-y-0 pb-4">
-            <div className="rounded-lg border border-orange-500/20 bg-orange-500/10 p-2">
-              <Truck className="size-5 text-orange-600" />
-            </div>
-            <ItemTitle className="font-bold text-base text-orange-600/80 uppercase tracking-tight">{t('supplier')}</ItemTitle>
-          </ItemHeader>
-          <ItemContent>
-            {data.supplierData && !data.supplierData.cancelled && data.supplierData.codigoFornecedor ? (
-              <div className="space-y-4 rounded-xl border border-orange-500/10 bg-orange-500/[0.03] p-4">
-                <div className="space-y-1">
-                  <ItemDescription className="font-bold text-[10px] text-orange-600/70 uppercase tracking-wider">{t('name')}</ItemDescription>
-                  <ItemTitle className="font-bold text-base leading-tight">{data.supplierData.razao || '-'}</ItemTitle>
-                </div>
-                <div className="space-y-1">
-                  <ItemDescription className="font-bold text-[10px] text-orange-600/70 uppercase tracking-wider">{t('code')}</ItemDescription>
-                  <ItemTitle className="font-mono text-sm">{data.supplierData.codigoFornecedor}</ItemTitle>
-                </div>
-                {data.supplierData.emails && data.supplierData.emails.length > 0 && (
-                  <div className="space-y-2 border-orange-500/10 border-t pt-2">
-                    <ItemDescription className="font-bold text-[10px] text-orange-600/70 uppercase tracking-wider">{t('emails')}</ItemDescription>
-                    <div className="flex flex-wrap gap-2">
-                      {data.supplierData.emails.map((email) => (
-                        <Badge key={email} variant="outline" className="bg-background/50 font-medium text-[10px]">
-                          {email}
-                        </Badge>
-                      ))}
-                    </div>
+      <div className="overflow-hidden bg-card">
+        <Table>
+          <TableBody>
+            {categories.map((category) => (
+              <TableRow key={category.id}>
+                <TableCell className="bg-muted/50 py-4 align-top font-medium">
+                  <div className="flex items-center gap-1">
+                    <ItemMedia variant="icon">{category.icon}</ItemMedia>
+                    <ItemTitle>{category.name}</ItemTitle>
                   </div>
-                )}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed bg-muted/5 py-12 text-center text-muted-foreground">
-                <Truck className="mb-3 size-10 opacity-20" />
-                <p className="max-w-[150px] font-medium text-xs italic">{t('no.supplier.assigned')}</p>
-              </div>
-            )}
-          </ItemContent>
-        </Item>
+                </TableCell>
+                {category.specs.map((spec) => (
+                  <TableCell key={`${category.id}-${spec.label}`} className="py-4 align-top">
+                    <div className="flex flex-col gap-1">
+                      <ItemDescription>{spec.label}</ItemDescription>
+                      <ItemTitle>{spec.value}</ItemTitle>
+                    </div>
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
-
-      {/* Additional and Payment Info */}
-      <Item className="overflow-hidden border-muted/40 bg-card/30 shadow-none">
-        <ItemHeader className="flex-row items-center gap-3 space-y-0 border-b bg-muted/20 pb-4">
-          <div className="rounded-lg border border-blue-500/20 bg-blue-500/10 p-2">
-            <Info className="size-5 text-blue-600" />
-          </div>
-          <ItemTitle className="font-bold text-base text-blue-600/80 uppercase tracking-tight">{t('fas.info')}</ItemTitle>
-        </ItemHeader>
-        <ItemContent className="p-0">
-          <div className="grid divide-y divide-muted/40 lg:grid-cols-4 lg:divide-x lg:divide-y-0">
-            {/* Status Section */}
-            <div className="space-y-6 bg-blue-500/[0.02] p-6">
-              <div className="grid gap-3">
-                <div className="flex items-center gap-2 text-muted-foreground/80">
-                  <Layers className="size-3.5" />
-                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('insurance.work.order')}</ItemDescription>
-                </div>
-                <Badge variant={data.osInsurance ? 'default' : 'secondary'} className={cn('w-fit font-bold', data.osInsurance ? 'bg-primary' : 'opacity-70')}>
-                  {t(data.osInsurance ? 'yes' : 'not')}
-                </Badge>
-              </div>
-              <div className="grid gap-3">
-                <div className="flex items-center gap-2 text-muted-foreground/80">
-                  <Users className="size-3.5" />
-                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('event.team.change')}</ItemDescription>
-                </div>
-                <Badge variant={data.fasHeader?.teamChange ? 'default' : 'secondary'} className={cn('w-fit font-bold', data.fasHeader?.teamChange ? 'bg-primary' : 'opacity-70')}>
-                  {t(data.fasHeader?.teamChange ? 'yes' : 'not')}
-                </Badge>
-              </div>
-              <div className="grid gap-3">
-                <div className="flex items-center gap-2 text-muted-foreground/80">
-                  <FileSearch className="size-3.5" />
-                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('downtime.work.order')}</ItemDescription>
-                </div>
-                <Badge variant={data.osDowntime ? 'default' : 'secondary'} className={cn('w-fit font-bold', data.osDowntime ? 'bg-primary' : 'opacity-70')}>
-                  {t(data.osDowntime ? 'yes' : 'not')}
-                </Badge>
-              </div>
-            </div>
-
-            {/* Observation Section */}
-            <div className="space-y-3 p-6 lg:col-span-2">
-              <ItemDescription className="font-bold text-muted-foreground/80 text-xs uppercase tracking-wider">{t('observation')}</ItemDescription>
-              <div className="rounded-lg border border-muted/50 bg-muted/30 p-4">
-                <p className="min-h-[100px] whitespace-pre-wrap text-balance text-foreground text-sm leading-relaxed">
-                  {data.confirmObservation || <span className="italic opacity-30">{t('no.observations')}</span>}
-                </p>
-              </div>
-            </div>
-
-            {/* Financial Section */}
-            <div className="space-y-6 bg-emerald-500/[0.02] p-6">
-              <div className="grid gap-3">
-                <div className="flex items-center gap-2 text-emerald-600/80">
-                  <CreditCard className="size-4" />
-                  <ItemDescription className="font-bold text-xs uppercase tracking-wider">{t('buy.request')}</ItemDescription>
-                </div>
-                {data.buyRequest ? (
-                  <ItemTitle className="rounded border border-emerald-500/10 bg-emerald-500/5 p-2 font-bold font-mono text-base text-emerald-700 tracking-tight">
-                    {data.buyRequest}
-                  </ItemTitle>
-                ) : (
-                  <span className="text-muted-foreground/50 text-sm italic">{t('not.informed')}</span>
-                )}
-              </div>
-              <Separator className="bg-emerald-500/10" />
-              <div className="grid gap-3">
-                <div className="flex items-center gap-2 text-emerald-600/80">
-                  <CalendarIcon className="size-4" />
-                  <ItemDescription className="font-bold text-xs uppercase tracking-wider">{t('date.of.payment')}</ItemDescription>
-                </div>
-                <ItemTitle className="font-bold text-base text-emerald-700">
-                  {data.paymentDate ? (
-                    formatDate(data.paymentDate, 'dd MMM yyyy')
-                  ) : (
-                    <span className="font-normal text-muted-foreground/50 text-sm italic">{t('not.informed')}</span>
-                  )}
-                </ItemTitle>
-              </div>
-            </div>
-          </div>
-        </ItemContent>
-      </Item>
     </div>
   );
+}
+
+interface SpecItem {
+  label: string;
+  value: React.ReactNode;
+}
+
+interface SpecCategory {
+  id: string;
+  name: string;
+  icon: React.ReactNode;
+  specs: SpecItem[];
 }
 
 interface OsDetailsSectionProps {
