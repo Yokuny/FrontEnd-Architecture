@@ -167,7 +167,7 @@ export function FleetMeasurePanel() {
                   {lineData.points.map((_: any, ptIdx: number) => {
                     const distFromStart = getDistancesInUnit(lineData.points.slice(0, ptIdx + 1));
                     return (
-                      <div key={`${lineData.id}-${ptIdx}`} className="relative py-1">
+                      <div key={`${lineData.id}${ptIdx}`} className="relative py-1">
                         <ItemMedia className="absolute top-1.5 -left-[1.2rem] box-content bg-background py-0.5">
                           <MapPin className="size-3 text-muted-foreground" />
                         </ItemMedia>

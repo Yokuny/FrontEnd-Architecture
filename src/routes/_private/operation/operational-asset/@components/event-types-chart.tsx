@@ -105,7 +105,7 @@ export function EventTypesChart({ data, isLoading }: EventTypesChartProps) {
                 />
                 <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={24} cursor={!selectedGroup ? 'pointer' : 'default'}>
                   {chartData.map((entry, index) => (
-                    <Cell key={`${entry.name}-${index}`} fill={getChartColor(index)} />
+                    <Cell key={`${entry.name}${index}`} fill={getChartColor(index)} />
                   ))}
                 </Bar>
               </BarChart>

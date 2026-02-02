@@ -45,7 +45,7 @@ export default function AppNavigation({ routes }: { routes: Route[] }) {
                       {route.subs?.map((subRoute) => {
                         const favorited = isFavorite(subRoute.link);
                         return (
-                          <SidebarMenuSubItem key={`${route.id}-${subRoute.title}`} className="group/sub flex h-auto items-center">
+                          <SidebarMenuSubItem key={`${route.id}${subRoute.title}`} className="group/sub flex h-auto items-center">
                             <button
                               type="button"
                               onClick={() => toggleFavorite({ title: subRoute.title, link: subRoute.link })}

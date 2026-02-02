@@ -89,7 +89,7 @@ export function ConnectionsVoyage({ voyages }: ConnectionsVoyageProps) {
           const isSelected = kickVoyageFilter?.index === i;
           return (
             <Item
-              key={`${x.source?.port}-${x.destiny?.port}-${i}`}
+              key={`${x.source?.port}${x.destiny?.port}${i}`}
               size="sm"
               variant={isSelected ? 'muted' : 'default'}
               className={cn('cursor-pointer border border-transparent p-1 transition-colors', isSelected && 'border-primary/30')}

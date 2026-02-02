@@ -305,7 +305,7 @@ export function ModalAddFasService({ show, onClose, onAdd, headerType, idEnterpr
               {order.files && order.files.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {order.files.map((file, index) => (
-                    <div key={`${file.name}-${index}`} className="flex items-center gap-2 rounded-md bg-muted px-2 py-1 text-xs">
+                    <div key={`${file.name}${index}`} className="flex items-center gap-2 rounded-md bg-muted px-2 py-1 text-xs">
                       <span className="max-w-40 truncate">{file.name}</span>
                       <button type="button" onClick={() => removeFile(index)} className="text-muted-foreground hover:text-destructive">
                         <X className="size-3" />

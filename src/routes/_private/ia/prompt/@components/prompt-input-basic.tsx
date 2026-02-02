@@ -37,7 +37,7 @@ export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: 
       {files.length > 0 && (
         <div className="flex flex-wrap gap-2 pb-2">
           {files.map((file, index) => (
-            <div key={`${file.name}-${index}`} className="flex items-center gap-2 rounded-lg bg-secondary px-3 py-2" onClick={(e) => e.stopPropagation()}>
+            <div key={`${file.name}${index}`} className="flex items-center gap-2 rounded-lg bg-secondary px-3 py-2" onClick={(e) => e.stopPropagation()}>
               <FileDigit className="size-4" />
               <span className="max-w-32 truncate">{file.name}</span>
               <button onClick={() => handleRemoveFile(index)} className="rounded-full p-1 hover:bg-secondary" type="button">

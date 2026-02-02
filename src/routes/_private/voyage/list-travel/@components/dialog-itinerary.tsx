@@ -141,7 +141,7 @@ export function DialogItinerary({ index, data, onChangeData, onDelete, disabled,
                 <TabsContent value="load" className="space-y-4 py-4">
                   <ItemGroup>
                     {(formData.load || []).map((item: any, idx: number) => (
-                      <Item variant="outline" key={`${idx}-${item?.id}`}>
+                      <Item variant="outline" key={`${idx}${item?.id}`}>
                         <div className="flex w-1/4 flex-col gap-1">
                           <Label>{t('description')}</Label>
                           <Input value={item.description || ''} onChange={(e) => updateLoad(idx, 'description', e.target.value)} placeholder={t('description')} />
@@ -173,7 +173,7 @@ export function DialogItinerary({ index, data, onChangeData, onDelete, disabled,
                 <TabsContent value="observation" className="space-y-4 py-4">
                   <ItemGroup>
                     {(formData.listObservations || []).map((item: any, idx: number) => (
-                      <Item variant="outline" key={`${idx}-${item?.id}`}>
+                      <Item variant="outline" key={`${idx}${item?.id}`}>
                         <div className="flex w-1/2 flex-col gap-1">
                           <Label>{t('observation')}</Label>
                           <Textarea

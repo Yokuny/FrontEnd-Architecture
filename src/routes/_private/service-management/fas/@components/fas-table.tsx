@@ -79,7 +79,7 @@ export function FasTable({ data, isLoading, page = 1, pageSize = 10, totalItems 
               const sortedOrders = [...orders].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
 
               return sortedOrders.map((order, index) => (
-                <TableRow key={`${fas.id}-${order.id || index}`} className="transition-colors hover:bg-secondary">
+                <TableRow key={`${fas.id}${order.id || index}`} className="transition-colors hover:bg-secondary">
                   {index === 0 && (
                     <>
                       <TableCell rowSpan={sortedOrders.length} className="align-top">

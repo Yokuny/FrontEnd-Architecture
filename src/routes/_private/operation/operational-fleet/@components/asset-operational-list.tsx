@@ -45,7 +45,7 @@ export function AssetOperationalList({ data, isLoading }: AssetOperationalListPr
           const colorStatus = getStatusColor(item.percentualOperating);
 
           return (
-            <TableRow key={`${item.machine.id}-${index}`}>
+            <TableRow key={`${item.machine.id}${index}`}>
               <TableCell>
                 <div className="flex items-center gap-3">
                   <span className="text-xl">{statusConfig.icon}</span>

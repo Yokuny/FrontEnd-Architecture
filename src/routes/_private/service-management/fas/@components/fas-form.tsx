@@ -193,7 +193,7 @@ export function FasForm() {
                     </TableRow>
                   ) : (
                     orders.map((order: FasOrderFormValues, index: number) => (
-                      <TableRow key={`${order.name}-${index}`} className="group bg-background hover:bg-muted/30">
+                      <TableRow key={`${order.name}${index}`} className="group bg-background hover:bg-muted/30">
                         <TableCell className="text-center font-mono text-muted-foreground text-xs">{order.job || '-'}</TableCell>
                         <TableCell className="font-semibold text-xs">{order.name}</TableCell>
                         <TableCell className="max-w-48">

@@ -1,0 +1,6 @@
+============================================================
+RELATÓRIO DE CHAVES DE TRADUÇÃO FALTANDO
+Base de comparação: pt.json
+============================================================
+
+✅ Nenhuma chave faltando! Tudo sincronizado.

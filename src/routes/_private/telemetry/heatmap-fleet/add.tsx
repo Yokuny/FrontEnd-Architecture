@@ -164,7 +164,7 @@ function HeatmapConfigPage() {
                     <Accordion type="single" collapsible className="flex w-full flex-col gap-2">
                       {equipment.subgroups.map((subgroup, subIndex) => {
                         const subgroupData = equipmentData?.subgroups?.[subIndex];
-                        const subId = `${equipment.code}-${subIndex}`;
+                        const subId = `${equipment.code}${subIndex}`;
                         return (
                           <AccordionItem key={subId} value={subId} className="border-none">
                             <AccordionTrigger className="group py-2 hover:no-underline [&>svg]:hidden">

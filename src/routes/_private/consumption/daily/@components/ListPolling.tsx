@@ -152,7 +152,7 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                       </Item>
                     )}
                     {item?.pollingEnd?.map((polling, i) => (
-                      <div key={`${item._id}-${i}`}>
+                      <div key={`${item._id}${i}`}>
                         <Item variant="default" size="sm" className="justify-between hover:bg-secondary">
                           <ItemDescription className="font-sans">{polling?.description}</ItemDescription>
                           <div className="flex items-baseline gap-1">

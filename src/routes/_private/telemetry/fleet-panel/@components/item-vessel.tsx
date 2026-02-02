@@ -76,7 +76,7 @@ export function ItemVessel({ data, onClick }: ItemVesselProps) {
         {/* Engines - RPM */}
         {data?.tree?.engineMain?.map((engine, i) =>
           engine.rpm !== undefined ? (
-            <div key={`${i}-${engine.title}`} className="flex items-center justify-between">
+            <div key={`${i}${engine.title}`} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Settings2 className={cn('size-4', engine.isRunning ? 'animate-spin text-info' : 'text-muted-foreground')} style={{ animationDuration: '2s' }} />
                 <Badge variant={engine.isRunning ? 'info' : 'secondary'} className="text-xs">
@@ -92,7 +92,7 @@ export function ItemVessel({ data, onClick }: ItemVesselProps) {
         {/* Engines - Load */}
         {data?.tree?.engineMain?.map((engine, i) =>
           engine.load?.value !== undefined ? (
-            <div key={`${i}-${engine.load?.value}`} className="flex items-center justify-between">
+            <div key={`${i}${engine.load?.value}`} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Settings2 className={cn('size-4', engine.load?.value ? 'animate-spin text-info' : 'text-muted-foreground')} style={{ animationDuration: '2s' }} />
                 <Badge variant={engine.load?.value ? 'info' : 'secondary'} className="text-xs">
@@ -108,7 +108,7 @@ export function ItemVessel({ data, onClick }: ItemVesselProps) {
         {/* Engines - Consumption */}
         {data?.tree?.engineMain?.map((engine, i) =>
           engine.consumption?.value !== undefined ? (
-            <div key={`${i}-${engine.consumption?.value}`} className="flex items-center justify-between">
+            <div key={`${i}${engine.consumption?.value}`} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Droplet className={cn('size-4', engine.isRunning ? 'text-info' : 'text-muted-foreground')} />
                 <Badge variant={engine.isRunning ? 'info' : 'secondary'} className="text-xs">
@@ -124,7 +124,7 @@ export function ItemVessel({ data, onClick }: ItemVesselProps) {
         {/* Engines - Hours */}
         {data?.tree?.engineMain?.map((engine, i) =>
           engine.hoursOperation !== undefined ? (
-            <div key={`${i}-${engine.title}`} className="flex items-center justify-between">
+            <div key={`${i}${engine.title}`} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Clock className={cn('size-4', engine.isRunning ? 'text-info' : 'text-muted-foreground')} />
                 <Badge variant={engine.isRunning ? 'info' : 'secondary'} className="text-xs">
@@ -139,7 +139,7 @@ export function ItemVessel({ data, onClick }: ItemVesselProps) {
         )}
         {/* Generators */}
         {data?.tree?.generator?.map((gen, i) => (
-          <div key={`${i}-${gen.title}`} className="flex items-center justify-between">
+          <div key={`${i}${gen.title}`} className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Zap className={cn('size-4', gen.isRunning ? 'text-warning' : 'text-muted-foreground')} />
               <Badge variant="secondary" className="text-xs">

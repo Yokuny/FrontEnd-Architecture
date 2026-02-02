@@ -144,7 +144,7 @@ function HeatmapNotificationsPage() {
 
                               return (
                                 <HeatmapNotificationsForm
-                                  key={`${subgroup.subgroupName}-${sensorItem.key}-${sIdx}`}
+                                  key={`${subgroup.subgroupName}${sensorItem.key}${sIdx}`}
                                   sensor={sensorItem}
                                   sensorData={sensorData}
                                   currentAlert={currentAlert}

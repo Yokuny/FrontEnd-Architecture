@@ -30,7 +30,7 @@ export function AddComposition({ compositionAsset, onChange, disabled }: Composi
       </ItemHeader>
       <ItemContent className="space-y-4">
         {compositionAsset.map((item, index) => (
-          <div key={`${index}-${item}`} className="flex items-center gap-4">
+          <div key={`${index}${item}`} className="flex items-center gap-4">
             <div className="flex-1">
               <ItemTitle>{t('machine')}</ItemTitle>
               <Input value={item} onChange={(e) => handleChange(index, e.target.value)} placeholder={`${t('composition')} ${t('machine')}`} disabled={disabled} />

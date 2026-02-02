@@ -30,7 +30,7 @@ export function AddItinerary({ itinerary, onChange, disabled, idEnterprise }: It
       <div className="grid gap-4">
         {itinerary.map((item, index) => (
           <DialogItinerary
-            key={`${index}-${item?.id}`}
+            key={`${index}${item?.id}`}
             index={index}
             data={item}
             onChangeData={(data) => handleChangeItem(index, data)}

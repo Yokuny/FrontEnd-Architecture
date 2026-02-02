@@ -26,7 +26,7 @@ export function RouteGeometry({ routeGeoJson }: RouteGeometryProps) {
         if (item?.geometry?.type === 'MultiPolygon') {
           return item.geometry.coordinates.map((coords: any, j: number) => (
             <Polygon
-              key={`${nanoid(4)}-${i}-${j}`}
+              key={`${nanoid(4)}${i}${j}`}
               positions={coords[0].map((coord: any) => [coord[1], coord[0]])}
               color={item.properties?.type?.toLowerCase() === 'danger' ? '#ef4444' : '#DE33FF'}
               fillOpacity={0.4}
@@ -38,7 +38,7 @@ export function RouteGeometry({ routeGeoJson }: RouteGeometryProps) {
         if (item?.geometry?.type === 'MultiLineString') {
           return item.geometry.coordinates.map((coords: any, j: number) => (
             <Polyline
-              key={`${nanoid(4)}-${i}-${j}`}
+              key={`${nanoid(4)}${i}${j}`}
               positions={coords.map((coord: any) => [coord[1], coord[0]])}
               color={['ConfinedWaters'].includes(item.properties?.tag) ? '#ef4444' : '#DE33FF'}
               weight={2}

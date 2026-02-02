@@ -78,7 +78,7 @@ export function KPI({ data, onFilter, activeFilters }: KPIProps) {
           <div className={`grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-${Math.min(statusItems.length, 6)}`}>
             {statusItems.map((item, index) => (
               <Item
-                key={`${index}-${item.text}`}
+                key={`${index}${item.text}`}
                 className={cn('cursor-pointer flex-col rounded-none border-0 transition-colors hover:bg-muted/50', isActive(item.text, 'status') && 'bg-muted')}
                 onClick={() => onFilter(item.text, 'status')}
               >
@@ -102,7 +102,7 @@ export function KPI({ data, onFilter, activeFilters }: KPIProps) {
           <div className={`grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-${Math.min(maintenanceItems.length, 6)}`}>
             {maintenanceItems.map((item, index) => (
               <Item
-                key={`${index}-${item.text}`}
+                key={`${index}${item.text}`}
                 className={cn('cursor-pointer flex-col rounded-none border-0 transition-colors hover:bg-muted/50', isActive(item.text, 'tipoManutencao') && 'bg-muted')}
                 onClick={() => onFilter(item.text, 'tipoManutencao')}
               >

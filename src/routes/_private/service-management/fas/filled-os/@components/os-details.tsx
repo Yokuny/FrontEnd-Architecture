@@ -1,4 +1,5 @@
 import { CreditCard, FileSearch, Layers, Package, Truck } from 'lucide-react';
+import type React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Badge, StatusIndicator, type StatusVariant } from '@/components/ui/badge';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
@@ -18,14 +19,15 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
       icon: <FileSearch className="size-4" />,
       specs: [
         { label: 'JOB', value: data.job || '-' },
+        { label: t('add.request'), value: data.requestOrder || '-' },
         {
           label: 'VOR',
           value: data.vor ? <Badge variant="error">{data.vor}</Badge> : '-',
         },
-        { label: t('add.request'), value: data.requestOrder || '-' },
         {
           label: t('description'),
           value: <span className="whitespace-pre-wrap">{data.description || '-'}</span>,
+          fullWidth: true,
         },
       ],
     },
@@ -34,25 +36,11 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
       name: t('materials'),
       icon: <Package className="size-4" />,
       specs: [
-        {
-          label: t('materialFas.label'),
-          value: (
-            <div className="flex flex-col">
-              <ItemTitle>{data.materialFas || '-'}</ItemTitle>
-              {data.materialFasCode && <ItemDescription>{data.materialFasCode}</ItemDescription>}
-            </div>
-          ),
-        },
-        {
-          label: t('rmrbFas.label'),
-          value: (
-            <div className="flex flex-col">
-              <ItemTitle>{data.rmrb || '-'}</ItemTitle>
-              {data.rmrbCode && <ItemDescription>{data.rmrbCode}</ItemDescription>}
-            </div>
-          ),
-        },
+        { label: t('materialFas.label'), value: data.materialFas || '-' },
+        { label: t('materialFas.code.label'), value: data.materialFasCode || '-' },
         { label: t('onboardMaterialFas.label'), value: data.onboardMaterial || '-' },
+        { label: t('rmrbFas.label'), value: data.rmrb || '-' },
+        { label: t('rmrbFas.code.label'), value: data.rmrbCode || '-' },
       ],
     },
     {
@@ -62,24 +50,21 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
       specs:
         data.supplierData && !data.supplierData.cancelled && data.supplierData.codigoFornecedor
           ? [
-              { label: t('name'), value: data.supplierData.razao || '-' },
-              { label: t('code'), value: data.supplierData.codigoFornecedor },
-              ...(data.supplierData.emails && data.supplierData.emails.length > 0
-                ? [
-                    {
-                      label: t('emails'),
-                      value: (
-                        <div className="flex flex-col gap-1">
-                          {data.supplierData.emails.map((email) => (
-                            <ItemTitle key={email}>{email}</ItemTitle>
-                          ))}
-                        </div>
-                      ),
-                    },
-                  ]
-                : []),
+              { label: t('supplier.code.label'), value: data.supplierData.codigoFornecedor },
+              { label: t('supplier.name.label'), value: data.supplierData.razao || '-' },
+              {
+                label: t('supplier.email.label'),
+                value: (
+                  <div className="flex flex-col gap-1">
+                    {data.supplierData.emails?.map((email) => (
+                      <ItemTitle key={email}>{email}</ItemTitle>
+                    ))}
+                  </div>
+                ),
+                fullWidth: true,
+              },
             ]
-          : [{ label: t('supplier'), value: t('no.supplier.assigned') }],
+          : [{ label: t('supplier'), value: t('no.supplier.assigned'), fullWidth: true }],
     },
     {
       id: 'status',
@@ -108,6 +93,7 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
         {
           label: t('observation'),
           value: <div className="whitespace-pre-wrap">{data.confirmObservation || <ItemDescription className="italic">{t('no.observations')}</ItemDescription>}</div>,
+          fullWidth: true,
         },
       ],
     },
@@ -119,7 +105,7 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
         {
           label: t('buy.request'),
           value: data.buyRequest ? (
-            <ItemTitle className="font-mono text-emerald-600">{data.buyRequest}</ItemTitle>
+            <ItemTitle className="font-mono font-semibold text-emerald-600">{data.buyRequest}</ItemTitle>
           ) : (
             <ItemDescription className="italic">{t('not.informed')}</ItemDescription>
           ),
@@ -127,7 +113,7 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
         {
           label: t('date.of.payment'),
           value: data.paymentDate ? (
-            <ItemTitle className="text-emerald-600">{formatDate(data.paymentDate, 'dd MMM yyyy')}</ItemTitle>
+            <ItemTitle className="font-semibold text-emerald-600">{formatDate(data.paymentDate, 'dd MMM yyyy')}</ItemTitle>
           ) : (
             <ItemDescription className="italic">{t('not.informed')}</ItemDescription>
           ),
@@ -137,7 +123,7 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <Item className="justify-between">
         <div className="flex flex-col gap-4 md:flex-row md:gap-8">
           <div className="flex flex-col gap-1">
@@ -212,30 +198,60 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
         </ItemContent>
       </Item>
 
-      <div className="overflow-hidden bg-card">
-        <Table>
-          <TableBody>
-            {categories.map((category) => (
-              <TableRow key={category.id}>
-                <TableCell className="bg-muted/50 py-4 align-top font-medium">
-                  <div className="flex items-center gap-1">
-                    <ItemMedia variant="icon">{category.icon}</ItemMedia>
-                    <ItemTitle>{category.name}</ItemTitle>
-                  </div>
-                </TableCell>
-                {category.specs.map((spec) => (
-                  <TableCell key={`${category.id}-${spec.label}`} className="py-4 align-top">
-                    <div className="flex flex-col gap-1">
-                      <ItemDescription>{spec.label}</ItemDescription>
-                      <ItemTitle>{spec.value}</ItemTitle>
-                    </div>
-                  </TableCell>
+      {categories.map((category) => {
+        const normalSpecs = category.specs.filter((s) => !s.fullWidth);
+        const fullWidthSpecs = category.specs.filter((s) => s.fullWidth);
+        const hasNormalRow = normalSpecs.length > 0;
+        const totalRows = (hasNormalRow ? 1 : 0) + fullWidthSpecs.length;
+
+        return (
+          <div key={category.id} className="overflow-hidden rounded-lg border bg-card">
+            <Table>
+              <TableBody>
+                {/* Normal Specs Row */}
+                {hasNormalRow && (
+                  <TableRow>
+                    <TableCell className="w-60 bg-muted/50 py-4 align-top font-medium" rowSpan={totalRows}>
+                      <div className="flex items-center gap-1">
+                        <ItemMedia variant="icon">{category.icon}</ItemMedia>
+                        <ItemTitle>{category.name}</ItemTitle>
+                      </div>
+                    </TableCell>
+                    {normalSpecs.map((spec) => (
+                      <TableCell key={`${category.id}${spec.label}`} className="py-4 align-top">
+                        <div className="flex flex-col gap-1">
+                          <ItemDescription>{spec.label}</ItemDescription>
+                          <ItemTitle>{spec.value}</ItemTitle>
+                        </div>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                )}
+
+                {/* Full Width Specs Rows */}
+                {fullWidthSpecs.map((spec, index) => (
+                  <TableRow key={spec.label} className="border-t">
+                    {!hasNormalRow && index === 0 && (
+                      <TableCell className="w-60 bg-muted/50 py-4 align-top font-medium" rowSpan={totalRows}>
+                        <div className="flex items-center gap-1">
+                          <ItemMedia variant="icon">{category.icon}</ItemMedia>
+                          <ItemTitle>{category.name}</ItemTitle>
+                        </div>
+                      </TableCell>
+                    )}
+                    <TableCell colSpan={normalSpecs.length || 4} className="py-4 align-top">
+                      <div className="flex flex-col gap-1">
+                        <ItemDescription>{spec.label}</ItemDescription>
+                        <ItemTitle>{spec.value}</ItemTitle>
+                      </div>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+              </TableBody>
+            </Table>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -243,6 +259,7 @@ export function OsDetails({ data }: OsDetailsSectionProps) {
 interface SpecItem {
   label: string;
   value: React.ReactNode;
+  fullWidth?: boolean;
 }
 
 interface SpecCategory {

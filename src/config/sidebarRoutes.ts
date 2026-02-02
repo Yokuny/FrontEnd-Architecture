@@ -55,7 +55,7 @@ export function buildSidebarRoutes(): SidebarRoute[] {
       // Evitar duplicatas
       if (!children.find((c) => c.path === path)) {
         children.push({
-          id: `${section}-${childName}`,
+          id: `${section}${childName}`,
           path,
           labelKey: ROUTE_LABELS[childName] || childName,
           icon: SUB_ROUTE_ICONS[childName],

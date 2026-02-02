@@ -115,7 +115,7 @@ export function ModalViewDetails({ operations, rdo }: ModalViewDetailsProps) {
                       const contractMax = (x.consumptionDailyContract / 24) * diffInHours;
 
                       return (
-                        <tr key={`${day}-${x.code}-${x.dateStart.getTime()}`} className={dayIndex % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
+                        <tr key={`${day}${x.code}${x.dateStart.getTime()}`} className={dayIndex % 2 === 0 ? 'bg-background' : 'bg-muted/30'}>
                           {opIndex === 0 && (
                             <td className="p-2 text-center align-middle" rowSpan={ops.length}>
                               {format(x.dateStart, 'dd MMM yyyy')}

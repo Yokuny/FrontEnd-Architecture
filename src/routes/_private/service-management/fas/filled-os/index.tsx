@@ -41,11 +41,11 @@ import {
   useRefuseBMS,
 } from '@/hooks/use-fas-api';
 import { OsAttachmentDialog } from './@components/os-attachment-dialog';
-import { OsCollaboratorsTable } from './@components/os-collaborators-table';
+import { OsCollaborators } from './@components/os-collaborators';
 import { OsDetails } from './@components/os-details';
-import { OsExpensesTable } from './@components/os-expenses-table';
-import { OsRatingSection } from './@components/os-rating-section';
-import { OsReasonsList } from './@components/os-reasons-list';
+import { OsExpenses } from './@components/os-expenses';
+import { OsRating } from './@components/os-rating';
+import { OsReasons } from './@components/os-reasons';
 import { OsRefusalDialog } from './@components/os-refusal-dialog';
 import {
   canAddBuyRequest,
@@ -311,18 +311,12 @@ function FilledOsPage() {
         ) : !data ? (
           <DefaultEmptyData />
         ) : (
-          <ItemContent className="gap-8">
+          <ItemContent className="gap-10">
             <OsDetails data={data} />
-
-            <Separator />
-            {/* Collaborators */}
-            <OsCollaboratorsTable collaborators={data.collaborators} />
-            {/* Reasons History */}
-            <OsReasonsList data={data} />
-            {/* BMS Expenses */}
-            <OsExpensesTable bms={data.bms} />
-            {/* Rating */}
-            <OsRatingSection data={data} />
+            <OsCollaborators collaborators={data.collaborators} />
+            <OsReasons data={data} />
+            <OsExpenses bms={data.bms} />
+            <OsRating data={data} />
             <Separator />
             {/* Confirm OS Fields */}
             {canConfirmOsAction && showConfirmOsFields && (

@@ -78,8 +78,8 @@ export function FormFieldPreview({ field, value, onChange, idEnterprise }: FormF
           <RadioGroup value={value} onValueChange={onChange} className="flex flex-col space-y-1 pt-1">
             {options?.map((opt: string) => (
               <div key={opt} className="flex items-center space-x-2">
-                <RadioGroupItem value={opt} id={`${name}-${opt}`} />
-                <Label htmlFor={`${name}-${opt}`} className="cursor-pointer font-normal">
+                <RadioGroupItem value={opt} id={`${name}${opt}`} />
+                <Label htmlFor={`${name}${opt}`} className="cursor-pointer font-normal">
                   {opt}
                 </Label>
               </div>
@@ -100,7 +100,7 @@ export function FormFieldPreview({ field, value, onChange, idEnterprise }: FormF
             <div className="grid grid-cols-12 gap-x-4 gap-y-2">
               {(field.fields || []).map((subField: any, i: number) => (
                 <FormFieldPreview
-                  key={`${i}-${subField.name}`}
+                  key={`${i}${subField.name}`}
                   field={subField}
                   value={value?.[subField.name]}
                   onChange={(val) => {

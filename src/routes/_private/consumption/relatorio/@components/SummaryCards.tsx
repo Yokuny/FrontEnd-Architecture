@@ -42,7 +42,7 @@ export function SummaryCards({ data, unit, isReal }: SummaryCardsProps) {
   return (
     <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
       {cards.map((card, index) => (
-        <Item key={`${card.title}-${index}`} className="flex-col rounded-none border-0 bg-background">
+        <Item key={`${card.title}${index}`} className="flex-col rounded-none border-0 bg-background">
           <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
             <card.icon className={cn('size-5', card.color)} />
             <ItemDescription className="font-medium">{card.title}</ItemDescription>

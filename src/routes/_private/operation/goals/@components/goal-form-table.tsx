@@ -38,7 +38,7 @@ export function GoalFormTable() {
             <TableRow key={field.id}>
               <TableCell className="sticky left-0 z-10 bg-background font-medium">{field.isFleet ? t('fleet') : field.machineName}</TableCell>
               {months.map((_, monthIndex) => (
-                <TableCell key={`${field.id}-${monthIndex}`} className="px-1">
+                <TableCell key={`${field.id}${monthIndex}`} className="px-1">
                   <Input
                     type="number"
                     step="0.01"

@@ -35,7 +35,7 @@ export function FormPreviewModal({ open, onOpenChange, fields, idEnterprise }: F
               {fields.length > 0 ? (
                 fields.map((field: any, index: number) => (
                   <FormFieldPreview
-                    key={field.id || `preview-${field.name}-${index}`}
+                    key={field.id || `preview-${field.name}${index}`}
                     field={field}
                     value={previewData[field.name]}
                     onChange={(val) => handleValueChange(field.name, val)}

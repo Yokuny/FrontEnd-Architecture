@@ -83,7 +83,7 @@ export function FilledFormTable({ data, isLoading, page, pageSize, totalItems, o
             {data.data.map((item, index) => (
               <TableRow key={item.id || index}>
                 {data.columns.map((col) => (
-                  <TableCell key={`${item.id}-${col.name}`} className="text-center">
+                  <TableCell key={`${item.id}${col.name}`} className="text-center">
                     {renderCellContent(item, col)}
                   </TableCell>
                 ))}

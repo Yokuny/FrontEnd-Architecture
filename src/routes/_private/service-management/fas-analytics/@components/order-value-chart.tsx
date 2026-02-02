@@ -38,7 +38,7 @@ export function OrderValueChart({ search }: OrderValueChartProps) {
         if (typeof p._id === 'string') {
           key = p._id;
         } else if (p._id && typeof p._id === 'object') {
-          key = `${p._id.month || ''}-${p._id.year || ''}`;
+          key = `${p._id.month || ''}${p._id.year || ''}`;
         }
         paymentMap.set(key, p.total);
       });
@@ -65,7 +65,7 @@ export function OrderValueChart({ search }: OrderValueChartProps) {
           const month = item._id.month || t('undefined');
           const year = item._id.year ? ` ${item._id.year}` : '';
           name = `${month}${year}`;
-          key = `${item._id.month || ''}-${item._id.year || ''}`;
+          key = `${item._id.month || ''}${item._id.year || ''}`;
         }
       }
 
