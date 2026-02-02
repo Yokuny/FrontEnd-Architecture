@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { DoorOpen, MoreVertical, Pencil, Plus, Users } from 'lucide-react';
+import { DoorOpen, Globe, Lock, MoreVertical, Pencil, Plus, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import DefaultEmpty from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
@@ -7,7 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
-import { useRolesAll } from '@/hooks/use-roles-api';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useRoles } from '@/hooks/use-roles-api';
+import { cn } from '@/lib/utils';
 
 export const Route = createFileRoute('/_private/permissions/roles/')({
   component: ListRolesPage,
@@ -16,11 +18,29 @@ export const Route = createFileRoute('/_private/permissions/roles/')({
 function ListRolesPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: roles, isLoading } = useRolesAll();
+  const { idEnterprise } = useEnterpriseFilter();
+  const { data: roles, isLoading } = useRoles({
+    idEnterprise,
+    page: 0,
+    size: 20,
+  });
 
   // TODO: Get from permissions/menu state
   const hasPermissionAdd = true;
   const hasPermissionViewUsers = true;
+
+  const getVisibilityData = (visibility: string) => {
+    switch (visibility) {
+      case 'public':
+        return { icon: Globe, color: 'text-green-500' };
+      case 'private':
+        return { icon: Lock, color: 'text-red-500' };
+      case 'limited':
+        return { icon: Users, color: 'text-orange-500' };
+      default:
+        return { icon: Lock, color: 'text-muted-foreground' };
+    }
+  };
 
   return (
     <Card>
@@ -35,70 +55,84 @@ function ListRolesPage() {
       <CardContent>
         {isLoading ? (
           <DefaultLoading />
-        ) : roles && roles.length > 0 ? (
+        ) : roles && roles.data.length > 0 ? (
           <ItemGroup>
-            {roles.map((role) => (
-              <Item
-                key={role.id}
-                variant="outline"
-                className="cursor-pointer"
-                onClick={() => {
-                  if (hasPermissionAdd) {
-                    navigate({
-                      to: '/permissions/roles/edit',
-                      search: { id: role.id },
-                    });
-                  }
-                }}
-              >
-                <div className="flex flex-1 items-center gap-4">
-                  <ItemMedia variant="image">
-                    <DoorOpen className="size-5 text-warning" />
-                  </ItemMedia>
-                  <ItemContent className="gap-0">
-                    <ItemTitle className="text-base">{role.description}</ItemTitle>
-                    <ItemDescription className="truncate">{role.enterprise?.name || '-'}</ItemDescription>
-                  </ItemContent>
-                </div>
+            {roles.data.map((role) => {
+              const visibilityData = getVisibilityData(role.visibility);
+              const VisibilityIcon = visibilityData.icon;
 
-                {(hasPermissionAdd || hasPermissionViewUsers) && (
-                  <div className="ml-2 flex items-center justify-end border-l pl-2">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
-                          <MoreVertical className="size-4" />
-                          <span className="sr-only">{t('actions')}</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        {hasPermissionAdd && (
-                          <DropdownMenuItem
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate({ to: '/permissions/roles/edit', search: { id: role.id } });
-                            }}
-                          >
-                            <Pencil className="mr-2 size-4" />
-                            {t('edit')}
-                          </DropdownMenuItem>
-                        )}
-                        {hasPermissionViewUsers && (
-                          <DropdownMenuItem
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate({ to: '/permissions/roles/users', search: { id: role.id } });
-                            }}
-                          >
-                            <Users className="mr-2 size-4" />
-                            {t('users')}
-                          </DropdownMenuItem>
-                        )}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+              return (
+                <Item
+                  key={role.id}
+                  variant="outline"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (hasPermissionAdd) {
+                      navigate({
+                        to: '/permissions/roles/edit',
+                        search: { id: role.id },
+                      });
+                    }
+                  }}
+                >
+                  <div className="flex flex-1 items-center gap-4">
+                    <ItemMedia variant="image">
+                      <DoorOpen className="size-5 text-warning" />
+                    </ItemMedia>
+                    <ItemContent className="gap-0">
+                      <ItemTitle className="text-base">{role.description}</ItemTitle>
+                      <ItemDescription className="truncate">{role.enterprise?.name || '-'}</ItemDescription>
+                    </ItemContent>
                   </div>
-                )}
-              </Item>
-            ))}
+
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 pr-2">
+                      <div className="flex items-center gap-1.5">
+                        <VisibilityIcon className={cn('size-4', visibilityData.color)} />
+                        <ItemDescription className="text-xs capitalize">{t(`visibility.${role.visibility}`)}</ItemDescription>
+                      </div>
+                    </div>
+
+                    {(hasPermissionAdd || hasPermissionViewUsers) && (
+                      <div className="ml-2 flex items-center justify-end border-l pl-2">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
+                              <MoreVertical className="size-4" />
+                              <span className="sr-only">{t('actions')}</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            {hasPermissionAdd && (
+                              <DropdownMenuItem
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate({ to: '/permissions/roles/edit', search: { id: role.id } });
+                                }}
+                              >
+                                <Pencil className="mr-2 size-4" />
+                                {t('edit')}
+                              </DropdownMenuItem>
+                            )}
+                            {hasPermissionViewUsers && (
+                              <DropdownMenuItem
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate({ to: '/permissions/roles/users', search: { id: role.id } });
+                                }}
+                              >
+                                <Users className="mr-2 size-4" />
+                                {t('users')}
+                              </DropdownMenuItem>
+                            )}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    )}
+                  </div>
+                </Item>
+              );
+            })}
           </ItemGroup>
         ) : (
           <DefaultEmpty />

@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useUsers } from '@/hooks/use-users-api';
 import { cn } from '@/lib/utils';
 import { UserFilterDialog } from './@components/user-filter-dialog';
@@ -41,11 +42,14 @@ function ListUsersPage() {
   const hasPermissionPermissions = true;
   const hasPermissionPassword = true;
 
+  const { idEnterprise } = useEnterpriseFilter();
+
   const { data, isLoading } = useUsers({
     page: page - 1,
     size: pageSize,
     idRole,
     idTypeUser,
+    idEnterprise: idEnterprise || undefined,
   });
 
   const handleFilter = (filters: { idRole?: string[]; idTypeUser?: string[] }) => {
