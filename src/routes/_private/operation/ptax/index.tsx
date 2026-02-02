@@ -25,6 +25,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { usePtax, usePtaxApi } from '@/hooks/use-ptax-api';
 import { formatDate } from '@/lib/formatDate';
 import { PtaxModal } from './@components/ptax-modal';
@@ -46,6 +47,8 @@ function PtaxPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/operation/ptax/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  const hasPermissionAdd = useHasPermission('/ptax-add');
 
   const { data, isLoading } = usePtax({
     idEnterprise: idEnterprise || '',
@@ -129,10 +132,12 @@ function PtaxPage() {
               }}
             />
           </div>
-          <Button onClick={handleNew} disabled={isLoading}>
-            <Plus className="mr-2 size-4" />
-            {t('new')}
-          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={handleNew} disabled={isLoading}>
+              <Plus className="mr-2 size-4" />
+              {t('new')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 

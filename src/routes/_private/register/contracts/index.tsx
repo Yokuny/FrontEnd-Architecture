@@ -13,6 +13,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useContractsPaginated } from '@/hooks/use-contracts-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 
 const contractsSearchSchema = z.object({
   page: z.number().optional().default(1),
@@ -32,6 +33,8 @@ function ContractsListPage() {
   const navigate = Route.useNavigate();
   const { page, size, search } = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
+
+  const hasPermissionAdd = useHasPermission('/contract-add');
 
   const { data, isLoading } = useContractsPaginated({
     page: page - 1,
@@ -70,10 +73,12 @@ function ContractsListPage() {
               }}
             />
           </div>
-          <Button onClick={() => navigate({ to: '/register/contracts/add' })}>
-            <Plus className="mr-2 size-4" />
-            {t('add')}
-          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/register/contracts/add' })}>
+              <Plus className="mr-2 size-4" />
+              {t('add')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 

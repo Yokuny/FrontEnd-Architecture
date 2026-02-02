@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useFuelTypes, useFuelTypesApi } from '@/hooks/use-fuel-types-api';
+import { useHasPermission } from '@/hooks/use-permissions';
 
 const fuelTypesSearchSchema = z.object({
   search: z.string().optional(),
@@ -32,6 +33,8 @@ function FuelTypeListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { search } = useSearch({ from: '/_private/register/type-fuel/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  const hasPermissionAdd = useHasPermission('/add-type-fuel');
 
   const { data: fuelTypes = [], isLoading } = useFuelTypes(idEnterprise);
   const { deleteFuelType } = useFuelTypesApi();
@@ -73,10 +76,12 @@ function FuelTypeListPage() {
               }}
             />
           </div>
-          <Button onClick={() => navigate({ to: '/register/type-fuel/add' })}>
-            <Plus className="mr-2 size-4" />
-            {t('add')}
-          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/register/type-fuel/add' })}>
+              <Plus className="mr-2 size-4" />
+              {t('add')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 

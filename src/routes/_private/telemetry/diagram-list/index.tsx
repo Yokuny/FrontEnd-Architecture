@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { formatDate } from '@/lib/formatDate';
 import { useDiagramList } from './@hooks/use-diagram-list';
 
@@ -32,8 +33,7 @@ function DiagramListPage() {
 
   const { data, isLoading } = useDiagramList(idEnterprise, page, 20, search);
 
-  // TODO: Implement permission check
-  const hasPermissionAdd = true;
+  const hasPermissionAdd = useHasPermission('/diagram-add');
 
   const updateSearch = (updates: Partial<z.infer<typeof searchParamsSchema>>) => {
     navigate({ search: (prev: z.infer<typeof searchParamsSchema>) => ({ ...prev, ...updates }) });

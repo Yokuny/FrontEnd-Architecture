@@ -20,6 +20,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { formatDate } from '@/lib/formatDate';
 import { ReportFormDialog } from './@components/report-form-dialog';
 import { STATUS_VARIANTS } from './@consts/download-request.consts';
@@ -35,7 +36,7 @@ function DownloadDataAssetRequestPage() {
   const { t } = useTranslation();
   const { idEnterprise } = useEnterpriseFilter();
 
-  const hasPermission = true; // TODO: Implement actual permission check if needed
+  const hasPermission = useHasPermission('/download-data-asset-request');
 
   const { data, isLoading } = useDownloadQueueQuery(idEnterprise);
   const { createRequest, deleteRequest } = useDownloadQueueApi(idEnterprise);

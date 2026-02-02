@@ -25,6 +25,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useMaintenancePlans, useMaintenancePlansApi } from '@/hooks/use-maintenance-plans-api';
+import { useHasPermission } from '@/hooks/use-permissions';
 
 const maintenancePlansSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
@@ -48,6 +49,8 @@ function MaintenancePlansListPage() {
   const { page, size, search } = useSearch({ from: '/_private/register/maintenance-plans/' });
   const { idEnterprise } = useEnterpriseFilter();
   const { deleteMaintenancePlan } = useMaintenancePlansApi();
+
+  const hasPermissionAdd = useHasPermission('/maintenance-plan-add');
 
   const { data, isLoading } = useMaintenancePlans({
     page: page - 1,
@@ -107,10 +110,12 @@ function MaintenancePlansListPage() {
               }}
             />
           </div>
-          <Button onClick={() => navigate({ to: '/register/maintenance-plans/add' })}>
-            <Plus className="mr-2 size-4" />
-            {t('add')}
-          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/register/maintenance-plans/add' })}>
+              <Plus className="mr-2 size-4" />
+              {t('add')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 

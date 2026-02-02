@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { useUsers } from '@/hooks/use-users-api';
 import { cn } from '@/lib/utils';
 import { UserFilterDialog } from './@components/user-filter-dialog';
@@ -36,11 +37,10 @@ function ListUsersPage() {
   const search = Route.useSearch();
   const { page, pageSize, idRole, idTypeUser } = search;
 
-  // TODO: Get from permissions/menu state
-  const hasPermissionAdd = true;
-  const hasPermissionEdit = true;
-  const hasPermissionPermissions = true;
-  const hasPermissionPassword = true;
+  const hasPermissionAdd = useHasPermission('/add-user');
+  const hasPermissionEdit = useHasPermission('/add-user');
+  const hasPermissionPermissions = useHasPermission('/list-users-permission');
+  const hasPermissionPassword = useHasPermission('/add-user');
 
   const { idEnterprise } = useEnterpriseFilter();
 

@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import { useDashboards } from '@/hooks/use-dashboards-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { DashboardItem } from './@components/dashboard-item';
 import { type DashboardListSearch, dashboardListSearchSchema } from './@interface/list-dashboard.schema';
 
@@ -27,10 +28,8 @@ function ListDashboardPage() {
   const { page, size, search } = searchParams;
   const { idEnterprise } = useEnterpriseFilter();
 
-  // TODO: Implement actual permission check based on user token or claims
-  // Legacy checked: props.items?.some((x) => x === "/list-dashboard")
-  const hasPermissionViewer = true;
-  const hasPermissionEditor = true;
+  const hasPermissionViewer = useHasPermission('/list-dashboard');
+  const hasPermissionEditor = useHasPermission('/add-dashboard');
 
   const { data, isLoading } = useDashboards({
     ...searchParams,

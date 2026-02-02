@@ -13,6 +13,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAlertsPaginated } from '@/hooks/use-alerts-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 
 const alertsSearchSchema = z.object({
   page: z.number().optional().default(1),
@@ -30,6 +31,8 @@ function AlertsListPage() {
   const navigate = Route.useNavigate();
   const { page, size, search } = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
+
+  const hasPermissionAdd = useHasPermission('/add-alarm');
 
   const { data, isLoading } = useAlertsPaginated({
     page: page - 1,
@@ -68,10 +71,12 @@ function AlertsListPage() {
               }}
             />
           </div>
-          <Button onClick={() => navigate({ to: '/register/alerts/add' })}>
-            <Plus className="mr-2 size-4" />
-            {t('add')}
-          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/register/alerts/add' })}>
+              <Plus className="mr-2 size-4" />
+              {t('add')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 

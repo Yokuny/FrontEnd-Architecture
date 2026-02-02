@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { ItemGroup, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { HeatmapTable, StatusTracker } from './@components/heatmap-table';
 import { KPI } from './@components/KPI';
 import { getAvailableEquipments } from './@consts/equipment.consts';
@@ -25,8 +26,7 @@ function HeatmapFleetPage() {
 
   const { data, isLoading } = useHeatmapFleet(idEnterprise);
 
-  // TODO: Implement permission check
-  const hasPermissionAdd = true;
+  const hasPermissionAdd = useHasPermission('/heatmap-fleet-add');
 
   const availableEquipments = useMemo(() => {
     if (!data) return [];

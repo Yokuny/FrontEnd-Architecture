@@ -23,6 +23,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Item, ItemDescription, ItemTitle } from '@/components/ui/item';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { SensorConfig } from './@components/sensor-config';
 import { EQUIPMENT_TYPES } from './@consts/equipment.consts';
 import { useDeleteHeatmapConfig, useHeatmapConfig, useMachineSensors, useSaveHeatmapConfig } from './@hooks/use-heatmap-config';
@@ -54,7 +55,7 @@ function HeatmapConfigPage() {
   const saveMutation = useSaveHeatmapConfig();
   const deleteMutation = useDeleteHeatmapConfig();
 
-  const hasPermissionDelete = false; // TODO: Replace with actual permission check
+  const hasPermissionDelete = useHasPermission('/heatmap-fleet-delete');
   const isEdit = !!id;
   const isLoading = isLoadingConfig || saveMutation.isPending || deleteMutation.isPending;
 

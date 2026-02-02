@@ -203,11 +203,21 @@ export function useRolesApi() {
   };
 }
 
-// Helper hook for select components
+// Helper hook for select components - always returns flat array of RoleListItem[]
 export function useRolesSelect(isAll = false, params?: Record<string, unknown>) {
   const allQuery = useRolesAll(isAll);
   const filterQuery = useRoles(params, !isAll);
-  return isAll ? allQuery : filterQuery;
+
+  // Transform paginated response to flat array for select components
+  if (isAll) {
+    return allQuery;
+  }
+
+  // Map the paginated response to match the expected format
+  return {
+    ...filterQuery,
+    data: filterQuery.data?.data || [],
+  };
 }
 
 // Helper function to map roles to select options

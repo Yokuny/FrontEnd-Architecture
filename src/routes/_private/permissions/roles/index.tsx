@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { useRoles } from '@/hooks/use-roles-api';
 import { cn } from '@/lib/utils';
 
@@ -25,9 +26,8 @@ function ListRolesPage() {
     size: 20,
   });
 
-  // TODO: Get from permissions/menu state
-  const hasPermissionAdd = true;
-  const hasPermissionViewUsers = true;
+  const hasPermissionAdd = useHasPermission('/add-role');
+  const hasPermissionViewUsers = useHasPermission('/list-role-users');
 
   const getVisibilityData = (visibility: string) => {
     switch (visibility) {

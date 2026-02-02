@@ -13,6 +13,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCustomersPaginated } from '@/hooks/use-customers-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 
 const customersSearchSchema = z.object({
   page: z.number().optional().default(1),
@@ -32,6 +33,8 @@ function CustomersListPage() {
   const navigate = Route.useNavigate();
   const { page, size, search } = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
+
+  const hasPermissionAdd = useHasPermission('/customer-add');
 
   const { data, isLoading } = useCustomersPaginated({
     page: page - 1,
@@ -70,10 +73,12 @@ function CustomersListPage() {
               }}
             />
           </div>
-          <Button onClick={() => navigate({ to: '/register/customers/add' } as any)}>
-            <Plus className="mr-2 size-4" />
-            {t('add')}
-          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/register/customers/add' } as any)}>
+              <Plus className="mr-2 size-4" />
+              {t('add')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 

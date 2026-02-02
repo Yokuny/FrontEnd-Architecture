@@ -15,6 +15,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useMachines } from '@/hooks/use-machines-api';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { IncludeVesselModal } from './@components/include-vessel-modal';
 
 const machinesSearchSchema = z.object({
@@ -36,6 +37,8 @@ function MachineListPage() {
   const { page, size, search } = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
   const [isIncludeVesselOpen, setIsIncludeVesselOpen] = useState(false);
+
+  const hasPermissionAdd = useHasPermission('/machine-add');
 
   const { data, isLoading } = useMachines({
     idEnterprise,
@@ -74,16 +77,18 @@ function MachineListPage() {
               }}
             />
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={() => setIsIncludeVesselOpen(true)}>
-              <Anchor className="mr-2 size-4" />
-              {t('vessel.include')}
-            </Button>
-            <Button onClick={() => navigate({ to: '/register/machines/add' } as any)}>
-              <Plus className="mr-2 size-4" />
-              {t('add')}
-            </Button>
-          </div>
+          {hasPermissionAdd && (
+            <div className="flex items-center gap-2">
+              <Button variant="outline" onClick={() => setIsIncludeVesselOpen(true)}>
+                <Anchor className="mr-2 size-4" />
+                {t('vessel.include')}
+              </Button>
+              <Button onClick={() => navigate({ to: '/register/machines/add' } as any)}>
+                <Plus className="mr-2 size-4" />
+                {t('add')}
+              </Button>
+            </div>
+          )}
         </div>
       </CardHeader>
 

@@ -14,6 +14,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useModelMachines, useModelMachinesApi } from '@/hooks/use-model-machines-api';
+import { useHasPermission } from '@/hooks/use-permissions';
 
 const modelMachineSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
@@ -36,6 +37,8 @@ function ModelMachineListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/model-machine/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  const hasPermissionAdd = useHasPermission('/model-machine-add');
 
   const { data, isLoading } = useModelMachines({
     idEnterprise,
@@ -84,10 +87,12 @@ function ModelMachineListPage() {
               }}
             />
           </div>
-          <Button onClick={() => navigate({ to: '/register/model-machine/add' })}>
-            <Plus className="mr-2 size-4" />
-            {t('add')}
-          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/register/model-machine/add' })}>
+              <Plus className="mr-2 size-4" />
+              {t('add')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 

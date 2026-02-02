@@ -12,6 +12,7 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } f
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { type Enterprise, useEnterprisesPaginated } from '@/hooks/use-enterprises-api';
+import { useHasPermission } from '@/hooks/use-permissions';
 
 const enterprisesSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
@@ -44,8 +45,7 @@ function EnterprisesListPage() {
   const total = data?.pageInfo?.[0]?.count || 0;
   const totalPages = Math.ceil(total / size);
 
-  // For migration purposes, we assume some permissions are true or come from the item in future
-  const hasPermissionAdd = true;
+  const hasPermissionAdd = useHasPermission('/organization-add');
 
   const renderEnterpriseItem = (item: Enterprise) => {
     return (

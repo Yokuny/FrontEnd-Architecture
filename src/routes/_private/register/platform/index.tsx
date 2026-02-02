@@ -13,6 +13,7 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } f
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { usePlatforms, usePlatformsApi } from '@/hooks/use-platforms-api';
 
 const platformsSearchSchema = z.object({
@@ -36,6 +37,8 @@ function PlatformListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/platform/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  const hasPermissionAdd = useHasPermission('/add-platform');
 
   const { data, isLoading } = usePlatforms({
     idEnterprise,
@@ -84,10 +87,12 @@ function PlatformListPage() {
               }}
             />
           </div>
-          <Button onClick={() => navigate({ to: '/register/platform/add' })}>
-            <Plus className="mr-2 size-4" />
-            {t('add')}
-          </Button>
+          {hasPermissionAdd && (
+            <Button onClick={() => navigate({ to: '/register/platform/add' })}>
+              <Plus className="mr-2 size-4" />
+              {t('add')}
+            </Button>
+          )}
         </div>
       </CardHeader>
 
