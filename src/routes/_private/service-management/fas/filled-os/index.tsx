@@ -22,7 +22,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { ItemContent } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import { useAuth } from '@/hooks/use-auth';
@@ -317,8 +316,7 @@ function FilledOsPage() {
             <OsReasons data={data} />
             <OsExpenses bms={data.bms} />
             <OsRating data={data} />
-            <Separator />
-            {/* Confirm OS Fields */}
+
             {canConfirmOsAction && showConfirmOsFields && (
               <div className="space-y-4 rounded-lg border p-4">
                 <h3 className="font-semibold">{t('fas.confirm.os')}</h3>
@@ -399,7 +397,7 @@ function FilledOsPage() {
         )}
       </CardContent>
 
-      <CardFooter className="flex flex-wrap gap-2">
+      <CardFooter>
         {data && (
           <>
             {/* Attachments Button */}
@@ -563,7 +561,6 @@ function FilledOsPage() {
             onConfirm={handleCancelOrder}
           />
 
-          {/* Confirm Dialogs */}
           <AlertDialog open={showConfirmBmsDialog} onOpenChange={setShowConfirmBmsDialog}>
             <AlertDialogContent>
               <AlertDialogHeader>

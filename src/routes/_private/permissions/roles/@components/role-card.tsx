@@ -1,11 +1,11 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { DoorOpen, Edit, MoreVertical, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Status, StatusIndicator, StatusLabel } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
-import type { RoleListItem } from '../@interface/role';
+import type { RoleListItem } from '../@interface';
 
 interface RoleCardProps {
   role: RoleListItem;
@@ -15,6 +15,17 @@ interface RoleCardProps {
 
 export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: RoleCardProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (hasPermissionEdit) {
+      navigate({
+        to: '/permissions/roles/edit',
+        search: { id: role.id },
+      });
+    }
+  };
+
   const getVisibilityBadge = (visibility: string) => {
     const variants = {
       public: { status: 'active' as const, labelKey: 'visibility.public' },
@@ -33,7 +44,7 @@ export function RoleCard({ role, hasPermissionEdit, hasPermissionViewUsers }: Ro
   };
 
   return (
-    <Item variant="outline" className="bg-card">
+    <Item variant="outline" className="cursor-pointer bg-card" onClick={handleClick}>
       <ItemMedia className="size-12 rounded-full border bg-secondary">
         <DoorOpen className="size-6 text-warning" />
       </ItemMedia>

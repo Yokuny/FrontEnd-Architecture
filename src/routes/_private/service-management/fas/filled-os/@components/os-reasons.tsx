@@ -116,7 +116,7 @@ export function OsReasons({ data }: OsReasonsListProps) {
               <React.Fragment key={category.id}>
                 {/* Main Row / Normal Specs Row */}
                 {hasNormalRow && (
-                  <TableRow className="border-t">
+                  <TableRow>
                     <TableCell className="w-60 bg-muted/50 py-4 align-top font-medium" rowSpan={totalRows}>
                       <div className="flex items-center gap-1">
                         <ItemMedia variant="icon">{category.icon}</ItemMedia>
@@ -136,7 +136,7 @@ export function OsReasons({ data }: OsReasonsListProps) {
 
                 {/* Full Width Specs (Reasons) */}
                 {fullWidthSpecs.map((spec, index) => (
-                  <TableRow key={spec.label} className="border-t">
+                  <TableRow key={spec.label}>
                     {!hasNormalRow && index === 0 && (
                       <TableCell className="w-60 bg-muted/50 py-4 align-top font-medium" rowSpan={totalRows}>
                         <div className="flex items-center gap-1">

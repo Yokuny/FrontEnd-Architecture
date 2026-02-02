@@ -212,7 +212,7 @@ function ListTravelPage() {
           <ItemGroup>
             {voyages.map((voyage: any, index: number) => (
               <div key={voyage._id || voyage.id || index} className="group relative">
-                <div onClick={() => navigate({ to: '/voyage/list-travel/add', search: { id: voyage._id || voyage.id } })}>
+                <div className="cursor-pointer" onClick={() => navigate({ to: '/voyage/list-travel/add', search: { id: voyage._id || voyage.id } })}>
                   <VoyageItem voyage={voyage} />
                 </div>
               </div>

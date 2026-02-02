@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api/client';
-import type { ChatbotPermission, PermissionPath, Role, RoleListItem, RoleUser } from '@/routes/_private/permissions/roles/@interface/role';
+import type { ChatbotPermission, PermissionPath, Role, RoleListItem, RoleUser } from '@/routes/_private/permissions/roles/@interface';
 
 export type { ChatbotPermission, PermissionPath, Role, RoleListItem, RoleUser };
 
