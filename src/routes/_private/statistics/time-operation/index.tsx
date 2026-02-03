@@ -15,7 +15,6 @@ import { Item, ItemContent } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { useTimeOperation } from '@/hooks/use-statistics-api';
 import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
@@ -39,7 +38,6 @@ function TimeOperationPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const search = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
-  const hasPermissionDetails = useHasPermission('/details-statistics-status');
 
   // Initialize state from URL params or defaults
   const [dateMin, setDateMin] = useState<Date>(search.min ? parseISO(search.min) : startOfDay(subDays(new Date(), 7)));
@@ -220,16 +218,7 @@ function TimeOperationPage() {
 
         {isLoading && <DefaultLoading />}
         {!isLoading && !normalizedData.length && <EmptyData />}
-        {!isLoading && (
-          <TimeOperationTable
-            data={normalizedData}
-            listStatusAllow={listStatusAllow}
-            orderColumn={orderColumn}
-            onOrderChange={setOrderColumn}
-            filters={apiFilters}
-            hasPermissionDetails={hasPermissionDetails}
-          />
-        )}
+        {!isLoading && <TimeOperationTable data={normalizedData} listStatusAllow={listStatusAllow} orderColumn={orderColumn} onOrderChange={setOrderColumn} filters={apiFilters} />}
       </CardContent>
     </Card>
   );

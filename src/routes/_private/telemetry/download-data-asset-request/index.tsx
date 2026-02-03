@@ -20,13 +20,14 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { formatDate } from '@/lib/formatDate';
 import { ReportFormDialog } from './@components/report-form-dialog';
 import { STATUS_VARIANTS } from './@consts/download-request.consts';
 import { useDownloadQueueApi, useDownloadQueueQuery } from './@hooks/use-download-queue';
 import type { DownloadQueueRequest } from './@interface/download-request.types';
 import { calculateRemainingDays, formatInterval } from './@utils/download-request.utils';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 export const Route = createFileRoute('/_private/telemetry/download-data-asset-request/')({
   component: DownloadDataAssetRequestPage,
@@ -36,7 +37,7 @@ function DownloadDataAssetRequestPage() {
   const { t } = useTranslation();
   const { idEnterprise } = useEnterpriseFilter();
 
-  const hasPermission = useHasPermission('/download-data-asset-request');
+  // const hasPermission = useHasPermission('/download-data-asset-request');
 
   const { data, isLoading } = useDownloadQueueQuery(idEnterprise);
   const { createRequest, deleteRequest } = useDownloadQueueApi(idEnterprise);
@@ -77,12 +78,12 @@ function DownloadDataAssetRequestPage() {
     <>
       <Card>
         <CardHeader title={t('download')}>
-          {hasPermission && (
-            <Button onClick={() => setModalOpen(true)}>
-              <Plus className="mr-2 size-4" />
-              {t('new')}
-            </Button>
-          )}
+          {/* {hasPermission && ( */}
+          <Button onClick={() => setModalOpen(true)}>
+            <Plus className="mr-2 size-4" />
+            {t('new')}
+          </Button>
+          {/* )} */}
         </CardHeader>
 
         <CardContent>
@@ -103,7 +104,8 @@ function DownloadDataAssetRequestPage() {
                     <TableHead className="text-center">{t('requested.by')}</TableHead>
                     <TableHead className="text-center">{t('created.at')}</TableHead>
                     <TableHead className="text-center">{t('days.remaining')}</TableHead>
-                    {hasPermission && <TableHead className="w-[100px] text-right">{t('actions')}</TableHead>}
+                    {/* {hasPermission && <TableHead className="w-[100px] text-right">{t('actions')}</TableHead>} */}
+                    <TableHead className="w-[100px] text-right">{t('actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -121,27 +123,27 @@ function DownloadDataAssetRequestPage() {
                         <TableCell className="text-center">{item.user?.name || '-'}</TableCell>
                         <TableCell className="text-center">{formatDate(createdDate || new Date(), 'dd MMM, HH:mm')}</TableCell>
                         <TableCell className="text-center">{calculateRemainingDays(createdDate)}</TableCell>
-                        {hasPermission && (
-                          <TableCell className="text-right">
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="size-8">
-                                  <MoreHorizontal className="size-4" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem onClick={() => handleDownload(item.file)} disabled={!item.file || item.status !== 'ready'}>
-                                  <Download className="mr-2 size-4" />
-                                  {t('download')}
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="text-destructive" onClick={() => confirmDelete(item.id)}>
-                                  <Trash2 className="mr-2 size-4" />
-                                  {t('delete')}
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                        )}
+                        {/* {hasPermission && ( */}
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="size-8">
+                                <MoreHorizontal className="size-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => handleDownload(item.file)} disabled={!item.file || item.status !== 'ready'}>
+                                <Download className="mr-2 size-4" />
+                                {t('download')}
+                              </DropdownMenuItem>
+                              <DropdownMenuItem className="text-destructive" onClick={() => confirmDelete(item.id)}>
+                                <Trash2 className="mr-2 size-4" />
+                                {t('delete')}
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                        {/* )} */}
                       </TableRow>
                     );
                   })}

@@ -8,12 +8,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { useTimeOperationDetails } from '@/hooks/use-statistics-api';
 
-const chartConfig = {
-  minutes: {
-    label: 'Minutes',
-  },
-} as any;
-
 export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }: TimeOperationDetailsDialogProps) {
   const { t } = useTranslation();
 
@@ -56,7 +50,13 @@ export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }
                   <ItemTitle>{t('dp')}</ItemTitle>
                 </ItemHeader>
                 <ItemContent>
-                  <ChartContainer config={chartConfig}>
+                  <ChartContainer
+                    config={{
+                      minutes: {
+                        label: 'Minutes',
+                      },
+                    }}
+                  >
                     <PieChart>
                       <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                       <Pie data={formatData(data?.plataform)} dataKey="value" nameKey="name" innerRadius={60} strokeWidth={5} />
@@ -73,7 +73,13 @@ export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }
                   <ItemTitle>{t('fence')}</ItemTitle>
                 </ItemHeader>
                 <ItemContent>
-                  <ChartContainer config={chartConfig}>
+                  <ChartContainer
+                    config={{
+                      minutes: {
+                        label: 'Minutes',
+                      },
+                    }}
+                  >
                     <PieChart>
                       <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                       <Pie data={formatData(data?.fence)} dataKey="value" nameKey="name" innerRadius={60} strokeWidth={5} />
@@ -90,7 +96,13 @@ export function TimeOperationDetailsDialog({ open, onOpenChange, item, filters }
                   <ItemTitle>{t('at.anchor')}</ItemTitle>
                 </ItemHeader>
                 <ItemContent>
-                  <ChartContainer config={chartConfig}>
+                  <ChartContainer
+                    config={{
+                      minutes: {
+                        label: 'Minutes',
+                      },
+                    }}
+                  >
                     <PieChart>
                       <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                       <Pie data={formatData(data?.atAnchor)} dataKey="value" nameKey="name" innerRadius={60} strokeWidth={5} />

@@ -1,3 +1,6 @@
+import { useNavigate } from '@tanstack/react-router';
+import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import type { MainRoute } from '@/config/routes';
@@ -93,18 +96,69 @@ export const usePermissions = create<PermissionsStore>()(
 
 // Helper hook for common permission checks
 export function useHasPermission(path: PermissionPath): boolean {
-  return usePermissions((state) => state.hasPermission(path));
+  const permissions = usePermissions((state) => state.permissions);
+  const normalizedPath = normalizePath(path);
+  return permissions.includes(normalizedPath);
 }
 
 // Helper to check multiple permissions at once
 export function useHasPermissions(paths: PermissionPath[]): Record<string, boolean> {
-  const hasPermission = usePermissions((state) => state.hasPermission);
+  const permissions = usePermissions((state) => state.permissions);
 
   const result: Record<string, boolean> = {};
   for (const path of paths) {
-    result[path] = hasPermission(path);
+    const normalizedPath = normalizePath(path);
+    result[path] = permissions.includes(normalizedPath);
   }
   return result;
+}
+
+/**
+ * Hook to initialize permissions on app load.
+ * Should be called in a high-level component (e.g., PrivateLayout).
+ * Automatically fetches permissions if user is authenticated but permissions are empty.
+ */
+
+// export function useInitPermissions(): void {
+//   const isAuthenticated = useAuth((state) => state.isAuthenticated);
+//   const user = useAuth((state) => state.user);
+//   const permissions = usePermissions((state) => state.permissions);
+//   const isLoading = usePermissions((state) => state.isLoading);
+//   const fetchPermissions = usePermissions((state) => state.fetchPermissions);
+
+//   useEffect(() => {
+//     // If authenticated AND permissions are empty AND not currently loading
+//     if (isAuthenticated && permissions.length === 0 && !isLoading) {
+//       fetchPermissions(user?.request);
+//     }
+//   }, [isAuthenticated, permissions.length, isLoading, fetchPermissions, user?.request]);
+// }
+
+/**
+ * Hook that requires a permission to access a page.
+ * If the user doesn't have permission, shows a toast error and redirects to home.
+ * @param path - The permission path to check
+ * @param redirectTo - Optional redirect path (defaults to '/')
+ */
+export function useRequirePermission(path: PermissionPath, redirectTo = '/'): boolean {
+  const hasPermission = useHasPermission(path);
+  const permissions = usePermissions((state) => state.permissions);
+  const isLoading = usePermissions((state) => state.isLoading);
+  const navigate = useNavigate();
+  const hasShownToast = useRef(false);
+
+  useEffect(() => {
+    // Only check after permissions have been loaded
+    if (isLoading || permissions.length === 0) return;
+
+    if (!hasPermission && !hasShownToast.current) {
+      hasShownToast.current = true;
+      toast.error('Você não tem permissão para acessar esta página.');
+      navigate({ to: redirectTo });
+    }
+  }, [hasPermission, isLoading, permissions.length, navigate, redirectTo]);
+
+  return hasPermission;
 }
 
 interface RolePath {

@@ -15,7 +15,9 @@ import { downloadCSV, sortByDateDesc } from '../@helpers/consumption-daily.helpe
 import { useConsumptionDailyApi } from '../@hooks/use-consumption-daily-api';
 import type { ConsumptionDailyData } from '../@interface/consumption-daily.types';
 
-export function Statistics({ data, machineId, machineName, hasPermissionEditor = false }: StatisticsProps) {
+// import { useHasPermission } from '@/hooks/use-permissions';
+
+export function Statistics({ data, machineId, machineName }: StatisticsProps) {
   const { t } = useTranslation();
   const { updateOilMoving } = useConsumptionDailyApi();
 
@@ -23,6 +25,7 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
   const [selectedItem, setSelectedItem] = useState<ConsumptionDailyData | null>(null);
   const [newOilReceived, setNewOilReceived] = useState<string>('');
   const [openCategories, setOpenCategories] = useState<string[]>([]);
+  // const hasPermissionEditor = useHasPermission('/edit-poll-consumption-daily');
 
   const toggleCategory = (id: string) => {
     setOpenCategories((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]));
@@ -120,19 +123,19 @@ export function Statistics({ data, machineId, machineName, hasPermissionEditor =
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      {hasPermissionEditor && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="size-6 hover:bg-background"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleOpenModal(item);
-                          }}
-                        >
-                          <Pencil className="size-3" />
-                        </Button>
-                      )}
+                      {/* {hasPermissionEditor && ( */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-6 hover:bg-background"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenModal(item);
+                        }}
+                      >
+                        <Pencil className="size-3" />
+                      </Button>
+                      {/* )} */}
                       <ChevronDown className={cn('size-5 text-muted-foreground transition-transform duration-200', isOpen && 'rotate-180')} />
                     </div>
                   </Button>
@@ -294,5 +297,4 @@ interface StatisticsProps {
   data: ConsumptionDailyData[];
   machineId?: string;
   machineName?: string;
-  hasPermissionEditor?: boolean;
 }

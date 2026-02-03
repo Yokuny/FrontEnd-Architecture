@@ -14,14 +14,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuShortc
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { formatDate } from '@/lib/formatDate';
-
 import { EditEventDialog } from './@components/EditEventDialog';
 import { MonthView } from './@components/Month';
 import { WeekView } from './@components/Week';
 import { useCalendarMaintenance } from './@hooks/use-calendar-maintenance';
 import { capitalizeString } from './@utils/calendar.utils';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const searchSchema = z.object({
   id: z.string().optional(),
@@ -55,7 +55,7 @@ function CalendarMaintenancePage() {
 
 function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) {
   const { t } = useTranslation();
-  const hasPermissionEdit = useHasPermission('/event-schedule-edit');
+  // const hasPermissionEdit = useHasPermission('/event-schedule-edit');
   const {
     currentDate,
     setCurrentDate,
@@ -123,12 +123,12 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
             <Button variant={showFilters ? 'secondary' : 'outline'} onClick={() => setShowFilters(!showFilters)}>
               <Filter className="size-4" />
             </Button>
-            {hasPermissionEdit && (
-              <Button onClick={handleAddEvent}>
-                <Plus className="size-4" />
-                <ItemContent className="max-sm:hidden">{t('add')}</ItemContent>
-              </Button>
-            )}
+            {/* {hasPermissionEdit && ( */}
+            <Button onClick={handleAddEvent}>
+              <Plus className="size-4" />
+              <ItemContent className="max-sm:hidden">{t('add')}</ItemContent>
+            </Button>
+            {/* )} */}
           </ItemContent>
         </Item>
       </CardHeader>

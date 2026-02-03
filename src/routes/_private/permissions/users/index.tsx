@@ -11,10 +11,11 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { useUsers } from '@/hooks/use-users-api';
 import { cn } from '@/lib/utils';
 import { UserFilterDialog } from './@components/user-filter-dialog';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const userSearchSchema = z.object({
   page: z.number().optional().default(1),
@@ -37,10 +38,10 @@ function ListUsersPage() {
   const search = Route.useSearch();
   const { page, pageSize, idRole, idTypeUser } = search;
 
-  const hasPermissionAdd = useHasPermission('/add-user');
-  const hasPermissionEdit = useHasPermission('/add-user');
-  const hasPermissionPermissions = useHasPermission('/list-users-permission');
-  const hasPermissionPassword = useHasPermission('/add-user');
+  // const hasPermissionAdd = useHasPermission('/add-user');
+  // const hasPermissionEdit = useHasPermission('/add-user');
+  // const hasPermissionPermissions = useHasPermission('/list-users-permission');
+  // const hasPermissionPassword = useHasPermission('/add-user');
 
   const { idEnterprise } = useEnterpriseFilter();
 
@@ -80,18 +81,18 @@ function ListUsersPage() {
       <CardHeader title={t('users.permissions')}>
         <div className="flex items-center gap-2">
           <UserFilterDialog initialFilters={{ idRole, idTypeUser }} onFilter={handleFilter} onClear={handleClear} />
-          {hasPermissionAdd && (
-            <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
-              <Plus className="size-4" />
-              {t('add.user')}
-            </Button>
-          )}
-          {hasPermissionPermissions && (
-            <Button onClick={() => navigate({ to: '/permissions/users/permissions-add' })}>
-              <Shield className="size-4" />
-              {t('new.permission')}
-            </Button>
-          )}
+          {/* {hasPermissionAdd && ( */}
+          <Button onClick={() => navigate({ to: '/permissions/users/add' })}>
+            <Plus className="size-4" />
+            {t('add.user')}
+          </Button>
+          {/* )} */}
+          {/* {hasPermissionPermissions && ( */}
+          <Button onClick={() => navigate({ to: '/permissions/users/permissions-add' })}>
+            <Shield className="size-4" />
+            {t('new.permission')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
       <CardContent>
@@ -122,12 +123,12 @@ function ListUsersPage() {
                   variant="outline"
                   className={cn('cursor-pointer', isDisabled && 'opacity-60')}
                   onClick={() => {
-                    if (hasPermissionEdit) {
-                      navigate({
-                        to: '/permissions/users/edit',
-                        search: { id: user.id },
-                      });
-                    }
+                    // if (hasPermissionEdit) {
+                    navigate({
+                      to: '/permissions/users/edit',
+                      search: { id: user.id },
+                    });
+                    // }
                   }}
                 >
                   <div className="flex flex-1 items-center gap-4">
@@ -156,55 +157,55 @@ function ListUsersPage() {
                       </div>
                     </div>
 
-                    {(hasPermissionEdit || hasPermissionPermissions || hasPermissionPassword) && (
-                      <div className="ml-2 flex items-center justify-end border-l pl-2">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
-                              <MoreVertical className="size-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            {hasPermissionPermissions && user.userEnterprise && (
-                              <DropdownMenuItem
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate({
-                                    to: '/permissions/users/permissions-add',
-                                    search: user.userEnterprise?.length === 1 ? { id: user.userEnterprise[0].id } : { idRef: user.id },
-                                  });
-                                }}
-                              >
-                                <Shield className="mr-2 size-4" />
-                                {t('permissions')}
-                              </DropdownMenuItem>
-                            )}
-                            {hasPermissionEdit && (
-                              <DropdownMenuItem
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate({ to: '/permissions/users/edit', search: { id: user.id } });
-                                }}
-                              >
-                                <Pencil className="mr-2 size-4" />
-                                {t('edit')}
-                              </DropdownMenuItem>
-                            )}
-                            {hasPermissionPassword && !user.isOnlyContact && (
-                              <DropdownMenuItem
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate({ to: '/permissions/users/password', search: { id: user.id } });
-                                }}
-                              >
-                                <Lock className="mr-2 size-4" />
-                                {t('new.password')}
-                              </DropdownMenuItem>
-                            )}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    )}
+                    {/* {(hasPermissionEdit || hasPermissionPermissions || hasPermissionPassword) && ( */}
+                    <div className="ml-2 flex items-center justify-end border-l pl-2">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
+                            <MoreVertical className="size-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          {/* {hasPermissionPermissions && user.userEnterprise && ( */}
+                          <DropdownMenuItem
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate({
+                                to: '/permissions/users/permissions-add',
+                                search: user.userEnterprise?.length === 1 ? { id: user.userEnterprise[0].id } : { idRef: user.id },
+                              });
+                            }}
+                          >
+                            <Shield className="mr-2 size-4" />
+                            {t('permissions')}
+                          </DropdownMenuItem>
+                          {/* )} */}
+                          {/* {hasPermissionEdit && ( */}
+                          <DropdownMenuItem
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate({ to: '/permissions/users/edit', search: { id: user.id } });
+                            }}
+                          >
+                            <Pencil className="mr-2 size-4" />
+                            {t('edit')}
+                          </DropdownMenuItem>
+                          {/* )} */}
+                          {/* {hasPermissionPassword && !user.isOnlyContact && ( */}
+                          <DropdownMenuItem
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate({ to: '/permissions/users/password', search: { id: user.id } });
+                            }}
+                          >
+                            <Lock className="mr-2 size-4" />
+                            {t('new.password')}
+                          </DropdownMenuItem>
+                          {/* )} */}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                    {/* )} */}
                   </div>
                 </Item>
               );

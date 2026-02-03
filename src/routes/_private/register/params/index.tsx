@@ -14,7 +14,8 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useParams, useParamsApi } from '@/hooks/use-params-api';
-import { useHasPermission } from '@/hooks/use-permissions';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const paramsSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
@@ -37,7 +38,7 @@ function ParamsListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/params/' });
   const { idEnterprise } = useEnterpriseFilter();
-  const hasPermissionAdd = useHasPermission('/params-add');
+  // const hasPermissionAdd = useHasPermission('/params-add');
 
   const { data, isLoading } = useParams({
     idEnterprise,
@@ -86,12 +87,12 @@ function ParamsListPage() {
               }}
             />
           </div>
-          {hasPermissionAdd && (
-            <Button onClick={() => navigate({ to: '/register/params/add' })}>
-              <Plus className="mr-2 size-4" />
-              {t('add')}
-            </Button>
-          )}
+          {/* {hasPermissionAdd && ( */}
+          <Button onClick={() => navigate({ to: '/register/params/add' })}>
+            <Plus className="mr-2 size-4" />
+            {t('add')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 
@@ -106,9 +107,9 @@ function ParamsListPage() {
               <Item
                 key={item.id}
                 variant="outline"
-                className={hasPermissionAdd ? 'cursor-pointer' : ''}
+                className="cursor-pointer"
                 onClick={() =>
-                  hasPermissionAdd &&
+                  // hasPermissionAdd &&
                   navigate({
                     to: '/register/params/add',
                     search: { id: item.id },
@@ -127,41 +128,41 @@ function ParamsListPage() {
                   </ItemContent>
                 </div>
 
-                {hasPermissionAdd && (
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-end border-l pl-2">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                          <Button variant="ghost" size="icon">
-                            <MoreVertical className="size-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate({
-                                to: '/register/params/add',
-                                search: { id: item.id },
-                              });
-                            }}
-                          >
-                            {t('edit')}
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            className="text-destructive"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(item.id);
-                            }}
-                          >
-                            {t('delete')}
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
+                {/* {hasPermissionAdd && ( */}
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-end border-l pl-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate({
+                              to: '/register/params/add',
+                              search: { id: item.id },
+                            });
+                          }}
+                        >
+                          {t('edit')}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(item.id);
+                          }}
+                        >
+                          {t('delete')}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
-                )}
+                </div>
+                {/* )} */}
               </Item>
             ))}
           </ItemGroup>

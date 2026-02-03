@@ -24,8 +24,9 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useGroup, useGroupsApi } from '@/hooks/use-groups-api';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { useGroupForm } from './@hooks/use-group-form';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const groupAddSearchSchema = z.object({
   id: z.string().optional(),
@@ -69,7 +70,7 @@ function GroupFormContent({ initialData }: { initialData: any }) {
   const navigate = useNavigate();
   const { deleteGroup } = useGroupsApi();
   const { form, onSubmit, isPending } = useGroupForm(initialData);
-  const hasPermissionDelete = useHasPermission('/group-delete');
+  // const hasPermissionDelete = useHasPermission('/group-delete');
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -176,7 +177,8 @@ function GroupFormContent({ initialData }: { initialData: any }) {
 
           <CardFooter layout="multi">
             <div>
-              {(initialData.id || initialData._id) && hasPermissionDelete && (
+              {/* {(initialData.id || initialData._id) && hasPermissionDelete && ( */}
+              {(initialData.id || initialData._id) && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button type="button" variant="destructive" disabled={deleteGroup.isPending || isPending}>

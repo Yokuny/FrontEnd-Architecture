@@ -10,13 +10,14 @@ import { Input } from '@/components/ui/input';
 import { ItemDescription } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { formatDate } from '@/lib/formatDate';
 import { CMMSCharts } from './@components/cmms-charts';
 import { DiagramCanvas } from './@components/diagram-canvas';
 import { MarkerEditor } from './@components/marker-editor';
 import { useDiagramApi, useDiagramDetail, useEquipmentStatus, useSensorStates } from './@hooks/use-diagram-details';
 import type { DiagramMarker } from './@interface/diagram-details.types';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const searchParamsSchema = z.object({
   id: z.string().optional(),
@@ -35,7 +36,7 @@ function DiagramDetailsPage() {
   const navigate = useNavigate();
   const { id } = useSearch({ from: '/_private/telemetry/diagram-list/diagram' });
   const { idEnterprise } = useEnterpriseFilter();
-  const hasPermissionAdd = useHasPermission('/diagram-add');
+  // const hasPermissionAdd = useHasPermission('/diagram-add');
 
   const [isEditing, setIsEditing] = useState(!id);
   const [markers, setMarkers] = useState<DiagramMarker[]>([]);
@@ -231,12 +232,12 @@ function DiagramDetailsPage() {
           </div>
           <div className="flex gap-2">
             {!isEditing ? (
-              hasPermissionAdd && (
-                <Button variant="outline" onClick={() => setIsEditing(true)}>
-                  <Edit className="mr-2 size-4" />
-                  {t('edit')}
-                </Button>
-              )
+              // hasPermissionAdd && (
+              <Button variant="outline" onClick={() => setIsEditing(true)}>
+                <Edit className="mr-2 size-4" />
+                {t('edit')}
+              </Button>
+              // )
             ) : (
               <>
                 <Button variant="outline" onClick={() => (id ? setIsEditing(false) : navigate({ to: '/telemetry/diagram-list', search: { page: 0 } }))}>

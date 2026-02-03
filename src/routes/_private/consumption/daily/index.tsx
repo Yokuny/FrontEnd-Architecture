@@ -15,7 +15,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { mapConsumptionMachinesToOptions, useConsumptionMachinesSelect } from '@/hooks/use-consumption-machines-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { formatDate } from '@/lib/formatDate';
 import { cn } from '@/lib/utils';
 import { ConsumptionChart } from './@components/ConsumptionChart';
@@ -73,7 +72,6 @@ function ConsumptionDailyPage() {
     });
   }, [navigate, dateMin, dateMax, machineId, unit]);
 
-  const hasPermissionEditor = useHasPermission('/edit-poll-consumption-daily');
   const machinesQuery = useConsumptionMachinesSelect(idEnterprise);
   const machinesOptions = useMemo(() => (machinesQuery.data ? mapConsumptionMachinesToOptions(machinesQuery.data) : []), [machinesQuery.data]);
   const selectedMachine = machinesOptions.find((m: any) => m.value === machineId);
@@ -167,9 +165,9 @@ function ConsumptionDailyPage() {
           <div className="space-y-6">
             <ConsumptionChart data={data} showReal={showReal} showEstimated={showEstimated} onToggleReal={setShowReal} onToggleEstimated={setShowEstimated} />
 
-            <Statistics data={data} machineId={machineId} machineName={machineName} hasPermissionEditor={hasPermissionEditor} />
+            <Statistics data={data} machineId={machineId} machineName={machineName} />
 
-            <ListPolling data={data} machineId={machineId} machineName={machineName} hasPermissionEditor={hasPermissionEditor} />
+            <ListPolling data={data} machineId={machineId} machineName={machineName} />
           </div>
         )}
       </CardContent>

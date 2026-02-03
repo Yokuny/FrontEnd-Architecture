@@ -11,8 +11,11 @@ import { cn } from '@/lib/utils';
 import { getStatusConfig } from '../@utils/getStatusConfig';
 import { TimeOperationDetailsDialog } from './TimeOperationDetailsDialog';
 
-export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrderChange, filters, hasPermissionDetails }: TimeOperationTableProps) {
+// import { useHasPermission } from '@/hooks/use-permissions';
+
+export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrderChange, filters }: TimeOperationTableProps) {
   const { t } = useTranslation();
+  // const hasPermissionDetails = useHasPermission('/details-statistics-status');
 
   const columns = useMemo(() => {
     const handleSort = (column: string) => {
@@ -170,7 +173,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
       </TableHeader>
       <TableBody>
         {data.map((row, index) => (
-          <TimeOperationTableRow key={`${index + 1}_${row?.machine?.id}`} row={row} columns={columns} filters={filters} hasPermissionDetails={hasPermissionDetails} />
+          <TimeOperationTableRow key={`${index + 1}_${row?.machine?.id}`} row={row} columns={columns} filters={filters} />
         ))}
       </TableBody>
       {benchmarkTotals && (
@@ -218,29 +221,19 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
   );
 }
 
-function TimeOperationTableRow({
-  row,
-  columns,
-  filters,
-  hasPermissionDetails,
-}: {
-  row: TimeOperationData;
-  columns: DataTableColumn<TimeOperationData>[];
-  filters: any;
-  hasPermissionDetails?: boolean;
-}) {
+function TimeOperationTableRow({ row, columns, filters }: { row: TimeOperationData; columns: DataTableColumn<TimeOperationData>[]; filters: any }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <TableRow className={hasPermissionDetails ? 'cursor-pointer' : ''} onClick={hasPermissionDetails ? () => setIsOpen(true) : undefined}>
+      <TableRow className="cursor-pointer" onClick={() => setIsOpen(true)}>
         {columns.map((column) => (
           <TableCell key={String(column.key)} className="p-4">
             {column.render ? column.render(row[column.key], row) : String(row[column.key] ?? '')}
           </TableCell>
         ))}
       </TableRow>
-      {isOpen && hasPermissionDetails && <TimeOperationDetailsDialog open={isOpen} onOpenChange={setIsOpen} item={row} filters={filters} />}
+      {isOpen && <TimeOperationDetailsDialog open={isOpen} onOpenChange={setIsOpen} item={row} filters={filters} />}
     </>
   );
 }
@@ -251,5 +244,4 @@ interface TimeOperationTableProps {
   orderColumn: { column: string; order: 'asc' | 'desc' } | null;
   onOrderChange: (order: { column: string; order: 'asc' | 'desc' } | null) => void;
   filters: any;
-  hasPermissionDetails?: boolean;
 }

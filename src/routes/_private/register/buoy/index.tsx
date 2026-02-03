@@ -14,7 +14,8 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useBuoys, useBuoysApi } from '@/hooks/use-buoys-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useHasPermission } from '@/hooks/use-permissions';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const buoySearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
@@ -38,7 +39,7 @@ function BuoyListPage() {
   const { page, size, search } = useSearch({ from: '/_private/register/buoy/' });
   const { idEnterprise } = useEnterpriseFilter();
 
-  const hasPermissionAdd = useHasPermission('/buoy-form');
+  // const hasPermissionAdd = useHasPermission('/buoy-form');
 
   const { data, isLoading } = useBuoys({
     idEnterprise,
@@ -87,12 +88,12 @@ function BuoyListPage() {
               }}
             />
           </div>
-          {hasPermissionAdd && (
-            <Button onClick={() => navigate({ to: '/register/buoy/add' })}>
-              <Plus className="mr-2 size-4" />
-              {t('add')}
-            </Button>
-          )}
+          {/* {hasPermissionAdd && ( */}
+          <Button onClick={() => navigate({ to: '/register/buoy/add' })}>
+            <Plus className="mr-2 size-4" />
+            {t('add')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

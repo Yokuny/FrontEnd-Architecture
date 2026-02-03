@@ -11,7 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { type Goal, useGoalsByEnterprise } from '@/hooks/use-goals-api';
-import { useHasPermission } from '@/hooks/use-permissions';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const searchSchema = z.object({
   id: z.string().optional(),
@@ -32,7 +33,7 @@ function GoalsListPage() {
   const { search } = useSearch({ from: '/_private/operation/goals/' });
   const { idEnterprise } = useEnterpriseFilter();
 
-  const hasPermissionAdd = useHasPermission('/goal-add');
+  // const hasPermissionAdd = useHasPermission('/goal-add');
 
   const { data, isLoading } = useGoalsByEnterprise(idEnterprise || '');
 
@@ -129,12 +130,12 @@ function GoalsListPage() {
               }}
             />
           </div>
-          {hasPermissionAdd && (
-            <Button onClick={handleNewGoal} disabled={!idEnterprise}>
-              <Plus className="mr-2 size-4" />
-              {t('new')}
-            </Button>
-          )}
+          {/* {hasPermissionAdd && ( */}
+          <Button onClick={handleNewGoal} disabled={!idEnterprise}>
+            <Plus className="mr-2 size-4" />
+            {t('new')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

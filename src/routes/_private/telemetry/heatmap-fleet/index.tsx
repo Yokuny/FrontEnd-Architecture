@@ -8,12 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { ItemGroup, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { HeatmapTable, StatusTracker } from './@components/heatmap-table';
 import { KPI } from './@components/KPI';
 import { getAvailableEquipments } from './@consts/equipment.consts';
 import { useHeatmapFleet } from './@hooks/use-heatmap-fleet';
 import { calculateHeatmapStats } from './@utils/heatmap.utils';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 export const Route = createFileRoute('/_private/telemetry/heatmap-fleet/')({
   component: HeatmapFleetPage,
@@ -26,7 +27,7 @@ function HeatmapFleetPage() {
 
   const { data, isLoading } = useHeatmapFleet(idEnterprise);
 
-  const hasPermissionAdd = useHasPermission('/heatmap-fleet-add');
+  // const hasPermissionAdd = useHasPermission('/heatmap-fleet-add');
 
   const availableEquipments = useMemo(() => {
     if (!data) return [];
@@ -41,12 +42,12 @@ function HeatmapFleetPage() {
   return (
     <Card>
       <CardHeader title={t('heatmap')}>
-        {hasPermissionAdd && (
-          <Button onClick={() => navigate({ to: '/telemetry/heatmap-fleet/add' })}>
-            <Plus className="mr-2 size-4" />
-            {t('view.heatmap.add')}
-          </Button>
-        )}
+        {/* {hasPermissionAdd && ( */}
+        <Button onClick={() => navigate({ to: '/telemetry/heatmap-fleet/add' })}>
+          <Plus className="mr-2 size-4" />
+          {t('view.heatmap.add')}
+        </Button>
+        {/* )} */}
       </CardHeader>
 
       <CardContent>
@@ -57,7 +58,7 @@ function HeatmapFleetPage() {
         ) : (
           <>
             <KPI stats={stats} />
-            <HeatmapTable data={data} availableEquipments={availableEquipments} hasPermissionAdd={hasPermissionAdd} />
+            <HeatmapTable data={data} availableEquipments={availableEquipments} />
           </>
         )}
       </CardContent>

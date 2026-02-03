@@ -23,11 +23,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Item, ItemDescription, ItemTitle } from '@/components/ui/item';
-import { useHasPermission } from '@/hooks/use-permissions';
 import { SensorConfig } from './@components/sensor-config';
 import { EQUIPMENT_TYPES } from './@consts/equipment.consts';
 import { useDeleteHeatmapConfig, useHeatmapConfig, useMachineSensors, useSaveHeatmapConfig } from './@hooks/use-heatmap-config';
 import type { EquipmentConfig, SubgroupConfig } from './@interface/heatmap.types';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const searchParamsSchema = z.object({
   id: z.string().optional(),
@@ -55,7 +56,7 @@ function HeatmapConfigPage() {
   const saveMutation = useSaveHeatmapConfig();
   const deleteMutation = useDeleteHeatmapConfig();
 
-  const hasPermissionDelete = useHasPermission('/heatmap-fleet-delete');
+  // const hasPermissionDelete = useHasPermission('/heatmap-fleet-delete');
   const isEdit = !!id;
   const isLoading = isLoadingConfig || saveMutation.isPending || deleteMutation.isPending;
 
@@ -211,7 +212,8 @@ function HeatmapConfigPage() {
     <Card>
       <CardHeader title={t(isEdit ? 'machine.edit' : 'add.machine')}>
         <div className="flex items-center gap-2">
-          {isEdit && hasPermissionDelete && (
+          {/* {isEdit && hasPermissionDelete && ( */}
+          {isEdit && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" disabled={isLoading}>

@@ -11,7 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { type Group, useGroupsByEnterprise } from '@/hooks/use-groups-api';
-import { useHasPermission } from '@/hooks/use-permissions';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const groupsSearchSchema = z.object({
   search: z.string().optional(),
@@ -28,7 +29,7 @@ function GroupsListPage() {
   const { search } = useSearch({ from: '/_private/operation/groups/' });
   const { idEnterprise } = useEnterpriseFilter();
 
-  const hasPermissionAdd = useHasPermission('/group-add');
+  // const hasPermissionAdd = useHasPermission('/group-add');
 
   const { data, isLoading } = useGroupsByEnterprise(idEnterprise || '');
 
@@ -113,12 +114,12 @@ function GroupsListPage() {
               }}
             />
           </div>
-          {hasPermissionAdd && (
-            <Button onClick={handleNewGroup} disabled={!idEnterprise}>
-              <Plus className="mr-2 size-4" />
-              {t('new')}
-            </Button>
-          )}
+          {/* {hasPermissionAdd && ( */}
+          <Button onClick={handleNewGroup} disabled={!idEnterprise}>
+            <Plus className="mr-2 size-4" />
+            {t('new')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

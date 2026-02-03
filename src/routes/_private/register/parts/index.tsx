@@ -15,7 +15,8 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useParts, usePartsApi } from '@/hooks/use-parts-api';
-import { useHasPermission } from '@/hooks/use-permissions';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const partsSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
@@ -39,7 +40,7 @@ function PartsListPage() {
   const { page, size, search } = useSearch({ from: '/_private/register/parts/' });
   const { idEnterprise } = useEnterpriseFilter();
 
-  const hasPermissionAdd = useHasPermission('/part-add');
+  // const hasPermissionAdd = useHasPermission('/part-add');
 
   const { data, isLoading } = useParts({
     idEnterprise,
@@ -88,12 +89,12 @@ function PartsListPage() {
               }}
             />
           </div>
-          {hasPermissionAdd && (
-            <Button onClick={() => navigate({ to: '/register/parts/add' })}>
-              <Plus className="mr-2 size-4" />
-              {t('add')}
-            </Button>
-          )}
+          {/* {hasPermissionAdd && ( */}
+          <Button onClick={() => navigate({ to: '/register/parts/add' })}>
+            <Plus className="mr-2 size-4" />
+            {t('add')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 
