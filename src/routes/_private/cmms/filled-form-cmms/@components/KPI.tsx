@@ -1,5 +1,5 @@
 import { Activity, AlertTriangle, Calendar, CheckCircle, Edit2, Search } from 'lucide-react';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
@@ -35,29 +35,30 @@ export function KPI({ data, onFilter, activeFilters }: KPIProps) {
     }
   };
 
-  const processDataGroup = (items: CmmsActivityItem[] = []) => {
-    // Logic from legacy: separate 'undefined' from defined and put it at the end
-    if (!Array.isArray(items)) return [];
+  const processDataGroup = useCallback(
+    (items: CmmsActivityItem[] = []) => {
+      // Logic from legacy: separate 'undefined' from defined and put it at the end
+      if (!Array.isArray(items)) return [];
 
-    const { defined, undefinedItem } = items.reduce(
-      (acc, item) => {
+      const defined: CmmsActivityItem[] = [];
+      let undefinedTotal = 0;
+
+      for (const item of items) {
         if (!item.text || item.text.trim() === '') {
-          return {
-            ...acc,
-            undefinedItem: {
-              text: t('undefined'), // or whatever key handles 'undefined' from backend
-              total: (acc.undefinedItem.total || 0) + (item.total || 0),
-            },
-          };
+          undefinedTotal += item.total || 0;
+        } else {
+          defined.push(item);
         }
-        acc.defined.push(item); // Refactored to push instead of spread
-        return acc;
-      },
-      { defined: [] as CmmsActivityItem[], undefinedItem: { text: t('undefined'), total: 0 } },
-    );
+      }
 
-    return undefinedItem.total > 0 ? [...defined, undefinedItem] : defined;
-  };
+      if (undefinedTotal > 0) {
+        defined.push({ text: t('undefined'), total: undefinedTotal });
+      }
+
+      return defined;
+    },
+    [t],
+  );
 
   const statusItems = useMemo(() => processDataGroup(data?.status), [data, processDataGroup]);
   const maintenanceItems = useMemo(() => processDataGroup(data?.typeMaintenance), [data, processDataGroup]);

@@ -108,7 +108,9 @@ export const preUploadAttachments = async ({ files, supplierCanView = false }: {
   }
 
   const fileForm = new FormData();
-  files.forEach((file) => fileForm.append('files', file));
+  for (const file of files) {
+    fileForm.append('files', file);
+  }
   fileForm.append('supplierCanView', String(supplierCanView));
   fileForm.append('status', 'awaiting.create.confirm');
 
