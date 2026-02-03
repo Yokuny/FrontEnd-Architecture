@@ -7,6 +7,7 @@ import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
+import { useHasPermission } from '@/hooks/use-permissions';
 import { VoyageForm } from './@components/voyage-form';
 import { useVoyageForm } from './@hooks/use-voyage-form';
 
@@ -25,6 +26,7 @@ function VoyageAddPage() {
   const { t } = useTranslation();
   const navigate = Route.useNavigate();
   const { id } = Route.useSearch();
+  const hasPermissionDelete = useHasPermission('/delete-travel');
 
   const { form, onSubmit, onDelete, isLoadingData } = useVoyageForm({
     id,
@@ -55,7 +57,7 @@ function VoyageAddPage() {
 
           <CardFooter layout="multi">
             <div>
-              {id && (
+              {id && hasPermissionDelete && (
                 <Button variant="destructive" type="button" onClick={() => onDelete(id)} disabled={form.formState.isSubmitting}>
                   <Trash2 className="mr-2 size-4" />
                   {t('delete')}

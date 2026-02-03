@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { getStatusConfig } from '../@utils/getStatusConfig';
 import { TimeOperationDetailsDialog } from './TimeOperationDetailsDialog';
 
-export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrderChange, filters }: TimeOperationTableProps) {
+export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrderChange, filters, hasPermissionDetails }: TimeOperationTableProps) {
   const { t } = useTranslation();
 
   const columns = useMemo(() => {
@@ -170,7 +170,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
       </TableHeader>
       <TableBody>
         {data.map((row, index) => (
-          <TimeOperationTableRow key={`${index + 1}_${row?.machine?.id}`} row={row} columns={columns} filters={filters} />
+          <TimeOperationTableRow key={`${index + 1}_${row?.machine?.id}`} row={row} columns={columns} filters={filters} hasPermissionDetails={hasPermissionDetails} />
         ))}
       </TableBody>
       {benchmarkTotals && (
@@ -218,19 +218,29 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
   );
 }
 
-function TimeOperationTableRow({ row, columns, filters }: { row: TimeOperationData; columns: DataTableColumn<TimeOperationData>[]; filters: any }) {
+function TimeOperationTableRow({
+  row,
+  columns,
+  filters,
+  hasPermissionDetails,
+}: {
+  row: TimeOperationData;
+  columns: DataTableColumn<TimeOperationData>[];
+  filters: any;
+  hasPermissionDetails?: boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <TableRow className="cursor-pointer" onClick={() => setIsOpen(true)}>
+      <TableRow className={hasPermissionDetails ? 'cursor-pointer' : ''} onClick={hasPermissionDetails ? () => setIsOpen(true) : undefined}>
         {columns.map((column) => (
           <TableCell key={String(column.key)} className="p-4">
             {column.render ? column.render(row[column.key], row) : String(row[column.key] ?? '')}
           </TableCell>
         ))}
       </TableRow>
-      {isOpen && <TimeOperationDetailsDialog open={isOpen} onOpenChange={setIsOpen} item={row} filters={filters} />}
+      {isOpen && hasPermissionDetails && <TimeOperationDetailsDialog open={isOpen} onOpenChange={setIsOpen} item={row} filters={filters} />}
     </>
   );
 }
@@ -241,4 +251,5 @@ interface TimeOperationTableProps {
   orderColumn: { column: string; order: 'asc' | 'desc' } | null;
   onOrderChange: (order: { column: string; order: 'asc' | 'desc' } | null) => void;
   filters: any;
+  hasPermissionDetails?: boolean;
 }
