@@ -51,54 +51,18 @@ export function SupplierSelect(props: SupplierSelectProps) {
 
   const activityFilterLabel = t('activity.filter');
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('supplier');
-    return (
-      <div className={className}>
-        {showActivityFilter && (
-          <div className="mb-4 space-y-2">
-            <Label htmlFor={activityId} className="flex items-center gap-2">
-              <Filter className="size-4" />
-              {activityFilterLabel}
-            </Label>
-            <DataSelect<string, string>
-              id={activityId}
-              placeholder={t('select.activity')}
-              value={activityFilter}
-              onChange={(val) => setActivityFilter(val as string)}
-              query={activitiesQuery}
-              mapToOptions={(acts) => acts.map((a) => ({ value: a, label: a, data: a }))}
-              clearable
-              searchPlaceholder={t('search.placeholder')}
-            />
-          </div>
-        )}
-
-        <div className="space-y-2">
-          {displayLabel && (
-            <Label htmlFor={id} className="flex items-center gap-2">
-              <Truck className="size-4" />
-              {displayLabel}
-            </Label>
-          )}
-          <DataMultiSelect<Supplier, Supplier>
-            id={id}
-            placeholder={placeholder || t('supplier')}
-            value={props.value}
-            onChange={(vals) => props.onChange(vals as string[])}
-            query={filteredQuery}
-            mapToOptions={mapSupplierToOptions}
-            disabled={disabled}
-            searchPlaceholder={t('search.placeholder')}
-            noOptionsMessage={t('nooptions.message')}
-            noResultsMessage={t('not.found')}
-          />
-        </div>
-      </div>
-    );
-  }
-
   const displayLabel = label || t('supplier');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('supplier'),
+    query: filteredQuery,
+    mapToOptions: mapSupplierToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+  };
+
   return (
     <div className={className}>
       {showActivityFilter && (
@@ -127,20 +91,11 @@ export function SupplierSelect(props: SupplierSelectProps) {
             {displayLabel}
           </Label>
         )}
-        <DataSelect<Supplier, Supplier>
-          id={id}
-          placeholder={placeholder || t('supplier')}
-          value={props.value}
-          onChange={(val) => props.onChange(val as string)}
-          query={filteredQuery}
-          mapToOptions={mapSupplierToOptions}
-          oneBlocked={oneBlocked}
-          disabled={disabled}
-          clearable={true}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-        />
+        {mode === 'multi' ? (
+          <DataMultiSelect<Supplier, Supplier> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+        ) : (
+          <DataSelect<Supplier, Supplier> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} oneBlocked={oneBlocked} clearable={true} />
+        )}
       </div>
     </div>
   );

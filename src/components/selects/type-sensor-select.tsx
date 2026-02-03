@@ -37,34 +37,19 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
       .sort((a, b) => a.label.localeCompare(b.label));
   };
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('variable.type');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Microscope className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<SelectOption, SelectOption>
-          id={id}
-          placeholder={placeholder || t('variable.type')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query as any}
-          mapToOptions={mapToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('variable.type');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('variable.type'),
+    query: query as any,
+    mapToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -73,20 +58,11 @@ export function TypeSensorSelect(props: TypeSensorSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<SelectOption, SelectOption>
-        id={id}
-        placeholder={placeholder || t('variable.type')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query as any}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        clearable
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<SelectOption, SelectOption> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<SelectOption, SelectOption> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable />
+      )}
     </div>
   );
 }

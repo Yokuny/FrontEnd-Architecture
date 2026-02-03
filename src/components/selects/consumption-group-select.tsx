@@ -12,36 +12,20 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
   const id = useId();
   const query = useConsumptionGroupsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
-
-  if (mode === 'multi') {
-    const displayLabel = label || t('group.consumption');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Layers className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<ConsumptionGroup>
-          id={id}
-          placeholder={t('group.consumption')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapConsumptionGroupsToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('group.consumption');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    placeholder: t('group.consumption'),
+    query,
+    mapToOptions: mapConsumptionGroupsToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -50,21 +34,11 @@ export function ConsumptionGroupSelect(props: ConsumptionGroupSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<ConsumptionGroup>
-        id={id}
-        placeholder={t('group.consumption')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapConsumptionGroupsToOptions}
-        oneBlocked={oneBlocked}
-        disabled={disabled}
-        clearable={false}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<ConsumptionGroup> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<ConsumptionGroup> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} oneBlocked={oneBlocked} clearable={false} />
+      )}
     </div>
   );
 }

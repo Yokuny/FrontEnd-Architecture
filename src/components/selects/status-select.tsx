@@ -12,8 +12,8 @@ export function StatusSelect(props: StatusSelectProps) {
   const id = useId();
   const query = useStatusSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
   const displayLabel = label || t('status.placeholder');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
 
   const mapWithDefaults = (statuses: string[]) => {
     const undefinedLabel = t('undefined');
@@ -28,31 +28,17 @@ export function StatusSelect(props: StatusSelectProps) {
     return options.sort((a, b) => a.label.localeCompare(b.label));
   };
 
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Activity className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<any, any>
-          id={id}
-          placeholder={placeholder || t('status.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapWithDefaults}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('status.placeholder'),
+    query,
+    mapToOptions: mapWithDefaults,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
   return (
     <div className="space-y-2">
@@ -62,20 +48,11 @@ export function StatusSelect(props: StatusSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<any, any>
-        id={id}
-        placeholder={placeholder || t('status.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapWithDefaults}
-        disabled={disabled}
-        clearable
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<any, any> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<any, any> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable />
+      )}
     </div>
   );
 }

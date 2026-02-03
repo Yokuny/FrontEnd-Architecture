@@ -10,12 +10,14 @@ export function AlertTypeSelect({ label, placeholder, values, onChangeMulti, dis
   const id = useId();
   const query = useAlertTypesSelect();
 
+  const displayLabel = label || t('scale.alert.type');
+
   return (
     <div className="space-y-2">
-      {(label || t('scale.alert.type')) && (
+      {displayLabel && (
         <Label htmlFor={id} className="flex items-center gap-2">
           <Bell className="size-4" />
-          {label || t('scale.alert.type')}
+          {displayLabel}
         </Label>
       )}
       <DataMultiSelect

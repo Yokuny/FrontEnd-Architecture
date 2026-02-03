@@ -12,36 +12,19 @@ export function ScaleSelect(props: ScaleSelectProps) {
   const id = useId();
   const query = useScalesSelect();
 
-  const noOptionsMessage = t('nooptions.message');
-
-  if (mode === 'multi') {
-    const displayLabel = label || t('scale');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Ruler className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Scale, Scale>
-          id={id}
-          placeholder={placeholder || t('scale')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapScalesToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('scale');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('scale'),
+    query,
+    mapToOptions: mapScalesToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -50,20 +33,11 @@ export function ScaleSelect(props: ScaleSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Scale, Scale>
-        id={id}
-        placeholder={placeholder || t('scale')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapScalesToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<Scale, Scale> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Scale, Scale> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

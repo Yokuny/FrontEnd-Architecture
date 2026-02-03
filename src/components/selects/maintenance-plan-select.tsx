@@ -12,34 +12,18 @@ export function MaintenancePlanSelect(props: MaintenancePlanSelectProps) {
   const id = useId();
   const { t } = useTranslation();
   const query = useMaintenancePlansSelect(idEnterprise);
-  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
   const displayLabel = label || t('maintenance.plan');
-
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <ClipboardCheck className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<MaintenancePlan, MaintenancePlan>
-          id={id}
-          placeholder={placeholder || t('maintenance.plans.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapMaintenancePlansToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    query,
+    mapToOptions: mapMaintenancePlansToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
   return (
     <div className="space-y-2">
@@ -49,20 +33,22 @@ export function MaintenancePlanSelect(props: MaintenancePlanSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<MaintenancePlan, MaintenancePlan>
-        id={id}
-        placeholder={placeholder || t('maintenance.plan.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapMaintenancePlansToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<MaintenancePlan, MaintenancePlan>
+          {...sharedProps}
+          placeholder={placeholder || t('maintenance.plans.placeholder')}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+        />
+      ) : (
+        <DataSelect<MaintenancePlan, MaintenancePlan>
+          {...sharedProps}
+          placeholder={placeholder || t('maintenance.plan.placeholder')}
+          value={props.value}
+          onChange={(val) => props.onChange(val as string)}
+          clearable={clearable}
+        />
+      )}
     </div>
   );
 }

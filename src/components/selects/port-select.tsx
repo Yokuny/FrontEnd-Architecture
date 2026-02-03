@@ -19,32 +19,17 @@ export function PortSelect(props: PortSelectProps) {
   const query = usePortsSelect();
 
   const displayLabel = label || t('port');
-
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Anchor className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Port, Port>
-          id={id}
-          placeholder={placeholder || t('port')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapPortsToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('port'),
+    query,
+    mapToOptions: mapPortsToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
   return (
     <div className="space-y-2">
@@ -54,20 +39,11 @@ export function PortSelect(props: PortSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Port, Port>
-        id={id}
-        placeholder={placeholder || t('port')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapPortsToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<Port, Port> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Port, Port> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

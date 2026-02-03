@@ -29,32 +29,17 @@ export function VisibilitySelect(props: VisibilitySelectProps) {
   };
 
   const displayLabel = label || t('visibility');
-
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Eye className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<SelectOptionWithKey, SelectOptionWithKey>
-          id={id}
-          placeholder={placeholder || t('visibility')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query as any}
-          mapToOptions={mapToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('visibility'),
+    query: query as any,
+    mapToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
   return (
     <div className="space-y-2">
@@ -64,20 +49,11 @@ export function VisibilitySelect(props: VisibilitySelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<SelectOptionWithKey, SelectOptionWithKey>
-        id={id}
-        placeholder={placeholder || t('visibility')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query as any}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        clearable={false}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<SelectOptionWithKey, SelectOptionWithKey> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<SelectOptionWithKey, SelectOptionWithKey> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={false} />
+      )}
     </div>
   );
 }

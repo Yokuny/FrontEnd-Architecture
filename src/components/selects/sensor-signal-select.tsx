@@ -24,34 +24,18 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
 
   const noOptionsMessage = !filterId ? t('select.sensor.first') : !sensorId ? t('select.sensor.first') : t('not.found');
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('signals');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Activity className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<SensorSignal, SensorSignal>
-          id={id}
-          placeholder={placeholder || t('select.sensor.first')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapSensorSignalsToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const displayLabel = label || (mode === 'multi' ? t('signals') : t('signal'));
+  const sharedProps = {
+    id,
+    query,
+    mapToOptions: mapSensorSignalsToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
-  const displayLabel = label || t('signal');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -60,20 +44,22 @@ export function SensorSignalSelect(props: SensorSignalSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<SensorSignal, SensorSignal>
-        id={id}
-        placeholder={placeholder || t('signal.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapSensorSignalsToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<SensorSignal, SensorSignal>
+          {...sharedProps}
+          placeholder={placeholder || t('select.sensor.first')}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+        />
+      ) : (
+        <DataSelect<SensorSignal, SensorSignal>
+          {...sharedProps}
+          placeholder={placeholder || t('signal.placeholder')}
+          value={props.value}
+          onChange={(val) => props.onChange(val as string)}
+          clearable={clearable}
+        />
+      )}
     </div>
   );
 }
