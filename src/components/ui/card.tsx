@@ -11,15 +11,11 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-interface CardHeaderProps extends Omit<React.ComponentProps<'div'>, 'title'> {
-  title?: React.ReactNode;
-}
-
-function CardHeader({ className, children, title, ...props }: CardHeaderProps) {
+function CardHeader({ children, title, ...props }: { children?: React.ReactNode; title?: React.ReactNode }) {
   const router = useRouter();
 
   return (
-    <div data-slot="card-header" className={cn('@container/card-header flex flex-col gap-4 px-6 [.border-b]:pb-6', className)} {...props}>
+    <div data-slot="card-header" className={'@container/card-header flex flex-col gap-4 px-6 [.border-b]:pb-6'} {...props}>
       <AutoBreadcrumbs />
 
       <div className="flex w-full items-start justify-between">
