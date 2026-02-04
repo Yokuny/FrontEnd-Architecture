@@ -11,13 +11,11 @@ export function SafetySelect(props: SafetySelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Mapping options to translated ones
   const translatedOptions = SAFETY_AREAS.map((opt) => ({
     ...opt,
     label: t(`safety.${opt.value}`),
   }));
 
-  // Simulated query object
   const query = {
     data: translatedOptions,
     isLoading: false,

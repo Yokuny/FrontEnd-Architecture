@@ -6,12 +6,6 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapSensorsByAssetsToOptions, type SensorByAsset, useSensorsByAssetsSelect } from '@/hooks/use-sensors-by-assets-api';
 
-/**
- * SensorByAssetsSelect Component
- *
- * Provides selection for sensors filtered by multiple asset IDs.
- * Supports single and multi selection modes.
- */
 export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
   const { t } = useTranslation();
   const { mode, idAssets, disabled = false, className, label, placeholder, clearable = true, idsNotAllowed = [] } = props;

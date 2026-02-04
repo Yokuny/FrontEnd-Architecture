@@ -6,18 +6,11 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { COUNTRIES, type Country } from '@/lib/constants/countries';
 
-/**
- * CountrySelect Component
- *
- * Provides selection for countries from a static list.
- * Follows the single/multi mode pattern.
- */
 export function CountrySelect(props: CountrySelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Simulated query object for static data
   const query = {
     data: COUNTRIES,
     isLoading: false,

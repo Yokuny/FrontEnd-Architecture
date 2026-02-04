@@ -6,44 +6,23 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapParamsToOptions, type Param, useParamsSelect } from '@/hooks/use-params-api';
 
-/**
- * ParamsSelect Component
- *
- * Fetches and displays global parameters.
- * Follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function ParamsSelect(props: ParamsSelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
   const query = useParamsSelect();
   const displayLabel = label || t('parameters');
-
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <List className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Param, Param>
-          id={id}
-          placeholder={placeholder || t('parameters')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapParamsToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('parameters'),
+    query,
+    mapToOptions: mapParamsToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
   return (
     <div className="space-y-2">
@@ -53,20 +32,11 @@ export function ParamsSelect(props: ParamsSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Param, Param>
-        id={id}
-        placeholder={placeholder || t('parameters')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapParamsToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<Param, Param> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Param, Param> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

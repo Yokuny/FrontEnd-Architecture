@@ -11,13 +11,11 @@ export function FenceTypeSelect(props: FenceTypeSelectProps) {
   const { mode, disabled = false, className, label, placeholder } = props;
   const id = useId();
 
-  // Mapping options to translated ones
   const translatedOptions = FENCE_TYPES.map((opt) => ({
     ...opt,
     name: t(opt.id),
   }));
 
-  // Simulated query object
   const query = {
     data: translatedOptions,
     isLoading: false,

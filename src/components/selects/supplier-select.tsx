@@ -7,13 +7,6 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Supplier, useSuppliersSelect } from '@/hooks/use-suppliers-api';
 
-/**
- * SupplierSelect Component
- *
- * This component provides selection for suppliers, with an optional activity filter.
- * Adheres to the new architecture and mode: single/multi pattern.
- * Original logic for 'oneBlocked' and activity filtering is preserved.
- */
 export function SupplierSelect(props: SupplierSelectProps) {
   const { t } = useTranslation();
   const { mode, oneBlocked = false, disabled = false, className, showActivityFilter = true, label, placeholder } = props;
@@ -23,7 +16,6 @@ export function SupplierSelect(props: SupplierSelectProps) {
   const query = useSuppliersSelect();
   const [activityFilter, setActivityFilter] = useState<string>();
 
-  // Filter query data by activity if selected
   const filteredQuery = {
     ...query,
     data: activityFilter && query.data ? query.data.filter((s) => s.atividades?.includes(activityFilter)) : query.data,

@@ -17,34 +17,20 @@ export function UserSamePermissionSelect(props: UserSamePermissionSelectProps) {
     return options.sort((a, b) => a.label.localeCompare(b.label));
   };
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('user');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <UserRound className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<UserSamePermission, UserSamePermission>
-          id={id}
-          placeholder={placeholder || t('user')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapWithDefaults}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('user');
+
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('user'),
+    query,
+    mapToOptions: mapWithDefaults,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -53,20 +39,11 @@ export function UserSamePermissionSelect(props: UserSamePermissionSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<UserSamePermission, UserSamePermission>
-        id={id}
-        placeholder={placeholder || t('user')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapWithDefaults}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<UserSamePermission, UserSamePermission> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<UserSamePermission, UserSamePermission> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

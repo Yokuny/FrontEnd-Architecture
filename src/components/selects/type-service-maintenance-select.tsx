@@ -1,20 +1,9 @@
 import { Boxes } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapTypeServiceMaintenanceToOptions, useTypeServiceMaintenance } from '@/hooks/use-maintenance-plans-api';
-
-interface TypeServiceMaintenanceSelectProps {
-  value?: any;
-  onChange: (value: any) => void;
-  disabled?: boolean;
-  className?: string;
-  label?: string;
-  placeholder?: string;
-  clearable?: boolean;
-}
 
 // TODO: DEPRECATED ???????
 
@@ -51,4 +40,14 @@ export function TypeServiceMaintenanceSelect(props: TypeServiceMaintenanceSelect
       />
     </div>
   );
+}
+
+interface TypeServiceMaintenanceSelectProps {
+  value?: any;
+  onChange: (value: any) => void;
+  disabled?: boolean;
+  className?: string;
+  label?: string;
+  placeholder?: string;
+  clearable?: boolean;
 }

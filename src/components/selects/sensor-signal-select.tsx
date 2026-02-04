@@ -7,12 +7,6 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapSensorSignalsToOptions, type SensorSignal, useSensorSignalsSelect } from '@/hooks/use-sensor-signals-api';
 
-/**
- * SensorSignalSelect Component
- *
- * Fetches and displays sensor signals based on a machine ID or enterprise ID, and a sensor ID.
- * Follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function SensorSignalSelect(props: SensorSignalSelectProps) {
   const { mode, idMachine, idEnterprise, sensorId, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();

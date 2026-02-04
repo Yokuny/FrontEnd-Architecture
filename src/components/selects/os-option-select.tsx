@@ -10,7 +10,6 @@ export function OsOptionSelect(props: OsOptionSelectProps) {
   const { disabled = false, className, label, placeholder } = props;
   const id = useId();
 
-  // Simulated query object
   const query = {
     data: OS_OPTIONS,
     isLoading: false,

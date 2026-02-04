@@ -1,428 +1,135 @@
-# Padrão de Arquitetura para Componentes Select
+# Padrão Select
 
-Este documento explica como construir componentes de seleção (select) seguindo o padrão estabelecido em `supplier-select.tsx`, usando os componentes base `DataSelect` e `DataMultiSelect` com integração ao TanStack Query.
+## Criação
 
----
+```tsx
+export function EntitySelect(props: EntitySelectProps) {
+  const { t } = useTranslation();
+  const { mode, disabled = false, className, label, placeholder } = props;
+  const id = useId();
+  const query = useEntitySelect();
 
-## 📋 Visão Geral
+  const displayLabel = label || t('entity.label');
 
-O padrão consiste em criar componentes select que:
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('entity.placeholder'),
+    query,
+    mapToOptions: mapEntityToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
-1. **Usam hooks do TanStack Query** para buscar dados da API.
-2. **Delegam renderização** para os componentes base `DataSelect` e `DataMultiSelect`.
-3. **Suportam modo único ou múltiplo** através de props discriminadas.
-4. **Aplicam transformações e filtros** nos dados antes de passar para o componente base.
-
----
-
-## 🏗️ Estrutura do Componente
-
-### 1. Definição de Tipos
-
-```typescript
-interface SupplierSelectBaseProps {
-  oneBlocked?: boolean;      // Auto-seleciona se houver apenas uma opção
-  disabled?: boolean;         // Desabilita o select
-  className?: string;         // Classes CSS adicionais
-  showActivityFilter?: boolean; // Mostra filtro de atividades
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Icon className="size-4" />
+          {displayLabel}
+        </Label>
+      )}
+      {mode === 'multi' ? (
+        <DataMultiSelect<Entity>
+          {...sharedProps}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+        />
+      ) : (
+        <DataSelect<Entity>
+          {...sharedProps}
+          value={props.value}
+          onChange={(val) => props.onChange(val as string)}
+          clearable={false}
+        />
+      )}
+    </div>
+  );
 }
 
-interface SupplierSelectSingleProps extends SupplierSelectBaseProps {
-  mode: "single";
+// Tipos
+interface EntitySelectBaseProps {
+  disabled?: boolean;
+  className?: string;
+  label?: string;
+  placeholder?: string;
+}
+
+interface EntitySelectSingleProps extends EntitySelectBaseProps {
+  mode: 'single';
   value?: string;
   onChange: (value: string | undefined) => void;
 }
 
-interface SupplierSelectMultiProps extends SupplierSelectBaseProps {
-  mode: "multi";
+interface EntitySelectMultiProps extends EntitySelectBaseProps {
+  mode: 'multi';
   value?: string[];
   onChange: (value: string[]) => void;
 }
 
-type SupplierSelectProps = SupplierSelectSingleProps | SupplierSelectMultiProps;
+export type EntitySelectProps = EntitySelectSingleProps | EntitySelectMultiProps;
 ```
 
-> **Importante:** Use union types discriminadas com a propriedade `mode` para suportar tanto seleção única quanto múltipla. Isso garante segurança de tipos (type safety) no TypeScript.
-
-### 2. Integração com TanStack Query
-
-#### Hook de API (`use-suppliers-api.ts`)
-
-```typescript
-// Definição do tipo de dados
-export interface Supplier {
-  razao: string;
-  status: string;
-  atividades: string[];
-}
-
-// Query keys para gerenciamento de cache
-export const suppliersKeys = {
-  all: ["suppliers"] as const,
-  lists: () => [...suppliersKeys.all, "list"] as const,
-  list: (filters?: Record<string, unknown>) => [...suppliersKeys.lists(), filters] as const,
-};
-
-// Função de busca (fetch)
-async function fetchSuppliers(): Promise<Supplier[]> {
-  const response = await api.get<Supplier[]>("/fas/suricatta-supplier/fornecedores");
-  return response.data;
-}
-
-// Hook principal
-export function useSuppliers(params?: Record<string, unknown>) {
-  return useQuery({
-    queryKey: suppliersKeys.list(params),
-    queryFn: fetchSuppliers,
-  });
-}
-
-// Hook específico para selects
-export function useSuppliersSelect() {
-  return useSuppliers();
-}
-```
-
-### 3. Implementação do Componente
-
-```typescript
-export function SupplierSelect(props: SupplierSelectProps) {
-  const { mode, oneBlocked = false, disabled = false, className, showActivityFilter = true } = props;
-  
-  // 1. Buscar dados usando TanStack Query
-  const query = useSuppliersSelect();
-  
-  // 2. Estado local para filtros (opcional)
-  const [activityFilter, setActivityFilter] = useState<string>();
-
-  // 3. Aplicar filtros aos dados
-  const filteredQuery: any = activityFilter
-    ? {
-        ...query,
-        data: query.data?.filter((s) => s.atividades?.includes(activityFilter)),
-      }
-    : query;
-
-  // 4. Renderizar componente base apropriado
-  if (mode === "multi") {
-    return (
-      <DataMultiSelect<Supplier>
-        label="Fornecedor"
-        placeholder="Selecione os fornecedores..."
-        value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
-        query={filteredQuery}
-        valueKey="razao"
-        labelKey="razao"
-        disabled={disabled}
-        searchPlaceholder="Buscar fornecedor..."
-        noOptionsMessage="Nenhum fornecedor disponível."
-        noResultsMessage="Nenhum fornecedor encontrado."
-      />
-    );
-  }
-
-  return (
-    <DataSelect<Supplier>
-      label="Fornecedor"
-      placeholder="Selecione um fornecedor..."
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={filteredQuery}
-      valueKey="razao"
-      labelKey="razao"
-      oneBlocked={oneBlocked}
-      disabled={disabled}
-      clearable={false}
-      searchPlaceholder="Buscar fornecedor..."
-      noOptionsMessage="Nenhum fornecedor disponível."
-      noResultsMessage="Nenhum fornecedor encontrado."
-    />
-  );
-}
-```
-
----
-
-## � Dados Estáticos e Fixos
-
-Para componentes que utilizam dados fixos (opções que não vêm da API), seguimos estas regras:
-
-1. **Centralização**: Os dados devem ser obrigatoriamente armazenados em [`src/lib/constants/select-options.ts`](file:///Users/yokuny/Documents/GitHub/FrontEnd-Architecture/src/lib/constants/select-options.ts). Nunca duplique ou sobrescreva valores existentes.
-2. **Encapsulamento**: A lógica de simulação de query e a internacionalização das labels devem residir dentro do componente especializado em `src/components/selects`.
-3. **Simulação de Query**: Para manter a compatibilidade com `DataSelect`, simulamos o objeto de retorno do TanStack Query usando `UseQueryResult`.
-4. **Tradução (i18n)**: Utilize o hook `useIntl()` dentro do componente e a prop `mapToOptions` para traduzir as chaves de label (`labelKey`) no momento da renderização.
-
-### Exemplo de Constante (`select-options.ts`)
-
-```typescript
-export interface SelectOption<T = string> {
-  value: T;
-  label: string;
-}
-
-export interface SelectOptionWithKey<T = string> {
-  value: T;
-  labelKey: string;
-}
-
-export interface PriorityOption extends SelectOption<string> {
-  labelKey: string; // Key for translation
-}
-
-export const PRIORITY_OPTIONS: PriorityOption[] = [
-  { value: "low", label: "Low", labelKey: "priority.low" },
-  { value: "medium", label: "Medium", labelKey: "priority.medium" },
-  { value: "high", label: "High", labelKey: "priority.high" },
-];
-```
-
-### Exemplo de Componente Estático Traduzido
+## Uso
 
 ```tsx
-import { useIntl } from 'react-intl';
-import { DataSelect } from '@/components/ui/data-select';
-import { PRIORITY_OPTIONS, type PriorityOption } from '@/lib/constants/select-options';
+// Single
+<EnterpriseSelect mode="single" value={value} onChange={setValue} />
 
-export function PrioritySelect(props: PrioritySelectProps) {
-  const intl = useIntl();
+// Multi
+<EnterpriseSelect mode="multi" value={values} onChange={setValues} />
 
-  // Simulação de query para compatibilidade
-  const query = {
-    data: PRIORITY_OPTIONS,
-    isLoading: false,
-    isSuccess: true,
-    status: "success",
-  } as UseQueryResult<PriorityOption[], Error>;
+// Com props
+<EnterpriseSelect
+  mode="single"
+  value={value}
+  onChange={setValue}
+  label="Empresa"
+  placeholder="Selecione..."
+  disabled={isLoading}
+/>
 
-  return (
-    <DataSelect<PriorityOption>
-      label={props.label || intl.formatMessage({ id: 'priority' })}
-      query={query}
-      mapToOptions={(data) => data.map(opt => ({
-        value: opt.value,
-        label: intl.formatMessage({ id: opt.labelKey }),
-        data: opt
-      }))}
-      {...props}
-    />
-  );
-}
-```
-
-### Exemplo de Componente Estático
-
-```typescript
-export function PrioritySelect(props: PrioritySelectProps) {
-  const { mode, disabled, className, label } = props;
-
-  // 1. Simular objeto de query
-  const query = {
-    data: PRIORITY_OPTIONS,
-    isLoading: false,
-    isError: false,
-    isSuccess: true,
-    status: "success" as const,
-  };
-
-  // 2. Mapeamento (opcional se valueKey/labelKey forem padrão)
-  const mapToOptions = (data: PriorityOption[]) => data.map(opt => ({
-    value: opt.value,
-    label: opt.label,
-    data: opt
-  }));
-
-  return (
-    <DataSelect<PriorityOption>
-      label={label || "Prioridade"}
-      query={query as any} // Cast necessário para simulação
-      mapToOptions={mapToOptions}
-      {...props}
-    />
-  );
-}
-```
-
----
-
-## �🔑 Props dos Componentes Base
-
-### DataSelect Props
-
-| Prop | Tipo | Descrição |
-|------|------|-----------|
-| `label` | `string?` | Rótulo do campo |
-| `placeholder` | `string?` | Texto quando nenhum valor selecionado |
-| `value` | `string \| number?` | Valor selecionado |
-| `onChange` | `function` | Callback quando a seleção muda |
-| `query` | `UseQueryResult<T[], Error>` | **Resultado do TanStack Query** |
-| `mapToOptions` | `function?` | Função para mapear dados para opções |
-| `valueKey` | `string?` | Chave do objeto para usar como valor (padrão: 'id') |
-| `labelKey` | `string?` | Chave do objeto para usar como label (padrão: 'name') |
-| `oneBlocked` | `boolean?` | Seleciona automaticamente se houver apenas uma opção |
-| `disabled` | `boolean?` | Desabilita o select |
-| `clearable` | `boolean?` | Permite limpar a seleção |
-| `searchPlaceholder` | `string?` | Placeholder da busca |
-| `noOptionsMessage` | `string?` | Mensagem quando não há opções |
-| `noResultsMessage` | `string?` | Mensagem quando a busca não retorna resultados |
-
-### DataMultiSelect Props
-
-Similar ao `DataSelect`, mas:
-- `value` é `(string | number)[]?`
-- `onChange` recebe `(values, options) => void`
-- Adiciona `maxShownItems` para limitar badges mostradas.
-
----
-
-## 🎯 Padrão de Filtros (Opcional)
-
-O `SupplierSelect` demonstra como adicionar filtros locais:
-
-```typescript
-// 1. Estado do filtro
-const [activityFilter, setActivityFilter] = useState<string>();
-
-// 2. Extrair valores únicos para o filtro
-const activities = query.data
-  ?.flatMap((s) => s.atividades || [])
-  .filter((v, i, a) => a.indexOf(v) === i) 
-  || [];
-
-// 3. Criar query mock para o filtro
-const activitiesQuery: any = {
-  data: activities,
-  isLoading: false,
-  isError: false,
-  error: null,
-  status: "success",
-};
-
-// 4. Renderizar select de filtro
-<DataSelect<string>
-  label="Filtrar pela atividade (Opcional)"
-  placeholder="Selecione uma atividade..."
-  value={activityFilter}
-  onChange={(val) => setActivityFilter(val as string)}
-  query={activitiesQuery}
-  mapToOptions={(acts) => acts.map((a) => ({ value: a, label: a }))}
-  clearable
-  className="mb-4"
+// React Hook Form
+<Controller
+  control={form.control}
+  name="idEnterprise"
+  render={({ field }) => (
+    <EnterpriseSelect mode="single" value={field.value} onChange={field.onChange} />
+  )}
 />
 ```
 
----
+## Regras
 
-## 📝 Como Converter Outros Componentes
+1. `displayLabel` definido **uma única vez** (não dentro de if/else)
+2. `sharedProps` com propriedades comuns entre single/multi
+3. **Um único wrapper** `<div>` com renderização condicional via ternário
+4. Props específicas de cada modo passadas diretamente no componente
 
-### Passo 1: Criar ou Verificar o Hook de API
+## ❌ Errado
 
-```typescript
-// src/hooks/use-[entidade]-api.ts
-export interface MinhaEntidade {
-  id: string;
-  nome: string;
+```tsx
+// displayLabel duplicado
+if (mode === 'multi') {
+  const displayLabel = label || t('entity');
+  return (<div>...</div>);
 }
-
-export const minhaEntidadeKeys = {
-  all: ["minhaEntidade"] as const,
-  lists: () => [...minhaEntidadeKeys.all, "list"] as const,
-  list: (filters?: Record<string, unknown>) => [...minhaEntidadeKeys.lists(), filters] as const,
-};
-
-async function fetchMinhaEntidade(): Promise<MinhaEntidade[]> {
-  const response = await api.get<MinhaEntidade[]>("/api/endpoint");
-  return response.data;
-}
-
-export function useMinhaEntidade(params?: Record<string, unknown>) {
-  return useQuery({
-    queryKey: minhaEntidadeKeys.list(params),
-    queryFn: fetchMinhaEntidade,
-  });
-}
-
-export function useMinhaEntidadeSelect() {
-  return useMinhaEntidade();
-}
+const displayLabel = label || t('entity');
+return (<div>...</div>);
 ```
 
-### Passo 2: Definir Interface de Props
+## ✅ Correto
 
-```typescript
-// src/components/selects/minha-entidade-select.tsx
-interface MinhaEntidadeSelectBaseProps {
-  oneBlocked?: boolean;
-  disabled?: boolean;
-  className?: string;
-}
+```tsx
+const displayLabel = label || t('entity');
+const sharedProps = { ... };
 
-interface MinhaEntidadeSelectSingleProps extends MinhaEntidadeSelectBaseProps {
-  mode: "single";
-  value?: string;
-  onChange: (value: string | undefined) => void;
-}
-
-interface MinhaEntidadeSelectMultiProps extends MinhaEntidadeSelectBaseProps {
-  mode: "multi";
-  value?: string[];
-  onChange: (value: string[]) => void;
-}
-
-type MinhaEntidadeSelectProps = MinhaEntidadeSelectSingleProps | MinhaEntidadeSelectMultiProps;
+return (
+  <div>
+    {displayLabel && <Label>...</Label>}
+    {mode === 'multi' ? <DataMultiSelect {...sharedProps} /> : <DataSelect {...sharedProps} />}
+  </div>
+);
 ```
-
-### Passo 3: Implementar o Componente
-
-```typescript
-export function MinhaEntidadeSelect(props: MinhaEntidadeSelectProps) {
-  const { mode, oneBlocked = false, disabled = false, className } = props;
-  const query = useMinhaEntidadeSelect();
-
-  if (mode === "multi") {
-    return (
-      <DataMultiSelect<MinhaEntidade>
-        label="Minha Entidade"
-        placeholder="Selecione..."
-        value={props.value}
-        onChange={(vals) => props.onChange(vals as string[])}
-        query={query}
-        valueKey="id"      // Ajustar conforme sua entidade
-        labelKey="nome"    // Ajustar conforme sua entidade
-        disabled={disabled}
-        className={className}
-      />
-    );
-  }
-
-  return (
-    <DataSelect<MinhaEntidade>
-      label="Minha Entidade"
-      placeholder="Selecione..."
-      value={props.value}
-      onChange={(val) => props.onChange(val as string)}
-      query={query}
-      valueKey="id"
-      labelKey="nome"
-      oneBlocked={oneBlocked}
-      disabled={disabled}
-      className={className}
-    />
-  );
-}
-```
-
----
-
-## ✅ Checklist de Conversão
-
-- [ ] Hook de API criado ou verificado em `src/hooks/use-[entidade]-api.ts`.
-- [ ] Interface de tipo exportada do hook.
-- [ ] Query keys definidas para gerenciamento de cache.
-- [ ] Hook `use[Entidade]Select()` criado.
-- [ ] Props discriminadas definidas (single/multi).
-- [ ] Componente usa `DataSelect` ou `DataMultiSelect`.
-- [ ] Props `valueKey` e `labelKey` configuradas corretamente.
-- [ ] Mensagens em português configuradas.
-- [ ] Componente exportado em `src/components/selects/index.ts`.
-- [ ] Type safety verificado (sem `any` desnecessários).

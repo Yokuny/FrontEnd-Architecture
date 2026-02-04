@@ -6,28 +6,6 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Machine, mapMachinesToOptionsSimple, useMachinesByEnterpriseSelect } from '@/hooks/use-machines-api';
 
-interface MachineSelectBaseProps {
-  idEnterprise?: string;
-  disabled?: boolean;
-  className?: string;
-  label?: string;
-  placeholder?: string;
-}
-
-interface MachineSelectSingleProps extends MachineSelectBaseProps {
-  mode: 'single';
-  value?: string;
-  onChange: (value: string | undefined) => void;
-}
-
-interface MachineSelectMultiProps extends MachineSelectBaseProps {
-  mode: 'multi';
-  value?: string[];
-  onChange: (value: string[]) => void;
-}
-
-export type MachineSelectProps = MachineSelectSingleProps | MachineSelectMultiProps;
-
 export function MachineSelect(props: MachineSelectProps) {
   const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
@@ -70,3 +48,25 @@ export function MachineSelect(props: MachineSelectProps) {
     </div>
   );
 }
+
+interface MachineSelectBaseProps {
+  idEnterprise?: string;
+  disabled?: boolean;
+  className?: string;
+  label?: string;
+  placeholder?: string;
+}
+
+interface MachineSelectSingleProps extends MachineSelectBaseProps {
+  mode: 'single';
+  value?: string;
+  onChange: (value: string | undefined) => void;
+}
+
+interface MachineSelectMultiProps extends MachineSelectBaseProps {
+  mode: 'multi';
+  value?: string[];
+  onChange: (value: string[]) => void;
+}
+
+export type MachineSelectProps = MachineSelectSingleProps | MachineSelectMultiProps;

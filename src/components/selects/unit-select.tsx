@@ -11,7 +11,6 @@ export function UnitSelect(props: UnitSelectProps) {
   const { disabled = false, className, label, placeholder, value, onChange } = props;
   const id = useId();
 
-  // Simulated query object
   const query = {
     data: UNIT_OPTIONS,
     isLoading: false,

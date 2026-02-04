@@ -6,13 +6,6 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type FleetMachines, type FleetVesselItem, mapFleetVesselsToOptionsFlat, useFleetVesselsSelect } from '@/hooks/use-fleet-vessels-api';
 
-/**
- * FleetVesselsSelect Component
- *
- * Note: The original legacy component supported grouped display and "Select All" per group.
- * The current DataMultiSelect/DataSelect base components use a flattened display.
- * Options are flattened to maintain compatibility with the new architecture pattern.
- */
 export function FleetVesselsSelect(props: FleetVesselsSelectProps) {
   const { t } = useTranslation();
   const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;

@@ -10,13 +10,11 @@ export function PrioritySelect(props: PrioritySelectProps) {
   const { disabled = false, className, label, placeholder, value, onChange } = props;
   const id = useId();
 
-  // Mapping options to translated ones
   const translatedOptions = PRIORITY_OPTIONS.map((opt) => ({
     ...opt,
     label: t(`priority.${opt.label.toLowerCase()}`),
   }));
 
-  // Simulated query object
   const query = {
     data: translatedOptions,
     isLoading: false,

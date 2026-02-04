@@ -6,24 +6,16 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { MACHINE_TYPES, type SelectOption } from '@/lib/constants/select-options';
 
-/**
- * TypeMachineSelect Component
- *
- * This component provides options for machine types (ship, truck, industrial).
- * It follows the single/multi mode pattern and uses static data centralizing in constants.
- */
 export function TypeMachineSelect(props: TypeMachineSelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Mapping options to translated ones
   const translatedOptions = MACHINE_TYPES.map((opt) => ({
     ...opt,
     label: t(`machine.type.${opt.value}`),
   }));
 
-  // Simulated query object
   const query = {
     data: translatedOptions,
     isLoading: false,

@@ -6,12 +6,6 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapPortsToOptions, type Port, usePortsSelect } from '@/hooks/use-ports-api';
 
-/**
- * PortSelect Component
- *
- * Fetches and displays ports.
- * Follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function PortSelect(props: PortSelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;

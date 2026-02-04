@@ -11,13 +11,11 @@ export function ViewSelect(props: ViewSelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Mapping options to translated ones
   const translatedOptions = VIEW_OPTIONS.map((opt) => ({
     ...opt,
     label: t(`view.${opt.value}`),
   }));
 
-  // Simulated query object
   const query = {
     data: translatedOptions,
     isLoading: false,

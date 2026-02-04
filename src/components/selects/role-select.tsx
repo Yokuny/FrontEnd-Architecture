@@ -1,7 +1,6 @@
 import { Shield } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -43,7 +42,7 @@ export function RoleSelect(props: RoleSelectProps) {
       {mode === 'multi' ? (
         <DataMultiSelect<RoleListItem, RoleListItem> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as (string | number)[])} />
       ) : (
-        <DataSelect<RoleListItem, RoleListItem> {...sharedProps} value={props.value} onChange={props.onChange} clearable={clearable} />
+        <DataSelect<RoleListItem, RoleListItem> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string | number | undefined)} clearable={clearable} />
       )}
     </div>
   );

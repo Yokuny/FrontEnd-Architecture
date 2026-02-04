@@ -6,24 +6,16 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { CONDITION_OPTIONS } from '@/lib/constants/select-options';
 
-/**
- * ConditionSelect Component
- *
- * Provides selection for logical conditions (Less than, Equal, Between, etc.).
- * Uses static data from central constants and supports single/multi modes.
- */
 export function ConditionSelect(props: ConditionSelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Mapping static options to translated ones
   const translatedOptions = CONDITION_OPTIONS.map((opt) => ({
     ...opt,
     label: t(`conditions.${opt.value.toLowerCase()}`),
   }));
 
-  // Simulated query object for static data
   const query = {
     data: translatedOptions,
     isLoading: false,

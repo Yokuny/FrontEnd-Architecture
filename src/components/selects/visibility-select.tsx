@@ -11,7 +11,6 @@ export function VisibilitySelect(props: VisibilitySelectProps) {
   const { mode, disabled = false, className, label, placeholder } = props;
   const id = useId();
 
-  // Simulated query object
   const query = {
     data: VISIBILITY_OPTIONS,
     isLoading: false,

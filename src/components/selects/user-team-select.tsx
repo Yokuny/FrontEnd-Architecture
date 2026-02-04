@@ -13,34 +13,19 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
   const id = useId();
   const query = useUserTeamSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
   const displayLabel = label || t('group');
-
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Users className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<UserTeamMember, UserTeamMember>
-          id={id}
-          placeholder={placeholder || t('group')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapUserTeamToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('group'),
+    query,
+    mapToOptions: mapUserTeamToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
   return (
     <div className="space-y-2">
@@ -50,20 +35,11 @@ export function UserTeamSelect(props: UserTeamSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<UserTeamMember, UserTeamMember>
-        id={id}
-        placeholder={placeholder || t('group')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapUserTeamToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<UserTeamMember, UserTeamMember> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<UserTeamMember, UserTeamMember> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

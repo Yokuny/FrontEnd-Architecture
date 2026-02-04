@@ -11,13 +11,11 @@ export function FasTypeSelect(props: FasTypeSelectProps) {
   const { mode, noRegularization = false, disabled = false, className, label, placeholder } = props;
   const id = useId();
 
-  // Combine options based on regularization preference
   const allOptions = [...FAS_TYPES];
   if (!noRegularization) {
     allOptions.push(...FAS_REGULARIZATION_TYPES);
   }
 
-  // Simulated query object
   const query = {
     data: allOptions,
     isLoading: false,

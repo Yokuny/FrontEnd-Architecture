@@ -11,13 +11,11 @@ export function LevelSelect(props: LevelSelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Mapping options to translated ones
   const translatedOptions = LEVEL_OPTIONS.map((opt) => ({
     ...opt,
     name: t(opt.id),
   }));
 
-  // Simulated query object
   const query = {
     data: translatedOptions,
     isLoading: false,

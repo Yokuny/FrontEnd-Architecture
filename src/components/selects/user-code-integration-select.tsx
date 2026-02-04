@@ -1,53 +1,31 @@
 import { UserRound } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapUserCodeIntegrationToOptions, type UserCodeIntegration, useUserCodeIntegrationSelect } from '@/hooks/use-user-code-integration-api';
 
-/**
- * UserCodeIntegrationSelect Component
- *
- * Fetches and displays users with their integration codes.
- * Follows the single/multi mode pattern and integrates with TanStack Query.
- */
 export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
   const query = useUserCodeIntegrationSelect();
-
-  if (mode === 'multi') {
-    const displayLabel = label || t('user');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <UserRound className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<UserCodeIntegration, UserCodeIntegration>
-          id={id}
-          placeholder={placeholder || t('user')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapUserCodeIntegrationToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('user');
+
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('user'),
+    query,
+    mapToOptions: mapUserCodeIntegrationToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -56,20 +34,11 @@ export function UserCodeIntegrationSelect(props: UserCodeIntegrationSelectProps)
           {displayLabel}
         </Label>
       )}
-      <DataSelect<UserCodeIntegration, UserCodeIntegration>
-        id={id}
-        placeholder={placeholder || t('user')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapUserCodeIntegrationToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<UserCodeIntegration, UserCodeIntegration> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<UserCodeIntegration, UserCodeIntegration> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }
