@@ -16,6 +16,7 @@
     "format": "biome check --write --unsafe && biome format --write .",
     "check": "tsc --noEmit",
     "routes": "npx tsx src/config/extractRoutes.ts && pnpm run format",
+    "routes:ai": "npx tsx src/config/route-metadata-generator.ts",
     "i18n": "python3 src/config/translations/i18n_pipeline.py",
     "i18n:clean": "python3 src/config/translations/i18n_remove_unused.py",
     "i18n:sort": "python3 src/config/translations/i18n_sort.py",

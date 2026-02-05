@@ -14,6 +14,9 @@ import { useFleetCII } from '@/hooks/use-esg-api';
 import { FleetCIITable } from './@components/FleetCIITable';
 
 export const Route = createFileRoute('/_private/esg/cii-fleet/')({
+  staticData: {
+    title: 'esg.fleet',
+  },
   component: CIIFleetPage,
 });
 
@@ -34,7 +37,7 @@ function CIIFleetPage() {
 
   return (
     <Card>
-      <CardHeader title={t('esg.fleet')} />
+      <CardHeader />
       <CardContent className="flex flex-col">
         <Item variant="outline" className="bg-secondary">
           <div className="flex flex-col gap-1.5">

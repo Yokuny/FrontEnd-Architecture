@@ -144,18 +144,24 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
   ```
 
 
-  **Hooks Globais Comuns (Top Usage)**:
-  | Hook | Descrição |
-  |---|---|
-  | `use-enterprise-filter.ts` | Obtém `idEnterprise` (empresa ativa) do filtro global. |
-  | `use-sensors-api.ts` | CRUD e listagem de sensores. |
-  | `use-users-api.ts` | Gestão de usuários do sistema. |
-  | `use-machines-api.ts` | Gestão de máquinas e embarcações. |
-  | `use-parts-api.ts` | Gestão de peças/parts. |
-  | `use-auth.ts` | Gestão de sessão, login e token. |
-  | `use-enterprises-api.ts` | CRUD de empresas. |
-  | `use-roles-api.ts` | Gestão de perfis de acesso. |
-  | `use-forms-api.ts` | Gestão de formulários dinâmicos. |
+  **Hooks Globais (258 hooks em `src/hooks`) - TOP 15 mais usados:**
+  | Hook | Usos | Descrição |
+  |------|------|-----------|
+  | `useEnterpriseFilter` | 90 | idEnterprise do filtro global |
+  | `useHasPermission` | 35 | Verifica permissões do usuário |
+  | `useSidebar` | 7 | Estado da sidebar |
+  | `useSidebarToggle` | 7 | Toggle da sidebar |
+  | `useCMMSKPIs` | 6 | KPIs do CMMS |
+  | `useIsMobile` | 5 | Detecta dispositivo mobile |
+  | `useMachinesByEnterpriseSelect` | 5 | Máquinas por empresa (select) |
+  | `useEnterprisesSelect` | 4 | Empresas para select |
+  | `useUsersApi` | 4 | CRUD usuários |
+  | `usePartsApi` | 3 | CRUD peças |
+  | `useModelMachinesApi` | 3 | CRUD modelos de máquinas |
+  | `usePlatformsApi` | 3 | CRUD plataformas |
+  | `useAuth` | 3 | Sessão e login |
+  | `useSensorsApi` | 3 | CRUD sensores |
+  | `useMachinesApi` | 3 | CRUD máquinas |
 
 
 
@@ -296,21 +302,25 @@ src/routes/_private/{module}/
  --------- 
 
 ### Seletores de Dados (Selects)
-[***`src/components/selects`***](./src/components/selects)
+[***`src/components/selects`***](./src/components/selects) - **68 componentes disponíveis**
 Os componentes de seleção de dados do sistema encapsulam a lógica de requisição a API, seu loading e tratamento de erro, já estão estilizados com label e icone seguindo o padrão do sistema.
 
-**Mais usados:**
+**TOP 10 mais usados:**
 
-| Componente | Descrição |
-| :--- | :--- |
-| `EnterpriseSelect` | Seleção de empresas (Fundamental para filtros globais). |
-| `MachineByEnterpriseSelect` | Seleção de máquinas filtradas pela empresa selecionada. |
-| `SensorByEnterpriseSelect` | Seleção de sensores vinculados a uma empresa. |
-| `ConditionSelect` | Seleção de condições lógicas (Maior que, Igual a, etc.). |
-| `StatusSelect` | Seleção de status de operação ou registro. |
-| `CountrySelect` | Seleção de países. |
+| Componente | Usos | Descrição |
+| :--- | :--- | :--- |
+| `MachineByEnterpriseSelect` | 28 | Máquinas filtradas pela empresa selecionada |
+| `EnterpriseSelect` | 27 | Seleção de empresas (filtro global) |
+| `MachineSelect` | 9 | Seleção de máquinas |
+| `UserSelect` | 8 | Seleção de usuários |
+| `UnitSelect` | 5 | Seleção de unidades |
+| `SensorByMachineSelect` | 5 | Sensores filtrados pela máquina |
+| `MaintenancePlanSelect` | 4 | Planos de manutenção |
+| `CustomerSelect` | 4 | Seleção de clientes |
+| `ConsumptionMachineSelect` | 4 | Máquinas para consumo |
+| `ModelMachineSelect` | 4 | Modelos de máquinas |
 
-*(Existem muitos outros seletores específicos no diretório, verifique antes de criar um novo)*
+*(Verifique o diretório antes de criar um novo select)*
 
 Recebem como props
 - `mode`: `'single' | 'multi'` (Define se é seleção única ou múltipla).

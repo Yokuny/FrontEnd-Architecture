@@ -25,6 +25,30 @@ import { useConsumptionDailyData } from './@hooks/use-consumption-daily-api';
 import { searchSchema } from './@interface/consumption-daily.schema';
 
 export const Route = createFileRoute('/_private/consumption/daily/')({
+  staticData: {
+    title: 'consumption.daily',
+    description: 'Página de relatório de consumo diário de combustível por embarcação. Exibe gráficos de consumo real vs estimado, estatísticas e lista de pollings.',
+    tags: ['consumo', 'combustível', 'diário', 'relatório', 'embarcação', 'vessel', 'fuel', 'daily', 'consumption'],
+    examplePrompts: [
+      'Quero ver o consumo diário do navio X',
+      'Relatório de consumo entre 2025-01-01 e 2025-02-01',
+      'Mostre o consumo de combustível do mês passado',
+      'Consumo diário de uma embarcação específica',
+    ],
+    searchParams: [
+      { name: 'dateMin', type: 'date', description: 'Data inicial do período no formato YYYY-MM-DD', example: '2025-01-01' },
+      { name: 'dateMax', type: 'date', description: 'Data final do período no formato YYYY-MM-DD', example: '2025-02-04' },
+      { name: 'machine', type: 'string', description: 'ID da embarcação/máquina para filtrar' },
+      { name: 'unit', type: 'string', description: 'Unidade de medida: L (litros), m³ (metros cúbicos), gal (galões)', example: 'L' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption/monthly', relation: 'sibling', description: 'Consumo mensal agregado' },
+      { path: '/_private/consumption/accumulated', relation: 'sibling', description: 'Consumo acumulado por período' },
+      { path: '/_private/consumption/comparative', relation: 'sibling', description: 'Comparativo de consumo entre embarcações' },
+    ],
+    entities: ['ConsumptionData', 'Machine', 'Enterprise'],
+    capabilities: ['Visualizar gráfico de consumo', 'Alternar consumo real/estimado', 'Ver estatísticas', 'Listar pollings'],
+  },
   component: ConsumptionDailyPage,
   validateSearch: searchSchema,
 });
@@ -79,7 +103,7 @@ function ConsumptionDailyPage() {
 
   return (
     <Card>
-      <CardHeader title={t('consumption.daily')} />
+      <CardHeader />
       <CardContent>
         <Item variant="outline" className="mb-6 bg-secondary">
           <ItemContent className="flex-none">

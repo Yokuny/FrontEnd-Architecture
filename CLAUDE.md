@@ -126,11 +126,6 @@ src/routes/_private/{module}/
 | `useSensorsApi` | 3 | CRUD sensores |
 | `useMachinesApi` | 3 | CRUD máquinas |
 
-## ShadCN CLI
-```bash
-pnpm dlx shadcn@latest add <component>
-```
-
 ## Antes de Commitar
 ```bash
 pnpm run format  # Biome

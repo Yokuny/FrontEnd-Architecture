@@ -10,7 +10,7 @@ from pathlib import Path
 from collections import defaultdict
 
 # Diretório raiz do projeto
-PROJECT_ROOT = Path(__file__).parent.parent
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 SELECTS_DIR = PROJECT_ROOT / "src" / "components" / "selects"
 SRC_DIR = PROJECT_ROOT / "src"
 
@@ -143,8 +143,9 @@ def print_report(selects: dict):
     print("📋 RESUMO")
     print("=" * 60)
     print(f"Total de componentes Select: {len(selects)}")
-    print(f"Em uso: {len(used)} ({len(used)/len(selects)*100:.1f}%)")
-    print(f"Sem uso: {len(unused)} ({len(unused)/len(selects)*100:.1f}%)")
+    if len(selects) > 0:
+        print(f"Em uso: {len(used)} ({len(used)/len(selects)*100:.1f}%)")
+        print(f"Sem uso: {len(unused)} ({len(unused)/len(selects)*100:.1f}%)")
 
     if unused:
         print(f"\n💡 Considere remover os {len(unused)} selects não utilizados.")

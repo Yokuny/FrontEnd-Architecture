@@ -72,11 +72,42 @@ Toda nova página DEVE seguir esta estrutura hierárquica:
 - **Datas**: Toda formatação para exibição DEVE usar [***`@/lib/formatDate`***](./src/lib/formatDate.ts). EVITE importar `format` ou `formatDistanceToNow` do `date-fns` diretamente nos componentes para não perder a internacionalização de locale.
 
 ### 7. Seletores (Selects)
-Use os componentes prontos em `src/components/selects` ao invés de criar `Select` do zero:
-- `EnterpriseSelect` (Filtro global)
-- `MachineByEnterpriseSelect`
-- `SensorByEnterpriseSelect`
-- `StatusSelect`, `ConditionSelect`, `CountrySelect`
+Use os componentes prontos em `src/components/selects` (68 componentes) ao invés de criar `Select` do zero.
+
+**TOP 10 mais usados:**
+| Componente | Usos |
+|------------|------|
+| `MachineByEnterpriseSelect` | 28 |
+| `EnterpriseSelect` | 27 |
+| `MachineSelect` | 9 |
+| `UserSelect` | 8 |
+| `UnitSelect` | 5 |
+| `SensorByMachineSelect` | 5 |
+| `MaintenancePlanSelect` | 4 |
+| `CustomerSelect` | 4 |
+| `ConsumptionMachineSelect` | 4 |
+| `ModelMachineSelect` | 4 |
+
+### 8. Hooks Globais (258 hooks em `src/hooks`)
+
+**TOP 15 mais usados:**
+| Hook | Usos | Descrição |
+|------|------|-----------|
+| `useEnterpriseFilter` | 90 | idEnterprise do filtro global |
+| `useHasPermission` | 35 | Verifica permissões do usuário |
+| `useSidebar` | 7 | Estado da sidebar |
+| `useSidebarToggle` | 7 | Toggle da sidebar |
+| `useCMMSKPIs` | 6 | KPIs do CMMS |
+| `useIsMobile` | 5 | Detecta dispositivo mobile |
+| `useMachinesByEnterpriseSelect` | 5 | Máquinas por empresa (select) |
+| `useEnterprisesSelect` | 4 | Empresas para select |
+| `useUsersApi` | 4 | CRUD usuários |
+| `usePartsApi` | 3 | CRUD peças |
+| `useModelMachinesApi` | 3 | CRUD modelos de máquinas |
+| `usePlatformsApi` | 3 | CRUD plataformas |
+| `useAuth` | 3 | Sessão e login |
+| `useSensorsApi` | 3 | CRUD sensores |
+| `useMachinesApi` | 3 | CRUD máquinas |
 
 ## 🛠️ Modos de Operação
 
