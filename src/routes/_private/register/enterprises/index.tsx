@@ -29,6 +29,47 @@ export const Route = createFileRoute('/_private/register/enterprises/')({
   beforeLoad: () => ({
     title: 'enterprises',
   }),
+  staticData: {
+    title: 'register.enterprises',
+    description: 'Página de cadastro e gerenciamento de empresas/organizações. Permite criar, visualizar, editar e configurar empresas com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'empresas', 'enterprises', 'organizações', 'tenant', 'multi-tenant'],
+    examplePrompts: [
+      'Cadastrar nova empresa',
+      'Listar todas as empresas',
+      'Editar empresa',
+      'Buscar empresa por nome',
+      'Configurar email da empresa',
+      'Configurar chatbot da empresa',
+      'Gerenciar usuários externos',
+      'Configurar limites da empresa',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'nome' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' },
+      { path: '/_private/set-up-company/setup-email', relation: 'sibling', description: 'Configuração de email' },
+      { path: '/_private/set-up-company/setup-chatbot', relation: 'sibling', description: 'Configuração de chatbot' },
+      { path: '/_private/set-up-company/external-users', relation: 'sibling', description: 'Usuários externos' },
+      { path: '/_private/set-up-company/setup-limits', relation: 'sibling', description: 'Configuração de limites' },
+      { path: '/_private/set-up-company/setup-fleet', relation: 'sibling', description: 'Configuração de frota' },
+    ],
+    entities: ['Enterprise'],
+    capabilities: [
+      'Listar empresas com paginação',
+      'Buscar por termo',
+      'Criar nova empresa',
+      'Editar empresa existente',
+      'Configurar email da empresa',
+      'Configurar chatbot',
+      'Gerenciar usuários externos',
+      'Configurar limites de uso',
+      'Configurar visualização na frota',
+      'Visualizar localização da empresa',
+    ],
+  },
 });
 
 function EnterprisesListPage() {

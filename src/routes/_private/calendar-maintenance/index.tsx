@@ -33,6 +33,38 @@ export const Route = createFileRoute('/_private/calendar-maintenance/')({
   beforeLoad: () => ({
     title: 'calendar.maintenance',
   }),
+  staticData: {
+    title: 'calendar.maintenance',
+    description:
+      'Calendário visual de manutenções - visualização temporal de eventos de manutenção em formato mensal ou semanal. Permite filtrar por ativos, planos de manutenção, responsáveis e status, além de criar e editar eventos diretamente no calendário',
+    tags: ['calendar', 'maintenance', 'manutenção', 'schedule', 'agenda', 'event', 'eventos', 'plan', 'visual', 'timeline', 'month', 'week', 'asset', 'filter'],
+    examplePrompts: [
+      'Visualizar calendário de manutenções',
+      'Agendar nova manutenção no calendário',
+      'Filtrar manutenções por embarcação e período',
+      'Ver eventos de manutenção da semana',
+      'Buscar manutenções por plano',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da empresa para filtrar eventos de manutenção', example: 'uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/cmms/maintenance-plan', relation: 'sibling', description: 'Planos de manutenção' },
+      { path: '/_private/cmms/maintenance-order', relation: 'sibling', description: 'Ordens de manutenção' },
+      { path: '/_private/cmms', relation: 'sibling', description: 'Hub CMMS' },
+    ],
+    entities: ['MaintenanceEvent', 'MaintenancePlan', 'Machine', 'Enterprise', 'Manager'],
+    capabilities: [
+      'Visualizar calendário mensal',
+      'Visualizar calendário semanal',
+      'Criar evento de manutenção',
+      'Editar evento existente',
+      'Filtrar por ativos',
+      'Filtrar por plano de manutenção',
+      'Filtrar por responsável',
+      'Filtrar por status',
+      'Navegar entre períodos',
+      'Selecionar data',
+    ],
+  },
 });
 
 function CalendarMaintenancePage() {

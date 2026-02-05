@@ -24,6 +24,32 @@ export const Route = createFileRoute('/_private/set-up-company/external-users/')
   beforeLoad: () => ({
     title: 'usernames.external',
   }),
+  staticData: {
+    title: 'usernames.external',
+    description:
+      'Gerenciamento de usuários externos para integração com APIs e sistemas de terceiros. Configure tokens de autenticação e controle de acesso para usuários externos.',
+    tags: ['setup', 'configuração', 'config', 'admin', 'integration', 'integração', 'external users', 'usuários externos', 'tokens', 'api', 'autenticação', 'authentication'],
+    examplePrompts: [
+      'Como criar um novo usuário externo para integração?',
+      'Como gerar um token de acesso para API externa?',
+      'Como desativar um usuário externo?',
+      'Onde gerencio os tokens de autenticação?',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da empresa para filtrar usuários externos', example: 'uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/set-up-company', relation: 'parent', description: 'Hub de configurações da empresa' },
+      { path: '/_private/set-up-company/setup-api-external', relation: 'sibling', description: 'Configuração de APIs externas' },
+      { path: '/_private/set-up-company/integration-list', relation: 'sibling', description: 'Lista de integrações' },
+    ],
+    entities: ['Enterprise', 'ExternalUser', 'Integration'],
+    capabilities: [
+      'Criar usuários externos',
+      'Gerenciar tokens de acesso',
+      'Ativar/desativar usuários externos',
+      'Visualizar credenciais de integração',
+      'Configurar autenticação de APIs',
+    ],
+  },
 });
 
 function ExternalUsersPage() {

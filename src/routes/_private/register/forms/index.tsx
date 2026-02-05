@@ -30,6 +30,28 @@ export const Route = createFileRoute('/_private/register/forms/')({
   beforeLoad: () => ({
     title: 'config.form',
   }),
+  staticData: {
+    title: 'register.forms',
+    description: 'Página de cadastro e gerenciamento de formulários e checklists. Permite criar, visualizar e editar formulários personalizados com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'formulários', 'forms', 'checklists', 'configuração'],
+    examplePrompts: ['Cadastrar novo formulário', 'Listar todos os formulários', 'Editar formulário', 'Buscar formulário por descrição', 'Visualizar formulários não salvos'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'checklist' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Form', 'Enterprise', 'User'],
+    capabilities: [
+      'Listar formulários com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo formulário',
+      'Editar formulário existente',
+      'Visualizar formulários pendentes (não salvos)',
+      'Gerenciar permissões de edição',
+    ],
+  },
 });
 
 interface PendingForm {

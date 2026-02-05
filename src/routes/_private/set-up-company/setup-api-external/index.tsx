@@ -21,6 +21,26 @@ export const Route = createFileRoute('/_private/set-up-company/setup-api-externa
   beforeLoad: () => ({
     title: 'setup.api.external',
   }),
+  staticData: {
+    title: 'setup.api.external',
+    description:
+      'Configuração de APIs externas e chaves de acesso para serviços de terceiros. Configure integrações com Windy e outros serviços meteorológicos e de dados externos.',
+    tags: ['setup', 'configuração', 'config', 'admin', 'api', 'external api', 'api externa', 'integration', 'integração', 'windy', 'chaves', 'keys', 'terceiros'],
+    examplePrompts: [
+      'Como configurar a chave da API Windy?',
+      'Onde adiciono chaves de APIs externas?',
+      'Como testar uma API externa configurada?',
+      'Como trocar a chave de acesso de um serviço externo?',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da empresa para configurar APIs externas', example: 'uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/set-up-company', relation: 'parent', description: 'Hub de configurações da empresa' },
+      { path: '/_private/set-up-company/external-users', relation: 'sibling', description: 'Usuários externos' },
+      { path: '/_private/set-up-company/integration-list', relation: 'sibling', description: 'Lista de integrações' },
+    ],
+    entities: ['Enterprise', 'ApiConfig', 'Integration'],
+    capabilities: ['Configurar chaves de APIs externas', 'Gerenciar credenciais de serviços terceiros', 'Integrar com Windy API', 'Atualizar configurações de APIs'],
+  },
 });
 
 function SetupApiExternalPage() {

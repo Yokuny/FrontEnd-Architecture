@@ -27,6 +27,38 @@ type ContractsSearch = z.infer<typeof contractsSearchSchema>;
 export const Route = createFileRoute('/_private/register/contracts/')({
   component: ContractsListPage,
   validateSearch: (search: Record<string, unknown>): ContractsSearch => contractsSearchSchema.parse(search),
+  staticData: {
+    title: 'register.contracts',
+    description: 'Página de cadastro e gerenciamento de contratos. Permite criar, visualizar, editar, duplicar e visualizar ativos vinculados aos contratos com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'contratos', 'contracts', 'acordos', 'clientes'],
+    examplePrompts: [
+      'Cadastrar novo contrato',
+      'Listar todos os contratos',
+      'Editar contrato',
+      'Buscar contrato por descrição',
+      'Duplicar contrato',
+      'Visualizar ativos do contrato',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'contrato' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' },
+      { path: '/_private/register/contracts/assets/$id', relation: 'child', description: 'Ativos do contrato' },
+    ],
+    entities: ['Contract', 'Customer', 'Enterprise'],
+    capabilities: [
+      'Listar contratos com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo contrato',
+      'Editar contrato existente',
+      'Duplicar contrato',
+      'Visualizar ativos vinculados ao contrato',
+    ],
+  },
 });
 
 function ContractsListPage() {

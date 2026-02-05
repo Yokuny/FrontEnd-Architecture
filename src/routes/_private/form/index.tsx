@@ -18,6 +18,38 @@ import { type FormSearch, formSearchSchema } from './@interface/form.schema';
 export const Route = createFileRoute('/_private/form/')({
   component: FormsPage,
   validateSearch: (search: Record<string, unknown>): FormSearch => formSearchSchema.parse(search),
+  staticData: {
+    title: 'forms',
+    description:
+      'Formulários dinâmicos - sistema de gestão de formulários customizáveis com templates reutilizáveis. Permite listar, buscar e acessar formulários preenchidos, suportando diferentes tipos e permissões de preenchimento',
+    tags: ['form', 'formulário', 'template', 'dynamic', 'dinâmico', 'custom', 'filled', 'preenchido', 'checklist', 'survey', 'inspection', 'data-collection'],
+    examplePrompts: [
+      'Listar todos os formulários disponíveis',
+      'Buscar formulário por nome',
+      'Ver formulários preenchidos',
+      'Criar novo preenchimento de formulário',
+      'Filtrar formulários por tipo',
+    ],
+    searchParams: [
+      { name: 'search', type: 'string', description: 'Termo de busca para filtrar formulários', example: 'inspeção' },
+      { name: 'page', type: 'number', description: 'Número da página para paginação', example: '1' },
+      { name: 'size', type: 'number', description: 'Quantidade de itens por página', example: '10' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/cmms/filled-form-cmms', relation: 'sibling', description: 'Formulários preenchidos do CMMS' },
+      { path: '/_private/cmms', relation: 'sibling', description: 'Hub CMMS' },
+    ],
+    entities: ['Form', 'FilledForm', 'Enterprise', 'FormType'],
+    capabilities: [
+      'Listar formulários',
+      'Buscar formulários',
+      'Paginar resultados',
+      'Ver formulários preenchidos',
+      'Filtrar por empresa',
+      'Verificar permissões de preenchimento',
+      'Acessar detalhes do formulário',
+    ],
+  },
 });
 
 function FormsPage() {

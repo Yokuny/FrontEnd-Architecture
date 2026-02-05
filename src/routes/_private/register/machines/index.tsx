@@ -30,6 +30,40 @@ type MachinesSearch = z.infer<typeof machinesSearchSchema>;
 export const Route = createFileRoute('/_private/register/machines/')({
   component: MachineListPage,
   validateSearch: (search: Record<string, unknown>): MachinesSearch => machinesSearchSchema.parse(search),
+  staticData: {
+    title: 'register.machines',
+    description: 'Página de cadastro e gerenciamento de ativos/embarcações. Permite criar, visualizar, editar e incluir embarcações com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'máquinas', 'machines', 'ativos', 'assets', 'embarcações', 'vessels'],
+    examplePrompts: [
+      'Cadastrar novo ativo',
+      'Listar todos os ativos',
+      'Editar máquina',
+      'Buscar embarcação por nome',
+      'Incluir embarcação externa',
+      'Visualizar sensores da máquina',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'navio' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Machine', 'Enterprise'],
+    capabilities: [
+      'Listar ativos com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo ativo',
+      'Editar ativo existente',
+      'Incluir embarcação externa',
+      'Visualizar código do ativo',
+      'Visualizar status de ativação',
+      'Visualizar configurações de frota e viagem',
+      'Visualizar quantidade de sensores',
+      'Editar alarmes da máquina',
+      'Gerenciar sensores da máquina',
+    ],
+  },
 });
 
 function MachineListPage() {

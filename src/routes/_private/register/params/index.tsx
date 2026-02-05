@@ -31,6 +31,20 @@ export const Route = createFileRoute('/_private/register/params/')({
   beforeLoad: () => ({
     title: 'params',
   }),
+  staticData: {
+    title: 'register.params',
+    description: 'Página de cadastro e gerenciamento de parâmetros globais do sistema. Permite criar, visualizar, editar e deletar configurações com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'parâmetros', 'parameters', 'params', 'configuração', 'settings'],
+    examplePrompts: ['Cadastrar novo parâmetro', 'Listar todos os parâmetros', 'Editar parâmetro', 'Buscar parâmetro por descrição', 'Deletar parâmetro'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '20' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'configuração' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Param', 'Enterprise'],
+    capabilities: ['Listar parâmetros com paginação', 'Buscar por termo', 'Filtrar por empresa', 'Criar novo parâmetro', 'Editar parâmetro existente', 'Deletar parâmetro'],
+  },
 });
 
 function ParamsListPage() {

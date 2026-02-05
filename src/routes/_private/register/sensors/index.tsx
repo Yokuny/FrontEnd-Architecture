@@ -31,6 +31,29 @@ export const Route = createFileRoute('/_private/register/sensors/')({
   beforeLoad: () => ({
     title: 'sensors',
   }),
+  staticData: {
+    title: 'register.sensors',
+    description: 'Página de cadastro e gerenciamento de sensores IoT. Permite criar, visualizar, editar e deletar sensores com configurações de sinal, busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'sensores', 'sensors', 'IoT', 'telemetria', 'monitoramento'],
+    examplePrompts: ['Cadastrar novo sensor', 'Listar todos os sensores', 'Editar sensor', 'Buscar sensor por nome', 'Deletar sensor', 'Visualizar máquinas vinculadas ao sensor'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '20' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'temperatura' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Sensor', 'Enterprise', 'Machine'],
+    capabilities: [
+      'Listar sensores com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo sensor',
+      'Editar sensor existente',
+      'Deletar sensor',
+      'Visualizar ID do sensor',
+      'Visualizar máquinas vinculadas',
+    ],
+  },
 });
 
 function SensorListPage() {

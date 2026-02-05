@@ -26,6 +26,51 @@ import { fasAnalyticsSearchSchema } from './@interface/fas-analytics.schema';
 export const Route = createFileRoute('/_private/service-management/fas-analytics/')({
   component: FasAnalyticsPage,
   validateSearch: (search: Record<string, unknown>): FasAnalyticsSearch => fasAnalyticsSearchSchema.parse(search),
+  staticData: {
+    title: 'fas.analytics',
+    description:
+      'Analytics e dashboards de serviços externos FAS. Visualize gráficos de ordens realizadas, tipos de cabeçalho, status de ordens, valores BMS e valores de OS por fornecedor, com múltiplos filtros e eixos de análise',
+    tags: ['analytics', 'dashboard', 'fas', 'field-service', 'chart', 'graph', 'bms', 'value', 'report', 'statistics', 'kpi'],
+    examplePrompts: [
+      'Ver analytics de serviços de campo',
+      'Mostrar gráfico de ordens realizadas por mês',
+      'Analisar valores BMS por fornecedor',
+      'Comparar tipos de serviços por período',
+      'Dashboard de status de ordens de serviço',
+    ],
+    searchParams: [
+      { name: 'chartType', type: 'string', description: 'Tipo de gráfico selecionado' },
+      { name: 'filterType', type: 'string', description: 'Tipo de filtro de data (range ou month)' },
+      { name: 'startDate', type: 'string', description: 'Data de início (modo range)' },
+      { name: 'endDate', type: 'string', description: 'Data de fim (modo range)' },
+      { name: 'month', type: 'string', description: 'Mês selecionado (modo month)' },
+      { name: 'year', type: 'number', description: 'Ano selecionado (modo month)' },
+      { name: 'vesselId', type: 'string', description: 'ID da embarcação' },
+      { name: 'dependantAxis', type: 'string', description: 'Eixo dependente do gráfico' },
+      { name: 'status', type: 'array', description: 'Status das ordens' },
+      { name: 'fasType', type: 'array', description: 'Tipos de FAS' },
+      { name: 'showValueByPayment', type: 'boolean', description: 'Mostrar valores por data de pagamento' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/service-management', relation: 'parent', description: 'Hub de gestão de serviços' },
+      { path: '/_private/service-management/fas', relation: 'sibling', description: 'Listagem de FAS' },
+    ],
+    entities: ['FAS', 'WorkOrder', 'BMS', 'Supplier', 'Vessel'],
+    capabilities: [
+      'Visualizar gráficos de ordens realizadas',
+      'Analisar tipos de cabeçalho',
+      'Ver status de ordens',
+      'Analisar valores BMS',
+      'Analisar valores de OS',
+      'Filtrar por período (range ou mês)',
+      'Filtrar por embarcação',
+      'Filtrar por status',
+      'Filtrar por tipo FAS',
+      'Agrupar por mês/ano/embarcação/fornecedor',
+      'Visualizar valores por data de pagamento',
+      'Atualizar dados do gráfico',
+    ],
+  },
 });
 
 function FasAnalyticsPage() {

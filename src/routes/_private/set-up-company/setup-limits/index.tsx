@@ -21,6 +21,22 @@ export const Route = createFileRoute('/_private/set-up-company/setup-limits/')({
   beforeLoad: () => ({
     title: 'setup.limits',
   }),
+  staticData: {
+    title: 'setup.limits',
+    description:
+      'Configuração de limites e quotas de uso do sistema. Defina limites de usuários, máquinas, armazenamento, requisições de API e outros recursos disponíveis para a empresa.',
+    tags: ['setup', 'configuração', 'config', 'admin', 'limits', 'limites', 'quotas', 'cotas', 'recursos', 'resources', 'usage', 'uso'],
+    examplePrompts: [
+      'Como definir limites de uso do sistema?',
+      'Onde configuro as quotas da empresa?',
+      'Como aumentar o limite de usuários?',
+      'Quais limites podem ser configurados?',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da empresa para configurar limites', example: 'uuid-123' }],
+    relatedRoutes: [{ path: '/_private/set-up-company', relation: 'parent', description: 'Hub de configurações da empresa' }],
+    entities: ['Enterprise', 'LimitConfig'],
+    capabilities: ['Configurar limites de uso', 'Definir quotas de recursos', 'Gerenciar limites de usuários e máquinas', 'Controlar uso de API e armazenamento'],
+  },
 });
 
 function SetupLimitsPage() {

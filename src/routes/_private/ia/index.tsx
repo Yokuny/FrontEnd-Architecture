@@ -6,6 +6,21 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/comp
 
 export const Route = createFileRoute('/_private/ia/')({
   component: IAHubPage,
+  staticData: {
+    title: 'ai',
+    description:
+      'Hub de Inteligência Artificial - menu centralizado de ferramentas de IA incluindo chatbot com prompt engineering e detector de anomalias com machine learning. Ponto de entrada para recursos de análise preditiva e assistentes inteligentes',
+    tags: ['ai', 'ia', 'artificial-intelligence', 'inteligência-artificial', 'hub', 'menu', 'ml', 'machine-learning', 'chatbot', 'anomaly', 'prompt', 'nexai'],
+    examplePrompts: ['Acessar ferramentas de IA', 'Usar chatbot inteligente', 'Detectar anomalias', 'Ver menu de IA', 'Navegar para recursos de machine learning'],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/ia/prompt', relation: 'child', description: 'AI Chatbot com prompt engineering' },
+      { path: '/_private/ia/anomaly-detector', relation: 'child', description: 'Detector de anomalias ML' },
+      { path: '/_private', relation: 'parent', description: 'Dashboard principal' },
+    ],
+    entities: ['AITool', 'Enterprise'],
+    capabilities: ['Navegar para chatbot', 'Navegar para detector de anomalias', 'Visualizar menu de IA', 'Acessar ferramentas ML'],
+  },
 });
 
 function IAHubPage() {

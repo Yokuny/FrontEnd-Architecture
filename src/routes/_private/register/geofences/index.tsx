@@ -30,6 +30,36 @@ export const Route = createFileRoute('/_private/register/geofences/')({
   beforeLoad: () => ({
     title: 'geofences',
   }),
+  staticData: {
+    title: 'register.geofences',
+    description: 'Página de cadastro e gerenciamento de cercas virtuais geográficas. Permite criar, visualizar, editar e deletar geofences com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'geofences', 'cercas virtuais', 'áreas', 'segurança', 'localização'],
+    examplePrompts: [
+      'Cadastrar nova geofence',
+      'Listar todas as geofences',
+      'Editar geofence',
+      'Buscar geofence por descrição',
+      'Deletar geofence',
+      'Visualizar tipos de geofence',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '20' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'porto' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Geofence', 'Enterprise'],
+    capabilities: [
+      'Listar geofences com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar nova geofence',
+      'Editar geofence existente',
+      'Deletar geofence',
+      'Visualizar tipo de geofence',
+      'Visualizar localização (cidade e estado)',
+    ],
+  },
 });
 
 function GeofenceListPage() {

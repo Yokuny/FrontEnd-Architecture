@@ -21,6 +21,26 @@ export const Route = createFileRoute('/_private/set-up-company/setup-fleet/')({
   beforeLoad: () => ({
     title: 'setup.fleet',
   }),
+  staticData: {
+    title: 'setup.fleet',
+    description:
+      'Configuração de parâmetros da frota e integração com sistemas de rastreamento Fleet. Defina configurações gerais para gestão e monitoramento da frota de embarcações.',
+    tags: ['setup', 'configuração', 'config', 'admin', 'fleet', 'frota', 'embarcações', 'rastreamento', 'tracking', 'monitoramento', 'monitoring'],
+    examplePrompts: [
+      'Como configurar a frota no sistema?',
+      'Onde defino os parâmetros da frota?',
+      'Como integrar o sistema Fleet?',
+      'Quais configurações estão disponíveis para a frota?',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da empresa para configurar frota', example: 'uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/set-up-company', relation: 'parent', description: 'Hub de configurações da empresa' },
+      { path: '/_private/set-up-company/integration-list', relation: 'sibling', description: 'Lista de integrações AIS' },
+      { path: '/_private/machines', relation: 'sibling', description: 'Gerenciamento de máquinas' },
+    ],
+    entities: ['Enterprise', 'FleetConfig', 'Machine'],
+    capabilities: ['Configurar parâmetros da frota', 'Integrar com sistema Fleet', 'Definir configurações de rastreamento', 'Gerenciar configurações de embarcações'],
+  },
 });
 
 function SetupFleetPage() {

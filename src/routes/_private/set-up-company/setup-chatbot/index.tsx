@@ -21,6 +21,41 @@ export const Route = createFileRoute('/_private/set-up-company/setup-chatbot/')(
   beforeLoad: () => ({
     title: 'setup.chatbot',
   }),
+  staticData: {
+    title: 'setup.chatbot',
+    description:
+      'Configuração de chatbot e integração com WhatsApp para notificações e comunicação automatizada. Configure credenciais, webhooks e parâmetros de conexão com serviços de mensageria.',
+    tags: [
+      'setup',
+      'configuração',
+      'config',
+      'admin',
+      'chatbot',
+      'whatsapp',
+      'bot',
+      'mensagens',
+      'messages',
+      'integration',
+      'integração',
+      'notificações',
+      'notifications',
+      'webhook',
+    ],
+    examplePrompts: [
+      'Como configurar o chatbot do WhatsApp?',
+      'Como integrar notificações via chatbot?',
+      'Onde configuro as credenciais do bot?',
+      'Como testar o chatbot configurado?',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da empresa para configurar chatbot', example: 'uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/set-up-company', relation: 'parent', description: 'Hub de configurações da empresa' },
+      { path: '/_private/set-up-company/setup-email', relation: 'sibling', description: 'Configuração de email' },
+      { path: '/_private/set-up-company/setup-api-external', relation: 'sibling', description: 'Configuração de APIs externas' },
+    ],
+    entities: ['Enterprise', 'ChatbotConfig', 'Integration'],
+    capabilities: ['Configurar integração com WhatsApp', 'Gerenciar credenciais do chatbot', 'Configurar webhooks de mensageria', 'Ativar notificações automatizadas'],
+  },
 });
 
 function SetupChatbotPage() {

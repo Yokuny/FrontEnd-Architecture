@@ -45,6 +45,47 @@ const fasDetailsSearchSchema = z.object({
 export const Route = createFileRoute('/_private/service-management/fas/details/')({
   component: FasDetailsPage,
   validateSearch: fasDetailsSearchSchema,
+  staticData: {
+    title: 'view.fas',
+    description:
+      'Detalhes completos de uma FAS (Field Service). Exibe informações do cabeçalho (embarcação, empresa, tipo, data, local), timeline de eventos, tabela de ordens de serviço e permite editar, cancelar, exportar e adicionar novos serviços',
+    tags: ['fas', 'details', 'detalhes', 'field-service', 'os', 'work-order', 'vessel', 'timeline', 'export', 'edit', 'cancel'],
+    examplePrompts: [
+      'Ver detalhes de uma ordem de serviço FAS',
+      'Editar data e local de serviço',
+      'Adicionar novo serviço a uma FAS',
+      'Exportar FAS para CSV',
+      'Ver timeline de eventos da FAS',
+      'Cancelar uma ordem de serviço',
+    ],
+    searchParams: [
+      { name: 'id', type: 'string', description: 'ID da FAS' },
+      { name: 'search', type: 'string', description: 'Busca em ordens' },
+      { name: 'status', type: 'array', description: 'Filtrar ordens por status' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/service-management/fas', relation: 'parent', description: 'Listagem de FAS' },
+      { path: '/_private/service-management/fas/filled-os', relation: 'sibling', description: 'Detalhes de OS específica' },
+      { path: '/_private/service-management', relation: 'parent', description: 'Hub de gestão de serviços' },
+    ],
+    entities: ['FAS', 'WorkOrder', 'Vessel', 'Enterprise', 'Event'],
+    capabilities: [
+      'Visualizar detalhes da FAS',
+      'Ver embarcação e empresa',
+      'Ver tipo e data de serviço',
+      'Ver local do serviço',
+      'Editar data e local',
+      'Visualizar timeline de eventos',
+      'Listar ordens de serviço da FAS',
+      'Adicionar nova ordem de serviço',
+      'Exportar FAS para CSV',
+      'Cancelar FAS',
+      'Visualizar ordens',
+      'Editar ordens',
+      'Transferir ordens',
+      'Gerenciar fornecedores',
+    ],
+  },
 });
 
 function FasDetailsPage() {

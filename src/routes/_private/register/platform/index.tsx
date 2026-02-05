@@ -31,6 +31,28 @@ export const Route = createFileRoute('/_private/register/platform/')({
   beforeLoad: () => ({
     title: 'platforms',
   }),
+  staticData: {
+    title: 'register.platforms',
+    description: 'Página de cadastro e gerenciamento de plataformas offshore. Permite criar, visualizar, editar e deletar plataformas com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'plataformas', 'platforms', 'offshore', 'equipamentos'],
+    examplePrompts: ['Cadastrar nova plataforma', 'Listar todas as plataformas', 'Editar plataforma', 'Buscar plataforma por nome', 'Deletar plataforma'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '20' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'plataforma' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Platform', 'Enterprise'],
+    capabilities: [
+      'Listar plataformas com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar nova plataforma',
+      'Editar plataforma existente',
+      'Deletar plataforma',
+      'Visualizar acrônimo e tipo de modelo',
+    ],
+  },
 });
 
 function PlatformListPage() {

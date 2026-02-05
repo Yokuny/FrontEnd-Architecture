@@ -27,6 +27,31 @@ export const Route = createFileRoute('/_private/register/type-fuel/')({
   beforeLoad: () => ({
     title: 'types.fuel',
   }),
+  staticData: {
+    title: 'register.type-fuel',
+    description: 'Página de cadastro e gerenciamento de tipos de combustível. Permite criar, visualizar, editar e deletar tipos de combustível com busca.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'combustível', 'fuel', 'tipos', 'types', 'consumo'],
+    examplePrompts: [
+      'Cadastrar novo tipo de combustível',
+      'Listar todos os tipos de combustível',
+      'Editar tipo de combustível',
+      'Buscar combustível por descrição',
+      'Deletar tipo de combustível',
+    ],
+    searchParams: [{ name: 'search', type: 'string', description: 'Termo de busca', example: 'diesel' }],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['FuelType', 'Enterprise'],
+    capabilities: [
+      'Listar tipos de combustível',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo tipo de combustível',
+      'Editar tipo existente',
+      'Deletar tipo',
+      'Visualizar código do combustível',
+      'Visualizar cor do combustível',
+    ],
+  },
 });
 
 function FuelTypeListPage() {

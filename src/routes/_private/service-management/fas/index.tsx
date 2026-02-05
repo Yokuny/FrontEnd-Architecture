@@ -28,6 +28,48 @@ import { fasSearchSchema } from './@interface/fas.schema';
 export const Route = createFileRoute('/_private/service-management/fas/')({
   component: FASPage,
   validateSearch: fasSearchSchema,
+  staticData: {
+    title: 'fas',
+    description:
+      'Gerenciamento de FAS (Field Service) - ordens de serviço externas. Permite listar, filtrar, criar e exportar OS de campo, incluindo filtros por embarcação, status, tipo, data e planejador',
+    tags: ['fas', 'field-service', 'serviço', 'os', 'work-order', 'external', 'order', 'vessel', 'list', 'filter', 'export'],
+    examplePrompts: [
+      'Listar todas as ordens de serviço externas',
+      'Filtrar FAS por embarcação e período',
+      'Criar nova ordem de serviço de campo',
+      'Exportar relatório de FAS',
+      'Buscar OS por status e tipo',
+    ],
+    searchParams: [
+      { name: 'search', type: 'string', description: 'Busca textual' },
+      { name: 'idVessel', type: 'array', description: 'IDs de embarcações para filtrar' },
+      { name: 'status', type: 'array', description: 'Status das FAS' },
+      { name: 'type', type: 'array', description: 'Tipos de FAS' },
+      { name: 'planner', type: 'array', description: 'IDs de planejadores' },
+      { name: 'dateStart', type: 'string', description: 'Data de início do período' },
+      { name: 'dateEnd', type: 'string', description: 'Data de fim do período' },
+      { name: 'page', type: 'number', description: 'Número da página' },
+      { name: 'size', type: 'number', description: 'Itens por página' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/service-management', relation: 'parent', description: 'Hub de gestão de serviços' },
+      { path: '/_private/service-management/fas/details', relation: 'child', description: 'Detalhes de FAS' },
+      { path: '/_private/service-management/fas-analytics', relation: 'sibling', description: 'Analytics de serviços' },
+    ],
+    entities: ['FAS', 'WorkOrder', 'Vessel', 'Enterprise', 'ServiceProvider'],
+    capabilities: [
+      'Listar FAS',
+      'Filtrar por embarcação',
+      'Filtrar por status',
+      'Filtrar por tipo',
+      'Filtrar por período',
+      'Filtrar por planejador',
+      'Criar nova FAS',
+      'Exportar FAS para CSV',
+      'Buscar FAS',
+      'Paginar resultados',
+    ],
+  },
 });
 
 function FASPage() {

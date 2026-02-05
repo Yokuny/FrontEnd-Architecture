@@ -21,6 +21,33 @@ import type { MachineIntegration } from './@interface/machine-integration';
 
 export const Route = createFileRoute('/_private/set-up-company/integration-list/')({
   component: IntegrationListPage,
+  staticData: {
+    title: 'integration',
+    description:
+      'Gerenciamento de integrações AIS para rastreamento de embarcações. Configure tipos de integração (MOON, IMO, MMSI), intervalos de atualização e vincule máquinas aos sistemas de rastreamento marítimo.',
+    tags: ['setup', 'configuração', 'config', 'admin', 'integration', 'integração', 'AIS', 'MOON', 'IMO', 'MMSI', 'rastreamento', 'tracking', 'embarcações', 'frota', 'fleet'],
+    examplePrompts: [
+      'Como configurar integração AIS para uma embarcação?',
+      'Como vincular IMO e MMSI a uma máquina?',
+      'Como alterar o intervalo de atualização da integração?',
+      'Como desativar a integração de uma embarcação?',
+    ],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/set-up-company', relation: 'parent', description: 'Hub de configurações da empresa' },
+      { path: '/_private/set-up-company/setup-api-external', relation: 'sibling', description: 'Configuração de APIs externas' },
+      { path: '/_private/set-up-company/setup-fleet', relation: 'sibling', description: 'Configuração da frota' },
+      { path: '/_private/machines', relation: 'sibling', description: 'Gerenciamento de máquinas' },
+    ],
+    entities: ['Enterprise', 'Machine', 'Integration', 'MachineIntegration'],
+    capabilities: [
+      'Configurar integrações AIS',
+      'Vincular máquinas a sistemas de rastreamento',
+      'Gerenciar identificadores marítimos (IMO, MMSI)',
+      'Configurar intervalos de atualização',
+      'Ativar/desativar integrações por máquina',
+    ],
+  },
 });
 
 function IntegrationListPage() {

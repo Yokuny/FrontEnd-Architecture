@@ -25,6 +25,32 @@ const fasContactsSearchSchema = z.object({
 export const Route = createFileRoute('/_private/service-management/fas-contacts/')({
   component: FasContactsPage,
   validateSearch: (search: Record<string, unknown>): FasContactsSearch => fasContactsSearchSchema.parse(search),
+  staticData: {
+    title: 'fas.contacts',
+    description:
+      'Gerenciamento de contatos de fornecedores de serviços FAS. Lista fornecedores com seus contatos (email e função), permitindo busca, paginação e edição de informações de contato',
+    tags: ['contacts', 'contatos', 'supplier', 'fornecedor', 'fas', 'field-service', 'email', 'admin', 'provider', 'contractor'],
+    examplePrompts: ['Listar contatos de fornecedores de serviços', 'Buscar fornecedor por nome', 'Editar contatos de um fornecedor', 'Ver emails de contato de fornecedores FAS'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página' },
+      { name: 'size', type: 'number', description: 'Itens por página' },
+      { name: 'search', type: 'string', description: 'Busca por fornecedor' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/service-management', relation: 'parent', description: 'Hub de gestão de serviços' },
+      { path: '/_private/service-management/fas', relation: 'sibling', description: 'Listagem de FAS' },
+    ],
+    entities: ['Supplier', 'Contact', 'FAS'],
+    capabilities: [
+      'Listar fornecedores FAS',
+      'Buscar fornecedor',
+      'Visualizar contatos do fornecedor',
+      'Ver emails de contato',
+      'Identificar contatos admin',
+      'Editar informações de contato',
+      'Paginar listagem',
+    ],
+  },
 });
 
 function FasContactsPage() {

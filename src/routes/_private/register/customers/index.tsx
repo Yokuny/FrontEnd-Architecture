@@ -27,6 +27,27 @@ type CustomersSearch = z.infer<typeof customersSearchSchema>;
 export const Route = createFileRoute('/_private/register/customers/')({
   component: CustomersListPage,
   validateSearch: (search: Record<string, unknown>): CustomersSearch => customersSearchSchema.parse(search),
+  staticData: {
+    title: 'register.customers',
+    description: 'Página de cadastro e gerenciamento de clientes. Permite criar, visualizar e editar clientes com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'clientes', 'customers', 'contatos'],
+    examplePrompts: ['Cadastrar novo cliente', 'Listar todos os clientes', 'Editar cliente', 'Buscar cliente por nome'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'nome' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Customer', 'Enterprise'],
+    capabilities: [
+      'Listar clientes com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo cliente',
+      'Editar cliente existente',
+      'Visualizar código e empresa do cliente',
+    ],
+  },
 });
 
 function CustomersListPage() {

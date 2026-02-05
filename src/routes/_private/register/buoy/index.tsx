@@ -31,6 +31,28 @@ export const Route = createFileRoute('/_private/register/buoy/')({
   beforeLoad: () => ({
     title: 'buoys',
   }),
+  staticData: {
+    title: 'register.buoys',
+    description: 'Página de cadastro e gerenciamento de monoboias. Permite criar, visualizar, editar e deletar monoboias offshore com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'boias', 'buoys', 'monobuoys', 'offshore', 'equipamentos'],
+    examplePrompts: ['Cadastrar nova monoboia', 'Listar todas as monoboias', 'Editar monoboia', 'Buscar monoboia por nome', 'Deletar monoboia'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'boia' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Buoy', 'Enterprise'],
+    capabilities: [
+      'Listar monoboias com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar nova monoboia',
+      'Editar monoboia existente',
+      'Deletar monoboia',
+      'Visualizar proximidade da monoboia',
+    ],
+  },
 });
 
 function BuoyListPage() {

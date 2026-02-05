@@ -25,6 +25,29 @@ const alertsSearchSchema = z.object({
 export const Route = createFileRoute('/_private/register/alerts/')({
   component: AlertsListPage,
   validateSearch: (search: Record<string, unknown>): AlertsSearch => alertsSearchSchema.parse(search),
+  staticData: {
+    title: 'register.alerts',
+    description: 'Página de cadastro e gerenciamento de alertas. Permite criar, visualizar, editar e duplicar regras de alerta do sistema com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'alertas', 'alerts', 'notificações', 'notifications', 'rules'],
+    examplePrompts: ['Cadastrar novo alerta', 'Listar todos os alertas', 'Editar alerta', 'Buscar alerta por descrição', 'Duplicar alerta existente'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'temperatura' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Alert', 'Enterprise'],
+    capabilities: [
+      'Listar alertas com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo alerta',
+      'Editar alerta existente',
+      'Duplicar alerta',
+      'Visualizar tipo de alerta (evento, min-max, condicional)',
+      'Gerenciar visibilidade do alerta (público, privado, limitado)',
+    ],
+  },
 });
 
 function AlertsListPage() {
