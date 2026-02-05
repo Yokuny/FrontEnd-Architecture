@@ -13,6 +13,52 @@ import { useOsDetails } from './@hooks/use-os-details-api';
 import { osDetailsSearchSchema } from './@interface/os-details.types';
 
 export const Route = createFileRoute('/_private/maintenance/list-os-done/view/')({
+  staticData: {
+    title: 'done.os',
+    description:
+      'Página de visualização detalhada de Ordem de Serviço (OS/Work Order) concluída. Exibe informações completas da manutenção executada incluindo: dados da embarcação e empresa, plano de manutenção vinculado, responsáveis pela execução, usuário que preencheu, data de conclusão, checklist de serviços realizados com status (done/not done), observações técnicas e grupos de serviço. Permite impressão para documentação física e compliance.',
+    tags: [
+      'maintenance',
+      'manutenção',
+      'os',
+      'work-order',
+      'ordem-serviço',
+      'details',
+      'detalhes',
+      'view',
+      'visualização',
+      'checklist',
+      'services',
+      'serviços',
+      'print',
+      'impressão',
+      'pms',
+      'audit',
+    ],
+    examplePrompts: [
+      'Ver detalhes completos da Ordem de Serviço #OS-2024-001',
+      'Imprimir OS concluída para auditoria',
+      'Visualizar checklist de manutenção executada',
+      'Verificar responsáveis pela execução da OS',
+      'Consultar observações técnicas da work order',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da Ordem de Serviço a ser visualizada', example: 'os-uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/maintenance', relation: 'parent', description: 'Hub de manutenção' },
+      { path: '/_private/maintenance/list-os-done', relation: 'parent', description: 'Lista de OS concluídas' },
+      { path: '/_private/maintenance/monitoring-plans', relation: 'sibling', description: 'Monitoramento de planos de manutenção' },
+    ],
+    entities: ['WorkOrder', 'MaintenancePlan', 'Machine', 'Enterprise', 'User', 'Service', 'ServiceGroup', 'ServiceType'],
+    capabilities: [
+      'Visualizar dados completos da OS (ordem, empresa, máquina, plano)',
+      'Exibir lista de usuários responsáveis pela execução',
+      'Mostrar usuário que preencheu e data de preenchimento',
+      'Apresentar checklist de serviços com status (✓ done / ✗ not done)',
+      'Exibir grupos de serviço, tipos e observações técnicas',
+      'Imprimir OS para documentação física e auditorias',
+      'Formatar layout para impressão (oculta sidebar e controles)',
+    ],
+  },
   validateSearch: (search) => osDetailsSearchSchema.parse(search),
   component: OsDetailsPage,
 });

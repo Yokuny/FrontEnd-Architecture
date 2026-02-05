@@ -14,6 +14,26 @@ import { cn } from '@/lib/utils';
 // import { useHasPermission } from '@/hooks/use-permissions';
 
 export const Route = createFileRoute('/_private/permissions/roles/')({
+  staticData: {
+    title: 'role',
+    description:
+      'Página de listagem e gerenciamento de perfis de acesso (roles). Permite visualizar, criar e editar perfis com controle de permissões de páginas, ativos, chatbot e visibilidade.',
+    tags: ['roles', 'perfis', 'permissões', 'permissions', 'access', 'acesso', 'control', 'controle'],
+    examplePrompts: ['Listar todos os perfis de acesso', 'Criar novo perfil de usuário', 'Ver perfis por empresa', 'Gerenciar roles do sistema'],
+    relatedRoutes: [
+      { path: '/_private/permissions', relation: 'parent', description: 'Hub de permissões' },
+      { path: '/_private/permissions/roles/edit', relation: 'child', description: 'Edição de perfil de acesso' },
+      { path: '/_private/permissions/roles/users', relation: 'child', description: 'Usuários do perfil' },
+    ],
+    entities: ['Role', 'Enterprise', 'Permission'],
+    capabilities: [
+      'Listar perfis de acesso por empresa',
+      'Visualizar visibilidade do perfil (público, privado, limitado)',
+      'Criar novo perfil',
+      'Editar perfil existente',
+      'Ver usuários do perfil',
+    ],
+  },
   component: ListRolesPage,
 });
 

@@ -23,6 +23,55 @@ import { useOperationalDashboard } from './@hooks/use-operational-dashboard';
 import { type OperationalFleetSearchParams, operationalFleetSearchParamsSchema } from './@interface/operational-dashboard.types';
 
 export const Route = createFileRoute('/_private/operation/operational-fleet/')({
+  staticData: {
+    title: 'performance.fleet.operational',
+    description:
+      'Dashboard consolidado de performance operacional da frota completa. Monitora disponibilidade, uptime e status operacional de todos os ativos. Inclui KPIs agregados, lista de ativos com status e filtros por período, busca e seleção de data rápida (7, 30, 90 dias).',
+    tags: [
+      'operational',
+      'operacional',
+      'fleet',
+      'frota',
+      'dashboard',
+      'performance',
+      'desempenho',
+      'availability',
+      'disponibilidade',
+      'uptime',
+      'status',
+      'kpi',
+      'monitoring',
+      'monitoramento',
+    ],
+    examplePrompts: [
+      'Visualizar dashboard da frota',
+      'Monitorar disponibilidade de todos os ativos',
+      'Ver status operacional da frota',
+      'Filtrar performance por período',
+      'Comparar KPIs dos últimos 30 dias',
+    ],
+    searchParams: [
+      { name: 'search', type: 'string', description: 'Busca por nome de máquina ou status', example: 'PSV-01' },
+      { name: 'dateMin', type: 'date', description: 'Data inicial do período (ISO com timezone)', example: '2025-01-01T00:00:00-03:00' },
+      { name: 'dateMax', type: 'date', description: 'Data final do período (ISO com timezone)', example: '2025-02-05T23:59:59-03:00' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/operation', relation: 'parent', description: 'Hub operacional' },
+      { path: '/_private/operation/operational-asset', relation: 'sibling', description: 'Performance por ativo individual' },
+      { path: '/_private/operation/downtime', relation: 'sibling', description: 'Análise de downtime' },
+      { path: '/_private/operation/goals', relation: 'sibling', description: 'Metas operacionais' },
+    ],
+    entities: ['Machine', 'OperationalData', 'Enterprise', 'Downtime'],
+    capabilities: [
+      'Visualizar KPIs agregados da frota',
+      'Listar status de todos os ativos',
+      'Filtrar por período customizado',
+      'Buscar por máquina ou status',
+      'Selecionar períodos rápidos (7/30/90 dias)',
+      'Monitorar última atualização de dados',
+      'Visualizar availability geral',
+    ],
+  },
   component: OperationalDashboardPage,
   validateSearch: (search: Record<string, unknown>) => operationalFleetSearchParamsSchema.parse(search),
 });

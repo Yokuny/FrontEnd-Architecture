@@ -14,6 +14,38 @@ import { cn } from '@/lib/utils';
 import { calculateRating, getRatingColor, getReferenceAC } from '../indicators-eeoi-cii/@consts/cii.utils';
 
 export const Route = createFileRoute('/_private/esg/simulator-cii/')({
+  staticData: {
+    title: 'simulator.cii',
+    description:
+      'Simulador de Carbon Intensity Indicator (CII) para planejamento de compliance IMO. Permite simular diferentes cenários operacionais calculando CII attained = (CO₂ / (DWT × distância)) × 10⁶ vs CII reference = a × capacity^(-c). Projeta rating (A-E) para anos de 2024-2027 considerando fatores de redução progressivos (Z-factor). Baseado em IMO MEPC.328(76) e MEPC.355(78).',
+    tags: ['esg', 'simulator', 'simulador', 'cii', 'carbon', 'carbono', 'planning', 'planejamento', 'imo', 'mepc', 'compliance', 'rating', 'forecast', 'projeção'],
+    examplePrompts: [
+      'Simular CII para próxima viagem',
+      'Calcular rating CII com consumo planejado',
+      'Projetar compliance CII para 2025',
+      'Testar cenários de consumo IFO e MDO',
+      'Ver impacto de redução de distância no rating',
+      'Simular CII required para diferentes anos',
+    ],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/esg', relation: 'parent', description: 'Hub ESG - Menu principal de conformidade ambiental' },
+      { path: '/_private/esg/indicators-eeoi-cii', relation: 'sibling', description: 'Indicadores EEOI/CII reais das viagens' },
+      { path: '/_private/esg/cii-fleet', relation: 'sibling', description: 'Rating CII histórico da frota' },
+      { path: '/_private/esg/consumption-co2', relation: 'sibling', description: 'Monitoramento de emissões de CO₂' },
+    ],
+    entities: ['VesselType', 'CII', 'SimulationData', 'ReferenceValues'],
+    capabilities: [
+      'Simular CII attained com inputs personalizados',
+      'Calcular CII reference por tipo de navio (a × capacity^(-c))',
+      'Converter consumo em emissões (IFO: 3.1166, MDO: 2.68 tCO₂/ton)',
+      'Projetar rating CII (A-E) para 2024-2027',
+      'Aplicar Z-factors de redução anual (7%, 9%, 11%, 13%)',
+      'Comparar CII attained vs required por ano',
+      'Planejar compliance futuro com IMO MARPOL',
+      'Testar cenários operacionais "what-if"',
+    ],
+  },
   component: SimulatorCIIPage,
 });
 

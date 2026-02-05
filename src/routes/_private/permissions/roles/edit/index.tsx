@@ -33,6 +33,26 @@ const editRoleSearchSchema = z.object({
 });
 
 export const Route = createFileRoute('/_private/permissions/roles/edit/')({
+  staticData: {
+    title: 'edit.role',
+    description: 'Página de edição de perfil de acesso com controle granular de permissões. Permite configurar acesso a páginas, ativos, chatbot e definir visibilidade do perfil.',
+    tags: ['edit', 'role', 'editar', 'perfil', 'permissions', 'permissões', 'pages', 'assets', 'chatbot'],
+    examplePrompts: ['Editar perfil de acesso', 'Configurar permissões de páginas', 'Definir acesso a ativos', 'Alterar visibilidade do perfil'],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID do perfil de acesso a ser editado', example: 'role-uuid' }],
+    relatedRoutes: [
+      { path: '/_private/permissions/roles', relation: 'parent', description: 'Lista de perfis de acesso' },
+      { path: '/_private/permissions/roles/users', relation: 'sibling', description: 'Usuários do perfil' },
+    ],
+    entities: ['Role', 'Enterprise', 'Permission', 'Path', 'Machine'],
+    capabilities: [
+      'Editar informações do perfil',
+      'Selecionar páginas permitidas',
+      'Configurar permissões de ativos/máquinas',
+      'Configurar permissões de chatbot',
+      'Definir visibilidade (público, privado, limitado)',
+      'Deletar perfil',
+    ],
+  },
   component: EditRolePage,
   validateSearch: (search) => editRoleSearchSchema.parse(search),
 });

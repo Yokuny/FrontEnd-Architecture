@@ -19,6 +19,54 @@ import { useTimeOperationDashboard } from './@hooks/use-time-operation-api';
 import { OPERATION_MODES, type TimeOperationSearchParams, timeOperationSearchParamsSchema } from './@interface/time-operation.types';
 
 export const Route = createFileRoute('/_private/consumption/time-operation/')({
+  staticData: {
+    title: 'consumption.time.operation',
+    description:
+      'Dashboard de análise de consumo de combustível por tempo de operação e modo operacional. Apresenta tabela detalhada mostrando o tempo (em minutos e porcentagem) e consumo de combustível para cada modo de operação das embarcações: DP (Dynamic Position), Stand By, Underway, Transit, At Anchor, Moored, etc. Permite análise de eficiência operacional e identificação de padrões de consumo por atividade.',
+    tags: [
+      'consumption',
+      'consumo',
+      'fuel',
+      'combustível',
+      'vessel',
+      'embarcação',
+      'operation',
+      'operação',
+      'time',
+      'tempo',
+      'mode',
+      'modo',
+      'dp',
+      'standby',
+      'underway',
+      'transit',
+      'efficiency',
+      'eficiência',
+    ],
+    examplePrompts: ['Ver consumo por modo de operação', 'Analisar tempo de operação das embarcações', 'Consumo em DP vs Stand By', 'Eficiência operacional por modo'],
+    searchParams: [
+      { name: 'machines', type: 'string', description: 'IDs das embarcações separados por vírgula', example: 'id1,id2,id3' },
+      { name: 'dateMin', type: 'string', description: 'Data inicial no formato ISO 8601', example: '2025-01-01T00:00:00+00:00' },
+      { name: 'dateMax', type: 'string', description: 'Data final no formato ISO 8601', example: '2025-02-04T23:59:59+00:00' },
+      { name: 'isShowDisabled', type: 'boolean', description: 'Mostrar embarcações desabilitadas', example: 'false' },
+      { name: 'unit', type: 'string', description: 'Unidade de medida: L, m³, gal', example: 'm³' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption', relation: 'parent', description: 'Hub de consumo' },
+      { path: '/_private/consumption/daily', relation: 'sibling', description: 'Consumo diário' },
+      { path: '/_private/consumption/relatorio', relation: 'sibling', description: 'Relatório de consumo' },
+    ],
+    entities: ['Machine', 'TimeStatus', 'DailyEvent', 'Operation'],
+    capabilities: [
+      'Visualizar consumo por modo operacional',
+      'Analisar tempo em cada modo de operação',
+      'Comparar eficiência entre embarcações',
+      'Ordenar por porcentagem de tempo ou consumo',
+      'Filtrar embarcações ativas/inativas',
+      'Alternar unidade de medida',
+      'Identificar modos operacionais predominantes',
+    ],
+  },
   component: TimeOperationDashboardPage,
   validateSearch: timeOperationSearchParamsSchema,
 });

@@ -27,6 +27,20 @@ const roleUsersSearchSchema = z.object({
 });
 
 export const Route = createFileRoute('/_private/permissions/roles/users/')({
+  staticData: {
+    title: 'role.users',
+    description: 'Página de gerenciamento de usuários vinculados a um perfil de acesso específico. Permite visualizar e remover usuários do perfil.',
+    tags: ['users', 'usuários', 'role', 'perfil', 'permissions', 'vincular', 'assign'],
+    examplePrompts: ['Ver usuários de um perfil', 'Listar membros do perfil', 'Remover usuário do perfil', 'Gerenciar usuários do role'],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID do perfil de acesso', example: 'role-uuid' }],
+    relatedRoutes: [
+      { path: '/_private/permissions/roles', relation: 'parent', description: 'Lista de perfis de acesso' },
+      { path: '/_private/permissions/roles/edit', relation: 'sibling', description: 'Edição do perfil' },
+      { path: '/_private/permissions/users', relation: 'sibling', description: 'Lista de todos os usuários' },
+    ],
+    entities: ['Role', 'User', 'UserEnterprise'],
+    capabilities: ['Visualizar usuários do perfil', 'Adicionar usuário ao perfil', 'Remover usuário do perfil', 'Filtrar por empresa'],
+  },
   component: RoleUsersPage,
   validateSearch: (search) => roleUsersSearchSchema.parse(search),
 });

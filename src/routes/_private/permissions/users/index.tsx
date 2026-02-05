@@ -25,6 +25,35 @@ const userSearchSchema = z.object({
 });
 
 export const Route = createFileRoute('/_private/permissions/users/')({
+  staticData: {
+    title: 'users.permissions',
+    description: 'Página de listagem e gerenciamento de usuários do sistema. Permite visualizar, filtrar, criar e editar usuários, gerenciar permissões e tipos de acesso.',
+    tags: ['users', 'usuários', 'permissions', 'permissões', 'management', 'gestão', 'access', 'acesso'],
+    examplePrompts: ['Listar todos os usuários', 'Filtrar usuários por perfil', 'Criar novo usuário', 'Gerenciar usuários do sistema'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'pageSize', type: 'number', description: 'Quantidade de itens por página', example: '10' },
+      { name: 'idRole', type: 'array', description: 'IDs dos perfis de acesso para filtrar' },
+      { name: 'idTypeUser', type: 'array', description: 'IDs dos tipos de usuário para filtrar' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/permissions', relation: 'parent', description: 'Hub de permissões' },
+      { path: '/_private/permissions/users/edit', relation: 'child', description: 'Edição de usuário' },
+      { path: '/_private/permissions/users/password', relation: 'child', description: 'Reset de senha' },
+      { path: '/_private/permissions/roles', relation: 'sibling', description: 'Perfis de acesso' },
+    ],
+    entities: ['User', 'Role', 'TypeUser', 'Enterprise'],
+    capabilities: [
+      'Listar usuários por empresa',
+      'Filtrar por perfil e tipo de usuário',
+      'Visualizar status (ativo, desabilitado, apenas contato)',
+      'Criar novo usuário',
+      'Editar usuário',
+      'Gerenciar permissões do usuário',
+      'Resetar senha',
+      'Paginação de resultados',
+    ],
+  },
   component: ListUsersPage,
   validateSearch: (search) => userSearchSchema.parse(search),
   beforeLoad: () => ({

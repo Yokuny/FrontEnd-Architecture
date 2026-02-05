@@ -5,6 +5,37 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 
 export const Route = createFileRoute('/_private/voyage/')({
+  staticData: {
+    title: 'voyage.page',
+    description:
+      'Hub principal do módulo de Gestão de Viagens Marítimas (Voyage). Central de acesso a todas as funcionalidades relacionadas ao planejamento, monitoramento e análise de viagens, incluindo listagem de travels, KPIs de performance, planejador de rotas otimizado e integração de dados de viagem com sensores e sistemas externos.',
+    tags: ['voyage', 'viagem', 'travel', 'travessia', 'route', 'rota', 'planning', 'planejamento', 'noon-report', 'eta', 'port-call', 'leg', 'maritime', 'marítimo', 'hub', 'menu'],
+    examplePrompts: [
+      'Ir para o módulo de viagens',
+      'Abrir hub de gestão de voyage',
+      'Ver opções de planejamento de rotas marítimas',
+      'Acessar lista de travels',
+      'Verificar KPIs das viagens',
+    ],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/voyage/list-travel', relation: 'child', description: 'Listagem e gerenciamento de viagens' },
+      { path: '/_private/voyage/kpis-travel', relation: 'child', description: 'KPIs e análises de performance de viagens' },
+      { path: '/_private/voyage/route-planner', relation: 'child', description: 'Planejador de rotas otimizado' },
+      { path: '/_private/voyage/voyage-integration', relation: 'child', description: 'Integração e monitoramento de dados de viagem' },
+      { path: '/_private/esg/indicators-eeoi-cii', relation: 'sibling', description: 'Indicadores EEOI/CII calculados por viagem' },
+      { path: '/_private/consumption', relation: 'sibling', description: 'Consumo de combustível por viagem' },
+    ],
+    entities: ['Voyage', 'Travel', 'Port', 'Route', 'NoonReport', 'Machine', 'Customer'],
+    capabilities: [
+      'Navegar para listagem de viagens',
+      'Acessar KPIs de travel',
+      'Planejar rotas marítimas',
+      'Visualizar integração de dados',
+      'Centralizar gestão de voyages',
+      'Monitorar ETAs e distâncias',
+    ],
+  },
   component: VoyageHubPage,
 });
 

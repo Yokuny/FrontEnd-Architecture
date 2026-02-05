@@ -23,6 +23,56 @@ import { useRVERDOData } from './@hooks/use-rve-rdo-api';
 import { searchSchema } from './@interface/rve-rdo.schema';
 
 export const Route = createFileRoute('/_private/consumption/rve-rdo/')({
+  staticData: {
+    title: 'dashboard.rve.rdo',
+    description:
+      'Dashboard de análise comparativa entre RVE (Relatório de Viagem Eletrônico) e RDO (Relatório Diário de Operação). Compara o consumo estimado de combustível registrado no RVE com o consumo máximo permitido por operação definido no RDO. Exibe operações diárias com horários, duração e diferenças de consumo. Permite análise de conformidade operacional e identificação de desvios.',
+    tags: [
+      'consumption',
+      'consumo',
+      'fuel',
+      'combustível',
+      'vessel',
+      'embarcação',
+      'rve',
+      'rdo',
+      'voyage',
+      'viagem',
+      'operation',
+      'operação',
+      'report',
+      'relatório',
+      'compliance',
+      'conformidade',
+    ],
+    examplePrompts: [
+      'Comparar RVE e RDO das embarcações',
+      'Ver diferenças entre consumo estimado e máximo permitido',
+      'Dashboard de conformidade operacional',
+      'Analisar operações do RDO vs consumo do RVE',
+    ],
+    searchParams: [
+      { name: 'initialDate', type: 'string', description: 'Data inicial do período no formato ISO 8601', example: '2025-01-01T00:00:00Z' },
+      { name: 'finalDate', type: 'string', description: 'Data final do período no formato ISO 8601', example: '2025-02-04T23:59:59Z' },
+      { name: 'machines', type: 'string', description: 'IDs das embarcações separados por vírgula', example: 'id1,id2,id3' },
+      { name: 'showInoperabilities', type: 'boolean', description: 'Incluir consumo durante períodos de inoperabilidade', example: 'true' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption', relation: 'parent', description: 'Hub de consumo' },
+      { path: '/_private/consumption/rve-sounding', relation: 'sibling', description: 'Dashboard RVE com sounding' },
+      { path: '/_private/consumption/relatorio', relation: 'sibling', description: 'Relatório de consumo detalhado' },
+    ],
+    entities: ['Asset', 'Operation', 'ConsumptionData', 'RVE', 'RDO'],
+    capabilities: [
+      'Comparar RVE vs RDO por embarcação',
+      'Visualizar operações diárias com horários',
+      'Calcular diferença entre consumo estimado e máximo',
+      'Identificar desvios operacionais',
+      'Exportar dados para CSV',
+      'Filtrar por período e embarcações',
+      'Incluir/excluir inoperabilidades',
+    ],
+  },
   component: RVERDODashboardPage,
   validateSearch: searchSchema,
 });

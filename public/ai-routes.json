@@ -6,17 +6,7 @@
       "path": "/_private/consumption/daily/",
       "title": "consumption.daily",
       "description": "Página de relatório de consumo diário de combustível por embarcação. Exibe gráficos de consumo real vs estimado, estatísticas e lista de pollings.",
-      "tags": [
-        "consumo",
-        "combustível",
-        "diário",
-        "relatório",
-        "embarcação",
-        "vessel",
-        "fuel",
-        "daily",
-        "consumption"
-      ],
+      "tags": ["consumo", "combustível", "diário", "relatório", "embarcação", "vessel", "fuel", "daily", "consumption"],
       "examplePrompts": [
         "Quero ver o consumo diário do navio X",
         "Relatório de consumo entre 2025-01-01 e 2025-02-01",
@@ -65,17 +55,8 @@
           "description": "Comparativo de consumo entre embarcações"
         }
       ],
-      "entities": [
-        "ConsumptionData",
-        "Machine",
-        "Enterprise"
-      ],
-      "capabilities": [
-        "Visualizar gráfico de consumo",
-        "Alternar consumo real/estimado",
-        "Ver estatísticas",
-        "Listar pollings"
-      ]
+      "entities": ["ConsumptionData", "Machine", "Enterprise"],
+      "capabilities": ["Visualizar gráfico de consumo", "Alternar consumo real/estimado", "Ver estatísticas", "Listar pollings"]
     },
     {
       "path": "/_private/esg/cii-fleet/",

@@ -13,6 +13,24 @@ const updatePasswordSearchSchema = z.object({
 });
 
 export const Route = createFileRoute('/_private/permissions/users/password/')({
+  staticData: {
+    title: 'new.password',
+    description: 'Página de reset de senha do usuário. Envia automaticamente um email com instruções para redefinição de senha.',
+    tags: ['password', 'senha', 'reset', 'recuperar', 'recovery', 'email'],
+    examplePrompts: ['Resetar senha do usuário', 'Enviar email de recuperação', 'Redefinir senha de acesso'],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID do usuário para resetar senha', example: 'user-uuid' }],
+    relatedRoutes: [
+      { path: '/_private/permissions/users', relation: 'parent', description: 'Lista de usuários' },
+      { path: '/_private/permissions/users/edit', relation: 'sibling', description: 'Edição do usuário' },
+    ],
+    entities: ['User'],
+    capabilities: [
+      'Enviar email de reset de senha automaticamente',
+      'Visualizar status do envio (loading, sucesso, erro)',
+      'Retentar envio em caso de falha',
+      'Voltar para lista de usuários',
+    ],
+  },
   component: UpdatePasswordPage,
   validateSearch: (search) => updatePasswordSearchSchema.parse(search),
 });

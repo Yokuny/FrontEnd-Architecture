@@ -26,6 +26,39 @@ import { useConsumptionIntervalData } from './@hooks/use-consumption-interval-ap
 import { searchSchema } from './@interface/consumption-interval.schema';
 
 export const Route = createFileRoute('/_private/consumption/relatorio/')({
+  staticData: {
+    title: 'reports',
+    description:
+      'Página de relatório consolidado de consumo de combustível por intervalo de tempo. Exibe análise detalhada com cartões de resumo, comparação entre embarcações e tabela completa de consumo. Permite visualizar tanto dados de polling (consumo real) quanto flowmeter (consumo estimado), com opção de exportação para CSV.',
+    tags: ['consumption', 'consumo', 'fuel', 'combustível', 'vessel', 'embarcação', 'report', 'relatório', 'interval', 'intervalo', 'polling', 'flowmeter', 'export', 'csv'],
+    examplePrompts: [
+      'Gerar relatório de consumo dos últimos 3 meses',
+      'Relatório de consumo com múltiplas embarcações',
+      'Exportar relatório de consumo para CSV',
+      'Ver comparação de consumo real vs estimado no relatório',
+    ],
+    searchParams: [
+      { name: 'dateMin', type: 'date', description: 'Data inicial do período no formato YYYY-MM-DD', example: '2025-01-01' },
+      { name: 'dateMax', type: 'date', description: 'Data final do período no formato YYYY-MM-DD', example: '2025-02-04' },
+      { name: 'machines', type: 'array', description: 'Array de IDs das embarcações para análise', example: '["id1", "id2"]' },
+      { name: 'unit', type: 'string', description: 'Unidade de medida: L (litros), m³ (metros cúbicos), gal (galões)', example: 'L' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption', relation: 'parent', description: 'Hub de consumo' },
+      { path: '/_private/consumption/daily', relation: 'sibling', description: 'Consumo diário detalhado' },
+      { path: '/_private/consumption/comparative', relation: 'sibling', description: 'Comparativo entre embarcações' },
+    ],
+    entities: ['ConsumptionData', 'Machine', 'Enterprise', 'Engine', 'OilData'],
+    capabilities: [
+      'Visualizar resumo estatístico de consumo',
+      'Comparar consumo entre embarcações',
+      'Ver tabela detalhada de consumo',
+      'Alternar entre consumo real (polling) e estimado (flowmeter)',
+      'Exportar dados para CSV',
+      'Filtrar por múltiplas embarcações',
+      'Análise de consumo por motor',
+    ],
+  },
   component: ConsumptionIntervalPage,
   validateSearch: searchSchema,
 });

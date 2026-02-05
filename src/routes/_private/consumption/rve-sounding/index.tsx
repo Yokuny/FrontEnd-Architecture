@@ -17,6 +17,54 @@ import { useRVESoundingDashboard } from './@hooks/use-rve-sounding-api';
 import { type RVESoundingSearchParams, rveSoundingSearchParamsSchema } from './@interface/rve-sounding.types';
 
 export const Route = createFileRoute('/_private/consumption/rve-sounding/')({
+  staticData: {
+    title: 'dashboard.rve.sounding',
+    description:
+      'Dashboard de análise integrada entre RVE (Relatório de Viagem Eletrônico), sounding (medição de nível de tanques de combustível) e RDO (Relatório Diário de Operação). Permite monitorar o consumo através de diferentes fontes de dados: operações registradas, medições físicas de tanques e recebimento/abastecimento de combustível. Essencial para auditoria e reconciliação de combustível.',
+    tags: [
+      'consumption',
+      'consumo',
+      'fuel',
+      'combustível',
+      'vessel',
+      'embarcação',
+      'rve',
+      'sounding',
+      'medição',
+      'tanque',
+      'tank',
+      'rdo',
+      'polling',
+      'voyage',
+      'viagem',
+      'measurement',
+    ],
+    examplePrompts: [
+      'Ver dashboard de sounding e RVE',
+      'Monitorar medições de tanque de combustível',
+      'Reconciliação de combustível com sounding',
+      'Análise de abastecimento e consumo via sounding',
+    ],
+    searchParams: [
+      { name: 'machines', type: 'string', description: 'IDs das embarcações separados por vírgula', example: 'id1,id2,id3' },
+      { name: 'dateStart', type: 'string', description: 'Data inicial no formato YYYY-MM-DD', example: '2025-01-01' },
+      { name: 'dateEnd', type: 'string', description: 'Data final no formato YYYY-MM-DD', example: '2025-02-04' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption', relation: 'parent', description: 'Hub de consumo' },
+      { path: '/_private/consumption/rve-rdo', relation: 'sibling', description: 'Dashboard RVE vs RDO' },
+      { path: '/_private/consumption/daily', relation: 'sibling', description: 'Consumo diário' },
+    ],
+    entities: ['Asset', 'Operation', 'Sounding', 'RDO', 'RVE'],
+    capabilities: [
+      'Visualizar medições de sounding',
+      'Acompanhar operações do RVE',
+      'Reconciliar dados de RDO com sounding',
+      'Monitorar recebimento e abastecimento',
+      'Analisar níveis de tanque',
+      'Filtrar por embarcações e período',
+    ],
+  },
   component: RVESoundingDashboardPage,
   validateSearch: rveSoundingSearchParamsSchema,
 });

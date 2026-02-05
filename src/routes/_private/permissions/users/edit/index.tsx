@@ -27,6 +27,28 @@ const editUserSearchSchema = z.object({
 });
 
 export const Route = createFileRoute('/_private/permissions/users/edit/')({
+  staticData: {
+    title: 'edit.user',
+    description: 'Página de edição de usuário do sistema. Permite atualizar informações pessoais, configurar tipos de acesso, credenciais e habilitar/desabilitar usuários.',
+    tags: ['edit', 'user', 'editar', 'usuário', 'profile', 'perfil', 'credentials', 'credenciais'],
+    examplePrompts: ['Editar informações do usuário', 'Atualizar tipos de acesso', 'Desabilitar usuário', 'Configurar credenciais de acesso'],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID do usuário a ser editado', example: 'user-uuid' }],
+    relatedRoutes: [
+      { path: '/_private/permissions/users', relation: 'parent', description: 'Lista de usuários' },
+      { path: '/_private/permissions/users/password', relation: 'sibling', description: 'Reset de senha do usuário' },
+    ],
+    entities: ['User', 'TypeUser', 'TypeCredentials', 'Language'],
+    capabilities: [
+      'Editar nome e email do usuário',
+      'Configurar se é usuário do sistema ou apenas contato',
+      'Atualizar WhatsApp e idioma',
+      'Enviar mensagem de boas-vindas',
+      'Selecionar tipos de usuário',
+      'Configurar tipos de credenciais',
+      'Desabilitar/habilitar usuário',
+      'Deletar usuário',
+    ],
+  },
   component: EditUserPage,
   validateSearch: (search) => editUserSearchSchema.parse(search),
 });

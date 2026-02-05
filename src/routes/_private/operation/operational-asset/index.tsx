@@ -28,6 +28,59 @@ import type { OperationalAssetSearch } from './@interface/operational-asset.type
 import { operationalAssetSearchSchema } from './@interface/operational-asset.types';
 
 export const Route = createFileRoute('/_private/operation/operational-asset/')({
+  staticData: {
+    title: 'performance.asset.operational',
+    description:
+      'Análise detalhada de performance operacional por ativo/máquina. Dashboard com KPIs de disponibilidade, uptime, revenue e loss. Visualizações incluem operabilidade diária, status mensal, receita vs perda e tipos de eventos. Suporta filtros por período, máquina e visão operacional/financeira.',
+    tags: [
+      'operational',
+      'operacional',
+      'asset',
+      'ativo',
+      'performance',
+      'desempenho',
+      'availability',
+      'disponibilidade',
+      'uptime',
+      'revenue',
+      'receita',
+      'loss',
+      'perda',
+      'kpi',
+      'dashboard',
+      'financial',
+      'financeiro',
+    ],
+    examplePrompts: [
+      'Analisar performance do ativo',
+      'Ver KPIs operacionais da máquina',
+      'Visualizar receita e perda operacional',
+      'Comparar disponibilidade por período',
+      'Exportar dados operacionais em CSV',
+    ],
+    searchParams: [
+      { name: 'idMachine', type: 'string', description: 'ID da máquina/ativo para análise', example: 'machine-uuid-456' },
+      { name: 'dateStart', type: 'date', description: 'Data inicial do período (ISO)', example: '2025-01-01' },
+      { name: 'dateEnd', type: 'date', description: 'Data final do período (ISO)', example: '2025-02-05' },
+      { name: 'view', type: 'string', description: 'Visão: operational ou financial', example: 'operational' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/operation', relation: 'parent', description: 'Hub operacional' },
+      { path: '/_private/operation/operational-fleet', relation: 'sibling', description: 'Performance da frota completa' },
+      { path: '/_private/operation/downtime', relation: 'sibling', description: 'Análise de downtime' },
+    ],
+    entities: ['Machine', 'OperationalData', 'Downtime', 'Enterprise', 'EventType'],
+    capabilities: [
+      'Visualizar KPIs de disponibilidade',
+      'Analisar uptime vs downtime',
+      'Calcular revenue e loss',
+      'Gerar gráficos de operabilidade diária',
+      'Visualizar status mensal',
+      'Filtrar por período e máquina',
+      'Alternar visão operacional/financeira',
+      'Exportar dados em CSV',
+    ],
+  },
   component: OperationalAssetPage,
   validateSearch: (search: Record<string, unknown>) => operationalAssetSearchSchema.parse(search),
 });

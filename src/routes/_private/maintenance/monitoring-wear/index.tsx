@@ -20,6 +20,56 @@ const searchSchema = z.object({
 type SearchParams = z.infer<typeof searchSchema>;
 
 export const Route = createFileRoute('/_private/maintenance/monitoring-wear/')({
+  staticData: {
+    title: 'monitoring.wear.part',
+    description:
+      'Página de monitoramento de desgaste de peças e componentes (Wear Monitoring). Permite acompanhar o ciclo de vida de spare parts críticas, visualizar histórico de substituições, calcular vida útil restante baseada em running hours ou tempo de uso, e identificar peças próximas do limite de troca. Essencial para manutenção preditiva, gestão de estoque de spare parts e prevenção de falhas (breakdown).',
+    tags: [
+      'maintenance',
+      'manutenção',
+      'wear',
+      'desgaste',
+      'parts',
+      'peças',
+      'spare-parts',
+      'monitoring',
+      'monitoramento',
+      'predictive',
+      'preditiva',
+      'lifecycle',
+      'ciclo-vida',
+      'running-hours',
+      'replacement',
+      'substituição',
+    ],
+    examplePrompts: [
+      'Monitorar desgaste de peças da frota',
+      'Ver peças próximas do limite de troca',
+      'Verificar histórico de substituição de spare parts',
+      'Calcular vida útil restante de componentes críticos',
+      'Identificar peças com desgaste crítico por embarcação',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página (paginação)', example: '1' },
+      { name: 'size', type: 'number', description: 'Quantidade de registros por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca para filtrar peças ou embarcações', example: 'filtro óleo' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/maintenance', relation: 'parent', description: 'Hub de manutenção' },
+      { path: '/_private/maintenance/list-os-done', relation: 'sibling', description: 'Histórico de OS concluídas' },
+      { path: '/_private/maintenance/monitoring-plans', relation: 'sibling', description: 'Monitoramento de planos de manutenção' },
+    ],
+    entities: ['Part', 'Machine', 'Enterprise', 'WearData', 'ReplacementHistory', 'Equipment'],
+    capabilities: [
+      'Visualizar desgaste de peças agrupadas por embarcação',
+      'Monitorar vida útil restante de spare parts',
+      'Identificar componentes próximos do limite de troca',
+      'Acompanhar histórico de substituições',
+      'Filtrar por termo de busca (peça ou embarcação)',
+      'Calcular percentual de desgaste baseado em running hours',
+      'Prevenir breakdowns com alertas de manutenção preditiva',
+    ],
+  },
   component: MonitoringWearPage,
   validateSearch: searchSchema,
 });

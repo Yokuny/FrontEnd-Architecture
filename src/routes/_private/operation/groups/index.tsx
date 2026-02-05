@@ -19,6 +19,21 @@ const groupsSearchSchema = z.object({
 });
 
 export const Route = createFileRoute('/_private/operation/groups/')({
+  staticData: {
+    title: 'groups',
+    description:
+      'Gerenciamento de grupos de máquinas e ativos operacionais. Permite organizar a frota em grupos lógicos para facilitar análise de performance, downtime e disponibilidade. Suporta busca por nome, criação e edição de grupos por empresa.',
+    tags: ['groups', 'grupos', 'machines', 'máquinas', 'fleet', 'frota', 'organization', 'organização', 'operational', 'operacional', 'assets', 'ativos'],
+    examplePrompts: ['Gerenciar grupos de máquinas', 'Criar novo grupo operacional', 'Editar grupo de ativos', 'Organizar frota em grupos', 'Buscar grupo por nome'],
+    searchParams: [{ name: 'search', type: 'string', description: 'Busca por nome do grupo', example: 'Grupo Alpha' }],
+    relatedRoutes: [
+      { path: '/_private/operation', relation: 'parent', description: 'Hub operacional' },
+      { path: '/_private/operation/groups/add', relation: 'child', description: 'Adicionar/editar grupo' },
+      { path: '/_private/operation/operational-fleet', relation: 'sibling', description: 'Dashboard da frota' },
+    ],
+    entities: ['Group', 'Machine', 'Enterprise'],
+    capabilities: ['Listar grupos de máquinas', 'Criar novo grupo', 'Editar grupo existente', 'Buscar grupo por nome', 'Filtrar por empresa', 'Organizar ativos operacionais'],
+  },
   component: GroupsListPage,
   validateSearch: (search: Record<string, unknown>) => groupsSearchSchema.parse(search),
 });
