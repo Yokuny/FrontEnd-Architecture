@@ -18,7 +18,7 @@ function Input({
       className={cn(
         'w-full min-w-0 rounded-md px-4 py-2',
         'font-medium text-sm',
-        'border border-input bg-background text-foreground shadow-xs',
+        'border border-input bg-background text-foreground',
         'dark:border-input dark:bg-input/30 dark:hover:bg-input/50',
         'selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground',
         'hover:bg-accent hover:text-accent-foreground',

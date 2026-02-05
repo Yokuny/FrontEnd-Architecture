@@ -34,9 +34,9 @@ export function AssetOperationalList({ data, isLoading }: AssetOperationalListPr
     <Table>
       <TableHeader className="p-4">
         <TableRow>
-          <TableHead className="w-[200px]">{t('last.status')}</TableHead>
+          <TableHead className="w-48">{t('last.status')}</TableHead>
           <TableHead>{t('machine')}</TableHead>
-          <TableHead className="w-[150px] text-right">{t('perc.title.last.30.days')}</TableHead>
+          <TableHead className="w-36 text-right">{t('perc.title.last.30.days')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -45,7 +45,7 @@ export function AssetOperationalList({ data, isLoading }: AssetOperationalListPr
           const colorStatus = getStatusColor(item.percentualOperating);
 
           return (
-            <TableRow key={`${item.machine.id}-${index}`}>
+            <TableRow key={`${item.machine.id}${index}`}>
               <TableCell>
                 <div className="flex items-center gap-3">
                   <span className="text-xl">{statusConfig.icon}</span>

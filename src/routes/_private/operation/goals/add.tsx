@@ -93,7 +93,7 @@ function GoalAddFormContent({ initialData }: { initialData: any }) {
                 },
                 {
                   title: t('goals'),
-                  description: t('manage.goals.description'),
+                  description: t('edit.goal'),
                   layout: 'vertical',
                   fields: [
                     <div key="goals-container" className="space-y-4">

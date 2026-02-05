@@ -25,32 +25,17 @@ export function SensorSelect({
   const query = useSensorsSelect(idEnterprise);
 
   const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
-
-  if (multi) {
-    return (
-      <div className="space-y-2">
-        {label && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Radar className="size-4" />
-            {label}
-          </Label>
-        )}
-        <DataMultiSelect<Sensor, Sensor>
-          id={id}
-          placeholder={placeholder || t('machine.sensors.placeholder')}
-          value={values}
-          onChange={(newValues) => onChangeMulti?.(newValues as string[])}
-          query={query}
-          mapToOptions={mapSensorsToOptions}
-          disabled={disabled}
-          className={className}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('machine.sensors.placeholder'),
+    query,
+    mapToOptions: mapSensorsToOptions,
+    disabled,
+    className,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+  };
 
   return (
     <div className="space-y-2">
@@ -60,20 +45,11 @@ export function SensorSelect({
           {label}
         </Label>
       )}
-      <DataSelect<Sensor, Sensor>
-        id={id}
-        placeholder={placeholder || t('machine.sensors.placeholder')}
-        value={value}
-        onChange={(newValue) => onChange?.(newValue as string | undefined)}
-        query={query}
-        mapToOptions={mapSensorsToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        className={className}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-      />
+      {multi ? (
+        <DataMultiSelect<Sensor, Sensor> {...sharedProps} value={values} onChange={(newValues) => onChangeMulti?.(newValues as string[])} />
+      ) : (
+        <DataSelect<Sensor, Sensor> {...sharedProps} value={value} onChange={(newValue) => onChange?.(newValue as string | undefined)} clearable={clearable} />
+      )}
     </div>
   );
 }

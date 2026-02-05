@@ -12,36 +12,20 @@ export function TypeProblemSelect(props: TypeProblemSelectProps) {
   const id = useId();
   const query = useTypeProblemsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
-
-  if (mode === 'multi') {
-    const displayLabel = label || t('support.typeProblem.placeholder');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <AlertCircle className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<TypeProblem, TypeProblem>
-          id={id}
-          placeholder={placeholder || t('support.typeProblem.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapTypeProblemsToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('support.typeProblem.placeholder');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('support.typeProblem.placeholder'),
+    query,
+    mapToOptions: mapTypeProblemsToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -50,20 +34,11 @@ export function TypeProblemSelect(props: TypeProblemSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<TypeProblem, TypeProblem>
-        id={id}
-        placeholder={placeholder || t('support.typeProblem.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapTypeProblemsToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<TypeProblem, TypeProblem> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<TypeProblem, TypeProblem> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

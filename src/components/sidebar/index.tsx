@@ -1,15 +1,19 @@
 'use client';
 
+import { useTheme } from 'next-themes';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FooterNavigation } from '@/components/sidebar/nav-footer';
 import AppNavigation, { type Route } from '@/components/sidebar/nav-main';
+import { EnterpriseSwitcher } from '@/components/sidebar/switch-enterprise';
 import { LanguageSwitcher } from '@/components/sidebar/switch-language';
 import { NotificationsSwitcher } from '@/components/sidebar/switch-notifications';
 import { SidebarSwitcher } from '@/components/sidebar/switch-sidebar';
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
 import { buildSidebarRoutes, type SidebarRoute } from '@/config/sidebarRoutes';
+import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useEnterprisesSelect } from '@/hooks/use-enterprises-api';
 import { cn } from '@/lib/utils';
 
 const sampleNotifications = [
@@ -36,6 +40,8 @@ const sampleNotifications = [
   },
 ];
 
+const THEMES_DARKS = ['dark', 'ocean-blue', 'system'];
+
 const convertToNavRoutes = (routes: SidebarRoute[], t: (key: string) => string): Route[] => {
   return routes.map((route) => {
     const title = t(route.labelKey);
@@ -55,9 +61,15 @@ const convertToNavRoutes = (routes: SidebarRoute[], t: (key: string) => string):
 };
 
 export function AppSidebar() {
+  const { theme } = useTheme();
   const { state, setHovered } = useSidebar();
   const { t } = useTranslation();
+  const { idEnterprise } = useEnterpriseFilter();
+  const enterprisesQuery = useEnterprisesSelect();
   const isCollapsed = state === 'collapsed';
+
+  const isDark = theme && THEMES_DARKS.includes(theme);
+
   // Agrupando rotas que irão para o footer
   const footerPaths = ['/fleet-manager', '/ia'];
 
@@ -71,6 +83,17 @@ export function AppSidebar() {
     };
   }, [t]);
 
+  const selectedEnterprise = useMemo(() => {
+    if (!enterprisesQuery.data || !idEnterprise) return null;
+    return enterprisesQuery.data.find((e) => e.id === idEnterprise);
+  }, [enterprisesQuery.data, idEnterprise]);
+
+  const enterpriseLogoUrl = useMemo(() => {
+    if (!selectedEnterprise) return null;
+    const imageDarkUrl = typeof selectedEnterprise.imageDark?.url === 'string' ? selectedEnterprise.imageDark.url : undefined;
+    return isDark && imageDarkUrl ? imageDarkUrl : selectedEnterprise.image?.url;
+  }, [selectedEnterprise, isDark]);
+
   return (
     <Sidebar variant="floating" collapsible="icon" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className="transition-all duration-300 ease-in-out">
       <SidebarHeader className="items-center px-2 pt-3">
@@ -83,9 +106,15 @@ export function AppSidebar() {
             <div className="flex items-center">
               <LanguageSwitcher />
               <ThemeSwitcher />
+              <EnterpriseSwitcher />
             </div>
           )}
         </div>
+        {!isCollapsed && enterpriseLogoUrl && (
+          <div className="flex w-full items-center justify-center py-2">
+            <img src={enterpriseLogoUrl} alt={selectedEnterprise?.name || 'Logo'} className="max-h-10 max-w-[140px] object-contain" />
+          </div>
+        )}
         <SidebarSeparator />
       </SidebarHeader>
       <SidebarContent className="px-2 py-1 text-muted-foreground">

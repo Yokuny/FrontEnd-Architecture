@@ -16,7 +16,7 @@ import { getTimezoneOffset } from '../@utils/download-request.utils';
 
 function formatDateTimeLocal(date: Date): string {
   const pad = (n: number) => n.toString().padStart(2, '0');
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
 export function ReportFormDialog({ open, onOpenChange, idEnterprise, onSubmit, isLoading }: ReportFormDialogProps) {
@@ -121,10 +121,10 @@ export function ReportFormDialog({ open, onOpenChange, idEnterprise, onSubmit, i
             </div>
 
             <div className="space-y-2">
-              <Label>{t('interval')} *</Label>
+              <Label>{t('range')} *</Label>
               <Select value={interval} onValueChange={setInterval}>
                 <SelectTrigger>
-                  <SelectValue placeholder={t('interval')} />
+                  <SelectValue placeholder={t('range')} />
                 </SelectTrigger>
                 <SelectContent>
                   {INTERVAL_OPTIONS.map((opt) => (

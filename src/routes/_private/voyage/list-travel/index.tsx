@@ -36,6 +36,75 @@ const voyageSearchSchema = z.object({
 type VoyageSearch = z.infer<typeof voyageSearchSchema>;
 
 export const Route = createFileRoute('/_private/voyage/list-travel/')({
+  staticData: {
+    title: 'voyage.list',
+    description:
+      'Listagem completa e gerenciamento de viagens marítimas (travels). Permite buscar, filtrar e visualizar viagens por embarcação, status (em curso/finalizada), tipo (travel/maneuver/manualVoyage), período e cliente. Exibe KPIs agregados como distância total, consumo de bunker, tempo médio e ROB (Remaining On Board). Possibilita adicionar novas viagens e acessar detalhes de cada leg para edição.',
+    tags: [
+      'voyage',
+      'viagem',
+      'travel',
+      'list',
+      'listagem',
+      'leg',
+      'trecho',
+      'port-call',
+      'porto',
+      'status',
+      'maneuver',
+      'manobra',
+      'bunker',
+      'rob',
+      'distance',
+      'distância',
+      'eta',
+      'etd',
+      'search',
+      'busca',
+      'filter',
+      'filtro',
+      'pagination',
+      'paginação',
+    ],
+    examplePrompts: [
+      'Listar todas as viagens',
+      'Buscar viagens em andamento',
+      'Filtrar travels por embarcação',
+      'Ver viagens finalizadas do último mês',
+      'Adicionar nova viagem',
+      'Filtrar por tipo de viagem (travel/maneuver)',
+    ],
+    searchParams: [
+      { name: 'page', description: 'Número da página (paginação)', type: 'number' },
+      { name: 'size', description: 'Quantidade de registros por página', type: 'number' },
+      { name: 'search', description: 'Termo de busca para filtrar viagens', type: 'string' },
+      { name: 'idMachine', description: 'ID da embarcação para filtrar', type: 'string' },
+      { name: 'status', description: 'Status da viagem: in_travel, finished_travel', type: 'string' },
+      { name: 'travelType', description: 'Tipo da viagem: travel, maneuver, manualVoyage', type: 'string' },
+      { name: 'dateInit', description: 'Data inicial do filtro (ISO string)', type: 'string' },
+      { name: 'dateEnd', description: 'Data final do filtro (ISO string)', type: 'string' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/voyage', relation: 'parent', description: 'Hub de viagens' },
+      { path: '/_private/voyage/kpis-travel', relation: 'sibling', description: 'KPIs de viagem' },
+      { path: '/_private/voyage/voyage-integration', relation: 'sibling', description: 'Integração de dados de viagem' },
+      { path: '/_private/voyage/list-travel/add', relation: 'child', description: 'Adicionar ou editar viagem' },
+    ],
+    entities: ['Voyage', 'Travel', 'Port', 'Machine', 'NoonReport', 'Enterprise', 'Customer'],
+    capabilities: [
+      'Listar viagens com paginação',
+      'Buscar por termo',
+      'Filtrar por embarcação',
+      'Filtrar por status',
+      'Filtrar por tipo de viagem',
+      'Filtrar por período',
+      'Visualizar KPIs agregados',
+      'Adicionar nova viagem',
+      'Editar viagem existente',
+      'Ver detalhes de legs',
+      'Limpar filtros',
+    ],
+  },
   component: ListTravelPage,
   validateSearch: (search: Record<string, unknown>): VoyageSearch => voyageSearchSchema.parse(search),
 });
@@ -195,7 +264,7 @@ function ListTravelPage() {
           </div>
 
           <div className="ml-auto flex justify-end gap-2">
-            <Button className="text-amber-700 hover:text-amber-800" variant="outline" onClick={handleClear}>
+            <Button variant="outline" onClick={handleClear}>
               <BrushCleaning className="size-4" />
             </Button>
             <Button type="button" onClick={handleSearch} disabled={isLoading}>
@@ -212,7 +281,7 @@ function ListTravelPage() {
           <ItemGroup>
             {voyages.map((voyage: any, index: number) => (
               <div key={voyage._id || voyage.id || index} className="group relative">
-                <div onClick={() => navigate({ to: '/voyage/list-travel/add', search: { id: voyage._id || voyage.id } })}>
+                <div className="cursor-pointer" onClick={() => navigate({ to: '/voyage/list-travel/add', search: { id: voyage._id || voyage.id } })}>
                   <VoyageItem voyage={voyage} />
                 </div>
               </div>

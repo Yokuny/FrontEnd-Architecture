@@ -45,7 +45,7 @@ export function StatusChart({ filters }: { filters: KPISCMMSFilters & { min: str
   return (
     <Item variant="outline" className="w-full flex-1 flex-col items-stretch">
       <ItemHeader className="flex-col items-center pb-4">
-        <ItemTitle className="font-bold text-lg">{t('kpis.cmms.tasks.open.vs.closed')}</ItemTitle>
+        <ItemTitle className="font-bold text-lg">{t('tasks.open_vs_closed')}</ItemTitle>
         <ItemDescription>{t('kpis.cmms.tasks.open.vs.closed.description')}</ItemDescription>
       </ItemHeader>
       <ItemContent>

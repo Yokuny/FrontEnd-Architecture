@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { RoleListItem, UserType } from '@/routes/_private/permissions/roles/@interface/role';
+import type { RoleListItem, UserType } from '@/routes/_private/permissions/roles/@interface';
 
 // API base URL
 const API_BASE = '/api';

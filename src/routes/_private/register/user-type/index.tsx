@@ -25,6 +25,24 @@ export const Route = createFileRoute('/_private/register/user-type/')({
   beforeLoad: () => ({
     title: 'types.user',
   }),
+  staticData: {
+    title: 'register.user-type',
+    description: 'Página de cadastro e gerenciamento de tipos de usuário. Permite criar, visualizar, editar e deletar tipos de usuário com permissões e busca.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'usuários', 'users', 'tipos', 'types', 'permissões', 'permissions'],
+    examplePrompts: ['Cadastrar novo tipo de usuário', 'Listar todos os tipos de usuário', 'Editar tipo de usuário', 'Buscar tipo por descrição', 'Deletar tipo de usuário'],
+    searchParams: [{ name: 'search', type: 'string', description: 'Termo de busca', example: 'admin' }],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['UserType', 'Enterprise'],
+    capabilities: [
+      'Listar tipos de usuário',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo tipo de usuário',
+      'Editar tipo existente',
+      'Deletar tipo',
+      'Visualizar cor do tipo',
+    ],
+  },
 });
 
 function UserTypeListPage() {

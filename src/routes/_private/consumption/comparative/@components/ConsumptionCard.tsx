@@ -29,7 +29,7 @@ export function ConsumptionCard({ data, filters }: ConsumptionCardProps) {
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="rounded-lg border bg-card">
       <div className="flex flex-wrap items-center justify-between gap-4 p-4">
-        <div className="flex min-w-[200px] items-center gap-4">
+        <div className="flex min-w-48 items-center gap-4">
           <Avatar className="size-12 border">
             <AvatarImage src={machine.image?.url} alt={machine.name} className="object-cover" />
             <AvatarFallback>{machine.name.substring(0, 2).toUpperCase()}</AvatarFallback>

@@ -23,7 +23,7 @@ export function GoalFormTable() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="sticky left-0 z-10 min-w-[150px] bg-background">{t('machine')}</TableHead>
+            <TableHead className="sticky left-0 z-10 min-w-36 bg-background">{t('machine')}</TableHead>
             {months.map((month) => (
               <TableHead key={month} className="w-[100px] px-1 text-center">
                 {t(month)}
@@ -38,7 +38,7 @@ export function GoalFormTable() {
             <TableRow key={field.id}>
               <TableCell className="sticky left-0 z-10 bg-background font-medium">{field.isFleet ? t('fleet') : field.machineName}</TableCell>
               {months.map((_, monthIndex) => (
-                <TableCell key={`${field.id}-${monthIndex}`} className="px-1">
+                <TableCell key={`${field.id}${monthIndex}`} className="px-1">
                   <Input
                     type="number"
                     step="0.01"

@@ -20,7 +20,6 @@ export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps)
 
   const [selectedValue, setSelectedValue] = useState<string | undefined>(props.value);
 
-  // Sync with preferred value from API if props.value is not provided
   useEffect(() => {
     if (query.data && !selectedValue) {
       const preferred = query.data.find((item) => item.preferred);
@@ -30,7 +29,6 @@ export function EnterprisePreferredSelect(props: EnterprisePreferredSelectProps)
     }
   }, [query.data, selectedValue]);
 
-  // Handle local change and API update
   const handleChange = (value: string | number | undefined) => {
     const stringValue = value as string;
     setSelectedValue(stringValue);

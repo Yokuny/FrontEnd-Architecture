@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 const checkboxVariants = cva(
   [
     'peer size-4 shrink-0 rounded-[4px]',
-    'cursor-pointer border border-input shadow-xs',
+    'cursor-pointer border border-input',
     'bg-background text-foreground',
     'dark:border-input dark:bg-input/30 dark:hover:bg-input/50',
     'hover:bg-accent',

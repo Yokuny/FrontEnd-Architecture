@@ -49,7 +49,7 @@ export function DevicesChart({ filters }: DevicesChartProps) {
               </TableHeader>
               <TableBody>
                 {tableData.map((item, index) => (
-                  <TableRow key={`${item.os}-${item.osVersion}-${index}`}>
+                  <TableRow key={`${item.os}${item.osVersion}${index}`}>
                     <TableCell>
                       <ItemTitle>
                         {item.os} {item.osVersion}

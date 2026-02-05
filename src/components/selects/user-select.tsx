@@ -1,7 +1,6 @@
 import { Users } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -26,32 +25,17 @@ export function UserSelect({
   const query = useUsersByEnterprise(idEnterprise, includeDetails);
 
   const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
-
-  if (multi) {
-    return (
-      <div className="space-y-2">
-        {label && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Users className="size-4" />
-            {label}
-          </Label>
-        )}
-        <DataMultiSelect
-          id={id}
-          placeholder={placeholder || t('select.users.placeholder')}
-          value={values}
-          onChange={(newValues) => onChangeMulti?.(newValues)}
-          query={query}
-          mapToOptions={(users) => mapUsersToOptions(users, includeDetails)}
-          disabled={disabled}
-          className={className}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('select.users.placeholder'),
+    query,
+    mapToOptions: (users: Parameters<typeof mapUsersToOptions>[0]) => mapUsersToOptions(users, includeDetails),
+    disabled,
+    className,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+  };
 
   return (
     <div className="space-y-2">
@@ -61,20 +45,11 @@ export function UserSelect({
           {label}
         </Label>
       )}
-      <DataSelect
-        id={id}
-        placeholder={placeholder || t('select.users.placeholder')}
-        value={value}
-        onChange={(newValue) => onChange?.(newValue)}
-        query={query}
-        mapToOptions={(users) => mapUsersToOptions(users, includeDetails)}
-        disabled={disabled}
-        clearable={clearable}
-        className={className}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-      />
+      {multi ? (
+        <DataMultiSelect {...sharedProps} value={values} onChange={(newValues) => onChangeMulti?.(newValues)} />
+      ) : (
+        <DataSelect {...sharedProps} value={value} onChange={(newValue) => onChange?.(newValue)} clearable={clearable} />
+      )}
     </div>
   );
 }

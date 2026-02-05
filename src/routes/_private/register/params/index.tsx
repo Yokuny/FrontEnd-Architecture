@@ -15,6 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useParams, useParamsApi } from '@/hooks/use-params-api';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const paramsSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
   size: z.number().catch(20).optional().default(20),
@@ -29,6 +31,20 @@ export const Route = createFileRoute('/_private/register/params/')({
   beforeLoad: () => ({
     title: 'params',
   }),
+  staticData: {
+    title: 'register.params',
+    description: 'Página de cadastro e gerenciamento de parâmetros globais do sistema. Permite criar, visualizar, editar e deletar configurações com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'parâmetros', 'parameters', 'params', 'configuração', 'settings'],
+    examplePrompts: ['Cadastrar novo parâmetro', 'Listar todos os parâmetros', 'Editar parâmetro', 'Buscar parâmetro por descrição', 'Deletar parâmetro'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '20' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'configuração' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Param', 'Enterprise'],
+    capabilities: ['Listar parâmetros com paginação', 'Buscar por termo', 'Filtrar por empresa', 'Criar novo parâmetro', 'Editar parâmetro existente', 'Deletar parâmetro'],
+  },
 });
 
 function ParamsListPage() {
@@ -36,6 +52,7 @@ function ParamsListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/params/' });
   const { idEnterprise } = useEnterpriseFilter();
+  // const hasPermissionAdd = useHasPermission('/params-add');
 
   const { data, isLoading } = useParams({
     idEnterprise,
@@ -84,10 +101,12 @@ function ParamsListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/params/add' })}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 
@@ -104,6 +123,7 @@ function ParamsListPage() {
                 variant="outline"
                 className="cursor-pointer"
                 onClick={() =>
+                  // hasPermissionAdd &&
                   navigate({
                     to: '/register/params/add',
                     search: { id: item.id },
@@ -122,6 +142,7 @@ function ParamsListPage() {
                   </ItemContent>
                 </div>
 
+                {/* {hasPermissionAdd && ( */}
                 <div className="flex items-center gap-4">
                   <div className="flex items-center justify-end border-l pl-2">
                     <DropdownMenu>
@@ -155,6 +176,7 @@ function ParamsListPage() {
                     </DropdownMenu>
                   </div>
                 </div>
+                {/* )} */}
               </Item>
             ))}
           </ItemGroup>

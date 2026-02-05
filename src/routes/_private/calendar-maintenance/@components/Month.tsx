@@ -23,7 +23,7 @@ const Header = () => {
     <Item variant="outline" className="w-full rounded-none border-accent border-x-0 border-t-0 bg-secondary p-0 text-muted-foreground" size="sm">
       <ItemContent className="grid grid-cols-7 flex-row">
         {weekDays.map((day, index) => (
-          <ItemContent key={`${index}-${day.toString()}month-header-`} className="flex items-center justify-center border-r py-3 last:border-r-0">
+          <ItemContent key={`${index}${day.toString()}month-header-`} className="flex items-center justify-center border-r py-3 last:border-r-0">
             <ItemTitle className="font-semibold text-xs">
               <span className="sm:hidden">{formatDate(day, 'EEEEE')}</span>
               <span className="max-sm:hidden">{formatDate(day, 'EEEE')}</span>
@@ -87,7 +87,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
       <ScrollArea className="md:h-[calc(100vh-13.3rem)]">
         <ItemContent className="grid auto-rows-fr gap-0 p-0">
           {weeks.map((week, weekIndex) => (
-            <ItemContent key={`${weekIndex}-${week}`} className="grid grid-cols-7 flex-row gap-0 p-0 [&:last-child>*]:border-b-0">
+            <ItemContent key={`${weekIndex}${week}`} className="grid grid-cols-7 flex-row gap-0 p-0 [&:last-child>*]:border-b-0">
               {week.map((day, dayIndex) => {
                 if (!day) return null;
                 const dayEvents = getEventsForDay(events, day);
@@ -132,7 +132,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                           const isHidden = visibleCount !== undefined && index >= visibleCount;
 
                           return (
-                            <ItemContent key={`${dayIndex}-${event._id || event.id}`} className="aria-hidden:hidden" aria-hidden={isHidden ? 'true' : undefined}>
+                            <ItemContent key={`${dayIndex}${event._id || event.id}`} className="aria-hidden:hidden" aria-hidden={isHidden ? 'true' : undefined}>
                               <EventItem onClick={(e) => handleEventClick(event, e)} event={event} view="month" isFirstDay={isFirstDay} isLastDay={isLastDay}>
                                 {!isFirstDay && (
                                   <ItemContent className="invisible" aria-hidden={true}>

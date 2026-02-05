@@ -6,18 +6,11 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { COUNTRIES, type Country } from '@/lib/constants/countries';
 
-/**
- * CountrySelect Component
- *
- * Provides selection for countries from a static list.
- * Follows the single/multi mode pattern.
- */
 export function CountrySelect(props: CountrySelectProps) {
   const { t } = useTranslation();
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Simulated query object for static data
   const query = {
     data: COUNTRIES,
     isLoading: false,
@@ -34,34 +27,19 @@ export function CountrySelect(props: CountrySelectProps) {
     }));
   };
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('country');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Globe className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Country, Country>
-          id={id}
-          placeholder={placeholder || t('country')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query as any}
-          mapToOptions={mapToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('country');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('country'),
+    query: query as any,
+    mapToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -70,20 +48,11 @@ export function CountrySelect(props: CountrySelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Country, Country>
-        id={id}
-        placeholder={placeholder || t('country')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query as any}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<Country, Country> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Country, Country> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

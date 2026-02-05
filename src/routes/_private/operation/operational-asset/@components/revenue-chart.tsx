@@ -127,7 +127,7 @@ export function RevenueChart({ data, isLoading, totalRevenue, totalLoss }: Reven
                 />
                 <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                   {chartData.map((entry, index) => (
-                    <Cell key={`${entry.type}-${index}`} fill={entry.type === 'revenue' ? STATUS_COLORS.operacao : STATUS_COLORS.downtime} />
+                    <Cell key={`${entry.type}${index}`} fill={entry.type === 'revenue' ? STATUS_COLORS.operacao : STATUS_COLORS.downtime} />
                   ))}
                 </Bar>
               </BarChart>

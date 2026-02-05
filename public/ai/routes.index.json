@@ -1,0 +1,463 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-02-05T12:00:03.217Z",
+  "totalRoutes": 76,
+  "routes": [
+    {
+      "id": "__private_",
+      "path": "/_private/",
+      "title": "index",
+      "embeddingKey": "__private_"
+    },
+    {
+      "id": "__private_calendar_maintenance_",
+      "path": "/_private/calendar-maintenance/",
+      "title": "calendar.maintenance",
+      "embeddingKey": "__private_calendar_maintenance_"
+    },
+    {
+      "id": "__private_cmms_",
+      "path": "/_private/cmms/",
+      "title": "cmms",
+      "embeddingKey": "__private_cmms_"
+    },
+    {
+      "id": "__private_consumption_",
+      "path": "/_private/consumption/",
+      "title": "consume",
+      "embeddingKey": "__private_consumption_"
+    },
+    {
+      "id": "__private_consumption_comparative_",
+      "path": "/_private/consumption/comparative/",
+      "title": "consumption.comparative",
+      "embeddingKey": "__private_consumption_comparative_"
+    },
+    {
+      "id": "__private_consumption_daily_",
+      "path": "/_private/consumption/daily/",
+      "title": "consumption.daily",
+      "embeddingKey": "__private_consumption_daily_"
+    },
+    {
+      "id": "__private_consumption_relatorio_",
+      "path": "/_private/consumption/relatorio/",
+      "title": "reports",
+      "embeddingKey": "__private_consumption_relatorio_"
+    },
+    {
+      "id": "__private_consumption_rve_rdo_",
+      "path": "/_private/consumption/rve-rdo/",
+      "title": "dashboard.rve.rdo",
+      "embeddingKey": "__private_consumption_rve_rdo_"
+    },
+    {
+      "id": "__private_consumption_rve_sounding_",
+      "path": "/_private/consumption/rve-sounding/",
+      "title": "dashboard.rve.sounding",
+      "embeddingKey": "__private_consumption_rve_sounding_"
+    },
+    {
+      "id": "__private_consumption_time_operation_",
+      "path": "/_private/consumption/time-operation/",
+      "title": "consumption.time.operation",
+      "embeddingKey": "__private_consumption_time_operation_"
+    },
+    {
+      "id": "__private_esg_",
+      "path": "/_private/esg/",
+      "title": "esg",
+      "embeddingKey": "__private_esg_"
+    },
+    {
+      "id": "__private_esg_cii_fleet_",
+      "path": "/_private/esg/cii-fleet/",
+      "title": "esg.fleet",
+      "embeddingKey": "__private_esg_cii_fleet_"
+    },
+    {
+      "id": "__private_esg_consumption_co2_",
+      "path": "/_private/esg/consumption-co2/",
+      "title": "esg.co2",
+      "embeddingKey": "__private_esg_consumption_co2_"
+    },
+    {
+      "id": "__private_esg_indicators_eeoi_cii_",
+      "path": "/_private/esg/indicators-eeoi-cii/",
+      "title": "menu.eeoi.cii",
+      "embeddingKey": "__private_esg_indicators_eeoi_cii_"
+    },
+    {
+      "id": "__private_esg_simulator_cii_",
+      "path": "/_private/esg/simulator-cii/",
+      "title": "simulator.cii",
+      "embeddingKey": "__private_esg_simulator_cii_"
+    },
+    {
+      "id": "__private_fleet_manager_",
+      "path": "/_private/fleet-manager/",
+      "title": "fleet.map",
+      "embeddingKey": "__private_fleet_manager_"
+    },
+    {
+      "id": "__private_form_",
+      "path": "/_private/form/",
+      "title": "forms",
+      "embeddingKey": "__private_form_"
+    },
+    {
+      "id": "__private_ia_",
+      "path": "/_private/ia/",
+      "title": "ai",
+      "embeddingKey": "__private_ia_"
+    },
+    {
+      "id": "__private_ia_anomaly_detector_",
+      "path": "/_private/ia/anomaly-detector/",
+      "title": "menu.nexai.anomaly.detector",
+      "embeddingKey": "__private_ia_anomaly_detector_"
+    },
+    {
+      "id": "__private_ia_prompt_",
+      "path": "/_private/ia/prompt/",
+      "title": "ai.prompt",
+      "embeddingKey": "__private_ia_prompt_"
+    },
+    {
+      "id": "__private_maintenance_",
+      "path": "/_private/maintenance/",
+      "title": "maintenance",
+      "embeddingKey": "__private_maintenance_"
+    },
+    {
+      "id": "__private_maintenance_list_os_done_",
+      "path": "/_private/maintenance/list-os-done/",
+      "title": "done.os",
+      "embeddingKey": "__private_maintenance_list_os_done_"
+    },
+    {
+      "id": "__private_maintenance_list_os_done_view_",
+      "path": "/_private/maintenance/list-os-done/view/",
+      "title": "done.os",
+      "embeddingKey": "__private_maintenance_list_os_done_view_"
+    },
+    {
+      "id": "__private_maintenance_monitoring_plans_",
+      "path": "/_private/maintenance/monitoring-plans/",
+      "title": "monitoring.plan.maintenance",
+      "embeddingKey": "__private_maintenance_monitoring_plans_"
+    },
+    {
+      "id": "__private_maintenance_monitoring_wear_",
+      "path": "/_private/maintenance/monitoring-wear/",
+      "title": "monitoring.wear.part",
+      "embeddingKey": "__private_maintenance_monitoring_wear_"
+    },
+    {
+      "id": "__private_operation_",
+      "path": "/_private/operation/",
+      "title": "operation",
+      "embeddingKey": "__private_operation_"
+    },
+    {
+      "id": "__private_operation_downtime_",
+      "path": "/_private/operation/downtime/",
+      "title": "downtime",
+      "embeddingKey": "__private_operation_downtime_"
+    },
+    {
+      "id": "__private_operation_goals_",
+      "path": "/_private/operation/goals/",
+      "title": "goals",
+      "embeddingKey": "__private_operation_goals_"
+    },
+    {
+      "id": "__private_operation_groups_",
+      "path": "/_private/operation/groups/",
+      "title": "groups",
+      "embeddingKey": "__private_operation_groups_"
+    },
+    {
+      "id": "__private_operation_operational_asset_",
+      "path": "/_private/operation/operational-asset/",
+      "title": "performance.asset.operational",
+      "embeddingKey": "__private_operation_operational_asset_"
+    },
+    {
+      "id": "__private_operation_operational_fleet_",
+      "path": "/_private/operation/operational-fleet/",
+      "title": "performance.fleet.operational",
+      "embeddingKey": "__private_operation_operational_fleet_"
+    },
+    {
+      "id": "__private_operation_ptax_",
+      "path": "/_private/operation/ptax/",
+      "title": "ptax",
+      "embeddingKey": "__private_operation_ptax_"
+    },
+    {
+      "id": "__private_permissions_",
+      "path": "/_private/permissions/",
+      "title": "permissions",
+      "embeddingKey": "__private_permissions_"
+    },
+    {
+      "id": "__private_permissions_roles_",
+      "path": "/_private/permissions/roles/",
+      "title": "role",
+      "embeddingKey": "__private_permissions_roles_"
+    },
+    {
+      "id": "__private_permissions_roles_edit_",
+      "path": "/_private/permissions/roles/edit/",
+      "title": "edit.role",
+      "embeddingKey": "__private_permissions_roles_edit_"
+    },
+    {
+      "id": "__private_permissions_roles_users_",
+      "path": "/_private/permissions/roles/users/",
+      "title": "role.users",
+      "embeddingKey": "__private_permissions_roles_users_"
+    },
+    {
+      "id": "__private_permissions_users_",
+      "path": "/_private/permissions/users/",
+      "title": "users.permissions",
+      "embeddingKey": "__private_permissions_users_"
+    },
+    {
+      "id": "__private_permissions_users_edit_",
+      "path": "/_private/permissions/users/edit/",
+      "title": "edit.user",
+      "embeddingKey": "__private_permissions_users_edit_"
+    },
+    {
+      "id": "__private_permissions_users_password_",
+      "path": "/_private/permissions/users/password/",
+      "title": "new.password",
+      "embeddingKey": "__private_permissions_users_password_"
+    },
+    {
+      "id": "__private_register_",
+      "path": "/_private/register/",
+      "title": "register",
+      "embeddingKey": "__private_register_"
+    },
+    {
+      "id": "__private_register_alerts_",
+      "path": "/_private/register/alerts/",
+      "title": "register.alerts",
+      "embeddingKey": "__private_register_alerts_"
+    },
+    {
+      "id": "__private_register_buoy_",
+      "path": "/_private/register/buoy/",
+      "title": "buoys",
+      "embeddingKey": "__private_register_buoy_"
+    },
+    {
+      "id": "__private_register_contracts_",
+      "path": "/_private/register/contracts/",
+      "title": "register.contracts",
+      "embeddingKey": "__private_register_contracts_"
+    },
+    {
+      "id": "__private_register_customers_",
+      "path": "/_private/register/customers/",
+      "title": "register.customers",
+      "embeddingKey": "__private_register_customers_"
+    },
+    {
+      "id": "__private_register_enterprises_",
+      "path": "/_private/register/enterprises/",
+      "title": "enterprises",
+      "embeddingKey": "__private_register_enterprises_"
+    },
+    {
+      "id": "__private_register_forms_",
+      "path": "/_private/register/forms/",
+      "title": "config.form",
+      "embeddingKey": "__private_register_forms_"
+    },
+    {
+      "id": "__private_register_geofences_",
+      "path": "/_private/register/geofences/",
+      "title": "geofences",
+      "embeddingKey": "__private_register_geofences_"
+    },
+    {
+      "id": "__private_register_machines_",
+      "path": "/_private/register/machines/",
+      "title": "register.machines",
+      "embeddingKey": "__private_register_machines_"
+    },
+    {
+      "id": "__private_register_maintenance_plans_",
+      "path": "/_private/register/maintenance-plans/",
+      "title": "maintenance.plans",
+      "embeddingKey": "__private_register_maintenance_plans_"
+    },
+    {
+      "id": "__private_register_model_machine_",
+      "path": "/_private/register/model-machine/",
+      "title": "models.machine",
+      "embeddingKey": "__private_register_model_machine_"
+    },
+    {
+      "id": "__private_register_params_",
+      "path": "/_private/register/params/",
+      "title": "params",
+      "embeddingKey": "__private_register_params_"
+    },
+    {
+      "id": "__private_register_parts_",
+      "path": "/_private/register/parts/",
+      "title": "parts",
+      "embeddingKey": "__private_register_parts_"
+    },
+    {
+      "id": "__private_register_platform_",
+      "path": "/_private/register/platform/",
+      "title": "platforms",
+      "embeddingKey": "__private_register_platform_"
+    },
+    {
+      "id": "__private_register_sensor_functions_",
+      "path": "/_private/register/sensor-functions/",
+      "title": "sensor.functions",
+      "embeddingKey": "__private_register_sensor_functions_"
+    },
+    {
+      "id": "__private_register_sensors_",
+      "path": "/_private/register/sensors/",
+      "title": "sensors",
+      "embeddingKey": "__private_register_sensors_"
+    },
+    {
+      "id": "__private_register_type_fuel_",
+      "path": "/_private/register/type-fuel/",
+      "title": "types.fuel",
+      "embeddingKey": "__private_register_type_fuel_"
+    },
+    {
+      "id": "__private_register_user_type_",
+      "path": "/_private/register/user-type/",
+      "title": "types.user",
+      "embeddingKey": "__private_register_user_type_"
+    },
+    {
+      "id": "__private_service_management_",
+      "path": "/_private/service-management/",
+      "title": "service.management",
+      "embeddingKey": "__private_service_management_"
+    },
+    {
+      "id": "__private_service_management_fas_analytics_",
+      "path": "/_private/service-management/fas-analytics/",
+      "title": "fas.analytics",
+      "embeddingKey": "__private_service_management_fas_analytics_"
+    },
+    {
+      "id": "__private_service_management_fas_contacts_",
+      "path": "/_private/service-management/fas-contacts/",
+      "title": "fas.contacts",
+      "embeddingKey": "__private_service_management_fas_contacts_"
+    },
+    {
+      "id": "__private_service_management_fas_",
+      "path": "/_private/service-management/fas/",
+      "title": "fas",
+      "embeddingKey": "__private_service_management_fas_"
+    },
+    {
+      "id": "__private_service_management_fas_details_",
+      "path": "/_private/service-management/fas/details/",
+      "title": "view.fas",
+      "embeddingKey": "__private_service_management_fas_details_"
+    },
+    {
+      "id": "__private_service_management_fas_filled_os_",
+      "path": "/_private/service-management/fas/filled-os/",
+      "title": "view.order.service",
+      "embeddingKey": "__private_service_management_fas_filled_os_"
+    },
+    {
+      "id": "__private_set_up_company_",
+      "path": "/_private/set-up-company/",
+      "title": "setup.company",
+      "embeddingKey": "__private_set_up_company_"
+    },
+    {
+      "id": "__private_set_up_company_external_users_",
+      "path": "/_private/set-up-company/external-users/",
+      "title": "usernames.external",
+      "embeddingKey": "__private_set_up_company_external_users_"
+    },
+    {
+      "id": "__private_set_up_company_integration_list_",
+      "path": "/_private/set-up-company/integration-list/",
+      "title": "integration",
+      "embeddingKey": "__private_set_up_company_integration_list_"
+    },
+    {
+      "id": "__private_set_up_company_setup_api_external_",
+      "path": "/_private/set-up-company/setup-api-external/",
+      "title": "setup.api.external",
+      "embeddingKey": "__private_set_up_company_setup_api_external_"
+    },
+    {
+      "id": "__private_set_up_company_setup_chatbot_",
+      "path": "/_private/set-up-company/setup-chatbot/",
+      "title": "setup.chatbot",
+      "embeddingKey": "__private_set_up_company_setup_chatbot_"
+    },
+    {
+      "id": "__private_set_up_company_setup_email_",
+      "path": "/_private/set-up-company/setup-email/",
+      "title": "setup.email",
+      "embeddingKey": "__private_set_up_company_setup_email_"
+    },
+    {
+      "id": "__private_set_up_company_setup_fleet_",
+      "path": "/_private/set-up-company/setup-fleet/",
+      "title": "setup.fleet",
+      "embeddingKey": "__private_set_up_company_setup_fleet_"
+    },
+    {
+      "id": "__private_set_up_company_setup_limits_",
+      "path": "/_private/set-up-company/setup-limits/",
+      "title": "setup.limits",
+      "embeddingKey": "__private_set_up_company_setup_limits_"
+    },
+    {
+      "id": "__private_voyage_",
+      "path": "/_private/voyage/",
+      "title": "voyage.page",
+      "embeddingKey": "__private_voyage_"
+    },
+    {
+      "id": "__private_voyage_kpis_travel_",
+      "path": "/_private/voyage/kpis-travel/",
+      "title": "kpis.travel",
+      "embeddingKey": "__private_voyage_kpis_travel_"
+    },
+    {
+      "id": "__private_voyage_list_travel_",
+      "path": "/_private/voyage/list-travel/",
+      "title": "voyage.list",
+      "embeddingKey": "__private_voyage_list_travel_"
+    },
+    {
+      "id": "__private_voyage_route_planner_",
+      "path": "/_private/voyage/route-planner/",
+      "title": "route.planner",
+      "embeddingKey": "__private_voyage_route_planner_"
+    },
+    {
+      "id": "__private_voyage_voyage_integration_",
+      "path": "/_private/voyage/voyage-integration/",
+      "title": "voyage.integration",
+      "embeddingKey": "__private_voyage_voyage_integration_"
+    }
+  ]
+}

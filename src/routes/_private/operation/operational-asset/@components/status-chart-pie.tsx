@@ -50,7 +50,7 @@ export function StatusChartPie({ data, isLoading }: StatusChartPieProps) {
               <ChartTooltip content={<ChartTooltipContent hideLabel />} />
               <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60} strokeWidth={5} paddingAngle={2}>
                 {chartData.map((entry, index) => (
-                  <Cell key={`${entry.status}-${index}`} fill={entry.fill} />
+                  <Cell key={`${entry.status}${index}`} fill={entry.fill} />
                 ))}
               </Pie>
             </PieChart>

@@ -12,36 +12,20 @@ export function QlpSelect(props: QlpSelectProps) {
   const id = useId();
   const query = useQlpsSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
-
-  if (mode === 'multi') {
-    const displayLabel = label || t('qlp.placeholder');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <SlidersHorizontal className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Qlp, Qlp>
-          id={id}
-          placeholder={placeholder || t('qlp.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapQlpsToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('qlp.placeholder');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('qlp.placeholder'),
+    query,
+    mapToOptions: mapQlpsToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -50,20 +34,11 @@ export function QlpSelect(props: QlpSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Qlp, Qlp>
-        id={id}
-        placeholder={placeholder || t('qlp.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapQlpsToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<Qlp, Qlp> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Qlp, Qlp> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

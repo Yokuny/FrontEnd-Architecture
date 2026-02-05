@@ -25,6 +25,30 @@ import { useConsumptionDailyData } from './@hooks/use-consumption-daily-api';
 import { searchSchema } from './@interface/consumption-daily.schema';
 
 export const Route = createFileRoute('/_private/consumption/daily/')({
+  staticData: {
+    title: 'consumption.daily',
+    description: 'Página de relatório de consumo diário de combustível por embarcação. Exibe gráficos de consumo real vs estimado, estatísticas e lista de pollings.',
+    tags: ['consumo', 'combustível', 'diário', 'relatório', 'embarcação', 'vessel', 'fuel', 'daily', 'consumption'],
+    examplePrompts: [
+      'Quero ver o consumo diário do navio X',
+      'Relatório de consumo entre 2025-01-01 e 2025-02-01',
+      'Mostre o consumo de combustível do mês passado',
+      'Consumo diário de uma embarcação específica',
+    ],
+    searchParams: [
+      { name: 'dateMin', type: 'date', description: 'Data inicial do período no formato YYYY-MM-DD', example: '2025-01-01' },
+      { name: 'dateMax', type: 'date', description: 'Data final do período no formato YYYY-MM-DD', example: '2025-02-04' },
+      { name: 'machine', type: 'string', description: 'ID da embarcação/máquina para filtrar' },
+      { name: 'unit', type: 'string', description: 'Unidade de medida: L (litros), m³ (metros cúbicos), gal (galões)', example: 'L' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption/monthly', relation: 'sibling', description: 'Consumo mensal agregado' },
+      { path: '/_private/consumption/accumulated', relation: 'sibling', description: 'Consumo acumulado por período' },
+      { path: '/_private/consumption/comparative', relation: 'sibling', description: 'Comparativo de consumo entre embarcações' },
+    ],
+    entities: ['ConsumptionData', 'Machine', 'Enterprise'],
+    capabilities: ['Visualizar gráfico de consumo', 'Alternar consumo real/estimado', 'Ver estatísticas', 'Listar pollings'],
+  },
   component: ConsumptionDailyPage,
   validateSearch: searchSchema,
 });
@@ -72,11 +96,6 @@ function ConsumptionDailyPage() {
     });
   }, [navigate, dateMin, dateMax, machineId, unit]);
 
-  // Check permissions - simplificado para esta implementação
-  // TODO: Integrar com sistema de permissões real (useAuth ou similar)
-  const hasPermissionEditor = true;
-
-  // Get machine name
   const machinesQuery = useConsumptionMachinesSelect(idEnterprise);
   const machinesOptions = useMemo(() => (machinesQuery.data ? mapConsumptionMachinesToOptions(machinesQuery.data) : []), [machinesQuery.data]);
   const selectedMachine = machinesOptions.find((m: any) => m.value === machineId);
@@ -84,15 +103,15 @@ function ConsumptionDailyPage() {
 
   return (
     <Card>
-      <CardHeader title={t('consumption.daily')} />
+      <CardHeader />
       <CardContent>
-        <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
+        <Item variant="outline" className="mb-6 bg-secondary">
           <ItemContent className="flex-none">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -101,7 +120,6 @@ function ConsumptionDailyPage() {
                   mode="single"
                   selected={dateMin}
                   onSelect={(date) => date && setDateMin(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -114,8 +132,8 @@ function ConsumptionDailyPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -124,7 +142,6 @@ function ConsumptionDailyPage() {
                   mode="single"
                   selected={dateMax}
                   onSelect={(date) => date && setDateMax(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -133,18 +150,16 @@ function ConsumptionDailyPage() {
             </Popover>
           </ItemContent>
 
-          <ItemContent className="min-w-[240px]">
-            <ConsumptionMachineSelect
-              mode="single"
-              label={t('vessel')}
-              placeholder={t('vessels.select.placeholder')}
-              idEnterprise={idEnterprise}
-              value={machineId}
-              onChange={setMachineId}
-            />
-          </ItemContent>
+          <ConsumptionMachineSelect
+            mode="single"
+            label={t('vessel')}
+            placeholder={t('vessels.select.placeholder')}
+            idEnterprise={idEnterprise}
+            value={machineId}
+            onChange={setMachineId}
+          />
 
-          <ItemContent className="min-w-[120px]">
+          <ItemContent className="min-w-28">
             <Label>{t('unit')}</Label>
             <Select value={unit} onValueChange={setUnit}>
               <SelectTrigger className="bg-background">
@@ -159,11 +174,12 @@ function ConsumptionDailyPage() {
               </SelectContent>
             </Select>
           </ItemContent>
-
-          <Button variant="outline" className="ml-auto shrink-0 gap-2 bg-background" onClick={handleSearch} disabled={!machineId}>
-            <Search className="size-4" />
-            {t('filter')}
-          </Button>
+          <div className="ml-auto">
+            <Button variant="outline" className="shrink-0 gap-2" onClick={handleSearch} disabled={!machineId}>
+              <Search className="size-4" />
+              {t('filter')}
+            </Button>
+          </div>
         </Item>
 
         {isLoading && <DefaultLoading />}
@@ -173,9 +189,9 @@ function ConsumptionDailyPage() {
           <div className="space-y-6">
             <ConsumptionChart data={data} showReal={showReal} showEstimated={showEstimated} onToggleReal={setShowReal} onToggleEstimated={setShowEstimated} />
 
-            <Statistics data={data} machineId={machineId} machineName={machineName} hasPermissionEditor={hasPermissionEditor} />
+            <Statistics data={data} machineId={machineId} machineName={machineName} />
 
-            <ListPolling data={data} machineId={machineId} machineName={machineName} hasPermissionEditor={hasPermissionEditor} />
+            <ListPolling data={data} machineId={machineId} machineName={machineName} />
           </div>
         )}
       </CardContent>

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api/client';
-import type { ChatbotPermission, PermissionPath, Role, RoleListItem, RoleUser } from '@/routes/_private/permissions/roles/@interface/role';
+import type { ChatbotPermission, PermissionPath, Role, RoleListItem, RoleUser } from '@/routes/_private/permissions/roles/@interface';
 
 export type { ChatbotPermission, PermissionPath, Role, RoleListItem, RoleUser };
 
@@ -17,9 +17,26 @@ export const rolesKeys = {
 };
 
 // API functions
-async function fetchRoles(params?: Record<string, unknown>): Promise<RoleListItem[]> {
-  const queryString = params ? `?${new URLSearchParams(params as Record<string, string>).toString()}` : '';
-  const response = await api.get<RoleListItem[]>(`/role/list${queryString}`);
+async function fetchRoles(params?: Record<string, unknown>): Promise<{ data: RoleListItem[]; pageInfo: { count: number }[] }> {
+  const searchParams = new URLSearchParams();
+
+  if (params) {
+    for (const [key, value] of Object.entries(params)) {
+      if (value === undefined || value === null || value === '') continue;
+
+      if (Array.isArray(value)) {
+        const paramKey = key.endsWith('[]') ? key : `${key}[]`;
+        for (const item of value) {
+          searchParams.append(paramKey, String(item));
+        }
+      } else {
+        searchParams.append(key, String(value));
+      }
+    }
+  }
+
+  const queryString = searchParams.toString() ? `?${searchParams.toString()}` : '';
+  const response = await api.get<{ data: RoleListItem[]; pageInfo: { count: number }[] }>(`/role/list${queryString}`);
   return response.data;
 }
 
@@ -186,16 +203,27 @@ export function useRolesApi() {
   };
 }
 
-// Helper hook for select components
+// Helper hook for select components - always returns flat array of RoleListItem[]
 export function useRolesSelect(isAll = false, params?: Record<string, unknown>) {
   const allQuery = useRolesAll(isAll);
   const filterQuery = useRoles(params, !isAll);
-  return isAll ? allQuery : filterQuery;
+
+  // Transform paginated response to flat array for select components
+  if (isAll) {
+    return allQuery;
+  }
+
+  // Map the paginated response to match the expected format
+  return {
+    ...filterQuery,
+    data: filterQuery.data?.data || [],
+  } as typeof allQuery;
 }
 
 // Helper function to map roles to select options
-export function mapRolesToOptions(roles: RoleListItem[]) {
-  return roles
+export function mapRolesToOptions(roles: RoleListItem[] | { data: RoleListItem[] }) {
+  const items = Array.isArray(roles) ? roles : roles.data;
+  return items
     .map((role) => ({
       value: role.id,
       label: role.description,

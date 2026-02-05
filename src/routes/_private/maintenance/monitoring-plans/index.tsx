@@ -22,6 +22,54 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute('/_private/maintenance/monitoring-plans/')({
+  staticData: {
+    title: 'monitoring.plan.maintenance',
+    description:
+      'Página de monitoramento de planos de manutenção preventiva (Planned Maintenance). Permite acompanhar o status de execução dos planos de manutenção programada por embarcação, visualizar próximas manutenções agendadas baseadas em running hours ou calendário, filtrar por máquina/plano/responsáveis/status, e identificar planos atrasados ou próximos do vencimento. Essencial para gestão proativa de manutenção preventiva e cumprimento de schedules de PMS.',
+    tags: [
+      'maintenance',
+      'manutenção',
+      'monitoring',
+      'monitoramento',
+      'plan',
+      'plano',
+      'preventive',
+      'preventiva',
+      'scheduled',
+      'programada',
+      'pms',
+      'running-hours',
+      'calendar',
+      'schedule',
+    ],
+    examplePrompts: [
+      'Monitorar planos de manutenção preventiva da frota',
+      'Ver próximas manutenções programadas por embarcação',
+      'Filtrar planos atrasados ou próximos do vencimento',
+      'Verificar status de execução dos planos de manutenção',
+      'Consultar manutenções agendadas por running hours',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página (paginação)', example: '1' },
+      { name: 'size', type: 'number', description: 'Quantidade de registros por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca para filtrar planos', example: 'motor' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/maintenance', relation: 'parent', description: 'Hub de manutenção' },
+      { path: '/_private/maintenance/list-os-done', relation: 'sibling', description: 'Histórico de OS concluídas' },
+      { path: '/_private/maintenance/monitoring-wear', relation: 'sibling', description: 'Monitoramento de desgaste de peças' },
+    ],
+    entities: ['MaintenancePlan', 'Machine', 'Enterprise', 'User', 'Equipment', 'RunningHours'],
+    capabilities: [
+      'Visualizar planos de manutenção agrupados por embarcação',
+      'Monitorar status de execução (pendente, em andamento, concluído)',
+      'Filtrar por máquina, plano de manutenção, responsáveis e status',
+      'Identificar planos atrasados ou próximos do vencimento',
+      'Acompanhar manutenções baseadas em running hours ou calendário',
+      'Navegar com paginação entre embarcações e seus planos',
+      'Exibir avatar e informações da embarcação',
+    ],
+  },
   component: MonitoringPlansPage,
   validateSearch: searchSchema,
 });

@@ -6,12 +6,6 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { mapSensorsByAssetsToOptions, type SensorByAsset, useSensorsByAssetsSelect } from '@/hooks/use-sensors-by-assets-api';
 
-/**
- * SensorByAssetsSelect Component
- *
- * Provides selection for sensors filtered by multiple asset IDs.
- * Supports single and multi selection modes.
- */
 export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
   const { t } = useTranslation();
   const { mode, idAssets, disabled = false, className, label, placeholder, clearable = true, idsNotAllowed = [] } = props;
@@ -29,34 +23,19 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
     return options.filter((opt) => !lowerNotAllowed.includes(opt.value.toLowerCase()));
   };
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('sensor.placeholder');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Radar className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<SensorByAsset, SensorByAsset>
-          id={id}
-          placeholder={placeholder || t('sensor.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={filterOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('sensor.placeholder');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('sensor.placeholder'),
+    query,
+    mapToOptions: filterOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -65,20 +44,11 @@ export function SensorByAssetsSelect(props: SensorByAssetsSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<SensorByAsset, SensorByAsset>
-        id={id}
-        placeholder={placeholder || t('sensor.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={filterOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<SensorByAsset, SensorByAsset> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<SensorByAsset, SensorByAsset> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

@@ -21,6 +21,25 @@ export const Route = createFileRoute('/_private/set-up-company/setup-email/')({
   beforeLoad: () => ({
     title: 'setup.email',
   }),
+  staticData: {
+    title: 'setup.email',
+    description:
+      'Configuração de servidor SMTP para envio de emails do sistema. Configure host, porta, credenciais e parâmetros de autenticação para envio de notificações e relatórios por email.',
+    tags: ['setup', 'configuração', 'config', 'admin', 'email', 'smtp', 'mail', 'notificações', 'notifications', 'servidor', 'server', 'autenticação'],
+    examplePrompts: [
+      'Como configurar o servidor SMTP para emails?',
+      'Como testar o envio de emails?',
+      'Onde configuro as credenciais do servidor de email?',
+      'Como alterar a porta do servidor SMTP?',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da empresa para configurar email SMTP', example: 'uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/set-up-company', relation: 'parent', description: 'Hub de configurações da empresa' },
+      { path: '/_private/set-up-company/setup-chatbot', relation: 'sibling', description: 'Configuração de chatbot' },
+    ],
+    entities: ['Enterprise', 'EmailConfig'],
+    capabilities: ['Configurar servidor SMTP', 'Gerenciar credenciais de email', 'Testar envio de emails', 'Configurar parâmetros de autenticação'],
+  },
 });
 
 function SetupEmailPage() {
@@ -45,7 +64,7 @@ function SetupEmailFormContent({ idEnterprise }: { idEnterprise?: string }) {
           <Form {...form}>
             <form onSubmit={onSubmit}>
               <EmailConfigForm isEnterpriseDisabled={!!idEnterprise} />
-              <CardFooter className="mt-6 border-t px-0 pt-6">
+              <CardFooter className="mt-6 px-0 pt-6">
                 <Button type="submit" disabled={isPending || isLoading} className="min-w-[120px]">
                   {isPending ? <Spinner className="mr-2 size-4" /> : <Save className="mr-2 size-4" />}
                   {t('save')}

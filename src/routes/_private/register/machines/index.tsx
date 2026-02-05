@@ -17,6 +17,8 @@ import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useMachines } from '@/hooks/use-machines-api';
 import { IncludeVesselModal } from './@components/include-vessel-modal';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const machinesSearchSchema = z.object({
   page: z.number().optional().default(1),
   size: z.number().optional().default(10),
@@ -28,6 +30,40 @@ type MachinesSearch = z.infer<typeof machinesSearchSchema>;
 export const Route = createFileRoute('/_private/register/machines/')({
   component: MachineListPage,
   validateSearch: (search: Record<string, unknown>): MachinesSearch => machinesSearchSchema.parse(search),
+  staticData: {
+    title: 'register.machines',
+    description: 'Página de cadastro e gerenciamento de ativos/embarcações. Permite criar, visualizar, editar e incluir embarcações com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'máquinas', 'machines', 'ativos', 'assets', 'embarcações', 'vessels'],
+    examplePrompts: [
+      'Cadastrar novo ativo',
+      'Listar todos os ativos',
+      'Editar máquina',
+      'Buscar embarcação por nome',
+      'Incluir embarcação externa',
+      'Visualizar sensores da máquina',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'navio' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Machine', 'Enterprise'],
+    capabilities: [
+      'Listar ativos com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo ativo',
+      'Editar ativo existente',
+      'Incluir embarcação externa',
+      'Visualizar código do ativo',
+      'Visualizar status de ativação',
+      'Visualizar configurações de frota e viagem',
+      'Visualizar quantidade de sensores',
+      'Editar alarmes da máquina',
+      'Gerenciar sensores da máquina',
+    ],
+  },
 });
 
 function MachineListPage() {
@@ -36,6 +72,8 @@ function MachineListPage() {
   const { page, size, search } = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
   const [isIncludeVesselOpen, setIsIncludeVesselOpen] = useState(false);
+
+  // const hasPermissionAdd = useHasPermission('/machine-add');
 
   const { data, isLoading } = useMachines({
     idEnterprise,
@@ -50,7 +88,7 @@ function MachineListPage() {
 
   return (
     <Card>
-      <CardHeader title={t('machines')}>
+      <CardHeader title={t('assets')}>
         <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <div className="relative w-full sm:max-w-64">
             <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -74,6 +112,7 @@ function MachineListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <div className="flex items-center gap-2">
             <Button variant="outline" onClick={() => setIsIncludeVesselOpen(true)}>
               <Anchor className="mr-2 size-4" />
@@ -84,6 +123,7 @@ function MachineListPage() {
               {t('add')}
             </Button>
           </div>
+          {/* )} */}
         </div>
       </CardHeader>
 

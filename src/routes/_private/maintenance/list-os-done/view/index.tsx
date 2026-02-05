@@ -6,11 +6,59 @@ import DefaultLoading from '@/components/default-loading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { formatDate } from '@/lib/formatDate';
 import { useOsDetails } from './@hooks/use-os-details-api';
 import { osDetailsSearchSchema } from './@interface/os-details.types';
 
 export const Route = createFileRoute('/_private/maintenance/list-os-done/view/')({
+  staticData: {
+    title: 'done.os',
+    description:
+      'Página de visualização detalhada de Ordem de Serviço (OS/Work Order) concluída. Exibe informações completas da manutenção executada incluindo: dados da embarcação e empresa, plano de manutenção vinculado, responsáveis pela execução, usuário que preencheu, data de conclusão, checklist de serviços realizados com status (done/not done), observações técnicas e grupos de serviço. Permite impressão para documentação física e compliance.',
+    tags: [
+      'maintenance',
+      'manutenção',
+      'os',
+      'work-order',
+      'ordem-serviço',
+      'details',
+      'detalhes',
+      'view',
+      'visualização',
+      'checklist',
+      'services',
+      'serviços',
+      'print',
+      'impressão',
+      'pms',
+      'audit',
+    ],
+    examplePrompts: [
+      'Ver detalhes completos da Ordem de Serviço #OS-2024-001',
+      'Imprimir OS concluída para auditoria',
+      'Visualizar checklist de manutenção executada',
+      'Verificar responsáveis pela execução da OS',
+      'Consultar observações técnicas da work order',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da Ordem de Serviço a ser visualizada', example: 'os-uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/maintenance', relation: 'parent', description: 'Hub de manutenção' },
+      { path: '/_private/maintenance/list-os-done', relation: 'parent', description: 'Lista de OS concluídas' },
+      { path: '/_private/maintenance/monitoring-plans', relation: 'sibling', description: 'Monitoramento de planos de manutenção' },
+    ],
+    entities: ['WorkOrder', 'MaintenancePlan', 'Machine', 'Enterprise', 'User', 'Service', 'ServiceGroup', 'ServiceType'],
+    capabilities: [
+      'Visualizar dados completos da OS (ordem, empresa, máquina, plano)',
+      'Exibir lista de usuários responsáveis pela execução',
+      'Mostrar usuário que preencheu e data de preenchimento',
+      'Apresentar checklist de serviços com status (✓ done / ✗ not done)',
+      'Exibir grupos de serviço, tipos e observações técnicas',
+      'Imprimir OS para documentação física e auditorias',
+      'Formatar layout para impressão (oculta sidebar e controles)',
+    ],
+  },
   validateSearch: (search) => osDetailsSearchSchema.parse(search),
   component: OsDetailsPage,
 });
@@ -55,115 +103,154 @@ function OsDetailsPage() {
       </CardHeader>
 
       <CardContent className="max-w-5xl space-y-6 pb-20 print:max-w-none">
-        <div className="flex flex-col justify-between gap-8 pt-6 md:flex-row md:items-end">
-          <div className="flex w-full items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <FileText className="size-6" />
-              </div>
-              <span className="font-semibold text-3xl tracking-tighter">{data.order}</span>
-            </div>
-            <div className="flex flex-col items-start gap-1">
-              <h2 className="font-bold text-2xl tracking-tight">{data.enterprise.name}</h2>
-              <p className="text-muted-foreground">
+        {/* Header Section */}
+        <Item className="justify-between p-0">
+          <div className="flex flex-col gap-1">
+            <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('order')}</ItemDescription>
+            <ItemTitle className="font-semibold text-2xl tracking-tighter">{data.order}</ItemTitle>
+          </div>
+          <div className="flex flex-col gap-1">
+            <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('enterprise')}</ItemDescription>
+            <div className="items-baseline-last flex gap-4">
+              <ItemTitle className="font-semibold text-2xl tracking-tighter">{data.enterprise.name}</ItemTitle>
+              <ItemDescription>
                 {data.enterprise.city} - {data.enterprise.state}
-              </p>
+              </ItemDescription>
             </div>
           </div>
-        </div>
+        </Item>
 
-        {/* Info Grid - Experience inspired */}
-        <div className="grid grid-cols-1 gap-0 border-y py-6 md:grid-cols-3">
-          <div className="space-y-2 border-b px-0 pb-8 md:border-r md:border-b-0 md:pr-12 md:pb-0">
-            <span className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('machine')}</span>
-            <h3 className="font-semibold text-3xl leading-tight tracking-tighter">{data.machine.name}</h3>
-          </div>
-          <div className="space-y-2 border-b px-0 py-8 md:border-r md:border-b-0 md:px-12 md:py-0">
-            <span className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('maintenance.plan')}</span>
-            <h3 className="font-semibold text-3xl leading-tight tracking-tighter">{data.maintenancePlan.description}</h3>
-          </div>
-          <div className="space-y-2 px-0 pt-8 md:pt-0 md:pl-12">
-            <span className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('done.at')}</span>
-            <h3 className="font-semibold text-3xl leading-tight tracking-tighter">{data.doneAt ? formatDate(data.doneAt, 'dd MM yyyy') : '-'}</h3>
-          </div>
-        </div>
+        {/* Info Grid */}
+        <Item className="grid grid-cols-1 rounded-none border-y border-y-border py-6 md:grid-cols-3">
+          <ItemContent className="md:border-r">
+            <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('machine')}</ItemDescription>
+            <ItemTitle className="text-2xl leading-none">{data.machine.name}</ItemTitle>
+          </ItemContent>
 
-        {/* Description Section */}
-        {data.description && (
-          <div className="space-y-4">
-            <h3 className="font-semibold text-muted-foreground/60 text-xl uppercase tracking-tighter">{t('description')}</h3>
-            <p className="whitespace-pre-wrap font-medium text-2xl text-foreground/80 leading-relaxed tracking-tight">{data.description}</p>
-          </div>
-        )}
+          <ItemContent className="md:border-r md:px-8">
+            <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('maintenance.plan')}</ItemDescription>
+            <ItemTitle className="text-2xl leading-none">{data.maintenancePlan.description}</ItemTitle>
+          </ItemContent>
+
+          <ItemContent className="md:px-8">
+            <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('done.at')}</ItemDescription>
+            <ItemTitle className="text-2xl leading-none">{data.doneAt ? formatDate(data.doneAt, 'dd MM yyyy') : '-'}</ItemTitle>
+          </ItemContent>
+        </Item>
+
+        {/* Details Section */}
+        <div className="overflow-hidden bg-card">
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell className="bg-muted/50 py-4 align-top font-medium">
+                  <ItemTitle>{t('action.by')}</ItemTitle>
+                </TableCell>
+                <TableCell className="py-4 align-top">
+                  <div className="flex flex-wrap gap-2">
+                    {data.usersDone.map((user) => (
+                      <div key={user.id} className="flex items-center gap-2 rounded-full border border-border/50 bg-muted/40 px-3 py-1.5">
+                        <div className="flex size-6 items-center justify-center rounded-full bg-primary/10 font-bold text-[10px] text-primary">{user.name.charAt(0)}</div>
+                        <span className="font-medium text-sm">{user.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="bg-muted/50 py-4 align-top font-medium">
+                  <ItemTitle>{t('user.fill')}</ItemTitle>
+                </TableCell>
+                <TableCell className="py-4 align-top">
+                  <ItemTitle>{data.userFill?.name || '-'}</ItemTitle>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="bg-muted/50 py-4 align-top font-medium">
+                  <ItemTitle>{t('fill.at')}</ItemTitle>
+                </TableCell>
+                <TableCell className="py-4 align-top">
+                  <ItemTitle className="tabular-nums">{data.createAt ? formatDate(data.createAt, 'dd MM yyyy HH:mm') : '-'}</ItemTitle>
+                </TableCell>
+              </TableRow>
+              {data.description && (
+                <TableRow>
+                  <TableCell className="bg-muted/50 py-4 align-top font-medium">
+                    <div className="flex items-center gap-1">
+                      <ItemMedia variant="icon">
+                        <FileText className="size-4" />
+                      </ItemMedia>
+                      <ItemTitle>{t('description')}</ItemTitle>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-4 align-top">
+                    <div className="whitespace-pre-wrap">{data.description}</div>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
 
         {/* Checklist Section */}
-        <div className="space-y-10 lg:space-y-16">
-          <h2 className="font-semibold text-4xl tracking-tighter">{t('check.list')}</h2>
 
-          <ul className="divide-y">
-            {data.services.map((service, index) => (
-              <li key={`${service.description}-${index}`} className="flex flex-col gap-6 py-8 first:pt-0 last:pb-0 md:flex-row md:items-start md:gap-12">
-                <div className="w-16 shrink-0 md:pt-1">
-                  {service.done ? (
-                    <div className="flex size-10 items-center justify-center rounded-full border border-green-100 bg-green-50 text-green-600">
-                      <CheckCircle2 className="size-5" />
-                    </div>
-                  ) : (
-                    <div className="flex size-10 items-center justify-center rounded-full border border-red-100 bg-red-50 text-red-600">
-                      <XCircle className="size-5" />
-                    </div>
-                  )}
-                </div>
+        {data.services.length !== 0 && (
+          <div className="space-y-6">
+            <ItemTitle className="text-2xl">{t('check.list')}</ItemTitle>
 
-                <div className="flex-1 space-y-2">
-                  <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-                    <h4 className="font-semibold text-2xl leading-none tracking-tighter">{service.description}</h4>
-                    <Badge variant="secondary" className="w-fit px-3 py-1 font-medium text-xs">
-                      {service.groupName}
-                    </Badge>
-                  </div>
-
-                  {service.typeService?.label && <p className="font-semibold text-primary/70 text-sm">{service.typeService.label}</p>}
-
-                  {service.observation && (
-                    <p className="mt-4 rounded-r-lg border-primary/20 border-l-4 bg-muted/20 py-2 pl-6 text-lg text-muted-foreground italic">{service.observation}</p>
-                  )}
-                </div>
-              </li>
-            ))}
-            {data.services.length === 0 && (
-              <li className="border-none py-6">
-                <EmptyData />
-              </li>
-            )}
-          </ul>
-        </div>
-
-        {/* Personnel Section */}
-        <div className="flex items-center justify-between">
-          <div className="flex w-fit flex-col items-center space-y-6">
-            <h3 className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('action.by')}</h3>
-            <div className="flex flex-wrap gap-4">
-              {data.usersDone.map((user) => (
-                <div key={user.id} className="flex items-center gap-3 rounded-full border border-border/50 bg-muted/40 px-5 py-2.5 transition-colors hover:bg-muted/60">
-                  <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 font-bold text-primary text-xs">{user.name.charAt(0)}</div>
-                  <span className="font-semibold text-sm tracking-tight">{user.name}</span>
-                </div>
-              ))}
+            <div className="overflow-hidden bg-card">
+              <Table>
+                <TableBody>
+                  {data.services.map((service, index) => (
+                    <TableRow key={`${service.description}-${index}`}>
+                      <TableCell className="w-16 py-4 align-top">
+                        {service.done ? (
+                          <div className="flex size-8 items-center justify-center rounded-full border border-green-100 bg-green-50 text-green-600">
+                            <CheckCircle2 className="size-4" />
+                          </div>
+                        ) : (
+                          <div className="flex size-8 items-center justify-center rounded-full border border-red-100 bg-red-50 text-red-600">
+                            <XCircle className="size-4" />
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell className="py-4 align-top">
+                        <div className="flex flex-col gap-1">
+                          <ItemDescription>{t('service')}</ItemDescription>
+                          <ItemTitle>{service.description}</ItemTitle>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-4 align-top">
+                        <div className="flex flex-col gap-1">
+                          <ItemDescription>{t('group')}</ItemDescription>
+                          <Badge variant="secondary" className="w-fit">
+                            {service.groupName}
+                          </Badge>
+                        </div>
+                      </TableCell>
+                      {service.typeService?.label && (
+                        <TableCell className="py-4 align-top">
+                          <div className="flex flex-col gap-1">
+                            <ItemDescription>{t('type')}</ItemDescription>
+                            <ItemTitle className="text-primary/70">{service.typeService.label}</ItemTitle>
+                          </div>
+                        </TableCell>
+                      )}
+                      {service.observation && (
+                        <TableCell className="py-4 align-top">
+                          <div className="flex flex-col gap-1">
+                            <ItemDescription>{t('observation')}</ItemDescription>
+                            <ItemDescription className="italic">{service.observation}</ItemDescription>
+                          </div>
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-12">
-            <div className="space-y-2">
-              <h3 className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('user.fill')}</h3>
-              <p className="font-bold text-xl tracking-tight">{data.userFill?.name || '-'}</p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-bold text-muted-foreground/60 text-xs uppercase tracking-widest">{t('fill.at')}</h3>
-              <p className="font-medium text-muted-foreground text-xl tabular-nums tracking-tight">{data.createAt ? formatDate(data.createAt, 'dd MM yyyy HH:mm') : '-'}</p>
-            </div>
-          </div>
-        </div>
+        )}
       </CardContent>
 
       <style>{`
@@ -187,7 +274,6 @@ function OsDetailsPage() {
           .pb-20, .py-6, .pt-12 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
           .space-y-12 { margin-top: 0 !important; margin-bottom: 0 !important; }
           
-          /* Forçar bordas e shadows para sumirem no Card */
           .card, .border { 
             border: none !important; 
             box-shadow: none !important; 

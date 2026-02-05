@@ -106,12 +106,12 @@ export function VesselMarkers() {
               <div className={`flex flex-col items-center transition-transform ${isSelected ? 'z-50 scale-125' : ''}`}>
                 <div className="p-0.5 transition-transform">
                   <SendHorizontal
-                    className="size-6 drop-shadow-md transition-all"
+                    className="size-6 transition-all"
                     fill="currentColor"
                     style={{
                       color: dynamicColor || 'currentColor',
                       transform: `rotate(${heading - 90}deg)`,
-                      filter: isSelected ? 'brightness(1.2) drop-shadow(0 0 4px currentColor)' : undefined,
+                      filter: isSelected ? 'brightness(1.2)' : undefined,
                     }}
                   />
                 </div>
@@ -129,7 +129,7 @@ export function VesselMarkers() {
                 permanent
                 direction="top"
                 sideOffset={10}
-                className={cn('rounded-sm border shadow-sm backdrop-blur-[2px]', isDarkMap ? 'bg-black! text-white!' : 'bg-white! text-black!')}
+                className={cn('rounded-sm border backdrop-blur-[2px]', isDarkMap ? 'bg-black! text-white!' : 'bg-white! text-black!')}
               >
                 <div className="flex items-baseline gap-1.5 whitespace-nowrap">
                   {showNames && <span className="font-semibold">{machine?.machine.name}</span>}

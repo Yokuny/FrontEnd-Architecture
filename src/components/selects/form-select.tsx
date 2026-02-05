@@ -12,34 +12,19 @@ export function FormSelect(props: FormSelectProps) {
   const id = useId();
   const query = useFormsSelect(idEnterprise);
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('form');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <ClipboardList className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Form, Form>
-          id={id}
-          placeholder={placeholder || t('form')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapFormsToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('form');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('form'),
+    query,
+    mapToOptions: mapFormsToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -48,20 +33,11 @@ export function FormSelect(props: FormSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Form, Form>
-        id={id}
-        placeholder={placeholder || t('form')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapFormsToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<Form, Form> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Form, Form> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

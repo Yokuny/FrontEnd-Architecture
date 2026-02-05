@@ -129,7 +129,7 @@ export function MachineDetailsPanel() {
                   content={({ active, payload }) => {
                     if (active && payload?.[0]) {
                       return (
-                        <div className="rounded-lg border bg-background p-2 text-[10px] shadow-lg">
+                        <div className="rounded-lg border bg-background p-2 text-[10px]">
                           <div className="font-bold">{format(new Date(payload[0].payload.time), 'HH:mm')}</div>
                           <div className="font-bold" style={{ color: getChartColor(0) }}>
                             {payload[0].value} kn

@@ -82,7 +82,7 @@ export function IncludeVesselModal({ isOpen, onClose, idEnterprise }: IncludeVes
           <div className="space-y-2">
             <Label className="flex items-center gap-2">
               <Clock className="size-4" />
-              {t('interval')} *
+              {t('range')} *
             </Label>
             <Select value={data.interval.toString()} onValueChange={(val) => setData({ ...data, interval: Number.parseInt(val, 10) })}>
               <SelectTrigger>

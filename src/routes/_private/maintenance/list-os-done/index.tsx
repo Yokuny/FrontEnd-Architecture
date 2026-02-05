@@ -21,6 +21,39 @@ const listOsDoneSearchSchema = z.object({
 type ListOsDoneSearch = z.infer<typeof listOsDoneSearchSchema>;
 
 export const Route = createFileRoute('/_private/maintenance/list-os-done/')({
+  staticData: {
+    title: 'done.os',
+    description:
+      'Página de histórico de Ordens de Serviço (OS/Work Orders) concluídas. Permite visualizar e consultar todas as manutenções finalizadas da frota, incluindo detalhes de execução, responsáveis, planos de manutenção vinculados, checklists realizados e observações técnicas. Essencial para auditorias, análise de histórico de manutenção e compliance com normas PMS.',
+    tags: ['maintenance', 'manutenção', 'os', 'work-order', 'ordem-serviço', 'done', 'concluída', 'finalizada', 'histórico', 'history', 'pms', 'audit', 'auditoria', 'checklist'],
+    examplePrompts: [
+      'Mostrar Ordens de Serviço concluídas no último mês',
+      'Buscar OS finalizadas de uma embarcação específica',
+      'Ver histórico de manutenções preventivas executadas',
+      'Listar work orders realizadas por plano de manutenção',
+      'Consultar checklist de manutenção concluída',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página (paginação)', example: '1' },
+      { name: 'size', type: 'number', description: 'Quantidade de registros por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca para filtrar OS', example: 'motor principal' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/maintenance', relation: 'parent', description: 'Hub de manutenção' },
+      { path: '/_private/maintenance/list-os-done/view', relation: 'child', description: 'Visualização detalhada da OS' },
+      { path: '/_private/maintenance/monitoring-plans', relation: 'sibling', description: 'Monitoramento de planos de manutenção' },
+      { path: '/_private/maintenance/monitoring-wear', relation: 'sibling', description: 'Monitoramento de desgaste de peças' },
+    ],
+    entities: ['WorkOrder', 'MaintenancePlan', 'Machine', 'User', 'Enterprise', 'Service', 'Checklist'],
+    capabilities: [
+      'Listar Ordens de Serviço concluídas com paginação',
+      'Buscar OS por termo de pesquisa (máquina, plano, responsável)',
+      'Filtrar por empresa (idEnterprise)',
+      'Visualizar detalhes básicos da OS (ordem, máquina, plano, data)',
+      'Navegar para visualização detalhada de cada OS',
+      'Acessar histórico completo de manutenções executadas',
+    ],
+  },
   component: ListOsDonePage,
   validateSearch: (search: Record<string, unknown>): ListOsDoneSearch => listOsDoneSearchSchema.parse(search),
 });

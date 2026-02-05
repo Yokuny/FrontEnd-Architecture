@@ -13,6 +13,8 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } f
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useFuelTypes, useFuelTypesApi } from '@/hooks/use-fuel-types-api';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const fuelTypesSearchSchema = z.object({
   search: z.string().optional(),
 });
@@ -25,6 +27,31 @@ export const Route = createFileRoute('/_private/register/type-fuel/')({
   beforeLoad: () => ({
     title: 'types.fuel',
   }),
+  staticData: {
+    title: 'register.type-fuel',
+    description: 'Página de cadastro e gerenciamento de tipos de combustível. Permite criar, visualizar, editar e deletar tipos de combustível com busca.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'combustível', 'fuel', 'tipos', 'types', 'consumo'],
+    examplePrompts: [
+      'Cadastrar novo tipo de combustível',
+      'Listar todos os tipos de combustível',
+      'Editar tipo de combustível',
+      'Buscar combustível por descrição',
+      'Deletar tipo de combustível',
+    ],
+    searchParams: [{ name: 'search', type: 'string', description: 'Termo de busca', example: 'diesel' }],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['FuelType', 'Enterprise'],
+    capabilities: [
+      'Listar tipos de combustível',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo tipo de combustível',
+      'Editar tipo existente',
+      'Deletar tipo',
+      'Visualizar código do combustível',
+      'Visualizar cor do combustível',
+    ],
+  },
 });
 
 function FuelTypeListPage() {
@@ -32,6 +59,8 @@ function FuelTypeListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { search } = useSearch({ from: '/_private/register/type-fuel/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/add-type-fuel');
 
   const { data: fuelTypes = [], isLoading } = useFuelTypes(idEnterprise);
   const { deleteFuelType } = useFuelTypesApi();
@@ -73,10 +102,12 @@ function FuelTypeListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/type-fuel/add' })}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

@@ -104,7 +104,7 @@ export function FilterDialog({ idEnterprise, filter, onFilterChange }: FilterDia
         </div>
 
         <DialogFooter className="flex justify-between">
-          <Button onClick={handleClear} className="text-amber-700 hover:text-amber-800">
+          <Button onClick={handleClear}>
             <BrushCleaning className="size-4" />
           </Button>
           <Button onClick={handleApply}>{t('filter')}</Button>

@@ -4,7 +4,7 @@ import { type UseFormReturn, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useRole, useRolesApi } from '@/hooks/use-roles-api';
-import { type RoleFormData, roleSchema } from '../@interface/role';
+import { type RoleFormData, roleSchema } from '../@interface';
 
 export interface UseRoleFormReturn {
   form: UseFormReturn<RoleFormData>;

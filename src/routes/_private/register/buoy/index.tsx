@@ -15,6 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useBuoys, useBuoysApi } from '@/hooks/use-buoys-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const buoySearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
   size: z.number().catch(10).optional().default(10),
@@ -29,6 +31,28 @@ export const Route = createFileRoute('/_private/register/buoy/')({
   beforeLoad: () => ({
     title: 'buoys',
   }),
+  staticData: {
+    title: 'register.buoys',
+    description: 'Página de cadastro e gerenciamento de monoboias. Permite criar, visualizar, editar e deletar monoboias offshore com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'boias', 'buoys', 'monobuoys', 'offshore', 'equipamentos'],
+    examplePrompts: ['Cadastrar nova monoboia', 'Listar todas as monoboias', 'Editar monoboia', 'Buscar monoboia por nome', 'Deletar monoboia'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'boia' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Buoy', 'Enterprise'],
+    capabilities: [
+      'Listar monoboias com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar nova monoboia',
+      'Editar monoboia existente',
+      'Deletar monoboia',
+      'Visualizar proximidade da monoboia',
+    ],
+  },
 });
 
 function BuoyListPage() {
@@ -36,6 +60,8 @@ function BuoyListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/buoy/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/buoy-form');
 
   const { data, isLoading } = useBuoys({
     idEnterprise,
@@ -84,10 +110,12 @@ function BuoyListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/buoy/add' })}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

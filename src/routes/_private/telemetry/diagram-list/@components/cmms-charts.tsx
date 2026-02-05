@@ -16,7 +16,7 @@ export function CMMSCharts({ cmmsData, isLoading }: CMMSChartsProps) {
     return (
       <ItemGroup className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {[1, 2, 3, 4].map((i) => (
-          <Skeleton key={i} className="h-[300px] w-full" />
+          <Skeleton key={i} className="h-72 w-full" />
         ))}
       </ItemGroup>
     );

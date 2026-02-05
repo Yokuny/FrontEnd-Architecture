@@ -4,7 +4,7 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import { MachineByEnterpriseSelect, SensorByAssetsSelect } from '@/components/selects';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import type { RoleFormData } from '../@interface/role';
+import type { RoleFormData } from '../@interface';
 
 interface AssetsPermissionsProps {
   form: UseFormReturn<RoleFormData>;

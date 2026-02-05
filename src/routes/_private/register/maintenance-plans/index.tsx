@@ -26,6 +26,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useMaintenancePlans, useMaintenancePlansApi } from '@/hooks/use-maintenance-plans-api';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const maintenancePlansSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
   size: z.number().catch(20).optional().default(20),
@@ -40,6 +42,33 @@ export const Route = createFileRoute('/_private/register/maintenance-plans/')({
   beforeLoad: () => ({
     title: 'maintenance.plans',
   }),
+  staticData: {
+    title: 'register.maintenance-plans',
+    description: 'Página de cadastro e gerenciamento de planos de manutenção preventiva. Permite criar, visualizar, editar e deletar planos com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'manutenção', 'maintenance', 'planos', 'plans', 'preventiva', 'CMMS'],
+    examplePrompts: [
+      'Cadastrar novo plano de manutenção',
+      'Listar todos os planos de manutenção',
+      'Editar plano de manutenção',
+      'Buscar plano por descrição',
+      'Deletar plano de manutenção',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '20' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'preventiva' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['MaintenancePlan', 'Enterprise'],
+    capabilities: [
+      'Listar planos de manutenção com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo plano de manutenção',
+      'Editar plano existente',
+      'Deletar plano com confirmação',
+    ],
+  },
 });
 
 function MaintenancePlansListPage() {
@@ -48,6 +77,8 @@ function MaintenancePlansListPage() {
   const { page, size, search } = useSearch({ from: '/_private/register/maintenance-plans/' });
   const { idEnterprise } = useEnterpriseFilter();
   const { deleteMaintenancePlan } = useMaintenancePlansApi();
+
+  // const hasPermissionAdd = useHasPermission('/maintenance-plan-add');
 
   const { data, isLoading } = useMaintenancePlans({
     page: page - 1,
@@ -107,10 +138,12 @@ function MaintenancePlansListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/maintenance-plans/add' })}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

@@ -91,20 +91,10 @@ export function MonthlyStatusChart({ data, isLoading, viewFinancial }: MonthlySt
         <ItemTitle className="text-lg">{t('operational.average')}</ItemTitle>
         <div className="flex h-9 gap-1 rounded-lg bg-muted p-1">
           {/* TODO: Add toggle to switch between competence and month */}
-          <Toggle
-            size="sm"
-            pressed={typeView === 'competence'}
-            onPressedChange={() => setTypeView('competence')}
-            className="h-7 px-4 text-xs data-[state=on]:bg-background data-[state=on]:shadow-sm"
-          >
+          <Toggle size="sm" pressed={typeView === 'competence'} onPressedChange={() => setTypeView('competence')} className="h-7 px-4 text-xs data-[state=on]:bg-background">
             {t('competence')}
           </Toggle>
-          <Toggle
-            size="sm"
-            pressed={typeView === 'month'}
-            onPressedChange={() => setTypeView('month')}
-            className="h-7 px-4 text-xs data-[state=on]:bg-background data-[state=on]:shadow-sm"
-          >
+          <Toggle size="sm" pressed={typeView === 'month'} onPressedChange={() => setTypeView('month')} className="h-7 px-4 text-xs data-[state=on]:bg-background">
             {t('monthly')}
           </Toggle>
         </div>

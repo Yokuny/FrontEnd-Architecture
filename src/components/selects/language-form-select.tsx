@@ -10,7 +10,6 @@ export function LanguageFormSelect(props: LanguageFormSelectProps) {
   const { disabled = false, className, label, placeholder, value, onChange } = props;
   const id = useId();
 
-  // Simulated query object
   const query = {
     data: LANGUAGES,
     isLoading: false,

@@ -3,6 +3,8 @@ import { AppSidebar } from '@/components/sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { useAuth } from '@/hooks/use-auth';
 
+// import { useInitPermissions } from '@/hooks/use-permissions';
+
 /**
  * Criando Rotas Privadas
  * Layout route para rotas privadas (com autenticação)
@@ -10,6 +12,9 @@ import { useAuth } from '@/hooks/use-auth';
  */
 
 function PrivateLayout() {
+  // Initialize permissions on app load (handles refresh/rehydration)
+  // TOOD: useInitPermissions();
+
   return (
     <SidebarProvider defaultOpen={false}>
       <main className="relative flex w-full bg-accent">

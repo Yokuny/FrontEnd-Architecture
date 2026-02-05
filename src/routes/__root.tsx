@@ -41,7 +41,7 @@ export const Route = createRootRoute({
           <Empty className="border-2 border-destructive/20 bg-destructive/10">
             <EmptyHeader>
               <CircleAlert className="size-8 animate-pulse text-destructive" />
-              <EmptyTitle className="text-destructive">{t('something.went.wrong')}</EmptyTitle>
+              <EmptyTitle className="text-destructive">{t('error.page')}</EmptyTitle>
               <EmptyDescription className="max-w-md break-all rounded-md border bg-background/50 p-4 font-mono text-xs">
                 {error instanceof Error ? error.message : String(error)}
               </EmptyDescription>
@@ -55,7 +55,7 @@ export const Route = createRootRoute({
     const { t } = useTranslation();
     return (
       <Card className="m-2">
-        <CardHeader title={t('loading.page')}>
+        <CardHeader title={t('error.page')}>
           <div className="flex gap-2">
             <ThemeSwitcher />
             <LanguageSwitcher />

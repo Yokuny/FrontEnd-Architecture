@@ -21,6 +21,33 @@ import type { MachineIntegration } from './@interface/machine-integration';
 
 export const Route = createFileRoute('/_private/set-up-company/integration-list/')({
   component: IntegrationListPage,
+  staticData: {
+    title: 'integration',
+    description:
+      'Gerenciamento de integrações AIS para rastreamento de embarcações. Configure tipos de integração (MOON, IMO, MMSI), intervalos de atualização e vincule máquinas aos sistemas de rastreamento marítimo.',
+    tags: ['setup', 'configuração', 'config', 'admin', 'integration', 'integração', 'AIS', 'MOON', 'IMO', 'MMSI', 'rastreamento', 'tracking', 'embarcações', 'frota', 'fleet'],
+    examplePrompts: [
+      'Como configurar integração AIS para uma embarcação?',
+      'Como vincular IMO e MMSI a uma máquina?',
+      'Como alterar o intervalo de atualização da integração?',
+      'Como desativar a integração de uma embarcação?',
+    ],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/set-up-company', relation: 'parent', description: 'Hub de configurações da empresa' },
+      { path: '/_private/set-up-company/setup-api-external', relation: 'sibling', description: 'Configuração de APIs externas' },
+      { path: '/_private/set-up-company/setup-fleet', relation: 'sibling', description: 'Configuração da frota' },
+      { path: '/_private/machines', relation: 'sibling', description: 'Gerenciamento de máquinas' },
+    ],
+    entities: ['Enterprise', 'Machine', 'Integration', 'MachineIntegration'],
+    capabilities: [
+      'Configurar integrações AIS',
+      'Vincular máquinas a sistemas de rastreamento',
+      'Gerenciar identificadores marítimos (IMO, MMSI)',
+      'Configurar intervalos de atualização',
+      'Ativar/desativar integrações por máquina',
+    ],
+  },
 });
 
 function IntegrationListPage() {
@@ -86,7 +113,7 @@ function IntegrationListPage() {
                   <TableHead className="w-[70px]">{t('image')}</TableHead>
                   <TableHead className="w-[250px]">{t('name')}</TableHead>
                   <TableHead className="w-[160px] text-center">{t('type')}</TableHead>
-                  <TableHead className="w-[120px] text-center">{t('interval')}</TableHead>
+                  <TableHead className="w-[120px] text-center">{t('range')}</TableHead>
                   <TableHead className="text-center">{t('options')}</TableHead>
                   <TableHead className="w-[80px] text-center">{t('machine')}</TableHead>
                 </TableRow>
@@ -130,7 +157,7 @@ function IntegrationListPage() {
                     <TableCell>
                       <Select value={item.updateTime?.toString() || ''} onValueChange={(value) => handleChange(index, 'updateTime', parseInt(value, 10))} disabled={item.disabled}>
                         <SelectTrigger size="sm">
-                          <SelectValue placeholder={t('interval')} />
+                          <SelectValue placeholder={t('range')} />
                         </SelectTrigger>
                         <SelectContent>
                           {UPDATE_INTERVAL_OPTIONS.map((opt) => (

@@ -24,7 +24,7 @@ export function OsDoneItem({ item, hasViewPermission }: OsDoneItemProps) {
   };
 
   return (
-    <Item variant="outline" className="group">
+    <Item variant="outline" className="group cursor-pointer" onClick={handleViewDetails}>
       <ItemMedia variant="icon" className="size-11 rounded-full border-red-100 bg-red-50 text-red-600">
         <FileText className="size-5" />
       </ItemMedia>

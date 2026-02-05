@@ -47,7 +47,7 @@ function AddRolePage() {
               </TabsTrigger>
               <TabsTrigger value="machines" className="gap-2">
                 <Settings className="size-4" />
-                {t('machines')}
+                {t('assets')}
               </TabsTrigger>
               <TabsTrigger value="chatbot" className="gap-2">
                 <MessageCircle className="size-4" />

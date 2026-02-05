@@ -25,34 +25,19 @@ export function UserRoleSelect(props: UserRoleSelectProps) {
       .sort((a, b) => a.label.localeCompare(b.label));
   };
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('users');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <UserPlus className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<UserListItem, UserListItem>
-          id={id}
-          placeholder={placeholder || t('select.users.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query as any}
-          mapToOptions={mapToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const displayLabel = label || (mode === 'multi' ? t('users') : t('user'));
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('select.users.placeholder'),
+    query: query as any,
+    mapToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
-  const displayLabel = label || t('user');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -61,20 +46,11 @@ export function UserRoleSelect(props: UserRoleSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<UserListItem, UserListItem>
-        id={id}
-        placeholder={placeholder || t('select.users.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query as any}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<UserListItem, UserListItem> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<UserListItem, UserListItem> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

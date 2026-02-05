@@ -12,36 +12,20 @@ export function MachineByEnterpriseSelect(props: MachineByEnterpriseSelectProps)
   const id = useId();
   const query = useMachinesByEnterpriseSelect(idEnterprise);
 
+  const displayLabel = label || t('select.machine');
   const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('select.machine'),
+    query,
+    mapToOptions: mapMachinesToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('machine.placeholder');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Cpu className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Machine>
-          id={id}
-          placeholder={placeholder || t('machine.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapMachinesToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
-  const displayLabel = label || t('machine.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -50,20 +34,11 @@ export function MachineByEnterpriseSelect(props: MachineByEnterpriseSelectProps)
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Machine>
-        id={id}
-        placeholder={placeholder || t('machine.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapMachinesToOptions}
-        disabled={disabled}
-        clearable
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<Machine> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Machine> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable />
+      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { Shield } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -19,34 +18,18 @@ export function RoleSelect(props: RoleSelectProps) {
   const { t } = useTranslation();
 
   const query = useRolesSelect(isAll, params);
-
   const displayLabel = label || t('role');
-
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Shield className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<RoleListItem, RoleListItem>
-          id={id}
-          placeholder={placeholder || t('roles.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as (string | number)[])}
-          query={query}
-          mapToOptions={mapRolesToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('roles.placeholder'),
+    query,
+    mapToOptions: mapRolesToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
   return (
     <div className="space-y-2">
@@ -56,20 +39,11 @@ export function RoleSelect(props: RoleSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<RoleListItem, RoleListItem>
-        id={id}
-        placeholder={placeholder || t('roles.placeholder')}
-        value={props.value}
-        onChange={props.onChange}
-        query={query}
-        mapToOptions={mapRolesToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<RoleListItem, RoleListItem> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as (string | number)[])} />
+      ) : (
+        <DataSelect<RoleListItem, RoleListItem> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string | number | undefined)} clearable={clearable} />
+      )}
     </div>
   );
 }

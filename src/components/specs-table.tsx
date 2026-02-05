@@ -119,7 +119,6 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
 
   return (
     <section className={cn('container max-w-4xl py-8', className)}>
-      {/* Header */}
       <ItemHeader className="mb-6">
         <ItemTitle className="text-xl md:text-2xl">{title}</ItemTitle>
         <div className="flex gap-1">
@@ -133,7 +132,6 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
         </div>
       </ItemHeader>
 
-      {/* Spec Categories */}
       <div className="space-y-4">
         {categories.map((category) => (
           <Collapsible key={category.id} open={openCategories.includes(category.id)} onOpenChange={() => toggleCategory(category.id)}>
@@ -152,7 +150,7 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
               <CollapsibleContent>
                 <ItemGroup>
                   {category.specs.map((spec, index) => (
-                    <div key={`${spec.label}-${category.id}`}>
+                    <div key={`${spec.label}${category.id}`}>
                       <Item variant="default" size="sm" className="justify-between hover:bg-secondary">
                         <ItemDescription className="font-sans">{spec.label}</ItemDescription>
                         <ItemTitle className="font-mono">{spec.value}</ItemTitle>

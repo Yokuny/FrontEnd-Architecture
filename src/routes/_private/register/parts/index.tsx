@@ -16,6 +16,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useParts, usePartsApi } from '@/hooks/use-parts-api';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const partsSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
   size: z.number().catch(10).optional().default(10),
@@ -30,6 +32,29 @@ export const Route = createFileRoute('/_private/register/parts/')({
   beforeLoad: () => ({
     title: 'parts',
   }),
+  staticData: {
+    title: 'register.parts',
+    description: 'Página de cadastro e gerenciamento de peças e materiais. Permite criar, visualizar, editar e deletar peças do catálogo com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'peças', 'parts', 'materiais', 'estoque', 'inventory'],
+    examplePrompts: ['Cadastrar nova peça', 'Listar todas as peças', 'Editar peça', 'Buscar peça por nome', 'Buscar peça por SKU', 'Deletar peça'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'filtro' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Part', 'Enterprise'],
+    capabilities: [
+      'Listar peças com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar nova peça',
+      'Editar peça existente',
+      'Deletar peça',
+      'Visualizar SKU da peça',
+      'Upload de imagem da peça',
+    ],
+  },
 });
 
 function PartsListPage() {
@@ -37,6 +62,8 @@ function PartsListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/parts/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/part-add');
 
   const { data, isLoading } = useParts({
     idEnterprise,
@@ -85,10 +112,12 @@ function PartsListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/parts/add' })}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

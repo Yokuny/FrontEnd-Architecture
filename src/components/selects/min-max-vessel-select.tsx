@@ -5,15 +5,6 @@ import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { Label } from '@/components/ui/label';
 import { useMinMaxVessels } from '@/hooks/use-alerts-api';
 
-interface MinMaxVesselSelectProps {
-  idEnterprise?: string;
-  disabled?: boolean;
-  className?: string;
-  value?: string[];
-  onChange: (value: string[]) => void;
-  placeholder?: string;
-}
-
 export function MinMaxVesselSelect({ idEnterprise, disabled, className, value, onChange, placeholder }: MinMaxVesselSelectProps) {
   const { t } = useTranslation();
   const id = useId();
@@ -50,4 +41,13 @@ export function MinMaxVesselSelect({ idEnterprise, disabled, className, value, o
       />
     </div>
   );
+}
+
+interface MinMaxVesselSelectProps {
+  idEnterprise?: string;
+  disabled?: boolean;
+  className?: string;
+  value?: string[];
+  onChange: (value: string[]) => void;
+  placeholder?: string;
 }

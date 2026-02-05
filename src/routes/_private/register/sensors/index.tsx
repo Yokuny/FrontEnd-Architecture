@@ -15,6 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useSensors, useSensorsApi } from '@/hooks/use-sensors-api';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const sensorsSearchSchema = z.object({
   page: z.number().optional().default(1),
   size: z.number().optional().default(20),
@@ -29,6 +31,29 @@ export const Route = createFileRoute('/_private/register/sensors/')({
   beforeLoad: () => ({
     title: 'sensors',
   }),
+  staticData: {
+    title: 'register.sensors',
+    description: 'Página de cadastro e gerenciamento de sensores IoT. Permite criar, visualizar, editar e deletar sensores com configurações de sinal, busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'sensores', 'sensors', 'IoT', 'telemetria', 'monitoramento'],
+    examplePrompts: ['Cadastrar novo sensor', 'Listar todos os sensores', 'Editar sensor', 'Buscar sensor por nome', 'Deletar sensor', 'Visualizar máquinas vinculadas ao sensor'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '20' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'temperatura' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Sensor', 'Enterprise', 'Machine'],
+    capabilities: [
+      'Listar sensores com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo sensor',
+      'Editar sensor existente',
+      'Deletar sensor',
+      'Visualizar ID do sensor',
+      'Visualizar máquinas vinculadas',
+    ],
+  },
 });
 
 function SensorListPage() {
@@ -36,6 +61,8 @@ function SensorListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/sensors/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/sensor-add');
 
   const { data, isLoading } = useSensors(idEnterprise, page - 1, size, search);
   const { deleteSensor } = useSensorsApi();
@@ -79,10 +106,12 @@ function SensorListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/sensors/add' })}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 
@@ -125,7 +154,7 @@ function SensorListPage() {
                       <ItemDescription>{item.sensorId}</ItemDescription>
                     </div>
                     {item.machines && item.machines.length > 0 && (
-                      <div className="flex max-w-[200px] items-center gap-2 truncate text-muted-foreground text-sm">
+                      <div className="flex max-w-48 items-center gap-2 truncate text-muted-foreground text-sm">
                         <Ship className="size-3 shrink-0" />
                         <ItemDescription>{item.machines.join(', ')}</ItemDescription>
                       </div>

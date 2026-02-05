@@ -38,7 +38,7 @@ export function OrderValueChart({ search }: OrderValueChartProps) {
         if (typeof p._id === 'string') {
           key = p._id;
         } else if (p._id && typeof p._id === 'object') {
-          key = `${p._id.month || ''}-${p._id.year || ''}`;
+          key = `${p._id.month || ''}${p._id.year || ''}`;
         }
         paymentMap.set(key, p.total);
       });
@@ -65,7 +65,7 @@ export function OrderValueChart({ search }: OrderValueChartProps) {
           const month = item._id.month || t('undefined');
           const year = item._id.year ? ` ${item._id.year}` : '';
           name = `${month}${year}`;
-          key = `${item._id.month || ''}-${item._id.year || ''}`;
+          key = `${item._id.month || ''}${item._id.year || ''}`;
         }
       }
 
@@ -140,7 +140,7 @@ export function OrderValueChart({ search }: OrderValueChartProps) {
             <ChartTooltip content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar yAxisId="left" dataKey={t('value.with.payment')} stackId="a" fill={chartConfig[t('value.with.payment')].color} radius={[0, 0, 0, 0]} />
-            <Bar yAxisId="left" dataKey={t('value.without.payment')} stackId="a" fill={chartConfig[t('value.without.payment')].color} radius={[4, 4, 0, 0]} />
+            <Bar yAxisId="left" dataKey={t('value.with.payment')} stackId="a" fill={chartConfig[t('value.with.payment')].color} radius={[4, 4, 0, 0]} />
             <Line yAxisId="right" type="monotone" dataKey={t('os.quantity')} stroke={chartConfig[t('os.quantity')].color} strokeWidth={4} dot={false} />
             {showPaymentLine && (
               <Line yAxisId="left" type="monotone" dataKey={t('value.by.payment.date')} stroke={chartConfig[t('value.by.payment.date')].color} strokeWidth={4} dot={false} />

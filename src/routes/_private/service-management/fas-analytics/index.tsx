@@ -7,6 +7,7 @@ import { MachineByEnterpriseSelect } from '@/components/selects/machine-by-enter
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Item } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -18,38 +19,59 @@ import { HeaderTypesChart } from './@components/header-types-chart';
 import { OrderStatusChart } from './@components/order-status-chart';
 import { OrderValueChart } from './@components/order-value-chart';
 import { RealizedOrdersChart } from './@components/realized-orders-chart';
+import { CHART_GROUPS, FAS_TYPES, FILTER_DEFAULTS, MONTHS, STATUS_OPTIONS, YEARS } from './@const/fas-analytics.const';
 import type { FasAnalyticsSearch } from './@interface/fas-analytics.schema';
 import { fasAnalyticsSearchSchema } from './@interface/fas-analytics.schema';
 
 export const Route = createFileRoute('/_private/service-management/fas-analytics/')({
   component: FasAnalyticsPage,
   validateSearch: (search: Record<string, unknown>): FasAnalyticsSearch => fasAnalyticsSearchSchema.parse(search),
+  staticData: {
+    title: 'fas.analytics',
+    description:
+      'Analytics e dashboards de serviços externos FAS. Visualize gráficos de ordens realizadas, tipos de cabeçalho, status de ordens, valores BMS e valores de OS por fornecedor, com múltiplos filtros e eixos de análise',
+    tags: ['analytics', 'dashboard', 'fas', 'field-service', 'chart', 'graph', 'bms', 'value', 'report', 'statistics', 'kpi'],
+    examplePrompts: [
+      'Ver analytics de serviços de campo',
+      'Mostrar gráfico de ordens realizadas por mês',
+      'Analisar valores BMS por fornecedor',
+      'Comparar tipos de serviços por período',
+      'Dashboard de status de ordens de serviço',
+    ],
+    searchParams: [
+      { name: 'chartType', type: 'string', description: 'Tipo de gráfico selecionado' },
+      { name: 'filterType', type: 'string', description: 'Tipo de filtro de data (range ou month)' },
+      { name: 'startDate', type: 'string', description: 'Data de início (modo range)' },
+      { name: 'endDate', type: 'string', description: 'Data de fim (modo range)' },
+      { name: 'month', type: 'string', description: 'Mês selecionado (modo month)' },
+      { name: 'year', type: 'number', description: 'Ano selecionado (modo month)' },
+      { name: 'vesselId', type: 'string', description: 'ID da embarcação' },
+      { name: 'dependantAxis', type: 'string', description: 'Eixo dependente do gráfico' },
+      { name: 'status', type: 'array', description: 'Status das ordens' },
+      { name: 'fasType', type: 'array', description: 'Tipos de FAS' },
+      { name: 'showValueByPayment', type: 'boolean', description: 'Mostrar valores por data de pagamento' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/service-management', relation: 'parent', description: 'Hub de gestão de serviços' },
+      { path: '/_private/service-management/fas', relation: 'sibling', description: 'Listagem de FAS' },
+    ],
+    entities: ['FAS', 'WorkOrder', 'BMS', 'Supplier', 'Vessel'],
+    capabilities: [
+      'Visualizar gráficos de ordens realizadas',
+      'Analisar tipos de cabeçalho',
+      'Ver status de ordens',
+      'Analisar valores BMS',
+      'Analisar valores de OS',
+      'Filtrar por período (range ou mês)',
+      'Filtrar por embarcação',
+      'Filtrar por status',
+      'Filtrar por tipo FAS',
+      'Agrupar por mês/ano/embarcação/fornecedor',
+      'Visualizar valores por data de pagamento',
+      'Atualizar dados do gráfico',
+    ],
+  },
 });
-
-const CHART_GROUPS = [
-  { value: 'realized.orders', label: 'fas.completed.chart', orderFilter: true, dependantOptions: ['month', 'vessel'] },
-  { value: 'header.types', label: 'fas.types.chart', orderFilter: false, dependantOptions: ['month', 'vessel'] },
-  { value: 'order.status', label: 'fas.status.chart', orderFilter: true, dependantOptions: ['month', 'vessel'] },
-  { value: 'fas.bms.value.chart', label: 'fas.bms.value.chart', orderFilter: false, dependantOptions: ['month', 'year', 'vessel'] },
-  { value: 'order.bms.value.chart', label: 'order.bms.value.chart', orderFilter: true, dependantOptions: ['month', 'year', 'vessel', 'supplier'] },
-] as const;
-
-const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'] as const;
-const YEARS = [2023, 2024, 2025, 2026] as const;
-
-const FAS_TYPES = [
-  { value: 'BMS', label: 'BMS' },
-  { value: 'CLASSE', label: 'CLASSE' },
-  { value: 'REQUISICAO', label: 'REQUISICAO' },
-  { value: 'REGULARIZACAO', label: 'REGULARIZACAO' },
-] as const;
-
-const STATUS_OPTIONS = [
-  { value: 'OPEN', label: 'status.open' },
-  { value: 'IN_PROGRESS', label: 'status.in.progress' },
-  { value: 'COMPLETED', label: 'status.completed' },
-  { value: 'CANCELLED', label: 'status.cancelled' },
-] as const;
 
 function FasAnalyticsPage() {
   const { t } = useTranslation();
@@ -58,16 +80,16 @@ function FasAnalyticsPage() {
   const { idEnterprise } = useEnterpriseFilter();
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const [filterType, setFilterType] = useState<'range' | 'month'>(search.filterType || 'range');
+  const [filterType, setFilterType] = useState<'range' | 'month'>(search.filterType || FILTER_DEFAULTS.FILTER_TYPE);
   const [dateStart, setDateStart] = useState<Date | undefined>(search.startDate ? new Date(search.startDate) : undefined);
   const [dateEnd, setDateEnd] = useState<Date | undefined>(search.endDate ? new Date(search.endDate) : undefined);
   const [month, setMonth] = useState<string | undefined>(search.month);
   const [year, setYear] = useState<number | undefined>(search.year);
   const [vesselId, setVesselId] = useState<string | undefined>(search.vesselId);
-  const [dependantAxis, setDependantAxis] = useState<'month' | 'year' | 'vessel' | 'supplier'>(search.dependantAxis || 'month');
+  const [dependantAxis, setDependantAxis] = useState<'month' | 'year' | 'vessel' | 'supplier'>(search.dependantAxis || FILTER_DEFAULTS.DEPENDANT_AXIS);
   const [status, setStatus] = useState<string[]>(search.status || []);
   const [fasType, setFasType] = useState<string[]>(search.fasType || []);
-  const [showValueByPayment, setShowValueByPayment] = useState(search.showValueByPayment || false);
+  const [showValueByPayment, setShowValueByPayment] = useState(search.showValueByPayment || FILTER_DEFAULTS.SHOW_VALUE_BY_PAYMENT);
 
   const selectedChartGroup = CHART_GROUPS.find((g) => g.value === search.chartType) || CHART_GROUPS[0];
 
@@ -143,8 +165,9 @@ function FasAnalyticsPage() {
         </div>
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-6">
-        <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary p-4">
+      <CardContent className="flex flex-col">
+        {/* Filtros */}
+        <Item variant="outline" className="bg-secondary">
           <div className="flex flex-col gap-1.5">
             <Label>{t('filter.by.date')}</Label>
             <Select value={filterType} onValueChange={(value: 'range' | 'month') => setFilterType(value)}>
@@ -214,7 +237,7 @@ function FasAnalyticsPage() {
                 <Label>{t('month')}</Label>
                 <Select value={month} onValueChange={setMonth}>
                   <SelectTrigger className="w-48 bg-background">
-                    <SelectValue placeholder={t('select.month')} />
+                    <SelectValue placeholder={t('select.year')} />
                   </SelectTrigger>
                   <SelectContent>
                     {MONTHS.map((m) => (
@@ -266,7 +289,7 @@ function FasAnalyticsPage() {
             <div className="flex flex-col gap-1.5">
               <Label>{t('status')}</Label>
               <Select value={status[0]} onValueChange={(val) => setStatus(val ? [val] : [])}>
-                <SelectTrigger className="w-48 bg-background">
+                <SelectTrigger className="w-40 bg-background">
                   <SelectValue placeholder={t('select.status')} />
                 </SelectTrigger>
                 <SelectContent>
@@ -283,7 +306,7 @@ function FasAnalyticsPage() {
           <div className="flex flex-col gap-1.5">
             <Label>{t('type')}</Label>
             <Select value={fasType[0]} onValueChange={(val) => setFasType(val ? [val] : [])}>
-              <SelectTrigger className="w-48 bg-background">
+              <SelectTrigger className="w-40 bg-background">
                 <SelectValue placeholder={t('select.type')} />
               </SelectTrigger>
               <SelectContent>
@@ -307,7 +330,7 @@ function FasAnalyticsPage() {
             <Search className="mr-2 size-4" />
             {t('search')}
           </Button>
-        </div>
+        </Item>
 
         {renderActiveChart()}
       </CardContent>

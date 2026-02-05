@@ -66,7 +66,7 @@ export function useVoyageForm({ id, redirect }: UseVoyageFormProps) {
   const onDelete = async (idToDelete: string) => {
     try {
       await deleteVoyage.mutateAsync(idToDelete);
-      toast.success(t('success.delete'));
+      toast.success(t('delete.success'));
       redirect?.();
     } catch {
       toast.error(t('error.delete'));

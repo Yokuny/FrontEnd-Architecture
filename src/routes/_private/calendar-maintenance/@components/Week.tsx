@@ -307,7 +307,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
                     {[0, 1, 2, 3].map((quarter) => {
                       return (
                         <ItemContent
-                          key={`${hour.toString()}-${quarter}`}
+                          key={`${hour.toString()}${quarter}`}
                           className={cn(
                             'absolute h-[calc(var(--week-cells-height)/4)] w-full cursor-pointer transition-colors hover:bg-slate-100 dark:hover:bg-slate-800',
                             quarter === 0 && 'top-0',

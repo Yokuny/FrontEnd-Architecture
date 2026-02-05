@@ -7,7 +7,6 @@ export { ContractAssetEnterpriseSelect } from './contract-asset-enterprise-selec
 export { CountrySelect } from './country-select';
 export { CustomerSelect } from './customer-select';
 export { EditPermissionSelect } from './edit-permission-select';
-export { EnterpriseFilterSelect } from './enterprise-filter-select';
 export { EnterprisePreferredSelect } from './enterprise-preferred-select';
 export { EnterpriseSelect } from './enterprise-select';
 export { EnterpriseWithSetupSelect } from './enterprise-with-setup-select';

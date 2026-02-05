@@ -14,6 +14,38 @@ import { cn } from '@/lib/utils';
 import { calculateRating, getRatingColor, getReferenceAC } from '../indicators-eeoi-cii/@consts/cii.utils';
 
 export const Route = createFileRoute('/_private/esg/simulator-cii/')({
+  staticData: {
+    title: 'simulator.cii',
+    description:
+      'Simulador de Carbon Intensity Indicator (CII) para planejamento de compliance IMO. Permite simular diferentes cenários operacionais calculando CII attained = (CO₂ / (DWT × distância)) × 10⁶ vs CII reference = a × capacity^(-c). Projeta rating (A-E) para anos de 2024-2027 considerando fatores de redução progressivos (Z-factor). Baseado em IMO MEPC.328(76) e MEPC.355(78).',
+    tags: ['esg', 'simulator', 'simulador', 'cii', 'carbon', 'carbono', 'planning', 'planejamento', 'imo', 'mepc', 'compliance', 'rating', 'forecast', 'projeção'],
+    examplePrompts: [
+      'Simular CII para próxima viagem',
+      'Calcular rating CII com consumo planejado',
+      'Projetar compliance CII para 2025',
+      'Testar cenários de consumo IFO e MDO',
+      'Ver impacto de redução de distância no rating',
+      'Simular CII required para diferentes anos',
+    ],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/esg', relation: 'parent', description: 'Hub ESG - Menu principal de conformidade ambiental' },
+      { path: '/_private/esg/indicators-eeoi-cii', relation: 'sibling', description: 'Indicadores EEOI/CII reais das viagens' },
+      { path: '/_private/esg/cii-fleet', relation: 'sibling', description: 'Rating CII histórico da frota' },
+      { path: '/_private/esg/consumption-co2', relation: 'sibling', description: 'Monitoramento de emissões de CO₂' },
+    ],
+    entities: ['VesselType', 'CII', 'SimulationData', 'ReferenceValues'],
+    capabilities: [
+      'Simular CII attained com inputs personalizados',
+      'Calcular CII reference por tipo de navio (a × capacity^(-c))',
+      'Converter consumo em emissões (IFO: 3.1166, MDO: 2.68 tCO₂/ton)',
+      'Projetar rating CII (A-E) para 2024-2027',
+      'Aplicar Z-factors de redução anual (7%, 9%, 11%, 13%)',
+      'Comparar CII attained vs required por ano',
+      'Planejar compliance futuro com IMO MARPOL',
+      'Testar cenários operacionais "what-if"',
+    ],
+  },
   component: SimulatorCIIPage,
 });
 
@@ -166,13 +198,13 @@ function SimulatorCIIPage() {
           ) : (
             <div className="fade-in animate-in space-y-8 duration-500">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center shadow-sm">
+                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center">
                   <p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">CII Reference</p>
                   <p className="font-bold font-mono text-3xl text-primary">
                     {new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(results.ciiRef)}
                   </p>
                 </div>
-                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center shadow-sm">
+                <div className="flex flex-col items-center justify-center rounded-xl border bg-card p-6 text-center">
                   <p className="mb-1 font-bold text-[10px] text-muted-foreground uppercase tracking-widest">CII Attained</p>
                   <p className="font-bold font-mono text-3xl text-primary">
                     {new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(results.ciiAttained)}
@@ -180,7 +212,7 @@ function SimulatorCIIPage() {
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-xl border shadow-sm">
+              <div className="overflow-hidden rounded-xl border">
                 <Table>
                   <TableHeader className="bg-secondary/30">
                     <TableRow>
@@ -203,7 +235,7 @@ function SimulatorCIIPage() {
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <div className="flex cursor-help flex-col items-center gap-3">
-                                    <Badge className={cn('px-8 py-2 font-bold text-xl shadow-md', getRatingColor(rating))}>{rating}</Badge>
+                                    <Badge className={cn('px-8 py-2 font-bold text-xl', getRatingColor(rating))}>{rating}</Badge>
                                     <p className="font-bold text-[10px] text-muted-foreground uppercase tracking-tighter">RED. {yf.factor}%</p>
                                   </div>
                                 </TooltipTrigger>

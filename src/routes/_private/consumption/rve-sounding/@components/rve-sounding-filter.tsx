@@ -112,7 +112,7 @@ export function RVESoundingFilter({ idEnterprise, filters, onFilterChange, isLoa
         </Popover>
       </ItemContent>
 
-      <ItemContent className="min-w-[240px]">
+      <ItemContent className="min-w-60">
         <MachineByEnterpriseSelect
           mode="multi"
           label={t('vessels')}
@@ -125,7 +125,7 @@ export function RVESoundingFilter({ idEnterprise, filters, onFilterChange, isLoa
 
       <div className="ml-auto flex shrink-0 gap-2">
         {hasFilter && (
-          <Button className="text-amber-700 hover:text-amber-800" disabled={isLoading} onClick={handleClear}>
+          <Button disabled={isLoading} onClick={handleClear}>
             <BrushCleaning className="size-4" />
           </Button>
         )}

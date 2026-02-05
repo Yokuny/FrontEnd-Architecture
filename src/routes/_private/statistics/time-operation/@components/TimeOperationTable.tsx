@@ -11,8 +11,11 @@ import { cn } from '@/lib/utils';
 import { getStatusConfig } from '../@utils/getStatusConfig';
 import { TimeOperationDetailsDialog } from './TimeOperationDetailsDialog';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrderChange, filters }: TimeOperationTableProps) {
   const { t } = useTranslation();
+  // const hasPermissionDetails = useHasPermission('/details-statistics-status');
 
   const columns = useMemo(() => {
     const handleSort = (column: string) => {
@@ -158,65 +161,63 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
-      <Table>
-        <TableHeader className="sticky top-0 z-10 bg-muted/30">
-          <TableRow className="border-none hover:bg-transparent">
-            {columns.map((column) => (
-              <TableHead key={String(column.key)} className="p-4 align-middle" style={column.width ? { width: column.width } : undefined}>
-                {typeof column.header === 'string' ? <ItemTitle className="text-muted-foreground uppercase">{column.header}</ItemTitle> : column.header}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.map((row, index) => (
-            <TimeOperationTableRow key={`${index + 1}_${row?.machine?.id}`} row={row} columns={columns} filters={filters} />
+    <Table>
+      <TableHeader className="sticky top-0 z-10 bg-muted/30">
+        <TableRow className="border-none hover:bg-transparent">
+          {columns.map((column) => (
+            <TableHead key={String(column.key)} className="p-4 align-middle" style={column.width ? { width: column.width } : undefined}>
+              {typeof column.header === 'string' ? <ItemTitle className="text-muted-foreground uppercase">{column.header}</ItemTitle> : column.header}
+            </TableHead>
           ))}
-        </TableBody>
-        {benchmarkTotals && (
-          <TableFooter className="sticky bottom-0 bg-secondary">
-            <TableRow className="hover:bg-transparent">
-              <TableCell className="p-4">
-                <ItemTitle className="text-muted-foreground text-sm uppercase">{t('total')}</ItemTitle>
-              </TableCell>
-              {listStatusAllow.map((status) => {
-                const statusTotal = benchmarkTotals.statusTotals.find((s) => s.status === status);
-                if (!statusTotal) return <TableCell key={status} className="p-4" />;
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {data.map((row, index) => (
+          <TimeOperationTableRow key={`${index + 1}_${row?.machine?.id}`} row={row} columns={columns} filters={filters} />
+        ))}
+      </TableBody>
+      {benchmarkTotals && (
+        <TableFooter className="sticky bottom-0 bg-secondary">
+          <TableRow className="hover:bg-transparent">
+            <TableCell className="p-4">
+              <ItemTitle className="text-muted-foreground text-sm uppercase">{t('total')}</ItemTitle>
+            </TableCell>
+            {listStatusAllow.map((status) => {
+              const statusTotal = benchmarkTotals.statusTotals.find((s) => s.status === status);
+              if (!statusTotal) return <TableCell key={status} className="p-4" />;
 
-                return (
-                  <TableCell key={status} className="p-4">
-                    <ItemContent className="items-end gap-1 p-0">
-                      <ItemDescription className="font-bold text-xs uppercase">{statusTotal.percentual.toFixed(1)}%</ItemDescription>
-                      <ItemActions className="items-baseline gap-1">
-                        <ItemTitle>{(statusTotal.minutes / 60).toFixed(1)}</ItemTitle>
-                        <ItemDescription className="text-xs uppercase">HR</ItemDescription>
-                      </ItemActions>
-                      <ItemActions className="items-baseline gap-1">
-                        <ItemTitle>{statusTotal.distance.toFixed(2)}</ItemTitle>
-                        <ItemDescription className="text-xs uppercase">NM</ItemDescription>
-                      </ItemActions>
-                    </ItemContent>
-                  </TableCell>
-                );
-              })}
-              <TableCell className="p-4">
-                <ItemContent className="items-end gap-1 p-0">
-                  <ItemActions className="items-baseline gap-1">
-                    <ItemTitle>{(benchmarkTotals.totalAllMinutes / 60).toFixed(1)}</ItemTitle>
-                    <ItemDescription className="text-xs uppercase">HR</ItemDescription>
-                  </ItemActions>
-                  <ItemActions className="items-baseline gap-1 text-primary">
-                    <ItemTitle>{benchmarkTotals.totalAllDistance.toFixed(2)}</ItemTitle>
-                    <ItemDescription className="text-xs uppercase">NM</ItemDescription>
-                  </ItemActions>
-                </ItemContent>
-              </TableCell>
-            </TableRow>
-          </TableFooter>
-        )}
-      </Table>
-    </div>
+              return (
+                <TableCell key={status} className="p-4">
+                  <ItemContent className="items-end gap-1 p-0">
+                    <ItemDescription className="font-bold text-xs uppercase">{statusTotal.percentual.toFixed(1)}%</ItemDescription>
+                    <ItemActions className="items-baseline gap-1">
+                      <ItemTitle>{(statusTotal.minutes / 60).toFixed(1)}</ItemTitle>
+                      <ItemDescription className="text-xs uppercase">HR</ItemDescription>
+                    </ItemActions>
+                    <ItemActions className="items-baseline gap-1">
+                      <ItemTitle>{statusTotal.distance.toFixed(2)}</ItemTitle>
+                      <ItemDescription className="text-xs uppercase">NM</ItemDescription>
+                    </ItemActions>
+                  </ItemContent>
+                </TableCell>
+              );
+            })}
+            <TableCell className="p-4">
+              <ItemContent className="items-end gap-1 p-0">
+                <ItemActions className="items-baseline gap-1">
+                  <ItemTitle>{(benchmarkTotals.totalAllMinutes / 60).toFixed(1)}</ItemTitle>
+                  <ItemDescription className="text-xs uppercase">HR</ItemDescription>
+                </ItemActions>
+                <ItemActions className="items-baseline gap-1 text-primary">
+                  <ItemTitle>{benchmarkTotals.totalAllDistance.toFixed(2)}</ItemTitle>
+                  <ItemDescription className="text-xs uppercase">NM</ItemDescription>
+                </ItemActions>
+              </ItemContent>
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      )}
+    </Table>
   );
 }
 

@@ -95,8 +95,8 @@ export function ConsumptionCO2Table({ data, selectedUnit }: ConsumptionCO2TableP
   ];
 
   return (
-    <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
-      <DataTable data={data} columns={columns} bordered={false} searchable={false} className="border-none py-0 shadow-none" />
+    <div className="overflow-hidden rounded-xl border bg-card">
+      <DataTable data={data} columns={columns} bordered={false} searchable={false} className="border-none py-0" />
     </div>
   );
 }

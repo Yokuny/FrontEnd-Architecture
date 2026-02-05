@@ -57,7 +57,7 @@ function TrackingActivityPage() {
       <CardHeader title={t('tracking.activity')} />
       <CardContent className="flex flex-col gap-6">
         <Item variant="outline" className="bg-secondary">
-          <div className="flex min-w-[300px] flex-col gap-1.5">
+          <div className="flex min-w-72 flex-col gap-1.5">
             <Label className="flex items-center gap-2">
               <Users className="size-4" />
               {t('users.included')}
@@ -76,7 +76,7 @@ function TrackingActivityPage() {
             />
           </div>
 
-          <div className="flex min-w-[300px] flex-col gap-1.5">
+          <div className="flex min-w-72 flex-col gap-1.5">
             <Label className="flex items-center gap-2">
               <Users className="size-4" />
               {t('users.not.included')}
@@ -95,7 +95,7 @@ function TrackingActivityPage() {
             />
           </div>
 
-          <div className="flex min-w-[150px] flex-col gap-1.5">
+          <div className="flex min-w-36 flex-col gap-1.5">
             <Label>{t('last')}</Label>
             <Select value={String(periodFilter)} onValueChange={(val) => setPeriodFilter(Number(val))}>
               <SelectTrigger className="bg-background">

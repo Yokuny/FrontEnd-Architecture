@@ -9,6 +9,35 @@ export const Route = createFileRoute('/_private/register/')({
   beforeLoad: () => ({
     title: 'register',
   }),
+  staticData: {
+    title: 'register.hub',
+    description:
+      'Hub central de cadastros e dados mestres do sistema. Menu principal com acesso a todos os módulos de cadastro básico (empresas, máquinas, sensores, clientes, contratos, etc).',
+    tags: ['register', 'cadastro', 'hub', 'menu', 'master data', 'dados mestres', 'central', 'navigation'],
+    examplePrompts: ['Ir para cadastros', 'Acessar cadastro de empresas', 'Cadastrar máquina', 'Gerenciar sensores', 'Configurar alertas', 'Visualizar todos os cadastros'],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/register/enterprises', relation: 'child', description: 'Cadastro de empresas' },
+      { path: '/_private/register/customers', relation: 'child', description: 'Cadastro de clientes' },
+      { path: '/_private/register/contracts', relation: 'child', description: 'Cadastro de contratos' },
+      { path: '/_private/register/user-type', relation: 'child', description: 'Tipos de usuário' },
+      { path: '/_private/register/machines', relation: 'child', description: 'Cadastro de ativos' },
+      { path: '/_private/register/model-machine', relation: 'child', description: 'Modelos de máquina' },
+      { path: '/_private/register/sensors', relation: 'child', description: 'Cadastro de sensores' },
+      { path: '/_private/register/sensor-functions', relation: 'child', description: 'Funções de sensores' },
+      { path: '/_private/register/platform', relation: 'child', description: 'Cadastro de plataformas' },
+      { path: '/_private/register/buoy', relation: 'child', description: 'Cadastro de monoboias' },
+      { path: '/_private/register/geofences', relation: 'child', description: 'Cadastro de geofences' },
+      { path: '/_private/register/alerts', relation: 'child', description: 'Cadastro de alertas' },
+      { path: '/_private/register/maintenance-plans', relation: 'child', description: 'Planos de manutenção' },
+      { path: '/_private/register/parts', relation: 'child', description: 'Cadastro de peças' },
+      { path: '/_private/register/type-fuel', relation: 'child', description: 'Tipos de combustível' },
+      { path: '/_private/register/forms', relation: 'child', description: 'Configuração de formulários' },
+      { path: '/_private/register/params', relation: 'child', description: 'Parâmetros do sistema' },
+    ],
+    entities: [],
+    capabilities: ['Navegação para módulos de cadastro', 'Visualização de todos os cadastros disponíveis', 'Acesso rápido aos principais cadastros'],
+  },
 });
 
 function RegisterHubPage() {
@@ -40,7 +69,7 @@ function RegisterHubPage() {
       to: '/register/user-type' as const,
     },
     {
-      title: t('machines'),
+      title: t('assets'),
       description: t('machines.description', 'Gerencie os ativos e equipamentos da frota.'),
       icon: Cpu,
       to: '/register/machines' as const,

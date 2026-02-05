@@ -2,7 +2,7 @@ import type { UseFormReturn } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import DefaultFormLayout from '@/components/default-form-layout';
 import { EditPermissionSelect, UserSamePermissionSelect, VisibilitySelect } from '@/components/selects';
-import type { EditPermission, RoleFormData, Visibility } from '../@interface/role';
+import type { EditPermission, RoleFormData, Visibility } from '../@interface';
 
 interface VisibilitySettingsProps {
   form: UseFormReturn<RoleFormData>;

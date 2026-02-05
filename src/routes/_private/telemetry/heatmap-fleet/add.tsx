@@ -28,6 +28,8 @@ import { EQUIPMENT_TYPES } from './@consts/equipment.consts';
 import { useDeleteHeatmapConfig, useHeatmapConfig, useMachineSensors, useSaveHeatmapConfig } from './@hooks/use-heatmap-config';
 import type { EquipmentConfig, SubgroupConfig } from './@interface/heatmap.types';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const searchParamsSchema = z.object({
   id: z.string().optional(),
 });
@@ -54,7 +56,7 @@ function HeatmapConfigPage() {
   const saveMutation = useSaveHeatmapConfig();
   const deleteMutation = useDeleteHeatmapConfig();
 
-  const hasPermissionDelete = false; // TODO: Replace with actual permission check
+  // const hasPermissionDelete = useHasPermission('/heatmap-fleet-delete');
   const isEdit = !!id;
   const isLoading = isLoadingConfig || saveMutation.isPending || deleteMutation.isPending;
 
@@ -103,7 +105,7 @@ function HeatmapConfigPage() {
       { id, idEnterprise: enterprise.value, idMachine: machine.value, equipments: equipmentList.filter((e) => e.subgroups.length > 0) },
       {
         onSuccess: () => {
-          toast.success(t('save.successfull'));
+          toast.success(t('save.success'));
           navigate({ to: '/telemetry/heatmap-fleet', search: { page: 0 } });
         },
         onError: () => toast.error(t('save.error')),
@@ -115,17 +117,17 @@ function HeatmapConfigPage() {
     if (!id) return;
     deleteMutation.mutate(id, {
       onSuccess: () => {
-        toast.success(t('delete.successfull'));
+        toast.success(t('delete.success'));
         navigate({ to: '/telemetry/heatmap-fleet', search: { page: 0 } });
       },
-      onError: () => toast.error(t('delete.error')),
+      onError: () => toast.error(t('save.error')),
     });
   };
 
   const sections: FormSection[] = [
     {
       title: t('basic.info'),
-      description: t('machine.basic.description'),
+      description: t('save.error'),
       layout: 'horizontal',
       fields: [
         <div key="selects-row" className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -142,7 +144,7 @@ function HeatmapConfigPage() {
     },
     {
       title: t('machine.equipment'),
-      description: t('machine.equipment.description'),
+      description: t('select.machine.first'),
       layout: 'vertical',
       fields: [
         machine?.value ? (
@@ -164,7 +166,7 @@ function HeatmapConfigPage() {
                     <Accordion type="single" collapsible className="flex w-full flex-col gap-2">
                       {equipment.subgroups.map((subgroup, subIndex) => {
                         const subgroupData = equipmentData?.subgroups?.[subIndex];
-                        const subId = `${equipment.code}-${subIndex}`;
+                        const subId = `${equipment.code}${subIndex}`;
                         return (
                           <AccordionItem key={subId} value={subId} className="border-none">
                             <AccordionTrigger className="group py-2 hover:no-underline [&>svg]:hidden">
@@ -199,7 +201,7 @@ function HeatmapConfigPage() {
           </Accordion>
         ) : (
           <Item key="no-machine" variant="muted" className="justify-center border-dashed">
-            <ItemDescription>{t('select.machine.to.configure')}</ItemDescription>
+            <ItemDescription>{t('select.machine.first')}</ItemDescription>
           </Item>
         ),
       ],
@@ -210,7 +212,8 @@ function HeatmapConfigPage() {
     <Card>
       <CardHeader title={t(isEdit ? 'machine.edit' : 'add.machine')}>
         <div className="flex items-center gap-2">
-          {isEdit && hasPermissionDelete && (
+          {/* {isEdit && hasPermissionDelete && ( */}
+          {isEdit && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" disabled={isLoading}>

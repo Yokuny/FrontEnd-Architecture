@@ -11,13 +11,11 @@ export function SafetySelect(props: SafetySelectProps) {
   const { mode, disabled = false, className, label, placeholder, clearable = true } = props;
   const id = useId();
 
-  // Mapping options to translated ones
   const translatedOptions = SAFETY_AREAS.map((opt) => ({
     ...opt,
     label: t(`safety.${opt.value}`),
   }));
 
-  // Simulated query object
   const query = {
     data: translatedOptions,
     isLoading: false,
@@ -34,34 +32,19 @@ export function SafetySelect(props: SafetySelectProps) {
     }));
   };
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('safety');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <ShieldCheck className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<SelectOption, SelectOption>
-          id={id}
-          placeholder={placeholder || t('safety')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query as any}
-          mapToOptions={mapToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('safety');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('safety'),
+    query: query as any,
+    mapToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -70,20 +53,11 @@ export function SafetySelect(props: SafetySelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<SelectOption, SelectOption>
-        id={id}
-        placeholder={placeholder || t('safety')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query as any}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<SelectOption, SelectOption> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<SelectOption, SelectOption> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

@@ -61,7 +61,7 @@ export function AddGroup({ events, onChange, disabled }: GroupCardProps) {
             </TableHeader>
             <TableBody>
               {events.map((event, index) => (
-                <TableRow key={`${index}-${event}`}>
+                <TableRow key={`${index}${event}`}>
                   <TableCell>{event.datetime ? formatDate(event.datetime, 'dd MM yyyy HH:mm') : '-'}</TableCell>
                   <TableCell>{event.status}</TableCell>
                   <TableCell className="text-right">{event.speed}</TableCell>

@@ -26,6 +26,39 @@ import { useConsumptionIntervalData } from './@hooks/use-consumption-interval-ap
 import { searchSchema } from './@interface/consumption-interval.schema';
 
 export const Route = createFileRoute('/_private/consumption/relatorio/')({
+  staticData: {
+    title: 'reports',
+    description:
+      'Página de relatório consolidado de consumo de combustível por intervalo de tempo. Exibe análise detalhada com cartões de resumo, comparação entre embarcações e tabela completa de consumo. Permite visualizar tanto dados de polling (consumo real) quanto flowmeter (consumo estimado), com opção de exportação para CSV.',
+    tags: ['consumption', 'consumo', 'fuel', 'combustível', 'vessel', 'embarcação', 'report', 'relatório', 'interval', 'intervalo', 'polling', 'flowmeter', 'export', 'csv'],
+    examplePrompts: [
+      'Gerar relatório de consumo dos últimos 3 meses',
+      'Relatório de consumo com múltiplas embarcações',
+      'Exportar relatório de consumo para CSV',
+      'Ver comparação de consumo real vs estimado no relatório',
+    ],
+    searchParams: [
+      { name: 'dateMin', type: 'date', description: 'Data inicial do período no formato YYYY-MM-DD', example: '2025-01-01' },
+      { name: 'dateMax', type: 'date', description: 'Data final do período no formato YYYY-MM-DD', example: '2025-02-04' },
+      { name: 'machines', type: 'array', description: 'Array de IDs das embarcações para análise', example: '["id1", "id2"]' },
+      { name: 'unit', type: 'string', description: 'Unidade de medida: L (litros), m³ (metros cúbicos), gal (galões)', example: 'L' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption', relation: 'parent', description: 'Hub de consumo' },
+      { path: '/_private/consumption/daily', relation: 'sibling', description: 'Consumo diário detalhado' },
+      { path: '/_private/consumption/comparative', relation: 'sibling', description: 'Comparativo entre embarcações' },
+    ],
+    entities: ['ConsumptionData', 'Machine', 'Enterprise', 'Engine', 'OilData'],
+    capabilities: [
+      'Visualizar resumo estatístico de consumo',
+      'Comparar consumo entre embarcações',
+      'Ver tabela detalhada de consumo',
+      'Alternar entre consumo real (polling) e estimado (flowmeter)',
+      'Exportar dados para CSV',
+      'Filtrar por múltiplas embarcações',
+      'Análise de consumo por motor',
+    ],
+  },
   component: ConsumptionIntervalPage,
   validateSearch: searchSchema,
 });
@@ -108,13 +141,13 @@ function ConsumptionIntervalPage() {
       </CardHeader>
       <CardContent>
         {/* Filters Section */}
-        <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
+        <Item variant="outline" className="bg-secondary">
           <ItemContent className="flex-none">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -123,7 +156,6 @@ function ConsumptionIntervalPage() {
                   mode="single"
                   selected={dateMin}
                   onSelect={(date) => date && setDateMin(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -136,8 +168,8 @@ function ConsumptionIntervalPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -146,7 +178,6 @@ function ConsumptionIntervalPage() {
                   mode="single"
                   selected={dateMax}
                   onSelect={(date) => date && setDateMax(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -155,18 +186,16 @@ function ConsumptionIntervalPage() {
             </Popover>
           </ItemContent>
 
-          <ItemContent className="min-w-[300px]">
-            <ConsumptionMachineSelect
-              mode="multi"
-              label={t('vessel')}
-              placeholder={t('vessels.select.placeholder')}
-              idEnterprise={idEnterprise}
-              value={machineIds}
-              onChange={setMachineIds}
-            />
-          </ItemContent>
+          <ConsumptionMachineSelect
+            mode="multi"
+            label={t('vessel')}
+            placeholder={t('vessels.select.placeholder')}
+            idEnterprise={idEnterprise}
+            value={machineIds}
+            onChange={setMachineIds}
+          />
 
-          <ItemContent className="min-w-[120px]">
+          <ItemContent className="min-w-28">
             <Label>{t('unit')}</Label>
             <Select value={unit} onValueChange={setUnit}>
               <SelectTrigger className="bg-background">
@@ -182,10 +211,12 @@ function ConsumptionIntervalPage() {
             </Select>
           </ItemContent>
 
-          <Button variant="outline" className="ml-auto shrink-0 gap-2 bg-background" onClick={handleSearch} disabled={!idEnterprise}>
-            <Search className="size-4" />
-            {t('filter')}
-          </Button>
+          <div className="ml-auto">
+            <Button variant="outline" className="shrink-0 gap-2" onClick={handleSearch} disabled={!idEnterprise}>
+              <Search className="size-4" />
+              {t('filter')}
+            </Button>
+          </div>
         </Item>
 
         <div className="mb-6 flex items-center gap-6">

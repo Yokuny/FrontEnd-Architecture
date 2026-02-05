@@ -14,6 +14,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useAlertsPaginated } from '@/hooks/use-alerts-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const alertsSearchSchema = z.object({
   page: z.number().optional().default(1),
   size: z.number().optional().default(10),
@@ -23,6 +25,29 @@ const alertsSearchSchema = z.object({
 export const Route = createFileRoute('/_private/register/alerts/')({
   component: AlertsListPage,
   validateSearch: (search: Record<string, unknown>): AlertsSearch => alertsSearchSchema.parse(search),
+  staticData: {
+    title: 'register.alerts',
+    description: 'Página de cadastro e gerenciamento de alertas. Permite criar, visualizar, editar e duplicar regras de alerta do sistema com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'alertas', 'alerts', 'notificações', 'notifications', 'rules'],
+    examplePrompts: ['Cadastrar novo alerta', 'Listar todos os alertas', 'Editar alerta', 'Buscar alerta por descrição', 'Duplicar alerta existente'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'temperatura' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Alert', 'Enterprise'],
+    capabilities: [
+      'Listar alertas com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo alerta',
+      'Editar alerta existente',
+      'Duplicar alerta',
+      'Visualizar tipo de alerta (evento, min-max, condicional)',
+      'Gerenciar visibilidade do alerta (público, privado, limitado)',
+    ],
+  },
 });
 
 function AlertsListPage() {
@@ -30,6 +55,8 @@ function AlertsListPage() {
   const navigate = Route.useNavigate();
   const { page, size, search } = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/add-alarm');
 
   const { data, isLoading } = useAlertsPaginated({
     page: page - 1,
@@ -68,10 +95,12 @@ function AlertsListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/alerts/add' })}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

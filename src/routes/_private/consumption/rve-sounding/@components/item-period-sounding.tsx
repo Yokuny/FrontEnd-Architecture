@@ -50,7 +50,7 @@ export function ItemPeriodSounding({ data }: ItemPeriodSoundingProps) {
         const isOpen = openIndex === i;
 
         return (
-          <Card key={`period-${first.date.getTime()}`} className="border shadow-none">
+          <Card key={`period-${first.date.getTime()}`} className="border">
             <CardHeader className="p-4">
               <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-12">
                 {/* Start */}
@@ -108,7 +108,7 @@ export function ItemPeriodSounding({ data }: ItemPeriodSoundingProps) {
 
                 {/* Consumption */}
                 <div className="flex flex-col md:col-span-2">
-                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('consumption')}</span>
+                  <span className="mb-1 font-semibold text-[10px] text-muted-foreground uppercase">{t('consume')}</span>
                   <div className="flex items-center gap-1 font-bold text-lg">
                     <Droplet className={isExcess ? 'text-red-500' : 'text-green-500'} size={16} />
                     {formatNumber(consumed, 3)}

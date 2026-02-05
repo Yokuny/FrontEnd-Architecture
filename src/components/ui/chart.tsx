@@ -144,7 +144,7 @@ function ChartTooltipContent({
   const nestLabel = payload.length === 1 && indicator !== 'dot';
 
   return (
-    <div className={cn('grid min-w-32 items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl', className)}>
+    <div className={cn('grid min-w-32 items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs', className)}>
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
         {payload
@@ -275,7 +275,7 @@ export function getChartColor(index: number) {
   const shadeIndex = Math.floor(index / COLORS.length);
   const shade = 400 + shadeIndex * 100;
 
-  return `var(--color-${COLORS[colorIndex]}-${shade})`;
+  return `var(--color-${COLORS[colorIndex]}${shade})`;
 }
 
 export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle };

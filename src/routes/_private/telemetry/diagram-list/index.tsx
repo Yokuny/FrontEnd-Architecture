@@ -14,6 +14,8 @@ import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { formatDate } from '@/lib/formatDate';
 import { useDiagramList } from './@hooks/use-diagram-list';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const searchParamsSchema = z.object({
   page: z.coerce.number().optional().default(0),
   search: z.string().optional(),
@@ -32,8 +34,7 @@ function DiagramListPage() {
 
   const { data, isLoading } = useDiagramList(idEnterprise, page, 20, search);
 
-  // TODO: Implement permission check
-  const hasPermissionAdd = true;
+  // const hasPermissionAdd = useHasPermission('/diagram-add');
 
   const updateSearch = (updates: Partial<z.infer<typeof searchParamsSchema>>) => {
     navigate({ search: (prev: z.infer<typeof searchParamsSchema>) => ({ ...prev, ...updates }) });
@@ -61,12 +62,12 @@ function DiagramListPage() {
               }}
             />
           </div>
-          {hasPermissionAdd && (
-            <Button onClick={() => navigate({ to: '/telemetry/diagram-list/diagram' })}>
-              <Plus className="mr-2 size-4" />
-              {t('diagram.new')}
-            </Button>
-          )}
+          {/* {hasPermissionAdd && ( */}
+          <Button onClick={() => navigate({ to: '/telemetry/diagram-list/diagram' })}>
+            <Plus className="mr-2 size-4" />
+            {t('diagram.new')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

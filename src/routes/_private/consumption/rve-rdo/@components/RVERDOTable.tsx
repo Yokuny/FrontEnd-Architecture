@@ -55,7 +55,7 @@ export function RVERDOTable({ data }: RVERDOTableProps) {
             const statusClass = maxInThisDay === 0 ? '' : consumptionEstimated !== undefined && maxInThisDay <= consumptionEstimated ? 'text-red-500 font-bold' : 'text-primary';
 
             return item.operations.map((operation, opIndex) => (
-              <TableRow key={`${item.date.getTime()}-${opIndex}`} className={index % 2 === 0 ? 'bg-muted/30' : ''}>
+              <TableRow key={`${item.date.getTime()}${opIndex}`} className={index % 2 === 0 ? 'bg-muted/30' : ''}>
                 {opIndex === 0 && (
                   <>
                     <TableCell className="text-center" rowSpan={item.operations.length}>

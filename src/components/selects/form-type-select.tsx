@@ -6,6 +6,57 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { FORM_TYPE_OPTIONS, type SelectOptionWithKey } from '@/lib/constants/select-options';
 
+export function FormTypeSelect(props: FormTypeSelectProps) {
+  const { t } = useTranslation();
+  const { mode, disabled = false, className, label, placeholder } = props;
+  const id = useId();
+
+  const query = {
+    data: FORM_TYPE_OPTIONS,
+    isLoading: false,
+    isError: false,
+    isSuccess: true,
+    status: 'success' as const,
+  };
+
+  const mapToOptions = (options: SelectOptionWithKey[]) => {
+    return options.map((opt) => ({
+      value: opt.value,
+      label: t(opt.labelKey),
+      data: opt,
+    }));
+  };
+
+  const displayLabel = label === undefined ? t('type.form') : label;
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('type.form'),
+    query: query as any,
+    mapToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <FileText className="size-4" />
+          {displayLabel}
+        </Label>
+      )}
+      {mode === 'multi' ? (
+        <DataMultiSelect<SelectOptionWithKey, SelectOptionWithKey> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<SelectOptionWithKey, SelectOptionWithKey> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={false} />
+      )}
+    </div>
+  );
+}
+
 interface FormTypeSelectBaseProps {
   disabled?: boolean;
   className?: string;
@@ -26,79 +77,3 @@ interface FormTypeSelectMultiProps extends FormTypeSelectBaseProps {
 }
 
 export type FormTypeSelectProps = FormTypeSelectSingleProps | FormTypeSelectMultiProps;
-
-export function FormTypeSelect(props: FormTypeSelectProps) {
-  const { t } = useTranslation();
-  const { mode, disabled = false, className, label, placeholder } = props;
-  const id = useId();
-
-  // Simulated query object for static constants
-  const query = {
-    data: FORM_TYPE_OPTIONS,
-    isLoading: false,
-    isError: false,
-    isSuccess: true,
-    status: 'success' as const,
-  };
-
-  const mapToOptions = (options: SelectOptionWithKey[]) => {
-    return options.map((opt) => ({
-      value: opt.value,
-      label: t(opt.labelKey),
-      data: opt,
-    }));
-  };
-
-  const displayLabel = label === undefined ? t('type.form') : label;
-
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <FileText className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<SelectOptionWithKey, SelectOptionWithKey>
-          id={id}
-          placeholder={placeholder || t('type.form')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query as any}
-          mapToOptions={mapToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-2">
-      {displayLabel && (
-        <Label htmlFor={id} className="flex items-center gap-2">
-          <FileText className="size-4" />
-          {displayLabel}
-        </Label>
-      )}
-      <DataSelect<SelectOptionWithKey, SelectOptionWithKey>
-        id={id}
-        placeholder={placeholder || t('type.form')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query as any}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        clearable={false}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
-    </div>
-  );
-}

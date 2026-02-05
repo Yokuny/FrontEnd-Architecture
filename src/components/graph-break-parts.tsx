@@ -77,7 +77,7 @@ export function GraphBreakParts() {
         <div className="relative w-full" style={{ height: `${barHeight}px` }}>
           <TooltipProvider>
             {processedData.map((d, index) => (
-              <Tooltip key={`${d.key}-${index}`}>
+              <Tooltip key={`${d.key}${index}`}>
                 <TooltipTrigger asChild>
                   <div
                     className="group absolute cursor-help transition-all duration-300 hover:z-10 hover:brightness-110"
@@ -88,7 +88,7 @@ export function GraphBreakParts() {
                     }}
                   >
                     <div
-                      className="h-full w-full border-white/5 border-y shadow-sm first:border-l last:border-r"
+                      className="h-full w-full border-white/5 border-y first:border-l last:border-r"
                       style={{
                         backgroundColor: d.color,
                         borderRadius: d.borderRadius,

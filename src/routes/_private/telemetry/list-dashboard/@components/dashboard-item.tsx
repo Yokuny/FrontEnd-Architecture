@@ -10,10 +10,14 @@ import { useDashboardFolderFiles } from '@/hooks/use-dashboards-api';
 import { cn } from '@/lib/utils';
 import type { Dashboard } from '../@interface/dashboard.types';
 
-export function DashboardItem({ item, hasPermissionViewer, hasPermissionEditor }: DashboardItemProps) {
+// import { useHasPermission } from '@/hooks/use-permissions';
+
+export function DashboardItem({ item }: { item: Dashboard }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  // const hasPermissionViewer = useHasPermission('/list-dashboard');
+  // const hasPermissionEditor = useHasPermission('/add-dashboard');
 
   const isFolder = item.typeData === 'folder';
   const isUrl = item.typeData === 'url.external';
@@ -26,7 +30,7 @@ export function DashboardItem({ item, hasPermissionViewer, hasPermissionEditor }
       setIsOpen(!isOpen);
     } else if (isUrl) {
       navigate({ to: '/my-frame', search: { id: item.id } } as any);
-    } else if (hasPermissionViewer) {
+    } else {
       navigate({ to: item.typeLayout === 'group' ? '/my-group-dashboard' : '/my-dashboard', search: { id: item.id } } as any);
     }
   };
@@ -83,8 +87,8 @@ export function DashboardItem({ item, hasPermissionViewer, hasPermissionEditor }
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Actions */}
-          {(hasPermissionViewer || (hasPermissionEditor && item.isCanEdit)) && (
+          {/* {(hasPermissionViewer || (hasPermissionEditor && item.isCanEdit)) && ( */}
+          {item.isCanEdit && (
             <div className="flex items-center justify-end border-l pl-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
@@ -130,16 +134,10 @@ export function DashboardItem({ item, hasPermissionViewer, hasPermissionEditor }
           ) : !folderContent?.length ? (
             <div className="py-2 text-muted-foreground text-sm italic">{t('folder.empty')}</div>
           ) : (
-            folderContent.map((subItem) => <DashboardItem key={subItem.id} item={subItem} hasPermissionViewer={hasPermissionViewer} hasPermissionEditor={hasPermissionEditor} />)
+            folderContent.map((subItem) => <DashboardItem key={subItem.id} item={subItem} />)
           )}
         </div>
       )}
     </>
   );
-}
-
-interface DashboardItemProps {
-  item: Dashboard;
-  hasPermissionViewer: boolean;
-  hasPermissionEditor: boolean;
 }

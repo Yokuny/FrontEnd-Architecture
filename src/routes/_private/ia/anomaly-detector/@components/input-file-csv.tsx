@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 
 const csvStringToJson = (csvString: string) => {
-  const lines = csvString.split('\n').filter((x) => x !== '' && x !== null);
+  const lines = csvString.split('upload.csv').filter((x) => x !== '' && x !== null);
   const headers = lines[0].split(',');
   const result: any[] = [];
 
@@ -103,12 +103,12 @@ export function InputFileCsv({ onHandleData }: InputFileCsvProps) {
               <Button variant="ghost" className="size-8 text-destructive" onClick={() => setFile(null)}>
                 <X className="size-4" />
               </Button>
-              <span className="max-w-[200px] truncate font-medium text-sm">{file.name}</span>
+              <span className="max-w-48 truncate font-medium text-sm">{file.name}</span>
             </div>
           )}
 
           {file && (
-            <Button variant="default" onClick={handleUpload} className="animate-pulse gap-2 shadow-lg shadow-primary/20">
+            <Button variant="default" onClick={handleUpload} className="animate-pulse gap-2">
               <Play className="size-4" />
               {t('start.monitoring')}
             </Button>

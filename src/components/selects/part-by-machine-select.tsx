@@ -24,32 +24,17 @@ export function PartByMachineSelect({
   const query = usePartsByMachineSelect(idMachine);
 
   const noOptionsMessage = !idMachine ? t('select.enterprise.first') : t('nooptions.message');
-
-  if (multi) {
-    return (
-      <div className="space-y-2">
-        {label && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Settings className="size-4" />
-            {label}
-          </Label>
-        )}
-        <DataMultiSelect
-          id={id}
-          placeholder={placeholder || t('part.placeholder')}
-          value={values}
-          onChange={(newValues) => onChangeMulti?.(newValues as string[])}
-          query={query}
-          mapToOptions={mapPartsByMachineToOptions}
-          disabled={disabled}
-          className={className}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('part.placeholder'),
+    query,
+    mapToOptions: mapPartsByMachineToOptions,
+    disabled,
+    className,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+  };
 
   return (
     <div className="space-y-2">
@@ -59,20 +44,11 @@ export function PartByMachineSelect({
           {label}
         </Label>
       )}
-      <DataSelect
-        id={id}
-        placeholder={placeholder || t('part.placeholder')}
-        value={value}
-        onChange={(val) => onChange?.(val)}
-        query={query}
-        mapToOptions={mapPartsByMachineToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        className={className}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-      />
+      {multi ? (
+        <DataMultiSelect {...sharedProps} value={values} onChange={(newValues) => onChangeMulti?.(newValues as string[])} />
+      ) : (
+        <DataSelect {...sharedProps} value={value} onChange={(val) => onChange?.(val)} clearable={clearable} />
+      )}
     </div>
   );
 }

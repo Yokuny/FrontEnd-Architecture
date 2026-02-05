@@ -23,6 +23,56 @@ import { useRVERDOData } from './@hooks/use-rve-rdo-api';
 import { searchSchema } from './@interface/rve-rdo.schema';
 
 export const Route = createFileRoute('/_private/consumption/rve-rdo/')({
+  staticData: {
+    title: 'dashboard.rve.rdo',
+    description:
+      'Dashboard de análise comparativa entre RVE (Relatório de Viagem Eletrônico) e RDO (Relatório Diário de Operação). Compara o consumo estimado de combustível registrado no RVE com o consumo máximo permitido por operação definido no RDO. Exibe operações diárias com horários, duração e diferenças de consumo. Permite análise de conformidade operacional e identificação de desvios.',
+    tags: [
+      'consumption',
+      'consumo',
+      'fuel',
+      'combustível',
+      'vessel',
+      'embarcação',
+      'rve',
+      'rdo',
+      'voyage',
+      'viagem',
+      'operation',
+      'operação',
+      'report',
+      'relatório',
+      'compliance',
+      'conformidade',
+    ],
+    examplePrompts: [
+      'Comparar RVE e RDO das embarcações',
+      'Ver diferenças entre consumo estimado e máximo permitido',
+      'Dashboard de conformidade operacional',
+      'Analisar operações do RDO vs consumo do RVE',
+    ],
+    searchParams: [
+      { name: 'initialDate', type: 'string', description: 'Data inicial do período no formato ISO 8601', example: '2025-01-01T00:00:00Z' },
+      { name: 'finalDate', type: 'string', description: 'Data final do período no formato ISO 8601', example: '2025-02-04T23:59:59Z' },
+      { name: 'machines', type: 'string', description: 'IDs das embarcações separados por vírgula', example: 'id1,id2,id3' },
+      { name: 'showInoperabilities', type: 'boolean', description: 'Incluir consumo durante períodos de inoperabilidade', example: 'true' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption', relation: 'parent', description: 'Hub de consumo' },
+      { path: '/_private/consumption/rve-sounding', relation: 'sibling', description: 'Dashboard RVE com sounding' },
+      { path: '/_private/consumption/relatorio', relation: 'sibling', description: 'Relatório de consumo detalhado' },
+    ],
+    entities: ['Asset', 'Operation', 'ConsumptionData', 'RVE', 'RDO'],
+    capabilities: [
+      'Comparar RVE vs RDO por embarcação',
+      'Visualizar operações diárias com horários',
+      'Calcular diferença entre consumo estimado e máximo',
+      'Identificar desvios operacionais',
+      'Exportar dados para CSV',
+      'Filtrar por período e embarcações',
+      'Incluir/excluir inoperabilidades',
+    ],
+  },
   component: RVERDODashboardPage,
   validateSearch: searchSchema,
 });
@@ -119,24 +169,22 @@ function RVERDODashboardPage() {
       </CardHeader>
       <CardContent>
         {/* Filters */}
-        <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
-          <ItemContent className="min-w-[300px]">
-            <ConsumptionMachineSelect
-              mode="multi"
-              label={t('vessels')}
-              placeholder={t('vessels.select.placeholder')}
-              idEnterprise={idEnterprise}
-              value={machineIds}
-              onChange={(ids) => setMachineIds(ids)}
-            />
-          </ItemContent>
+        <Item variant="outline" className="bg-secondary">
+          <ConsumptionMachineSelect
+            mode="multi"
+            label={t('vessels')}
+            placeholder={t('vessels.select.placeholder')}
+            idEnterprise={idEnterprise}
+            value={machineIds}
+            onChange={(ids) => setMachineIds(ids)}
+          />
 
           <ItemContent className="flex-none">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -145,7 +193,6 @@ function RVERDODashboardPage() {
                   mode="single"
                   selected={dateMin}
                   onSelect={(date) => date && setDateMin(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -158,8 +205,8 @@ function RVERDODashboardPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -168,7 +215,6 @@ function RVERDODashboardPage() {
                   mode="single"
                   selected={dateMax}
                   onSelect={(date) => date && setDateMax(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -177,11 +223,8 @@ function RVERDODashboardPage() {
             </Popover>
           </ItemContent>
 
-          <ItemContent className="flex-none">
-            <Label className="mb-2 flex items-center gap-2">
-              <span className="size-1" /> {/* Spacer to align with icons */}
-              {t('consume')}
-            </Label>
+          <ItemContent className="flex-none items-center">
+            <Label className="mb-2 flex items-center gap-2">{t('consume')}</Label>
             <div className="flex h-10 items-center gap-2 pb-2">
               <Checkbox id="inoperabilities" checked={showInoperabilities} onCheckedChange={(val) => setShowInoperabilities(!!val)} />
               <Label htmlFor="inoperabilities" className="font-normal text-xs leading-tight">
@@ -190,9 +233,9 @@ function RVERDODashboardPage() {
             </div>
           </ItemContent>
 
-          <div className="flex flex-row items-center gap-2 pb-1">
+          <div className="ml-auto flex justify-end gap-2">
             {hasFilter && (
-              <Button onClick={clearFilter} className="text-amber-700 hover:text-amber-800">
+              <Button onClick={clearFilter}>
                 <BrushCleaning className="size-4" />
               </Button>
             )}

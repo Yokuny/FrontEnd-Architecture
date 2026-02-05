@@ -6,6 +6,49 @@ import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
 import { type Machine, mapMachinesToOptionsSimple, useMachinesByEnterpriseSelect } from '@/hooks/use-machines-api';
 
+export function MachineSelect(props: MachineSelectProps) {
+  const { t } = useTranslation();
+  const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
+  const id = useId();
+  const query = useMachinesByEnterpriseSelect(idEnterprise);
+
+  const displayLabel = label || t('machine');
+  const isDisabled = disabled || !idEnterprise;
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    query,
+    mapToOptions: mapMachinesToOptionsSimple,
+    disabled: isDisabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
+  return (
+    <div className="space-y-2">
+      {displayLabel && (
+        <Label htmlFor={id} className="flex items-center gap-2">
+          <Zap className="size-4" />
+          {displayLabel}
+        </Label>
+      )}
+      {mode === 'multi' ? (
+        <DataMultiSelect<Machine> {...sharedProps} placeholder={placeholder || t('select.machines')} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Machine>
+          {...sharedProps}
+          placeholder={placeholder || t('select.machine')}
+          value={props.value}
+          onChange={(val) => props.onChange(val as string)}
+          clearable={true}
+        />
+      )}
+    </div>
+  );
+}
+
 interface MachineSelectBaseProps {
   idEnterprise?: string;
   disabled?: boolean;
@@ -27,63 +70,3 @@ interface MachineSelectMultiProps extends MachineSelectBaseProps {
 }
 
 export type MachineSelectProps = MachineSelectSingleProps | MachineSelectMultiProps;
-
-export function MachineSelect(props: MachineSelectProps) {
-  const { t } = useTranslation();
-  const { mode, idEnterprise, disabled = false, className, label, placeholder } = props;
-  const id = useId();
-  const query = useMachinesByEnterpriseSelect(idEnterprise);
-  const isDisabled = disabled || !idEnterprise;
-  const displayLabel = label || t('machine');
-
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Zap className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Machine>
-          id={id}
-          placeholder={placeholder || t('select.machines')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapMachinesToOptionsSimple}
-          disabled={isDisabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={!idEnterprise ? t('select.enterprise.first') : t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-2">
-      {displayLabel && (
-        <Label htmlFor={id} className="flex items-center gap-2">
-          <Zap className="size-4" />
-          {displayLabel}
-        </Label>
-      )}
-      <DataSelect<Machine>
-        id={id}
-        placeholder={placeholder || t('select.machine')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapMachinesToOptionsSimple}
-        disabled={isDisabled}
-        clearable={true}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={!idEnterprise ? t('select.enterprise.first') : t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
-    </div>
-  );
-}

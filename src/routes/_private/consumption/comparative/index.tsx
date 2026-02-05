@@ -22,6 +22,38 @@ import { useConsumptionComparative } from './@hooks/use-consumption-comparative-
 import { searchSchema } from './@interface/consumption-comparative.schema';
 
 export const Route = createFileRoute('/_private/consumption/comparative/')({
+  staticData: {
+    title: 'consumption.comparative',
+    description:
+      'Página de comparativo de consumo e estoque de combustível entre múltiplas embarcações. Permite visualizar e comparar gráficos de consumo real vs estimado ou níveis de estoque de combustível para várias embarcações simultaneamente em um período específico.',
+    tags: ['consumption', 'consumo', 'fuel', 'combustível', 'vessel', 'embarcação', 'comparative', 'comparativo', 'stock', 'estoque', 'comparison', 'análise'],
+    examplePrompts: [
+      'Comparar o consumo de combustível entre navios A, B e C no último mês',
+      'Ver comparativo de estoque de combustível de várias embarcações',
+      'Análise comparativa de consumo entre embarcações em janeiro',
+      'Gráfico comparativo de múltiplas embarcações',
+    ],
+    searchParams: [
+      { name: 'dateMin', type: 'string', description: 'Data inicial do período no formato ISO 8601', example: '2025-01-01T00:00:00+00:00' },
+      { name: 'dateMax', type: 'string', description: 'Data final do período no formato ISO 8601', example: '2025-02-04T23:59:59+00:00' },
+      { name: 'machines', type: 'string', description: 'IDs das embarcações separados por vírgula', example: 'id1,id2,id3' },
+      { name: 'unit', type: 'string', description: 'Unidade de medida: L (litros), m³ (metros cúbicos), gal (galões)', example: 'L' },
+      { name: 'viewType', type: 'string', description: 'Tipo de visualização: consumption (consumo) ou stock (estoque)', example: 'consumption' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/consumption', relation: 'parent', description: 'Hub de consumo' },
+      { path: '/_private/consumption/daily', relation: 'sibling', description: 'Consumo diário de uma embarcação' },
+      { path: '/_private/consumption/relatorio', relation: 'sibling', description: 'Relatório de consumo com múltiplas embarcações' },
+    ],
+    entities: ['ConsumptionData', 'Machine', 'Enterprise', 'StockData'],
+    capabilities: [
+      'Comparar consumo entre múltiplas embarcações',
+      'Alternar entre visualização de consumo e estoque',
+      'Filtrar por período personalizado',
+      'Selecionar múltiplas embarcações',
+      'Visualizar gráficos comparativos',
+    ],
+  },
   component: ConsumptionComparativePage,
   validateSearch: searchSchema,
 });
@@ -81,13 +113,13 @@ function ConsumptionComparativePage() {
       <CardHeader title={t('consumption.comparative')} />
       <CardContent>
         {/* Filters */}
-        <Item variant="outline" className="mb-6 flex-row items-end gap-4 overflow-x-auto bg-secondary">
+        <Item variant="outline" className="bg-secondary">
           <ItemContent className="flex-none">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -96,7 +128,6 @@ function ConsumptionComparativePage() {
                   mode="single"
                   selected={dateMin}
                   onSelect={(date) => date && setDateMin(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -109,8 +140,8 @@ function ConsumptionComparativePage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -119,7 +150,6 @@ function ConsumptionComparativePage() {
                   mode="single"
                   selected={dateMax}
                   onSelect={(date) => date && setDateMax(date)}
-                  initialFocus
                   captionLayout="dropdown-years"
                   startMonth={new Date(2010, 0)}
                   endMonth={new Date()}
@@ -128,18 +158,16 @@ function ConsumptionComparativePage() {
             </Popover>
           </ItemContent>
 
-          <ItemContent className="min-w-[250px]">
-            <ConsumptionMachineSelect
-              mode="multi"
-              label={t('vessels')}
-              placeholder={t('vessels.select.placeholder')}
-              idEnterprise={idEnterprise}
-              value={machineIds}
-              onChange={setMachineIds}
-            />
-          </ItemContent>
+          <ConsumptionMachineSelect
+            mode="multi"
+            label={t('vessels')}
+            placeholder={t('vessels.select.placeholder')}
+            idEnterprise={idEnterprise}
+            value={machineIds}
+            onChange={setMachineIds}
+          />
 
-          <ItemContent className="w-32 flex-none">
+          <div className="flex min-w-32 flex-col gap-1.5">
             <Label>{t('type')}</Label>
             <Select value={viewType} onValueChange={setViewType}>
               <SelectTrigger className="bg-background">
@@ -153,7 +181,7 @@ function ConsumptionComparativePage() {
                 ))}
               </SelectContent>
             </Select>
-          </ItemContent>
+          </div>
 
           <ItemContent className="w-24 flex-none">
             <Label>{t('unit')}</Label>
@@ -173,7 +201,7 @@ function ConsumptionComparativePage() {
 
           <div className="ml-auto flex gap-2">
             {hasFilter && (
-              <Button onClick={clearFilter} className="text-amber-700 hover:text-amber-800">
+              <Button onClick={clearFilter}>
                 <BrushCleaning className="size-4" />
               </Button>
             )}

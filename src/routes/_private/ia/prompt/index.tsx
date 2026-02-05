@@ -14,6 +14,42 @@ import type { ChatMessage as ChatMessageType } from './@interface/prompt.types';
 
 export const Route = createFileRoute('/_private/ia/prompt/')({
   component: AIPromptPage,
+  staticData: {
+    title: 'ai.prompt',
+    description:
+      'Chatbot inteligente com IA - assistente conversacional baseado em prompt engineering para responder perguntas, fornecer insights e auxiliar em análises. Interface de chat em tempo real com histórico de conversação',
+    tags: [
+      'ai',
+      'ia',
+      'chatbot',
+      'prompt',
+      'prompt-engineering',
+      'conversation',
+      'conversação',
+      'assistant',
+      'assistente',
+      'nlp',
+      'natural-language',
+      'chat',
+      'messaging',
+      'nexai',
+    ],
+    examplePrompts: ['Fazer uma pergunta para a IA', 'Conversar com assistente inteligente', 'Obter insights com IA', 'Analisar dados via chat', 'Usar prompt engineering'],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/ia', relation: 'parent', description: 'Hub de IA' },
+      { path: '/_private/ia/anomaly-detector', relation: 'sibling', description: 'Detector de anomalias' },
+    ],
+    entities: ['ChatMessage', 'AIResponse', 'User'],
+    capabilities: [
+      'Enviar mensagens para IA',
+      'Receber respostas inteligentes',
+      'Manter histórico de conversa',
+      'Processar linguagem natural',
+      'Visualizar chat em tempo real',
+      'Scroll automático de mensagens',
+    ],
+  },
 });
 
 function ChatMessageItem({ msg }: ChatMessageProps) {

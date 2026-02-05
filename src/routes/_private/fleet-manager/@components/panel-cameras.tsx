@@ -46,7 +46,7 @@ export function FleetCamerasPanel() {
 
       <div className="space-y-4">
         {/* Video Player Container */}
-        <div className="group relative aspect-video overflow-hidden rounded-xl border border-primary/10 bg-black shadow-2xl">
+        <div className="group relative aspect-video overflow-hidden rounded-xl border border-primary/10 bg-black">
           {currentCamera ? (
             <video key={currentCamera.link} src={currentCamera.link} autoPlay controls className="h-full w-full object-contain">
               {t('no.support.video')}
@@ -69,7 +69,7 @@ export function FleetCamerasPanel() {
         <ItemContent className="grid grid-cols-2 gap-2 rounded-lg border border-primary/5 bg-accent/20 p-2">
           {validCameras.map((camera: any, index: number) => (
             <Button
-              key={`${camera.name}-${index}`}
+              key={`${camera.name}${index}`}
               variant={activeCamera === index || (activeCamera === null && index === 0) ? 'default' : 'secondary'}
               onClick={() => setActiveCamera(index)}
               className="h-10 justify-start gap-2 px-3 font-bold text-[9px] uppercase tracking-tight"

@@ -30,6 +30,42 @@ export const Route = createFileRoute('/_private/fleet-manager/')({
   beforeLoad: () => ({
     title: 'fleet.map',
   }),
+  staticData: {
+    title: 'fleet.map',
+    description:
+      'Gestão centralizada de frota - mapa visual em tempo real com posicionamento de embarcações, múltiplos layers cartográficos (náutico, satélite, topográfico) e informações de viagens. Permite rastreamento geográfico, visualização de status da frota e análise de posicionamento',
+    tags: ['fleet', 'frota', 'map', 'mapa', 'tracking', 'rastreamento', 'gps', 'position', 'vessel', 'embarcação', 'nautical', 'voyage', 'real-time', 'geolocation', 'maritime'],
+    examplePrompts: [
+      'Visualizar posição atual da frota',
+      'Rastrear embarcação específica no mapa',
+      'Ver trajeto de uma viagem',
+      'Alternar entre camadas do mapa',
+      'Localizar ativo por coordenadas',
+    ],
+    searchParams: [
+      { name: 'idVoyage', type: 'string', description: 'ID da viagem para rastreamento', example: 'uuid-456' },
+      { name: 'codeVoyage', type: 'string', description: 'Código da viagem para busca', example: 'VOY-2024-001' },
+      { name: 'request', type: 'string', description: 'Tipo de requisição ou ação específica', example: 'track' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/voyage', relation: 'sibling', description: 'Gestão de viagens' },
+      { path: '/_private/cmms', relation: 'sibling', description: 'CMMS - manutenção de ativos' },
+    ],
+    entities: ['Machine', 'Vessel', 'Position', 'Voyage', 'Enterprise', 'FleetStatus'],
+    capabilities: [
+      'Visualizar mapa com frota',
+      'Rastrear posição em tempo real',
+      'Alternar layers cartográficos',
+      'Visualizar camada náutica',
+      'Visualizar satélite',
+      'Visualizar topografia',
+      'Selecionar embarcação',
+      'Ver detalhes de posição',
+      'Filtrar por empresa',
+      'Sincronizar status da frota',
+      'Visualizar coordenadas',
+    ],
+  },
 });
 
 function FleetMapPage() {

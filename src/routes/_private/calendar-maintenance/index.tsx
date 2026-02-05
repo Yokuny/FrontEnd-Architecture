@@ -15,12 +15,13 @@ import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/i
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { formatDate } from '@/lib/formatDate';
-
 import { EditEventDialog } from './@components/EditEventDialog';
 import { MonthView } from './@components/Month';
 import { WeekView } from './@components/Week';
 import { useCalendarMaintenance } from './@hooks/use-calendar-maintenance';
 import { capitalizeString } from './@utils/calendar.utils';
+
+// import { useHasPermission } from '@/hooks/use-permissions';
 
 const searchSchema = z.object({
   id: z.string().optional(),
@@ -32,6 +33,38 @@ export const Route = createFileRoute('/_private/calendar-maintenance/')({
   beforeLoad: () => ({
     title: 'calendar.maintenance',
   }),
+  staticData: {
+    title: 'calendar.maintenance',
+    description:
+      'Calendário visual de manutenções - visualização temporal de eventos de manutenção em formato mensal ou semanal. Permite filtrar por ativos, planos de manutenção, responsáveis e status, além de criar e editar eventos diretamente no calendário',
+    tags: ['calendar', 'maintenance', 'manutenção', 'schedule', 'agenda', 'event', 'eventos', 'plan', 'visual', 'timeline', 'month', 'week', 'asset', 'filter'],
+    examplePrompts: [
+      'Visualizar calendário de manutenções',
+      'Agendar nova manutenção no calendário',
+      'Filtrar manutenções por embarcação e período',
+      'Ver eventos de manutenção da semana',
+      'Buscar manutenções por plano',
+    ],
+    searchParams: [{ name: 'id', type: 'string', description: 'ID da empresa para filtrar eventos de manutenção', example: 'uuid-123' }],
+    relatedRoutes: [
+      { path: '/_private/cmms/maintenance-plan', relation: 'sibling', description: 'Planos de manutenção' },
+      { path: '/_private/cmms/maintenance-order', relation: 'sibling', description: 'Ordens de manutenção' },
+      { path: '/_private/cmms', relation: 'sibling', description: 'Hub CMMS' },
+    ],
+    entities: ['MaintenanceEvent', 'MaintenancePlan', 'Machine', 'Enterprise', 'Manager'],
+    capabilities: [
+      'Visualizar calendário mensal',
+      'Visualizar calendário semanal',
+      'Criar evento de manutenção',
+      'Editar evento existente',
+      'Filtrar por ativos',
+      'Filtrar por plano de manutenção',
+      'Filtrar por responsável',
+      'Filtrar por status',
+      'Navegar entre períodos',
+      'Selecionar data',
+    ],
+  },
 });
 
 function CalendarMaintenancePage() {
@@ -54,6 +87,7 @@ function CalendarMaintenancePage() {
 
 function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) {
   const { t } = useTranslation();
+  // const hasPermissionEdit = useHasPermission('/event-schedule-edit');
   const {
     currentDate,
     setCurrentDate,
@@ -121,10 +155,12 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
             <Button variant={showFilters ? 'secondary' : 'outline'} onClick={() => setShowFilters(!showFilters)}>
               <Filter className="size-4" />
             </Button>
+            {/* {hasPermissionEdit && ( */}
             <Button onClick={handleAddEvent}>
               <Plus className="size-4" />
               <ItemContent className="max-sm:hidden">{t('add')}</ItemContent>
             </Button>
+            {/* )} */}
           </ItemContent>
         </Item>
       </CardHeader>
@@ -133,7 +169,7 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
           <Item variant="outline" className="gap-4 bg-secondary">
             <MachineByEnterpriseSelect
               mode="multi"
-              label={t('machines')}
+              label={t('assets')}
               idEnterprise={idEnterprise}
               value={filters.idMachine || []}
               onChange={(vals) => setFilters((prev) => ({ ...prev, idMachine: vals }))}
@@ -163,14 +199,14 @@ function CalendarMaintenanceContent({ idEnterprise }: { idEnterprise: string }) 
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">{t('all')}</SelectItem>
-                  <SelectItem value="next">{t('status.next')}</SelectItem>
-                  <SelectItem value="late">{t('status.late')}</SelectItem>
+                  <SelectItem value="next">{t('managers')}</SelectItem>
+                  <SelectItem value="late">{t('managers')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="ml-auto flex gap-2">
-              <Button className="text-amber-700 hover:text-amber-800" variant="outline" onClick={() => setFilters({})}>
+              <Button variant="outline" onClick={() => setFilters({})}>
                 <BrushCleaning className="size-4" />
               </Button>
               <Button variant="outline" className="flex-1 gap-2 bg-background">

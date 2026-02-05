@@ -144,7 +144,7 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="flex h-full w-full flex-col bg-background group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-sm"
+          className="flex h-full w-full flex-col bg-background group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border"
         >
           {children}
         </div>
@@ -158,8 +158,8 @@ function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        'flex w-full flex-1 flex-col',
-        'md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2 md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm',
+        'flex w-full min-w-0 flex-1 flex-col',
+        'md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2 md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl',
         className,
       )}
       {...props}
@@ -168,7 +168,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
 }
 
 function SidebarInput({ className, ...props }: React.ComponentProps<typeof Input>) {
-  return <Input data-slot="sidebar-input" data-sidebar="input" className={cn('h-8 w-full bg-background shadow-none', className)} {...props} />;
+  return <Input data-slot="sidebar-input" data-sidebar="input" className={cn('h-8 w-full bg-background', className)} {...props} />;
 }
 
 function SidebarHeader({ className, ...props }: React.ComponentProps<'div'>) {
@@ -252,8 +252,7 @@ const sidebarMenuButtonVariants = cva(
     variants: {
       variant: {
         default: 'text-sidebar-accent-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground',
-        outline:
-          'bg-background text-sidebar-accent-foreground shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]',
+        outline: 'bg-background text-sidebar-accent-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground',
       },
       size: {
         default: 'h-8',

@@ -57,7 +57,7 @@ export function FleetContactsPanel() {
           ) : (
             data.contacts.map((contact: any, i: number) => (
               <div
-                key={`${contact.id}-${i}`}
+                key={`${contact.id}${i}`}
                 className="group flex items-center justify-between rounded-lg border border-primary/5 bg-accent/30 p-3 transition-colors hover:bg-accent/50"
               >
                 <div className="flex flex-col">

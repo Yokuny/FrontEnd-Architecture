@@ -12,34 +12,19 @@ export function EnterpriseSelect(props: EnterpriseSelectProps) {
   const id = useId();
   const query = useEnterprisesSelect();
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('machine.idEnterprise.placeholder');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Building2 className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<Enterprise>
-          id={id}
-          placeholder={placeholder || t('machine.idEnterprise.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapEnterprisesToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('machine.idEnterprise.placeholder');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('machine.idEnterprise.placeholder'),
+    query,
+    mapToOptions: mapEnterprisesToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -48,21 +33,11 @@ export function EnterpriseSelect(props: EnterpriseSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<Enterprise>
-        id={id}
-        placeholder={placeholder || t('machine.idEnterprise.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapEnterprisesToOptions}
-        oneBlocked={oneBlocked}
-        disabled={disabled}
-        clearable={false}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<Enterprise> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<Enterprise> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} oneBlocked={oneBlocked} clearable={false} />
+      )}
     </div>
   );
 }

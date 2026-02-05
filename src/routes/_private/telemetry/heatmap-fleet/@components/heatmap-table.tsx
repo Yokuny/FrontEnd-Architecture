@@ -79,7 +79,7 @@ export function StatusTracker({ items, onItemClick, showLegend }: StatusTrackerP
   );
 }
 
-export function HeatmapTable({ data, availableEquipments, hasPermissionAdd }: HeatmapTableProps) {
+export function HeatmapTable({ data, availableEquipments }: HeatmapTableProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -95,7 +95,7 @@ export function HeatmapTable({ data, availableEquipments, hasPermissionAdd }: He
               {equipment.name}
             </TableHead>
           ))}
-          {hasPermissionAdd && <TableHead />}
+          <TableHead />
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -141,27 +141,27 @@ export function HeatmapTable({ data, availableEquipments, hasPermissionAdd }: He
               );
             })}
 
-            {hasPermissionAdd && (
-              <TableCell className="text-center">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button size="icon">
-                      <MoreVertical className="size-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => navigate({ to: '/telemetry/heatmap-fleet/add', search: { id: fleet.id } })}>
-                      <Edit className="mr-2 size-4" />
-                      {t('edit')}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate({ to: '/telemetry/heatmap-fleet/notifications', search: { id: fleet.id } })}>
-                      <Bell className="mr-2 size-4 text-muted-foreground" />
-                      {t('notifications')}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            )}
+            {/* {hasPermissionAdd && ( */}
+            <TableCell className="text-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button size="icon">
+                    <MoreVertical className="size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => navigate({ to: '/telemetry/heatmap-fleet/add', search: { id: fleet.id } })}>
+                    <Edit className="mr-2 size-4" />
+                    {t('edit')}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate({ to: '/telemetry/heatmap-fleet/notifications', search: { id: fleet.id } })}>
+                    <Bell className="mr-2 size-4 text-muted-foreground" />
+                    {t('alerts')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TableCell>
+            {/* )} */}
           </TableRow>
         ))}
       </TableBody>
@@ -172,7 +172,6 @@ export function HeatmapTable({ data, availableEquipments, hasPermissionAdd }: He
 interface HeatmapTableProps {
   data: HeatmapFleetItem[];
   availableEquipments: EquipmentType[];
-  hasPermissionAdd?: boolean;
 }
 
 export type StatusVariant = 'success' | 'warning' | 'danger' | 'basic';

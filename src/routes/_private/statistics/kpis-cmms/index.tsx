@@ -9,7 +9,7 @@ import { StatusSelect } from '@/components/selects/status-select';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { ItemGroup } from '@/components/ui/item';
+import { Item, ItemGroup } from '@/components/ui/item';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -87,15 +87,15 @@ function KPISCMMSPage() {
     <Card>
       <CardHeader title="KPI's CMMS" />
       <CardContent className="flex flex-col gap-6">
-        <div className="flex flex-wrap items-end gap-4 rounded-lg border bg-secondary p-4">
+        {/* Filtros */}
+        <Item variant="outline" className="bg-secondary">
           <MachineByEnterpriseSelect mode="multi" idEnterprise={idEnterprise} value={selectedMachines} onChange={setSelectedMachines} label={t('vessels')} className="w-64" />
-
           <div className="flex flex-col gap-1.5">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-36 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? format(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -112,13 +112,12 @@ function KPISCMMSPage() {
               </PopoverContent>
             </Popover>
           </div>
-
           <div className="flex flex-col gap-1.5">
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-36 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? format(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -135,15 +134,13 @@ function KPISCMMSPage() {
               </PopoverContent>
             </Popover>
           </div>
-
           <MaintenanceTypeSelect
             mode="multi"
             idEnterprise={idEnterprise}
             value={selectedMaintenanceTypes}
             onChange={(vals) => setSelectedMaintenanceTypes(vals)}
-            className="w-64"
+            className="min-w-48"
           />
-
           <div className="flex flex-col gap-1.5">
             <Label>{t('critical.equipment.label')}</Label>
             <Select value={selectedEquipment} onValueChange={setSelectedEquipment}>
@@ -157,14 +154,12 @@ function KPISCMMSPage() {
               </SelectContent>
             </Select>
           </div>
-
           <StatusSelect mode="single" value={selectedStatus} onChange={setSelectedStatus} className="w-48" />
-
           <Button onClick={handleSearch} className="ml-auto">
-            <Search className="mr-2 size-4" />
+            <Search className="mr-1 size-4" />
             {t('search')}
           </Button>
-        </div>
+        </Item>
 
         <KPI filters={appliedFilters} />
 

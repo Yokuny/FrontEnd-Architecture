@@ -22,7 +22,7 @@ export function ChatContent({ children, className, ...props }: React.ComponentPr
 
 export function ChatInput({ children, className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div className={cn('cursor-text rounded-3xl border border-input bg-background p-2 shadow-xs', className)} {...props}>
+    <div className={cn('cursor-text rounded-3xl border border-input bg-background p-2', className)} {...props}>
       {children}
     </div>
   );
@@ -44,7 +44,7 @@ export function ChatInputTextarea({ value, onChange, ...props }: React.Component
       ref={textareaRef}
       value={value}
       onChange={onChange}
-      className={cn('min-h-[44px] w-full resize-none border-none bg-transparent text-primary shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0')}
+      className={cn('min-h-[44px] w-full resize-none border-none bg-transparent text-primary outline-none focus-visible:ring-0 focus-visible:ring-offset-0')}
       rows={1}
       {...props}
     />

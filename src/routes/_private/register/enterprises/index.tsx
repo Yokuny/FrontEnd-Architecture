@@ -13,6 +13,8 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { type Enterprise, useEnterprisesPaginated } from '@/hooks/use-enterprises-api';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const enterprisesSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
   size: z.number().catch(10).optional().default(10),
@@ -27,6 +29,47 @@ export const Route = createFileRoute('/_private/register/enterprises/')({
   beforeLoad: () => ({
     title: 'enterprises',
   }),
+  staticData: {
+    title: 'register.enterprises',
+    description: 'Página de cadastro e gerenciamento de empresas/organizações. Permite criar, visualizar, editar e configurar empresas com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'empresas', 'enterprises', 'organizações', 'tenant', 'multi-tenant'],
+    examplePrompts: [
+      'Cadastrar nova empresa',
+      'Listar todas as empresas',
+      'Editar empresa',
+      'Buscar empresa por nome',
+      'Configurar email da empresa',
+      'Configurar chatbot da empresa',
+      'Gerenciar usuários externos',
+      'Configurar limites da empresa',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'nome' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' },
+      { path: '/_private/set-up-company/setup-email', relation: 'sibling', description: 'Configuração de email' },
+      { path: '/_private/set-up-company/setup-chatbot', relation: 'sibling', description: 'Configuração de chatbot' },
+      { path: '/_private/set-up-company/external-users', relation: 'sibling', description: 'Usuários externos' },
+      { path: '/_private/set-up-company/setup-limits', relation: 'sibling', description: 'Configuração de limites' },
+      { path: '/_private/set-up-company/setup-fleet', relation: 'sibling', description: 'Configuração de frota' },
+    ],
+    entities: ['Enterprise'],
+    capabilities: [
+      'Listar empresas com paginação',
+      'Buscar por termo',
+      'Criar nova empresa',
+      'Editar empresa existente',
+      'Configurar email da empresa',
+      'Configurar chatbot',
+      'Gerenciar usuários externos',
+      'Configurar limites de uso',
+      'Configurar visualização na frota',
+      'Visualizar localização da empresa',
+    ],
+  },
 });
 
 function EnterprisesListPage() {
@@ -44,8 +87,7 @@ function EnterprisesListPage() {
   const total = data?.pageInfo?.[0]?.count || 0;
   const totalPages = Math.ceil(total / size);
 
-  // For migration purposes, we assume some permissions are true or come from the item in future
-  const hasPermissionAdd = true;
+  // const hasPermissionAdd = useHasPermission('/organization-add');
 
   const renderEnterpriseItem = (item: Enterprise) => {
     return (
@@ -167,12 +209,12 @@ function EnterprisesListPage() {
               }}
             />
           </div>
-          {hasPermissionAdd && (
-            <Button onClick={() => navigate({ to: '/register/enterprises/add' })}>
-              <Plus className="mr-2 size-4" />
-              {t('add')}
-            </Button>
-          )}
+          {/* {hasPermissionAdd && ( */}
+          <Button onClick={() => navigate({ to: '/register/enterprises/add' })}>
+            <Plus className="mr-2 size-4" />
+            {t('add')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

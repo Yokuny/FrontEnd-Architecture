@@ -30,6 +30,37 @@ export const Route = createFileRoute('/_private/register/sensor-functions/')({
   beforeLoad: () => ({
     title: 'sensor.functions',
   }),
+  staticData: {
+    title: 'register.sensor-functions',
+    description:
+      'Página de cadastro e gerenciamento de funções de sensores. Permite criar, visualizar e editar lógicas de processamento e algoritmos de sensores com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'funções', 'functions', 'sensores', 'sensors', 'algoritmos', 'lógica'],
+    examplePrompts: [
+      'Cadastrar nova função de sensor',
+      'Listar todas as funções de sensores',
+      'Editar função de sensor',
+      'Buscar função por descrição',
+      'Visualizar algoritmo do sensor',
+    ],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '20' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'temperatura' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['SensorFunction', 'Enterprise', 'Machine'],
+    capabilities: [
+      'Listar funções de sensores com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar nova função de sensor',
+      'Editar função existente',
+      'Visualizar algoritmo da função',
+      'Visualizar máquinas vinculadas',
+      'Ativar/desativar função',
+      'Visualizar status de ativação',
+    ],
+  },
 });
 
 function SensorFunctionsListPage() {

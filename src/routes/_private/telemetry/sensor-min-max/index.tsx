@@ -92,7 +92,7 @@ function SensorMinMaxPage() {
     saveMinMax.mutate(
       { id: minMaxConfig?.id, sensors: dataToSave },
       {
-        onSuccess: () => toast.success(t('save.successfull')),
+        onSuccess: () => toast.success(t('save.success')),
       },
     );
   };
@@ -124,7 +124,7 @@ function SensorMinMaxPage() {
               onChange={(v) => updateSearch({ idAsset: v })}
               idEnterprise={idEnterprise}
               label=""
-              placeholder={t('machine.placeholder')}
+              placeholder={t('select.machine')}
             />
           </div>
           <div className="flex flex-col gap-1">

@@ -52,12 +52,12 @@ export function MachineSummaryPanel() {
         </div>
         <div className="flex flex-col items-end gap-1">
           {navStatus && (
-            <Badge style={{ backgroundColor: navColor || undefined }} className="text-[10px] uppercase">
+            <Badge style={{ backgroundColor: navColor || undefined }} className="text-[10px] uppercase ring-0">
               {navStatus}
             </Badge>
           )}
           {opStatusValue && (
-            <Badge style={{ backgroundColor: opColor || undefined }} className="text-[10px] uppercase">
+            <Badge style={{ backgroundColor: opColor || undefined }} className="text-[10px] uppercase ring-0">
               {opStatusValue}
             </Badge>
           )}

@@ -1,7 +1,6 @@
 import { Settings2 } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { DataMultiSelect } from '@/components/ui/data-multi-select';
 import { DataSelect } from '@/components/ui/data-select';
 import { Label } from '@/components/ui/label';
@@ -14,36 +13,19 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
 
   const query = useMaintenanceTypesSelect(idEnterprise);
 
-  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
-
-  if (mode === 'multi') {
-    const displayLabel = label || t('maintenance.type');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Settings2 className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<string, string>
-          id={id}
-          placeholder={placeholder || t('maintenance.types.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapMaintenanceTypesToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
   const displayLabel = label || t('maintenance.type');
+  const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    query,
+    mapToOptions: mapMaintenanceTypesToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
+
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -52,20 +34,22 @@ export function MaintenanceTypeSelect(props: MaintenanceTypeSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<string, string>
-        id={id}
-        placeholder={placeholder || t('maintenance.type.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapMaintenanceTypesToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<string, string>
+          {...sharedProps}
+          placeholder={placeholder || t('maintenance.types.placeholder')}
+          value={props.value}
+          onChange={(vals) => props.onChange(vals as string[])}
+        />
+      ) : (
+        <DataSelect<string, string>
+          {...sharedProps}
+          placeholder={placeholder || t('maintenance.type.placeholder')}
+          value={props.value}
+          onChange={(val) => props.onChange(val as string)}
+          clearable={clearable}
+        />
+      )}
     </div>
   );
 }

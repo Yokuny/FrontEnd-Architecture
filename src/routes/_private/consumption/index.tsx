@@ -5,6 +5,31 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 
 export const Route = createFileRoute('/_private/consumption/')({
+  staticData: {
+    title: 'consume',
+    description:
+      'Hub principal do módulo de Consumo de Combustível. Página de menu com acesso a todas as funcionalidades relacionadas ao monitoramento, análise e relatórios de consumo de combustível das embarcações da frota. Inclui acesso a consumo diário, relatórios, tempo de operação, comparativos e dashboards RVE/RDO.',
+    tags: ['consumption', 'consumo', 'fuel', 'combustível', 'vessel', 'embarcação', 'hub', 'menu', 'dashboard', 'reports', 'relatórios'],
+    examplePrompts: ['Ir para o módulo de consumo', 'Abrir o hub de consumo de combustível', 'Ver opções de relatórios de consumo', 'Acessar análise de consumo'],
+    searchParams: [],
+    relatedRoutes: [
+      { path: '/_private/consumption/daily', relation: 'child', description: 'Consumo diário por embarcação' },
+      { path: '/_private/consumption/relatorio', relation: 'child', description: 'Relatório de consumo detalhado' },
+      { path: '/_private/consumption/time-operation', relation: 'child', description: 'Consumo por tempo de operação' },
+      { path: '/_private/consumption/comparative', relation: 'child', description: 'Comparativo entre embarcações' },
+      { path: '/_private/consumption/rve-rdo', relation: 'child', description: 'Dashboard RVE vs RDO' },
+      { path: '/_private/consumption/rve-sounding', relation: 'child', description: 'Dashboard RVE com sounding' },
+    ],
+    entities: ['ConsumptionData', 'Machine', 'Enterprise'],
+    capabilities: [
+      'Navegar para consumo diário',
+      'Acessar relatórios de consumo',
+      'Ver tempo de operação',
+      'Comparar embarcações',
+      'Acessar dashboards RVE/RDO',
+      'Visualizar sounding',
+    ],
+  },
   component: ConsumoHubPage,
 });
 

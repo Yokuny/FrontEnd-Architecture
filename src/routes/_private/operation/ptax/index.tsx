@@ -30,6 +30,8 @@ import { formatDate } from '@/lib/formatDate';
 import { PtaxModal } from './@components/ptax-modal';
 import type { PtaxFormData } from './@interface/ptax.schema';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const ptaxSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
   size: z.number().catch(10).optional().default(10),
@@ -37,6 +39,34 @@ const ptaxSearchSchema = z.object({
 });
 
 export const Route = createFileRoute('/_private/operation/ptax/')({
+  staticData: {
+    title: 'ptax',
+    description:
+      'Gerenciamento de taxas PTAX (taxa de câmbio oficial brasileira) para cálculo de custos operacionais. Permite adicionar, editar e excluir registros históricos de PTAX por data. Inclui busca, paginação e ordenação por data. Essencial para conversão de custos operacionais em USD para BRL.',
+    tags: ['ptax', 'exchange', 'câmbio', 'rate', 'taxa', 'currency', 'moeda', 'brl', 'usd', 'operational', 'operacional', 'costs', 'custos', 'financial', 'financeiro'],
+    examplePrompts: ['Adicionar nova taxa PTAX', 'Editar PTAX de uma data específica', 'Buscar taxa de câmbio por data', 'Gerenciar histórico de PTAX', 'Excluir registro de PTAX'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página (default: 1)', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página (default: 10)', example: '10' },
+      { name: 'search', type: 'string', description: 'Busca por data ou valor', example: '5.85' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/operation', relation: 'parent', description: 'Hub operacional' },
+      { path: '/_private/operation/operational-asset', relation: 'sibling', description: 'Performance com dados financeiros' },
+      { path: '/_private/operation/operational-fleet', relation: 'sibling', description: 'Dashboard da frota' },
+    ],
+    entities: ['PTAX', 'Enterprise'],
+    capabilities: [
+      'Listar histórico de PTAX',
+      'Adicionar nova taxa',
+      'Editar taxa existente',
+      'Excluir registro de PTAX',
+      'Buscar por data ou valor',
+      'Paginar resultados',
+      'Ordenar por data decrescente',
+      'Visualizar valor formatado em BRL',
+    ],
+  },
   component: PtaxPage,
   validateSearch: (search: Record<string, unknown>) => ptaxSearchSchema.parse(search),
 });
@@ -46,6 +76,8 @@ function PtaxPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/operation/ptax/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/ptax-add');
 
   const { data, isLoading } = usePtax({
     idEnterprise: idEnterprise || '',
@@ -129,10 +161,12 @@ function PtaxPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={handleNew} disabled={isLoading}>
             <Plus className="mr-2 size-4" />
             {t('new')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

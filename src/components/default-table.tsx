@@ -20,16 +20,6 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-type Status = 'completed' | 'pending' | 'processing' | 'cancelled';
-
-interface Item {
-  id: string;
-  name: string;
-  date: string;
-  status: Status;
-  amount: string;
-}
-
 const statusConfig: Record<Status, { label: string; className: string }> = {
   completed: {
     label: 'Completed',
@@ -288,4 +278,14 @@ export default function Table05() {
       </div>
     </div>
   );
+}
+
+type Status = 'completed' | 'pending' | 'processing' | 'cancelled';
+
+interface Item {
+  id: string;
+  name: string;
+  date: string;
+  status: Status;
+  amount: string;
 }

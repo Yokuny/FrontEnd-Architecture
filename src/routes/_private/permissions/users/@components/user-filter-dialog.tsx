@@ -57,7 +57,7 @@ export function UserFilterDialog({ initialFilters, onFilter, onClear }: UserFilt
           />
         </div>
         <DialogFooter className="flex justify-between sm:justify-between">
-          <Button onClick={handleClear} className="text-amber-700 hover:text-amber-800">
+          <Button onClick={handleClear}>
             <BrushCleaning className="size-4" />
           </Button>
           <Button onClick={handleApply}>{t('filter')}</Button>

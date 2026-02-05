@@ -30,7 +30,7 @@ export function AddCrew({ crew, onChange, disabled }: CrewCardProps) {
       </ItemHeader>
       <ItemContent className="space-y-4">
         {crew.map((member, index) => (
-          <div key={`${index}-${member}`} className="flex items-center gap-4">
+          <div key={`${index}${member}`} className="flex items-center gap-4">
             <div className="flex-1">
               <ItemTitle>{t('name')}</ItemTitle>
               <Input value={member} onChange={(e) => handleChange(index, e.target.value)} placeholder={t('name')} disabled={disabled} />

@@ -15,6 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useModelMachines, useModelMachinesApi } from '@/hooks/use-model-machines-api';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const modelMachineSearchSchema = z.object({
   page: z.number().catch(1).optional().default(1),
   size: z.number().catch(10).optional().default(10),
@@ -29,6 +31,30 @@ export const Route = createFileRoute('/_private/register/model-machine/')({
   beforeLoad: () => ({
     title: 'models.machine',
   }),
+  staticData: {
+    title: 'register.model-machine',
+    description:
+      'Página de cadastro e gerenciamento de modelos de máquina/ativos. Permite criar, visualizar, editar e deletar modelos com especificações e cores com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'modelos', 'models', 'máquinas', 'machines', 'especificações'],
+    examplePrompts: ['Cadastrar novo modelo de máquina', 'Listar todos os modelos', 'Editar modelo de máquina', 'Buscar modelo por descrição', 'Deletar modelo de máquina'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'modelo' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['ModelMachine', 'Enterprise'],
+    capabilities: [
+      'Listar modelos de máquina com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo modelo',
+      'Editar modelo existente',
+      'Deletar modelo',
+      'Visualizar cor do modelo',
+      'Upload de imagem do modelo',
+    ],
+  },
 });
 
 function ModelMachineListPage() {
@@ -36,6 +62,8 @@ function ModelMachineListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/model-machine/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/model-machine-add');
 
   const { data, isLoading } = useModelMachines({
     idEnterprise,
@@ -84,10 +112,12 @@ function ModelMachineListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/model-machine/add' })}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

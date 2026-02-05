@@ -20,6 +20,45 @@ import { IndicatorsTable } from './@components/IndicatorsTable';
 import { IndicatorsTableDetails } from './@components/IndicatorsTableDetails';
 
 export const Route = createFileRoute('/_private/esg/indicators-eeoi-cii/')({
+  staticData: {
+    title: 'menu.eeoi.cii',
+    description:
+      'Página de monitoramento de indicadores de eficiência energética operacional (EEOI) e intensidade de carbono (CII) por viagem. Calcula EEOI = CO₂ / (carga × distância) e CII attained vs CII required conforme IMO MEPC.328(76). Permite visualização consolidada por viagem ou detalhada por leg. Essencial para compliance anual CII e planejamento operacional sustentável.',
+    tags: ['esg', 'eeoi', 'cii', 'indicators', 'indicadores', 'efficiency', 'eficiência', 'voyage', 'viagem', 'imo', 'mepc', 'compliance', 'carbon', 'carbono', 'operational'],
+    examplePrompts: [
+      'Calcular EEOI das viagens do último trimestre',
+      'Ver CII attained por embarcação',
+      'Comparar indicadores entre viagens',
+      'Análise detalhada de legs da viagem',
+      'Exportar dados EEOI/CII para relatório IMO',
+      'Verificar performance energética da frota',
+    ],
+    searchParams: [
+      { name: 'idEnterprise', type: 'string', description: 'ID da empresa filtrada', example: 'enterprise-uuid' },
+      { name: 'idMachine[]', type: 'array', description: 'IDs das embarcações selecionadas', example: 'machine-uuid-1,machine-uuid-2' },
+      { name: 'dateTimeStart', type: 'string', description: 'Data inicial do período no formato YYYY-MM-DD', example: '2025-01-01' },
+      { name: 'dateTimeEnd', type: 'string', description: 'Data final do período no formato YYYY-MM-DD', example: '2025-02-04' },
+      { name: 'search', type: 'string', description: 'Termo de busca para filtrar viagens', example: 'Santos' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/esg', relation: 'parent', description: 'Hub ESG - Menu principal de conformidade ambiental' },
+      { path: '/_private/esg/consumption-co2', relation: 'sibling', description: 'Monitoramento de emissões de CO₂' },
+      { path: '/_private/esg/cii-fleet', relation: 'sibling', description: 'Rating CII consolidado da frota' },
+      { path: '/_private/esg/simulator-cii', relation: 'sibling', description: 'Simulador de CII' },
+      { path: '/_private/voyages', relation: 'sibling', description: 'Gestão de viagens' },
+    ],
+    entities: ['Voyage', 'Machine', 'Enterprise', 'CII', 'EEOI', 'ConsumptionData', 'Leg'],
+    capabilities: [
+      'Calcular EEOI por viagem (CO₂ / carga × distância)',
+      'Calcular CII attained vs CII reference por ano',
+      'Visualizar dados consolidados por viagem',
+      'Detalhar indicadores por legs da viagem',
+      'Filtrar por embarcações e período',
+      'Exportar dados em CSV para DCS/MRV',
+      'Monitorar compliance com IMO MEPC.328(76)',
+      'Analisar eficiência operacional da frota',
+    ],
+  },
   component: IndicatorsEEOICIIPage,
 });
 
@@ -69,7 +108,7 @@ function IndicatorsEEOICIIPage() {
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -84,7 +123,7 @@ function IndicatorsEEOICIIPage() {
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className={cn('w-40 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>

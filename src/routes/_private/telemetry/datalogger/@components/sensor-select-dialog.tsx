@@ -81,7 +81,7 @@ export function SensorSelectDialog({ idMachine, selectedSensors, onSensorsChange
   };
 
   return (
-    <ItemContent className="min-w-[150px]">
+    <ItemContent className="min-w-36">
       <Label className="flex items-center gap-2">
         <Zap className="size-4" />
         {t('sensors')}
@@ -107,7 +107,7 @@ export function SensorSelectDialog({ idMachine, selectedSensors, onSensorsChange
           </div>
 
           {/* Sensors List */}
-          <ScrollArea className="h-[300px] rounded-md border">
+          <ScrollArea className="h-72 rounded-md border">
             {isLoading ? (
               <div className="flex items-center justify-center p-8">
                 <div className="size-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
@@ -141,7 +141,7 @@ export function SensorSelectDialog({ idMachine, selectedSensors, onSensorsChange
             </Button>
             <div className="flex gap-2">
               {localSelection.length > 0 && (
-                <Button className="text-amber-700 hover:text-amber-800" onClick={handleClearAll}>
+                <Button onClick={handleClearAll}>
                   <BrushCleaning />
                 </Button>
               )}

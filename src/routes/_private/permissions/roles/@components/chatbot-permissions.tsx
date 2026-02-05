@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { useChatbotPermissions } from '@/hooks/use-roles-api';
-import type { RoleFormData } from '../@interface/role';
+import type { RoleFormData } from '../@interface';
 
 interface ChatbotPermissionsProps {
   form: UseFormReturn<RoleFormData>;

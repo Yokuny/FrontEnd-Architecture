@@ -43,7 +43,7 @@ export function KPI({ filters }: { filters: KPISCMMSFilters & { min: string; max
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
           <ItemDescription className="font-medium">{t('kpis.cmms.open.os')}</ItemDescription>
-          <Badge className="rounded-sm border-none bg-amber-100 font-bold text-amber-700 shadow-none">{kpis.openPercent.toFixed(1)}%</Badge>
+          <Badge className="rounded-sm bg-amber-100 font-bold text-amber-700 ring-0">{kpis.openPercent.toFixed(1)}%</Badge>
         </ItemContent>
         <ItemTitle className="ml-6 font-bold text-2xl text-amber-600 tracking-tight">{kpis.open}</ItemTitle>
       </Item>
@@ -51,7 +51,7 @@ export function KPI({ filters }: { filters: KPISCMMSFilters & { min: string; max
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
           <ItemDescription className="font-medium">{t('kpis.cmms.closed.os')}</ItemDescription>
-          <Badge className="rounded-sm border-none bg-emerald-100 font-bold text-emerald-700 shadow-none">{kpis.closedPercent.toFixed(1)}%</Badge>
+          <Badge className="rounded-sm bg-emerald-100 font-bold text-emerald-700 ring-0">{kpis.closedPercent.toFixed(1)}%</Badge>
         </ItemContent>
         <ItemTitle className="ml-6 font-bold text-2xl text-emerald-600 tracking-tight">{kpis.closed}</ItemTitle>
       </Item>
@@ -59,7 +59,7 @@ export function KPI({ filters }: { filters: KPISCMMSFilters & { min: string; max
       <Item className="flex-col rounded-none border-0 bg-background">
         <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
           <ItemDescription className="font-medium">{t('predictive.deviation')}</ItemDescription>
-          <Badge className="rounded-sm border-none bg-red-100 font-bold text-red-700 shadow-none">{kpis.expiredPercent.toFixed(1)}%</Badge>
+          <Badge className="rounded-sm bg-red-100 font-bold text-red-700 ring-0">{kpis.expiredPercent.toFixed(1)}%</Badge>
         </ItemContent>
         <ItemTitle className="ml-6 font-bold text-2xl text-red-600 tracking-tight">{kpis.expired}</ItemTitle>
       </Item>

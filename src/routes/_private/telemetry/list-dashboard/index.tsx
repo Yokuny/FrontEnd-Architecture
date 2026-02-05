@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input';
 import { ItemGroup } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
 import { useDashboards } from '@/hooks/use-dashboards-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { DashboardItem } from './@components/dashboard-item';
@@ -26,11 +25,6 @@ function ListDashboardPage() {
   const searchParams = Route.useSearch();
   const { page, size, search } = searchParams;
   const { idEnterprise } = useEnterpriseFilter();
-
-  // TODO: Implement actual permission check based on user token or claims
-  // Legacy checked: props.items?.some((x) => x === "/list-dashboard")
-  const hasPermissionViewer = true;
-  const hasPermissionEditor = true;
 
   const { data, isLoading } = useDashboards({
     ...searchParams,
@@ -68,12 +62,12 @@ function ListDashboardPage() {
               }}
             />
           </div>
-          {hasPermissionEditor && (
-            <Button onClick={() => navigate({ to: './add' } as any)}>
-              <Plus className="mr-2 size-4" />
-              {t('new')}
-            </Button>
-          )}
+          {/* {hasPermissionEditor && ( */}
+          <Button onClick={() => navigate({ to: './add' } as any)}>
+            <Plus className="mr-2 size-4" />
+            {t('new')}
+          </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 
@@ -85,7 +79,7 @@ function ListDashboardPage() {
         ) : (
           <ItemGroup>
             {dashboards.map((dashboard) => (
-              <DashboardItem key={dashboard.id} item={dashboard} hasPermissionViewer={hasPermissionViewer} hasPermissionEditor={hasPermissionEditor} />
+              <DashboardItem key={dashboard.id} item={dashboard} />
             ))}
           </ItemGroup>
         )}

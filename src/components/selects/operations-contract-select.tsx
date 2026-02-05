@@ -12,36 +12,20 @@ export function OperationsContractSelect(props: OperationsContractSelectProps) {
   const id = useId();
   const query = useOperationsByAssetSelect(idEnterprise, idMachine);
 
+  const displayLabel = label || t('select.machine');
   const noOptionsMessage = !idEnterprise ? t('select.enterprise.first') : !idMachine ? t('select.machine.first') : t('nooptions.message');
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('select.machine'),
+    query,
+    mapToOptions: mapOperationsByAssetToOptions,
+    disabled,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage,
+    noResultsMessage: t('not.found'),
+    className,
+  };
 
-  if (mode === 'multi') {
-    const displayLabel = label || t('machine.placeholder');
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <FileText className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect<OperationByAsset, OperationByAsset>
-          id={id}
-          placeholder={placeholder || t('machine.placeholder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapOperationsByAssetToOptions}
-          disabled={disabled}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={noOptionsMessage}
-          noResultsMessage={t('not.found')}
-          className={className}
-        />
-      </div>
-    );
-  }
-
-  const displayLabel = label || t('machine.placeholder');
   return (
     <div className="space-y-2">
       {displayLabel && (
@@ -50,20 +34,11 @@ export function OperationsContractSelect(props: OperationsContractSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect<OperationByAsset, OperationByAsset>
-        id={id}
-        placeholder={placeholder || t('machine.placeholder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapOperationsByAssetToOptions}
-        disabled={disabled}
-        clearable
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={noOptionsMessage}
-        noResultsMessage={t('not.found')}
-        className={className}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect<OperationByAsset, OperationByAsset> {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect<OperationByAsset, OperationByAsset> {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable />
+      )}
     </div>
   );
 }

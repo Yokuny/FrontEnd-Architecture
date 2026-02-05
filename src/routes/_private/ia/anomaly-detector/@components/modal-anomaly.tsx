@@ -22,7 +22,7 @@ export function ModalAnomaly({ show, onClose, sensorsFeatures }: ModalAnomalyPro
         <ScrollArea className="max-h-[60vh]">
           <div className="space-y-1">
             {sensors.map((sensor, index) => (
-              <Item key={`${index}-${sensor}`} className="px-4 py-2 transition-colors hover:bg-muted/50">
+              <Item key={`${index}${sensor}`} className="px-4 py-2 transition-colors hover:bg-muted/50">
                 <ItemContent>
                   <ItemTitle className="font-medium text-sm">{sensor}</ItemTitle>
                 </ItemContent>

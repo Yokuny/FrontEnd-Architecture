@@ -14,7 +14,9 @@ import { downloadCSV, sortByDateDesc, updateDateTime } from '../@helpers/consump
 import { useConsumptionDailyApi } from '../@hooks/use-consumption-daily-api';
 import type { ConsumptionDailyData } from '../@interface/consumption-daily.types';
 
-export function ListPolling({ data, machineId, machineName, hasPermissionEditor = false }: ListPollingProps) {
+// import { useHasPermission } from '@/hooks/use-permissions';
+
+export function ListPolling({ data, machineId, machineName }: ListPollingProps) {
   const { t } = useTranslation();
   const { updatePolling } = useConsumptionDailyApi();
 
@@ -23,6 +25,7 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
   const [selectedTimeStart, setSelectedTimeStart] = useState<string>('');
   const [selectedTimeEnd, setSelectedTimeEnd] = useState<string>('');
   const [openCategories, setOpenCategories] = useState<string[]>([]);
+  // const hasPermissionEditor = useHasPermission('/edit-poll-consumption-daily');
 
   const items = data?.filter((x) => x?.pollingEnd?.length) || [];
 
@@ -127,19 +130,19 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                       {item?.status === 'processing' && <Loader2 className="ml-2 size-4 animate-spin text-muted-foreground" />}
                     </div>
                     <div className="flex items-center gap-2">
-                      {hasPermissionEditor && item?.status === 'processed' && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="size-6 hover:bg-background"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleOpenModal(item);
-                          }}
-                        >
-                          <Pencil className="size-3" />
-                        </Button>
-                      )}
+                      {/* {hasPermissionEditor && item?.status === 'processed' && ( */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-6 hover:bg-background"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenModal(item);
+                        }}
+                      >
+                        <Pencil className="size-3" />
+                      </Button>
+                      {/* )} */}
                       <ChevronDown className={cn('size-5 text-muted-foreground transition-transform duration-200', isOpen && 'rotate-180')} />
                     </div>
                   </Button>
@@ -152,7 +155,7 @@ export function ListPolling({ data, machineId, machineName, hasPermissionEditor 
                       </Item>
                     )}
                     {item?.pollingEnd?.map((polling, i) => (
-                      <div key={`${item._id}-${i}`}>
+                      <div key={`${item._id}${i}`}>
                         <Item variant="default" size="sm" className="justify-between hover:bg-secondary">
                           <ItemDescription className="font-sans">{polling?.description}</ItemDescription>
                           <div className="flex items-baseline gap-1">
@@ -253,5 +256,4 @@ interface ListPollingProps {
   data: ConsumptionDailyData[];
   machineId?: string;
   machineName?: string;
-  hasPermissionEditor?: boolean;
 }

@@ -63,7 +63,7 @@ export function MenuPanel({ idEnterprise }: PanelContainerProps) {
   return (
     <div className={cn('pointer-events-none z-1000', isMobile ? 'absolute inset-0 flex flex-col gap-2 p-2' : 'absolute inset-0 ml-13')}>
       <div className={cn('pointer-events-none', isMobile ? 'min-h-0 flex-1' : 'absolute top-4 bottom-4 left-4 w-96')}>
-        <ItemGroup className="pointer-events-auto flex h-full w-full flex-col gap-0 overflow-hidden rounded-xl border border-primary/10 bg-background/95 shadow-2xl backdrop-blur-md">
+        <ItemGroup className="pointer-events-auto flex h-full w-full flex-col gap-0 overflow-hidden rounded-xl border border-primary/10 bg-background/95 backdrop-blur-md">
           <Item size="sm" className="shrink-0 rounded-none border-b bg-muted/30 p-2 px-4">
             <ItemHeader>
               <ItemTitle className="font-semibold text-sm uppercase tracking-wider">{getTitle()}</ItemTitle>

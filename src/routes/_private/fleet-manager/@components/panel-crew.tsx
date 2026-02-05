@@ -57,7 +57,7 @@ export function FleetCrewPanel() {
             </TableHeader>
             <TableBody>
               {crewData.people.map((person: any, idx: number) => (
-                <TableRow key={`${person.id}-${idx}`} className="transition-colors hover:bg-accent/50">
+                <TableRow key={`${person.id}${idx}`} className="transition-colors hover:bg-accent/50">
                   <TableCell className="py-3 font-medium text-xs">{person.name}</TableCell>
                   <TableCell className="py-3 text-muted-foreground text-xs">
                     <div className="flex items-center gap-2">

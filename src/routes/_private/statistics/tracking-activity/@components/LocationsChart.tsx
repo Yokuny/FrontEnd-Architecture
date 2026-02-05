@@ -51,7 +51,7 @@ export function LocationsChart({ filters }: LocationsChartProps) {
               </TableHeader>
               <TableBody>
                 {tableData.map((item, index) => (
-                  <TableRow key={`${item.city}-${index}`}>
+                  <TableRow key={`${item.city}${index}`}>
                     <TableCell>
                       <ItemTitle>{item.city}</ItemTitle>
                       <ItemDescription>

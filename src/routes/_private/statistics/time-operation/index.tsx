@@ -143,28 +143,33 @@ function TimeOperationPage() {
     <Card>
       <CardHeader title={t('time.operation')} />
       <CardContent>
-        <Item variant="outline" className="flex-row items-end gap-4 overflow-x-auto bg-secondary">
-          <ItemContent className="min-w-[240px]">
-            <MachineSelect
-              mode="multi"
-              label={t('machine.placeholder')}
-              placeholder={t('machine.placeholder')}
-              idEnterprise={idEnterprise}
-              value={selectedMachines}
-              onChange={setSelectedMachines}
-            />
-          </ItemContent>
+        <Item variant="outline" className="bg-secondary">
+          <MachineSelect
+            mode="multi"
+            className="min-w-48"
+            label={t('select.machine')}
+            placeholder={t('select.machine')}
+            idEnterprise={idEnterprise}
+            value={selectedMachines}
+            onChange={setSelectedMachines}
+          />
 
-          <ItemContent className="min-w-[240px]">
-            <ModelMachineSelect mode="multi" label={t('model')} placeholder={t('model')} idEnterprise={idEnterprise} value={selectedModels} onChange={setSelectedModels} />
-          </ItemContent>
+          <ModelMachineSelect
+            mode="multi"
+            className="min-w-48"
+            label={t('model')}
+            placeholder={t('model')}
+            idEnterprise={idEnterprise}
+            value={selectedModels}
+            onChange={setSelectedModels}
+          />
 
           <ItemContent className="flex-none">
             <Label>{t('date.start')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-36 justify-start bg-background text-left font-normal', !dateMin && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMin ? formatDate(dateMin, 'dd MM yyyy') : <span>{t('date.start')}</span>}
                 </Button>
               </PopoverTrigger>
@@ -186,8 +191,8 @@ function TimeOperationPage() {
             <Label>{t('date.end')}</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className={cn('w-44 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
+                <Button variant="outline" className={cn('w-36 justify-start bg-background text-left font-normal', !dateMax && 'text-muted-foreground')}>
+                  <CalendarIcon className="mr-1 size-4" />
                   {dateMax ? formatDate(dateMax, 'dd MM yyyy') : <span>{t('date.end')}</span>}
                 </Button>
               </PopoverTrigger>

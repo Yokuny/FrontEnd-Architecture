@@ -179,7 +179,7 @@ function DataloggerPage() {
             idEnterprise={idEnterprise}
             value={selectedMachine}
             onChange={(val: string | undefined) => setSelectedMachine(val)}
-            placeholder={t('machine.placeholder')}
+            placeholder={t('select.machine')}
           />
         </div>
       </CardHeader>
@@ -270,11 +270,11 @@ function DataloggerPage() {
               <ItemContent className="w-40 flex-none">
                 <Label className="flex items-center gap-2">
                   <Clock className="size-4" />
-                  {t('interval')}
+                  {t('range')}
                 </Label>
                 <Select value={String(filters.interval)} onValueChange={(val) => setFilters((f) => ({ ...f, interval: Number(val) }))}>
                   <SelectTrigger className="bg-background">
-                    <SelectValue placeholder={t('interval')} />
+                    <SelectValue placeholder={t('range')} />
                   </SelectTrigger>
                   <SelectContent>
                     {intervalOptions.map((opt) => (

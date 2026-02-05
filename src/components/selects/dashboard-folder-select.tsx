@@ -33,31 +33,17 @@ export function DashboardFolderSelect(props: DashboardFolderSelectProps) {
 
   const displayLabel = label || t('folder');
 
-  if (mode === 'multi') {
-    return (
-      <div className="space-y-2">
-        {displayLabel && (
-          <Label htmlFor={id} className="flex items-center gap-2">
-            <Layers className="size-4" />
-            {displayLabel}
-          </Label>
-        )}
-        <DataMultiSelect
-          id={id}
-          placeholder={placeholder || t('folder')}
-          value={props.value}
-          onChange={(vals) => props.onChange(vals as string[])}
-          query={query}
-          mapToOptions={mapToOptions}
-          disabled={disabled}
-          className={className}
-          searchPlaceholder={t('search.placeholder')}
-          noOptionsMessage={!idEnterprise ? t('select.first.enterprise') : t('nooptions.message')}
-          noResultsMessage={t('not.found')}
-        />
-      </div>
-    );
-  }
+  const sharedProps = {
+    id,
+    placeholder: placeholder || t('folder'),
+    query,
+    mapToOptions,
+    disabled,
+    className,
+    searchPlaceholder: t('search.placeholder'),
+    noOptionsMessage: !idEnterprise ? t('select.first.enterprise') : t('nooptions.message'),
+    noResultsMessage: t('not.found'),
+  };
 
   return (
     <div className="space-y-2">
@@ -67,20 +53,11 @@ export function DashboardFolderSelect(props: DashboardFolderSelectProps) {
           {displayLabel}
         </Label>
       )}
-      <DataSelect
-        id={id}
-        placeholder={placeholder || t('folder')}
-        value={props.value}
-        onChange={(val) => props.onChange(val as string)}
-        query={query}
-        mapToOptions={mapToOptions}
-        disabled={disabled}
-        clearable={clearable}
-        className={className}
-        searchPlaceholder={t('search.placeholder')}
-        noOptionsMessage={!idEnterprise ? t('select.first.enterprise') : t('nooptions.message')}
-        noResultsMessage={t('not.found')}
-      />
+      {mode === 'multi' ? (
+        <DataMultiSelect {...sharedProps} value={props.value} onChange={(vals) => props.onChange(vals as string[])} />
+      ) : (
+        <DataSelect {...sharedProps} value={props.value} onChange={(val) => props.onChange(val as string)} clearable={clearable} />
+      )}
     </div>
   );
 }

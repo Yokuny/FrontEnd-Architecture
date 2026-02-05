@@ -14,6 +14,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useCustomersPaginated } from '@/hooks/use-customers-api';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const customersSearchSchema = z.object({
   page: z.number().optional().default(1),
   size: z.number().optional().default(10),
@@ -25,6 +27,27 @@ type CustomersSearch = z.infer<typeof customersSearchSchema>;
 export const Route = createFileRoute('/_private/register/customers/')({
   component: CustomersListPage,
   validateSearch: (search: Record<string, unknown>): CustomersSearch => customersSearchSchema.parse(search),
+  staticData: {
+    title: 'register.customers',
+    description: 'Página de cadastro e gerenciamento de clientes. Permite criar, visualizar e editar clientes com busca e paginação.',
+    tags: ['register', 'cadastro', 'crud', 'management', 'gestão', 'clientes', 'customers', 'contatos'],
+    examplePrompts: ['Cadastrar novo cliente', 'Listar todos os clientes', 'Editar cliente', 'Buscar cliente por nome'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca', example: 'nome' },
+    ],
+    relatedRoutes: [{ path: '/_private/register', relation: 'parent', description: 'Hub de cadastros' }],
+    entities: ['Customer', 'Enterprise'],
+    capabilities: [
+      'Listar clientes com paginação',
+      'Buscar por termo',
+      'Filtrar por empresa',
+      'Criar novo cliente',
+      'Editar cliente existente',
+      'Visualizar código e empresa do cliente',
+    ],
+  },
 });
 
 function CustomersListPage() {
@@ -32,6 +55,8 @@ function CustomersListPage() {
   const navigate = Route.useNavigate();
   const { page, size, search } = Route.useSearch();
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/customer-add');
 
   const { data, isLoading } = useCustomersPaginated({
     page: page - 1,
@@ -70,10 +95,12 @@ function CustomersListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={() => navigate({ to: '/register/customers/add' } as any)}>
             <Plus className="mr-2 size-4" />
             {t('add')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

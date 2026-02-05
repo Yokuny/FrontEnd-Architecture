@@ -68,7 +68,7 @@ export function SensorFunctionForm({ idEnterprise }: { idEnterprise: string }) {
           name="idMachines"
           render={({ field }) => (
             <FormItem>
-              <MachineByEnterpriseSelect mode="multi" label={t('machines')} idEnterprise={idEnterprise} value={field.value} onChange={(vals) => field.onChange(vals)} />
+              <MachineByEnterpriseSelect mode="multi" label={t('assets')} idEnterprise={idEnterprise} value={field.value} onChange={(vals) => field.onChange(vals)} />
               <FormMessage />
             </FormItem>
           )}

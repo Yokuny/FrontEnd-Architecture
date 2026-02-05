@@ -50,7 +50,7 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
             const nextContraction = (part.lastWearDone || 0) + (action?.valueCycle || 0);
 
             return (
-              <TableRow key={`${part.part.id}-${part.typeService.id}`} className="transition-colors hover:bg-accent/5">
+              <TableRow key={`${part.part.id}${part.typeService.id}`} className="transition-colors hover:bg-accent/5">
                 <TableCell className="py-3 text-sm">{part.typeService.description}</TableCell>
                 <TableCell className="text-center font-mono text-xs">{part.part.sku}</TableCell>
                 <TableCell className="text-sm">{part.part.name}</TableCell>
@@ -73,7 +73,7 @@ export function MonitoringWearDetails({ idMachine }: MonitoringWearDetailsProps)
                         {t('late')}
                       </Badge>
                     ) : part.percentual > 90 ? (
-                      <Badge className="h-6 whitespace-nowrap bg-yellow-500 text-white hover:bg-yellow-600">{t('next')}</Badge>
+                      <Badge className="h-6 whitespace-nowrap bg-yellow-500 text-white ring-0 hover:bg-yellow-600">{t('next')}</Badge>
                     ) : (
                       <div className="min-h-6" />
                     )}

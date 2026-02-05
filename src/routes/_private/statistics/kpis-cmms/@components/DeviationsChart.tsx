@@ -22,17 +22,17 @@ export function DeviationsChart({ filters }: { filters: KPISCMMSFilters & { min:
     const total = openDeviations + executedDeviations;
 
     const formattedData = [
-      { name: t('open.deviation'), value: openDeviations, fill: getChartColor(0), key: 'open' },
-      { name: t('executed.deviation'), value: executedDeviations, fill: getChartColor(8), key: 'executed' },
+      { name: t('deviation.open'), value: openDeviations, fill: getChartColor(0), key: 'open' },
+      { name: t('deviation.executed'), value: executedDeviations, fill: getChartColor(8), key: 'executed' },
     ];
 
     const config: ChartConfig = {
       open: {
-        label: t('open.deviation'),
+        label: t('deviation.open'),
         color: getChartColor(0),
       },
       executed: {
-        label: t('executed.deviation'),
+        label: t('deviation.executed'),
         color: getChartColor(8),
       },
     };

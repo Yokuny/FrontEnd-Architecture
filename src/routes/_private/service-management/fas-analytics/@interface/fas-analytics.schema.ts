@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const fasAnalyticsSearchSchema = z.object({
-  chartType: z.string().optional().default('realized.orders'),
+  chartType: z.string().optional().default('range'),
   filterType: z.enum(['range', 'month']).optional().default('range'),
   startDate: z.string().optional(),
   endDate: z.string().optional(),

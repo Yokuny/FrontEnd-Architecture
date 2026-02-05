@@ -3,6 +3,8 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { type DecodedToken, decodeToken } from '@/config/token';
 import { useEnterpriseFilter } from './use-enterprise-filter';
 
+// import { usePermissions } from './use-permissions';
+
 interface LockedAccount {
   id: string;
   isBlockedTemporary: boolean;
@@ -37,10 +39,13 @@ export const useAuth = create<AuthStore>()(
           mapShowName: true,
           locked: null,
         });
+
+        // usePermissions.getState().fetchPermissions(user.request);
       },
 
       clearAuth: () => {
         useEnterpriseFilter.getState().setIdEnterprise('');
+        // usePermissions.getState().clearPermissions();
         set({
           isAuthenticated: false,
           user: null,

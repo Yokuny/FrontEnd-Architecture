@@ -61,8 +61,8 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
   if (!data || data.length === 0) return <DefaultEmptyData />;
 
   return (
-    <div className="flex">
-      <Table className="min-w-0">
+    <div className="w-full min-w-0">
+      <Table>
         <TableHeader className="sticky top-0 z-20 bg-secondary">
           <TableRow className="hover:bg-transparent">
             <TableHead className="sticky left-0 z-30 min-w-[160px] bg-background/95 p-4 backdrop-blur">
@@ -101,7 +101,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
               );
             })}
 
-            <TableHead className="sticky right-0 z-30 min-w-[150px] bg-background/30 uppercase backdrop-blur">
+            <TableHead className="sticky right-0 z-30 min-w-36 bg-background/30 uppercase backdrop-blur">
               <ItemTitle className="text-muted-foreground uppercase">{t('total')}</ItemTitle>
             </TableHead>
           </TableRow>
@@ -110,7 +110,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
         <TableBody>
           {data.map((row, index) => (
             <TableRow key={`${index + 1}_${row.machine.id}`}>
-              <TableCell className="sticky left-0 z-10 min-w-[200px] bg-background/30 p-2 backdrop-blur">
+              <TableCell className="sticky left-0 z-10 min-w-48 bg-background/30 p-2 backdrop-blur">
                 <div className="flex items-center gap-3">
                   <Avatar className="size-10">
                     <AvatarImage src={row.machine.image?.url} alt={row.machine.name} />
@@ -158,7 +158,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
                 );
               })}
 
-              <TableCell className="sticky right-0 z-10 min-w-[150px] bg-background/30 p-2 backdrop-blur">
+              <TableCell className="sticky right-0 z-10 min-w-36 bg-background/30 p-2 backdrop-blur">
                 <ItemContent className="items-end">
                   <ItemActions>
                     <ItemTitle>{formatNumber(row.listTimeStatus.reduce((acc: number, curr: any) => acc + (curr.minutes || 0), 0) / 60, 1)}</ItemTitle>
@@ -185,7 +185,7 @@ export function TimeOperationTable({ data, listStatusAllow, orderColumn, onOrder
               <TableCell className="sticky left-0 z-10 bg-secondary">
                 <div className="flex flex-col gap-6">
                   <ItemTitle className="text-muted-foreground uppercase">{t('total')}</ItemTitle>
-                  <ItemTitle className="text-muted-foreground uppercase">{t('average')}</ItemTitle>
+                  <ItemTitle className="text-muted-foreground uppercase">{t('medium')}</ItemTitle>
                 </div>
               </TableCell>
 

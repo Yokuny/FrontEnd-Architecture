@@ -18,6 +18,42 @@ import { ConsumptionCO2Table } from './@components/ConsumptionCO2Table';
 import { ConsumptionCO2Totals } from './@components/ConsumptionCO2Totals';
 
 export const Route = createFileRoute('/_private/esg/consumption-co2/')({
+  staticData: {
+    title: 'esg.co2',
+    description:
+      'Página de monitoramento de emissões de CO₂ por consumo de combustível. Permite calcular e visualizar as emissões totais de dióxido de carbono geradas pela frota com base no consumo de diferentes tipos de combustível (IFO, MDO, MGO) conforme fatores de conversão da IMO. Essencial para compliance com regulamentações DCS, MRV e EU ETS.',
+    tags: ['esg', 'environmental', 'ambiental', 'co2', 'emissions', 'emissões', 'fuel', 'combustível', 'imo', 'compliance', 'dcs', 'mrv', 'eu-ets', 'carbon', 'carbono'],
+    examplePrompts: [
+      'Mostrar emissões de CO₂ da frota no último mês',
+      'Calcular emissões por tipo de combustível',
+      'Ver consumo de combustível e CO₂ equivalente',
+      'Analisar emissões por embarcação no período',
+      'Exportar relatório de emissões para compliance DCS',
+    ],
+    searchParams: [
+      { name: 'idEnterprise', type: 'string', description: 'ID da empresa filtrada', example: 'enterprise-uuid' },
+      { name: 'idMachine[]', type: 'array', description: 'IDs das embarcações selecionadas', example: 'machine-uuid-1,machine-uuid-2' },
+      { name: 'dateMin', type: 'string', description: 'Data inicial no formato ISO 8601', example: '2025-01-01T00:00:00+00:00' },
+      { name: 'dateMax', type: 'string', description: 'Data final no formato ISO 8601', example: '2025-02-04T23:59:59+00:00' },
+      { name: 'unit', type: 'string', description: 'Unidade de medida do consumo (L, m³, ton)', example: 'L' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/esg', relation: 'parent', description: 'Hub ESG - Menu principal de conformidade ambiental' },
+      { path: '/_private/esg/indicators-eeoi-cii', relation: 'sibling', description: 'Indicadores EEOI e CII' },
+      { path: '/_private/esg/cii-fleet', relation: 'sibling', description: 'Rating CII da frota' },
+      { path: '/_private/esg/simulator-cii', relation: 'sibling', description: 'Simulador de CII' },
+      { path: '/_private/consumption', relation: 'sibling', description: 'Módulo de consumo de combustível' },
+    ],
+    entities: ['ConsumptionData', 'Machine', 'Enterprise', 'FuelType', 'EmissionsData'],
+    capabilities: [
+      'Calcular emissões de CO₂ por combustível (IFO: 3.1166, MDO: 2.68, MGO: 3.206)',
+      'Filtrar por embarcações e período',
+      'Visualizar consumo em diferentes unidades (L, m³, ton)',
+      'Totalizar emissões por tipo de combustível',
+      'Monitorar compliance com DCS/MRV/EU ETS',
+      'Exportar dados para relatórios regulatórios',
+    ],
+  },
   component: ConsumptionCO2Page,
 });
 
@@ -88,7 +124,7 @@ function ConsumptionCO2Page() {
       <CardHeader title={t('esg.co2')} />
       <CardContent className="flex flex-col">
         <Item variant="outline" className="bg-secondary">
-          <MachineByEnterpriseSelect mode="multi" label={t('machines')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
+          <MachineByEnterpriseSelect mode="multi" label={t('assets')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />
 
           <UnitSelect value={selectedUnit} onChange={(val) => val && setSelectedUnit(val)} />
 

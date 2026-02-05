@@ -12,12 +12,48 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } f
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { type Goal, useGoalsByEnterprise } from '@/hooks/use-goals-api';
 
+// import { useHasPermission } from '@/hooks/use-permissions';
+
 const searchSchema = z.object({
   id: z.string().optional(),
   search: z.string().optional(),
 });
 
 export const Route = createFileRoute('/_private/operation/goals/')({
+  staticData: {
+    title: 'goals',
+    description:
+      'Gerenciamento de metas operacionais e KPIs da frota. Permite criar, editar e monitorar objetivos de performance operacional, incluindo metas de disponibilidade, utilização, uptime e eficiência. Filtro por empresa, busca por nome e tipo de meta.',
+    tags: [
+      'goals',
+      'metas',
+      'kpi',
+      'operational',
+      'operacional',
+      'performance',
+      'targets',
+      'objetivos',
+      'availability',
+      'disponibilidade',
+      'uptime',
+      'utilization',
+      'utilização',
+      'efficiency',
+      'eficiência',
+    ],
+    examplePrompts: ['Configurar metas operacionais', 'Criar nova meta de disponibilidade', 'Editar KPIs da frota', 'Buscar metas por ano', 'Definir objetivos de uptime'],
+    searchParams: [
+      { name: 'id', type: 'string', description: 'ID da meta para edição', example: 'goal-uuid-123' },
+      { name: 'search', type: 'string', description: 'Busca por nome ou tipo da meta', example: 'Meta 2026' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/operation', relation: 'parent', description: 'Hub operacional' },
+      { path: '/_private/operation/goals/add', relation: 'child', description: 'Adicionar/editar meta' },
+      { path: '/_private/operation/operational-fleet', relation: 'sibling', description: 'Dashboard de performance' },
+    ],
+    entities: ['Goal', 'Enterprise', 'Machine'],
+    capabilities: ['Listar metas operacionais', 'Criar nova meta', 'Editar meta existente', 'Buscar metas por filtro', 'Visualizar tipo e ano da meta', 'Filtrar por empresa'],
+  },
   component: GoalsListPage,
   validateSearch: (search: Record<string, unknown>) => searchSchema.parse(search),
   beforeLoad: () => ({
@@ -30,6 +66,8 @@ function GoalsListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { search } = useSearch({ from: '/_private/operation/goals/' });
   const { idEnterprise } = useEnterpriseFilter();
+
+  // const hasPermissionAdd = useHasPermission('/goal-add');
 
   const { data, isLoading } = useGoalsByEnterprise(idEnterprise || '');
 
@@ -126,10 +164,12 @@ function GoalsListPage() {
               }}
             />
           </div>
+          {/* {hasPermissionAdd && ( */}
           <Button onClick={handleNewGoal} disabled={!idEnterprise}>
             <Plus className="mr-2 size-4" />
             {t('new')}
           </Button>
+          {/* )} */}
         </div>
       </CardHeader>
 

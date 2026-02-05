@@ -40,3 +40,10 @@ export const CHART_MIN_HEIGHT = {
   DEFAULT: '300px',
   LARGE: '400px',
 };
+
+/**
+ * Permission configuration for viewing financial data
+ */
+export const PERMISSIONS = {
+  VIEW_FINANCIAL: true, // TODO: Implement actual permission check if needed
+} as const;

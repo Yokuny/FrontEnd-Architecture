@@ -37,7 +37,7 @@ export function TableListRVESounding({ data }: TableListRVESoundingProps) {
             <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">{t('machine.supplies.consumption.received')} (m³)</th>
             <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">{t('machine.supplies.consumption.supplied')} (m³)</th>
             <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">
-              {t('consumption')} {t('period')} (m³)
+              {t('consume')} {t('period')} (m³)
             </th>
             <th className="p-2 text-right font-semibold text-muted-foreground text-xs uppercase">{t('contract.max')} (m³)</th>
             <th className="p-2 text-center font-semibold text-muted-foreground text-xs uppercase">{t('status')}</th>

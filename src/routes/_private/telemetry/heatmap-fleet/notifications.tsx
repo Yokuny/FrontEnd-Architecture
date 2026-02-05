@@ -74,10 +74,10 @@ function HeatmapNotificationsPage() {
       { idMachine: machineId, alerts },
       {
         onSuccess: () => {
-          toast.success(t('save.successfull'));
+          toast.success(t('save.success'));
           navigate({ to: '/telemetry/heatmap-fleet', search: { page: 0 } });
         },
-        onError: () => toast.error(t('save.error')),
+        onError: () => toast.error(t('error.load')),
       },
     );
   };
@@ -98,7 +98,7 @@ function HeatmapNotificationsPage() {
 
   return (
     <Card>
-      <CardHeader title={`${configData?.machine?.name || '...'} - ${t('settings.heatmap.alerts')}`} />
+      <CardHeader title={`${configData?.machine?.name || '...'} - ${t('editor.alarms.machine')}`} />
 
       <CardContent className="flex flex-col gap-4">
         {isLoading ? (
@@ -144,7 +144,7 @@ function HeatmapNotificationsPage() {
 
                               return (
                                 <HeatmapNotificationsForm
-                                  key={`${subgroup.subgroupName}-${sensorItem.key}-${sIdx}`}
+                                  key={`${subgroup.subgroupName}${sensorItem.key}${sIdx}`}
                                   sensor={sensorItem}
                                   sensorData={sensorData}
                                   currentAlert={currentAlert}
@@ -178,7 +178,7 @@ function HeatmapNotificationsPage() {
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>{t('caution')}!</AlertDialogTitle>
+                <AlertDialogTitle>{t('warn')}!</AlertDialogTitle>
                 <AlertDialogDescription>{t('settings.heatmap.alerts.remove')}</AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

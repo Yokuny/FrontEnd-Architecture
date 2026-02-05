@@ -21,11 +21,19 @@ export function AutoBreadcrumbs() {
 
       const match = matches.find((m) => m.pathname === cumulativePath || m.pathname === `${cumulativePath}/`);
 
-      let title = (match?.context as any)?.title;
+      // Prioriza getTitle (função dinâmica), depois title (chave i18n), depois context.title
+      let title: string | undefined;
 
-      if (title) {
-        title = t(title);
-      } else {
+      if (match?.staticData?.getTitle && typeof match.staticData.getTitle === 'function') {
+        title = match.staticData.getTitle();
+      } else if (match?.staticData?.title) {
+        title = t(match.staticData.title);
+      } else if ((match?.context as any)?.title) {
+        title = t((match?.context as any).title);
+      }
+
+      // Fallback: tenta traduzir o segmento da URL ou capitaliza
+      if (!title) {
         const translatedSegment = t(segment);
         if (translatedSegment !== segment) {
           title = translatedSegment;
