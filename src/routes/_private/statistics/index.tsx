@@ -6,6 +6,22 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/comp
 
 export const Route = createFileRoute('/_private/statistics/')({
   component: StatisticsHubPage,
+  staticData: {
+    title: 'statistics.hub',
+    description:
+      'Hub central de estatísticas e análises. Fornece acesso centralizado a dashboards de KPIs, rastreamento de atividades, tempo de operação, integrações e relatórios RVE para análise de dados da frota.',
+    tags: ['statistics', 'estatisticas', 'analytics', 'dashboard', 'kpi', 'hub', 'bi', 'business-intelligence'],
+    examplePrompts: ['Acessar hub de estatísticas', 'Ver dashboards de análise', 'Navegar para KPIs e relatórios'],
+    relatedRoutes: [
+      { path: '/_private/statistics/tracking-activity', relation: 'child', description: 'Rastreamento de atividades dos usuários' },
+      { path: '/_private/statistics/time-operation', relation: 'child', description: 'Análise de tempo de operação' },
+      { path: '/_private/statistics/rve-dashboard', relation: 'child', description: 'Dashboard de relatórios de viagem' },
+      { path: '/_private/statistics/kpis-cmms', relation: 'child', description: 'KPIs do sistema CMMS' },
+      { path: '/_private/statistics/integration', relation: 'child', description: 'Status de integrações da frota' },
+    ],
+    entities: ['Statistics', 'KPI', 'Dashboard'],
+    capabilities: ['Navegação centralizada', 'Acesso a dashboards', 'Hub de analytics'],
+  },
 });
 
 function StatisticsHubPage() {

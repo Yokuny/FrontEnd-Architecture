@@ -22,6 +22,27 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/statistics/integration/')({
   component: FleetStatusListPage,
   validateSearch: (search) => searchSchema.parse(search),
+  staticData: {
+    title: 'statistics.integration',
+    description:
+      'Status de integração da frota com sistemas externos. Monitora atualizações de APIs de rastreamento (AIS, MarineTraffic, etc), exibe ETA, portos de destino, MMSI/IMO e alerta sobre embarcações com dados desatualizados.',
+    tags: ['integration', 'integracao', 'fleet-status', 'ais', 'tracking', 'middleware', 'api-status', 'vessel-monitoring', 'eta'],
+    examplePrompts: ['Ver status de integração da frota', 'Verificar embarcações com dados desatualizados', 'Consultar último update de rastreamento AIS'],
+    searchParams: [{ name: 'idEnterprise', type: 'string', description: 'ID da empresa para filtrar status' }],
+    relatedRoutes: [
+      { path: '/_private/statistics', relation: 'parent', description: 'Hub de estatísticas' },
+      { path: '/_private/telemetry/fleet-panel', relation: 'sibling', description: 'Painel da frota com dados em tempo real' },
+    ],
+    entities: ['Machine', 'FleetStatus', 'Integration', 'AIS'],
+    capabilities: [
+      'Visualização de status de integração',
+      'Monitoramento de atualizações de APIs externas',
+      'Alertas de dados desatualizados (4h, 8h, 14h)',
+      'Exibição de ETA e portos de destino',
+      'Filtro por empresa',
+      'Busca por nome/MMSI/IMO',
+    ],
+  },
 });
 
 function FleetStatusListPage() {

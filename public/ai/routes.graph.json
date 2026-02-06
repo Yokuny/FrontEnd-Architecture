@@ -16,6 +16,21 @@
       "label": "cmms"
     },
     {
+      "id": "__private_cmms_diagram_list_",
+      "type": "page",
+      "label": "telemetry.diagram.list"
+    },
+    {
+      "id": "__private_cmms_filled_form_cmms_",
+      "type": "page",
+      "label": "filled.forms"
+    },
+    {
+      "id": "__private_cmms_kpis_cmms_",
+      "type": "page",
+      "label": "kpis.cmms"
+    },
+    {
       "id": "__private_consumption_",
       "type": "page",
       "label": "consume"
@@ -49,6 +64,31 @@
       "id": "__private_consumption_time_operation_",
       "type": "page",
       "label": "consumption.time.operation"
+    },
+    {
+      "id": "__private_contracts_",
+      "type": "page",
+      "label": "contracts.index"
+    },
+    {
+      "id": "__private_contracts_contract_list_",
+      "type": "page",
+      "label": "contracts.list"
+    },
+    {
+      "id": "__private_contracts_dashboard_rve_rdo_",
+      "type": "page",
+      "label": "contracts.rve-rdo"
+    },
+    {
+      "id": "__private_contracts_dashboard_rve_sounding_",
+      "type": "page",
+      "label": "contracts.rve-sounding"
+    },
+    {
+      "id": "__private_contracts_dashboard_rve_",
+      "type": "page",
+      "label": "contracts.rve-dashboard"
     },
     {
       "id": "__private_esg_",
@@ -356,6 +396,96 @@
       "label": "setup.limits"
     },
     {
+      "id": "__private_statistics_",
+      "type": "page",
+      "label": "statistics.hub"
+    },
+    {
+      "id": "__private_statistics_integration_",
+      "type": "page",
+      "label": "statistics.integration"
+    },
+    {
+      "id": "__private_statistics_kpis_cmms_",
+      "type": "page",
+      "label": "statistics.kpis-cmms"
+    },
+    {
+      "id": "__private_statistics_rve_dashboard_",
+      "type": "page",
+      "label": "statistics.rve-dashboard"
+    },
+    {
+      "id": "__private_statistics_time_operation_",
+      "type": "page",
+      "label": "statistics.time-operation"
+    },
+    {
+      "id": "__private_statistics_tracking_activity_",
+      "type": "page",
+      "label": "statistics.tracking-activity"
+    },
+    {
+      "id": "__private_telemetry_",
+      "type": "page",
+      "label": "telemetry.hub"
+    },
+    {
+      "id": "__private_telemetry_buoys_dwell_time_",
+      "type": "page",
+      "label": "telemetry.buoys-dwell-time"
+    },
+    {
+      "id": "__private_telemetry_datalogger_",
+      "type": "page",
+      "label": "telemetry.datalogger"
+    },
+    {
+      "id": "__private_telemetry_diagram_list_",
+      "type": "page",
+      "label": "telemetry.diagram-list"
+    },
+    {
+      "id": "__private_telemetry_download_data_asset_request_",
+      "type": "page",
+      "label": "telemetry.download-data-asset-request"
+    },
+    {
+      "id": "__private_telemetry_fleet_panel_",
+      "type": "page",
+      "label": "telemetry.fleet-panel"
+    },
+    {
+      "id": "__private_telemetry_heatmap_fleet_",
+      "type": "page",
+      "label": "telemetry.heatmap-fleet"
+    },
+    {
+      "id": "__private_telemetry_heatmap_panel_",
+      "type": "page",
+      "label": "telemetry.heatmap-panel"
+    },
+    {
+      "id": "__private_telemetry_list_dashboard_",
+      "type": "page",
+      "label": "telemetry.list-dashboard"
+    },
+    {
+      "id": "__private_telemetry_performance_",
+      "type": "page",
+      "label": "telemetry.performance"
+    },
+    {
+      "id": "__private_telemetry_remote_ihm_",
+      "type": "page",
+      "label": "telemetry.remote-ihm"
+    },
+    {
+      "id": "__private_telemetry_sensor_min_max_",
+      "type": "page",
+      "label": "telemetry.sensor-min-max"
+    },
+    {
       "id": "__private_voyage_",
       "type": "page",
       "label": "voyage.page"
@@ -483,6 +613,42 @@
       "to": "__private_telemetry_diagram_list",
       "relation": "redirect",
       "description": "Lista de diagramas (rota real)"
+    },
+    {
+      "from": "__private_cmms_diagram_list_",
+      "to": "__private_cmms",
+      "relation": "parent",
+      "description": "Hub CMMS"
+    },
+    {
+      "from": "__private_cmms_diagram_list_",
+      "to": "__private_telemetry_diagram_list",
+      "relation": "alternative",
+      "description": "Lista de diagramas (destino do redirect)"
+    },
+    {
+      "from": "__private_cmms_filled_form_cmms_",
+      "to": "__private_cmms",
+      "relation": "parent",
+      "description": "Hub CMMS"
+    },
+    {
+      "from": "__private_cmms_filled_form_cmms_",
+      "to": "__private_maintenance",
+      "relation": "sibling",
+      "description": "Gestão de manutenção"
+    },
+    {
+      "from": "__private_cmms_kpis_cmms_",
+      "to": "__private_cmms",
+      "relation": "parent",
+      "description": "Hub CMMS"
+    },
+    {
+      "from": "__private_cmms_kpis_cmms_",
+      "to": "__private_statistics_kpis_cmms",
+      "relation": "alternative",
+      "description": "KPIs CMMS (destino do redirect)"
     },
     {
       "from": "__private_consumption_",
@@ -627,6 +793,66 @@
       "to": "__private_consumption_relatorio",
       "relation": "sibling",
       "description": "Relatório de consumo"
+    },
+    {
+      "from": "__private_contracts_",
+      "to": "__private_contracts_contract_list",
+      "relation": "child",
+      "description": "Lista de contratos cadastrados"
+    },
+    {
+      "from": "__private_contracts_",
+      "to": "__private_register_contracts",
+      "relation": "alternative",
+      "description": "Cadastro e gestão de contratos"
+    },
+    {
+      "from": "__private_contracts_contract_list_",
+      "to": "__private_contracts",
+      "relation": "parent",
+      "description": "Hub de contratos"
+    },
+    {
+      "from": "__private_contracts_contract_list_",
+      "to": "__private_register_contracts",
+      "relation": "alternative",
+      "description": "Destino do redirecionamento - cadastro de contratos"
+    },
+    {
+      "from": "__private_contracts_dashboard_rve_rdo_",
+      "to": "__private_contracts",
+      "relation": "parent",
+      "description": "Hub de contratos"
+    },
+    {
+      "from": "__private_contracts_dashboard_rve_rdo_",
+      "to": "__private_consumption_rve_rdo",
+      "relation": "alternative",
+      "description": "Destino do redirecionamento - dashboard RVE-RDO"
+    },
+    {
+      "from": "__private_contracts_dashboard_rve_sounding_",
+      "to": "__private_contracts",
+      "relation": "parent",
+      "description": "Hub de contratos"
+    },
+    {
+      "from": "__private_contracts_dashboard_rve_sounding_",
+      "to": "__private_consumption_rve_sounding",
+      "relation": "alternative",
+      "description": "Destino do redirecionamento - dashboard RVE-Sounding"
+    },
+    {
+      "from": "__private_contracts_dashboard_rve_",
+      "to": "__private_contracts",
+      "relation": "parent",
+      "description": "Hub de contratos"
+    },
+    {
+      "from": "__private_contracts_dashboard_rve_",
+      "to": "__private_statistics_rve_dashboard",
+      "relation": "alternative",
+      "description": "Destino do redirecionamento - dashboard RVE em estatísticas"
     },
     {
       "from": "__private_esg_",
@@ -1665,6 +1891,336 @@
       "to": "__private_set_up_company",
       "relation": "parent",
       "description": "Hub de configurações da empresa"
+    },
+    {
+      "from": "__private_statistics_",
+      "to": "__private_statistics_tracking_activity",
+      "relation": "child",
+      "description": "Rastreamento de atividades dos usuários"
+    },
+    {
+      "from": "__private_statistics_",
+      "to": "__private_statistics_time_operation",
+      "relation": "child",
+      "description": "Análise de tempo de operação"
+    },
+    {
+      "from": "__private_statistics_",
+      "to": "__private_statistics_rve_dashboard",
+      "relation": "child",
+      "description": "Dashboard de relatórios de viagem"
+    },
+    {
+      "from": "__private_statistics_",
+      "to": "__private_statistics_kpis_cmms",
+      "relation": "child",
+      "description": "KPIs do sistema CMMS"
+    },
+    {
+      "from": "__private_statistics_",
+      "to": "__private_statistics_integration",
+      "relation": "child",
+      "description": "Status de integrações da frota"
+    },
+    {
+      "from": "__private_statistics_integration_",
+      "to": "__private_statistics",
+      "relation": "parent",
+      "description": "Hub de estatísticas"
+    },
+    {
+      "from": "__private_statistics_integration_",
+      "to": "__private_telemetry_fleet_panel",
+      "relation": "sibling",
+      "description": "Painel da frota com dados em tempo real"
+    },
+    {
+      "from": "__private_statistics_kpis_cmms_",
+      "to": "__private_statistics",
+      "relation": "parent",
+      "description": "Hub de estatísticas"
+    },
+    {
+      "from": "__private_statistics_kpis_cmms_",
+      "to": "__private_cmms",
+      "relation": "sibling",
+      "description": "Módulo CMMS completo"
+    },
+    {
+      "from": "__private_statistics_kpis_cmms_",
+      "to": "__private_register_maintenance",
+      "relation": "alternative",
+      "description": "Cadastro de manutenções"
+    },
+    {
+      "from": "__private_statistics_rve_dashboard_",
+      "to": "__private_statistics",
+      "relation": "parent",
+      "description": "Hub de estatísticas"
+    },
+    {
+      "from": "__private_statistics_rve_dashboard_",
+      "to": "__private_consumption_rve_rdo",
+      "relation": "sibling",
+      "description": "RVE com RDO (consumo)"
+    },
+    {
+      "from": "__private_statistics_rve_dashboard_",
+      "to": "__private_consumption_rve_sounding",
+      "relation": "sibling",
+      "description": "RVE com sounding"
+    },
+    {
+      "from": "__private_statistics_time_operation_",
+      "to": "__private_statistics",
+      "relation": "parent",
+      "description": "Hub de estatísticas"
+    },
+    {
+      "from": "__private_statistics_time_operation_",
+      "to": "__private_statistics_integration",
+      "relation": "sibling",
+      "description": "Status de integração AIS"
+    },
+    {
+      "from": "__private_statistics_time_operation_",
+      "to": "__private_telemetry_fleet_panel",
+      "relation": "alternative",
+      "description": "Painel da frota em tempo real"
+    },
+    {
+      "from": "__private_statistics_tracking_activity_",
+      "to": "__private_statistics",
+      "relation": "parent",
+      "description": "Hub de estatísticas"
+    },
+    {
+      "from": "__private_statistics_tracking_activity_",
+      "to": "__private_register_users",
+      "relation": "alternative",
+      "description": "Cadastro de usuários"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_datalogger",
+      "relation": "child",
+      "description": "Visualização de dados históricos de sensores"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_performance",
+      "relation": "child",
+      "description": "Análise de performance com scatter plots"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_fleet_panel",
+      "relation": "child",
+      "description": "Painel da frota com dados em tempo real"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_remote_ihm",
+      "relation": "child",
+      "description": "Interface HMI remota"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_heatmap_fleet",
+      "relation": "child",
+      "description": "Heatmap de status da frota"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_heatmap_panel",
+      "relation": "child",
+      "description": "Painel de heatmap consolidado"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_buoys_dwell_time",
+      "relation": "child",
+      "description": "Tempo de permanência em boias"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_download_data_asset_request",
+      "relation": "child",
+      "description": "Requisições de download de dados"
+    },
+    {
+      "from": "__private_telemetry_",
+      "to": "__private_telemetry_diagram_list",
+      "relation": "child",
+      "description": "Lista de diagramas"
+    },
+    {
+      "from": "__private_telemetry_buoys_dwell_time_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_buoys_dwell_time_",
+      "to": "__private_telemetry_fleet_panel",
+      "relation": "sibling",
+      "description": "Painel da frota"
+    },
+    {
+      "from": "__private_telemetry_buoys_dwell_time_",
+      "to": "__private_register_delimitations",
+      "relation": "alternative",
+      "description": "Cadastro de delimitações"
+    },
+    {
+      "from": "__private_telemetry_datalogger_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_datalogger_",
+      "to": "__private_telemetry_performance",
+      "relation": "sibling",
+      "description": "Análise de performance"
+    },
+    {
+      "from": "__private_telemetry_datalogger_",
+      "to": "__private_telemetry_sensor_min_max",
+      "relation": "sibling",
+      "description": "Configuração de limites de sensores"
+    },
+    {
+      "from": "__private_telemetry_diagram_list_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_diagram_list_",
+      "to": "__private_telemetry_diagram_list_diagram",
+      "relation": "child",
+      "description": "Visualização/edição de diagrama"
+    },
+    {
+      "from": "__private_telemetry_download_data_asset_request_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_download_data_asset_request_",
+      "to": "__private_telemetry_datalogger",
+      "relation": "sibling",
+      "description": "Visualização de dados em gráficos"
+    },
+    {
+      "from": "__private_telemetry_fleet_panel_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_fleet_panel_",
+      "to": "__private_telemetry_heatmap_fleet",
+      "relation": "sibling",
+      "description": "Heatmap da frota"
+    },
+    {
+      "from": "__private_telemetry_fleet_panel_",
+      "to": "__private_statistics_integration",
+      "relation": "alternative",
+      "description": "Status de integração"
+    },
+    {
+      "from": "__private_telemetry_heatmap_fleet_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_heatmap_fleet_",
+      "to": "__private_telemetry_heatmap_panel",
+      "relation": "sibling",
+      "description": "Painel de heatmap consolidado"
+    },
+    {
+      "from": "__private_telemetry_heatmap_fleet_",
+      "to": "__private_telemetry_fleet_panel",
+      "relation": "sibling",
+      "description": "Painel da frota detalhado"
+    },
+    {
+      "from": "__private_telemetry_heatmap_fleet_",
+      "to": "__private_telemetry_heatmap_fleet_add",
+      "relation": "child",
+      "description": "Adicionar view de heatmap"
+    },
+    {
+      "from": "__private_telemetry_heatmap_panel_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_heatmap_panel_",
+      "to": "__private_telemetry_heatmap_fleet",
+      "relation": "sibling",
+      "description": "Heatmap da frota"
+    },
+    {
+      "from": "__private_telemetry_list_dashboard_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_list_dashboard_",
+      "to": "__private_telemetry_list_dashboard_add",
+      "relation": "child",
+      "description": "Criação de dashboard"
+    },
+    {
+      "from": "__private_telemetry_performance_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_performance_",
+      "to": "__private_telemetry_datalogger",
+      "relation": "sibling",
+      "description": "Visualização de tendências"
+    },
+    {
+      "from": "__private_telemetry_remote_ihm_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_remote_ihm_",
+      "to": "__private_telemetry_fleet_panel",
+      "relation": "sibling",
+      "description": "Painel da frota"
+    },
+    {
+      "from": "__private_telemetry_sensor_min_max_",
+      "to": "__private_telemetry",
+      "relation": "parent",
+      "description": "Hub de telemetria"
+    },
+    {
+      "from": "__private_telemetry_sensor_min_max_",
+      "to": "__private_telemetry_datalogger",
+      "relation": "sibling",
+      "description": "Visualização de dados históricos"
+    },
+    {
+      "from": "__private_telemetry_sensor_min_max_",
+      "to": "__private_register_sensors",
+      "relation": "alternative",
+      "description": "Cadastro de sensores"
     },
     {
       "from": "__private_voyage_",

@@ -33,6 +33,37 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/statistics/tracking-activity/')({
   component: TrackingActivityPage,
   validateSearch: (search) => searchSchema.parse(search),
+  staticData: {
+    title: 'statistics.tracking-activity',
+    description:
+      'Rastreamento de atividades dos usuários no sistema. Exibe gráficos de acessos diários, ações realizadas, dispositivos utilizados, localizações, paths navegados e estatísticas de uso do WhatsApp. Permite filtros por usuário e período.',
+    tags: ['tracking', 'activity', 'user-analytics', 'access-log', 'audit', 'usage-statistics', 'whatsapp', 'devices', 'monitoring'],
+    examplePrompts: ['Ver atividades dos usuários no sistema', 'Analisar acessos e dispositivos utilizados', 'Consultar estatísticas de uso por usuário'],
+    searchParams: [
+      { name: 'idEnterprise', type: 'string', description: 'ID da empresa para filtrar atividades' },
+      { name: 'periodFilter', type: 'number', description: 'Período em horas (padrão: últimas horas)' },
+      { name: 'idUsers[]', type: 'array', description: 'IDs dos usuários incluídos no filtro' },
+      { name: 'idUsersNotIncluded[]', type: 'array', description: 'IDs dos usuários excluídos do filtro' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/statistics', relation: 'parent', description: 'Hub de estatísticas' },
+      { path: '/_private/register/users', relation: 'alternative', description: 'Cadastro de usuários' },
+    ],
+    entities: ['User', 'AccessLog', 'Activity'],
+    capabilities: [
+      'Gráfico de acessos por dia',
+      'Gráfico de acessos por usuário e dia',
+      'Top usuários mais ativos',
+      'Estatísticas de uso do WhatsApp',
+      'Paths/rotas mais navegados',
+      'Ações realizadas na frota',
+      'Localizações de acesso',
+      'Dispositivos utilizados',
+      'Filtros por usuário (inclusão/exclusão)',
+      'Filtro de período (horas)',
+      'Gráficos específicos para empresa RM',
+    ],
+  },
 });
 
 function TrackingActivityPage() {

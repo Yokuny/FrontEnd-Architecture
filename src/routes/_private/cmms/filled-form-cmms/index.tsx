@@ -26,6 +26,29 @@ import { useCmmsActivities, useFilledForms } from './@hooks/use-filled-form-api'
 import { filledFormSearchSchema } from './@interface/filled-form.schema';
 
 export const Route = createFileRoute('/_private/cmms/filled-form-cmms/')({
+  staticData: {
+    title: 'filled.forms',
+    description:
+      'Página de gerenciamento de formulários CMMS preenchidos. Permite visualizar, filtrar e analisar histórico de inspeções, checklists e formulários digitais de manutenção com KPIs de performance.',
+    tags: ['cmms', 'form', 'formulário', 'filled', 'preenchido', 'checklist', 'inspection', 'inspeção', 'maintenance', 'manutenção', 'kpi'],
+    examplePrompts: ['Ver formulários CMMS preenchidos', 'Listar inspeções realizadas', 'Filtrar checklists por máquina e período', 'Analisar KPIs de manutenção'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página', example: '1' },
+      { name: 'size', type: 'number', description: 'Itens por página', example: '10' },
+      { name: 'search', type: 'string', description: 'Termo de busca' },
+      { name: 'machines', type: 'array', description: 'IDs das máquinas' },
+      { name: 'initialDate', type: 'string', description: 'Data inicial YYYY-MM-DD' },
+      { name: 'finalDate', type: 'string', description: 'Data final YYYY-MM-DD' },
+      { name: 'status', type: 'string', description: 'Status do formulário' },
+      { name: 'tipoManutencao', type: 'string', description: 'Tipo de manutenção' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/cmms', relation: 'parent', description: 'Hub CMMS' },
+      { path: '/_private/maintenance', relation: 'sibling', description: 'Gestão de manutenção' },
+    ],
+    entities: ['Form', 'FormResponse', 'Machine', 'KPI'],
+    capabilities: ['Listar formulários preenchidos', 'Filtrar por máquinas e período', 'Visualizar KPIs consolidados', 'Filtrar por status e tipo de manutenção'],
+  },
   component: CMMSFilledFormsPage,
   validateSearch: filledFormSearchSchema,
 });

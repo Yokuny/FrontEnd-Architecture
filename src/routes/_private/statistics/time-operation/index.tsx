@@ -31,6 +31,34 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/statistics/time-operation/')({
   component: TimeOperationPage,
   validateSearch: (search) => searchSchema.parse(search),
+  staticData: {
+    title: 'statistics.time-operation',
+    description:
+      'Análise de tempo de operação da frota. Exibe percentuais de tempo em cada status operacional (navegando, atracado, fundeado, etc), distância percorrida e permite comparação entre embarcações e modelos. Baseado em dados AIS/rastreamento.',
+    tags: ['time-operation', 'operational-status', 'ais', 'underway', 'moored', 'anchored', 'transit', 'analytics', 'fleet-analysis'],
+    examplePrompts: ['Analisar tempo de operação da frota', 'Ver percentual de tempo navegando vs atracado', 'Comparar status operacionais entre embarcações'],
+    searchParams: [
+      { name: 'min', type: 'string', description: 'Data/hora inicial (formato ISO 8601)' },
+      { name: 'max', type: 'string', description: 'Data/hora final (formato ISO 8601)' },
+      { name: 'idMachine[]', type: 'array', description: 'IDs das embarcações para filtro' },
+      { name: 'idModel[]', type: 'array', description: 'IDs dos modelos para filtro' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/statistics', relation: 'parent', description: 'Hub de estatísticas' },
+      { path: '/_private/statistics/integration', relation: 'sibling', description: 'Status de integração AIS' },
+      { path: '/_private/telemetry/fleet-panel', relation: 'alternative', description: 'Painel da frota em tempo real' },
+    ],
+    entities: ['Machine', 'OperationalStatus', 'ModelMachine'],
+    capabilities: [
+      'Tabela com percentuais por status operacional',
+      'Cálculo de tempo em minutos por status',
+      'Distância percorrida por embarcação',
+      'Ordenação por coluna (percentual)',
+      'Filtros por embarcação e modelo',
+      'Filtro de período (padrão: últimos 7 dias)',
+      'Consolidação de status transit/underway',
+    ],
+  },
 });
 
 function TimeOperationPage() {

@@ -26,6 +26,37 @@ import { searchSchema } from './@interface/kpis-cmms.schema';
 export const Route = createFileRoute('/_private/statistics/kpis-cmms/')({
   component: KPISCMMSPage,
   validateSearch: (search) => searchSchema.parse(search),
+  staticData: {
+    title: 'statistics.kpis-cmms',
+    description:
+      'Dashboard de KPIs do CMMS (Computerized Maintenance Management System). Exibe métricas de confiabilidade por embarcação e grupo, tarefas de manutenção, status de execução, desvios de cronograma e análise de equipamentos críticos.',
+    tags: ['kpis', 'cmms', 'maintenance', 'manutencao', 'reliability', 'confiabilidade', 'analytics', 'preventive-maintenance', 'dashboard'],
+    examplePrompts: ['Ver KPIs de manutenção da frota', 'Analisar confiabilidade das embarcações', 'Consultar desvios de manutenção preventiva'],
+    searchParams: [
+      { name: 'initialDate', type: 'string', description: 'Data inicial do filtro (formato: yyyy-MM-dd)' },
+      { name: 'finalDate', type: 'string', description: 'Data final do filtro (formato: yyyy-MM-dd)' },
+      { name: 'machines', type: 'string', description: 'IDs das embarcações separadas por vírgula' },
+      { name: 'status', type: 'string', description: 'Status das tarefas de manutenção' },
+      { name: 'tipoManutencao', type: 'string', description: 'Tipos de manutenção separados por vírgula' },
+      { name: 'equipmentCritical', type: 'string', description: 'Filtro de equipamentos críticos (true/false/All)' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/statistics', relation: 'parent', description: 'Hub de estatísticas' },
+      { path: '/_private/cmms', relation: 'sibling', description: 'Módulo CMMS completo' },
+      { path: '/_private/register/maintenance', relation: 'alternative', description: 'Cadastro de manutenções' },
+    ],
+    entities: ['MaintenanceTask', 'KPI', 'Machine', 'MaintenanceType'],
+    capabilities: [
+      'KPIs consolidados de manutenção',
+      'Gráfico de confiabilidade por embarcação',
+      'Gráfico de confiabilidade por grupo',
+      'Gráfico de tarefas por embarcação',
+      'Gráfico de status de manutenções',
+      'Gráfico de desvios de cronograma',
+      'Filtros por período, embarcações, tipo de manutenção',
+      'Filtro de equipamentos críticos',
+    ],
+  },
 });
 
 function KPISCMMSPage() {
