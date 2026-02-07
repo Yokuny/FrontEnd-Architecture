@@ -59,7 +59,7 @@ function ExternalUsersPage() {
   if (!idEnterpriseQuery) {
     return (
       <Card>
-        <CardHeader title={t('usernames.external')} />
+        <CardHeader />
         <CardContent>
           <EmptyData />
         </CardContent>

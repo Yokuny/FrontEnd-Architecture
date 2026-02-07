@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
@@ -51,14 +50,13 @@ export const Route = createFileRoute('/_private/ia/anomaly-detector/')({
 });
 
 function AnomalyDetectorPage() {
-  const { t } = useTranslation();
   const [modalSensors, setModalSensors] = useState<Record<string, number> | null>(null);
 
   const { normalizedData, isLoading, isFabric, handleClassify } = useAnomalyDetector();
 
   return (
     <Card>
-      <CardHeader title={t('menu.nexai.anomaly.detector')}>{!isFabric && <InputFileCsv onHandleData={handleClassify} />}</CardHeader>
+      <CardHeader>{!isFabric && <InputFileCsv onHandleData={handleClassify} />}</CardHeader>
 
       <CardContent>
         {isLoading ? (

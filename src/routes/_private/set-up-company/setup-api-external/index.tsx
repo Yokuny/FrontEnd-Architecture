@@ -60,7 +60,7 @@ function SetupApiExternalFormContent({ idEnterprise }: { idEnterprise?: string }
 
   return (
     <Card>
-      <CardHeader title={t('setup.api.external')} />
+      <CardHeader />
       <CardContent>
         {isLoading ? (
           <DefaultLoading />

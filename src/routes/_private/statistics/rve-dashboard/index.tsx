@@ -121,7 +121,7 @@ function RVEDashboardPage() {
 
   return (
     <Card>
-      <CardHeader title="RVE Dashboard" />
+      <CardHeader />
       <CardContent className="flex flex-col">
         {/* Filtros */}
         <Item variant="outline" className="bg-secondary">

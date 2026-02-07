@@ -85,7 +85,7 @@ function TrackingActivityPage() {
 
   return (
     <Card>
-      <CardHeader title={t('tracking.activity')} />
+      <CardHeader />
       <CardContent className="flex flex-col gap-6">
         <Item variant="outline" className="bg-secondary">
           <div className="flex min-w-72 flex-col gap-1.5">

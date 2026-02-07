@@ -179,7 +179,7 @@ function SimulatorCIIPage() {
 
   return (
     <Card>
-      <CardHeader title={t('simulator.cii')} />
+      <CardHeader />
       <CardContent className="flex flex-col p-0">
         <DefaultFormLayout sections={formSections} />
 

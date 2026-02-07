@@ -298,7 +298,7 @@ function GeofenceAddPage() {
   if (id && isLoading) {
     return (
       <Card>
-        <CardHeader title={t('edit.geofence')} />
+        <CardHeader />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -339,7 +339,7 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
 
   return (
     <Card>
-      <CardHeader title={initialData ? t('edit.geofence') : t('add.geofence')} />
+      <CardHeader />
 
       <Form {...form}>
         <form onSubmit={onSubmit}>

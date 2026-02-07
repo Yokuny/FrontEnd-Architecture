@@ -24,7 +24,7 @@ function RemoteIHMPage() {
 
   return (
     <Card>
-      <CardHeader title={t('telemetry.remote.ihm')} />
+      <CardHeader />
       <CardContent>{/* TODO: Migrate content from iotlog-fronted */}</CardContent>
     </Card>
   );

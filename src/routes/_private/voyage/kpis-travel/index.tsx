@@ -92,7 +92,7 @@ function KpisVoyagePage() {
 
   return (
     <Card>
-      <CardHeader title={t('kpis.travel')} />
+      <CardHeader />
       <CardContent className="flex flex-col gap-4">
         <Item variant="outline" className="bg-secondary">
           <MachineByEnterpriseSelect

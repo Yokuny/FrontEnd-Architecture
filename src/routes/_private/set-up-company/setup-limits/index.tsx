@@ -53,7 +53,7 @@ function SetupLimitsFormContent({ idEnterprise }: { idEnterprise?: string }) {
 
   return (
     <Card>
-      <CardHeader title={t('setup.limits')} />
+      <CardHeader />
       <CardContent>
         {isLoading ? (
           <DefaultLoading />

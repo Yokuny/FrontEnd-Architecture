@@ -169,7 +169,7 @@ function TimeOperationPage() {
 
   return (
     <Card>
-      <CardHeader title={t('time.operation')} />
+      <CardHeader />
       <CardContent>
         <Item variant="outline" className="bg-secondary">
           <MachineSelect

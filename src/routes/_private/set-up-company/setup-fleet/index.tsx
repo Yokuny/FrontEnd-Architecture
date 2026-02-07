@@ -57,7 +57,7 @@ function SetupFleetFormContent({ idEnterprise }: { idEnterprise?: string }) {
 
   return (
     <Card>
-      <CardHeader title={`${t('config')} Fleet`} />
+      <CardHeader />
       <CardContent>
         {isLoading ? (
           <DefaultLoading />

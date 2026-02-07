@@ -115,7 +115,7 @@ function RVESoundingDashboardPage() {
 
   return (
     <Card>
-      <CardHeader title={t('polling')} />
+      <CardHeader />
 
       <CardContent>
         <Item variant="outline" className="bg-secondary">

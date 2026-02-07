@@ -42,7 +42,7 @@ function PrivateHubPage() {
   if (routes.length === 0) {
     return (
       <Card>
-        <CardHeader title={t('index')} />
+        <CardHeader />
         <CardContent>
           <DefaultEmptyData />
         </CardContent>
@@ -52,7 +52,7 @@ function PrivateHubPage() {
 
   return (
     <Card>
-      <CardHeader title={t('index')} />
+      <CardHeader />
       <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {routes.map((route) => {
           const label = t(route.labelKey);

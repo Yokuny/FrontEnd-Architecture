@@ -524,7 +524,7 @@ function AddUserPage() {
 
   return (
     <Card>
-      <CardHeader title={t('users.add')} />
+      <CardHeader />
 
       <CardContent>
         <DefaultFormLayout>

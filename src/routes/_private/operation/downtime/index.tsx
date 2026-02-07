@@ -55,7 +55,7 @@ function DowntimePage() {
 
   return (
     <Card>
-      <CardHeader title={t('downtime')} />
+      <CardHeader />
       <CardContent>
         <p className="text-muted-foreground">{t('operation.downtime.description')}</p>
         <div className="mt-8 flex items-center justify-center rounded-lg border-2 border-dashed p-8">

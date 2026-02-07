@@ -90,7 +90,7 @@ function TelemetryHubPage() {
 
   return (
     <Card>
-      <CardHeader title={t('telemetry')} />
+      <CardHeader />
       <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {menuItems.map((item) => (
           <Item key={item.to} variant="outline" className="h-full cursor-pointer" asChild>

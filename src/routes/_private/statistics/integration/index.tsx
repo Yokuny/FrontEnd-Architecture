@@ -205,7 +205,7 @@ function FleetStatusListPage() {
 
   return (
     <Card>
-      <CardHeader title={t('status.fleet')} />
+      <CardHeader />
       <CardContent>
         {isLoading ? (
           <DefaultLoading />

@@ -66,7 +66,7 @@ function EditUserPage() {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader title={t('edit.user')} />
+        <CardHeader />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -76,7 +76,7 @@ function EditUserPage() {
 
   return (
     <Card>
-      <CardHeader title={t('edit.user')} />
+      <CardHeader />
       <form onSubmit={onSubmit}>
         <CardContent>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

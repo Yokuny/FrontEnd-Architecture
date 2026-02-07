@@ -65,7 +65,7 @@ function EditRolePage() {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader title={t('edit.role')} />
+        <CardHeader />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -75,7 +75,7 @@ function EditRolePage() {
 
   return (
     <Card>
-      <CardHeader title={t('edit.role')} />
+      <CardHeader />
       <Form {...form}>
         <form onSubmit={onSubmit}>
           <CardContent className="p-0">

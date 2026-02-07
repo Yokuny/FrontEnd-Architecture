@@ -45,7 +45,7 @@ function BuoysDwellTimePage() {
 
   return (
     <Card>
-      <CardHeader title={t('telemetry.buoys.dwell.time')} />
+      <CardHeader />
 
       <CardContent>
         {isLoading ? (

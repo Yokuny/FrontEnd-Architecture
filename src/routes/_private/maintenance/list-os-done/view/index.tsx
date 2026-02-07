@@ -75,7 +75,7 @@ function OsDetailsPage() {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader title={t('done.os')} />
+        <CardHeader />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -86,7 +86,7 @@ function OsDetailsPage() {
   if (!data) {
     return (
       <Card>
-        <CardHeader title={t('done.os')} />
+        <CardHeader />
         <CardContent className="p-12">
           <EmptyData />
         </CardContent>

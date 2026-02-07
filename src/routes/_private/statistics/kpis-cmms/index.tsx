@@ -116,7 +116,7 @@ function KPISCMMSPage() {
 
   return (
     <Card>
-      <CardHeader title="KPI's CMMS" />
+      <CardHeader />
       <CardContent className="flex flex-col gap-6">
         {/* Filtros */}
         <Item variant="outline" className="bg-secondary">

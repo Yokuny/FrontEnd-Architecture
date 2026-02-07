@@ -56,7 +56,7 @@ function SetupEmailFormContent({ idEnterprise }: { idEnterprise?: string }) {
 
   return (
     <Card>
-      <CardHeader title={t('setup.email')} />
+      <CardHeader />
       <CardContent>
         {isLoading ? (
           <DefaultLoading />
