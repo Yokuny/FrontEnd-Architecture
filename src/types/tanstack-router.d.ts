@@ -23,7 +23,7 @@ export interface RouteRelation {
   /** Path da rota relacionada */
   path: string;
   /** Tipo de relação */
-  relation: 'parent' | 'child' | 'sibling' | 'alternative';
+  relation: 'parent' | 'child' | 'sibling' | 'alternative' | 'redirect';
   /** Descrição da relação */
   description?: string;
 }

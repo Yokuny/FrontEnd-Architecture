@@ -53,7 +53,6 @@ export const Route = createFileRoute('/_private/set-up-company/external-users/')
 });
 
 function ExternalUsersPage() {
-  const { t } = useTranslation();
   const { id: idEnterpriseQuery } = useSearch({ from: '/_private/set-up-company/external-users/' });
 
   if (!idEnterpriseQuery) {

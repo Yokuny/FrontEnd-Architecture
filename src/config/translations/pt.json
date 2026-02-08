@@ -2882,5 +2882,11 @@
   "yesterday": "Até ontem",
   "you": "Você",
   "zip.label": "CEP",
-  "zoom.init.label": "Zoom inicial"
+  "zoom.init.label": "Zoom inicial",
+  "ai.routes_found": "Encontrei {count} rota(s) relacionada(s):",
+  "ai.no_routes_found": "Não encontrei nenhuma página específica no sistema para essa solicitação. Tente descrever o que você precisa fazer (ex: \"ver consumo\", \"gerenciar usuários\").",
+  "ai.error_processing": "Ocorreu um erro ao processar sua solicitação local. Verifique os logs do console.",
+  "ai.navigation_suggestion": "Sugestão de Navegação",
+  "ai.suggestions": "Ver caminhos sugeridos",
+  "stop": "Parar"
 }

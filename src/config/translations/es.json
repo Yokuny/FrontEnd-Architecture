@@ -2871,5 +2871,11 @@
   "yesterday": "Hasta ayer",
   "you": "Tú",
   "zip.label": "Código postal",
-  "zoom.init.label": "Zoom inicial"
+  "zoom.init.label": "Zoom inicial",
+  "ai.routes_found": "Encontré {count} ruta(s) relacionada(s):",
+  "ai.no_routes_found": "No encontré ninguna página específica en el sistema para esta solicitud. Intente describir o que necesita hacer (ej: \"ver consumo\", \"gestionar usuarios\").",
+  "ai.error_processing": "Ocurrió un error al procesar su solicitud local. Verifique los registros de la consola.",
+  "ai.navigation_suggestion": "Sugerencia de Navegación",
+  "ai.suggestions": "Ver rutas sugeridas",
+  "stop": "Detener"
 }

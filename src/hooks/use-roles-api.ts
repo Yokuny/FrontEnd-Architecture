@@ -217,7 +217,7 @@ export function useRolesSelect(isAll = false, params?: Record<string, unknown>) 
   return {
     ...filterQuery,
     data: filterQuery.data?.data || [],
-  } as typeof allQuery;
+  } as unknown as typeof allQuery;
 }
 
 // Helper function to map roles to select options

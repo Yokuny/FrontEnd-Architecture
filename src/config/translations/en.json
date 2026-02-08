@@ -2860,5 +2860,11 @@
   "yesterday": "Until yesterday",
   "you": "You",
   "zip.label": "ZIP code",
-  "zoom.init.label": "Zoom initial"
+  "zoom.init.label": "Zoom initial",
+  "ai.routes_found": "Found {count} related route(s):",
+  "ai.no_routes_found": "I didn't find any specific page in the system for this request. Try describing what you need to do (e.g.: \"view consumption\", \"manage users\").",
+  "ai.error_processing": "An error occurred while processing your local request. Check the console logs.",
+  "ai.navigation_suggestion": "Navigation Suggestion",
+  "ai.suggestions": "See suggested paths",
+  "stop": "Stop"
 }

@@ -23,7 +23,7 @@ export function OperationalKPI({ data, isLoading }: OperationalKPIProps) {
     }, 0);
     const average = total ? totalPercent / total : 0;
 
-    let colors = OPERATIONAL_COLORS.POOR;
+    let colors: (typeof OPERATIONAL_COLORS)[keyof typeof OPERATIONAL_COLORS] = OPERATIONAL_COLORS.POOR;
 
     if (average >= OPERATIONAL_THRESHOLDS.EXCELLENT) {
       colors = OPERATIONAL_COLORS.EXCELLENT;

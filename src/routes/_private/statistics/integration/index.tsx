@@ -28,7 +28,7 @@ export const Route = createFileRoute('/_private/statistics/integration/')({
       'Status de integração da frota com sistemas externos. Monitora atualizações de APIs de rastreamento (AIS, MarineTraffic, etc), exibe ETA, portos de destino, MMSI/IMO e alerta sobre embarcações com dados desatualizados.',
     tags: ['integration', 'integracao', 'fleet-status', 'ais', 'tracking', 'middleware', 'api-status', 'vessel-monitoring', 'eta'],
     examplePrompts: ['Ver status de integração da frota', 'Verificar embarcações com dados desatualizados', 'Consultar último update de rastreamento AIS'],
-    searchParams: [{ name: 'idEnterprise', type: 'string', description: 'ID da empresa para filtrar status' }],
+    searchParams: [],
     relatedRoutes: [
       { path: '/_private/statistics', relation: 'parent', description: 'Hub de estatísticas' },
       { path: '/_private/telemetry/fleet-panel', relation: 'sibling', description: 'Painel da frota com dados em tempo real' },

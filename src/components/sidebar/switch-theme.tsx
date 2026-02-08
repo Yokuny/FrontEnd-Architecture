@@ -350,7 +350,7 @@ const CloudSunIcon = forwardRef<CloudSunIconHandle, HTMLAttributes<HTMLDivElemen
   );
 
   return (
-    <button className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <div className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
         height="28"
@@ -371,7 +371,7 @@ const CloudSunIcon = forwardRef<CloudSunIconHandle, HTMLAttributes<HTMLDivElemen
         ))}
         <title>Cloud Sun</title>
       </svg>
-    </button>
+    </div>
   );
 });
 

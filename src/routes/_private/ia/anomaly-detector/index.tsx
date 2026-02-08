@@ -29,7 +29,7 @@ export const Route = createFileRoute('/_private/ia/anomaly-detector/')({
       'Analisar padrões anormais',
       'Processar dados de sensores',
     ],
-    searchParams: [{ name: 'idEnterprise', type: 'string', description: 'ID da empresa para análise de anomalias', example: 'uuid-789' }],
+    searchParams: [],
     relatedRoutes: [
       { path: '/_private/ia', relation: 'parent', description: 'Hub de IA' },
       { path: '/_private/cmms/sensor', relation: 'sibling', description: 'Gestão de sensores' },

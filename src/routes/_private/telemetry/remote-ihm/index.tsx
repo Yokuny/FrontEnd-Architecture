@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export const Route = createFileRoute('/_private/telemetry/remote-ihm/')({
@@ -20,8 +19,6 @@ export const Route = createFileRoute('/_private/telemetry/remote-ihm/')({
 });
 
 function RemoteIHMPage() {
-  const { t } = useTranslation();
-
   return (
     <Card>
       <CardHeader />

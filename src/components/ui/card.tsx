@@ -14,7 +14,7 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-function CardHeader({ children, title: titleProp, ...props }: { children?: React.ReactNode; title?: React.ReactNode }) {
+function CardHeader({ className, children, title: titleProp, ...props }: { className?: string; children?: React.ReactNode; title?: React.ReactNode }) {
   const router = useRouter();
   const matches = useMatches();
   const { t } = useTranslation();

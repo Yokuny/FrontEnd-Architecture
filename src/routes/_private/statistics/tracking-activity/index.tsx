@@ -40,7 +40,6 @@ export const Route = createFileRoute('/_private/statistics/tracking-activity/')(
     tags: ['tracking', 'activity', 'user-analytics', 'access-log', 'audit', 'usage-statistics', 'whatsapp', 'devices', 'monitoring'],
     examplePrompts: ['Ver atividades dos usuários no sistema', 'Analisar acessos e dispositivos utilizados', 'Consultar estatísticas de uso por usuário'],
     searchParams: [
-      { name: 'idEnterprise', type: 'string', description: 'ID da empresa para filtrar atividades' },
       { name: 'periodFilter', type: 'number', description: 'Período em horas (padrão: últimas horas)' },
       { name: 'idUsers[]', type: 'array', description: 'IDs dos usuários incluídos no filtro' },
       { name: 'idUsersNotIncluded[]', type: 'array', description: 'IDs dos usuários excluídos do filtro' },

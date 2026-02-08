@@ -27,7 +27,6 @@ export const Route = createFileRoute('/_private/telemetry/list-dashboard/')({
       { name: 'page', type: 'number', description: 'Número da página (padrão: 1)' },
       { name: 'size', type: 'number', description: 'Tamanho da página (padrão: 10)' },
       { name: 'search', type: 'string', description: 'Termo de busca' },
-      { name: 'idEnterprise', type: 'string', description: 'ID da empresa' },
     ],
     relatedRoutes: [
       { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
