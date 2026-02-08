@@ -1,4 +1,4 @@
-import type { ChatMessage } from '../@interface/prompt.types';
+import type { ChatMessage } from './prompt.types';
 
 export function createMessage(message: string, sender: string, reply: boolean, type: 'text' = 'text'): ChatMessage {
   return {

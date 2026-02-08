@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { MessageSquare, ScanSearch } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AIPromptSheet } from '@/components/ai-prompt';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 
@@ -14,7 +16,6 @@ export const Route = createFileRoute('/_private/ia/')({
     examplePrompts: ['Acessar ferramentas de IA', 'Usar chatbot inteligente', 'Detectar anomalias', 'Ver menu de IA', 'Navegar para recursos de machine learning'],
     searchParams: [],
     relatedRoutes: [
-      { path: '/_private/ia/prompt', relation: 'child', description: 'AI Chatbot com prompt engineering' },
       { path: '/_private/ia/anomaly-detector', relation: 'child', description: 'Detector de anomalias ML' },
       { path: '/_private', relation: 'parent', description: 'Dashboard principal' },
     ],
@@ -25,40 +26,37 @@ export const Route = createFileRoute('/_private/ia/')({
 
 function IAHubPage() {
   const { t } = useTranslation();
-
-  const menuItems = [
-    {
-      title: t('ai.prompt'),
-      description: t('ai.anomaly.detector'),
-      icon: MessageSquare,
-      to: '/ia/prompt' as const,
-    },
-    {
-      title: t('ai.anomaly.detector'),
-      description: t('ai.anomaly.detector'),
-      icon: ScanSearch,
-      to: '/ia/anomaly-detector' as const,
-    },
-  ];
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
 
   return (
-    <Card>
-      <CardHeader />
-      <CardContent className="grid gap-4 md:grid-cols-2">
-        {menuItems.map((item) => (
-          <Item key={item.to} variant="outline" className="h-full cursor-pointer" asChild>
-            <Link to={item.to}>
+    <>
+      <Card>
+        <CardHeader />
+        <CardContent className="grid gap-4 md:grid-cols-2">
+          <Item variant="outline" className="h-full cursor-pointer" onClick={() => setIsPromptOpen(true)}>
+            <ItemMedia variant="icon">
+              <MessageSquare className="size-5" />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle className="text-base">{t('ai.prompt')}</ItemTitle>
+              <ItemDescription>{t('ai.anomaly.detector')}</ItemDescription>
+            </ItemContent>
+          </Item>
+
+          <Item variant="outline" className="h-full cursor-pointer" asChild>
+            <Link to="/ia/anomaly-detector">
               <ItemMedia variant="icon">
-                <item.icon className="size-5" />
+                <ScanSearch className="size-5" />
               </ItemMedia>
               <ItemContent>
-                <ItemTitle className="text-base">{item.title}</ItemTitle>
-                <ItemDescription>{item.description}</ItemDescription>
+                <ItemTitle className="text-base">{t('ai.anomaly.detector')}</ItemTitle>
+                <ItemDescription>{t('ai.anomaly.detector')}</ItemDescription>
               </ItemContent>
             </Link>
           </Item>
-        ))}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <AIPromptSheet open={isPromptOpen} onOpenChange={setIsPromptOpen} />
+    </>
   );
 }

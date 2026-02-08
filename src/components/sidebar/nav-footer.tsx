@@ -2,6 +2,8 @@
 
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AIPromptSheet } from '@/components/ai-prompt';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
@@ -12,10 +14,12 @@ import { SparklesIcon } from './sparkles-icon';
 import { FavoritesSwitcher } from './switch-favorites';
 
 export function FooterNavigation({ routes }: { routes: Route[] }) {
+  const { t } = useTranslation();
   const { state } = useSidebar();
   const { setMenuOpen } = useSidebarToggle();
   const isCollapsed = state === 'collapsed';
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
 
   const getIconForRoute = (routeId: string) => {
     if (routeId === 'ia') return <SparklesIcon size={20} />;
@@ -52,6 +56,18 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="right" className="min-w-48">
+                  {route.id === 'ia' && (
+                    <DropdownMenuItem
+                      onClick={() => {
+                        setIsPromptOpen(true);
+                        setOpenDropdown(null);
+                      }}
+                      className="flex cursor-pointer items-center gap-2"
+                    >
+                      <SparklesIcon size={16} />
+                      <span>{t('ai.assistant')}</span>
+                    </DropdownMenuItem>
+                  )}
                   {route.subs?.map((sub) => (
                     <DropdownMenuItem key={sub.link} asChild>
                       <Link to={sub.link} className="flex items-center gap-2">
@@ -78,6 +94,7 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
         );
       })}
       <FavoritesSwitcher />
+      <AIPromptSheet open={isPromptOpen} onOpenChange={setIsPromptOpen} />
     </SidebarMenu>
   );
 }

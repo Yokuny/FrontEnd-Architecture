@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from '@/lib/api/client';
-import type { AIPromptData } from '../@interface/prompt.types';
+import type { AIPromptData } from './prompt.types';
 
 export function useAIPrompt() {
   return useMutation({

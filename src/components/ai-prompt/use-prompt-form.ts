@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { type AIPromptData, aiPromptSchema } from '../@interface/prompt.types';
+import { type AIPromptData, aiPromptSchema } from './prompt.types';
 
 export function usePromptForm(onSubmit: (data: AIPromptData) => void) {
   const form = useForm<AIPromptData>({

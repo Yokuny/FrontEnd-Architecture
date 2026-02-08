@@ -3,7 +3,7 @@ import { ExternalLink, Navigation, Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
-import type { NavigationResult } from '../@utils/ai/navigationAgent';
+import type { NavigationResult } from './ai/navigationAgent';
 
 export function Suggestions({ result, onNavigate }: AssistantPanelProps) {
   const navigate = useNavigate();
