@@ -3,55 +3,55 @@
 ## Stack
 - React + Vite + TanStack Router + TanStack Query + Zustand
 
-## UI & Estilização
+## UI & Estilizacao
 - Use ShadCN UI (`src/components/ui`)
 - NUNCA use tags HTML puras estilizadas - use componentes ShadCN
-- Para cores de gráficos: `getChartColor(index)` de `src/components/ui/chart`
+- Para cores de graficos: `getChartColor(index)` de `src/components/ui/chart`
 - NUNCA use `mx-auto` no ChartContainer
 
-## Internacionalização (CRÍTICO)
+## Internacionalizacao (CRITICO)
 - TODA string de UI deve usar `t('chave')` do `react-i18next`
 - SEMPRE adicionar chaves nos 3 arquivos: `pt.json`, `en.json`, `es.json` em `src/config/translations/`
-- Use grep para verificar se a chave já existe antes de criar
+- Use grep para verificar se a chave ja existe antes de criar
 
 ## Roteamento
-- Rotas baseadas em diretórios com `index.tsx` obrigatório
+- Rotas baseadas em diretorios com `index.tsx` obrigatorio
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
-- Estrutura válida: `index.tsx`, `add.tsx`, `$id.tsx`
+- Estrutura valida: `index.tsx`, `add.tsx`, `$id.tsx`
 
 ## Datas
-- SEMPRE usar `@/lib/formatDate` para formatação
+- SEMPRE usar `@/lib/formatDate` para formatacao
 - NUNCA importar `format` diretamente do `date-fns`
 
 ## Estado Global
-- Usar Zustand com middleware `persist` para persistência
+- Usar Zustand com middleware `persist` para persistencia
 - NUNCA usar `localStorage.setItem` diretamente
 
-## Componentes Obrigatórios
+## Componentes Obrigatorios
 - Dados vazios: `<DefaultEmptyData />` de `src/components/default-empty-data.tsx`
 - Loading: `<DefaultLoading />` de `src/components/default-loading.tsx`
-- Formulários: `<DefaultFormLayout />` de `src/components/default-form-layout.tsx`
+- Formularios: `<DefaultFormLayout />` de `src/components/default-form-layout.tsx`
 
-## Estrutura de Página
+## Estrutura de Pagina
 ```tsx
 <Card>
   <CardHeader title={t('titulo')}>
-    {/* Ações: botões, filtros */}
+    {/* Acoes: botoes, filtros */}
   </CardHeader>
   <CardContent>
-    {/* Conteúdo */}
+    {/* Conteudo */}
   </CardContent>
   <CardFooter layout="multi | single">
-    {/* Paginação */}
+    {/* Paginacao */}
   </CardFooter>
 </Card>
 ```
 
-## Componentes Comuns (não páginas)
+## Componentes Comuns (nao paginas)
 - NUNCA usar Card.tsx em componentes comuns
 - Usar `<Item>`, `<ItemTitle>`, `<ItemDescription>` de `src/components/ui/item.tsx`
 
-## Hooks de API (Padrão TanStack Query)
+## Hooks de API (Padrao TanStack Query)
 ```tsx
 // src/hooks/use-{feature}-api.ts
 export const featureKeys = {
@@ -68,66 +68,44 @@ export function useFeature() {
 }
 ```
 
-## Hooks de Formulário (react-hook-form + zod)
+## Hooks de Formulario (react-hook-form + zod)
 - Criar em `@hooks/use-{feature}-form.ts` da rota
-- Usar `zodResolver` para validação
+- Usar `zodResolver` para validacao
 
 ## Antes de Criar Hooks
-- VERIFICAR se já existe em `src/hooks/` (hooks globais)
-- Hooks específicos de rota: criar em `@hooks/` da rota
+- VERIFICAR se ja existe em `src/hooks/` (hooks globais)
+- Hooks especificos de rota: criar em `@hooks/` da rota
 
 ## Estrutura de Pastas da Rota
 ```
 src/routes/_private/{module}/
-├── index.tsx           # Página principal
-├── @components/        # Componentes específicos da rota
+├── index.tsx           # Pagina principal
+├── @components/        # Componentes especificos da rota
 ├── @consts/           # Valores fixos, enums
-├── @hooks/            # Hooks específicos
+├── @hooks/            # Hooks especificos
 ├── @interface/        # Types, Interfaces, Schemas Zod
-└── @utils/            # Funções auxiliares
+└── @utils/            # Funcoes auxiliares
 ```
-
-## Selects Disponíveis (68 componentes em `src/components/selects`)
-- Já encapsulam API, loading e erro
-- Props: `mode`, `value`, `onChange`, `disabled`, `clearable`
-
-**TOP 10 mais usados:**
-| Componente | Usos |
-|------------|------|
-| `MachineByEnterpriseSelect` | 28 |
-| `EnterpriseSelect` | 27 |
-| `MachineSelect` | 9 |
-| `UserSelect` | 8 |
-| `UnitSelect` | 5 |
-| `SensorByMachineSelect` | 5 |
-| `MaintenancePlanSelect` | 4 |
-| `CustomerSelect` | 4 |
-| `ConsumptionMachineSelect` | 4 |
-| `ModelMachineSelect` | 4 |
-
-## Hooks Globais (258 hooks em `src/hooks`)
-
-**TOP 15 mais usados:**
-| Hook | Usos | Descrição |
-|------|------|-----------|
-| `useEnterpriseFilter` | 90 | idEnterprise do filtro global |
-| `useHasPermission` | 35 | Verifica permissões do usuário |
-| `useSidebar` | 7 | Estado da sidebar |
-| `useSidebarToggle` | 7 | Toggle da sidebar |
-| `useCMMSKPIs` | 6 | KPIs do CMMS |
-| `useIsMobile` | 5 | Detecta dispositivo mobile |
-| `useMachinesByEnterpriseSelect` | 5 | Máquinas por empresa (select) |
-| `useEnterprisesSelect` | 4 | Empresas para select |
-| `useUsersApi` | 4 | CRUD usuários |
-| `usePartsApi` | 3 | CRUD peças |
-| `useModelMachinesApi` | 3 | CRUD modelos de máquinas |
-| `usePlatformsApi` | 3 | CRUD plataformas |
-| `useAuth` | 3 | Sessão e login |
-| `useSensorsApi` | 3 | CRUD sensores |
-| `useMachinesApi` | 3 | CRUD máquinas |
 
 ## Antes de Commitar
 ```bash
 pnpm run format  # Biome
 pnpm run check   # TypeScript
 ```
+
+## Documentacao Detalhada (sob demanda)
+
+Para padroes detalhados com exemplos completos, consulte os docs conforme o cenario:
+
+| Cenario | Documento |
+|---------|-----------|
+| Iniciar nova feature / criar pastas | `docs/route-structure.md`, `docs/checklist.md` |
+| Criar pagina de listagem ou formulario | `docs/page-patterns.md` |
+| Criar hooks de API (TanStack Query) | `docs/api-hooks.md` |
+| Criar formularios (react-hook-form) | `docs/form-hooks.md` |
+| Criar schemas Zod, interfaces, consts | `docs/schemas-types.md` |
+| Gerenciar estado global (Zustand) | `docs/state-management.md` |
+| Traducoes i18n ou formatacao de datas | `docs/i18n-dates.md` |
+| Padroes de componentes React | `docs/react-patterns.md` |
+| Buscar selects, hooks ou componentes existentes | `docs/available-resources.md` |
+| Consultar tech stack e versoes | `docs/stack.md` |
