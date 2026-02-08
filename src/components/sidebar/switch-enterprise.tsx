@@ -1,11 +1,14 @@
 'use client';
 
+import { useNavigate } from '@tanstack/react-router';
 import type { Variants } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
+import { LogOutIcon } from 'lucide-react';
 import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/hooks/use-auth';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 import { useEnterprisesSelect } from '@/hooks/use-enterprises-api';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
@@ -16,8 +19,15 @@ export function EnterpriseSwitcher() {
   const { setMenuOpen } = useSidebarToggle();
   const { idEnterprise, setIdEnterprise } = useEnterpriseFilter();
   const { data: enterprises } = useEnterprisesSelect();
+  const { clearAuth } = useAuth();
+  const navigate = useNavigate();
 
   const selectedEnterprise = enterprises?.find((e) => e.id === idEnterprise);
+
+  const onLogout = () => {
+    clearAuth();
+    navigate({ to: '/auth' });
+  };
 
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
@@ -39,6 +49,13 @@ export function EnterpriseSwitcher() {
             {idEnterprise === enterprise.id && <span className="ml-auto">✓</span>}
           </DropdownMenuItem>
         ))}
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem onClick={onLogout} variant="destructive">
+          <LogOutIcon className="mr-2 size-4" />
+          <span>{t('logout')}</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
