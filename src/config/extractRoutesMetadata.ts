@@ -189,6 +189,7 @@ function main() {
       return JSON.stringify({
         id: r.path.replace(/\W+/g, '_'),
         path: r.path,
+        title: r.title,
         semantic_text: buildSemanticText(r),
         // intents removido pois virou semantic_text
         capabilities: r.capabilities,

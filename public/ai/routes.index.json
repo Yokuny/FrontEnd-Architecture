@@ -1,14 +1,8 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-07T00:27:17.763Z",
-  "totalRoutes": 102,
+  "generatedAt": "2026-02-08T01:52:32.855Z",
+  "totalRoutes": 100,
   "routes": [
-    {
-      "id": "__private_",
-      "path": "/_private/",
-      "title": "index",
-      "embeddingKey": "__private_"
-    },
     {
       "id": "__private_calendar_maintenance_",
       "path": "/_private/calendar-maintenance/",
@@ -164,12 +158,6 @@
       "path": "/_private/ia/anomaly-detector/",
       "title": "menu.nexai.anomaly.detector",
       "embeddingKey": "__private_ia_anomaly_detector_"
-    },
-    {
-      "id": "__private_ia_prompt_",
-      "path": "/_private/ia/prompt/",
-      "title": "ai.prompt",
-      "embeddingKey": "__private_ia_prompt_"
     },
     {
       "id": "__private_maintenance_",

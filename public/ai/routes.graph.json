@@ -1,11 +1,6 @@
 {
   "nodes": [
     {
-      "id": "__private_",
-      "type": "page",
-      "label": "index"
-    },
-    {
       "id": "__private_calendar_maintenance_",
       "type": "page",
       "label": "calendar.maintenance"
@@ -134,11 +129,6 @@
       "id": "__private_ia_anomaly_detector_",
       "type": "page",
       "label": "menu.nexai.anomaly.detector"
-    },
-    {
-      "id": "__private_ia_prompt_",
-      "type": "page",
-      "label": "ai.prompt"
     },
     {
       "id": "__private_maintenance_",
@@ -512,54 +502,6 @@
     }
   ],
   "edges": [
-    {
-      "from": "__private_",
-      "to": "__private_cmms",
-      "relation": "child",
-      "description": "CMMS - Gestão de manutenção"
-    },
-    {
-      "from": "__private_",
-      "to": "__private_voyage",
-      "relation": "child",
-      "description": "Gestão de viagens"
-    },
-    {
-      "from": "__private_",
-      "to": "__private_service_management",
-      "relation": "child",
-      "description": "Gestão de serviços"
-    },
-    {
-      "from": "__private_",
-      "to": "__private_fleet_manager",
-      "relation": "child",
-      "description": "Gestão de frota"
-    },
-    {
-      "from": "__private_",
-      "to": "__private_ia",
-      "relation": "child",
-      "description": "Inteligência Artificial"
-    },
-    {
-      "from": "__private_",
-      "to": "__private_set_up_company",
-      "relation": "child",
-      "description": "Configurações da empresa"
-    },
-    {
-      "from": "__private_",
-      "to": "__private_calendar_maintenance",
-      "relation": "child",
-      "description": "Calendário de manutenções"
-    },
-    {
-      "from": "__private_",
-      "to": "__private_form",
-      "relation": "child",
-      "description": "Formulários dinâmicos"
-    },
     {
       "from": "__private_calendar_maintenance_",
       "to": "__private_cmms_maintenance_plan",
@@ -1027,18 +969,6 @@
       "to": "__private_cmms_sensor",
       "relation": "sibling",
       "description": "Gestão de sensores"
-    },
-    {
-      "from": "__private_ia_prompt_",
-      "to": "__private_ia",
-      "relation": "parent",
-      "description": "Hub de IA"
-    },
-    {
-      "from": "__private_ia_prompt_",
-      "to": "__private_ia_anomaly_detector",
-      "relation": "sibling",
-      "description": "Detector de anomalias"
     },
     {
       "from": "__private_maintenance_",

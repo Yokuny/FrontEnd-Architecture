@@ -2,96 +2,95 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { ItemDescription } from '@/components/ui/item';
+import { ItemDescription, ItemGroup } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { SparklesIcon } from '../../../../components/sidebar/sparkles-icon';
 import { ChatContent, ChatMessage } from './@components/chat';
-import { PromptInputBasic } from './@components/prompt-input-basic';
-import { useAIPrompt } from './@hooks/use-prompt-api';
+import { ChatInput } from './@components/chat-input';
+import { Suggestions } from './@components/suggestions';
+import { BYKONZ_AI_NAME } from './@consts/prompt.consts';
+// import { useAIPrompt } from './@hooks/use-prompt-api';
 import { usePromptForm } from './@hooks/use-prompt-form';
 import type { ChatMessage as ChatMessageType } from './@interface/prompt.types';
+import type { NavigationResult } from './@utils/ai/navigationAgent';
+import { useAIAssistant } from './@utils/ai/useAIAssistant';
+import { createMessage } from './@utils/prompt-utils';
 
 export const Route = createFileRoute('/_private/ia/prompt/')({
   component: AIPromptPage,
-  staticData: {
-    title: 'ai.prompt',
-    description:
-      'Chatbot inteligente com IA - assistente conversacional baseado em prompt engineering para responder perguntas, fornecer insights e auxiliar em análises. Interface de chat em tempo real com histórico de conversação',
-    tags: [
-      'ai',
-      'ia',
-      'chatbot',
-      'prompt',
-      'prompt-engineering',
-      'conversation',
-      'conversação',
-      'assistant',
-      'assistente',
-      'nlp',
-      'natural-language',
-      'chat',
-      'messaging',
-      'nexai',
-    ],
-    examplePrompts: ['Fazer uma pergunta para a IA', 'Conversar com assistente inteligente', 'Obter insights com IA', 'Analisar dados via chat', 'Usar prompt engineering'],
-    searchParams: [],
-    relatedRoutes: [
-      { path: '/_private/ia', relation: 'parent', description: 'Hub de IA' },
-      { path: '/_private/ia/anomaly-detector', relation: 'sibling', description: 'Detector de anomalias' },
-    ],
-    entities: ['ChatMessage', 'AIResponse', 'User'],
-    capabilities: [
-      'Enviar mensagens para IA',
-      'Receber respostas inteligentes',
-      'Manter histórico de conversa',
-      'Processar linguagem natural',
-      'Visualizar chat em tempo real',
-      'Scroll automático de mensagens',
-    ],
-  },
 });
 
-function ChatMessageItem({ msg }: ChatMessageProps) {
+function ChatMessageItem({ msg, assistantResults }: ChatMessageProps) {
   const isAI = !msg.reply;
 
   return (
-    <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
-      {isAI && <SparklesIcon size={18} className="mr-2 text-muted-foreground" />}
-      <ChatContent className={cn('max-w-[85%]', isAI ? 'bg-muted' : 'bg-muted-foreground text-primary-foreground')}>{msg.message}</ChatContent>
-    </ChatMessage>
+    <div className="flex flex-col gap-2">
+      <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
+        {isAI && <SparklesIcon size={18} className="mr-2 text-muted-foreground" />}
+        <ChatContent className={cn('max-w-[85%]', isAI ? 'bg-muted' : 'bg-muted-foreground text-primary-foreground')}>{msg.message}</ChatContent>
+      </ChatMessage>
+      {isAI && assistantResults && assistantResults.length > 0 && (
+        <ItemGroup className="ml-5 max-w-[80%]">
+          {assistantResults.map((result, idx) => (
+            <Suggestions key={`${result.path}-${idx}`} result={result} />
+          ))}
+        </ItemGroup>
+      )}
+    </div>
   );
 }
 
 function AIPromptPage() {
   const { t } = useTranslation();
-  const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const [messages, setMessages] = useState<(ChatMessageType & { assistantResults?: NavigationResult[] })[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const promptMutation = useAIPrompt();
+  const [isProcessing, setIsProcessing] = useState(false);
+  // const promptMutation = useAIPrompt();
+  // const { ask, explain } = useAIAssistant();
+  const { ask } = useAIAssistant();
 
   const handleSend = async (data: { question: string }) => {
-    const userMessage: ChatMessageType = {
-      message: data.question,
-      date: new Date().toLocaleTimeString(),
-      reply: true,
-      type: 'text',
-      sender: t('you') || 'Você',
-    };
+    const userMessage = createMessage(data.question, t('you') || 'Você', true);
 
     setMessages((prev) => [...prev, userMessage]);
+    setIsProcessing(true);
 
     try {
-      const response = await promptMutation.mutateAsync({ question: data.question });
-      const aiMessage: ChatMessageType = {
-        message: response.text || '',
-        date: new Date().toLocaleTimeString(),
-        reply: false,
-        type: 'text',
-        sender: 'Bykonz IA',
+      // 1. Backend response ignored as requested
+      // const response = await promptMutation.mutateAsync({ question: data.question });
+
+      // 2. Local AISearch for navigation
+      const navigationResults = await ask(data.question);
+
+      // 3. AI Explanation/Response (Powerful AI)
+      // let responseText = await explain(data.question);
+      let responseText = '';
+
+      if (!responseText) {
+        if (navigationResults.length > 0) {
+          responseText = `Encontrei ${navigationResults.length} rota(s) relacionada(s):`;
+        } else {
+          responseText =
+            'Não encontrei nenhuma página específica no sistema para essa solicitação. Tente descrever o que você precisa fazer (ex: "ver consumo", "gerenciar usuários").';
+        }
+      }
+
+      const aiMessage = {
+        ...createMessage(responseText, BYKONZ_AI_NAME, false),
+        assistantResults: navigationResults,
       };
+
       setMessages((prev) => [...prev, aiMessage]);
-    } catch {
-      // Error is handled by mutation state or can add a toast
+    } catch (err) {
+      // biome-ignore lint: debugging
+      console.log('Erro no Assistant:', err);
+      const errorMessage = {
+        ...createMessage('Ocorreu um erro ao processar sua solicitação local. Verifique os logs do console.', BYKONZ_AI_NAME, false),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -105,11 +104,11 @@ function AIPromptPage() {
         scrollContainer.scrollTop = scrollContainer.scrollHeight;
       }
     }
-  }, [messages, promptMutation.isPending]);
+  }, [messages, isProcessing]);
 
   return (
     <Card>
-      <CardHeader title="Bykonz IA" />
+      <CardHeader />
       <CardContent>
         <ScrollArea className="h-[61.5vh]" ref={scrollRef}>
           {messages.length === 0 ? (
@@ -117,12 +116,12 @@ function AIPromptPage() {
               <ItemDescription>{t('can.i.help.you')}</ItemDescription>
             </div>
           ) : (
-            <div className="flex w-full flex-col gap-2 pr-6">
+            <div className="flex w-full flex-col gap-4 pr-6">
               {messages.map((msg, i) => (
-                <ChatMessageItem key={`${msg.sender}-${i}`} msg={msg} />
+                <ChatMessageItem key={`${msg.sender}-${i}`} msg={msg} assistantResults={msg.assistantResults} />
               ))}
 
-              {promptMutation.isPending && (
+              {isProcessing && (
                 <ChatMessage className="animate-pulse">
                   <ChatContent className="flex items-center justify-center border bg-accent">
                     <SparklesIcon size={20} className="text-primary" />
@@ -134,12 +133,7 @@ function AIPromptPage() {
         </ScrollArea>
       </CardContent>
       <CardFooter>
-        <PromptInputBasic
-          input={form.watch('question') || ''}
-          onInputChange={(val: string) => form.setValue('question', val)}
-          isLoading={promptMutation.isPending}
-          onSubmit={onSubmit}
-        />
+        <ChatInput input={form.watch('question') || ''} onInputChange={(val: string) => form.setValue('question', val)} isLoading={isProcessing} onSubmit={onSubmit} />
       </CardFooter>
     </Card>
   );
@@ -147,4 +141,5 @@ function AIPromptPage() {
 
 interface ChatMessageProps {
   msg: ChatMessageType;
+  assistantResults?: NavigationResult[];
 }

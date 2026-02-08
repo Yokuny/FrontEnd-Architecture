@@ -4,9 +4,9 @@ import { ArrowUp, FileDigit, Paperclip, Square, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { ChatInput, ChatInputAction, ChatInputTextarea } from './chat';
+import { ChatInputAction, ChatInputTextarea, ChatInput as PromptInput } from './chat';
 
-export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: PromptInputBasicProps) {
+export function ChatInput({ input, onInputChange, isLoading, onSubmit }: PromptInputBasicProps) {
   const { t } = useTranslation();
   const [files, setFiles] = useState<File[]>([]);
   const uploadInputRef = useRef<HTMLInputElement>(null);
@@ -32,8 +32,15 @@ export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: 
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
+
   return (
-    <ChatInput className="w-full">
+    <PromptInput className="w-full">
       {files.length > 0 && (
         <div className="flex flex-wrap gap-2 pb-2">
           {files.map((file, index) => (
@@ -48,7 +55,7 @@ export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: 
         </div>
       )}
 
-      <ChatInputTextarea placeholder={`${t('search.placeholder')}...`} value={input} onChange={(e) => onInputChange(e.target.value)} />
+      <ChatInputTextarea placeholder={`${t('search.placeholder')}...`} value={input} onChange={(e) => onInputChange(e.target.value)} onKeyDown={handleKeyDown} />
 
       <div className="flex items-center justify-between gap-2 pt-2">
         <ChatInputAction tooltip={t('attach.files') || 'Attach files'}>
@@ -64,7 +71,7 @@ export function PromptInputBasic({ input, onInputChange, isLoading, onSubmit }: 
           </Button>
         </ChatInputAction>
       </div>
-    </ChatInput>
+    </PromptInput>
   );
 }
 
