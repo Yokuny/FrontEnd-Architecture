@@ -58,14 +58,14 @@ export function ChatInput({ input, onInputChange, isLoading, onSubmit }: PromptI
       <ChatInputTextarea placeholder={`${t('search.placeholder')}...`} value={input} onChange={(e) => onInputChange(e.target.value)} onKeyDown={handleKeyDown} />
 
       <div className="flex items-center justify-between gap-2 pt-2">
-        <ChatInputAction tooltip={t('attach.files') || 'Attach files'}>
+        <ChatInputAction tooltip={t('attach.files')}>
           <label htmlFor="file-upload" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-2xl hover:bg-secondary-foreground/10">
             <input type="file" multiple onChange={handleFileChange} className="hidden" id="file-upload" ref={uploadInputRef} />
             <Paperclip className="size-5 text-primary" />
           </label>
         </ChatInputAction>
 
-        <ChatInputAction tooltip={isLoading ? t('attach.files') : t('attach.files')}>
+        <ChatInputAction tooltip={isLoading ? t('stop') : t('send')}>
           <Button className="size-8 rounded-xl" onClick={handleSubmit} disabled={!input.trim() && files.length === 0 && !isLoading} type="button">
             {isLoading ? <Square className="size-3 fill-current" /> : <ArrowUp className="size-4" />}
           </Button>

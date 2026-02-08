@@ -1,10 +1,11 @@
 'use client';
 
 import { Link } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AIPromptSheet } from '@/components/ai-prompt';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Kbd } from '@/components/ui/kbd';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
 import { cn } from '@/lib/utils';
@@ -20,6 +21,18 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
   const isCollapsed = state === 'collapsed';
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isPromptOpen, setIsPromptOpen] = useState(false);
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === 'g' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setIsPromptOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
+  }, []);
 
   const getIconForRoute = (routeId: string) => {
     if (routeId === 'ia') return <SparklesIcon size={20} />;
@@ -62,10 +75,13 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
                         setIsPromptOpen(true);
                         setOpenDropdown(null);
                       }}
-                      className="flex cursor-pointer items-center gap-2"
+                      className="flex cursor-pointer items-center justify-between gap-2"
                     >
-                      <SparklesIcon size={16} />
-                      <span>{t('ai.assistant')}</span>
+                      <div className="flex items-center gap-2">
+                        <SparklesIcon size={16} />
+                        <span>{t('ai.assistant')}</span>
+                      </div>
+                      <Kbd className="ml-auto">Ctrl G</Kbd>
                     </DropdownMenuItem>
                   )}
                   {route.subs?.map((sub) => (

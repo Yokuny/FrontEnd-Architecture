@@ -936,12 +936,6 @@
     },
     {
       "from": "__private_ia_",
-      "to": "__private_ia_prompt",
-      "relation": "child",
-      "description": "AI Chatbot com prompt engineering"
-    },
-    {
-      "from": "__private_ia_",
       "to": "__private_ia_anomaly_detector",
       "relation": "child",
       "description": "Detector de anomalias ML"
@@ -957,12 +951,6 @@
       "to": "__private_ia",
       "relation": "parent",
       "description": "Hub de IA"
-    },
-    {
-      "from": "__private_ia_anomaly_detector_",
-      "to": "__private_ia_prompt",
-      "relation": "sibling",
-      "description": "AI Chatbot"
     },
     {
       "from": "__private_ia_anomaly_detector_",

@@ -31,24 +31,21 @@ export class NavigationAgent {
 
   // #2 recebe a pergunta e processa a busca
   public async processQuery(userInput: string): Promise<NavigationResult[]> {
-    const results = this.semanticSearch.searchWithDetails(userInput, 4);
+    const results = this.semanticSearch.searchWithDetails(userInput, 3);
 
     return results.map((result) => {
-      const match = result.route;
-      // TODO: Montar a query com IA ?
-      const params = this.queryBuilder.buildQueryParams(userInput, match);
-      // const queryString = this.queryBuilder.toQueryString(params);
+      const params = this.queryBuilder.buildQueryParams(userInput, result.route);
+      const queryString = this.queryBuilder.toQueryString(params);
 
-      const indexEntry = this.routeIndex.find((r) => r.id === match.id);
-      const rawPath = indexEntry?.path || match.path;
+      const indexEntry = this.routeIndex.find((r) => r.id === result.route.id);
+      const rawPath = indexEntry?.path || result.route.path;
       const path = this.cleanPath(rawPath);
 
       return {
-        route: match,
+        route: result.route,
         path,
         params,
-        fullUrl: path,
-        // fullUrl: `${path}${queryString}`,
+        fullUrl: `${path}${queryString}`,
         confidence: result.score,
       };
     });

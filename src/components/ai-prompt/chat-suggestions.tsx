@@ -1,11 +1,13 @@
 import { useNavigate } from '@tanstack/react-router';
 import { ExternalLink, Navigation, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import type { NavigationResult } from './ai/navigationAgent';
 
 export function Suggestions({ result, onNavigate }: AssistantPanelProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   if (!result) return null;
@@ -20,14 +22,14 @@ export function Suggestions({ result, onNavigate }: AssistantPanelProps) {
       <ItemContent className="gap-0">
         <div className="flex items-stretch gap-1">
           <Navigation className="size-3 text-muted-foreground" />
-          <ItemDescription className="text-xs">Sugestão de Navegação</ItemDescription>
+          <ItemDescription className="text-xs">{t('ai.navigation_suggestion')}</ItemDescription>
         </div>
 
         <ItemTitle>{result.route.semantic_text.split('.')[0]}</ItemTitle>
       </ItemContent>
-      <div className="flex-1 space-y-2">
+      <div className="flex-1">
         {Object.keys(result.params).length > 0 && (
-          <div className="flex flex-wrap gap-2 py-2">
+          <div className="flex flex-wrap gap-1 py-1">
             {Object.entries(result.params).map(([key, value]) => (
               <Badge variant="outline" key={key}>
                 <Search className="size-3 text-muted-foreground" />

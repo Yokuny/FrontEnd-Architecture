@@ -1,20 +1,23 @@
 'use client';
 
+import { X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SparklesIcon } from '@/components/sidebar/sparkles-icon';
+import { Button } from '@/components/ui/button';
 import { ItemContent, ItemDescription, ItemGroup } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 import type { NavigationResult } from './ai/navigationAgent';
 import { useAIAssistant } from './ai/useAIAssistant';
 import { ChatContent, ChatMessage } from './chat';
 import { ChatInput } from './chat-input';
+import { Suggestions } from './chat-suggestions';
 import { BYKONZ_AI_NAME } from './prompt.consts';
 import type { ChatMessage as ChatMessageType } from './prompt.types';
 import { createMessage } from './prompt-utils';
-import { Suggestions } from './suggestions';
 import { usePromptForm } from './use-prompt-form';
 
 export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
@@ -25,7 +28,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
   const { ask } = useAIAssistant();
 
   const handleSend = async (data: { question: string }) => {
-    const userMessage = createMessage(data.question, t('you') || 'Você', true);
+    const userMessage = createMessage(data.question, t('you'), true);
 
     setMessages((prev) => [...prev, userMessage]);
     setIsProcessing(true);
@@ -39,10 +42,9 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
 
       if (!responseText) {
         if (navigationResults.length > 0) {
-          responseText = `Encontrei ${navigationResults.length} rota(s) relacionada(s):`;
+          responseText = t('ai.routes_found', { count: navigationResults.length });
         } else {
-          responseText =
-            'Não encontrei nenhuma página específica no sistema para essa solicitação. Tente descrever o que você precisa fazer (ex: "ver consumo", "gerenciar usuários").';
+          responseText = t('ai.no_routes_found');
         }
       }
 
@@ -56,7 +58,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
       // biome-ignore lint: debugging
       console.log('Erro no Assistant:', err);
       const errorMessage = {
-        ...createMessage('Ocorreu um erro ao processar sua solicitação local. Verifique os logs do console.', BYKONZ_AI_NAME, false),
+        ...createMessage(t('ai.error_processing'), BYKONZ_AI_NAME, false),
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -80,6 +82,10 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
     onOpenChange(false);
   };
 
+  const handleClearResults = (index: number) => {
+    setMessages((prev) => prev.map((msg, idx) => (idx === index ? { ...msg, assistantResults: [] } : msg)));
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full sm:max-w-2xl">
@@ -99,15 +105,29 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                 return (
                   <ItemContent key={`${msg.sender}-${i}`} className="gap-2">
                     <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
-                      {isAI && <SparklesIcon size={18} className="mr-2 text-muted-foreground" />}
+                      {isAI && <SparklesIcon size={18} className="text-muted-foreground" />}
                       <ChatContent className={cn('max-w-[85%]', isAI ? 'bg-muted' : 'bg-muted-foreground text-primary-foreground')}>{msg.message}</ChatContent>
                     </ChatMessage>
                     {isAI && msg.assistantResults && msg.assistantResults.length > 0 && (
-                      <ItemGroup className="ml-5 max-w-[80%]">
-                        {msg.assistantResults.map((result, idx) => (
-                          <Suggestions key={`${result.path}-${idx}`} result={result} onNavigate={handleNavigate} />
-                        ))}
-                      </ItemGroup>
+                      <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="suggestions" className="rounded-md border px-4 py-0">
+                          <AccordionTrigger className="text-muted-foreground text-sm hover:no-underline">
+                            <div className="flex w-full justify-between">
+                              {t('ai.suggestions')}
+                              <Button variant="ghost" size="sm" className="size-5" onClick={() => handleClearResults(i)}>
+                                <X className="size-3" />
+                              </Button>
+                            </div>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <ItemGroup>
+                              {msg.assistantResults.map((result, idx) => (
+                                <Suggestions key={`${result.path}-${idx}`} result={result} onNavigate={handleNavigate} />
+                              ))}
+                            </ItemGroup>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
                     )}
                   </ItemContent>
                 );
