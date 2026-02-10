@@ -1,14 +1,8 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-05T19:25:40.833Z",
-  "totalRoutes": 76,
+  "generatedAt": "2026-02-08T20:06:47.173Z",
+  "totalRoutes": 100,
   "routes": [
-    {
-      "id": "__private_",
-      "path": "/_private/",
-      "title": "index",
-      "embeddingKey": "__private_"
-    },
     {
       "id": "__private_calendar_maintenance_",
       "path": "/_private/calendar-maintenance/",
@@ -20,6 +14,24 @@
       "path": "/_private/cmms/",
       "title": "cmms",
       "embeddingKey": "__private_cmms_"
+    },
+    {
+      "id": "__private_cmms_diagram_list_",
+      "path": "/_private/cmms/diagram-list/",
+      "title": "telemetry.diagram.list",
+      "embeddingKey": "__private_cmms_diagram_list_"
+    },
+    {
+      "id": "__private_cmms_filled_form_cmms_",
+      "path": "/_private/cmms/filled-form-cmms/",
+      "title": "filled.forms",
+      "embeddingKey": "__private_cmms_filled_form_cmms_"
+    },
+    {
+      "id": "__private_cmms_kpis_cmms_",
+      "path": "/_private/cmms/kpis-cmms/",
+      "title": "kpis.cmms",
+      "embeddingKey": "__private_cmms_kpis_cmms_"
     },
     {
       "id": "__private_consumption_",
@@ -62,6 +74,36 @@
       "path": "/_private/consumption/time-operation/",
       "title": "consumption.time.operation",
       "embeddingKey": "__private_consumption_time_operation_"
+    },
+    {
+      "id": "__private_contracts_",
+      "path": "/_private/contracts/",
+      "title": "contracts.index",
+      "embeddingKey": "__private_contracts_"
+    },
+    {
+      "id": "__private_contracts_contract_list_",
+      "path": "/_private/contracts/contract-list/",
+      "title": "contracts.list",
+      "embeddingKey": "__private_contracts_contract_list_"
+    },
+    {
+      "id": "__private_contracts_dashboard_rve_rdo_",
+      "path": "/_private/contracts/dashboard-rve-rdo/",
+      "title": "contracts.rve-rdo",
+      "embeddingKey": "__private_contracts_dashboard_rve_rdo_"
+    },
+    {
+      "id": "__private_contracts_dashboard_rve_sounding_",
+      "path": "/_private/contracts/dashboard-rve-sounding/",
+      "title": "contracts.rve-sounding",
+      "embeddingKey": "__private_contracts_dashboard_rve_sounding_"
+    },
+    {
+      "id": "__private_contracts_dashboard_rve_",
+      "path": "/_private/contracts/dashboard-rve/",
+      "title": "contracts.rve-dashboard",
+      "embeddingKey": "__private_contracts_dashboard_rve_"
     },
     {
       "id": "__private_esg_",
@@ -116,12 +158,6 @@
       "path": "/_private/ia/anomaly-detector/",
       "title": "menu.nexai.anomaly.detector",
       "embeddingKey": "__private_ia_anomaly_detector_"
-    },
-    {
-      "id": "__private_ia_prompt_",
-      "path": "/_private/ia/prompt/",
-      "title": "ai.prompt",
-      "embeddingKey": "__private_ia_prompt_"
     },
     {
       "id": "__private_maintenance_",
@@ -428,6 +464,114 @@
       "path": "/_private/set-up-company/setup-limits/",
       "title": "setup.limits",
       "embeddingKey": "__private_set_up_company_setup_limits_"
+    },
+    {
+      "id": "__private_statistics_",
+      "path": "/_private/statistics/",
+      "title": "statistics.hub",
+      "embeddingKey": "__private_statistics_"
+    },
+    {
+      "id": "__private_statistics_integration_",
+      "path": "/_private/statistics/integration/",
+      "title": "statistics.integration",
+      "embeddingKey": "__private_statistics_integration_"
+    },
+    {
+      "id": "__private_statistics_kpis_cmms_",
+      "path": "/_private/statistics/kpis-cmms/",
+      "title": "statistics.kpis-cmms",
+      "embeddingKey": "__private_statistics_kpis_cmms_"
+    },
+    {
+      "id": "__private_statistics_rve_dashboard_",
+      "path": "/_private/statistics/rve-dashboard/",
+      "title": "statistics.rve-dashboard",
+      "embeddingKey": "__private_statistics_rve_dashboard_"
+    },
+    {
+      "id": "__private_statistics_time_operation_",
+      "path": "/_private/statistics/time-operation/",
+      "title": "statistics.time-operation",
+      "embeddingKey": "__private_statistics_time_operation_"
+    },
+    {
+      "id": "__private_statistics_tracking_activity_",
+      "path": "/_private/statistics/tracking-activity/",
+      "title": "statistics.tracking-activity",
+      "embeddingKey": "__private_statistics_tracking_activity_"
+    },
+    {
+      "id": "__private_telemetry_",
+      "path": "/_private/telemetry/",
+      "title": "telemetry.hub",
+      "embeddingKey": "__private_telemetry_"
+    },
+    {
+      "id": "__private_telemetry_buoys_dwell_time_",
+      "path": "/_private/telemetry/buoys-dwell-time/",
+      "title": "telemetry.buoys-dwell-time",
+      "embeddingKey": "__private_telemetry_buoys_dwell_time_"
+    },
+    {
+      "id": "__private_telemetry_datalogger_",
+      "path": "/_private/telemetry/datalogger/",
+      "title": "telemetry.datalogger",
+      "embeddingKey": "__private_telemetry_datalogger_"
+    },
+    {
+      "id": "__private_telemetry_diagram_list_",
+      "path": "/_private/telemetry/diagram-list/",
+      "title": "telemetry.diagram-list",
+      "embeddingKey": "__private_telemetry_diagram_list_"
+    },
+    {
+      "id": "__private_telemetry_download_data_asset_request_",
+      "path": "/_private/telemetry/download-data-asset-request/",
+      "title": "telemetry.download-data-asset-request",
+      "embeddingKey": "__private_telemetry_download_data_asset_request_"
+    },
+    {
+      "id": "__private_telemetry_fleet_panel_",
+      "path": "/_private/telemetry/fleet-panel/",
+      "title": "telemetry.fleet-panel",
+      "embeddingKey": "__private_telemetry_fleet_panel_"
+    },
+    {
+      "id": "__private_telemetry_heatmap_fleet_",
+      "path": "/_private/telemetry/heatmap-fleet/",
+      "title": "telemetry.heatmap-fleet",
+      "embeddingKey": "__private_telemetry_heatmap_fleet_"
+    },
+    {
+      "id": "__private_telemetry_heatmap_panel_",
+      "path": "/_private/telemetry/heatmap-panel/",
+      "title": "telemetry.heatmap-panel",
+      "embeddingKey": "__private_telemetry_heatmap_panel_"
+    },
+    {
+      "id": "__private_telemetry_list_dashboard_",
+      "path": "/_private/telemetry/list-dashboard/",
+      "title": "telemetry.list-dashboard",
+      "embeddingKey": "__private_telemetry_list_dashboard_"
+    },
+    {
+      "id": "__private_telemetry_performance_",
+      "path": "/_private/telemetry/performance/",
+      "title": "telemetry.performance",
+      "embeddingKey": "__private_telemetry_performance_"
+    },
+    {
+      "id": "__private_telemetry_remote_ihm_",
+      "path": "/_private/telemetry/remote-ihm/",
+      "title": "telemetry.remote-ihm",
+      "embeddingKey": "__private_telemetry_remote_ihm_"
+    },
+    {
+      "id": "__private_telemetry_sensor_min_max_",
+      "path": "/_private/telemetry/sensor-min-max/",
+      "title": "telemetry.sensor-min-max",
+      "embeddingKey": "__private_telemetry_sensor_min_max_"
     },
     {
       "id": "__private_voyage_",

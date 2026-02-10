@@ -59,6 +59,7 @@ export interface Form {
   _id?: string;
   description: string;
   code?: string;
+  typeForm?: string;
   enterprise?: {
     id: string;
     name: string;

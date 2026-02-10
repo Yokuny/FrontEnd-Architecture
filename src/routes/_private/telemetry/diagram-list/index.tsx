@@ -24,6 +24,31 @@ const searchParamsSchema = z.object({
 export const Route = createFileRoute('/_private/telemetry/diagram-list/')({
   component: DiagramListPage,
   validateSearch: (search: Record<string, unknown>): z.infer<typeof searchParamsSchema> => searchParamsSchema.parse(search),
+  staticData: {
+    title: 'telemetry.diagram-list',
+    description:
+      'Lista de diagramas técnicos e esquemáticos. Permite visualizar, criar e gerenciar diagramas de sistemas da embarcação, com busca, paginação e status ativo/inativo.',
+    tags: ['diagrams', 'diagramas', 'schematics', 'technical-drawings', 'systems', 'engineering', 'documentation'],
+    examplePrompts: ['Ver lista de diagramas técnicos', 'Criar novo diagrama de sistema', 'Buscar diagramas por descrição'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página (padrão: 0)' },
+      { name: 'search', type: 'string', description: 'Termo de busca na descrição' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/diagram-list/diagram', relation: 'child', description: 'Visualização/edição de diagrama' },
+    ],
+    entities: ['Diagram'],
+    capabilities: [
+      'Listagem paginada de diagramas',
+      'Busca por descrição',
+      'Visualização de diagrama',
+      'Criação de novos diagramas',
+      'Status ativo/inativo',
+      'Data de criação',
+      'Paginação (20 itens por página)',
+    ],
+  },
 });
 
 function DiagramListPage() {

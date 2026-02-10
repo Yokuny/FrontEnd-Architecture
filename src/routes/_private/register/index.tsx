@@ -150,7 +150,7 @@ function RegisterHubPage() {
 
   return (
     <Card>
-      <CardHeader title={t('register')} />
+      <CardHeader />
       <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {menuItems.map((item) => (
           <Item key={item.to} variant="outline" className="h-full cursor-pointer bg-card transition-colors hover:bg-muted/50" asChild>

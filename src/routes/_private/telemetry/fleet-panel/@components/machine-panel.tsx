@@ -41,7 +41,7 @@ export function MachinePanel({ idMachine, name, idEnterprise }: MachinePanelProp
             <DefaultLoading />
           ) : machineHeatmap.length > 0 ? (
             <div className="mt-4 overflow-hidden rounded-lg border">
-              <HeatmapTable data={machineHeatmap} availableEquipments={availableEquipments} hasPermissionAdd={false} />
+              <HeatmapTable data={machineHeatmap} availableEquipments={availableEquipments} />
             </div>
           ) : null}
 

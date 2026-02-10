@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
@@ -30,10 +29,9 @@ export const Route = createFileRoute('/_private/ia/anomaly-detector/')({
       'Analisar padrões anormais',
       'Processar dados de sensores',
     ],
-    searchParams: [{ name: 'idEnterprise', type: 'string', description: 'ID da empresa para análise de anomalias', example: 'uuid-789' }],
+    searchParams: [],
     relatedRoutes: [
       { path: '/_private/ia', relation: 'parent', description: 'Hub de IA' },
-      { path: '/_private/ia/prompt', relation: 'sibling', description: 'AI Chatbot' },
       { path: '/_private/cmms/sensor', relation: 'sibling', description: 'Gestão de sensores' },
     ],
     entities: ['Sensor', 'Anomaly', 'Enterprise', 'Machine', 'SensorData'],
@@ -51,14 +49,13 @@ export const Route = createFileRoute('/_private/ia/anomaly-detector/')({
 });
 
 function AnomalyDetectorPage() {
-  const { t } = useTranslation();
   const [modalSensors, setModalSensors] = useState<Record<string, number> | null>(null);
 
   const { normalizedData, isLoading, isFabric, handleClassify } = useAnomalyDetector();
 
   return (
     <Card>
-      <CardHeader title={t('menu.nexai.anomaly.detector')}>{!isFabric && <InputFileCsv onHandleData={handleClassify} />}</CardHeader>
+      <CardHeader>{!isFabric && <InputFileCsv onHandleData={handleClassify} />}</CardHeader>
 
       <CardContent>
         {isLoading ? (

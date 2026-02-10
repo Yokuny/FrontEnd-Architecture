@@ -22,6 +22,28 @@ import type { PerformanceData, SensorOption } from './@interface/performance.typ
 export const Route = createFileRoute('/_private/telemetry/performance/')({
   component: PerformancePage,
   validateSearch: (search) => performanceSearchSchema.parse(search),
+  staticData: {
+    title: 'telemetry.performance',
+    description:
+      'Análise de performance com scatter plots. Permite correlacionar um sensor X com múltiplos sensores Y para identificar relações entre variáveis (ex: RPM vs consumo, temperatura vs pressão). Ideal para análise de eficiência e otimização operacional.',
+    tags: ['performance', 'scatter-plot', 'correlation', 'sensor-analysis', 'efficiency', 'optimization', 'data-science', 'analytics'],
+    examplePrompts: ['Analisar correlação entre RPM e consumo', 'Ver scatter plot de temperatura vs pressão', 'Comparar múltiplos sensores em relação a um parâmetro'],
+    searchParams: [{ name: 'period', type: 'number', description: 'Período em dias (padrão: 1)' }],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/datalogger', relation: 'sibling', description: 'Visualização de tendências' },
+    ],
+    entities: ['Sensor', 'Machine', 'PerformanceData'],
+    capabilities: [
+      'Seleção de embarcação',
+      'Seleção de sensor X (eixo horizontal)',
+      'Seleção múltipla de sensores Y (eixos verticais)',
+      'Filtro de período (1 a 30 dias)',
+      'Scatter plots múltiplos',
+      'Correlação de variáveis',
+      'Auto-fetch ao alterar sensores Y',
+    ],
+  },
 });
 
 function PerformancePage() {

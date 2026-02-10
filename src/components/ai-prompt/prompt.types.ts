@@ -6,7 +6,7 @@ export const aiPromptSchema = z.object({
 
 export type AIPromptData = z.infer<typeof aiPromptSchema>;
 
-export interface ChatMessage {
+export interface ChatMessageType {
   message: string;
   date: string;
   reply: boolean;

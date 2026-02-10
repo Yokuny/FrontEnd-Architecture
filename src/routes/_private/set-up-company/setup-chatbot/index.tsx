@@ -72,7 +72,7 @@ function SetupChatbotFormContent({ idEnterprise }: { idEnterprise?: string }) {
 
   return (
     <Card>
-      <CardHeader title={t('setup.chatbot')} />
+      <CardHeader />
       <CardContent>
         {isLoading ? (
           <DefaultLoading />

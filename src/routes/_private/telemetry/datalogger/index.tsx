@@ -27,6 +27,36 @@ import type { IntervalOption, SensorDataSeries } from './@interface/datalogger.t
 export const Route = createFileRoute('/_private/telemetry/datalogger/')({
   component: DataloggerPage,
   validateSearch: (search) => dataloggerSearchSchema.parse(search),
+  staticData: {
+    title: 'telemetry.datalogger',
+    description:
+      'Visualização de dados históricos de sensores em gráficos de tendência. Permite seleção de múltiplos sensores, filtros de período (até 15 dias sem intervalo obrigatório), horários específicos e intervalos de amostragem. Ideal para análise de comportamento de sensores ao longo do tempo.',
+    tags: ['datalogger', 'sensors', 'sensores', 'trend-chart', 'historical-data', 'time-series', 'graficos', 'telemetry', 'iot'],
+    examplePrompts: ['Ver histórico de sensores no datalogger', 'Analisar tendências de temperatura e pressão', 'Consultar dados de sensores das últimas 2 semanas'],
+    searchParams: [
+      { name: 'dateInit', type: 'string', description: 'Data inicial (formato: yyyy-MM-dd)' },
+      { name: 'dateEnd', type: 'string', description: 'Data final (formato: yyyy-MM-dd)' },
+      { name: 'timeInit', type: 'string', description: 'Hora inicial (formato: HH:mm)' },
+      { name: 'timeEnd', type: 'string', description: 'Hora final (formato: HH:mm)' },
+      { name: 'interval', type: 'number', description: 'Intervalo de amostragem em minutos' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/performance', relation: 'sibling', description: 'Análise de performance' },
+      { path: '/_private/telemetry/sensor-min-max', relation: 'sibling', description: 'Configuração de limites de sensores' },
+    ],
+    entities: ['Sensor', 'Machine', 'SensorData'],
+    capabilities: [
+      'Seleção de embarcação',
+      'Seleção múltipla de sensores',
+      'Filtro de período (até 31 dias)',
+      'Filtro de horário (hora inicial/final)',
+      'Intervalos de amostragem (1, 2, 5, 10, 15, 30, 60 min)',
+      'Gráfico de tendência multi-séries',
+      'Validação de período (máx 15 dias sem intervalo)',
+      'Adicionar sensores incrementalmente',
+    ],
+  },
 });
 
 function DataloggerPage() {

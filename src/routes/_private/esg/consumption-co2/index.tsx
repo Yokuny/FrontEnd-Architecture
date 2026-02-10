@@ -31,7 +31,6 @@ export const Route = createFileRoute('/_private/esg/consumption-co2/')({
       'Exportar relatório de emissões para compliance DCS',
     ],
     searchParams: [
-      { name: 'idEnterprise', type: 'string', description: 'ID da empresa filtrada', example: 'enterprise-uuid' },
       { name: 'idMachine[]', type: 'array', description: 'IDs das embarcações selecionadas', example: 'machine-uuid-1,machine-uuid-2' },
       { name: 'dateMin', type: 'string', description: 'Data inicial no formato ISO 8601', example: '2025-01-01T00:00:00+00:00' },
       { name: 'dateMax', type: 'string', description: 'Data final no formato ISO 8601', example: '2025-02-04T23:59:59+00:00' },
@@ -121,7 +120,7 @@ function ConsumptionCO2Page() {
 
   return (
     <Card>
-      <CardHeader title={t('esg.co2')} />
+      <CardHeader />
       <CardContent className="flex flex-col">
         <Item variant="outline" className="bg-secondary">
           <MachineByEnterpriseSelect mode="multi" label={t('assets')} idEnterprise={idEnterprise} value={selectedMachines} onChange={(vals) => setSelectedMachines(vals)} />

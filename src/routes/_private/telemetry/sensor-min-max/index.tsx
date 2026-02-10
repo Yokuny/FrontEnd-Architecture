@@ -28,6 +28,35 @@ const searchParamsSchema = z.object({
 export const Route = createFileRoute('/_private/telemetry/sensor-min-max/')({
   component: SensorMinMaxPage,
   validateSearch: searchParamsSchema,
+  staticData: {
+    title: 'telemetry.sensor-min-max',
+    description:
+      'Configuração de limites mínimo/máximo de sensores. Permite definir thresholds para alertas e monitoramento de sensores, visualizar valores atuais, mínimos e máximos do período, e filtrar por unidade e tipo de sensor.',
+    tags: ['sensor-limits', 'thresholds', 'min-max', 'alerts', 'configuration', 'monitoring-rules', 'sensor-config'],
+    examplePrompts: ['Configurar limites de sensores', 'Definir threshold de temperatura', 'Ver valores mínimo e máximo de sensores'],
+    searchParams: [
+      { name: 'idAsset', type: 'string', description: 'ID da embarcação' },
+      { name: 'days', type: 'number', description: 'Período em dias para análise (padrão: 1)' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/datalogger', relation: 'sibling', description: 'Visualização de dados históricos' },
+      { path: '/_private/register/sensors', relation: 'alternative', description: 'Cadastro de sensores' },
+    ],
+    entities: ['Sensor', 'Machine', 'SensorMinMax'],
+    capabilities: [
+      'Seleção de embarcação',
+      'Filtro de período (1/3/7 dias)',
+      'Visualização de valores atual/mín/máx',
+      'Configuração de limites min/max',
+      'Toggle de alerta (isAlert)',
+      'Busca por descrição de sensor',
+      'Filtro por unidade de medida',
+      'Filtro por tipo de sensor (analog/digital)',
+      'Validação de min < max',
+      'Salvamento em lote',
+    ],
+  },
 });
 
 function SensorMinMaxPage() {

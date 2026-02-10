@@ -14,6 +14,27 @@ import { calculateTimeDifference, calculateTotalTimeSpent, getDelimitationName }
 
 export const Route = createFileRoute('/_private/telemetry/buoys-dwell-time/')({
   component: BuoysDwellTimePage,
+  staticData: {
+    title: 'telemetry.buoys-dwell-time',
+    description:
+      'Análise de tempo de permanência de embarcações em áreas delimitadas (boias/balizas). Exibe histórico de entrada/saída de embarcações em zonas de proximidade, com cálculo de tempo total de permanência e identificação por MMSI.',
+    tags: ['buoys', 'boias', 'dwell-time', 'geofencing', 'proximity', 'delimitation', 'maritime-zones', 'tracking', 'permanencia'],
+    examplePrompts: ['Ver tempo de permanência em boias', 'Analisar embarcações que passaram por áreas delimitadas', 'Consultar histórico de entrada/saída em zonas'],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/fleet-panel', relation: 'sibling', description: 'Painel da frota' },
+      { path: '/_private/register/delimitations', relation: 'alternative', description: 'Cadastro de delimitações' },
+    ],
+    entities: ['Buoy', 'Delimitation', 'Machine', 'DwellTime'],
+    capabilities: [
+      'Lista de boias/zonas delimitadas',
+      'Tempo total de permanência por zona',
+      'Histórico de entradas e saídas',
+      'Identificação de embarcações (nome, MMSI)',
+      'Cálculo automático de tempo (horas)',
+      'Accordion expansível por boia',
+    ],
+  },
 });
 
 function BuoysDwellTimePage() {
@@ -24,7 +45,7 @@ function BuoysDwellTimePage() {
 
   return (
     <Card>
-      <CardHeader title={t('telemetry.buoys.dwell.time')} />
+      <CardHeader />
 
       <CardContent>
         {isLoading ? (

@@ -17,6 +17,31 @@ import { type DashboardListSearch, dashboardListSearchSchema } from './@interfac
 export const Route = createFileRoute('/_private/telemetry/list-dashboard/')({
   component: ListDashboardPage,
   validateSearch: (search: Record<string, unknown>): DashboardListSearch => dashboardListSearchSchema.parse(search),
+  staticData: {
+    title: 'telemetry.list-dashboard',
+    description:
+      'Lista de dashboards customizáveis de telemetria. Permite criar, visualizar e gerenciar dashboards personalizados com widgets de sensores e métricas. Suporta busca e paginação.',
+    tags: ['dashboards', 'custom-dashboards', 'widgets', 'telemetry-views', 'personalization', 'iot-dashboard'],
+    examplePrompts: ['Ver lista de dashboards personalizados', 'Criar novo dashboard de telemetria', 'Buscar dashboard por nome'],
+    searchParams: [
+      { name: 'page', type: 'number', description: 'Número da página (padrão: 1)' },
+      { name: 'size', type: 'number', description: 'Tamanho da página (padrão: 10)' },
+      { name: 'search', type: 'string', description: 'Termo de busca' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/list-dashboard/add', relation: 'child', description: 'Criação de dashboard' },
+    ],
+    entities: ['Dashboard', 'Widget'],
+    capabilities: [
+      'Listagem paginada de dashboards',
+      'Busca por nome/descrição',
+      'Criação de novos dashboards',
+      'Acesso a dashboards existentes',
+      'Paginação com tamanhos variáveis (5/10/20/50)',
+      'Total de dashboards',
+    ],
+  },
 });
 
 function ListDashboardPage() {

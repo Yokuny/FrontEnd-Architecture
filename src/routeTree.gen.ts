@@ -91,7 +91,6 @@ import { Route as PrivateOperationDowntimeIndexRouteImport } from './routes/_pri
 import { Route as PrivateMaintenanceMonitoringWearIndexRouteImport } from './routes/_private/maintenance/monitoring-wear/index';
 import { Route as PrivateMaintenanceMonitoringPlansIndexRouteImport } from './routes/_private/maintenance/monitoring-plans/index';
 import { Route as PrivateMaintenanceListOsDoneIndexRouteImport } from './routes/_private/maintenance/list-os-done/index';
-import { Route as PrivateIaPromptIndexRouteImport } from './routes/_private/ia/prompt/index';
 import { Route as PrivateIaAnomalyDetectorIndexRouteImport } from './routes/_private/ia/anomaly-detector/index';
 import { Route as PrivateEsgSimulatorCiiIndexRouteImport } from './routes/_private/esg/simulator-cii/index';
 import { Route as PrivateEsgIndicatorsEeoiCiiIndexRouteImport } from './routes/_private/esg/indicators-eeoi-cii/index';
@@ -616,11 +615,6 @@ const PrivateMaintenanceListOsDoneIndexRoute =
     path: '/maintenance/list-os-done/',
     getParentRoute: () => PrivateRoute,
   } as any);
-const PrivateIaPromptIndexRoute = PrivateIaPromptIndexRouteImport.update({
-  id: '/ia/prompt/',
-  path: '/ia/prompt/',
-  getParentRoute: () => PrivateRoute,
-} as any);
 const PrivateIaAnomalyDetectorIndexRoute =
   PrivateIaAnomalyDetectorIndexRouteImport.update({
     id: '/ia/anomaly-detector/',
@@ -1005,7 +999,6 @@ export interface FileRoutesByFullPath {
   '/esg/indicators-eeoi-cii': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
   '/esg/simulator-cii': typeof PrivateEsgSimulatorCiiIndexRoute;
   '/ia/anomaly-detector': typeof PrivateIaAnomalyDetectorIndexRoute;
-  '/ia/prompt': typeof PrivateIaPromptIndexRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -1141,7 +1134,6 @@ export interface FileRoutesByTo {
   '/esg/indicators-eeoi-cii': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
   '/esg/simulator-cii': typeof PrivateEsgSimulatorCiiIndexRoute;
   '/ia/anomaly-detector': typeof PrivateIaAnomalyDetectorIndexRoute;
-  '/ia/prompt': typeof PrivateIaPromptIndexRoute;
   '/maintenance/list-os-done': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/maintenance/monitoring-plans': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/maintenance/monitoring-wear': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -1280,7 +1272,6 @@ export interface FileRoutesById {
   '/_private/esg/indicators-eeoi-cii/': typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
   '/_private/esg/simulator-cii/': typeof PrivateEsgSimulatorCiiIndexRoute;
   '/_private/ia/anomaly-detector/': typeof PrivateIaAnomalyDetectorIndexRoute;
-  '/_private/ia/prompt/': typeof PrivateIaPromptIndexRoute;
   '/_private/maintenance/list-os-done/': typeof PrivateMaintenanceListOsDoneIndexRoute;
   '/_private/maintenance/monitoring-plans/': typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   '/_private/maintenance/monitoring-wear/': typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -1418,7 +1409,6 @@ export interface FileRouteTypes {
     | '/esg/indicators-eeoi-cii'
     | '/esg/simulator-cii'
     | '/ia/anomaly-detector'
-    | '/ia/prompt'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
@@ -1554,7 +1544,6 @@ export interface FileRouteTypes {
     | '/esg/indicators-eeoi-cii'
     | '/esg/simulator-cii'
     | '/ia/anomaly-detector'
-    | '/ia/prompt'
     | '/maintenance/list-os-done'
     | '/maintenance/monitoring-plans'
     | '/maintenance/monitoring-wear'
@@ -1692,7 +1681,6 @@ export interface FileRouteTypes {
     | '/_private/esg/indicators-eeoi-cii/'
     | '/_private/esg/simulator-cii/'
     | '/_private/ia/anomaly-detector/'
-    | '/_private/ia/prompt/'
     | '/_private/maintenance/list-os-done/'
     | '/_private/maintenance/monitoring-plans/'
     | '/_private/maintenance/monitoring-wear/'
@@ -2341,13 +2329,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateMaintenanceListOsDoneIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
-    '/_private/ia/prompt/': {
-      id: '/_private/ia/prompt/';
-      path: '/ia/prompt';
-      fullPath: '/ia/prompt';
-      preLoaderRoute: typeof PrivateIaPromptIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
     '/_private/ia/anomaly-detector/': {
       id: '/_private/ia/anomaly-detector/';
       path: '/ia/anomaly-detector';
@@ -2787,7 +2768,6 @@ interface PrivateRouteChildren {
   PrivateEsgIndicatorsEeoiCiiIndexRoute: typeof PrivateEsgIndicatorsEeoiCiiIndexRoute;
   PrivateEsgSimulatorCiiIndexRoute: typeof PrivateEsgSimulatorCiiIndexRoute;
   PrivateIaAnomalyDetectorIndexRoute: typeof PrivateIaAnomalyDetectorIndexRoute;
-  PrivateIaPromptIndexRoute: typeof PrivateIaPromptIndexRoute;
   PrivateMaintenanceListOsDoneIndexRoute: typeof PrivateMaintenanceListOsDoneIndexRoute;
   PrivateMaintenanceMonitoringPlansIndexRoute: typeof PrivateMaintenanceMonitoringPlansIndexRoute;
   PrivateMaintenanceMonitoringWearIndexRoute: typeof PrivateMaintenanceMonitoringWearIndexRoute;
@@ -2932,7 +2912,6 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateEsgIndicatorsEeoiCiiIndexRoute: PrivateEsgIndicatorsEeoiCiiIndexRoute,
   PrivateEsgSimulatorCiiIndexRoute: PrivateEsgSimulatorCiiIndexRoute,
   PrivateIaAnomalyDetectorIndexRoute: PrivateIaAnomalyDetectorIndexRoute,
-  PrivateIaPromptIndexRoute: PrivateIaPromptIndexRoute,
   PrivateMaintenanceListOsDoneIndexRoute:
     PrivateMaintenanceListOsDoneIndexRoute,
   PrivateMaintenanceMonitoringPlansIndexRoute:

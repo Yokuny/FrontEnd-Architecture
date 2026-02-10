@@ -71,7 +71,7 @@ function VoyageHubPage() {
 
   return (
     <Card>
-      <CardHeader title={t('travel')} />
+      <CardHeader />
       <CardContent className="grid gap-4 md:grid-cols-2">
         {menuItems.map((item) => (
           <Item key={item.to} variant="outline" className="h-full cursor-pointer" asChild>

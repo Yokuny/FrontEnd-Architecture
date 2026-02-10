@@ -275,7 +275,7 @@ export function getChartColor(index: number) {
   const shadeIndex = Math.floor(index / COLORS.length);
   const shade = 400 + shadeIndex * 100;
 
-  return `var(--color-${COLORS[colorIndex]}${shade})`;
+  return `var(--color-${COLORS[colorIndex]}-${shade})`;
 }
 
 export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle };

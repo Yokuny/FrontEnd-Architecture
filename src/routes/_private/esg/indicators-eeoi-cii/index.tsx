@@ -34,7 +34,6 @@ export const Route = createFileRoute('/_private/esg/indicators-eeoi-cii/')({
       'Verificar performance energética da frota',
     ],
     searchParams: [
-      { name: 'idEnterprise', type: 'string', description: 'ID da empresa filtrada', example: 'enterprise-uuid' },
       { name: 'idMachine[]', type: 'array', description: 'IDs das embarcações selecionadas', example: 'machine-uuid-1,machine-uuid-2' },
       { name: 'dateTimeStart', type: 'string', description: 'Data inicial do período no formato YYYY-MM-DD', example: '2025-01-01' },
       { name: 'dateTimeEnd', type: 'string', description: 'Data final do período no formato YYYY-MM-DD', example: '2025-02-04' },

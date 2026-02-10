@@ -148,7 +148,11 @@ function walkDir(dir: string): string[] {
 }
 
 function buildSemanticText(route: RouteInfo) {
-  return [route.title, route.description, route.tags?.join(', '), route.capabilities?.join(', '), route.examplePrompts?.join(', ')].filter(Boolean).join('. ');
+  // principal busca pela ia vem de "examplePrompts"
+  if (route.examplePrompts && route.examplePrompts.length > 0) {
+    return route.examplePrompts.join('. ');
+  }
+  return [route.description, route.capabilities?.join(', ')].filter(Boolean).join('. ');
 }
 
 function main() {
@@ -185,8 +189,9 @@ function main() {
       return JSON.stringify({
         id: r.path.replace(/\W+/g, '_'),
         path: r.path,
+        title: r.title,
         semantic_text: buildSemanticText(r),
-        intents: r.examplePrompts,
+        // intents removido pois virou semantic_text
         capabilities: r.capabilities,
         tags: r.tags,
         entities: r.entities,

@@ -110,7 +110,7 @@ function ConsumptionComparativePage() {
 
   return (
     <Card>
-      <CardHeader title={t('consumption.comparative')} />
+      <CardHeader />
       <CardContent>
         {/* Filters */}
         <Item variant="outline" className="bg-secondary">

@@ -15,6 +15,27 @@ import type { TrackerItem } from './@interface/heatmap-panel.types';
 
 export const Route = createFileRoute('/_private/telemetry/heatmap-panel/')({
   component: HeatmapPanelPage,
+  staticData: {
+    title: 'telemetry.heatmap-panel',
+    description:
+      'Painel de heatmap consolidado com benchmark de equipamentos. Exibe matriz de status agrupada por subgrupos de equipamentos com totalizadores, permitindo drill-down para visualizar detalhes de equipamentos específicos. Ideal para gestão de frota centralizada.',
+    tags: ['heatmap-panel', 'benchmark', 'equipment-groups', 'fleet-overview', 'consolidated-view', 'status-matrix', 'drill-down'],
+    examplePrompts: ['Ver painel consolidado de heatmap', 'Analisar benchmark de equipamentos', 'Consultar status agrupados por categoria'],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/heatmap-fleet', relation: 'sibling', description: 'Heatmap da frota' },
+    ],
+    entities: ['Machine', 'EquipmentSubgroup', 'HeatmapData'],
+    capabilities: [
+      'Cards de benchmark com totais',
+      'Matriz de status consolidada',
+      'Agrupamento por subgrupos de equipamentos',
+      'Drill-down em células do heatmap',
+      'Modal com detalhes de equipamentos',
+      'Último update de dados',
+      'Colunas dinâmicas por configuração',
+    ],
+  },
 });
 
 function HeatmapPanelPage() {

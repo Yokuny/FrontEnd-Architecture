@@ -68,14 +68,13 @@ export const Route = createFileRoute('/_private/calendar-maintenance/')({
 });
 
 function CalendarMaintenancePage() {
-  const { t } = useTranslation();
   const { id: idEnterpriseQuery } = Route.useSearch();
   const { idEnterprise: idEnterpriseFilter } = useEnterpriseFilter();
   const idEnterprise = idEnterpriseQuery || idEnterpriseFilter;
   if (!idEnterprise) {
     return (
       <Card>
-        <CardHeader title={t('calendar.maintenance')} />
+        <CardHeader />
         <CardContent>
           <EmptyData />
         </CardContent>

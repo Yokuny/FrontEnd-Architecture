@@ -30,6 +30,31 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/statistics/rve-dashboard/')({
   component: RVEDashboardPage,
   validateSearch: (search) => searchSchema.parse(search),
+  staticData: {
+    title: 'statistics.rve-dashboard',
+    description:
+      'Dashboard de Relatórios de Viagem Eletrônicos (RVE). Exibe KPIs operacionais, gráficos de códigos operacionais por embarcação e análise de escalas (portos visitados), permitindo filtros por período e embarcações.',
+    tags: ['rve', 'voyage-report', 'operational-codes', 'escalas', 'ports', 'portos', 'dashboard', 'statistics', 'analytics'],
+    examplePrompts: ['Ver dashboard RVE da frota', 'Analisar códigos operacionais das embarcações', 'Consultar escalas e portos visitados'],
+    searchParams: [
+      { name: 'initialDate', type: 'string', description: 'Data inicial (formato: yyyy-MM-dd)' },
+      { name: 'finalDate', type: 'string', description: 'Data final (formato: yyyy-MM-dd)' },
+      { name: 'machines', type: 'string', description: 'IDs das embarcações separadas por vírgula' },
+    ],
+    relatedRoutes: [
+      { path: '/_private/statistics', relation: 'parent', description: 'Hub de estatísticas' },
+      { path: '/_private/consumption/rve-rdo', relation: 'sibling', description: 'RVE com RDO (consumo)' },
+      { path: '/_private/consumption/rve-sounding', relation: 'sibling', description: 'RVE com sounding' },
+    ],
+    entities: ['RVE', 'VoyageReport', 'OperationalCode', 'Port'],
+    capabilities: [
+      'KPIs de códigos operacionais',
+      'Gráfico de distribuição de códigos operacionais',
+      'Gráfico de escalas e portos visitados',
+      'Filtros por período e embarcações',
+      'Suporta até 1 mês de dados',
+    ],
+  },
 });
 
 function RVEDashboardPage() {
@@ -96,7 +121,7 @@ function RVEDashboardPage() {
 
   return (
     <Card>
-      <CardHeader title="RVE Dashboard" />
+      <CardHeader />
       <CardContent className="flex flex-col">
         {/* Filtros */}
         <Item variant="outline" className="bg-secondary">

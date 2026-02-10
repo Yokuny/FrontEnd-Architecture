@@ -18,6 +18,30 @@ import { calculateHeatmapStats } from './@utils/heatmap.utils';
 
 export const Route = createFileRoute('/_private/telemetry/heatmap-fleet/')({
   component: HeatmapFleetPage,
+  staticData: {
+    title: 'telemetry.heatmap-fleet',
+    description:
+      'Heatmap de status da frota. Visualização matricial de equipamentos por embarcação com indicadores visuais de status (OK/warning/danger), diferenciando modo ativo e power-off. Exibe KPIs consolidados de ativos online/offline e itens em alerta.',
+    tags: ['heatmap', 'fleet-monitoring', 'equipment-status', 'health-check', 'visual-dashboard', 'alert-system', 'iot', 'status-matrix'],
+    examplePrompts: ['Ver heatmap de status da frota', 'Monitorar equipamentos em alerta', 'Visualizar status de todos os ativos'],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/heatmap-panel', relation: 'sibling', description: 'Painel de heatmap consolidado' },
+      { path: '/_private/telemetry/fleet-panel', relation: 'sibling', description: 'Painel da frota detalhado' },
+      { path: '/_private/telemetry/heatmap-fleet/add', relation: 'child', description: 'Adicionar view de heatmap' },
+    ],
+    entities: ['Machine', 'Equipment', 'HeatmapView'],
+    capabilities: [
+      'KPIs de ativos online/offline',
+      'KPIs de itens OK/em progresso/em alerta',
+      'Matriz de status por embarcação e equipamento',
+      'Indicadores visuais coloridos (success/warning/danger)',
+      'Diferenciação modo ativo vs power-off',
+      'Legenda de status',
+      'Tooltip com detalhes',
+      'Criação de views personalizadas',
+    ],
+  },
 });
 
 function HeatmapFleetPage() {

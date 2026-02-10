@@ -31,6 +31,29 @@ import { calculateRemainingDays, formatInterval } from './@utils/download-reques
 
 export const Route = createFileRoute('/_private/telemetry/download-data-asset-request/')({
   component: DownloadDataAssetRequestPage,
+  staticData: {
+    title: 'telemetry.download-data-asset-request',
+    description:
+      'Gerenciamento de requisições de download de dados históricos de sensores. Permite solicitar exportação de dados por período, visualizar status de processamento (pending/processing/ready/error), fazer download de arquivos gerados e acompanhar prazo de disponibilidade.',
+    tags: ['download', 'export', 'data-request', 'historical-data', 'queue', 'async-processing', 'sensor-data', 'csv'],
+    examplePrompts: ['Solicitar download de dados históricos', 'Ver status de requisições de exportação', 'Baixar arquivo de dados processado'],
+    relatedRoutes: [
+      { path: '/_private/telemetry', relation: 'parent', description: 'Hub de telemetria' },
+      { path: '/_private/telemetry/datalogger', relation: 'sibling', description: 'Visualização de dados em gráficos' },
+    ],
+    entities: ['DownloadQueue', 'Machine', 'User'],
+    capabilities: [
+      'Criação de requisições de download',
+      'Seleção de embarcações',
+      'Filtro de período e horário',
+      'Intervalo de amostragem',
+      'Status de processamento',
+      'Download de arquivo gerado',
+      'Dias restantes para download',
+      'Exclusão de requisições',
+      'Histórico de solicitações',
+    ],
+  },
 });
 
 function DownloadDataAssetRequestPage() {
