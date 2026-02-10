@@ -16,7 +16,7 @@ import { ChatContent, ChatMessage } from './chat';
 import { ChatInput } from './chat-input';
 import { Suggestions } from './chat-suggestions';
 import { BYKONZ_AI_NAME } from './prompt.consts';
-import type { ChatMessage as ChatMessageType } from './prompt.types';
+import type { ChatMessageType } from './prompt.types';
 import { createMessage } from './prompt-utils';
 import { usePromptForm } from './use-prompt-form';
 
