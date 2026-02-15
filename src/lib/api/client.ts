@@ -149,6 +149,7 @@ function createHeaders(options: ApiOptions): HeadersInit {
 }
 
 function getBaseURL(options: ApiOptions): string {
+  if (options.baseURL) return options.baseURL;
   return options.isV2 ? baseURL.replace('/v1', '/v2') : baseURL;
 }
 
@@ -293,6 +294,7 @@ interface ApiOptions {
   responseType?: 'json' | 'blob' | 'text' | 'arraybuffer';
   isV2?: boolean;
   method?: string;
+  baseURL?: string;
 }
 
 interface ApiResponse<T = unknown> {
