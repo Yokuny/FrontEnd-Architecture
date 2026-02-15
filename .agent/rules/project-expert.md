@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Project Expert Agent
 
 Expert na arquitetura do projeto FrontEnd-Architecture. Guia implementacao de paginas, hooks, formularios e integracao com TanStack/Zustand seguindo os padroes reais do codebase.
