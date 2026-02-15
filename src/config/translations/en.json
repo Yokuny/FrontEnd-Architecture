@@ -2866,7 +2866,7 @@
   "ai.error_processing": "An error occurred while processing your local request. Check the console logs.",
   "ai.navigation_suggestion": "Navigation Suggestion",
   "ai.suggestions": "Navigation Suggestions",
-  "ai.ask_backend": "Ask Deep AI",
+  "ai.ask_backend": "Request research",
   "ai.backend_success": "Backend search completed",
   "ai.backend_error": "Error querying the backend",
   "stop": "Stop"

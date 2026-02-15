@@ -1,6 +1,6 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SparklesIcon } from '@/components/sidebar/sparkles-icon';
@@ -9,10 +9,11 @@ import { ItemContent, ItemDescription, ItemGroup } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useAIApi } from '@/hooks/use-ai-api';
+import { useAIAssistant } from '@/hooks/use-ai-assistant';
 import { cn } from '@/lib/utils';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
+import { Skeleton } from '../ui/skeleton';
 import type { NavigationResult } from './ai/navigationAgent';
-import { useAIAssistant } from './ai/useAIAssistant';
 import { ChatContent, ChatMessage } from './chat';
 import { ChatInput } from './chat-input';
 import { Suggestions } from './chat-suggestions';
@@ -23,7 +24,7 @@ import { usePromptForm } from './use-prompt-form';
 
 export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
   const { t } = useTranslation();
-  const [messages, setMessages] = useState<(ChatMessageType & { assistantResults?: NavigationResult[] })[]>([]);
+  const [messages, setMessages] = useState<(ChatMessageType & { assistantResults?: NavigationResult[]; isAccordionLoading?: boolean })[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const { ask } = useAIAssistant();
@@ -81,10 +82,20 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
       const aiMessage = {
         ...createMessage(responseText, BYKONZ_AI_NAME, false),
         assistantResults: navigationResults,
-        showBackendOption: true, // Sempre oferece a opção de ir ao backend para teste
+        showBackendOption: true,
+        isAccordionLoading: navigationResults.length > 0,
       };
 
-      setMessages((prev) => [...prev, aiMessage]);
+      setMessages((prev) => {
+        const next = [...prev, aiMessage];
+        if (navigationResults.length > 0) {
+          const aiIndex = next.length - 1;
+          setTimeout(() => {
+            setMessages((current) => current.map((m, idx) => (idx === aiIndex ? { ...m, isAccordionLoading: false } : m)));
+          }, 800);
+        }
+        return next;
+      });
     } catch (err) {
       // biome-ignore lint: debugging
       console.log('Erro no Assistant:', err);
@@ -136,19 +147,29 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                 return (
                   <ItemContent key={`${msg.sender}-${i}`} className="gap-2">
                     <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
-                      {isAI && <SparklesIcon size={18} className="text-muted-foreground" />}
-                      <ChatContent className={cn('max-w-[85%]', isAI ? 'bg-muted' : 'bg-muted-foreground text-primary-foreground')}>{msg.message}</ChatContent>
+                      {isAI ? (
+                        <div className="flex max-w-[85%] items-end gap-2">
+                          <SparklesIcon size={18} className="shrink-0 text-muted-foreground" />
+                          <p className="wrap-break-word whitespace-normal font-sans text-foreground text-sm">{msg.message}</p>
+                        </div>
+                      ) : (
+                        <ChatContent className="max-w-[85%] bg-muted text-foreground">{msg.message}</ChatContent>
+                      )}
                     </ChatMessage>
                     {isAI && msg.assistantResults && msg.assistantResults.length > 0 && (
                       <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="suggestions" className="rounded-md border px-4 py-0">
                           <AccordionTrigger className="text-muted-foreground text-sm hover:no-underline">
-                            <div className="flex w-full justify-between">
-                              {t('ai.suggestions')}
-                              <Button variant="ghost" size="sm" className="size-5" onClick={() => handleClearResults(i)}>
-                                <X className="size-3" />
-                              </Button>
-                            </div>
+                            {isAI && msg.isAccordionLoading ? (
+                              <Skeleton className="h-full w-full" />
+                            ) : (
+                              <div className="flex w-full justify-between">
+                                {t('ai.suggestions')}
+                                <Button variant="ghost" size="sm" className="size-5" onClick={() => handleClearResults(i)}>
+                                  <X className="size-3" />
+                                </Button>
+                              </div>
+                            )}
                           </AccordionTrigger>
                           <AccordionContent>
                             <ItemGroup>
@@ -163,17 +184,16 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                     {isAI && msg.showBackendOption && (
                       <div className="mt-2 flex justify-start pl-6">
                         <Button
-                          variant="outline"
+                          variant="ghost"
                           size="sm"
-                          className="h-7 border-primary/50 border-dashed text-primary text-xs hover:border-primary"
+                          className="gap-1.5 text-primary text-xs hover:bg-primary/10 hover:text-primary"
                           onClick={() => {
-                            // Encontra a pergunta original do usuário (mensagem anterior)
                             const userQuestion = messages[i - 1]?.message || '';
                             handleBackendSearch(userQuestion, i);
                           }}
                           disabled={isProcessing}
                         >
-                          <SparklesIcon size={12} className="mr-1.5" />
+                          <Search size={12} />
                           {t('ai.ask_backend')}
                         </Button>
                       </div>

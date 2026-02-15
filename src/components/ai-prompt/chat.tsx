@@ -44,7 +44,7 @@ export function ChatInputTextarea({ value, onChange, ...props }: React.Component
       ref={textareaRef}
       value={value}
       onChange={onChange}
-      className={cn('min-h-[44px] w-full resize-none border-none bg-transparent text-primary outline-none focus-visible:ring-0 focus-visible:ring-offset-0')}
+      className={cn('min-h-11 w-full resize-none border-none bg-transparent text-primary outline-none focus-visible:ring-0 focus-visible:ring-offset-0')}
       rows={1}
       {...props}
     />

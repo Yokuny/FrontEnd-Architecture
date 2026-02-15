@@ -2877,5 +2877,8 @@
   "ai.error_processing": "Ocurrió un error al procesar su solicitud local. Verifique los registros de la consola.",
   "ai.navigation_suggestion": "Sugerencia de Navegación",
   "ai.suggestions": "Ver rutas sugeridas",
+  "ai.ask_backend": "Solicitar investigación",
+  "ai.backend_success": "Búsqueda completada",
+  "ai.backend_error": "Error al consultar el backend",
   "stop": "Detener"
 }
