@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ItemContent, ItemDescription, ItemGroup } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useAIApi } from '@/hooks/use-ai-api';
 import { cn } from '@/lib/utils';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 import type { NavigationResult } from './ai/navigationAgent';
@@ -26,6 +27,35 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const { ask } = useAIAssistant();
+  const { search } = useAIApi();
+
+  const handleBackendSearch = async (question: string, index: number) => {
+    setIsProcessing(true);
+    // Remove o botão após o clique
+    setMessages((prev) => prev.map((msg, i) => (i === index ? { ...msg, showBackendOption: false } : msg)));
+
+    try {
+      const result = await search.mutateAsync({
+        prompt: question,
+        context: {
+          currentPath: window.location.pathname,
+        },
+      });
+
+      const aiMessage = {
+        ...createMessage(result.interpretation || t('ai.backend_success'), BYKONZ_AI_NAME, false),
+      };
+
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch (_err) {
+      const errorMessage = {
+        ...createMessage(t('ai.backend_error'), BYKONZ_AI_NAME, false),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   const handleSend = async (data: { question: string }) => {
     const userMessage = createMessage(data.question, t('you'), true);
@@ -51,6 +81,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
       const aiMessage = {
         ...createMessage(responseText, BYKONZ_AI_NAME, false),
         assistantResults: navigationResults,
+        showBackendOption: true, // Sempre oferece a opção de ir ao backend para teste
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -128,6 +159,24 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                           </AccordionContent>
                         </AccordionItem>
                       </Accordion>
+                    )}
+                    {isAI && msg.showBackendOption && (
+                      <div className="mt-2 flex justify-start pl-6">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-7 border-primary/50 border-dashed text-primary text-xs hover:border-primary"
+                          onClick={() => {
+                            // Encontra a pergunta original do usuário (mensagem anterior)
+                            const userQuestion = messages[i - 1]?.message || '';
+                            handleBackendSearch(userQuestion, i);
+                          }}
+                          disabled={isProcessing}
+                        >
+                          <SparklesIcon size={12} className="mr-1.5" />
+                          {t('ai.ask_backend')}
+                        </Button>
+                      </div>
                     )}
                   </ItemContent>
                 );

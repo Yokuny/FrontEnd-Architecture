@@ -2887,6 +2887,9 @@
   "ai.no_routes_found": "Não encontrei nenhuma página específica no sistema para essa solicitação. Tente descrever o que você precisa fazer (ex: \"ver consumo\", \"gerenciar usuários\").",
   "ai.error_processing": "Ocorreu um erro ao processar sua solicitação local. Verifique os logs do console.",
   "ai.navigation_suggestion": "Sugestão de Navegação",
-  "ai.suggestions": "Ver caminhos sugeridos",
+  "ai.suggestions": "Sugestões de navegação",
+  "ai.ask_backend": "Consultar IA Profunda",
+  "ai.backend_success": "Busca no backend concluída",
+  "ai.backend_error": "Erro ao consultar o backend",
   "stop": "Parar"
 }

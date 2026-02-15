@@ -4,51 +4,17 @@
  */
 
 import { toast } from 'sonner';
+import i18n from '@/config/i18n';
 import { useAuth } from '@/hooks/use-auth';
 import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 
 const baseURL = import.meta.env.VITE_URI_BASE || 'http://localhost:3001';
 const timeout = parseInt(import.meta.env.VITE_URI_TIMEOUT || '30000', 10);
 
-interface ApiOptions {
-  defaultTakeCareError?: boolean;
-  handleUploadProgress?: (percent: number) => void;
-  headers?: Record<string, string>;
-  responseType?: 'json' | 'blob' | 'text' | 'arraybuffer';
-  isV2?: boolean;
-  method?: string;
-}
-
-interface ApiResponse<T = unknown> {
-  data: T;
-  status: number;
-  statusText: string;
-  headers: Headers;
-}
-
-/**
- * Clear localStorage and redirect to login
- */
 function clearLocalStorage() {
   useAuth.getState().clearAuth();
 }
 
-/**
- * Translate error codes
- */
-function translate(code: string): string {
-  const translations: Record<string, string> = {
-    'session.expired': 'Session expired. Please login again.',
-    'user.notAllowed': "You don't have permission to perform this action.",
-    'no.connection': 'Connection error. Please try again.',
-    'server.too.many.request': 'Too many requests. Please wait a moment.',
-  };
-  return translations[code] || code;
-}
-
-/**
- * Handle fetch errors
- */
 async function handleError(response: Response, options: ApiOptions) {
   if (options.defaultTakeCareError === false) {
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -57,44 +23,39 @@ async function handleError(response: Response, options: ApiOptions) {
   let errorData: { code?: string; message?: string } | null = null;
   try {
     errorData = await response.json();
-  } catch {
-    // Ignore JSON parse errors
-  }
+  } catch {}
 
   if (response.status === 401) {
-    toast.error(translate('session.expired'));
+    toast.error(i18n.t('session.expired'));
     clearLocalStorage();
     window.location.href = `${window.location.origin}/auth`;
   } else if (response.status === 403) {
     if (errorData?.code) {
-      toast.warning(translate(errorData.code));
+      toast.warning(i18n.t(errorData.code));
     } else {
-      toast.warning(translate('user.notAllowed'));
+      toast.warning(i18n.t('user.notAllowed'));
     }
   } else if (response.status === 400) {
     if (errorData?.code) {
-      toast.warning(translate(errorData.code));
+      toast.warning(i18n.t(errorData.code));
     } else if (errorData?.message) {
       toast.warning(errorData.message);
     }
   } else if (response.status === 500) {
     if (errorData?.code) {
-      toast.error(translate(errorData.code));
+      toast.error(i18n.t(errorData.code));
     } else {
-      toast.error(translate('no.connection'));
+      toast.error(i18n.t('no.connection'));
     }
   } else if (response.status === 429) {
-    toast.error(translate('server.too.many.request'));
+    toast.error(i18n.t('server.too.many.request'));
   } else {
-    toast.error(translate('no.connection'));
+    toast.error(i18n.t('no.connection'));
   }
 
   throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 }
 
-/**
- * Parse response based on responseType
- */
 async function parseResponse<T>(response: Response, responseType: ApiOptions['responseType']): Promise<T> {
   if (response.status === 204) {
     return {} as T;
@@ -124,9 +85,6 @@ async function parseResponse<T>(response: Response, responseType: ApiOptions['re
   }
 }
 
-/**
- * Create fetch request with timeout and upload progress
- */
 async function fetchWithTimeout<T>(url: string, init: RequestInit, options: ApiOptions): Promise<ApiResponse<T>> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -164,9 +122,6 @@ async function fetchWithTimeout<T>(url: string, init: RequestInit, options: ApiO
   }
 }
 
-/**
- * Create request headers
- */
 function createHeaders(options: ApiOptions): HeadersInit {
   const token = useAuth.getState().token;
   const enterprise = useEnterpriseFilter.getState().idEnterprise;
@@ -175,7 +130,6 @@ function createHeaders(options: ApiOptions): HeadersInit {
     'Content-Type': 'application/json',
   };
 
-  // Remove Content-Type for GET and DELETE as they usually don't have a body
   if (options.method === 'GET' || options.method === 'DELETE') {
     delete headers['Content-Type'];
   }
@@ -194,16 +148,10 @@ function createHeaders(options: ApiOptions): HeadersInit {
   } as HeadersInit;
 }
 
-/**
- * Get base URL with version
- */
 function getBaseURL(options: ApiOptions): string {
   return options.isV2 ? baseURL.replace('/v1', '/v2') : baseURL;
 }
 
-/**
- * API Client Class
- */
 class ApiClient {
   async get<T = unknown>(url: string, options: ApiOptions & { params?: Record<string, any> } = {}) {
     const urlNormalized = url.split('?')[0];
@@ -335,6 +283,21 @@ class ApiClient {
   }
 }
 
-// Export singleton instance
 export const api = new ApiClient();
 export default api;
+
+interface ApiOptions {
+  defaultTakeCareError?: boolean;
+  handleUploadProgress?: (percent: number) => void;
+  headers?: Record<string, string>;
+  responseType?: 'json' | 'blob' | 'text' | 'arraybuffer';
+  isV2?: boolean;
+  method?: string;
+}
+
+interface ApiResponse<T = unknown> {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: Headers;
+}

@@ -13,4 +13,19 @@ export interface ChatMessageType {
   type: 'text';
   sender: string;
   avatar?: string;
+  showBackendOption?: boolean;
+}
+
+export interface AISearchRequest {
+  prompt: string;
+  context: {
+    currentPath: string;
+  };
+}
+
+export interface AISearchResponse {
+  success: boolean;
+  interpretation?: string;
+  data?: any[];
+  error?: string;
 }
