@@ -1,11 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export interface EnterpriseFilterStore {
-  idEnterprise: string;
-  setIdEnterprise: (id: string) => void;
-}
-
 export const useEnterpriseFilter = create<EnterpriseFilterStore>()(
   persist(
     (set) => ({
@@ -17,3 +12,8 @@ export const useEnterpriseFilter = create<EnterpriseFilterStore>()(
     },
   ),
 );
+
+export interface EnterpriseFilterStore {
+  idEnterprise: string;
+  setIdEnterprise: (id: string) => void;
+}

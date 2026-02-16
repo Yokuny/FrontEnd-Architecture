@@ -28,4 +28,6 @@ export interface AISearchResponse {
   interpretation?: string;
   data?: any[];
   error?: string;
+  query?: any;
+  metadata?: any;
 }

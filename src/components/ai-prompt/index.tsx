@@ -4,6 +4,7 @@ import { Search, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SparklesIcon } from '@/components/sidebar/sparkles-icon';
+import { EnterpriseSwitcher } from '@/components/sidebar/switch-enterprise';
 import { Button } from '@/components/ui/button';
 import { ItemContent, ItemDescription, ItemGroup } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -43,8 +44,18 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
         },
       });
 
+      const { success, interpretation, error } = result;
+
+      if (!success) {
+        const errorMessage = {
+          ...createMessage(error || t('ai.backend_error'), BYKONZ_AI_NAME, false),
+        };
+        setMessages((prev) => [...prev, errorMessage]);
+        return;
+      }
+
       const aiMessage = {
-        ...createMessage(result.interpretation || t('ai.backend_success'), BYKONZ_AI_NAME, false),
+        ...createMessage(interpretation || t('ai.backend_success'), BYKONZ_AI_NAME, false),
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -131,7 +142,10 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full sm:max-w-2xl">
-        <SheetHeader>
+        <SheetHeader className="flex flex-row items-center">
+          <div className="rounded-md border">
+            <EnterpriseSwitcher />
+          </div>
           <SheetTitle>{t('ai.assistant')}</SheetTitle>
         </SheetHeader>
 
