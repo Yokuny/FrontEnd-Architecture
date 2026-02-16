@@ -14,6 +14,7 @@ export interface ChatMessageType {
   sender: string;
   avatar?: string;
   showBackendOption?: boolean;
+  data?: any;
 }
 
 export interface AISearchRequest {

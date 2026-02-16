@@ -33,7 +33,6 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
 
   const handleBackendSearch = async (question: string, index: number) => {
     setIsProcessing(true);
-    // Remove o botão após o clique
     setMessages((prev) => prev.map((msg, i) => (i === index ? { ...msg, showBackendOption: false } : msg)));
 
     try {
@@ -44,7 +43,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
         },
       });
 
-      const { success, interpretation, error } = result;
+      const { success, interpretation, data, error } = result;
 
       if (!success) {
         const errorMessage = {
@@ -56,6 +55,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
 
       const aiMessage = {
         ...createMessage(interpretation || t('ai.backend_success'), BYKONZ_AI_NAME, false),
+        data,
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -187,15 +187,31 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                         </AccordionItem>
                       </Accordion>
                     ) : (
-                      <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
-                        {isAI ? (
-                          <div className="flex max-w-[85%] items-end gap-2">
-                            <p className="wrap-break-word whitespace-normal font-sans text-foreground text-sm">{msg.message}</p>
+                      <div className="flex w-full flex-col gap-2">
+                        <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
+                          {isAI ? (
+                            <div className="flex max-w-[85%] items-end gap-2">
+                              <p className="wrap-break-word whitespace-normal font-sans text-foreground text-sm">{msg.message}</p>
+                            </div>
+                          ) : (
+                            <ChatContent className="max-w-[85%] bg-muted text-foreground">{msg.message}</ChatContent>
+                          )}
+                        </ChatMessage>
+                        {isAI && msg.data && (
+                          <div className="pl-6">
+                            <Accordion type="single" collapsible className="w-full">
+                              <AccordionItem value="data" className="border-none">
+                                <AccordionTrigger className="justify-start py-1 text-muted-foreground text-xs hover:no-underline">{t('ai.view_data')}</AccordionTrigger>
+                                <AccordionContent>
+                                  <div className="max-h-60 overflow-auto rounded-md bg-muted p-2">
+                                    <pre className="text-xs">{JSON.stringify(msg.data, null, 2)}</pre>
+                                  </div>
+                                </AccordionContent>
+                              </AccordionItem>
+                            </Accordion>
                           </div>
-                        ) : (
-                          <ChatContent className="max-w-[85%] bg-muted text-foreground">{msg.message}</ChatContent>
                         )}
-                      </ChatMessage>
+                      </div>
                     )}
 
                     {isAI && msg.showBackendOption && (
