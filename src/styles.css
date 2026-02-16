@@ -58,6 +58,8 @@
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @custom-variant dark (&:is(.dark, [data-theme="dark"]));
 @custom-variant ocean-blue (&:is(.ocean-blue, [data-theme="ocean-blue"]));
 @custom-variant sunset (&:is(.sunset, [data-theme="sunset"]));
