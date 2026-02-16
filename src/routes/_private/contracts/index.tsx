@@ -22,8 +22,10 @@ export const Route = createFileRoute('/_private/contracts/')({
   },
 });
 
-function RouteComponent() {
-  return <div>Hello "/_private/contracts/"!</div>;
+function ContractsHubPage() {
+  const { t } = useTranslation();
+
+  const menuItems = [
     {
       title: t('contracts.list'),
       description: t('contracts.list.description'),
