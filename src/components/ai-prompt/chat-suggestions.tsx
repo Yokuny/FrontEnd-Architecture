@@ -1,7 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
-import { ExternalLink, Navigation, Search } from 'lucide-react';
+import { ExternalLink, Navigation } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import type { NavigationResult } from './ai/navigationAgent';
