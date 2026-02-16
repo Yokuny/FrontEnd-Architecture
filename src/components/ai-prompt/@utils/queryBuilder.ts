@@ -1,3 +1,5 @@
+import { AI_CONSTANTS } from '../@const';
+import type { RouteSemantic } from '../@interface/ai-engine.interface';
 import {
   extractAbsoluteDates,
   extractBoolean,
@@ -17,34 +19,8 @@ import {
   extractUnit,
   extractViewType,
 } from './extractors';
-import type { RouteSemantic } from './types';
 
-// Parameter type detection patterns
-const PARAM_TYPES = {
-  dateStart: ['datemin', 'datestart', 'dateinit', 'startdate', 'initialdate', 'min', 'timeinit'],
-  dateEnd: ['datemax', 'dateend', 'enddate', 'finaldate', 'max', 'timeend'],
-  date: ['date'],
-  time: ['time', 'hora'],
-  month: ['month', 'mes'],
-  year: ['year', 'ano'],
-  boolean: ['boolean', 'show', 'mostrar', 'is', 'exibir', 'incluir'],
-  status: ['status', 'estado'],
-  viewType: ['viewtype'],
-  view: ['view', 'visualização'],
-  travelType: ['traveltype', 'tipovigem'],
-  chartType: ['charttype', 'tipografico'],
-  filterType: ['filtertype'],
-  unit: ['unit', 'unidade', 'medida'],
-  page: ['page', 'pagina'],
-  size: ['size', 'pagesize', 'tamanho'],
-  interval: ['interval', 'intervalo'],
-  period: ['period', 'periodo', 'days', 'dias'],
-  periodHours: ['periodfilter', 'horas'],
-  search: ['search', 'busca', 'pesquisa', 'termo'],
-  machines: ['machines', 'embarcações', 'vessels', 'maquinas'],
-} as const;
-
-type ParamType = keyof typeof PARAM_TYPES;
+type ParamType = keyof typeof AI_CONSTANTS.PARAM_TYPES;
 
 export class QueryBuilder {
   /**
@@ -95,7 +71,7 @@ export class QueryBuilder {
    * Detects the type of parameter based on its key and description
    */
   private detectParamType(keyLower: string, descStr: string): ParamType | null {
-    for (const [type, patterns] of Object.entries(PARAM_TYPES)) {
+    for (const [type, patterns] of Object.entries(AI_CONSTANTS.PARAM_TYPES)) {
       for (const pattern of patterns) {
         if (keyLower.includes(pattern)) {
           return type as ParamType;
@@ -103,7 +79,7 @@ export class QueryBuilder {
       }
     }
 
-    for (const [type, patterns] of Object.entries(PARAM_TYPES)) {
+    for (const [type, patterns] of Object.entries(AI_CONSTANTS.PARAM_TYPES)) {
       for (const pattern of patterns) {
         if (descStr.includes(pattern)) {
           return type as ParamType;

@@ -1,8 +1,10 @@
+import { AI_CONSTANTS } from '../@const';
+import type { RouteGraph, RouteIndex, RouteSemantic } from '../@interface/ai-engine.interface';
+import type { NavigationResult } from '../@interface/ai-prompt.interface';
 import { ContextBuilder } from './contextBuilder';
 import { GraphResolver } from './graphResolver';
 import { QueryBuilder } from './queryBuilder';
 import { SemanticSearch } from './semanticSearch';
-import type { RouteGraph, RouteIndex, RouteSemantic } from './types';
 
 export class NavigationAgent {
   public semanticSearch: SemanticSearch;
@@ -31,7 +33,7 @@ export class NavigationAgent {
 
   // #2 recebe a pergunta e processa a busca
   public async processQuery(userInput: string): Promise<NavigationResult[]> {
-    const results = this.semanticSearch.searchWithDetails(userInput, 3);
+    const results = this.semanticSearch.searchWithDetails(userInput, AI_CONSTANTS.NAVIGATION_SEARCH_LIMIT);
 
     return results.map((result) => {
       const params = this.queryBuilder.buildQueryParams(userInput, result.route);
@@ -58,12 +60,4 @@ export class NavigationAgent {
   public buildContext(query: string, currentRouteId?: string): string {
     return this.contextBuilder.buildContext(query, currentRouteId);
   }
-}
-
-export interface NavigationResult {
-  route: RouteSemantic;
-  path: string;
-  params: Record<string, string>;
-  fullUrl: string;
-  confidence: number;
 }

@@ -1,4 +1,4 @@
-import type { RouteGraph, RouteNode } from './types';
+import type { RouteGraph, RouteNode } from '../@interface/ai-engine.interface';
 
 export class GraphResolver {
   private graph: RouteGraph;

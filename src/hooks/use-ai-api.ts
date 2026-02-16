@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import type { AIPromptData, AISearchRequest, AISearchResponse } from '@/components/ai-prompt/prompt.types';
+import type { AIPromptData, AISearchRequest, AISearchResponse } from '@/components/ai-prompt/@interface/ai-prompt.interface';
 import { api } from '@/lib/api/client';
 import { useEnterpriseFilter } from './use-enterprise-filter';
 

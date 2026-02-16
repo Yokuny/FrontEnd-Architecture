@@ -9,7 +9,6 @@ export interface RouteNode {
   id: string;
   type: string;
   label: string;
-  // properties for context builder
   parent_id?: string;
   children?: string[];
   metadata?: Record<string, any>;
@@ -76,4 +75,14 @@ export interface DebugInfo {
       path: number;
     };
   }>;
+}
+
+export interface DateRange {
+  start?: string;
+  end?: string;
+}
+
+export interface TimeRange {
+  start?: string;
+  end?: string;
 }

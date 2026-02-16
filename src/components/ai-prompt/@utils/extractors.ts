@@ -22,7 +22,8 @@ import {
   UNIT_SYNONYMS,
   VIEW_SYNONYMS,
   VIEW_TYPE_SYNONYMS,
-} from './synonyms';
+} from '../@const';
+import type { DateRange, TimeRange } from '../@interface/ai-engine.interface';
 
 // ============================================================================
 // UTILITY FUNCTIONS
@@ -54,11 +55,6 @@ function findInSynonyms(input: string, synonymsMap: Record<string, string[]>): s
 // ============================================================================
 // DATE EXTRACTORS
 // ============================================================================
-
-export interface DateRange {
-  start?: string;
-  end?: string;
-}
 
 /**
  * Extracts absolute dates in various formats:
@@ -235,11 +231,6 @@ export function extractMonthYear(input: string): { month?: string; year?: string
 // ============================================================================
 // TIME EXTRACTORS
 // ============================================================================
-
-export interface TimeRange {
-  start?: string;
-  end?: string;
-}
 
 /**
  * Extracts time ranges like "das 08:00 às 17:00", "from 8am to 5pm"

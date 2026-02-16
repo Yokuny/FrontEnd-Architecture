@@ -4,7 +4,10 @@ import { ArrowUp, FileDigit, Paperclip, Square, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { ChatInputAction, ChatInputTextarea, ChatInput as PromptInput } from './chat';
+import { cn } from '@/lib/utils';
+import { ChatInputAction, ChatInputTextarea, ChatInput as PromptInput } from '../ui/chat';
+import { UI_CONSTANTS } from './@const';
+import type { PromptInputBasicProps } from './@interface/ai-prompt.interface';
 
 export function ChatInput({ input, onInputChange, isLoading, onSubmit }: PromptInputBasicProps) {
   const { t } = useTranslation();
@@ -46,7 +49,7 @@ export function ChatInput({ input, onInputChange, isLoading, onSubmit }: PromptI
           {files.map((file, index) => (
             <div key={`${file.name}${index}`} className="flex items-center gap-2 rounded-lg bg-secondary px-3 py-2" onClick={(e) => e.stopPropagation()}>
               <FileDigit className="size-4" />
-              <span className="max-w-32 truncate">{file.name}</span>
+              <span className={cn('truncate', `max-w-${UI_CONSTANTS.MAX_FILE_NAME_LENGTH}`)}>{file.name}</span>
               <button onClick={() => handleRemoveFile(index)} className="rounded-full p-1 hover:bg-secondary" type="button">
                 <X className="size-4" />
               </button>
@@ -73,11 +76,4 @@ export function ChatInput({ input, onInputChange, isLoading, onSubmit }: PromptI
       </div>
     </PromptInput>
   );
-}
-
-interface PromptInputBasicProps {
-  input: string;
-  onInputChange: (value: string) => void;
-  isLoading: boolean;
-  onSubmit: () => void;
 }

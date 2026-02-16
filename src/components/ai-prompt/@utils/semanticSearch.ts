@@ -1,4 +1,5 @@
-import type { RouteSemantic, SearchResult } from './types';
+import { AI_CONSTANTS } from '../@const';
+import type { RouteSemantic, SearchResult } from '../@interface/ai-engine.interface';
 
 export class SemanticSearch {
   private routes: RouteSemantic[] = [];
@@ -90,15 +91,15 @@ export class SemanticSearch {
 
       // Match exato de tag vale mais
       if (queryTokens.some((qt) => tag === qt)) {
-        score += 2.0;
+        score += AI_CONSTANTS.WEIGHTS.TAG_EXACT;
       }
       // Match parcial
       else if (queryTokens.some((qt) => tag.includes(qt) || qt.includes(tag))) {
-        score += 1.0;
+        score += AI_CONSTANTS.WEIGHTS.TAG_PARTIAL;
       }
       // Similaridade de tokens
       else {
-        score += this.jaccardSimilarity(tagTokens, queryTokens) * 0.5;
+        score += this.jaccardSimilarity(tagTokens, queryTokens) * AI_CONSTANTS.WEIGHTS.TAG_SIMILARITY;
       }
     }
 
@@ -114,12 +115,12 @@ export class SemanticSearch {
     for (const capability of capabilities) {
       // Match direto na capability
       if (this.containsMatch(capability, query)) {
-        score += 1.5;
+        score += AI_CONSTANTS.WEIGHTS.CAPABILITY_DIRECT;
       }
 
       // Similaridade de tokens
       const capTokens = this.tokenize(capability);
-      score += this.jaccardSimilarity(capTokens, queryTokens) * 0.8;
+      score += this.jaccardSimilarity(capTokens, queryTokens) * AI_CONSTANTS.WEIGHTS.CAPABILITY_SIMILARITY;
     }
 
     return score;
@@ -148,11 +149,11 @@ export class SemanticSearch {
 
     // 1. Score de semantic_text (peso maior)
     const semanticTokens = this.tokenize(indexed.normalizedText);
-    matchDetails.semantic = this.jaccardSimilarity(semanticTokens, queryTokens) * 5.0;
+    matchDetails.semantic = this.jaccardSimilarity(semanticTokens, queryTokens) * AI_CONSTANTS.WEIGHTS.SEMANTIC_BASE;
 
     // Bonus para match exato de frases
     if (this.containsMatch(route.semantic_text, query)) {
-      matchDetails.semantic += 3.0;
+      matchDetails.semantic += AI_CONSTANTS.WEIGHTS.SEMANTIC_PHRASE_BONUS;
     }
 
     // 2. Score de tags (peso alto)
@@ -163,19 +164,19 @@ export class SemanticSearch {
 
     // 4. Score de título (peso médio-alto)
     const titleTokens = this.tokenize(route.title);
-    matchDetails.title = this.jaccardSimilarity(titleTokens, queryTokens) * 3.0;
+    matchDetails.title = this.jaccardSimilarity(titleTokens, queryTokens) * AI_CONSTANTS.WEIGHTS.TITLE_BASE;
 
     if (this.containsMatch(route.title, query)) {
-      matchDetails.title += 2.0;
+      matchDetails.title += AI_CONSTANTS.WEIGHTS.TITLE_BONUS;
     }
 
     // 5. Score de path (peso baixo, mas útil)
     if (this.containsMatch(route.path, query)) {
-      matchDetails.path = 1.0;
+      matchDetails.path = AI_CONSTANTS.WEIGHTS.PATH_MATCH;
     }
 
     // 6. Boost por prioridade
-    const priorityBoost = (route.priority || 0) * 0.5;
+    const priorityBoost = (route.priority || 0) * AI_CONSTANTS.WEIGHTS.PRIORITY_BOOST;
 
     const totalScore = matchDetails.semantic + matchDetails.tags + matchDetails.capabilities + matchDetails.title + matchDetails.path + priorityBoost;
 
@@ -189,7 +190,7 @@ export class SemanticSearch {
   /**
    * Busca semântica principal
    */
-  public search(query: string, limit: number = 5): RouteSemantic[] {
+  public search(query: string, limit: number = AI_CONSTANTS.DEFAULT_SEARCH_LIMIT): RouteSemantic[] {
     if (!query || query.trim().length === 0) {
       return [];
     }
@@ -207,7 +208,7 @@ export class SemanticSearch {
       const result = this.scoreRoute(indexed.route, indexed, query, queryTokens);
 
       // Apenas inclui resultados com score mínimo
-      if (result.score > 0.1) {
+      if (result.score > AI_CONSTANTS.MIN_SCORE_THRESHOLD) {
         results.push(result);
       }
     }
@@ -222,7 +223,7 @@ export class SemanticSearch {
   /**
    * Busca com detalhes de scoring (útil para debugging)
    */
-  public searchWithDetails(query: string, limit: number = 5): SearchResult[] {
+  public searchWithDetails(query: string, limit: number = AI_CONSTANTS.DEFAULT_SEARCH_LIMIT): SearchResult[] {
     if (!query || query.trim().length === 0) {
       return [];
     }
@@ -238,7 +239,7 @@ export class SemanticSearch {
     for (const [, indexed] of this.indexedData.entries()) {
       const result = this.scoreRoute(indexed.route, indexed, query, queryTokens);
 
-      if (result.score > 0.1) {
+      if (result.score > AI_CONSTANTS.MIN_SCORE_THRESHOLD) {
         results.push(result);
       }
     }

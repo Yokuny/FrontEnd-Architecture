@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { NavigationAgent, type NavigationResult } from '@/components/ai-prompt/ai/navigationAgent';
-import type { RouteGraph, RouteIndex, RouteSemantic } from '@/components/ai-prompt/ai/types';
+import type { RouteGraph, RouteIndex, RouteSemantic } from '@/components/ai-prompt/@interface/ai-engine.interface';
+import type { NavigationResult } from '@/components/ai-prompt/@interface/ai-prompt.interface';
+import { NavigationAgent } from '@/components/ai-prompt/@utils/ai/navigationAgent';
 
 async function loadAIData() {
   const [indexResponse, graphResponse, semanticResponse] = await Promise.all([fetch('/ai/routes.index.json'), fetch('/ai/routes.graph.json'), fetch('/ai/routes.semantic.jsonl')]);

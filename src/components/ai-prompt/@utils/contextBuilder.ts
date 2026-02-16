@@ -1,6 +1,7 @@
+import { AI_CONSTANTS } from '../@const';
+import type { ContextOptions, RouteSemantic } from '../@interface/ai-engine.interface';
 import type { GraphResolver } from './graphResolver';
 import type { SemanticSearch } from './semanticSearch';
-import type { ContextOptions, RouteSemantic } from './types';
 
 export class ContextBuilder {
   private semanticSearch: SemanticSearch;
@@ -23,7 +24,7 @@ export class ContextBuilder {
    * Builds a compact context string for the LLM based on the user query and current route.
    */
   public buildContext(query: string, currentRouteId?: string, options: ContextOptions = {}): string {
-    const { maxRoutes = 10, includeGraphContext = true, semanticLimit = 8, verboseSchema = false } = options;
+    const { maxRoutes = AI_CONSTANTS.CONTEXT.MAX_ROUTES, includeGraphContext = true, semanticLimit = AI_CONSTANTS.CONTEXT.SEMANTIC_LIMIT, verboseSchema = false } = options;
 
     const cacheKey = `${query}::${currentRouteId || ''}::${JSON.stringify(options)}`;
     const cached = this.cache.get(cacheKey);
@@ -79,7 +80,7 @@ export class ContextBuilder {
     // Current route context (if exists)
     const currentMatches = limitedMatches.filter((m) => m.source === 'current');
     if (currentMatches.length > 0) {
-      sections.push('=== CURRENT LOCATION ===');
+      sections.push(AI_CONSTANTS.CONTEXT.SECTIONS.CURRENT);
       sections.push(
         this.formatRoutes(
           currentMatches.map((m) => m.route),
@@ -91,7 +92,7 @@ export class ContextBuilder {
     // Semantic matches (best matches for query)
     const semanticResults = limitedMatches.filter((m) => m.source === 'semantic');
     if (semanticResults.length > 0) {
-      sections.push('=== RELEVANT ROUTES ===');
+      sections.push(AI_CONSTANTS.CONTEXT.SECTIONS.RELEVANT);
       sections.push(
         this.formatRoutes(
           semanticResults.map((m) => m.route),
@@ -103,7 +104,7 @@ export class ContextBuilder {
     // Graph context (related to current location)
     const graphResults = limitedMatches.filter((m) => m.source === 'graph');
     if (graphResults.length > 0) {
-      sections.push('=== NEARBY/RELATED ROUTES ===');
+      sections.push(AI_CONSTANTS.CONTEXT.SECTIONS.RELATED);
       sections.push(
         this.formatRoutes(
           graphResults.map((m) => m.route),
@@ -115,7 +116,7 @@ export class ContextBuilder {
     const contextString = sections.join('\n\n');
 
     // Cache with size limit (prevent memory leak)
-    if (this.cache.size > 100) {
+    if (this.cache.size > AI_CONSTANTS.CONTEXT.CACHE_SIZE_LIMIT) {
       const firstKey = this.cache.keys().next().value;
       if (firstKey !== undefined) {
         this.cache.delete(firstKey);
@@ -172,7 +173,7 @@ export class ContextBuilder {
    * Busca contextual com debug info
    */
   public buildContextWithDebug(query: string, currentRouteId?: string, options: ContextOptions = {}): { context: string; debug: any } {
-    const semanticLimit = options.semanticLimit || 8;
+    const semanticLimit = options.semanticLimit || AI_CONSTANTS.CONTEXT.SEMANTIC_LIMIT;
 
     // Usa versão com detalhes se disponível
     let semanticResults: any[] = [];

@@ -3,7 +3,7 @@ import { ExternalLink, Navigation } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
-import type { NavigationResult } from './ai/navigationAgent';
+import type { AssistantPanelProps } from './@interface/ai-prompt.interface';
 
 export function Suggestions({ result, onNavigate }: AssistantPanelProps) {
   const { t } = useTranslation();
@@ -43,9 +43,4 @@ export function Suggestions({ result, onNavigate }: AssistantPanelProps) {
       </Button>
     </Item>
   );
-}
-
-interface AssistantPanelProps {
-  result: NavigationResult | null;
-  onNavigate?: () => void;
 }
