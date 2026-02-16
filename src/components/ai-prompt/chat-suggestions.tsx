@@ -24,14 +24,13 @@ export function Suggestions({ result, onNavigate }: AssistantPanelProps) {
           <Navigation className="size-3 text-muted-foreground" />
           <ItemDescription className="text-xs">{t('ai.navigation_suggestion')}</ItemDescription>
         </div>
-
         <ItemTitle>{result.route.semantic_text.split('.')[0]}</ItemTitle>
       </ItemContent>
-      <div className="flex-1">
+      {/* <div className="flex-1">
         {Object.keys(result.params).length > 0 && (
           <div className="flex flex-wrap gap-1 py-1">
             {Object.entries(result.params).map(([key, value]) => (
-              <Badge variant="outline" key={key}>
+              <Badge variant="outline" className="max-w-40 " key={key}>
                 <Search className="size-3 text-muted-foreground" />
                 <ItemDescription className="leading-none">{key}:</ItemDescription>
                 <span>{value}</span>
@@ -39,7 +38,7 @@ export function Suggestions({ result, onNavigate }: AssistantPanelProps) {
             ))}
           </div>
         )}
-      </div>
+      </div> */}
       <Button onClick={handleNavigate}>
         <ExternalLink className="size-3" />
       </Button>

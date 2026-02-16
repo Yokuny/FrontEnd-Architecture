@@ -158,43 +158,46 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
             <ItemContent>
               {messages.map((msg, i) => {
                 const isAI = !msg.reply;
+                const hasResults = isAI && msg.assistantResults && msg.assistantResults.length > 0;
+
                 return (
-                  <ItemContent key={`${msg.sender}-${i}`} className="gap-2">
-                    <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
-                      {isAI ? (
-                        <div className="flex max-w-[85%] items-end gap-2">
-                          <SparklesIcon size={18} className="shrink-0 text-muted-foreground" />
-                          <p className="wrap-break-word whitespace-normal font-sans text-foreground text-sm">{msg.message}</p>
-                        </div>
-                      ) : (
-                        <ChatContent className="max-w-[85%] bg-muted text-foreground">{msg.message}</ChatContent>
-                      )}
-                    </ChatMessage>
-                    {isAI && msg.assistantResults && msg.assistantResults.length > 0 && (
+                  <ItemContent key={`${msg.sender}-${i}`} className="gap-4">
+                    {hasResults ? (
                       <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="suggestions" className="rounded-md border px-4 py-0">
-                          <AccordionTrigger className="text-muted-foreground text-sm hover:no-underline">
-                            {isAI && msg.isAccordionLoading ? (
-                              <Skeleton className="h-full w-full" />
-                            ) : (
-                              <div className="flex w-full justify-between">
-                                {t('ai.suggestions')}
-                                <Button variant="ghost" size="sm" className="size-5" onClick={() => handleClearResults(i)}>
-                                  <X className="size-3" />
-                                </Button>
-                              </div>
-                            )}
+                        <AccordionItem value="suggestions" className="border-none">
+                          <AccordionTrigger className="px-0 py-2 hover:no-underline">
+                            <div className="flex w-full items-end justify-between gap-2">
+                              <p className="wrap-break-word whitespace-normal font-sans text-foreground text-sm">{msg.message}</p>
+                              <Button variant="ghost" size="sm" className="size-5" onClick={() => handleClearResults(i)}>
+                                <X className="size-3" />
+                              </Button>
+                            </div>
                           </AccordionTrigger>
                           <AccordionContent>
-                            <ItemGroup>
-                              {msg.assistantResults.map((result, idx) => (
-                                <Suggestions key={`${result.path}-${idx}`} result={result} onNavigate={handleNavigate} />
-                              ))}
-                            </ItemGroup>
+                            {msg.isAccordionLoading ? (
+                              <Skeleton className="h-12 w-full" />
+                            ) : (
+                              <ItemGroup>
+                                {msg.assistantResults?.map((result, idx) => (
+                                  <Suggestions key={`${result.path}-${idx}`} result={result} onNavigate={handleNavigate} />
+                                ))}
+                              </ItemGroup>
+                            )}
                           </AccordionContent>
                         </AccordionItem>
                       </Accordion>
+                    ) : (
+                      <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
+                        {isAI ? (
+                          <div className="flex max-w-[85%] items-end gap-2">
+                            <p className="wrap-break-word whitespace-normal font-sans text-foreground text-sm">{msg.message}</p>
+                          </div>
+                        ) : (
+                          <ChatContent className="max-w-[85%] bg-muted text-foreground">{msg.message}</ChatContent>
+                        )}
+                      </ChatMessage>
                     )}
+
                     {isAI && msg.showBackendOption && (
                       <div className="mt-2 flex justify-start pl-6">
                         <Button
