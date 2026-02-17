@@ -2,6 +2,8 @@ import type { z } from 'zod';
 import type { RouteSemantic } from './ai-engine.interface';
 import type { aiPromptSchema } from './ai-prompt.schema';
 
+import type { IInsight, IInterpretedResponse, IVisualization } from './ai-search.interface';
+
 export type AIPromptData = z.infer<typeof aiPromptSchema>;
 
 export interface ChatMessageType {
@@ -19,6 +21,13 @@ export interface ChatMessageExtended extends ChatMessageType {
   assistantResults?: NavigationResult[];
   isAccordionLoading?: boolean;
   showBackendOption?: boolean;
+  // Campos para resposta rica da IA
+  insights?: IInsight[];
+  visualizations?: IVisualization[];
+  kpis?: IInterpretedResponse['kpis'];
+  summary?: IInterpretedResponse['summary'];
+  responseFormat?: IInterpretedResponse['responseFormat'];
+  metadata?: IInterpretedResponse['metadata'];
 }
 
 export interface AISearchRequest {
@@ -28,13 +37,10 @@ export interface AISearchRequest {
   };
 }
 
-export interface AISearchResponse {
+export interface AISearchResponse extends Partial<IInterpretedResponse> {
   success: boolean;
-  interpretation?: string;
-  data?: any[];
   error?: string;
-  query?: any;
-  metadata?: any;
+  interpretation?: string; // Mantido para compatibilidade, mas o novo padrão usa 'answer'
 }
 
 export interface NavigationResult {

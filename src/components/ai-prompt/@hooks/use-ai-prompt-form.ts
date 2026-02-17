@@ -34,7 +34,7 @@ export function useAIPromptForm() {
         },
       });
 
-      const { success, interpretation, data, error } = result;
+      const { success, answer, interpretation, data, error, insights, visualizations, kpis, summary, responseFormat, metadata } = result;
 
       if (!success) {
         const errorMessage = {
@@ -45,8 +45,14 @@ export function useAIPromptForm() {
       }
 
       const aiMessage = {
-        ...createMessage(interpretation || t('ai.backend_success'), BYKONZ_AI_NAME, false),
+        ...createMessage(answer || interpretation || t('ai.backend_success'), BYKONZ_AI_NAME, false),
         data,
+        insights,
+        visualizations,
+        kpis,
+        summary,
+        responseFormat,
+        metadata,
       };
 
       setMessages((prev) => [...prev, aiMessage]);
