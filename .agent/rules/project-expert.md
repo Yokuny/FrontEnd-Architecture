@@ -49,6 +49,9 @@ Leia `docs/i18n-dates.md` para regras de i18n e formatDate.
 ### Quando implementar componentes React ou refatorar
 Leia `docs/react-patterns.md` para padroes de componentes, estrutura interna, early returns e anti-patterns.
 
+### Quando criar ou usar graficos (Recharts)
+Leia `docs/charts.md` para padroes de graficos, cores com `getChartColor`, tipos de grafico e modelos de referencia.
+
 ### Quando precisar usar selects, hooks ou componentes existentes
 Leia `docs/available-resources.md` para a lista de selects, hooks globais e componentes obrigatorios disponiveis.
 
