@@ -6,13 +6,12 @@ import { code } from '@streamdown/code';
 import { math } from '@streamdown/math';
 import { mermaid } from '@streamdown/mermaid';
 import { useNavigate } from '@tanstack/react-router';
-import type { FileUIPart, UIMessage } from 'ai';
-import { ArrowUp, Brain, ChevronDown, ChevronLeft, ChevronRight, ExternalLink, FileDigit, Navigation, Paperclip, Square, X } from 'lucide-react';
-import { type ComponentProps, createContext, type HTMLAttributes, memo, type ReactElement, type ReactNode, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ArrowDown, ArrowUp, Brain, ChevronDown, ExternalLink, FileDigit, Navigation, Paperclip, Square, X } from 'lucide-react';
+import { type ComponentProps, createContext, type HTMLAttributes, memo, type ReactNode, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Streamdown } from 'streamdown';
+import { StickToBottom, useStickToBottomContext } from 'use-stick-to-bottom';
 import { Button } from '@/components/ui/button';
-import { ButtonGroup, ButtonGroupText } from '@/components/ui/button-group';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Shimmer } from '@/components/ui/shimmer';
@@ -42,139 +41,6 @@ export const MessageContent = ({ children, className, ...props }: MessageContent
   </div>
 );
 
-export const MessageActions = ({ className, children, ...props }: MessageActionsProps) => (
-  <div className={cn('flex items-center gap-1', className)} {...props}>
-    {children}
-  </div>
-);
-
-export const MessageAction = ({ tooltip, children, label, variant = 'ghost', size = 'icon-sm', ...props }: MessageActionProps) => {
-  const button = (
-    <Button size={size} type="button" variant={variant} {...props}>
-      {children}
-      <span className="sr-only">{label || tooltip}</span>
-    </Button>
-  );
-
-  if (tooltip) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>{button}</TooltipTrigger>
-          <TooltipContent side="top">
-            <p>{tooltip}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
-
-  return button;
-};
-
-const MessageBranchContext = createContext<MessageBranchContextType | null>(null);
-
-const useMessageBranch = () => {
-  const context = useContext(MessageBranchContext);
-  if (!context) {
-    throw new Error('MessageBranch components must be used within MessageBranch');
-  }
-  return context;
-};
-
-export const MessageBranch = ({ defaultBranch = 0, onBranchChange, className, ...props }: MessageBranchProps) => {
-  const [currentBranch, setCurrentBranch] = useState(defaultBranch);
-  const [branches, setBranches] = useState<ReactElement[]>([]);
-
-  const handleBranchChange = (newBranch: number) => {
-    setCurrentBranch(newBranch);
-    onBranchChange?.(newBranch);
-  };
-
-  const goToPrevious = () => {
-    const newBranch = currentBranch > 0 ? currentBranch - 1 : branches.length - 1;
-    handleBranchChange(newBranch);
-  };
-
-  const goToNext = () => {
-    const newBranch = currentBranch < branches.length - 1 ? currentBranch + 1 : 0;
-    handleBranchChange(newBranch);
-  };
-
-  const contextValue: MessageBranchContextType = {
-    currentBranch,
-    totalBranches: branches.length,
-    goToPrevious,
-    goToNext,
-    branches,
-    setBranches,
-  };
-
-  return (
-    <MessageBranchContext.Provider value={contextValue}>
-      <div className={cn('grid w-full gap-2 [&>div]:pb-0', className)} {...props} />
-    </MessageBranchContext.Provider>
-  );
-};
-
-export const MessageBranchContent = ({ children, ...props }: MessageBranchContentProps) => {
-  const { currentBranch, setBranches, branches } = useMessageBranch();
-  const childrenArray = Array.isArray(children) ? children : [children];
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: updates on count change
-  useEffect(() => {
-    if (branches.length !== childrenArray.length) {
-      setBranches(childrenArray);
-    }
-  }, [childrenArray, branches, setBranches]);
-
-  return childrenArray.map((branch, index) => (
-    <div className={cn('grid gap-2 overflow-hidden [&>div]:pb-0', index === currentBranch ? 'block' : 'hidden')} key={branch.key} {...props}>
-      {branch}
-    </div>
-  ));
-};
-
-export const MessageBranchSelector = ({ className, from, ...props }: MessageBranchSelectorProps) => {
-  const { totalBranches } = useMessageBranch();
-
-  if (totalBranches <= 1) {
-    return null;
-  }
-
-  return <ButtonGroup className={cn('[&>*:not(:first-child)]:rounded-l-md [&>*:not(:last-child)]:rounded-r-md', className)} orientation="horizontal" {...props} />;
-};
-
-export const MessageBranchPrevious = ({ children, ...props }: MessageBranchPreviousProps) => {
-  const { goToPrevious, totalBranches } = useMessageBranch();
-
-  return (
-    <Button aria-label="Previous branch" disabled={totalBranches <= 1} onClick={goToPrevious} size="icon-sm" type="button" variant="ghost" {...props}>
-      {children ?? <ChevronLeft size={14} />}
-    </Button>
-  );
-};
-
-export const MessageBranchNext = ({ children, className, ...props }: MessageBranchNextProps) => {
-  const { goToNext, totalBranches } = useMessageBranch();
-
-  return (
-    <Button aria-label="Next branch" disabled={totalBranches <= 1} onClick={goToNext} size="icon-sm" type="button" variant="ghost" {...props}>
-      {children ?? <ChevronRight size={14} />}
-    </Button>
-  );
-};
-
-export const MessageBranchPage = ({ className, ...props }: MessageBranchPageProps) => {
-  const { currentBranch, totalBranches } = useMessageBranch();
-
-  return (
-    <ButtonGroupText className={cn('border-none bg-transparent text-muted-foreground shadow-none', className)} {...props}>
-      {currentBranch + 1} of {totalBranches}
-    </ButtonGroupText>
-  );
-};
-
 export const MessageResponse = memo(
   ({ className, isAnimating, ...props }: MessageResponseProps) => (
     <Streamdown
@@ -189,84 +55,6 @@ export const MessageResponse = memo(
 );
 
 MessageResponse.displayName = 'MessageResponse';
-
-export function MessageAttachment({ data, className, onRemove, ...props }: MessageAttachmentProps) {
-  const filename = data.filename || '';
-  const mediaType = data.mediaType?.startsWith('image/') && data.url ? 'image' : 'file';
-  const isImage = mediaType === 'image';
-  const attachmentLabel = filename || (isImage ? 'Image' : 'Attachment');
-
-  return (
-    <div className={cn('group relative size-24 overflow-hidden rounded-lg', className)} {...props}>
-      {isImage ? (
-        <>
-          <img alt={filename || 'attachment'} className="size-full object-cover" height={100} src={data.url} width={100} />
-          {onRemove && (
-            <Button
-              aria-label="Remove attachment"
-              className="absolute top-2 right-2 size-6 rounded-full bg-background/80 p-0 opacity-0 backdrop-blur-sm transition-opacity hover:bg-background group-hover:opacity-100 [&>svg]:size-3"
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemove();
-              }}
-              type="button"
-              variant="ghost"
-            >
-              <X />
-              <span className="sr-only">Remove</span>
-            </Button>
-          )}
-        </>
-      ) : (
-        <>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex size-full shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
-                <Paperclip className="size-4" />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{attachmentLabel}</p>
-            </TooltipContent>
-          </Tooltip>
-          {onRemove && (
-            <Button
-              aria-label="Remove attachment"
-              className="size-6 shrink-0 rounded-full p-0 opacity-0 transition-opacity hover:bg-accent group-hover:opacity-100 [&>svg]:size-3"
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemove();
-              }}
-              type="button"
-              variant="ghost"
-            >
-              <X />
-              <span className="sr-only">Remove</span>
-            </Button>
-          )}
-        </>
-      )}
-    </div>
-  );
-}
-
-export function MessageAttachments({ children, className, ...props }: MessageAttachmentsProps) {
-  if (!children) {
-    return null;
-  }
-
-  return (
-    <div className={cn('ml-auto flex w-fit flex-wrap items-start gap-2', className)} {...props}>
-      {children}
-    </div>
-  );
-}
-
-export const MessageToolbar = ({ className, children, ...props }: MessageToolbarProps) => (
-  <div className={cn('mt-4 flex w-full items-center justify-between gap-4', className)} {...props}>
-    {children}
-  </div>
-);
 
 /* -------------------------------------------------------------------------- */
 /*                               Input Components                             */
@@ -455,7 +243,6 @@ export const Reasoning = memo(({ className, isStreaming = false, open, defaultOp
   // Auto-open when streaming starts, auto-close when streaming ends (once only)
   useEffect(() => {
     if (defaultOpen && !isStreaming && isOpen && !hasAutoClosed) {
-      // Add a small delay before closing to allow user to see the content
       const timer = setTimeout(() => {
         setIsOpen(false);
         setHasAutoClosed(true);
@@ -572,58 +359,65 @@ ReasoningClose.displayName = 'ReasoningClose';
 ReasoningContent.displayName = 'ReasoningContent';
 
 /* -------------------------------------------------------------------------- */
-/*                              Interfaces.                                   */
+/*                            Conversation Pattern                            */
 /* -------------------------------------------------------------------------- */
 
-export type MessageProps = HTMLAttributes<HTMLDivElement> & {
-  from: UIMessage['role'];
+export const Conversation = ({ className, ...props }: ConversationProps) => (
+  <StickToBottom className={cn('relative flex-1 overflow-y-hidden', className)} initial="smooth" resize="smooth" role="log" {...props} />
+);
+
+export const ConversationContent = ({ className, ...props }: ConversationContentProps) => <StickToBottom.Content className={cn('flex flex-col gap-4 p-4', className)} {...props} />;
+
+export const ConversationEmptyState = ({ className, title, description, icon, children, ...props }: ConversationEmptyStateProps) => (
+  <div className={cn('flex size-full flex-col items-center justify-center gap-3 p-8 text-center', className)} {...props}>
+    {children ?? (
+      <>
+        {icon && <div className="text-muted-foreground">{icon}</div>}
+        <div className="space-y-1">
+          {title && <h3 className="font-medium text-sm">{title}</h3>}
+          {description && <p className="text-muted-foreground text-sm">{description}</p>}
+        </div>
+      </>
+    )}
+  </div>
+);
+
+export const ConversationScrollButton = ({ className, ...props }: ConversationScrollButtonProps) => {
+  const { isAtBottom, scrollToBottom } = useStickToBottomContext();
+
+  const handleScrollToBottom = useCallback(() => {
+    scrollToBottom();
+  }, [scrollToBottom]);
+
+  if (isAtBottom) return null;
+
+  return (
+    <Button
+      className={cn('absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full', className)}
+      onClick={handleScrollToBottom}
+      size="icon"
+      type="button"
+      variant="outline"
+      {...props}
+    >
+      <ArrowDown className="size-4" />
+    </Button>
+  );
 };
 
-export type MessageActionsProps = ComponentProps<'div'>;
+/* -------------------------------------------------------------------------- */
+/*                              Interfaces                                    */
+/* -------------------------------------------------------------------------- */
 
-export type MessageActionProps = ComponentProps<typeof Button> & {
-  tooltip?: string;
-  label?: string;
+type MessageRole = 'user' | 'assistant' | 'system';
+
+export type MessageProps = HTMLAttributes<HTMLDivElement> & {
+  from: MessageRole;
 };
 
 export type MessageContentProps = HTMLAttributes<HTMLDivElement>;
 
-interface MessageBranchContextType {
-  currentBranch: number;
-  totalBranches: number;
-  goToPrevious: () => void;
-  goToNext: () => void;
-  branches: ReactElement[];
-  setBranches: (branches: ReactElement[]) => void;
-}
-
-export type MessageBranchProps = HTMLAttributes<HTMLDivElement> & {
-  defaultBranch?: number;
-  onBranchChange?: (branchIndex: number) => void;
-};
-export type MessageBranchContentProps = HTMLAttributes<HTMLDivElement>;
-
-export type MessageBranchSelectorProps = HTMLAttributes<HTMLDivElement> & {
-  from: UIMessage['role'];
-};
-
-export type MessageBranchPreviousProps = ComponentProps<typeof Button>;
-
-export type MessageBranchNextProps = ComponentProps<typeof Button>;
-
-export type MessageBranchPageProps = HTMLAttributes<HTMLSpanElement>;
-
 export type MessageResponseProps = ComponentProps<typeof Streamdown>;
-
-export type MessageAttachmentProps = HTMLAttributes<HTMLDivElement> & {
-  data: FileUIPart;
-  className?: string;
-  onRemove?: () => void;
-};
-
-export type MessageAttachmentsProps = ComponentProps<'div'>;
-
-export type MessageToolbarProps = ComponentProps<'div'>;
 
 export interface ChatInputProps {
   input: string;
@@ -681,3 +475,15 @@ export type ReasoningCloseProps = ComponentProps<typeof Button> & {
 };
 
 export type ReasoningContentProps = ComponentProps<typeof CollapsibleContent>;
+
+export type ConversationProps = ComponentProps<typeof StickToBottom>;
+
+export type ConversationContentProps = ComponentProps<typeof StickToBottom.Content>;
+
+export type ConversationEmptyStateProps = ComponentProps<'div'> & {
+  title?: string;
+  description?: string;
+  icon?: ReactNode;
+};
+
+export type ConversationScrollButtonProps = ComponentProps<typeof Button>;

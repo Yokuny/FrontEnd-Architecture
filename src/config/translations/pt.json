@@ -2900,7 +2900,7 @@
   "ai.error_processing": "Ocorreu um erro ao processar sua solicitação local. Verifique os logs do console.",
   "ai.navigation_suggestion": "Sugestão de Navegação",
   "ai.suggestions": "Sugestões de navegação",
-  "ai.ask_backend": "Requisitar pesquisa",
+  "ai.ask": "Buscar dados",
   "ai.backend_success": "Busca no backend concluída",
   "ai.backend_error": "Erro ao consultar o backend",
   "ai.view_data": "Ver dados",

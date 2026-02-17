@@ -1,24 +1,28 @@
-import { ArrowDownNarrowWide, Search } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { ArrowDownNarrowWide } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { CursorClickIcon } from '@/components/sidebar/cursor-click-icon';
 import { EnterpriseSwitcher } from '@/components/sidebar/switch-enterprise';
 import { ItemContent, ItemDescription, ItemGroup } from '@/components/ui/item';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { Button } from '../ui/button';
 import {
   ChatInput,
   ChatSuggestions,
   ChatTyping,
+  Conversation,
+  ConversationContent,
+  ConversationEmptyState,
+  ConversationScrollButton,
   Message,
   MessageContent,
   MessageResponse,
-  MessageToolbar,
   Reasoning,
   ReasoningClose,
   ReasoningContent,
   ReasoningTrigger,
 } from '../ui/chat';
+import { Shimmer } from '../ui/shimmer';
 import { Skeleton } from '../ui/skeleton';
 import { UI_CONSTANTS } from './@const';
 import { useAIPromptForm } from './@hooks/use-ai-prompt-form';
@@ -27,20 +31,9 @@ import type { AIPromptSheetProps } from './@interface/ai-prompt.interface';
 
 export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
   const { t } = useTranslation();
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   const isProcessing = useAIPromptStore((state) => state.isProcessing);
   const { form, onSubmit, handleBackendSearch, messages, setMessages } = useAIPromptForm();
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: scroll needs to trigger on new messages
-  useEffect(() => {
-    if (scrollRef.current) {
-      const scrollContainer = scrollRef.current.querySelector('[data-radix-scroll-area-viewport]');
-      if (scrollContainer) {
-        scrollContainer.scrollTop = scrollContainer.scrollHeight;
-      }
-    }
-  }, [messages, isProcessing]);
 
   const handleNavigate = () => {
     onOpenChange(false);
@@ -60,15 +53,17 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
           <SheetTitle>{t('ai.assistant')}</SheetTitle>
         </SheetHeader>
 
-        <div className="h-full min-h-0 w-full flex-1">
-          <ScrollArea className="h-full w-full px-4" ref={scrollRef}>
-            {messages.length === 0 ? (
-              <div className="w-full text-center text-xl">
-                <ItemDescription>{t('can.i.help.you')}</ItemDescription>
-              </div>
-            ) : (
-              <ItemContent>
-                {messages.map((msg, i) => {
+        <Conversation className="flex-1">
+          {messages.length === 0 ? (
+            <ConversationEmptyState>
+              <ItemDescription className="text-xl">{t('can.i.help.you')}</ItemDescription>
+            </ConversationEmptyState>
+          ) : (
+            <ConversationContent>
+              {(() => {
+                const lastBackendIndex = messages.reduce((acc, msg, idx) => (!msg.reply && msg.showBackendOption ? idx : acc), -1);
+
+                return messages.map((msg, i) => {
                   const isAI = !msg.reply;
                   const hasResults = isAI && msg.assistantResults && msg.assistantResults.length > 0;
 
@@ -114,31 +109,35 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                         </div>
                       )}
 
-                      {isAI && msg.showBackendOption && (
-                        <MessageToolbar
-                          className="mt-2"
-                          onClick={() => {
-                            const userQuestion = messages[i - 1]?.message || '';
-                            handleBackendSearch(userQuestion, i);
-                          }}
-                        >
-                          <Search className="size-4" />
-                          {t('ai.ask_backend')}
-                        </MessageToolbar>
+                      {isAI && msg.showBackendOption && i === lastBackendIndex && (
+                        <div className="flex w-full justify-end">
+                          <Button
+                            type="button"
+                            size="sm"
+                            onClick={() => {
+                              const userQuestion = messages[i - 1]?.message || '';
+                              handleBackendSearch(userQuestion, i);
+                            }}
+                          >
+                            <Shimmer duration={3}>{t('ai.ask')}</Shimmer>
+                            <CursorClickIcon size={20} className="shrink-0 text-muted-foreground" />
+                          </Button>
+                        </div>
                       )}
                     </ItemContent>
                   );
-                })}
+                });
+              })()}
 
-                {isProcessing && (
-                  <Message from="assistant">
-                    <ChatTyping className="border bg-accent">{t('ai.thinking')}</ChatTyping>
-                  </Message>
-                )}
-              </ItemContent>
-            )}
-          </ScrollArea>
-        </div>
+              {isProcessing && (
+                <Message from="assistant">
+                  <ChatTyping>{t('ai.thinking')}</ChatTyping>
+                </Message>
+              )}
+            </ConversationContent>
+          )}
+          <ConversationScrollButton />
+        </Conversation>
 
         <SheetFooter>
           <ChatInput input={form.watch('question') || ''} onInputChange={(val: string) => form.setValue('question', val)} isLoading={isProcessing} onSubmit={onSubmit} />
