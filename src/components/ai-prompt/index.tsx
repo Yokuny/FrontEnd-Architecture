@@ -1,22 +1,29 @@
-import { Search, X } from 'lucide-react';
+import { ArrowDownNarrowWide, Search } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SparklesIcon } from '@/components/sidebar/sparkles-icon';
 import { EnterpriseSwitcher } from '@/components/sidebar/switch-enterprise';
-import { Button } from '@/components/ui/button';
 import { ItemContent, ItemDescription, ItemGroup } from '@/components/ui/item';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
-import { ChatContent, ChatMessage } from '../ui/chat';
+import {
+  ChatInput,
+  ChatSuggestions,
+  ChatTyping,
+  Message,
+  MessageContent,
+  MessageResponse,
+  MessageToolbar,
+  Reasoning,
+  ReasoningClose,
+  ReasoningContent,
+  ReasoningTrigger,
+} from '../ui/chat';
 import { Skeleton } from '../ui/skeleton';
 import { UI_CONSTANTS } from './@const';
 import { useAIPromptForm } from './@hooks/use-ai-prompt-form';
 import { useAIPromptStore } from './@hooks/use-ai-prompt-store';
 import type { AIPromptSheetProps } from './@interface/ai-prompt.interface';
-import { ChatInput } from './chat-input';
-import { Suggestions } from './chat-suggestions';
 
 export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
   const { t } = useTranslation();
@@ -53,102 +60,85 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
           <SheetTitle>{t('ai.assistant')}</SheetTitle>
         </SheetHeader>
 
-        <ScrollArea className={cn('px-4', `h-[calc(100vh-${UI_CONSTANTS.SCROLL_AREA_OFFSET}px)]`)} ref={scrollRef}>
-          {messages.length === 0 ? (
-            <div className="w-full text-center text-xl">
-              <ItemDescription>{t('can.i.help.you')}</ItemDescription>
-            </div>
-          ) : (
-            <ItemContent>
-              {messages.map((msg, i) => {
-                const isAI = !msg.reply;
-                const hasResults = isAI && msg.assistantResults && msg.assistantResults.length > 0;
+        <div className="h-full min-h-0 w-full flex-1">
+          <ScrollArea className="h-full w-full px-4" ref={scrollRef}>
+            {messages.length === 0 ? (
+              <div className="w-full text-center text-xl">
+                <ItemDescription>{t('can.i.help.you')}</ItemDescription>
+              </div>
+            ) : (
+              <ItemContent>
+                {messages.map((msg, i) => {
+                  const isAI = !msg.reply;
+                  const hasResults = isAI && msg.assistantResults && msg.assistantResults.length > 0;
 
-                return (
-                  <ItemContent key={`${msg.sender}-${i}`} className="gap-4">
-                    {hasResults ? (
-                      <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="suggestions" className="border-none">
-                          <AccordionTrigger className="px-0 py-2 hover:no-underline">
-                            <div className="flex w-full items-end justify-between gap-2">
-                              <p className="wrap-break-word whitespace-normal font-sans text-foreground text-sm">{msg.message}</p>
-                              <Button variant="ghost" size="sm" className="size-5" onClick={() => handleClearResults(i)}>
-                                <X className="size-3" />
-                              </Button>
-                            </div>
-                          </AccordionTrigger>
-                          <AccordionContent>
+                  return (
+                    <ItemContent key={`${msg.sender}-${i}`}>
+                      {hasResults ? (
+                        <Reasoning defaultOpen onClose={() => handleClearResults(i)}>
+                          <div className="flex w-full items-center justify-between">
+                            <ReasoningTrigger className="py-1 text-xs">
+                              <p className="wrap-break-word min-w-0 flex-1 whitespace-normal text-left font-sans text-foreground">{msg.message}</p>
+                            </ReasoningTrigger>
+                            <ReasoningClose tooltip={t('clear')} />
+                          </div>
+                          <ReasoningContent className="max-w-xl">
                             {msg.isAccordionLoading ? (
                               <Skeleton className={cn('w-full', UI_CONSTANTS.SKELETON_HEIGHT)} />
                             ) : (
                               <ItemGroup>
                                 {msg.assistantResults?.map((result, idx) => (
-                                  <Suggestions key={`${result.path}-${idx}`} result={result} onNavigate={handleNavigate} />
+                                  <ChatSuggestions key={`${result.path}-${idx}`} result={result} onNavigate={handleNavigate} />
                                 ))}
                               </ItemGroup>
                             )}
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    ) : (
-                      <div className="flex w-full flex-col gap-2">
-                        <ChatMessage className={cn('flex flex-row', isAI ? 'justify-start' : 'justify-end')}>
-                          {isAI ? (
-                            <div className="flex max-w-[85%] items-end gap-2">
-                              <p className="wrap-break-word whitespace-normal font-sans text-foreground text-sm">{msg.message}</p>
-                            </div>
-                          ) : (
-                            <ChatContent className="max-w-[85%] bg-muted text-foreground">{msg.message}</ChatContent>
+                          </ReasoningContent>
+                        </Reasoning>
+                      ) : (
+                        <div className="mb-2 flex w-full flex-col gap-2">
+                          <Message from={isAI ? 'assistant' : 'user'}>
+                            {!msg.assistantResults && (
+                              <MessageContent className={!isAI ? 'bg-muted text-foreground' : ''}>
+                                {isAI ? <MessageResponse isAnimating={isProcessing && i === messages.length - 1}>{msg.message}</MessageResponse> : msg.message}
+                              </MessageContent>
+                            )}
+                          </Message>
+                          {isAI && msg.data && (
+                            <Reasoning>
+                              <ReasoningTrigger className="py-1 text-xs" icon={ArrowDownNarrowWide}>
+                                <p>{t('ai.view_data')}</p>
+                              </ReasoningTrigger>
+                              <ReasoningContent className="max-w-xl">{`\`\`\`json\n${JSON.stringify(msg.data, null, 2)}\n\`\`\``}</ReasoningContent>
+                            </Reasoning>
                           )}
-                        </ChatMessage>
-                        {isAI && msg.data && (
-                          <div className="pl-6">
-                            <Accordion type="single" collapsible className="w-full">
-                              <AccordionItem value="data" className="border-none">
-                                <AccordionTrigger className="justify-start py-1 text-muted-foreground text-xs hover:no-underline">{t('ai.view_data')}</AccordionTrigger>
-                                <AccordionContent>
-                                  <div className="max-h-60 overflow-auto rounded-md bg-muted p-2">
-                                    <pre className="text-xs">{JSON.stringify(msg.data, null, 2)}</pre>
-                                  </div>
-                                </AccordionContent>
-                              </AccordionItem>
-                            </Accordion>
-                          </div>
-                        )}
-                      </div>
-                    )}
+                        </div>
+                      )}
 
-                    {isAI && msg.showBackendOption && (
-                      <div className="mt-2 flex justify-start pl-6">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="gap-1.5 text-primary text-xs hover:bg-primary/10 hover:text-primary"
+                      {isAI && msg.showBackendOption && (
+                        <MessageToolbar
+                          className="mt-2"
                           onClick={() => {
                             const userQuestion = messages[i - 1]?.message || '';
                             handleBackendSearch(userQuestion, i);
                           }}
-                          disabled={isProcessing}
                         >
-                          <Search size={UI_CONSTANTS.BACKEND_SEARCH_ICON_SIZE} />
+                          <Search className="size-4" />
                           {t('ai.ask_backend')}
-                        </Button>
-                      </div>
-                    )}
-                  </ItemContent>
-                );
-              })}
+                        </MessageToolbar>
+                      )}
+                    </ItemContent>
+                  );
+                })}
 
-              {isProcessing && (
-                <ChatMessage className="animate-pulse">
-                  <ChatContent className="flex items-center justify-center border bg-accent">
-                    <SparklesIcon size={UI_CONSTANTS.CHAT_APP_ICON_SIZE} className="text-primary" />
-                  </ChatContent>
-                </ChatMessage>
-              )}
-            </ItemContent>
-          )}
-        </ScrollArea>
+                {isProcessing && (
+                  <Message from="assistant">
+                    <ChatTyping className="border bg-accent">{t('ai.thinking')}</ChatTyping>
+                  </Message>
+                )}
+              </ItemContent>
+            )}
+          </ScrollArea>
+        </div>
 
         <SheetFooter>
           <ChatInput input={form.watch('question') || ''} onInputChange={(val: string) => form.setValue('question', val)} isLoading={isProcessing} onSubmit={onSubmit} />

@@ -4,10 +4,7 @@ export const UI_CONSTANTS = {
 
   // Layout & Sizing
   SHEET_SIDE_WIDTH: 'sm:max-w-2xl',
-  SCROLL_AREA_OFFSET: 200,
   SKELETON_HEIGHT: 'h-12',
-  CHAT_APP_ICON_SIZE: 20,
-  BACKEND_SEARCH_ICON_SIZE: 12,
 
   // Input
   MAX_FILE_NAME_LENGTH: 32,

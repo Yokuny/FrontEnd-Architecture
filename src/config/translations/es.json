@@ -123,6 +123,10 @@
   "ai.anomaly.detector": "Detector de anomalías IA",
   "ai.assistant": "Asistente IA",
   "ai.prompt": "Chat IA",
+  "ai.thinking": "Pensando...",
+  "ai.thought_duration": "Pensó durante {{duration}} segundos",
+  "ai.thought_summary": "Pensó durante unos segundos",
+  "ai.typing": "Escribiendo...",
   "ais.dimensions": "Dimensiones AIS",
   "ais.global": "AIS Global",
   "alarms": "Alertas",
@@ -2888,5 +2892,6 @@
   "ai.ask_backend": "Solicitar investigación",
   "ai.backend_success": "Búsqueda completada",
   "ai.backend_error": "Error al consultar el backend",
+  "ai.view_data": "Ver datos",
   "stop": "Detener"
 }
