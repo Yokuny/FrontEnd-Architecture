@@ -2891,7 +2891,11 @@
   "ai.suggestions": "Ver rutas sugeridas",
   "ai.ask": "Solicitar datos",
   "ai.backend_success": "Búsqueda completada",
-  "ai.backend_error": "Error al consultar el backend",
+  "ai.backend_error": "Error al consultar",
   "ai.view_data": "Ver datos",
+  "ai.processing_request": "Procesando solicitud...",
+  "ai.analyzing_data": "Analizando datos...",
+  "ai.searching": "Buscando...",
+  "ai.almost_ready": "Casi listo...",
   "stop": "Detener"
 }

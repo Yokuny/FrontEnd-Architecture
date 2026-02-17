@@ -9,7 +9,6 @@ import { Button } from '../ui/button';
 import {
   ChatInput,
   ChatSuggestions,
-  ChatTyping,
   Conversation,
   ConversationContent,
   ConversationEmptyState,
@@ -22,6 +21,7 @@ import {
   ReasoningContent,
   ReasoningTrigger,
 } from '../ui/chat';
+import { RotatingText } from '../ui/rotating-text';
 import { Shimmer } from '../ui/shimmer';
 import { Skeleton } from '../ui/skeleton';
 import { UI_CONSTANTS } from './@const';
@@ -131,7 +131,9 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
 
               {isProcessing && (
                 <Message from="assistant">
-                  <ChatTyping>{t('ai.thinking')}</ChatTyping>
+                  <Reasoning className="text-xs">
+                    <RotatingText text={[t('ai.thinking'), t('ai.processing_request'), t('ai.analyzing_data'), t('ai.searching'), t('ai.almost_ready')]} duration={2000} />
+                  </Reasoning>
                 </Message>
               )}
             </ConversationContent>

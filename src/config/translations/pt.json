@@ -2901,8 +2901,12 @@
   "ai.navigation_suggestion": "Sugestão de Navegação",
   "ai.suggestions": "Sugestões de navegação",
   "ai.ask": "Buscar dados",
-  "ai.backend_success": "Busca no backend concluída",
-  "ai.backend_error": "Erro ao consultar o backend",
+  "ai.backend_success": "Busca concluída",
+  "ai.backend_error": "Erro ao consultar",
   "ai.view_data": "Ver dados",
+  "ai.processing_request": "Processando solicitação...",
+  "ai.analyzing_data": "Analisando dados...",
+  "ai.searching": "Buscando...",
+  "ai.almost_ready": "Quase pronto...",
   "stop": "Parar"
 }

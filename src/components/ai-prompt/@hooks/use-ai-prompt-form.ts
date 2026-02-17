@@ -63,7 +63,8 @@ export function useAIPromptForm() {
   const handleSend = async (data: AIPromptData) => {
     const userMessage = createMessage(data.question, t('you'), true);
 
-    setMessages((prev) => [...prev, userMessage]);
+    // Remove all previous showBackendOption flags
+    setMessages((prev) => [...prev.map((msg) => ({ ...msg, showBackendOption: false })), userMessage]);
     setIsProcessing(true);
 
     try {
