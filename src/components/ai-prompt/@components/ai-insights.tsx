@@ -1,11 +1,7 @@
-import { AlertTriangle, ArrowDown, ArrowUp, CheckCircle2, Info, Minus, XCircle } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Info, Minus, TrendingDown, TrendingUp, XCircle } from 'lucide-react';
 import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 import type { IInsight } from '../@interface/ai-search.interface';
-
-interface AIInsightsProps {
-  insights: IInsight[];
-}
 
 const insightConfig = {
   info: {
@@ -35,9 +31,9 @@ const insightConfig = {
 } as const;
 
 function TrendIcon({ trend }: { trend?: 'up' | 'down' | 'stable' }) {
-  if (trend === 'up') return <ArrowUp className="size-3" />;
-  if (trend === 'down') return <ArrowDown className="size-3" />;
-  return <Minus className="size-3" />;
+  if (trend === 'up') return <TrendingUp className="size-3.5" />;
+  if (trend === 'down') return <TrendingDown className="size-3.5" />;
+  return <Minus className="size-3.5" />;
 }
 
 export function AIInsights({ insights }: AIInsightsProps) {
@@ -45,12 +41,12 @@ export function AIInsights({ insights }: AIInsightsProps) {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      {insights.map((insight, idx) => {
+      {insights.map((insight) => {
         const config = insightConfig[insight.type] || insightConfig.info;
         const Icon = config.icon;
 
         return (
-          <div key={`insight-${idx}`} className={cn('flex items-start gap-2.5 rounded-md border p-2.5', config.border, config.bg)}>
+          <div key={insight.text} className={cn('flex items-start gap-2.5 rounded-md border p-2.5', config.border, config.bg)}>
             <Icon className={cn('mt-0.5 size-4 shrink-0', config.color)} />
             <ItemContent>
               <ItemDescription className="line-clamp-none text-foreground text-xs leading-relaxed">{insight.text}</ItemDescription>
@@ -84,4 +80,8 @@ export function AIInsights({ insights }: AIInsightsProps) {
       })}
     </div>
   );
+}
+
+interface AIInsightsProps {
+  insights: IInsight[];
 }

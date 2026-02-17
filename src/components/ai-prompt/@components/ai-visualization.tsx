@@ -262,10 +262,6 @@ function AIGaugeChart({ viz }: { viz: IVisualization }) {
 
 // --- Main Renderer ---
 
-interface AIVisualizationProps {
-  visualization: IVisualization;
-}
-
 export function AIVisualization({ visualization }: AIVisualizationProps) {
   const renderChart = () => {
     switch (visualization.chartType) {
@@ -301,10 +297,6 @@ export function AIVisualization({ visualization }: AIVisualizationProps) {
   );
 }
 
-interface AIVisualizationListProps {
-  visualizations: IVisualization[];
-}
-
 export function AIVisualizationList({ visualizations }: AIVisualizationListProps) {
   if (!visualizations || visualizations.length === 0) return null;
 
@@ -315,4 +307,11 @@ export function AIVisualizationList({ visualizations }: AIVisualizationListProps
       ))}
     </div>
   );
+}
+
+interface AIVisualizationProps {
+  visualization: IVisualization;
+}
+interface AIVisualizationListProps {
+  visualizations: IVisualization[];
 }

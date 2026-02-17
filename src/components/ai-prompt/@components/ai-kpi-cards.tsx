@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
+import { Minus, TrendingDown, TrendingUp } from 'lucide-react';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 import type { IInterpretedResponse } from '../@interface/ai-search.interface';
@@ -10,8 +10,8 @@ interface AIKpiCardsProps {
 }
 
 function TrendIcon({ trend }: { trend?: 'up' | 'down' | 'stable' }) {
-  if (trend === 'up') return <ArrowUp className="size-3.5" />;
-  if (trend === 'down') return <ArrowDown className="size-3.5" />;
+  if (trend === 'up') return <TrendingUp className="size-3.5" />;
+  if (trend === 'down') return <TrendingDown className="size-3.5" />;
   return <Minus className="size-3.5" />;
 }
 
@@ -28,23 +28,25 @@ export function AIKpiCards({ kpis }: AIKpiCardsProps) {
     <div className="grid w-full grid-cols-2 gap-2">
       {kpis.map((kpi, idx) => (
         <Item key={`${kpi.label}-${idx}`} variant="outline" size="sm" className="flex-col items-start">
-          <ItemContent>
-            <ItemDescription className="line-clamp-1 text-xs">{kpi.label}</ItemDescription>
+          <ItemContent className="w-full">
+            <div className="flex w-full justify-between">
+              <ItemDescription className="line-clamp-1 text-xs">{kpi.label}</ItemDescription>
+              {kpi.trend && (
+                <div className={cn('flex items-center gap-1 text-xs', trendColor(kpi.trend))}>
+                  <TrendIcon trend={kpi.trend} />
+                  {kpi.changePercent != null && (
+                    <span className="font-medium tabular-nums">
+                      {kpi.changePercent > 0 ? '+' : ''}
+                      {kpi.changePercent}%
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
             <div className="flex items-baseline gap-2">
               <ItemTitle className="font-bold text-lg tabular-nums">{typeof kpi.value === 'number' ? kpi.value.toLocaleString() : kpi.value}</ItemTitle>
               {kpi.unit && <ItemDescription className="text-xs">{kpi.unit}</ItemDescription>}
             </div>
-            {kpi.trend && (
-              <div className={cn('flex items-center gap-1 text-xs', trendColor(kpi.trend))}>
-                <TrendIcon trend={kpi.trend} />
-                {kpi.changePercent != null && (
-                  <span className="font-medium tabular-nums">
-                    {kpi.changePercent > 0 ? '+' : ''}
-                    {kpi.changePercent}%
-                  </span>
-                )}
-              </div>
-            )}
           </ItemContent>
         </Item>
       ))}
