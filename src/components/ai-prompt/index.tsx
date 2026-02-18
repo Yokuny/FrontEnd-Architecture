@@ -1,11 +1,9 @@
 import { ArrowDownNarrowWide } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { CursorClickIcon } from '@/components/sidebar/cursor-click-icon';
 import { EnterpriseSwitcher } from '@/components/sidebar/switch-enterprise';
 import { ItemContent, ItemDescription, ItemGroup } from '@/components/ui/item';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { Button } from '../ui/button';
 import {
   ChatInput,
   ChatSuggestions,
@@ -22,7 +20,6 @@ import {
   ReasoningTrigger,
 } from '../ui/chat';
 import { RotatingText } from '../ui/rotating-text';
-import { Shimmer } from '../ui/shimmer';
 import { Skeleton } from '../ui/skeleton';
 import { AIInsights } from './@components/ai-insights';
 import { AIKpiCards } from './@components/ai-kpi-cards';
@@ -36,7 +33,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
   const { t } = useTranslation();
 
   const isProcessing = useAIPromptStore((state) => state.isProcessing);
-  const { form, onSubmit, handleBackendSearch, messages, setMessages } = useAIPromptForm();
+  const { form, onSubmit, messages, setMessages } = useAIPromptForm();
 
   const handleNavigate = () => {
     onOpenChange(false);
@@ -64,8 +61,6 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
           ) : (
             <ConversationContent>
               {(() => {
-                const lastBackendIndex = messages.reduce((acc, msg, idx) => (!msg.reply && msg.showBackendOption ? idx : acc), -1);
-
                 return messages.map((msg, i) => {
                   const isAI = !msg.reply;
                   const hasResults = isAI && msg.assistantResults && msg.assistantResults.length > 0;
@@ -112,22 +107,6 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                               <ReasoningContent className="max-w-xl">{`\`\`\`json\n${JSON.stringify(msg.data, null, 2)}\n\`\`\``}</ReasoningContent>
                             </Reasoning>
                           )}
-                        </div>
-                      )}
-
-                      {isAI && msg.showBackendOption && i === lastBackendIndex && (
-                        <div className="flex w-full justify-end">
-                          <Button
-                            type="button"
-                            size="sm"
-                            onClick={() => {
-                              const userQuestion = messages[i - 1]?.message || '';
-                              handleBackendSearch(userQuestion, i);
-                            }}
-                          >
-                            <Shimmer duration={3}>{t('ai.ask')}</Shimmer>
-                            <CursorClickIcon size={20} className="shrink-0 text-muted-foreground" />
-                          </Button>
                         </div>
                       )}
                     </ItemContent>

@@ -40,29 +40,22 @@ export function AIInsights({ insights }: AIInsightsProps) {
   if (!insights || insights.length === 0) return null;
 
   return (
-    <div className="flex w-full flex-col gap-2">
+    <ItemContent>
       {insights.map((insight) => {
         const config = insightConfig[insight.type] || insightConfig.info;
         const Icon = config.icon;
 
         return (
           <div key={insight.text} className={cn('flex items-start gap-2.5 rounded-md border p-2.5', config.border, config.bg)}>
-            <Icon className={cn('mt-0.5 size-4 shrink-0', config.color)} />
-            <ItemContent>
-              <ItemDescription className="line-clamp-none text-foreground text-xs leading-relaxed">{insight.text}</ItemDescription>
+            <Icon className={cn('size-4 shrink-0', config.color)} />
+            <ItemContent className="gap-0">
+              <ItemDescription className="text-foreground text-xs">{insight.text}</ItemDescription>
               {insight.metric && (
-                <div className="mt-1 flex flex-wrap items-center gap-2">
-                  <ItemTitle className="text-xs tabular-nums">
-                    {typeof insight.metric.value === 'number' ? insight.metric.value.toLocaleString() : insight.metric.value}
-                    {insight.metric.unit && <span className="ml-0.5 font-normal text-muted-foreground">{insight.metric.unit}</span>}
-                  </ItemTitle>
+                <div className="flex flex-wrap items-center gap-2">
+                  <ItemTitle className="text-xs tabular-nums">{typeof insight.metric.value === 'number' ? insight.metric.value.toLocaleString() : insight.metric.value}</ItemTitle>
+                  {insight.metric.unit && <ItemDescription className="leading-none">{insight.metric.unit}</ItemDescription>}
                   {insight.metric.trend && (
-                    <div
-                      className={cn(
-                        'flex items-center gap-0.5 text-xs',
-                        insight.metric.trend === 'up' ? 'text-emerald-500' : insight.metric.trend === 'down' ? 'text-red-500' : 'text-muted-foreground',
-                      )}
-                    >
+                    <div className={cn(insight.metric.trend === 'up' ? 'text-emerald-500' : insight.metric.trend === 'down' ? 'text-red-500' : 'text-muted-foreground')}>
                       <TrendIcon trend={insight.metric.trend} />
                       {insight.metric.changePercent != null && (
                         <span className="tabular-nums">
@@ -78,7 +71,7 @@ export function AIInsights({ insights }: AIInsightsProps) {
           </div>
         );
       })}
-    </div>
+    </ItemContent>
   );
 }
 

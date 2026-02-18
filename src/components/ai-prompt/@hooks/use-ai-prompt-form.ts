@@ -22,9 +22,11 @@ export function useAIPromptForm() {
     },
   });
 
-  const handleBackendSearch = async (question: string, index: number) => {
+  const handleBackendSearch = async (question: string, index?: number) => {
     setIsProcessing(true);
-    setMessages((prev) => prev.map((msg, i) => (i === index ? { ...msg, showBackendOption: false } : msg)));
+    if (index !== undefined) {
+      setMessages((prev) => prev.map((msg, i) => (i === index ? { ...msg, showBackendOption: false } : msg)));
+    }
 
     try {
       const result = await search.mutateAsync({
@@ -91,7 +93,7 @@ export function useAIPromptForm() {
       const aiMessage = {
         ...createMessage(responseText, BYKONZ_AI_NAME, false),
         assistantResults: navigationResults,
-        showBackendOption: true,
+        showBackendOption: false,
         isAccordionLoading: navigationResults.length > 0,
       };
 
@@ -105,6 +107,9 @@ export function useAIPromptForm() {
         }
         return next;
       });
+
+      // Automate Backend Search
+      await handleBackendSearch(data.question);
     } catch (err) {
       // biome-ignore lint: debugging
       console.log('Erro no Assistant:', err);
