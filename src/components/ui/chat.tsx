@@ -6,7 +6,7 @@ import { code } from '@streamdown/code';
 import { math } from '@streamdown/math';
 import { mermaid } from '@streamdown/mermaid';
 import { useNavigate } from '@tanstack/react-router';
-import { ArrowDown, ArrowUp, Brain, ChevronDown, ExternalLink, FileDigit, Navigation, Paperclip, Square, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, AtSign, Brain, ChevronDown, ExternalLink, FileDigit, Navigation, Paperclip, Square, X } from 'lucide-react';
 import { type ComponentProps, createContext, type HTMLAttributes, memo, type ReactNode, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Streamdown } from 'streamdown';
@@ -68,7 +68,7 @@ export function ChatInputArea({ children, className, ...props }: React.Component
   );
 }
 
-export function ChatInput({ input, onInputChange, isLoading, onSubmit }: ChatInputProps) {
+export function ChatInput({ input, onInputChange, isLoading, onSubmit, onKeyDown, mentionDropdown, onTriggerMention, disableFileUpload, textareaRef }: ChatInputProps) {
   const { t } = useTranslation();
   const [files, setFiles] = useState<File[]>([]);
   const uploadInputRef = useRef<HTMLInputElement>(null);
@@ -94,15 +94,19 @@ export function ChatInput({ input, onInputChange, isLoading, onSubmit }: ChatInp
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const defaultKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
     }
   };
 
+  const isDisabled = !input.trim() && files.length === 0 && !isLoading;
+
   return (
-    <ChatInputArea className="w-full">
+    <ChatInputArea className="relative w-full">
+      {mentionDropdown}
+
       {files.length > 0 && (
         <div className="flex flex-wrap gap-2 pb-2">
           {files.map((file, index) => (
@@ -117,18 +121,35 @@ export function ChatInput({ input, onInputChange, isLoading, onSubmit }: ChatInp
         </div>
       )}
 
-      <ChatInputTextarea placeholder={`${t('search.placeholder')}...`} value={input} onChange={(e) => onInputChange(e.target.value)} onKeyDown={handleKeyDown} />
+      <ChatInputTextarea
+        ref={textareaRef}
+        placeholder={`${t('search.placeholder')}...`}
+        value={input}
+        onChange={(e) => onInputChange(e.target.value)}
+        onKeyDown={onKeyDown ?? defaultKeyDown}
+      />
 
       <div className="flex items-center justify-between gap-2 pt-2">
-        <ChatInputAction tooltip={t('attach.files')}>
-          <label htmlFor="file-upload" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-2xl hover:bg-secondary-foreground/10">
-            <input type="file" multiple onChange={handleFileChange} className="hidden" id="file-upload" ref={uploadInputRef} />
-            <Paperclip className="size-5 text-primary" />
-          </label>
-        </ChatInputAction>
+        <div className="flex items-center gap-2">
+          {!disableFileUpload && (
+            <ChatInputAction tooltip={t('attach.files')}>
+              <label htmlFor="file-upload" className="flex size-8 items-center justify-center rounded-full hover:bg-accent">
+                <input type="file" multiple onChange={handleFileChange} className="hidden" id="file-upload" ref={uploadInputRef} />
+                <Paperclip className="size-5 text-primary" />
+              </label>
+            </ChatInputAction>
+          )}
+          {onTriggerMention && (
+            <ChatInputAction tooltip={t('mention')}>
+              <button type="button" onClick={onTriggerMention} className="flex size-8 items-center justify-center rounded-full hover:bg-accent">
+                <AtSign className="size-5 text-primary" />
+              </button>
+            </ChatInputAction>
+          )}
+        </div>
 
         <ChatInputAction tooltip={isLoading ? t('stop') : t('send')}>
-          <Button className="size-8 rounded-xl" onClick={handleSubmit} disabled={!input.trim() && files.length === 0 && !isLoading} type="button">
+          <Button className="h-8 rounded-full" onClick={handleSubmit} disabled={isDisabled} type="button">
             {isLoading ? <Square className="size-3 fill-current" /> : <ArrowUp className="size-4" />}
           </Button>
         </ChatInputAction>
@@ -137,20 +158,21 @@ export function ChatInput({ input, onInputChange, isLoading, onSubmit }: ChatInp
   );
 }
 
-export function ChatInputTextarea({ value, onChange, ...props }: React.ComponentProps<typeof Textarea>) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+export function ChatInputTextarea({ ref, value, onChange, ...props }: React.ComponentProps<typeof Textarea>) {
+  const internalRef = useRef<HTMLTextAreaElement>(null);
+  const resolvedRef = (ref as React.RefObject<HTMLTextAreaElement>) ?? internalRef;
 
   useLayoutEffect(() => {
-    const el = textareaRef.current;
+    const el = resolvedRef.current;
     if (el) {
       el.style.height = 'auto';
       el.style.height = `${Math.min(el.scrollHeight, 240)}px`;
     }
-  }, []);
+  }, [resolvedRef]);
 
   return (
     <Textarea
-      ref={textareaRef}
+      ref={resolvedRef}
       value={value}
       onChange={onChange}
       className={cn('min-h-11 w-full resize-none border-none bg-transparent text-primary outline-none focus-visible:ring-0 focus-visible:ring-offset-0')}
@@ -424,6 +446,11 @@ export interface ChatInputProps {
   onInputChange: (value: string) => void;
   isLoading: boolean;
   onSubmit: () => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  mentionDropdown?: React.ReactNode;
+  onTriggerMention?: () => void;
+  disableFileUpload?: boolean;
+  textareaRef?: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 export interface ChatSuggestionProps {

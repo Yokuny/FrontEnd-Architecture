@@ -35,6 +35,7 @@ export interface AISearchRequest {
   prompt: string;
   context: {
     currentPath: string;
+    mentions?: Record<string, unknown>;
   };
 }
 

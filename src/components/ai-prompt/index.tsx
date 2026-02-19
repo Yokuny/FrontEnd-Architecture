@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { EnterpriseSwitcher } from '@/components/sidebar/switch-enterprise';
 import { ItemContent, ItemDescription, ItemGroup } from '@/components/ui/item';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import {
   ChatInput,
   ChatSuggestions,
@@ -25,9 +24,11 @@ import { AIInsights } from './@components/ai-insights';
 import { AIKpiCards } from './@components/ai-kpi-cards';
 import { AITable } from './@components/ai-table';
 import { AIVisualizationList } from './@components/ai-visualization';
-import { UI_CONSTANTS } from './@const';
+import { MentionDropdown } from './@components/mention-dropdown';
 import { useAIPromptForm } from './@hooks/use-ai-prompt-form';
 import { useAIPromptStore } from './@hooks/use-ai-prompt-store';
+import { useMentionData } from './@hooks/use-mention-data';
+import { useMentionInput } from './@hooks/use-mention-input';
 import type { AIPromptSheetProps } from './@interface/ai-prompt.interface';
 
 export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
@@ -35,6 +36,19 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
 
   const isProcessing = useAIPromptStore((state) => state.isProcessing);
   const { form, onSubmit, messages, setMessages } = useAIPromptForm();
+
+  const { categories, getItems } = useMentionData();
+  const mention = useMentionInput({
+    categories,
+    getItems,
+    onSubmit: (payload) => {
+      form.setValue('question', payload.text);
+      form.setValue('mentions', payload.mentions);
+      onSubmit();
+      form.setValue('question', '');
+      form.setValue('mentions', []);
+    },
+  });
 
   const handleNavigate = () => {
     onOpenChange(false);
@@ -46,7 +60,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className={cn('w-full', UI_CONSTANTS.SHEET_SIDE_WIDTH)}>
+      <SheetContent side="right" className={'w-full sm:max-w-2xl'}>
         <SheetHeader className="flex flex-row items-center">
           <div className="rounded-md border">
             <EnterpriseSwitcher />
@@ -78,7 +92,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                           </div>
                           <ReasoningContent className="max-w-xl">
                             {msg.isAccordionLoading ? (
-                              <Skeleton className={cn('w-full', UI_CONSTANTS.SKELETON_HEIGHT)} />
+                              <Skeleton className={'h-12 w-full'} />
                             ) : (
                               <ItemGroup>
                                 {msg.assistantResults?.map((result, idx) => (
@@ -129,7 +143,28 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
         </Conversation>
 
         <SheetFooter>
-          <ChatInput input={form.watch('question') || ''} onInputChange={(val: string) => form.setValue('question', val)} isLoading={isProcessing} onSubmit={onSubmit} />
+          <ChatInput
+            input={mention.input}
+            onInputChange={mention.handleInputChange}
+            isLoading={isProcessing}
+            onSubmit={mention.handleSubmit}
+            onKeyDown={mention.handleKeyDown}
+            textareaRef={mention.textareaRef}
+            disableFileUpload
+            onTriggerMention={mention.triggerMention}
+            mentionDropdown={
+              <MentionDropdown
+                step={mention.mentionState.step}
+                categories={mention.filteredCategories}
+                items={mention.filteredItems}
+                isLoading={mention.isItemsLoading}
+                selectedCategory={mention.mentionState.selectedCategory}
+                onSelectCategory={mention.selectCategory}
+                onSelectItem={mention.selectItem}
+                onClose={mention.closeMention}
+              />
+            }
+          />
         </SheetFooter>
       </SheetContent>
     </Sheet>

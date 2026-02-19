@@ -64,7 +64,7 @@ export function useAIPromptForm() {
     },
   });
 
-  const handleBackendSearch = async (question: string, index?: number) => {
+  const handleBackendSearch = async (question: string, mentions: Record<string, unknown> = {}, index?: number) => {
     setIsProcessing(true);
     if (index !== undefined) {
       setMessages((prev) => prev.map((msg, i) => (i === index ? { ...msg, showBackendOption: false } : msg)));
@@ -75,6 +75,7 @@ export function useAIPromptForm() {
         prompt: question,
         context: {
           currentPath: window.location.pathname,
+          ...mentions,
         },
       });
 
@@ -155,7 +156,13 @@ export function useAIPromptForm() {
       });
 
       // Automate Backend Search
-      await handleBackendSearch(data.question);
+      const mentionsMap =
+        data.mentions?.reduce((acc: Record<string, unknown>, curr) => {
+          acc[curr.name] = curr;
+          return acc;
+        }, {}) || {};
+
+      await handleBackendSearch(data.question, mentionsMap);
     } catch (err) {
       // biome-ignore lint: debugging
       console.log('Erro no Assistant:', err);
