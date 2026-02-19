@@ -5,7 +5,7 @@ export const aiPromptSchema = z.object({
   mentions: z
     .array(
       z.object({
-        trigger: z.string(),
+        trigger: z.string().optional(),
         type: z.string(),
         id: z.string(),
         name: z.string(),

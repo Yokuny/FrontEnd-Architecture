@@ -163,9 +163,8 @@ export function useAIPromptForm() {
         }, {}) || {};
 
       await handleBackendSearch(data.question, mentionsMap);
-    } catch (err) {
+    } catch {
       // biome-ignore lint: debugging
-      console.log('Erro no Assistant:', err);
       const errorMessage = {
         ...createMessage(t('ai.error_processing'), BYKONZ_AI_NAME, false),
       };

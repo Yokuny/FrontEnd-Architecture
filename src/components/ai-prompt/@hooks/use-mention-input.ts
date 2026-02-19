@@ -24,7 +24,7 @@ export interface ResolvedMention {
 
 export interface SubmitPayload {
   text: string;
-  mentions: ResolvedMention[];
+  mentions: Omit<ResolvedMention, 'trigger'>[];
 }
 
 export type MentionStep = 'idle' | 'category' | 'item';
@@ -157,7 +157,9 @@ export function useMentionInput({ categories, getItems, onSubmit }: UseMentionIn
     const text = input.trim();
     if (!text) return;
 
-    onSubmit?.({ text, mentions });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const cleanMentions = mentions.map(({ trigger, ...rest }) => rest);
+    onSubmit?.({ text, mentions: cleanMentions });
 
     setInput('');
     setMentions([]);
