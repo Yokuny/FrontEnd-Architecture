@@ -38,6 +38,7 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-medium">{t('email')}</FormLabel>
+
               <FormControl>
                 <div className="relative">
                   <Input {...field} className="h-14" type="email" placeholder={t('login.email.placeholder')} autoFocus />
@@ -53,7 +54,7 @@ export function EmailStep({ email, onEmailChange, rememberEmail, onRememberChang
 
         <div className="flex items-center space-x-2">
           <Checkbox id="remember" variant="blue" checked={rememberEmail} onCheckedChange={(checked: boolean | 'indeterminate') => onRememberChange(checked === true)} />
-          <Label htmlFor="remember" className="cursor-pointer font-normal text-sm">
+          <Label htmlFor="remember" className="cursor-pointer font-normal text-muted-foreground text-sm">
             {t('remember.email')}
           </Label>
         </div>

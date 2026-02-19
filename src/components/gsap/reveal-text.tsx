@@ -67,3 +67,34 @@ export const RevealText = ({ type = 'chars', gsapVars = {}, splitTextVars = {}, 
 
   return <div {...props} ref={wrapperRef} />;
 };
+
+type RevealImageProps = ComponentProps<'img'> & {
+  gsapVars?: gsap.TweenVars;
+};
+
+export const RevealImage = ({ gsapVars = {}, className, ...props }: RevealImageProps) => {
+  const ref = useRef<HTMLImageElement>(null);
+
+  useGSAP(
+    () => {
+      const element = ref.current;
+      if (!element) return;
+
+      const { delay, duration, ease, ...fromVars } = gsapVars;
+
+      gsap.from(element, {
+        opacity: 0,
+        y: 50,
+        scale: 1.05,
+        ...fromVars,
+        delay: delay ?? 0,
+        duration: duration ?? 1.5,
+        ease: ease ?? 'power3.out',
+        force3D: true,
+      });
+    },
+    { scope: ref },
+  );
+
+  return <img ref={ref} className={className} {...props} />;
+};

@@ -164,7 +164,6 @@ export function useAIPromptForm() {
 
       await handleBackendSearch(data.question, mentionsMap);
     } catch {
-      // biome-ignore lint: debugging
       const errorMessage = {
         ...createMessage(t('ai.error_processing'), BYKONZ_AI_NAME, false),
       };
