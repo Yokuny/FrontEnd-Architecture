@@ -1,19 +1,61 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useAIApi } from '@/hooks/use-ai-api';
+import { type ChatHistoryMessage, useAIApi } from '@/hooks/use-ai-api';
 import { useAIAssistant } from '@/hooks/use-ai-assistant';
 import { BYKONZ_AI_NAME, UI_CONSTANTS } from '../@const';
-import type { AIPromptData } from '../@interface/ai-prompt.interface';
+import type { AIPromptData, ChatMessageExtended } from '../@interface/ai-prompt.interface';
 import { aiPromptSchema } from '../@interface/ai-prompt.schema';
 import { createMessage } from '../@utils/ai-prompt.utils';
 import { useAIPromptStore } from './use-ai-prompt-store';
 
+function mapHistoryToMessages(historyMessages: ChatHistoryMessage[]): ChatMessageExtended[] {
+  return historyMessages.map((msg) => {
+    const isUser = msg.role === 'user';
+    const base = createMessage(msg.content, isUser ? 'You' : BYKONZ_AI_NAME, isUser);
+
+    if (!isUser && msg.metadata) {
+      return {
+        ...base,
+        insights: msg.metadata.insights as ChatMessageExtended['insights'],
+        visualizations: msg.metadata.visualizations as ChatMessageExtended['visualizations'],
+        kpis: msg.metadata.kpis as ChatMessageExtended['kpis'],
+        tableData: msg.metadata.tableData as ChatMessageExtended['tableData'],
+        summary: msg.metadata.summary as ChatMessageExtended['summary'],
+        responseFormat: msg.metadata.responseFormat as ChatMessageExtended['responseFormat'],
+        data: msg.metadata.data as ChatMessageExtended['data'],
+      };
+    }
+
+    return base;
+  });
+}
+
 export function useAIPromptForm() {
   const { t } = useTranslation();
   const { ask } = useAIAssistant();
-  const { search } = useAIApi();
-  const { messages, setMessages, setIsProcessing } = useAIPromptStore();
+  const { search, history, clearHistory } = useAIApi();
+  const { messages, setMessages, setIsProcessing, clearMessages } = useAIPromptStore();
+  const hasHydrated = useRef(false);
+
+  useEffect(() => {
+    if (hasHydrated.current) return;
+    if (messages.length > 0) {
+      hasHydrated.current = true;
+      return;
+    }
+    if (history.data?.success && history.data.messages.length > 0) {
+      hasHydrated.current = true;
+      const restored = mapHistoryToMessages(history.data.messages);
+      setMessages(restored);
+    }
+  }, [history.data, messages.length, setMessages]);
+
+  const handleClearMessages = () => {
+    clearMessages();
+    clearHistory.mutate();
+  };
 
   const form = useForm<AIPromptData>({
     resolver: zodResolver(aiPromptSchema),
@@ -135,6 +177,7 @@ export function useAIPromptForm() {
     form,
     onSubmit,
     handleBackendSearch,
+    handleClearMessages,
     messages,
     setMessages,
   };
