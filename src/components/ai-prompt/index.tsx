@@ -23,6 +23,7 @@ import { RotatingText } from '../ui/rotating-text';
 import { Skeleton } from '../ui/skeleton';
 import { AIInsights } from './@components/ai-insights';
 import { AIKpiCards } from './@components/ai-kpi-cards';
+import { AITable } from './@components/ai-table';
 import { AIVisualizationList } from './@components/ai-visualization';
 import { UI_CONSTANTS } from './@const';
 import { useAIPromptForm } from './@hooks/use-ai-prompt-form';
@@ -99,6 +100,7 @@ export function AIPromptSheet({ open, onOpenChange }: AIPromptSheetProps) {
                           {isAI && msg.kpis && msg.kpis.length > 0 && <AIKpiCards kpis={msg.kpis} />}
                           {isAI && msg.insights && msg.insights.length > 0 && <AIInsights insights={msg.insights} />}
                           {isAI && msg.visualizations && msg.visualizations.length > 0 && <AIVisualizationList visualizations={msg.visualizations} />}
+                          {isAI && msg.tableData && msg.tableData.columns.length > 0 && <AITable tableData={msg.tableData} />}
                           {isAI && msg.data && (
                             <Reasoning>
                               <ReasoningTrigger className="py-1 text-xs" icon={ArrowDownNarrowWide}>

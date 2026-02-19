@@ -50,6 +50,23 @@ export interface IInsight {
 }
 
 /**
+ * Coluna de tabela para renderização estruturada
+ */
+export interface ITableColumn {
+  key: string;
+  label: string;
+}
+
+/**
+ * Dados estruturados para renderização em tabela
+ */
+export interface ITableData {
+  title?: string;
+  columns: ITableColumn[];
+  rows: Record<string, string | number>[];
+}
+
+/**
  * Resposta interpretada pela IA com suporte a visualizações
  */
 export interface IInterpretedResponse {
@@ -67,6 +84,8 @@ export interface IInterpretedResponse {
   insights: IInsight[];
   /** Visualizações prontas para renderização em gráficos */
   visualizations: IVisualization[];
+  /** Dados estruturados para renderização em tabela */
+  tableData?: ITableData;
   /** KPIs/Cards de destaque */
   kpis?: {
     label: string;

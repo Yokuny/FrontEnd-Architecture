@@ -36,7 +36,7 @@ export function useAIPromptForm() {
         },
       });
 
-      const { success, answer, interpretation, data, error, insights, visualizations, kpis, summary, responseFormat, metadata } = result;
+      const { success, answer, interpretation, data, error, insights, visualizations, tableData, kpis, summary, responseFormat, metadata } = result;
 
       if (!success) {
         const errorMessage = {
@@ -54,6 +54,7 @@ export function useAIPromptForm() {
         data,
         insights,
         visualizations,
+        tableData,
         kpis,
         summary,
         responseFormat,

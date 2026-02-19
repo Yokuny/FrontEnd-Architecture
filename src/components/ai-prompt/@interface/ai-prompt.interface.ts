@@ -2,7 +2,7 @@ import type { z } from 'zod';
 import type { RouteSemantic } from './ai-engine.interface';
 import type { aiPromptSchema } from './ai-prompt.schema';
 
-import type { IInsight, IInterpretedResponse, IVisualization } from './ai-search.interface';
+import type { IInsight, IInterpretedResponse, ITableData, IVisualization } from './ai-search.interface';
 
 export type AIPromptData = z.infer<typeof aiPromptSchema>;
 
@@ -24,6 +24,7 @@ export interface ChatMessageExtended extends ChatMessageType {
   // Campos para resposta rica da IA
   insights?: IInsight[];
   visualizations?: IVisualization[];
+  tableData?: ITableData;
   kpis?: IInterpretedResponse['kpis'];
   summary?: IInterpretedResponse['summary'];
   responseFormat?: IInterpretedResponse['responseFormat'];
