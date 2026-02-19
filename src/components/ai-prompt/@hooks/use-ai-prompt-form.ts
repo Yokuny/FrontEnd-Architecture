@@ -40,14 +40,17 @@ export function useAIPromptForm() {
 
       if (!success) {
         const errorMessage = {
-          ...createMessage(error || t('ai.backend_error'), BYKONZ_AI_NAME, false),
+          ...createMessage(error ? t(error) : t('ai.backend_error'), BYKONZ_AI_NAME, false),
         };
         setMessages((prev) => [...prev, errorMessage]);
         return;
       }
 
+      const answerContent = answer?.startsWith('ai.error.') ? t(answer) : answer;
+      const interpretationContent = interpretation?.startsWith('ai.error.') ? t(interpretation) : interpretation;
+
       const aiMessage = {
-        ...createMessage(answer || interpretation || t('ai.backend_success'), BYKONZ_AI_NAME, false),
+        ...createMessage(answerContent || interpretationContent || t('ai.backend_success'), BYKONZ_AI_NAME, false),
         data,
         insights,
         visualizations,
