@@ -1,5 +1,5 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Item, ItemContent, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { ITableData } from '../@interface/ai-search.interface';
 
 interface AITableProps {
