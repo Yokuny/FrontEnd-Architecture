@@ -27,7 +27,6 @@ Ordem recomendada:
 ```tsx
 function MyComponent({ prop1, prop2 }: MyComponentProps) {
   // 1. Hooks de contexto/router
-  const { t } = useTranslation();
   const navigate = Route.useNavigate();
 
   // 2. Hooks de estado global (Zustand)
@@ -92,9 +91,9 @@ function UserProfile({ userId }: { userId?: string }) {
 // Multiplas condicoes - config object
 function StatusBadge({ status }: { status: Status }) {
   const config = {
-    active: { label: t('status.active'), variant: 'success' },
-    inactive: { label: t('status.inactive'), variant: 'secondary' },
-    pending: { label: t('status.pending'), variant: 'warning' },
+    active: { label: 'Ativo', variant: 'success' },
+    inactive: { label: 'Inativo', variant: 'secondary' },
+    pending: { label: 'Pendente', variant: 'warning' },
   }[status];
 
   return <Badge variant={config.variant}>{config.label}</Badge>;

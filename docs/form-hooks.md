@@ -45,7 +45,6 @@ Arquivo: `@components/{feature}-form.tsx`
 
 ```tsx
 import { useFormContext } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 import DefaultFormLayout from '@/components/default-form-layout';
 import { EnterpriseSelect } from '@/components/selects';
@@ -56,13 +55,12 @@ import { Input } from '@/components/ui/input';
 import type { GeofenceFormData } from '../@interface/geofence.interface';
 
 export function GeofenceForm() {
-  const { t } = useTranslation();
   const form = useFormContext<GeofenceFormData>();
 
   const sections = [
     {
-      title: t('general.information'),
-      description: t('geofence.general.description'),
+      title: 'Informações Gerais',
+      description: 'Dados básicos da geocerca',
       fields: [
         <FormField
           key="idEnterprise"
@@ -81,9 +79,9 @@ export function GeofenceForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('description')} *</FormLabel>
+              <FormLabel>Descrição *</FormLabel>
               <FormControl>
-                <Input {...field} placeholder={t('description')} />
+                <Input {...field} placeholder="Descrição" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -95,9 +93,9 @@ export function GeofenceForm() {
             name="code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('code')} *</FormLabel>
+                <FormLabel>Código *</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder={t('code')} />
+                  <Input {...field} placeholder="Código" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -107,8 +105,8 @@ export function GeofenceForm() {
       ],
     },
     {
-      title: t('advanced.settings'),
-      description: t('geofence.advanced.description'),
+      title: 'Configurações Avançadas',
+      description: 'Opções adicionais da geocerca',
       fields: [
         <div key="row-checks" className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-2">
           <FormField
@@ -120,7 +118,7 @@ export function GeofenceForm() {
                   <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel>{t('initialize.travel')}</FormLabel>
+                  <FormLabel>Inicializar viagem</FormLabel>
                 </div>
               </FormItem>
             )}

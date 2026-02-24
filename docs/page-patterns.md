@@ -4,13 +4,16 @@
 
 ```tsx
 <Card>
-  <CardHeader title={t('titulo')}>
-    {/* Acoes: botoes, filtros */}
+  <CardHeader>
+    <CardTitle>Título</CardTitle>
+    <CardAction>
+      {/* Acoes: botoes, filtros */}
+    </CardAction>
   </CardHeader>
   <CardContent>
     {/* Conteudo */}
   </CardContent>
-  <CardFooter layout="multi | single">
+  <CardFooter>
     {/* Paginacao */}
   </CardFooter>
 </Card>
@@ -23,7 +26,6 @@ Exemplo real de `src/routes/_private/register/geofences/index.tsx`:
 ```tsx
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 import { Plus, Search, MoreVertical } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -58,7 +60,6 @@ export const Route = createFileRoute('/_private/register/geofences/')({
 
 // 3. Componente da pagina
 function GeofenceListPage() {
-  const { t } = useTranslation();
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/register/geofences/' });
   const { idEnterprise } = useEnterpriseFilter();
@@ -80,41 +81,44 @@ function GeofenceListPage() {
   const handleDelete = async (id: string) => {
     try {
       await deleteGeofence.mutateAsync(id);
-      toast.success(t('delete.success'));
+      toast.success('Excluído com sucesso');
     } catch {
-      toast.error(t('error.delete'));
+      toast.error('Erro ao excluir');
     }
   };
 
   // 6. Render com estrutura obrigatoria
   return (
     <Card>
-      <CardHeader title={t('geofences')}>
-        <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
-          <div className="relative w-full sm:max-w-64">
-            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder={t('search')}
-              className="pl-9"
-              defaultValue={search || ''}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  navigate({
-                    search: (prev: SearchParams) => ({
-                      ...prev,
-                      search: e.currentTarget.value || undefined,
-                      page: 1,
-                    }),
-                  });
-                }
-              }}
-            />
+      <CardHeader>
+        <CardTitle>Geocercas</CardTitle>
+        <CardAction>
+          <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
+            <div className="relative w-full sm:max-w-64">
+              <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Buscar"
+                className="pl-9"
+                defaultValue={search || ''}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    navigate({
+                      search: (prev: SearchParams) => ({
+                        ...prev,
+                        search: e.currentTarget.value || undefined,
+                        page: 1,
+                      }),
+                    });
+                  }
+                }}
+              />
+            </div>
+            <Button onClick={() => navigate({ to: '/register/geofences/add' })}>
+              <Plus className="mr-2 size-4" />
+              Adicionar
+            </Button>
           </div>
-          <Button onClick={() => navigate({ to: '/register/geofences/add' })}>
-            <Plus className="mr-2 size-4" />
-            {t('add')}
-          </Button>
-        </div>
+        </CardAction>
       </CardHeader>
 
       <CardContent>
@@ -149,10 +153,10 @@ function GeofenceListPage() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => navigate({ to: '/register/geofences/add', search: { id: item.id } })}>
-                      {t('edit')}
+                      Editar
                     </DropdownMenuItem>
                     <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(item.id)}>
-                      {t('delete')}
+                      Excluir
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -163,9 +167,9 @@ function GeofenceListPage() {
       </CardContent>
 
       {totalCount > 0 && (
-        <CardFooter layout="multi">
+      <CardFooter>
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
-            <span>{t('show')}</span>
+            <span>Exibir</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev: SearchParams) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">
                 <SelectValue />
@@ -176,8 +180,8 @@ function GeofenceListPage() {
                 <SelectItem value="50">50</SelectItem>
               </SelectContent>
             </Select>
-            <span>{t('per.page')}</span>
-            <span className="ml-4 tabular-nums">{t('total')}: {totalCount}</span>
+            <span>por página</span>
+            <span className="ml-4 tabular-nums">Total: {totalCount}</span>
           </div>
 
           <Pagination>
@@ -209,9 +213,6 @@ Exemplo real de `src/routes/_private/register/geofences/add.tsx`:
 
 ```tsx
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Trash2 } from 'lucide-react';
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -236,7 +237,6 @@ export const Route = createFileRoute('/_private/register/geofences/add')({
 });
 
 function GeofenceAddPage() {
-  const { t } = useTranslation();
   const { id } = useSearch({ from: '/_private/register/geofences/add' });
   const { data: geofence, isLoading } = useGeofence(id);
 
@@ -255,7 +255,6 @@ function GeofenceAddPage() {
 }
 
 function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const { deleteGeofence } = useGeofencesApi();
 
@@ -273,10 +272,10 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
     if (!initialData?.id) return;
     try {
       await deleteGeofence.mutateAsync(initialData.id);
-      toast.success(t('delete.success'));
+      toast.success('Excluído com sucesso');
       navigate({ to: '/register/geofences' });
     } catch {
-      toast.error(t('error.delete'));
+      toast.error('Erro ao excluir');
     }
   };
 
@@ -292,18 +291,18 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
             {initialData && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button type="button" variant="destructive" disabled={deleteGeofence.isPending || isPending}>
+                    <Button type="button" variant="destructive" disabled={deleteGeofence.isPending || isPending}>
                     {deleteGeofence.isPending ? <Spinner className="mr-2 size-4" /> : <Trash2 className="mr-2 size-4" />}
-                    {t('delete')}
+                    Excluir
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>{t('delete.confirmation')}</AlertDialogTitle>
-                    <AlertDialogDescription>{t('delete.message.default')}</AlertDialogDescription>
+                    <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                    <AlertDialogDescription>Esta ação não pode ser desfeita.</AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
                     <AlertDialogAction onClick={handleDelete} className="bg-destructive">
                       <Trash2 className="size-4" />
                     </AlertDialogAction>
@@ -313,7 +312,7 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
             )}
             <Button type="submit" disabled={isPending} className="ml-auto min-w-[120px]">
               {isPending && <Spinner className="mr-2 size-4" />}
-              {t('save')}
+              Salvar
             </Button>
           </CardFooter>
         </form>

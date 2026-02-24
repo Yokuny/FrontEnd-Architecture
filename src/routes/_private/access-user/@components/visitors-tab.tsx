@@ -44,12 +44,12 @@ export function VisitorsTab() {
         { id: data.id, guestData },
         {
           onSuccess: () => {
-            toast.success('accessUser.guest.updateSuccess');
+            toast.success('Visitante atualizado com sucesso!');
             setIsFormVisible(false);
             setSelectedGuestId(null);
           },
           onError: (err: any) => {
-            toast.error(err?.response?.data?.message || 'accessUser.guest.updateError');
+            toast.error(err?.response?.data?.message || 'Erro ao atualizar visitante.');
           },
         },
       );
@@ -57,7 +57,7 @@ export function VisitorsTab() {
       createGuest.mutate(payload, {
         onSuccess: (responseData) => {
           if (hasPhoto) {
-            toast.success('accessUser.guest.saveSuccess');
+            toast.success('Visitante cadastrado com sucesso!');
             setIsFormVisible(false);
           } else if (responseData.token) {
             const url = `${window.location.origin}/new-user/${responseData.token}`;
@@ -68,7 +68,7 @@ export function VisitorsTab() {
           setSelectedGuestId(null);
         },
         onError: (err: any) => {
-          toast.error(err?.response?.data?.message || 'accessUser.guest.createError');
+          toast.error(err?.response?.data?.message || 'Erro ao cadastrar visitante.');
         },
       });
     }
@@ -79,7 +79,7 @@ export function VisitorsTab() {
     deleteGuest.mutate(guestToDelete.id, {
       onSuccess: () => setGuestToDelete(null),
       onError: (err: any) => {
-        toast.error(err?.response?.data?.message || 'accessUser.guest.deleteError');
+        toast.error(err?.response?.data?.message || 'Erro ao excluir visitante.');
         setGuestToDelete(null);
       },
     });
@@ -87,11 +87,11 @@ export function VisitorsTab() {
 
   async function handleCopyUrl() {
     await navigator.clipboard.writeText(invitationLink);
-    toast.success('accessUser.invite.copied');
+    toast.success('Link copiado!');
   }
 
   function handleShareWhatsApp() {
-    const message = encodeURIComponent(`${'accessUser.invite.whatsappMessage'} ${invitationLink}`);
+    const message = encodeURIComponent(`Olá! Finalize seu cadastro pelo link: ${invitationLink}`);
     window.open(`https://wa.me/?text=${message}`, '_blank');
   }
 
@@ -109,7 +109,7 @@ export function VisitorsTab() {
             setIsFormVisible(true);
           }}
           onDelete={(id, name) => setGuestToDelete({ id, name })}
-          title={'accessUser.visitors.title'}
+          title="Visitantes"
         />
       ) : (
         <GuestForm
@@ -128,12 +128,12 @@ export function VisitorsTab() {
       <AlertDialog open={!!guestToDelete} onOpenChange={() => setGuestToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{'accessUser.guest.deleteTitle'}</AlertDialogTitle>
-            <AlertDialogDescription>{'accessUser.guest.deleteConfirm'}</AlertDialogDescription>
+            <AlertDialogTitle>Excluir Visitante</AlertDialogTitle>
+            <AlertDialogDescription>Tem certeza que deseja excluir este visitante?</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{'cancel'}</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmDelete}>{'confirm'}</AlertDialogAction>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDelete}>Confirmar</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -141,14 +141,14 @@ export function VisitorsTab() {
       <Dialog open={showInviteModal} onOpenChange={setShowInviteModal}>
         <DialogContent className="text-center">
           <DialogHeader>
-            <DialogTitle>{'accessUser.invite.success'}</DialogTitle>
+            <DialogTitle>Pré-cadastro realizado com sucesso!</DialogTitle>
           </DialogHeader>
-          <p className="text-muted-foreground text-sm">{'accessUser.invite.share'}</p>
+          <p className="text-muted-foreground text-sm">Compartilhe o link abaixo para o visitante finalizar o cadastro e inserir a foto.</p>
           <Input value={invitationLink} readOnly />
           <div className="flex justify-center gap-2">
             <Button onClick={handleCopyUrl} size="sm">
               <Copy className="mr-2 h-4 w-4" />
-              {'accessUser.invite.copy'}
+              Copiar Link
             </Button>
             <Button onClick={handleShareWhatsApp} size="sm" variant="outline" className="bg-[#25D366] text-white hover:bg-[#25D366]/90">
               WhatsApp

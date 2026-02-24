@@ -6,13 +6,11 @@ alwaysApply: true
 # Project Rules
 
 ## Stack
-React 19 + Vite 7 + TanStack Router + TanStack Query + Zustand + ShadCN UI + TailwindCSS 4 + react-hook-form + zod + react-i18next + Biome
+React 19 + Vite 7 + TanStack Router + TanStack Query + Zustand + ShadCN UI + TailwindCSS 4 + react-hook-form + zod + Biome
 
 ## Regras Criticas
 
 - Use ShadCN UI (`src/components/ui`) - NUNCA tags HTML puras estilizadas
-- TODA string de UI deve usar `t('chave')` do `react-i18next`
-- SEMPRE adicionar chaves nos 3 arquivos: `pt.json`, `en.json`, `es.json` em `src/config/translations/`
 - SEMPRE usar `@/lib/formatDate` para datas - NUNCA `format` do `date-fns`
 - Usar Zustand com `persist` - NUNCA `localStorage.setItem` direto
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
@@ -49,7 +47,6 @@ Para padroes detalhados com exemplos, consulte `docs/` conforme o cenario:
 - Formularios (react-hook-form): `docs/form-hooks.md`
 - Schemas Zod, interfaces, consts: `docs/schemas-types.md`
 - Estado global (Zustand): `docs/state-management.md`
-- i18n e datas: `docs/i18n-dates.md`
 - Padroes React e anti-patterns: `docs/react-patterns.md`
 - Graficos (Recharts, cores, tipos): `docs/charts.md`
 - Selects, hooks e componentes existentes: `docs/available-resources.md`

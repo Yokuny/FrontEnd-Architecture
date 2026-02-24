@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DependentsTab } from './@components/dependents-tab';
 import { EditProfileTab } from './@components/edit-profile-tab';
@@ -8,19 +8,21 @@ import { VisitorsTab } from './@components/visitors-tab';
 
 export const Route = createFileRoute('/_private/access-user/')({
   component: AccessUserPage,
-  staticData: { title: 'accessUser.title' },
+  staticData: { title: 'Meus Dados' },
 });
 
 function AccessUserPage() {
   return (
     <Card>
-      <CardHeader title={'accessUser.title'} />
+      <CardHeader>
+        <CardTitle>Meus Dados</CardTitle>
+      </CardHeader>
       <CardContent>
         <Tabs defaultValue="edit">
           <TabsList>
-            <TabsTrigger value="edit">{'accessUser.tab.edit'}</TabsTrigger>
-            <TabsTrigger value="dependents">{'accessUser.tab.dependents'}</TabsTrigger>
-            <TabsTrigger value="visitors">{'accessUser.tab.visitors'}</TabsTrigger>
+            <TabsTrigger value="edit">Editar Dados</TabsTrigger>
+            <TabsTrigger value="dependents">Dependentes</TabsTrigger>
+            <TabsTrigger value="visitors">Visitantes</TabsTrigger>
           </TabsList>
           <TabsContent value="edit">
             <EditProfileTab />

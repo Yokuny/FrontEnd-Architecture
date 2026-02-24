@@ -37,24 +37,24 @@ export function DependentsTab() {
         { id: data.id, guestData },
         {
           onSuccess: () => {
-            toast.success('accessUser.guest.updateSuccess');
+            toast.success('Dependente atualizado com sucesso!');
             setIsFormVisible(false);
             setSelectedGuestId(null);
           },
           onError: (err: any) => {
-            toast.error(err?.response?.data?.message || 'accessUser.guest.updateError');
+            toast.error(err?.response?.data?.message || 'Erro ao atualizar dependente.');
           },
         },
       );
     } else {
       createGuest.mutate(payload, {
         onSuccess: () => {
-          toast.success('accessUser.guest.saveSuccess');
+          toast.success('Dependente cadastrado com sucesso!');
           setIsFormVisible(false);
           setSelectedGuestId(null);
         },
         onError: (err: any) => {
-          toast.error(err?.response?.data?.message || 'accessUser.guest.createError');
+          toast.error(err?.response?.data?.message || 'Erro ao cadastrar dependente.');
         },
       });
     }
@@ -64,11 +64,11 @@ export function DependentsTab() {
     if (!guestToDelete) return;
     deleteGuest.mutate(guestToDelete.id, {
       onSuccess: () => {
-        toast.success('accessUser.guest.deleteSuccess');
+        toast.success('Dependente excluído com sucesso!');
         setGuestToDelete(null);
       },
       onError: (err: any) => {
-        toast.error(err?.response?.data?.message || 'accessUser.guest.deleteError');
+        toast.error(err?.response?.data?.message || 'Erro ao excluir dependente.');
         setGuestToDelete(null);
       },
     });
@@ -88,7 +88,7 @@ export function DependentsTab() {
             setIsFormVisible(true);
           }}
           onDelete={(id, name) => setGuestToDelete({ id, name })}
-          title={'accessUser.dependents.title'}
+          title="Dependentes"
         />
       ) : (
         <GuestForm
@@ -107,12 +107,12 @@ export function DependentsTab() {
       <AlertDialog open={!!guestToDelete} onOpenChange={() => setGuestToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{'accessUser.guest.deleteTitle'}</AlertDialogTitle>
-            <AlertDialogDescription>{'accessUser.guest.deleteConfirm'}</AlertDialogDescription>
+            <AlertDialogTitle>Excluir Dependente</AlertDialogTitle>
+            <AlertDialogDescription>Tem certeza que deseja excluir este dependente?</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{'cancel'}</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmDelete}>{'confirm'}</AlertDialogAction>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDelete}>Confirmar</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

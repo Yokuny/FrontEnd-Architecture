@@ -6,29 +6,6 @@
   - **Importante**: Evite tags HTML puras estilizadas ou estilizar os componentes `ShadCN`; utilize as propriedades padrão da biblioteca.
   - **Paleta de Gráficos**: Para manter a consistência em gráficos (Recharts, etc), utilize a função utilitária [***`getChartColor(index)`***](./src/components/ui/chart) Ela cicla entre as cores padrão do Tailwind (Sky, Blue, Indigo, Violet, Purple, Fuchsia, Pink, Rose, Red, Orange, Amber, Yellow, Lime, Green, Emerald, Teal, Cyan) e tons (400, 500, 600...) conforme o índice aumenta, use `index * 2` para ter maior variação das cores.
 
-- **Internacionalização** ( [***`i18n`***](./src/config/i18n.ts) ): **IMPORTANTE**: Toda chave deve ser adicionada aos arquivos [***`pt.json`***](./src/config/translations/pt.json) (Default), [***`en.json`***](./src/config/translations/en.json) e [***`es.json`***](./src/config/translations/es.json). **Sempre use grep ou busca global para garantir que a chave exista ou que seja criada nos 3 arquivos**.
-
-  Exemplo de uso:
-  ```tsx
-  import { useTranslation } from 'react-i18nevxt';
-
-  function MyComponent() {
-    const { t } = useTranslation();
-
-    return (
-      <div>
-        {/* No JSX */}
-        <h1>{t('welcome.title')}</h1>
-        
-        {/* Com Variáveis (Use chaves simples { }) */}
-        <p>{t('welcome.message', { name: 'User' })}</p>
-        
-        {/* Em Atributos/Placeholders */}
-        <Input placeholder={t('login.email.placeholder')} />
-      </div>
-    );
-  }
-  ```
 
 - **Roteamento**: As rotas são baseadas em **diretórios**. Cada pasta de rota deve conter obrigatoriamente um arquivo `index.tsx` com a estrutura principal. É proibido o uso do caractere `.` para criar rotas aninhadas. Isso garante a integridade funcional do `Breadcrumb` e da `Sidebar`.
 
@@ -214,14 +191,13 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
 
   1. [***`Card`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Atua como `Shell/Wrapper` principal de página. **Toda rota** deve ser encapsulada por este componente.
 
-  2. [***`CardHeader`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Cabeçalho padrão. Ele recebe como atributo `title` e parametro `children` para elementos de ação (botões, filtros, busca).
+  2. [***`CardHeader`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Cabeçalho padrão. Deve conter `<CardTitle>` para o título e `<CardAction>` para elementos de ação (botões, filtros, busca).
 
   3. [***`ItemTitle` e `ItemDescription`***](./src/components/ui/item.tsx): Componentes padrão para títulos e descrições de itens. Devem ser usados em listas, tabelas e detalhes.
   
 Exemplo:
 
   ```tsx
-  import { useTranslation } from 'react-i18next';
   import { createFileRoute, Link } from '@tanstack/react-router';
 
   export const Route = createFileRoute('/_private/rota-da-pagina/')({
@@ -229,24 +205,26 @@ Exemplo:
   });
 
   export function MinhaPagina() {
-    const { t } = useTranslation();
     const navigate = Route.useNavigate();
 
     return (
       <Card>
-        <CardHeader title={t('meu.modulo.titulo')}>
-          <div className="flex items-center gap-2">
-            <Button variant="outline">
-              <Filter className="size-4" />
-              {t('filter')}
-            </Button>
-            <Button onClick={() => {
-              navigate({ to: '/add' } satisfies { to: string })
-            }}>
-              <Plus className="size-4" />
-              {t('btn.novo')}
-            </Button>
-          </div>
+        <CardHeader>
+          <CardTitle>Meu Módulo</CardTitle>
+          <CardAction>
+            <div className="flex items-center gap-2">
+              <Button variant="outline">
+                <Filter className="size-4" />
+                Filtrar
+              </Button>
+              <Button onClick={() => {
+                navigate({ to: '/add' } satisfies { to: string })
+              }}>
+                <Plus className="size-4" />
+                Novo
+              </Button>
+            </div>
+          </CardAction>
         </CardHeader>
         
         <CardContent>
@@ -255,7 +233,7 @@ Exemplo:
           </Item>
         </CardContent>
         
-        <CardFooter layout="multi | single">
+        <CardFooter>
           {/* Ações e paginação */}
         </CardFooter>
       </Card>
@@ -332,10 +310,6 @@ Recebem como props
 - `clearable?`: `boolean`
 
 ### Ferramentas de Produtividade
-**Inlang (Sherlock)** para gerenciar traduções diretamente no `VS Code`.
-- **Hover**: Passe o mouse sobre uma chave `t("key")` para ver a tradução.
-- **Extração**: Selecione um texto hardcoded e use `Cmd + .` para extrair para uma chave `i18n` automaticamente.
-- **Lint**: Alertas automáticos para chaves faltando ou traduções idênticas.
 
 **Biome** para formatação de código. Antes de fazer commits rode `pnpm run format`.
 

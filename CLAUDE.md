@@ -9,11 +9,6 @@
 - Para cores de graficos: `getChartColor(index)` de `src/components/ui/chart`
 - NUNCA use `mx-auto` no ChartContainer
 
-## Internacionalizacao (CRITICO)
-- TODA string de UI deve usar `t('chave')` do `react-i18next`
-- SEMPRE adicionar chaves nos 3 arquivos: `pt.json`, `en.json`, `es.json` em `src/config/translations/`
-- Use grep para verificar se a chave ja existe antes de criar
-
 ## Roteamento
 - Rotas baseadas em diretorios com `index.tsx` obrigatorio
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
@@ -105,7 +100,6 @@ Para padroes detalhados com exemplos completos, consulte os docs conforme o cena
 | Criar formularios (react-hook-form) | `docs/form-hooks.md` |
 | Criar schemas Zod, interfaces, consts | `docs/schemas-types.md` |
 | Gerenciar estado global (Zustand) | `docs/state-management.md` |
-| Traducoes i18n ou formatacao de datas | `docs/i18n-dates.md` |
 | Padroes de componentes React | `docs/react-patterns.md` |
 | Graficos (Recharts, cores, tipos) | `docs/charts.md` |
 | Buscar selects, hooks ou componentes existentes | `docs/available-resources.md` |

@@ -33,7 +33,7 @@ export function GuestList({ guests, syncStatuses, onAdd, onEdit, onDelete, title
         <h3 className="font-semibold text-lg">{title}</h3>
         <Button size="sm" onClick={onAdd}>
           <Plus className="mr-2 h-4 w-4" />
-          {'add'}
+          Adicionar
         </Button>
       </div>
 
@@ -51,8 +51,8 @@ export function GuestList({ guests, syncStatuses, onAdd, onEdit, onDelete, title
                 </ItemDescription>
               </ItemContent>
               <div className="flex items-center gap-2">
-                {item.registration_complete === true && <span className="rounded-full bg-green-100 px-2 py-0.5 text-green-700 text-xs">{'accessUser.registrationComplete'}</span>}
-                {item.registration_complete === false && <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs text-yellow-700">{'accessUser.registrationPending'}</span>}
+                {item.registration_complete === true && <span className="rounded-full bg-green-100 px-2 py-0.5 text-green-700 text-xs">Cadastro completo</span>}
+                {item.registration_complete === false && <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs text-yellow-700">Cadastro pendente</span>}
                 <Button
                   variant="ghost"
                   size="icon"

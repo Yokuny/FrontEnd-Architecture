@@ -1,6 +1,7 @@
 import { Loader2, Upload, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -58,9 +59,13 @@ export function GuestArea({ onClose }: GuestAreaProps) {
         setGuestImages(result.url_image || []);
       },
       onError: (err: any) => {
-        if (err?.message?.includes('429')) {
+        if (err?.response?.status === 429) {
           setBlockedUntil(new Date(Date.now() + 10000));
+          toast.error('Muitas tentativas. Aguarde...');
+          return;
         }
+        const msg = err?.response?.data?.originalError?.message || err?.response?.data?.message || 'Erro ao buscar cadastro.';
+        toast.error(msg);
       },
     });
   }
@@ -72,7 +77,12 @@ export function GuestArea({ onClose }: GuestAreaProps) {
       { id, url_image: guestImages },
       {
         onSuccess: () => {
+          toast.success('Imagem atualizada com sucesso!');
           setTimeout(onClose, 2000);
+        },
+        onError: (err: any) => {
+          const msg = err?.response?.data?.originalError?.message || err?.response?.data?.message || 'Erro ao atualizar imagem.';
+          toast.error(msg);
         },
       },
     );
@@ -95,17 +105,17 @@ export function GuestArea({ onClose }: GuestAreaProps) {
   if (!guestData) {
     return (
       <div className="flex w-full flex-col gap-4">
-        <h3 className="text-center font-semibold text-lg text-primary">{'appAuth.guest.title'}</h3>
-        <p className="text-center text-muted-foreground text-sm">{'appAuth.guest.subtitle'}</p>
+        <h3 className="text-center font-semibold text-lg text-primary">Área do Visitante</h3>
+        <p className="text-center text-muted-foreground text-sm">Digite seu CPF para buscar seu cadastro</p>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSearchSubmit)} className="flex flex-col gap-3">
             <FormField
               control={form.control}
               name="cpf"
-              rules={{ required: 'appAuth.cpf.required', minLength: { value: 14, message: 'appAuth.cpf.invalid' } }}
+              rules={{ required: 'CPF é obrigatório', minLength: { value: 14, message: 'CPF inválido' } }}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'appAuth.cpf'} *</FormLabel>
+                  <FormLabel>CPF *</FormLabel>
                   <FormControl>
                     <Input {...field} onChange={(e) => handleCpfChange(e.target.value)} maxLength={14} />
                   </FormControl>
@@ -115,10 +125,10 @@ export function GuestArea({ onClose }: GuestAreaProps) {
             />
             <Button type="submit" disabled={findGuest.isPending || !!blockedUntil} className="w-full">
               {findGuest.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {blockedUntil ? `${'appAuth.guest.wait'} ${countdown}s` : 'appAuth.guest.search'}
+              {blockedUntil ? `Aguarde ${countdown}s` : 'Buscar'}
             </Button>
             <Button type="button" variant="outline" onClick={onClose} className="w-full">
-              {'appAuth.guest.back'}
+              Voltar
             </Button>
           </form>
         </Form>
@@ -128,7 +138,7 @@ export function GuestArea({ onClose }: GuestAreaProps) {
 
   return (
     <div className="flex w-full flex-col items-center gap-4">
-      <h3 className="text-center font-semibold text-lg text-primary">{'appAuth.guest.updatePhoto'}</h3>
+      <h3 className="text-center font-semibold text-lg text-primary">Atualizar Foto</h3>
 
       <div className="flex w-full flex-col gap-2">
         <Input value={guestData.name || ''} disabled />
@@ -154,18 +164,18 @@ export function GuestArea({ onClose }: GuestAreaProps) {
         <Button asChild variant="outline" className="w-full">
           <label className="cursor-pointer">
             <Upload className="mr-2 h-4 w-4" />
-            {'accessUser.uploadFile'}
+            Carregar Arquivo
             <input type="file" accept="image/*" hidden onChange={handleFileChange} />
           </label>
         </Button>
 
         <Button onClick={handleImageUpdate} disabled={updateImage.isPending || !!blockedUntil} className="w-full">
           {updateImage.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {'save'}
+          {blockedUntil ? `Aguarde ${countdown}s` : 'Salvar'}
         </Button>
 
         <Button variant="ghost" onClick={onClose} className="w-full">
-          {'appAuth.guest.back'}
+          Voltar
         </Button>
       </div>
     </div>

@@ -14,7 +14,6 @@ Modern frontend application built with Vite, React 19, TanStack Router, TanStack
 | Tailwind CSS 4 | Styling |
 | Zod | Schema validation |
 | React Hook Form | Form management |
-| i18next | Internationalization |
 | Biome | Linting & Formatting |
 | Vite | Build tool |
 
@@ -30,8 +29,6 @@ src/
 ├── lib/
 │   └── api/client.ts    # API client
 ├── config/
-│   ├── i18n.ts          # i18n configuration
-│   └── translations/    # pt.json, en.json, es.json
 └── routes/
     ├── _public/         # Public routes (auth)
     └── _private/        # Authenticated routes
@@ -80,12 +77,6 @@ pnpm build
 2. Create form hook in `@hooks/` using React Hook Form
 3. Use ShadCN form components
 
-### Translations
-
-1. Add keys to `src/config/translations/pt.json` (default)
-2. Add translations to `en.json` and `es.json`
-3. Use `const { t } = useTranslation()` in components
-
 ## Available Commands
 
 | Command | Description |
@@ -98,7 +89,6 @@ pnpm build
 
 ## VSCode Extensions
 
-- **Inlang (Sherlock)** - i18n management
 - **Tailwind CSS IntelliSense** - Tailwind autocomplete
 - **Biome** - Code formatting
 

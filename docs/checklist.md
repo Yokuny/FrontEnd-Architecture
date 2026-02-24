@@ -17,8 +17,6 @@
 
 ## 3. Validacoes
 
-- [ ] Todas strings usando `t('chave')`
-- [ ] Chaves i18n nos 3 arquivos (pt, en, es)
 - [ ] Datas com `@/lib/formatDate`
 - [ ] Estado persistente com Zustand (nao localStorage)
 - [ ] Usando `DefaultLoading` e `DefaultEmptyData`

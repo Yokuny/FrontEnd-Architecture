@@ -51,16 +51,18 @@ export function EditProfileTab() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-lg">{'accessUser.editProfile'}</h3>
+        <h3 className="font-semibold text-lg">Editar Perfil</h3>
         <Button variant="outline" size="sm" onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
-          {'logout'}
+          Sair
         </Button>
       </div>
 
-      {syncStatus?.sync_status && <div className="rounded-md border bg-muted/50 p-3 text-sm">{syncStatus.synchronized ? 'accessUser.syncComplete' : 'accessUser.syncPending'}</div>}
+      {syncStatus?.sync_status && (
+        <div className="rounded-md border bg-muted/50 p-3 text-sm">{syncStatus.synchronized ? 'Cadastro sincronizado com sucesso.' : 'Cadastro pendente de sincronização.'}</div>
+      )}
 
-      {isError && <div className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-destructive text-sm">{'accessUser.loadError'}</div>}
+      {isError && <div className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-destructive text-sm">Erro ao carregar seus dados.</div>}
 
       <Form {...form}>
         <form onSubmit={onSubmit} className="flex flex-col gap-6">
@@ -70,7 +72,7 @@ export function EditProfileTab() {
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.fullName'} *</FormLabel>
+                  <FormLabel>Nome Completo *</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -83,7 +85,7 @@ export function EditProfileTab() {
               name="cpf"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.cpf'} *</FormLabel>
+                  <FormLabel>CPF *</FormLabel>
                   <FormControl>
                     <Input {...field} disabled />
                   </FormControl>
@@ -96,7 +98,7 @@ export function EditProfileTab() {
               name="birthDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.birthDate'}</FormLabel>
+                  <FormLabel>Data de Nascimento</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="DD/MM/AAAA" onChange={(e) => form.setValue('birthDate', applyDateMask(e.target.value))} maxLength={10} />
                   </FormControl>
@@ -109,7 +111,7 @@ export function EditProfileTab() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.newPassword'}</FormLabel>
+                  <FormLabel>Nova Senha</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="********" {...field} />
                   </FormControl>
@@ -122,7 +124,7 @@ export function EditProfileTab() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.email'}</FormLabel>
+                  <FormLabel>E-mail</FormLabel>
                   <FormControl>
                     <Input type="email" {...field} />
                   </FormControl>
@@ -135,7 +137,7 @@ export function EditProfileTab() {
               name="primaryPhone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.primaryPhone'}</FormLabel>
+                  <FormLabel>Telefone Primário</FormLabel>
                   <FormControl>
                     <Input {...field} onChange={(e) => form.setValue('primaryPhone', applyPhoneMask(e.target.value))} maxLength={15} />
                   </FormControl>
@@ -148,7 +150,7 @@ export function EditProfileTab() {
               name="secondaryPhone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.secondaryPhone'}</FormLabel>
+                  <FormLabel>Telefone Secundário</FormLabel>
                   <FormControl>
                     <Input {...field} onChange={(e) => form.setValue('secondaryPhone', applyPhoneMask(e.target.value))} maxLength={15} />
                   </FormControl>
@@ -159,7 +161,7 @@ export function EditProfileTab() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <FormLabel>{'accessUser.photos'}</FormLabel>
+            <FormLabel>Fotos</FormLabel>
             <div className="flex flex-wrap gap-2">
               {urlImages.map((url, index) => (
                 <div key={`${index}-img`} className="relative">
@@ -175,7 +177,7 @@ export function EditProfileTab() {
               ))}
               {urlImages.length === 0 && (
                 <div className="flex h-24 w-24 items-center justify-center rounded-md border-2 border-muted-foreground/30 border-dashed">
-                  <span className="text-muted-foreground text-xs">{'accessUser.noPhoto'}</span>
+                  <span className="text-muted-foreground text-xs">Sem foto</span>
                 </div>
               )}
             </div>
@@ -183,7 +185,7 @@ export function EditProfileTab() {
               <Button asChild type="button" variant="outline" size="sm">
                 <label className="cursor-pointer">
                   <Upload className="mr-2 h-4 w-4" />
-                  {'accessUser.uploadFile'}
+                  Carregar Arquivo
                   <input type="file" accept="image/*" hidden onChange={handleFileChange} />
                 </label>
               </Button>
@@ -193,7 +195,7 @@ export function EditProfileTab() {
           <div className="flex justify-end">
             <Button type="submit" disabled={isPending}>
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {'save'}
+              Salvar
             </Button>
           </div>
         </form>

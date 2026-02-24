@@ -12,10 +12,10 @@ import type { CreateGuestProps, UserType } from '../@interface/access-user.inter
 import { applyCpfMask, applyDateMask, applyPhoneMask } from '../@utils/masks';
 
 const guestFormSchema = z.object({
-  name: z.string().min(1, 'field.required'),
+  name: z.string().min(1, 'Campo obrigatório'),
   cpf: z.string().optional(),
   birthDate: z.string().optional(),
-  email: z.string().email('email.invalid').optional().or(z.literal('')),
+  email: z.string().email('E-mail inválido').optional().or(z.literal('')),
   primaryPhone: z.string().optional(),
   secondaryPhone: z.string().optional(),
   url_image: z.array(z.string()),
@@ -136,11 +136,13 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-lg">
-          {guestId ? 'edit' : 'add'} {userType === 'visitante' ? 'accessUser.visitor' : 'accessUser.dependent'}
+          {guestId ? 'Editar' : 'Adicionar'} {userType === 'visitante' ? 'Visitante' : 'Dependente'}
         </h3>
       </div>
 
-      {syncStatus?.sync_status && <div className="rounded-md border bg-muted/50 p-3 text-sm">{syncStatus.synchronized ? 'accessUser.syncComplete' : 'accessUser.syncPending'}</div>}
+      {syncStatus?.sync_status && (
+        <div className="rounded-md border bg-muted/50 p-3 text-sm">{syncStatus.synchronized ? 'Cadastro sincronizado com sucesso.' : 'Cadastro pendente de sincronização.'}</div>
+      )}
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleFormSubmit)} className="flex flex-col gap-4">
@@ -150,7 +152,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.fullName'} *</FormLabel>
+                  <FormLabel>Nome Completo *</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -163,7 +165,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
               name="cpf"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.cpf'}</FormLabel>
+                  <FormLabel>CPF</FormLabel>
                   <FormControl>
                     <Input {...field} onChange={(e) => form.setValue('cpf', applyCpfMask(e.target.value))} maxLength={14} disabled={!!guestId} />
                   </FormControl>
@@ -176,7 +178,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
               name="birthDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.birthDate'}</FormLabel>
+                  <FormLabel>Data de Nascimento</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="DD/MM/AAAA" onChange={(e) => form.setValue('birthDate', applyDateMask(e.target.value))} maxLength={10} />
                   </FormControl>
@@ -189,7 +191,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.email'}</FormLabel>
+                  <FormLabel>E-mail</FormLabel>
                   <FormControl>
                     <Input type="email" {...field} />
                   </FormControl>
@@ -202,7 +204,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
               name="primaryPhone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.primaryPhone'}</FormLabel>
+                  <FormLabel>Telefone Primário</FormLabel>
                   <FormControl>
                     <Input {...field} onChange={(e) => form.setValue('primaryPhone', applyPhoneMask(e.target.value))} maxLength={15} />
                   </FormControl>
@@ -215,7 +217,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
               name="secondaryPhone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{'accessUser.secondaryPhone'}</FormLabel>
+                  <FormLabel>Telefone Secundário</FormLabel>
                   <FormControl>
                     <Input {...field} onChange={(e) => form.setValue('secondaryPhone', applyPhoneMask(e.target.value))} maxLength={15} />
                   </FormControl>
@@ -226,7 +228,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
           </div>
 
           <div className="flex flex-col gap-3">
-            <FormLabel>{'accessUser.photos'}</FormLabel>
+            <FormLabel>Fotos</FormLabel>
             <div className="flex flex-wrap gap-2">
               {urlImages.map((url, index) => (
                 <div key={`${index}-img`} className="relative">
@@ -244,7 +246,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
             <Button asChild type="button" variant="outline" className="w-fit">
               <label className="cursor-pointer">
                 <Upload className="mr-2 h-4 w-4" />
-                {'accessUser.uploadFile'}
+                Carregar Arquivo
                 <input type="file" accept="image/*" hidden onChange={handleFileChange} />
               </label>
             </Button>
@@ -252,11 +254,11 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
 
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={onCancel}>
-              {'cancel'}
+              Cancelar
             </Button>
             <Button type="submit" disabled={isLoading || cooldown}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {'save'}
+              Salvar
             </Button>
           </div>
         </form>

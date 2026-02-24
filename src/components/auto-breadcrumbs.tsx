@@ -19,7 +19,6 @@ export function AutoBreadcrumbs() {
 
       const match = matches.find((m) => m.pathname === cumulativePath || m.pathname === `${cumulativePath}/`);
 
-      // Prioriza getTitle (função dinâmica), depois title (chave i18n), depois context.title
       let title: string | undefined;
 
       if (match?.staticData?.getTitle && typeof match.staticData.getTitle === 'function') {

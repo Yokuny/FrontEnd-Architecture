@@ -9,8 +9,6 @@ Expert na arquitetura do projeto FrontEnd-Architecture. Guia implementacao de pa
 ## Regras Sempre Ativas
 
 - Use ShadCN UI (`src/components/ui`) - NUNCA tags HTML puras estilizadas
-- TODA string de UI deve usar `t('chave')` do `react-i18next`
-- SEMPRE adicionar chaves nos 3 arquivos: `pt.json`, `en.json`, `es.json` em `src/config/translations/`
 - SEMPRE usar `@/lib/formatDate` para datas - NUNCA `format` do `date-fns`
 - Usar Zustand com `persist` - NUNCA `localStorage.setItem` direto
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
@@ -42,9 +40,6 @@ Leia `docs/schemas-types.md` para o padrao de schema, type inferido e consts.
 
 ### Quando lidar com estado global ou persistencia
 Leia `docs/state-management.md` para padroes de Zustand, persist e quando usar cada tipo de estado.
-
-### Quando lidar com traducoes ou formatacao de datas
-Leia `docs/i18n-dates.md` para regras de i18n e formatDate.
 
 ### Quando implementar componentes React ou refatorar
 Leia `docs/react-patterns.md` para padroes de componentes, estrutura interna, early returns e anti-patterns.

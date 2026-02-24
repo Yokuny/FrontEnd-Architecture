@@ -50,14 +50,14 @@ function AppAuthPage() {
         <Card>
           <CardContent className="flex flex-col gap-6 p-8">
             <div className="flex items-center justify-between">
-              <h1 className="font-bold text-2xl">{'appAuth.title'}</h1>
+              <h1 className="font-bold text-2xl">Acesso do Usuário</h1>
               <div className="flex gap-2">
                 <ThemeSwitcher />
                 <LanguageSwitcher />
               </div>
             </div>
 
-            <p className="text-muted-foreground text-sm">{'appAuth.subtitle'}</p>
+            <p className="text-muted-foreground text-sm">Digite seu CPF e senha para acessar</p>
 
             {isGuestMode ? (
               <GuestArea onClose={() => setIsGuestMode(false)} />
@@ -69,9 +69,9 @@ function AppAuthPage() {
                     name="cpf"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{'appAuth.cpf'} *</FormLabel>
+                        <FormLabel>CPF *</FormLabel>
                         <FormControl>
-                          <Input placeholder={'appAuth.cpf.placeholder'} {...field} onChange={(e) => handleCpfChange(e.target.value)} maxLength={14} />
+                          <Input placeholder="000.000.000-00" {...field} onChange={(e) => handleCpfChange(e.target.value)} maxLength={14} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -83,10 +83,10 @@ function AppAuthPage() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{'appAuth.password'} *</FormLabel>
+                        <FormLabel>Senha *</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <Input type={showPassword ? 'text' : 'password'} placeholder={'appAuth.password.placeholder'} {...field} />
+                            <Input type={showPassword ? 'text' : 'password'} placeholder="Digite sua senha" {...field} />
                             <button type="button" className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground" onClick={() => setShowPassword(!showPassword)}>
                               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                             </button>
@@ -99,7 +99,7 @@ function AppAuthPage() {
 
                   <Button type="submit" className="w-full" disabled={login.isPending}>
                     {login.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {'appAuth.submit'}
+                    Entrar
                   </Button>
                 </form>
               </Form>
@@ -107,7 +107,7 @@ function AppAuthPage() {
 
             {!isGuestMode && (
               <button type="button" onClick={() => setIsGuestMode(true)} className="text-center text-muted-foreground text-sm underline hover:text-foreground">
-                {'appAuth.guest.link'}
+                Visitante? Clique aqui para atualizar sua imagem
               </button>
             )}
           </CardContent>
