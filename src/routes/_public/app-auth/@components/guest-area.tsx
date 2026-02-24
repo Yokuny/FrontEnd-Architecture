@@ -151,18 +151,16 @@ export function GuestArea({ onClose, onGuestLoaded }: GuestAreaProps) {
 
   return (
     <ItemGroup className="gap-6!">
+      <ItemTitle className="text-center font-semibold text-2xl">Atualizar Foto</ItemTitle>
       <ItemContent>
-        <ItemTitle className="text-center font-semibold text-2xl">Atualizar Foto</ItemTitle>
-        <ItemDescription className="text-center">
-          <span className="block font-medium text-foreground">{guestData.name}</span>
-          <span>{applyCpfMask(guestData.cpf || '')}</span>
-        </ItemDescription>
+        <ItemTitle className="text-lg">{guestData.name}</ItemTitle>
+        <ItemDescription className="text-lg">{applyCpfMask(guestData.cpf || '')}</ItemDescription>
       </ItemContent>
 
       <div className="grid grid-cols-3 gap-3">
         {guestImages.map((url, index) => (
-          <div key={`${index}-img`} className="group relative aspect-square overflow-hidden rounded-lg border border-muted bg-muted/50">
-            <img alt={`foto-${index}`} className="h-full w-full object-cover transition-transform group-hover:scale-110" src={url} />
+          <div key={`img-${index}-${url}`} className="group relative aspect-square overflow-hidden rounded-lg border border-muted bg-muted/50">
+            <img alt={`foto-${index}-${url}`} className="h-full w-full object-cover transition-transform group-hover:scale-110" src={url} />
             <button
               className="absolute top-1 right-1 flex size-6 items-center justify-center rounded-full bg-destructive/90 text-white shadow-sm transition-all hover:bg-destructive"
               onClick={() => setGuestImages((prev) => prev.filter((_, i) => i !== index))}
