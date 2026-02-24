@@ -20,6 +20,9 @@
 - [ ] Datas com `@/lib/formatDate`
 - [ ] Estado persistente com Zustand (nao localStorage)
 - [ ] Usando `DefaultLoading` e `DefaultEmptyData`
+- [ ] ZERO tags HTML puras estilizadas em componentes comuns (usar `ItemTitle`, `ItemDescription`, `ItemContent`, etc)
+- [ ] Tipografia somente via `<ItemTitle>` e `<ItemDescription>` (nunca `<h1-6>`, `<p>`, `<span>` com classes)
+- [ ] Tipagem de componentes UI seguindo padrao `React.ComponentProps<'element'>` + `cn()` + `data-slot`
 
 ## 4. Antes de Commitar
 

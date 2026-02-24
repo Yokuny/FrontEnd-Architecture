@@ -9,6 +9,9 @@ Expert na arquitetura do projeto FrontEnd-Architecture. Guia implementacao de pa
 ## Regras Sempre Ativas
 
 - Use ShadCN UI (`src/components/ui`) - NUNCA tags HTML puras estilizadas
+- **PROIBIDO**: `<h1-6>`, `<p>`, `<span>` com classes de tipografia em componentes comuns — usar `<ItemTitle>`, `<ItemDescription>`
+- **PROIBIDO**: `<div className="flex flex-col gap-*">` para layout — usar `<ItemGroup>`, `<ItemContent>`, `<ItemHeader>`, `<ItemFooter>`, `<ItemActions>`
+- Tipagem de componentes UI: `React.ComponentProps<'element'>`, `cn()`, `data-slot`, `cva` + `VariantProps`
 - SEMPRE usar `@/lib/formatDate` para datas - NUNCA `format` do `date-fns`
 - Usar Zustand com `persist` - NUNCA `localStorage.setItem` direto
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
@@ -55,3 +58,6 @@ Leia `docs/masks.md` para as funções de máscara padronizadas.
 
 ### Quando quiser consultar o stack do projeto
 Leia `docs/stack.md` para a tabela completa de tecnologias e versoes.
+
+### Quando usar componentes Item ou criar componentes UI
+Leia `docs/item-pattern.md` para o padrao Item, tabela de substituicao de tags HTML, padrao de tipagem e exemplos.

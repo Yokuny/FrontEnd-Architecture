@@ -1,28 +1,22 @@
-import { useNavigate } from '@tanstack/react-router';
-import { Loader2, LogOut, Upload, X } from 'lucide-react';
+import { Loader2, Upload, X } from 'lucide-react';
 
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { useAppAuth } from '@/hooks/use-app-auth';
 import { applyDateMask, applyPhoneMask } from '@/lib/masks';
 import { useGetAppUser, useGetUserSyncStatus } from '../@hooks/use-access-user-api';
 import { useEditProfileForm } from '../@hooks/use-edit-profile-form';
 
 export function EditProfileTab() {
-  const navigate = useNavigate();
-  const { userId, clearAuth } = useAppAuth();
+  const { userId } = useAppAuth();
   const { data: user, isLoading, isError } = useGetAppUser();
   const { data: syncStatus } = useGetUserSyncStatus(userId);
   const { form, onSubmit, isPending } = useEditProfileForm(user);
 
   const urlImages = form.watch('url_image');
-
-  function handleLogout() {
-    clearAuth();
-    navigate({ to: '/app-auth' });
-  }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (urlImages.length >= 5) return;
@@ -49,14 +43,10 @@ export function EditProfileTab() {
   if (isLoading) return <DefaultLoading />;
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-lg">Editar Perfil</h3>
-        <Button variant="outline" size="sm" onClick={handleLogout}>
-          <LogOut className="mr-2 h-4 w-4" />
-          Sair
-        </Button>
-      </div>
+    <ItemGroup className="gap-6">
+      <ItemHeader>
+        <ItemTitle className="text-lg">Editar Perfil</ItemTitle>
+      </ItemHeader>
 
       {syncStatus?.sync_status && (
         <div className="rounded-md border bg-muted/50 p-3 text-sm">{syncStatus.synchronized ? 'Cadastro sincronizado com sucesso.' : 'Cadastro pendente de sincronização.'}</div>
@@ -160,7 +150,7 @@ export function EditProfileTab() {
             />
           </div>
 
-          <div className="flex flex-col gap-3">
+          <ItemContent className="gap-3">
             <FormLabel>Fotos</FormLabel>
             <div className="flex flex-wrap gap-2">
               {urlImages.map((url, index) => (
@@ -177,11 +167,11 @@ export function EditProfileTab() {
               ))}
               {urlImages.length === 0 && (
                 <div className="flex h-24 w-24 items-center justify-center rounded-md border-2 border-muted-foreground/30 border-dashed">
-                  <span className="text-muted-foreground text-xs">Sem foto</span>
+                  <ItemDescription className="text-xs">Sem foto</ItemDescription>
                 </div>
               )}
             </div>
-            <div className="flex gap-2">
+            <ItemActions>
               <Button asChild type="button" variant="outline" size="sm">
                 <label className="cursor-pointer">
                   <Upload className="mr-2 h-4 w-4" />
@@ -189,17 +179,17 @@ export function EditProfileTab() {
                   <input type="file" accept="image/*" hidden onChange={handleFileChange} />
                 </label>
               </Button>
-            </div>
-          </div>
+            </ItemActions>
+          </ItemContent>
 
-          <div className="flex justify-end">
+          <ItemActions className="justify-end">
             <Button type="submit" disabled={isPending}>
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Salvar
             </Button>
-          </div>
+          </ItemActions>
         </form>
       </Form>
-    </div>
+    </ItemGroup>
   );
 }

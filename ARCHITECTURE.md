@@ -3,7 +3,7 @@
 - **Core**: `React`, `Vite` com `TanStack Router`, `TanStack Query` e `Zustand` (Estado Global).
 
 - **UI & Estilização**: `ShadCN UI` ( localizado em [***`src/components/ui`***](./src/components/ui) ).
-  - **Importante**: Evite tags HTML puras estilizadas ou estilizar os componentes `ShadCN`; utilize as propriedades padrão da biblioteca.
+  - **⚠️ PROIBIDO tags HTML puras estilizadas**: Toda tipografia e layout em componentes comuns deve usar os componentes de [***`Item.tsx`***](./src/components/ui/item.tsx). Veja [***`docs/item-pattern.md`***](./docs/item-pattern.md) para a documentação completa.
   - **Paleta de Gráficos**: Para manter a consistência em gráficos (Recharts, etc), utilize a função utilitária [***`getChartColor(index)`***](./src/components/ui/chart) Ela cicla entre as cores padrão do Tailwind (Sky, Blue, Indigo, Violet, Purple, Fuchsia, Pink, Rose, Red, Orange, Amber, Yellow, Lime, Green, Emerald, Teal, Cyan) e tons (400, 500, 600...) conforme o índice aumenta, use `index * 2` para ter maior variação das cores.
 
 
@@ -186,14 +186,22 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
 
   - Páginas ( _definidas pelo uso de `createFileRoute`_ ): Devem obrigatoriamente iniciar com `<Card>` seguido de `<CardHeader>` como estrutura principal.
 
-  - Componentes Comuns: Não podem utilizar componentes de [~~`Card.tsx`~~](./src/components/ui/card.tsx). Devem utilizar exclusivamente as opções de [***`Item.tsx`***](./src/components/ui/item.tsx).
-    - **Tipagem Padrão**: Toda tipagem de texto comum deve ser feita através dos componentes `<ItemTitle />` e `<ItemDescription />`.
+  - **⚠️ Componentes Comuns**: Não podem utilizar componentes de [~~`Card.tsx`~~](./src/components/ui/card.tsx). Devem utilizar exclusivamente as opções de [***`Item.tsx`***](./src/components/ui/item.tsx).
+    - **PROIBIDO**: Tags HTML puras estilizadas com classes Tailwind para tipografia e layout (ex: `<h3 className="font-semibold text-lg">`, `<p className="text-muted-foreground text-sm">`, `<div className="flex flex-col items-center gap-4">`).
+    - **OBRIGATÓRIO**: Utilizar `<ItemTitle />` para títulos, `<ItemDescription />` para descrições, `<ItemContent />` para blocos de conteúdo, `<ItemHeader />` e `<ItemFooter />` para cabeçalhos/rodapés, e `<ItemActions />` para áreas de ação.
+    - Documentação completa: [***`docs/item-pattern.md`***](./docs/item-pattern.md)
+
+  - **Padrão de Tipagem dos Componentes UI**: Todo componente em `src/components/ui/` deve seguir o padrão de tipagem do `Item.tsx`:
+    - Props baseadas em `React.ComponentProps<'element'>` (ex: `React.ComponentProps<'div'>`)
+    - Merge de classes via `cn(estilos_base, className)` — `className` sempre por último
+    - Atributo `data-slot="nome"` para identificação no DOM
+    - Para variantes: `cva()` + `VariantProps<typeof variants>`
 
   1. [***`Card`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Atua como `Shell/Wrapper` principal de página. **Toda rota** deve ser encapsulada por este componente.
 
   2. [***`CardHeader`***](./src/components/ui/card.tsx): **OBRIGATÓRIO** Cabeçalho padrão. Deve conter `<CardTitle>` para o título e `<CardAction>` para elementos de ação (botões, filtros, busca).
 
-  3. [***`ItemTitle` e `ItemDescription`***](./src/components/ui/item.tsx): Componentes padrão para títulos e descrições de itens. Devem ser usados em listas, tabelas e detalhes.
+  3. [***`ItemTitle` e `ItemDescription`***](./src/components/ui/item.tsx): Componentes padrão para títulos e descrições de itens. Devem ser usados em listas, tabelas e detalhes. **NUNCA** usar `<h1-6>`, `<p>`, `<span>` com classes de tipografia diretamente.
   
 Exemplo:
 

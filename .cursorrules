@@ -6,6 +6,9 @@
 ## UI & Estilizacao
 - Use ShadCN UI (`src/components/ui`)
 - NUNCA use tags HTML puras estilizadas - use componentes ShadCN
+- **PROIBIDO**: `<h1-6>`, `<p>`, `<span>` com classes de tipografia em componentes comuns — usar `<ItemTitle>`, `<ItemDescription>`
+- **PROIBIDO**: `<div className="flex flex-col gap-*">` para listas/layout — usar `<ItemGroup>`, `<ItemContent>`, `<ItemHeader>`, `<ItemFooter>`, `<ItemActions>`
+- Documentacao completa do padrao: `docs/item-pattern.md`
 - Para cores de graficos: `getChartColor(index)` de `src/components/ui/chart`
 - NUNCA use `mx-auto` no ChartContainer
 
@@ -44,7 +47,15 @@
 
 ## Componentes Comuns (nao paginas)
 - NUNCA usar Card.tsx em componentes comuns
-- Usar `<Item>`, `<ItemTitle>`, `<ItemDescription>` de `src/components/ui/item.tsx`
+- Usar `<Item>`, `<ItemTitle>`, `<ItemDescription>`, `<ItemContent>`, `<ItemHeader>`, `<ItemFooter>`, `<ItemActions>` de `src/components/ui/item.tsx`
+- NUNCA `<h1-6>`, `<p>`, `<span>` com classes de tipografia — usar `<ItemTitle>` e `<ItemDescription>`
+- NUNCA `<div className="flex flex-col gap-*">` para layout composicional — usar subcomponentes do Item
+
+## Padrao de Tipagem de Componentes UI
+- Props: `React.ComponentProps<'element'>` (ex: `React.ComponentProps<'div'>`)
+- Merge de classes: `cn(estilos_base, className)` — className por ultimo
+- Identificacao DOM: `data-slot="nome-do-slot"`
+- Variantes: `cva()` + `VariantProps<typeof variants>`
 
 ## Hooks de API (Padrao TanStack Query)
 ```tsx
@@ -111,3 +122,4 @@ Para padroes detalhados com exemplos completos, leia os docs conforme o cenario:
 | Buscar selects, hooks ou componentes existentes | `docs/available-resources.md` |
 | Máscaras e Funções de Utilidade (CPF, Tel, Data) | `docs/masks.md` |
 | Consultar tech stack e versoes | `docs/stack.md` |
+| **Padrao Item e tipagem de componentes UI** | **`docs/item-pattern.md`** |

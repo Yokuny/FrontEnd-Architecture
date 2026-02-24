@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { applyCpfMask, applyDateMask, applyPhoneMask } from '@/lib/masks';
 import { useGetGuestById, useGetUserSyncStatus } from '../@hooks/use-access-user-api';
 import type { CreateGuestProps, UserType } from '../@interface/access-user.interface';
@@ -133,12 +134,12 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-lg">
+    <ItemGroup className="gap-4">
+      <ItemHeader>
+        <ItemTitle className="text-lg">
           {guestId ? 'Editar' : 'Adicionar'} {userType === 'visitante' ? 'Visitante' : 'Dependente'}
-        </h3>
-      </div>
+        </ItemTitle>
+      </ItemHeader>
 
       {syncStatus?.sync_status && (
         <div className="rounded-md border bg-muted/50 p-3 text-sm">{syncStatus.synchronized ? 'Cadastro sincronizado com sucesso.' : 'Cadastro pendente de sincronização.'}</div>
@@ -227,7 +228,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
             />
           </div>
 
-          <div className="flex flex-col gap-3">
+          <ItemContent className="gap-3">
             <FormLabel>Fotos</FormLabel>
             <div className="flex flex-wrap gap-2">
               {urlImages.map((url, index) => (
@@ -250,9 +251,9 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
                 <input type="file" accept="image/*" hidden onChange={handleFileChange} />
               </label>
             </Button>
-          </div>
+          </ItemContent>
 
-          <div className="flex justify-end gap-2">
+          <ItemActions className="justify-end gap-2">
             <Button type="button" variant="outline" onClick={onCancel}>
               Cancelar
             </Button>
@@ -260,9 +261,9 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Salvar
             </Button>
-          </div>
+          </ItemActions>
         </form>
       </Form>
-    </div>
+    </ItemGroup>
   );
 }

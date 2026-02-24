@@ -6,15 +6,25 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { applyCpfMask } from '@/lib/masks';
 import { useGuestByCpf, useUpdateGuestImage } from '../@hooks/use-app-login';
 
-interface GuestAreaProps {
-  onClose: () => void;
+interface Guest {
+  id?: string;
+  _id?: string;
+  name: string;
+  cpf: string;
+  url_image?: string[];
 }
 
-export function GuestArea({ onClose }: GuestAreaProps) {
-  const [guestData, setGuestData] = useState<any>(null);
+interface GuestAreaProps {
+  onClose: () => void;
+  onGuestLoaded?: (loaded: boolean) => void;
+}
+
+export function GuestArea({ onClose, onGuestLoaded }: GuestAreaProps) {
+  const [guestData, setGuestData] = useState<Guest | null>(null);
   const [guestImages, setGuestImages] = useState<string[]>([]);
   const [blockedUntil, setBlockedUntil] = useState<Date | null>(null);
   const [countdown, setCountdown] = useState(0);
@@ -25,6 +35,10 @@ export function GuestArea({ onClose }: GuestAreaProps) {
   const form = useForm<{ cpf: string }>({
     defaultValues: { cpf: '' },
   });
+
+  useEffect(() => {
+    onGuestLoaded?.(!!guestData);
+  }, [guestData, onGuestLoaded]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setInterval>;
@@ -46,7 +60,7 @@ export function GuestArea({ onClose }: GuestAreaProps) {
 
   function onSearchSubmit(data: { cpf: string }) {
     if (blockedUntil) return;
-    findGuest.mutate(data.cpf, {
+    findGuest.mutate(data.cpf.replace(/\D/g, ''), {
       onSuccess: (result) => {
         setGuestData(result);
         setGuestImages(result.url_image || []);
@@ -65,7 +79,7 @@ export function GuestArea({ onClose }: GuestAreaProps) {
 
   function handleImageUpdate() {
     if (blockedUntil || !guestData) return;
-    const id = guestData.id || guestData._id;
+    const id = guestData.id || guestData._id || '';
     updateImage.mutate(
       { id, url_image: guestImages },
       {
@@ -97,11 +111,14 @@ export function GuestArea({ onClose }: GuestAreaProps) {
 
   if (!guestData) {
     return (
-      <div className="flex w-full flex-col gap-4">
-        <h3 className="text-center font-semibold text-lg text-primary">Área do Visitante</h3>
-        <p className="text-center text-muted-foreground text-sm">Digite seu CPF para buscar seu cadastro</p>
+      <ItemGroup className="gap-6!">
+        <ItemContent>
+          <ItemTitle className="font-semibold text-2xl">Área do Visitante</ItemTitle>
+          <ItemDescription>Digite seu CPF para buscar seu cadastro</ItemDescription>
+        </ItemContent>
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSearchSubmit)} className="flex flex-col gap-3">
+          <form onSubmit={form.handleSubmit(onSearchSubmit)} className="flex flex-col gap-4">
             <FormField
               control={form.control}
               name="cpf"
@@ -110,67 +127,69 @@ export function GuestArea({ onClose }: GuestAreaProps) {
                 <FormItem>
                   <FormLabel>CPF *</FormLabel>
                   <FormControl>
-                    <Input {...field} onChange={(e) => handleCpfChange(e.target.value)} maxLength={14} />
+                    <Input autoFocus className="h-12!" maxLength={14} placeholder="000.000.000-00" {...field} onChange={(e) => handleCpfChange(e.target.value)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={findGuest.isPending || !!blockedUntil} className="w-full">
-              {findGuest.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {blockedUntil ? `Aguarde ${countdown}s` : 'Buscar'}
-            </Button>
-            <Button type="button" variant="outline" onClick={onClose} className="w-full">
-              Voltar
-            </Button>
+
+            <ItemGroup className="gap-2">
+              <Button className="h-12! w-full" disabled={findGuest.isPending || !!blockedUntil} type="submit">
+                {findGuest.isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
+                {blockedUntil ? `Aguarde ${countdown}s` : 'Buscar Cadastro'}
+              </Button>
+              <Button className="w-full" onClick={onClose} variant="ghost">
+                Voltar ao Início
+              </Button>
+            </ItemGroup>
           </form>
         </Form>
-      </div>
+      </ItemGroup>
     );
   }
 
   return (
-    <div className="flex w-full flex-col items-center gap-4">
-      <h3 className="text-center font-semibold text-lg text-primary">Atualizar Foto</h3>
+    <ItemGroup className="gap-6!">
+      <ItemContent>
+        <ItemTitle className="text-center font-semibold text-2xl">Atualizar Foto</ItemTitle>
+        <ItemDescription className="text-center">
+          <span className="block font-medium text-foreground">{guestData.name}</span>
+          <span>{applyCpfMask(guestData.cpf || '')}</span>
+        </ItemDescription>
+      </ItemContent>
 
-      <div className="flex w-full flex-col gap-2">
-        <Input value={guestData.name || ''} disabled />
-        <Input value={applyCpfMask(guestData.cpf || '')} disabled />
-      </div>
-
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="grid grid-cols-3 gap-3">
         {guestImages.map((url, index) => (
-          <div key={`${index}-img`} className="relative">
-            <img src={url} alt={`foto-${index}`} className="h-20 w-20 rounded-md object-cover" />
+          <div key={`${index}-img`} className="group relative aspect-square overflow-hidden rounded-lg border border-muted bg-muted/50">
+            <img alt={`foto-${index}`} className="h-full w-full object-cover transition-transform group-hover:scale-110" src={url} />
             <button
-              type="button"
+              className="absolute top-1 right-1 flex size-6 items-center justify-center rounded-full bg-destructive/90 text-white shadow-sm transition-all hover:bg-destructive"
               onClick={() => setGuestImages((prev) => prev.filter((_, i) => i !== index))}
-              className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white"
+              type="button"
             >
-              <X className="h-3 w-3" />
+              <X className="size-3" />
             </button>
           </div>
         ))}
-      </div>
-
-      <div className="flex w-full flex-col gap-2">
-        <Button asChild variant="outline" className="w-full">
-          <label className="cursor-pointer">
-            <Upload className="mr-2 h-4 w-4" />
-            Carregar Arquivo
-            <input type="file" accept="image/*" hidden onChange={handleFileChange} />
+        {guestImages.length < 5 && (
+          <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-muted-foreground/25 border-dashed transition-all hover:border-primary/50 hover:bg-primary/5">
+            <Upload className="size-6 text-muted-foreground" />
+            <span className="mt-1 font-medium text-[10px] text-muted-foreground">Adicionar</span>
+            <input accept="image/*" hidden onChange={handleFileChange} type="file" />
           </label>
-        </Button>
-
-        <Button onClick={handleImageUpdate} disabled={updateImage.isPending || !!blockedUntil} className="w-full">
-          {updateImage.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {blockedUntil ? `Aguarde ${countdown}s` : 'Salvar'}
-        </Button>
-
-        <Button variant="ghost" onClick={onClose} className="w-full">
-          Voltar
-        </Button>
+        )}
       </div>
-    </div>
+
+      <ItemGroup className="gap-2">
+        <Button className="h-12! w-full" disabled={updateImage.isPending || !!blockedUntil || guestImages.length === 0} onClick={handleImageUpdate}>
+          {updateImage.isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
+          {blockedUntil ? `Aguarde ${countdown}s` : 'Salvar Alterações'}
+        </Button>
+        <Button className="w-full" onClick={onClose} variant="ghost">
+          Cancelar
+        </Button>
+      </ItemGroup>
+    </ItemGroup>
   );
 }

@@ -1,5 +1,7 @@
 # Padroes de Pagina
 
+> **⚠️ IMPORTANTE**: Em **componentes comuns** (nao paginas), NUNCA use tags HTML puras estilizadas. Use os componentes de [`Item.tsx`](../src/components/ui/item.tsx). Veja [`docs/item-pattern.md`](./item-pattern.md) para a documentacao completa.
+
 ## Estrutura Obrigatoria
 
 ```tsx

@@ -16,6 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { ItemDescription } from '@/components/ui/item';
 import { useAppAuth } from '@/hooks/use-app-auth';
 import { useAccessUserApi, useGetAllSyncStatuses, useGetGuestsByParent } from '../@hooks/use-access-user-api';
 import type { CreateGuestProps } from '../@interface/access-user.interface';
@@ -143,7 +144,7 @@ export function VisitorsTab() {
           <DialogHeader>
             <DialogTitle>Pré-cadastro realizado com sucesso!</DialogTitle>
           </DialogHeader>
-          <p className="text-muted-foreground text-sm">Compartilhe o link abaixo para o visitante finalizar o cadastro e inserir a foto.</p>
+          <ItemDescription>Compartilhe o link abaixo para o visitante finalizar o cadastro e inserir a foto.</ItemDescription>
           <Input value={invitationLink} readOnly />
           <div className="flex justify-center gap-2">
             <Button onClick={handleCopyUrl} size="sm">

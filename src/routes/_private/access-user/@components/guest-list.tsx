@@ -2,8 +2,9 @@ import { Plus, Trash2 } from 'lucide-react';
 import { useMemo } from 'react';
 
 import DefaultEmptyData from '@/components/default-empty-data';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { applyCpfMask } from '@/lib/masks';
 import type { GuestProps, UserSyncStatus } from '../@interface/access-user.interface';
 
@@ -28,19 +29,21 @@ export function GuestList({ guests, syncStatuses, onAdd, onEdit, onDelete, title
   );
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-lg">{title}</h3>
-        <Button size="sm" onClick={onAdd}>
-          <Plus className="mr-2 h-4 w-4" />
-          Adicionar
-        </Button>
-      </div>
+    <ItemGroup className="gap-4">
+      <ItemHeader>
+        <ItemTitle className="text-lg">{title}</ItemTitle>
+        <ItemActions>
+          <Button size="sm" onClick={onAdd}>
+            <Plus className="mr-2 h-4 w-4" />
+            Adicionar
+          </Button>
+        </ItemActions>
+      </ItemHeader>
 
       {items.length === 0 ? (
         <DefaultEmptyData />
       ) : (
-        <div className="flex flex-col gap-2">
+        <ItemGroup>
           {items.map((item) => (
             <Item key={item._resolvedId} className="cursor-pointer" onClick={() => onEdit(item._resolvedId)}>
               <ItemContent>
@@ -50,9 +53,9 @@ export function GuestList({ guests, syncStatuses, onAdd, onEdit, onDelete, title
                   {item.birthday && ` - ${new Date(item.birthday).toLocaleDateString('pt-BR')}`}
                 </ItemDescription>
               </ItemContent>
-              <div className="flex items-center gap-2">
-                {item.registration_complete === true && <span className="rounded-full bg-green-100 px-2 py-0.5 text-green-700 text-xs">Cadastro completo</span>}
-                {item.registration_complete === false && <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs text-yellow-700">Cadastro pendente</span>}
+              <ItemActions>
+                {item.registration_complete === true && <Badge variant="success">Cadastro completo</Badge>}
+                {item.registration_complete === false && <Badge variant="warning">Cadastro pendente</Badge>}
                 <Button
                   variant="ghost"
                   size="icon"
@@ -63,11 +66,11 @@ export function GuestList({ guests, syncStatuses, onAdd, onEdit, onDelete, title
                 >
                   <Trash2 className="h-4 w-4 text-destructive" />
                 </Button>
-              </div>
+              </ItemActions>
             </Item>
           ))}
-        </div>
+        </ItemGroup>
       )}
-    </div>
+    </ItemGroup>
   );
 }

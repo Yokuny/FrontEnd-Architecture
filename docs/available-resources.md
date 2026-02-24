@@ -71,5 +71,33 @@ import { EnterpriseSelect, MachineByEnterpriseSelect, UserSelect } from '@/compo
 ## Componentes de UI
 
 - **Paginas**: Usar `Card`, `CardHeader`, `CardContent`, `CardFooter`
-- **Componentes comuns**: NUNCA Card. Usar `Item`, `ItemTitle`, `ItemDescription` de `@/components/ui/item`
+- **Componentes comuns**: NUNCA Card. Usar componentes `Item` de `@/components/ui/item`
 - **Charts**: `getChartColor(index)` de `src/components/ui/chart`. NUNCA `mx-auto` no ChartContainer
+
+### Componentes Item Disponiveis (OBRIGATORIO em componentes comuns)
+
+Documentacao completa: [`docs/item-pattern.md`](./item-pattern.md)
+
+| Componente | Substitui | Descricao |
+|------------|-----------|----------|
+| `Item` | `<div className="flex gap-4 p-4">` | Container principal com variantes (default, outline, muted) |
+| `ItemGroup` | `<ul>` / `<div className="flex flex-col gap-2">` | Lista vertical de Items |
+| `ItemContent` | `<div className="flex flex-col gap-1">` | Bloco de conteudo |
+| `ItemTitle` | `<h1-6 className="font-...">` | Titulo padrao (font-mono, text-sm, font-medium) |
+| `ItemDescription` | `<p className="text-muted-foreground text-sm">` | Descricao padrao (font-mono, text-muted-foreground) |
+| `ItemHeader` | `<div className="flex justify-between">` | Cabecalho com justify-between |
+| `ItemFooter` | `<div className="flex justify-between">` | Rodape com justify-between |
+| `ItemActions` | `<div className="flex items-center gap-2">` | Area de acoes (botoes, badges) |
+| `ItemMedia` | N/A | Area de icone/imagem com variantes |
+| `ItemSeparator` | `<hr>` | Separador horizontal |
+
+### Padrao de Tipagem (Referencia: `Item.tsx`)
+
+```tsx
+// Todos os componentes UI seguem este padrao:
+function MyComponent({ className, ...props }: React.ComponentProps<'div'>) {
+  return <div data-slot="my-component" className={cn('estilos-base', className)} {...props} />;
+}
+```
+
+**Regras**: `React.ComponentProps<'element'>` para props, `cn()` para merge, `data-slot` para DOM, `cva` + `VariantProps` para variantes.
