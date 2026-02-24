@@ -7,9 +7,9 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { applyCpfMask, applyDateMask, applyPhoneMask } from '@/lib/masks';
 import { useGetGuestById, useGetUserSyncStatus } from '../@hooks/use-access-user-api';
 import type { CreateGuestProps, UserType } from '../@interface/access-user.interface';
-import { applyCpfMask, applyDateMask, applyPhoneMask } from '../@utils/masks';
 
 const guestFormSchema = z.object({
   name: z.string().min(1, 'Campo obrigatório'),

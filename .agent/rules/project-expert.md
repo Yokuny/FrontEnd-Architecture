@@ -50,5 +50,8 @@ Leia `docs/charts.md` para padroes de graficos, cores com `getChartColor`, tipos
 ### Quando precisar usar selects, hooks ou componentes existentes
 Leia `docs/available-resources.md` para a lista de selects, hooks globais e componentes obrigatorios disponiveis.
 
+### Quando precisar usar máscaras (CPF, Telefone, Data)
+Leia `docs/masks.md` para as funções de máscara padronizadas.
+
 ### Quando quiser consultar o stack do projeto
 Leia `docs/stack.md` para a tabela completa de tecnologias e versoes.

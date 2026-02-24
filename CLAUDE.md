@@ -103,4 +103,5 @@ Para padroes detalhados com exemplos completos, consulte os docs conforme o cena
 | Padroes de componentes React | `docs/react-patterns.md` |
 | Graficos (Recharts, cores, tipos) | `docs/charts.md` |
 | Buscar selects, hooks ou componentes existentes | `docs/available-resources.md` |
+| Máscaras e Funções de Utilidade (CPF, Tel, Data) | `docs/masks.md` |
 | Consultar tech stack e versoes | `docs/stack.md` |

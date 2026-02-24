@@ -12,7 +12,7 @@ export function useAppLogin() {
 
   return useMutation({
     mutationFn: async ({ cpf, password }: { cpf: string; password: string }) => {
-      const response = await api.post<AppLoginResponse>('/api/app/login', {
+      const response = await api.post<AppLoginResponse>('/app/login', {
         cpf: cpf.replace(/\D/g, ''),
         password,
       });

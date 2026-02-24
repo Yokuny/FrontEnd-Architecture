@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 
 import { toast } from 'sonner';
 import { useAppAuth } from '@/hooks/use-app-auth';
+import { applyCpfMask, applyPhoneMask } from '@/lib/masks';
 import type { GuestProps } from '../@interface/access-user.interface';
 import { type EditProfileFormData, editProfileSchema } from '../@interface/access-user.interface';
-import { applyCpfMask, applyPhoneMask } from '../@utils/masks';
 import { useAccessUserApi } from './use-access-user-api';
 
 export function useEditProfileForm(user: GuestProps | undefined) {

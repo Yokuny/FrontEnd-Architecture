@@ -6,18 +6,11 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { applyCpfMask } from '@/lib/masks';
 import { useGuestByCpf, useUpdateGuestImage } from '../@hooks/use-app-login';
 
 interface GuestAreaProps {
   onClose: () => void;
-}
-
-function applyCpfMask(value: string) {
-  return value
-    .replace(/\D+/g, '')
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d)/, '$1-$2');
 }
 
 export function GuestArea({ onClose }: GuestAreaProps) {

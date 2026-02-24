@@ -109,4 +109,5 @@ Para padroes detalhados com exemplos completos, leia os docs conforme o cenario:
 | Gerenciar estado global (Zustand) | `docs/state-management.md` |
 | Padroes de componentes React | `docs/react-patterns.md` |
 | Buscar selects, hooks ou componentes existentes | `docs/available-resources.md` |
+| Máscaras e Funções de Utilidade (CPF, Tel, Data) | `docs/masks.md` |
 | Consultar tech stack e versoes | `docs/stack.md` |

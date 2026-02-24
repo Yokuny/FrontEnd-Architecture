@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { applyCpfMask } from '@/lib/masks';
 import { GuestArea } from './@components/guest-area';
 import { useAppLogin } from './@hooks/use-app-login';
 import { type AppAuthFormData, appAuthSchema } from './@interface/app-auth.interface';
@@ -26,14 +27,6 @@ function AppAuthPage() {
     resolver: zodResolver(appAuthSchema),
     defaultValues: { cpf: '', password: '' },
   });
-
-  function applyCpfMask(value: string) {
-    return value
-      .replace(/\D+/g, '')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1-$2');
-  }
 
   function handleCpfChange(value: string) {
     form.setValue('cpf', applyCpfMask(value), { shouldValidate: true });

@@ -4,8 +4,8 @@ import { useMemo } from 'react';
 import DefaultEmptyData from '@/components/default-empty-data';
 import { Button } from '@/components/ui/button';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
+import { applyCpfMask } from '@/lib/masks';
 import type { GuestProps, UserSyncStatus } from '../@interface/access-user.interface';
-import { applyCpfMask } from '../@utils/masks';
 
 interface GuestListProps {
   guests: GuestProps[];

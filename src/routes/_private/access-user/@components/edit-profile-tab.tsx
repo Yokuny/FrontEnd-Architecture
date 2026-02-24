@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useAppAuth } from '@/hooks/use-app-auth';
+import { applyDateMask, applyPhoneMask } from '@/lib/masks';
 import { useGetAppUser, useGetUserSyncStatus } from '../@hooks/use-access-user-api';
 import { useEditProfileForm } from '../@hooks/use-edit-profile-form';
-import { applyDateMask, applyPhoneMask } from '../@utils/masks';
 
 export function EditProfileTab() {
   const navigate = useNavigate();
