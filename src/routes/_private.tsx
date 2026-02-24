@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 import { AppSidebar } from '@/components/sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import { useAuth } from '@/hooks/use-auth';
+import { useAppAuth } from '@/hooks/use-app-auth';
 
 /**
  * Layout route para rotas privadas (com autenticacao)
@@ -25,11 +25,11 @@ function PrivateLayout() {
 
 export const Route = createFileRoute('/_private')({
   beforeLoad: async () => {
-    const { isAuthenticated } = useAuth.getState();
+    const { isAuthenticated } = useAppAuth.getState();
 
     if (!isAuthenticated) {
       throw redirect({
-        to: '/auth',
+        to: '/app-auth',
       });
     }
   },

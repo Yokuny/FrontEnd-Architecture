@@ -9,10 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
-import { Route as PrivateIndexRouteImport } from './routes/_private/index';
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateAccessUserIndexRouteImport } from './routes/_private/access-user/index';
+import { Route as PublicRouteImport } from './routes/_public';
+import { Route as PublicAppAuthIndexRouteImport } from './routes/_public/app-auth/index';
+import { Route as IndexRouteImport } from './routes/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -22,41 +23,56 @@ const PrivateRoute = PrivateRouteImport.update({
   id: '/_private',
   getParentRoute: () => rootRouteImport,
 } as any);
-const PrivateIndexRoute = PrivateIndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => PrivateRoute,
+  getParentRoute: () => rootRouteImport,
 } as any);
-const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
-  id: '/auth/',
-  path: '/auth/',
+const PublicAppAuthIndexRoute = PublicAppAuthIndexRouteImport.update({
+  id: '/app-auth/',
+  path: '/app-auth/',
   getParentRoute: () => PublicRoute,
+} as any);
+const PrivateAccessUserIndexRoute = PrivateAccessUserIndexRouteImport.update({
+  id: '/access-user/',
+  path: '/access-user/',
+  getParentRoute: () => PrivateRoute,
 } as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof PrivateIndexRoute;
-  '/auth': typeof PublicAuthIndexRoute;
+  '/': typeof IndexRoute;
+  '/access-user': typeof PrivateAccessUserIndexRoute;
+  '/app-auth': typeof PublicAppAuthIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof PrivateIndexRoute;
-  '/auth': typeof PublicAuthIndexRoute;
+  '/': typeof IndexRoute;
+  '/access-user': typeof PrivateAccessUserIndexRoute;
+  '/app-auth': typeof PublicAppAuthIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
+  '/': typeof IndexRoute;
   '/_private': typeof PrivateRouteWithChildren;
   '/_public': typeof PublicRouteWithChildren;
-  '/_private/': typeof PrivateIndexRoute;
-  '/_public/auth/': typeof PublicAuthIndexRoute;
+  '/_private/access-user/': typeof PrivateAccessUserIndexRoute;
+  '/_public/app-auth/': typeof PublicAppAuthIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/auth';
+  fullPaths: '/' | '/access-user' | '/app-auth';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/auth';
-  id: '__root__' | '/_private' | '/_public' | '/_private/' | '/_public/auth/';
+  to: '/' | '/access-user' | '/app-auth';
+  id:
+    | '__root__'
+    | '/'
+    | '/_private'
+    | '/_public'
+    | '/_private/access-user/'
+    | '/_public/app-auth/';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute;
   PrivateRoute: typeof PrivateRouteWithChildren;
   PublicRoute: typeof PublicRouteWithChildren;
 }
@@ -77,46 +93,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    '/_private/': {
-      id: '/_private/';
+    '/': {
+      id: '/';
       path: '/';
       fullPath: '/';
-      preLoaderRoute: typeof PrivateIndexRouteImport;
-      parentRoute: typeof PrivateRoute;
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    '/_public/auth/': {
-      id: '/_public/auth/';
-      path: '/auth';
-      fullPath: '/auth';
-      preLoaderRoute: typeof PublicAuthIndexRouteImport;
+    '/_public/app-auth/': {
+      id: '/_public/app-auth/';
+      path: '/app-auth';
+      fullPath: '/app-auth';
+      preLoaderRoute: typeof PublicAppAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/access-user/': {
+      id: '/_private/access-user/';
+      path: '/access-user';
+      fullPath: '/access-user';
+      preLoaderRoute: typeof PrivateAccessUserIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
   }
 }
 
 interface PrivateRouteChildren {
-  PrivateIndexRoute: typeof PrivateIndexRoute;
+  PrivateAccessUserIndexRoute: typeof PrivateAccessUserIndexRoute;
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
-  PrivateIndexRoute: PrivateIndexRoute,
+  PrivateAccessUserIndexRoute: PrivateAccessUserIndexRoute,
 };
 
 const PrivateRouteWithChildren =
   PrivateRoute._addFileChildren(PrivateRouteChildren);
 
 interface PublicRouteChildren {
-  PublicAuthIndexRoute: typeof PublicAuthIndexRoute;
+  PublicAppAuthIndexRoute: typeof PublicAppAuthIndexRoute;
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
-  PublicAuthIndexRoute: PublicAuthIndexRoute,
+  PublicAppAuthIndexRoute: PublicAppAuthIndexRoute,
 };
 
 const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren);
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   PrivateRoute: PrivateRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
 };
