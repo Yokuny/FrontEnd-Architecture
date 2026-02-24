@@ -1,5 +1,6 @@
 {
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["gesec-webclient", "src/config/extractRoutes.ts", "src/config/extractRoutesMetadata.ts"],
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",

@@ -6,7 +6,6 @@
 import { toast } from 'sonner';
 import i18n from '@/config/i18n';
 import { useAuth } from '@/hooks/use-auth';
-import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
 
 const baseURL = import.meta.env.VITE_URI_BASE || 'http://localhost:3001';
 const timeout = parseInt(import.meta.env.VITE_URI_TIMEOUT || '30000', 10);
@@ -124,7 +123,6 @@ async function fetchWithTimeout<T>(url: string, init: RequestInit, options: ApiO
 
 function createHeaders(options: ApiOptions): HeadersInit {
   const token = useAuth.getState().token;
-  const enterprise = useEnterpriseFilter.getState().idEnterprise;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -136,10 +134,6 @@ function createHeaders(options: ApiOptions): HeadersInit {
 
   if (token) {
     headers.token = token;
-  }
-
-  if (enterprise) {
-    headers.environment = enterprise;
   }
 
   return {
