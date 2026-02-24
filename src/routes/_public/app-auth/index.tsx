@@ -4,7 +4,6 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { LanguageSwitcher } from '@/components/sidebar/switch-language';
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -49,11 +48,13 @@ function AppAuthPage() {
       <div className="w-full max-w-md">
         <Card>
           <CardContent className="flex flex-col gap-6 p-8">
-            <div className="flex items-center justify-between">
-              <h1 className="font-bold text-2xl">Acesso do Usuário</h1>
-              <div className="flex gap-2">
-                <ThemeSwitcher />
-                <LanguageSwitcher />
+            <div className="flex flex-col items-center gap-4">
+              <img src="/images/logo.svg" alt="Logo" className="h-16 w-auto" />
+              <div className="flex w-full items-center justify-between">
+                <h1 className="font-bold text-2xl">Acesso do Usuário</h1>
+                <div className="flex gap-2">
+                  <ThemeSwitcher />
+                </div>
               </div>
             </div>
 
