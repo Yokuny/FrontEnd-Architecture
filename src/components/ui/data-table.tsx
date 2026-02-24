@@ -1,7 +1,6 @@
 import { ChevronDown, ChevronUp, Filter, Search, X } from 'lucide-react';
 import type React from 'react';
 import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import EmptyData from '@/components/default-empty-data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -51,7 +50,6 @@ export function DataTable<T extends Record<string, any>>({
   loading = false,
   onRowClick,
 }: DataTableProps<T>) {
-  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [sortConfig, setSortConfig] = useState<{
     key: keyof T | null;
@@ -280,7 +278,7 @@ export function DataTable<T extends Record<string, any>>({
       {showPagination && sortedData.length > 0 && (
         <ItemFooter className="flex flex-col items-center justify-between gap-4 px-6 py-4 sm:flex-row">
           <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
-            <span>{t('show')}</span>
+            <span>{'show'}</span>
             <Select
               value={String(pageSize)}
               onValueChange={(val) => {
@@ -298,9 +296,9 @@ export function DataTable<T extends Record<string, any>>({
                 <SelectItem value="50">50</SelectItem>
               </SelectContent>
             </Select>
-            <span>{t('per.page')}</span>
+            <span>{'per.page'}</span>
             <span className="ml-4 tabular-nums">
-              {t('total')}: {sortedData.length}
+              {'total'}: {sortedData.length}
             </span>
           </div>
 

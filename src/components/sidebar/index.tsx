@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FooterNavigation } from '@/components/sidebar/nav-footer';
 import AppNavigation, { type Route } from '@/components/sidebar/nav-main';
 import { EnterpriseSwitcher } from '@/components/sidebar/switch-enterprise';
@@ -12,9 +11,9 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator
 import { buildSidebarRoutes, type SidebarRoute } from '@/config/sidebarRoutes';
 import { cn } from '@/lib/utils';
 
-const convertToNavRoutes = (routes: SidebarRoute[], t: (key: string) => string): Route[] => {
+const convertToNavRoutes = (routes: SidebarRoute[]): Route[] => {
   return routes.map((route) => {
-    const title = t(route.labelKey);
+    const title = route.labelKey;
 
     return {
       id: route.id,
@@ -22,7 +21,7 @@ const convertToNavRoutes = (routes: SidebarRoute[], t: (key: string) => string):
       icon: route.icon ? <route.icon className="size-4" /> : undefined,
       link: route.path,
       subs: route.children?.map((child) => ({
-        title: t(child.labelKey),
+        title: child.labelKey,
         link: child.path,
         icon: child.icon ? <child.icon className="size-4" /> : undefined,
       })),
@@ -32,13 +31,12 @@ const convertToNavRoutes = (routes: SidebarRoute[], t: (key: string) => string):
 
 export function AppSidebar() {
   const { state } = useSidebar();
-  const { t } = useTranslation();
   const isCollapsed = state === 'collapsed';
 
   const navRoutes = useMemo(() => {
     const sidebarRoutes = buildSidebarRoutes();
-    return convertToNavRoutes(sidebarRoutes, t);
-  }, [t]);
+    return convertToNavRoutes(sidebarRoutes);
+  }, []);
 
   return (
     <Sidebar variant="floating" collapsible="icon" className="transition-all duration-300 ease-in-out">

@@ -1,18 +1,16 @@
 import { ImagePlus } from 'lucide-react';
 import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ItemDescription, ItemMedia } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 
 export default function UploadImage({ value, onAddFile, maxSize, className, height }: UploadImageProps) {
-  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       if (maxSize && file.size > maxSize) {
-        // toast.error(t('file.more.size', { 0: file.name, 1: maxSize }));
+        // toast.error('file.more.size');
         return;
       }
       onAddFile(file);
@@ -47,7 +45,7 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
           <ItemMedia variant="icon" className="text-muted-foreground">
             <ImagePlus className="size-8" />
           </ItemMedia>
-          <ItemDescription className="text-center text-xs">{t('drag.image', 'Arraste uma imagem aqui ou clique para selecionar')}</ItemDescription>
+          <ItemDescription className="text-center text-xs">{'drag.image'}</ItemDescription>
         </div>
       )}
     </button>

@@ -4,7 +4,6 @@ import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
 import { Controller, type ControllerProps, type FieldPath, type FieldValues, FormProvider, useFormContext, useFormState } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 
@@ -87,8 +86,7 @@ function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
 
 function FormMessage({ className, children, ...props }: React.ComponentProps<'p'>) {
   const { error, formMessageId } = useFormField();
-  const { t } = useTranslation();
-  const body = error ? t(String(error?.message ?? '')) : children;
+  const body = error ? String(error?.message ?? '') : children;
 
   if (!body) {
     return null;

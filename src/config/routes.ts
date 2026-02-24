@@ -6,7 +6,7 @@ export const ROUTE_ICONS: Record<string, LucideIcon> = {};
 // Icones para sub-rotas especificas
 export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {};
 
-// Chaves i18n para traducao de rotas
+// Chaves para traducao de rotas
 export const ROUTE_LABELS: Record<string, string> = {
   dashboard: 'dashboard',
 };

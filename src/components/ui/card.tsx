@@ -1,7 +1,6 @@
 import { useMatches, useRouter } from '@tanstack/react-router';
 import { CircleQuestionMark, MoveLeft } from 'lucide-react';
 import type * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import { AutoBreadcrumbs } from '@/components/auto-breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -17,13 +16,12 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
 function CardHeader({ className, children, title: titleProp, ...props }: { className?: string; children?: React.ReactNode; title?: React.ReactNode }) {
   const router = useRouter();
   const matches = useMatches();
-  const { t } = useTranslation();
 
   // Obtém o título e descrição do staticData da última rota (a atual)
   const lastMatch = matches[matches.length - 1];
   const staticTitle = lastMatch?.staticData?.title;
   const description = lastMatch?.staticData?.description;
-  const resolvedTitle = titleProp ?? (staticTitle ? t(staticTitle) : undefined);
+  const resolvedTitle = titleProp ?? staticTitle;
 
   return (
     <div data-slot="card-header" className={'@container/card-header flex flex-col gap-4 px-6 [.border-b]:pb-6'} {...props}>

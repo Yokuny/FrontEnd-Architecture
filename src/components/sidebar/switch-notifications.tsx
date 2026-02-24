@@ -3,7 +3,6 @@
 import type { Variants } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
 import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -14,7 +13,6 @@ import { cn } from '@/lib/utils';
 
 export function NotificationsSwitcher({ notifications }: { notifications: Notification[] }) {
   const { setMenuOpen } = useSidebarToggle();
-  const { t } = useTranslation();
 
   const hasNotifications = notifications.length > 0;
 
@@ -37,7 +35,7 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" className="my-6 w-80">
-        <DropdownMenuLabel>{t('alerts')}</DropdownMenuLabel>
+        <DropdownMenuLabel>{'alerts'}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <div className="max-h-72 overflow-y-auto">
           {hasNotifications ? (
@@ -54,11 +52,11 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
               </DropdownMenuItem>
             ))
           ) : (
-            <div className="p-4 text-center text-muted-foreground text-sm">{t('notifications.empty')}</div>
+            <div className="p-4 text-center text-muted-foreground text-sm">{'notifications.empty'}</div>
           )}
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="justify-center font-mono text-muted-foreground text-sm hover:text-primary">{t('notifications.viewall')}</DropdownMenuItem>
+        <DropdownMenuItem className="justify-center font-mono text-muted-foreground text-sm hover:text-primary">{'notifications.viewall'}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

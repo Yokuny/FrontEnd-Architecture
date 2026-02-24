@@ -30,7 +30,7 @@ export interface RouteRelation {
 
 declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
-    /** Título da rota (chave i18n) para Breadcrumbs e CardHeader */
+    /** Título da rota para Breadcrumbs e CardHeader */
     title?: string;
     /** Função para obter o título dinamicamente (para rotas com $params) */
     getTitle?: () => string;

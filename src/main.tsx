@@ -1,11 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
-import { StrictMode, useEffect } from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Toaster } from 'sonner';
-import i18n from './config/i18n';
-import { useLocale } from './hooks/use-locale';
+
 import { routeTree } from './routeTree.gen';
 
 import './styles.css';
@@ -43,12 +42,6 @@ declare module '@tanstack/react-router' {
 
 // App component with all providers
 function App() {
-  const locale = useLocale((state) => state.locale);
-
-  useEffect(() => {
-    i18n.changeLanguage(locale);
-  }, [locale]);
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange themes={['light', 'dark', 'ocean-blue', 'sunset']}>

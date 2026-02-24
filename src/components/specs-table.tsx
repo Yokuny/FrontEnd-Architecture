@@ -4,7 +4,6 @@
 
 import { Battery, Box, ChevronDown, Cpu, HardDrive, Monitor, Wifi } from 'lucide-react';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemDescription, ItemGroup, ItemHeader, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
@@ -107,7 +106,6 @@ interface ProductSpecs1Props {
 }
 
 const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Specifications', className }: ProductSpecs1Props) => {
-  const { t } = useTranslation();
   const [openCategories, setOpenCategories] = useState<string[]>(categories.map((c) => c.id));
 
   const toggleCategory = (id: string) => {
@@ -123,11 +121,11 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
         <ItemTitle className="text-xl md:text-2xl">{title}</ItemTitle>
         <div className="flex gap-1">
           <Button variant="ghost" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
-            {t('expand.all')}
+            {'expand.all'}
           </Button>
           <Separator orientation="vertical" className="h-4 self-center" />
           <Button variant="ghost" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
-            {t('collapse.all')}
+            {'collapse.all'}
           </Button>
         </div>
       </ItemHeader>

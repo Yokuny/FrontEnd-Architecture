@@ -4,7 +4,7 @@
  */
 
 import { toast } from 'sonner';
-import i18n from '@/config/i18n';
+
 import { useAuth } from '@/hooks/use-auth';
 
 const baseURL = import.meta.env.VITE_URI_BASE || 'http://localhost:3001';
@@ -25,31 +25,31 @@ async function handleError(response: Response, options: ApiOptions) {
   } catch {}
 
   if (response.status === 401) {
-    toast.error(i18n.t('session.expired'));
+    toast.error('session.expired');
     clearLocalStorage();
     window.location.href = `${window.location.origin}/auth`;
   } else if (response.status === 403) {
     if (errorData?.code) {
-      toast.warning(i18n.t(errorData.code));
+      toast.warning(errorData.code);
     } else {
-      toast.warning(i18n.t('user.notAllowed'));
+      toast.warning('user.notAllowed');
     }
   } else if (response.status === 400) {
     if (errorData?.code) {
-      toast.warning(i18n.t(errorData.code));
+      toast.warning(errorData.code);
     } else if (errorData?.message) {
       toast.warning(errorData.message);
     }
   } else if (response.status === 500) {
     if (errorData?.code) {
-      toast.error(i18n.t(errorData.code));
+      toast.error(errorData.code);
     } else {
-      toast.error(i18n.t('no.connection'));
+      toast.error('no.connection');
     }
   } else if (response.status === 429) {
-    toast.error(i18n.t('server.too.many.request'));
+    toast.error('server.too.many.request');
   } else {
-    toast.error(i18n.t('no.connection'));
+    toast.error('no.connection');
   }
 
   throw new Error(`HTTP ${response.status}: ${response.statusText}`);

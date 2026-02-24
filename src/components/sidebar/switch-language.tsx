@@ -1,7 +1,6 @@
 import type { Variants } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
 import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useLocale } from '@/hooks/use-locale';
@@ -12,7 +11,6 @@ import { cn } from '@/lib/utils';
 const availableLocales = LANGUAGES.map((l) => l.value);
 
 export function LanguageSwitcher() {
-  const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
   const { setMenuOpen } = useSidebarToggle();
 
@@ -21,7 +19,7 @@ export function LanguageSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="ghost" aria-label="Switch language">
           <LanguagesIcon className="flex h-full w-full items-center justify-center" />
-          <span className="sr-only">{t('language')}</span>
+          <span className="sr-only">{'language'}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

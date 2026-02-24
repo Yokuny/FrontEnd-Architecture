@@ -1,12 +1,10 @@
 import { Link, useMatches } from '@tanstack/react-router';
 import { Home } from 'lucide-react';
 import { Fragment, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 
 export function AutoBreadcrumbs() {
   const matches = useMatches();
-  const { t } = useTranslation();
 
   const breadcrumbs = useMemo(() => {
     const lastMatch = matches[matches.length - 1];
@@ -27,19 +25,14 @@ export function AutoBreadcrumbs() {
       if (match?.staticData?.getTitle && typeof match.staticData.getTitle === 'function') {
         title = match.staticData.getTitle();
       } else if (match?.staticData?.title) {
-        title = t(match.staticData.title);
+        title = match.staticData.title;
       } else if ((match?.context as any)?.title) {
-        title = t((match?.context as any).title);
+        title = (match?.context as any).title;
       }
 
-      // Fallback: tenta traduzir o segmento da URL ou capitaliza
+      // Fallback: tenta capitalizar
       if (!title) {
-        const translatedSegment = t(segment);
-        if (translatedSegment !== segment) {
-          title = translatedSegment;
-        } else {
-          title = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
-        }
+        title = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
       }
 
       crumbs.push({
@@ -49,7 +42,7 @@ export function AutoBreadcrumbs() {
     }
 
     return crumbs;
-  }, [matches, t]);
+  }, [matches]);
 
   // Se tiver mais que 3 segmentos após a Home, colapsamos
   const shouldCollapse = breadcrumbs.length > 3;
