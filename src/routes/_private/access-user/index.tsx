@@ -37,15 +37,15 @@ function AccessUserPage() {
                 <ItemActions>
                   <ThemeSwitcher />
                   <Button variant="outline" onClick={handleLogout}>
-                    <LogOut className="mr-2 h-4 w-4" />
                     Sair
+                    <LogOut className="size-4" />
                   </Button>
                 </ItemActions>
               </ItemHeader>
             </ItemContent>
 
             <Tabs defaultValue="edit">
-              <TabsList>
+              <TabsList className="mb-4 justify-between">
                 <TabsTrigger value="edit">Editar Dados</TabsTrigger>
                 <TabsTrigger value="dependents">Dependentes</TabsTrigger>
                 <TabsTrigger value="visitors">Visitantes</TabsTrigger>

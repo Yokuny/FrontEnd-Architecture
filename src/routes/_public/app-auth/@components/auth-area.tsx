@@ -37,7 +37,7 @@ export function AuthArea({ onGuestMode }: AuthAreaProps) {
     <ItemGroup className="gap-6!">
       <ItemContent>
         <ItemHeader className="w-full">
-          <ItemTitle className="font-semibold text-2xl">Acesso do Usuário</ItemTitle>
+          <ItemTitle className="text-2xl">Acesso do Usuário</ItemTitle>
           <ItemActions>
             <ThemeSwitcher />
           </ItemActions>

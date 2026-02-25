@@ -113,7 +113,7 @@ export function GuestArea({ onClose, onGuestLoaded }: GuestAreaProps) {
     return (
       <ItemGroup className="gap-6!">
         <ItemContent>
-          <ItemTitle className="font-semibold text-2xl">Área do Visitante</ItemTitle>
+          <ItemTitle className="text-2xl">Área do Visitante</ItemTitle>
           <ItemDescription>Digite seu CPF para buscar seu cadastro</ItemDescription>
         </ItemContent>
 
@@ -151,7 +151,7 @@ export function GuestArea({ onClose, onGuestLoaded }: GuestAreaProps) {
 
   return (
     <ItemGroup className="gap-6!">
-      <ItemTitle className="text-center font-semibold text-2xl">Atualizar Foto</ItemTitle>
+      <ItemTitle className="text-center text-2xl">Atualizar Foto</ItemTitle>
       <ItemContent>
         <ItemTitle className="text-lg">{guestData.name}</ItemTitle>
         <ItemDescription className="text-lg">{applyCpfMask(guestData.cpf || '')}</ItemDescription>

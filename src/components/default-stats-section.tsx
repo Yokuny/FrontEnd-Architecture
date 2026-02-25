@@ -61,7 +61,7 @@ export function DefaultStatsSection() {
           <CardContent className="py-24 text-center">
             <Item className="flex-col items-center justify-center">
               <ItemContent className="items-center">
-                <ItemTitle className="font-bold text-5xl text-emerald-500 leading-snug">
+                <ItemTitle className="font-bold text-5xl text-emerald-500">
                   <Leaf className="mr-2 inline size-10" />
                   1,000Kg
                 </ItemTitle>
@@ -81,7 +81,7 @@ export function DefaultStatsSection() {
         {/* Stats Grid */}
         <div className="grid gap-10 gap-x-20 lg:grid-cols-2">
           {stats.map((props, key) => (
-            <StatsCard key={key} {...props} />
+            <StatsCard key={`${key}-${props.title}`} {...props} />
           ))}
         </div>
       </div>

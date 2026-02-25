@@ -139,7 +139,7 @@ export function GraphArea() {
                 {item.name} <span className="font-normal text-muted-foreground">({item.tickerSymbol})</span>
               </ItemTitle>
               <div className="flex w-full items-baseline justify-between">
-                <ItemTitle className="font-semibold text-lg" style={{ color: color }}>
+                <ItemTitle className="text-lg" style={{ color: color }}>
                   {item.value}
                 </ItemTitle>
                 <div className="flex items-center space-x-1 text-sm">

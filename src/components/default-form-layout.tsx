@@ -15,7 +15,7 @@ export default function DefaultFormLayout({ sections, layout = 'horizontal' }: D
               <FieldSet className={cn('block w-full border-none p-0', sectionLayout === 'horizontal' ? 'grid grid-cols-1 gap-10 md:grid-cols-3' : 'flex flex-col gap-6')}>
                 <ItemContent className="gap-1">
                   <FieldLegend variant="label" className="m-0 p-0">
-                    <ItemTitle className="font-semibold text-lg">{section.title}</ItemTitle>
+                    <ItemTitle className="text-lg">{section.title}</ItemTitle>
                   </FieldLegend>
                   {section.description && <ItemDescription className="line-clamp-none">{section.description}</ItemDescription>}
                 </ItemContent>

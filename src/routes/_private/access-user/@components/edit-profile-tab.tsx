@@ -154,7 +154,7 @@ export function EditProfileTab() {
             <FormLabel>Fotos</FormLabel>
             <div className="flex flex-wrap gap-2">
               {urlImages.map((url, index) => (
-                <div key={`${index}-img`} className="relative">
+                <div key={`${index}-${url}-img`} className="relative">
                   <img src={url} alt={`foto-${index}`} className="h-24 w-24 rounded-md object-cover" />
                   <button
                     type="button"

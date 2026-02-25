@@ -142,9 +142,9 @@ export function GraphBreakParts() {
             <div key={item.key} className="flex flex-col items-center">
               <div className="flex items-baseline gap-2">
                 <div className="size-2" style={{ backgroundColor: item.color }} />
-                <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{item.key}</ItemTitle>
+                <ItemTitle className="text-muted-foreground text-xs uppercase">{item.key}</ItemTitle>
               </div>
-              <ItemTitle className="font-semibold text-lg tabular-nums">{item.value}</ItemTitle>
+              <ItemTitle className="text-lg tabular-nums">{item.value}</ItemTitle>
             </div>
           ))}
         </ItemFooter>
