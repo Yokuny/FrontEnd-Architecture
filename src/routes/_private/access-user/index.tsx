@@ -1,5 +1,5 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { LogOut } from 'lucide-react';
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
+import { LogOut, User, UserPlus, Users } from 'lucide-react';
 
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,15 @@ import { EditProfileTab } from './@components/edit-profile-tab';
 import { VisitorsTab } from './@components/visitors-tab';
 
 export const Route = createFileRoute('/_private/access-user/')({
+  beforeLoad: () => {
+    const { isAuthenticated } = useAppAuth.getState();
+
+    if (!isAuthenticated) {
+      throw redirect({
+        to: '/app-auth',
+      });
+    }
+  },
   component: AccessUserPage,
   staticData: { title: 'Meus Dados' },
 });
@@ -46,9 +55,18 @@ function AccessUserPage() {
 
             <Tabs defaultValue="edit">
               <TabsList className="mb-4 justify-between">
-                <TabsTrigger value="edit">Editar Dados</TabsTrigger>
-                <TabsTrigger value="dependents">Dependentes</TabsTrigger>
-                <TabsTrigger value="visitors">Visitantes</TabsTrigger>
+                <TabsTrigger value="edit" className="gap-2">
+                  <User className="size-4" />
+                  Editar Dados
+                </TabsTrigger>
+                <TabsTrigger value="dependents" className="gap-2">
+                  <Users className="size-4" />
+                  Dependentes
+                </TabsTrigger>
+                <TabsTrigger value="visitors" className="gap-2">
+                  <UserPlus className="size-4" />
+                  Visitantes
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="edit">
                 <EditProfileTab />

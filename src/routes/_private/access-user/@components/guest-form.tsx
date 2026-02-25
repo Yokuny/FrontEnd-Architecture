@@ -1,13 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2, Upload, X } from 'lucide-react';
+import { Camera, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { CameraCaptureDialog } from '@/components/ui/image-capture';
 import { Input } from '@/components/ui/input';
 import { ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import UploadImage from '@/components/upload-image';
 import { applyCpfMask, applyDateMask, applyPhoneMask } from '@/lib/masks';
 import { useGetGuestById, useGetUserSyncStatus } from '../@hooks/use-access-user-api';
 import type { CreateGuestProps, UserType } from '../@interface/access-user.interface';
@@ -37,6 +39,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
   const { data: existingGuest } = useGetGuestById(guestId || null);
   const { data: syncStatus } = useGetUserSyncStatus(guestId);
   const [cooldown, setCooldown] = useState(false);
+  const [cameraOpen, setCameraOpen] = useState(false);
 
   const form = useForm<GuestFormData>({
     resolver: zodResolver(guestFormSchema),
@@ -111,26 +114,17 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
     }
   }
 
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-    if (urlImages.length >= 5) return;
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const base64 = e.target?.result as string;
-        form.setValue('url_image', [...urlImages, base64], { shouldValidate: true });
-      };
-      reader.readAsDataURL(file);
-    }
-    event.target.value = '';
+  function handleAddFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target?.result as string;
+      form.setValue('url_image', [base64], { shouldValidate: true });
+    };
+    reader.readAsDataURL(file);
   }
 
-  function handleRemoveImage(index: number) {
-    form.setValue(
-      'url_image',
-      urlImages.filter((_, i) => i !== index),
-      { shouldValidate: true },
-    );
+  function handleCameraCapture(image: string) {
+    form.setValue('url_image', [image], { shouldValidate: true });
   }
 
   return (
@@ -229,28 +223,14 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
           </div>
 
           <ItemContent className="gap-3">
-            <FormLabel>Fotos</FormLabel>
-            <div className="flex flex-wrap gap-2">
-              {urlImages.map((url, index) => (
-                <div key={`${index}-${url}-img`} className="relative">
-                  <img src={url} alt={`foto-${index}`} className="h-20 w-20 rounded-md object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveImage(index)}
-                    className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </div>
-              ))}
-            </div>
-            <Button asChild type="button" variant="outline" className="w-fit">
-              <label className="cursor-pointer">
-                <Upload className="mr-2 h-4 w-4" />
-                Carregar Arquivo
-                <input type="file" accept="image/*" hidden onChange={handleFileChange} />
-              </label>
-            </Button>
+            <FormLabel>Foto</FormLabel>
+            <UploadImage value={urlImages[0]} onAddFile={handleAddFile} height={200} />
+            <ItemActions>
+              <Button type="button" variant="outline" size="sm" onClick={() => setCameraOpen(true)}>
+                <Camera className="mr-2 h-4 w-4" />
+                Câmera
+              </Button>
+            </ItemActions>
           </ItemContent>
 
           <ItemActions className="justify-end gap-2">
@@ -264,6 +244,8 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
           </ItemActions>
         </form>
       </Form>
+
+      <CameraCaptureDialog open={cameraOpen} onClose={() => setCameraOpen(false)} onCapture={handleCameraCapture} />
     </ItemGroup>
   );
 }

@@ -1,10 +1,13 @@
-import { Loader2, Upload, X } from 'lucide-react';
+import { Camera, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { CameraCaptureDialog } from '@/components/ui/image-capture';
 import { Input } from '@/components/ui/input';
-import { ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import UploadImage from '@/components/upload-image';
 import { useAppAuth } from '@/hooks/use-app-auth';
 import { applyDateMask, applyPhoneMask } from '@/lib/masks';
 import { useGetAppUser, useGetUserSyncStatus } from '../@hooks/use-access-user-api';
@@ -15,29 +18,21 @@ export function EditProfileTab() {
   const { data: user, isLoading, isError } = useGetAppUser();
   const { data: syncStatus } = useGetUserSyncStatus(userId);
   const { form, onSubmit, isPending } = useEditProfileForm(user);
+  const [cameraOpen, setCameraOpen] = useState(false);
 
   const urlImages = form.watch('url_image');
 
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-    if (urlImages.length >= 5) return;
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const base64 = e.target?.result as string;
-        form.setValue('url_image', [...urlImages, base64], { shouldValidate: true });
-      };
-      reader.readAsDataURL(file);
-    }
-    event.target.value = '';
+  function handleAddFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target?.result as string;
+      form.setValue('url_image', [base64], { shouldValidate: true });
+    };
+    reader.readAsDataURL(file);
   }
 
-  function handleRemoveImage(index: number) {
-    form.setValue(
-      'url_image',
-      urlImages.filter((_, i) => i !== index),
-      { shouldValidate: true },
-    );
+  function handleCameraCapture(image: string) {
+    form.setValue('url_image', [image], { shouldValidate: true });
   }
 
   if (isLoading) return <DefaultLoading />;
@@ -72,12 +67,12 @@ export function EditProfileTab() {
             />
             <FormField
               control={form.control}
-              name="cpf"
+              name="birthDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>CPF *</FormLabel>
+                  <FormLabel>Data de Nascimento</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled />
+                    <Input {...field} placeholder="DD/MM/AAAA" onChange={(e) => form.setValue('birthDate', applyDateMask(e.target.value))} maxLength={10} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,12 +80,12 @@ export function EditProfileTab() {
             />
             <FormField
               control={form.control}
-              name="birthDate"
+              name="cpf"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Data de Nascimento</FormLabel>
+                  <FormLabel>CPF *</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="DD/MM/AAAA" onChange={(e) => form.setValue('birthDate', applyDateMask(e.target.value))} maxLength={10} />
+                    <Input {...field} disabled />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -151,33 +146,12 @@ export function EditProfileTab() {
           </div>
 
           <ItemContent className="gap-3">
-            <FormLabel>Fotos</FormLabel>
-            <div className="flex flex-wrap gap-2">
-              {urlImages.map((url, index) => (
-                <div key={`${index}-${url}-img`} className="relative">
-                  <img src={url} alt={`foto-${index}`} className="h-24 w-24 rounded-md object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveImage(index)}
-                    className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </div>
-              ))}
-              {urlImages.length === 0 && (
-                <div className="flex h-24 w-24 items-center justify-center rounded-md border-2 border-muted-foreground/30 border-dashed">
-                  <ItemDescription className="text-xs">Sem foto</ItemDescription>
-                </div>
-              )}
-            </div>
+            <FormLabel>Foto de Perfil</FormLabel>
+            <UploadImage value={urlImages[0]} onAddFile={handleAddFile} height={200} />
             <ItemActions>
-              <Button asChild type="button" variant="outline" size="sm">
-                <label className="cursor-pointer">
-                  <Upload className="mr-2 h-4 w-4" />
-                  Carregar Arquivo
-                  <input type="file" accept="image/*" hidden onChange={handleFileChange} />
-                </label>
+              <Button type="button" variant="outline" size="sm" onClick={() => setCameraOpen(true)}>
+                <Camera className="mr-2 h-4 w-4" />
+                Câmera
               </Button>
             </ItemActions>
           </ItemContent>
@@ -190,6 +164,8 @@ export function EditProfileTab() {
           </ItemActions>
         </form>
       </Form>
+
+      <CameraCaptureDialog open={cameraOpen} onClose={() => setCameraOpen(false)} onCapture={handleCameraCapture} />
     </ItemGroup>
   );
 }

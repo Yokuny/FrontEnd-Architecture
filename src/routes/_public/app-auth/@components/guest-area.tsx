@@ -1,12 +1,14 @@
-import { Loader2, Upload, X } from 'lucide-react';
+import { Camera, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { CameraCaptureDialog } from '@/components/ui/image-capture';
 import { Input } from '@/components/ui/input';
-import { ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
+import { ItemActions, ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
+import UploadImage from '@/components/upload-image';
 import { applyCpfMask } from '@/lib/masks';
 import { useGuestByCpf, useUpdateGuestImage } from '../@hooks/use-app-login';
 
@@ -28,6 +30,7 @@ export function GuestArea({ onClose, onGuestLoaded }: GuestAreaProps) {
   const [guestImages, setGuestImages] = useState<string[]>([]);
   const [blockedUntil, setBlockedUntil] = useState<Date | null>(null);
   const [countdown, setCountdown] = useState(0);
+  const [cameraOpen, setCameraOpen] = useState(false);
 
   const findGuest = useGuestByCpf();
   const updateImage = useUpdateGuestImage();
@@ -95,18 +98,17 @@ export function GuestArea({ onClose, onGuestLoaded }: GuestAreaProps) {
     );
   }
 
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-    if (guestImages.length >= 5) return;
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const base64 = e.target?.result as string;
-        setGuestImages((prev) => [...prev, base64]);
-      };
-      reader.readAsDataURL(file);
-    }
-    event.target.value = '';
+  function handleAddFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target?.result as string;
+      setGuestImages([base64]);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleCameraCapture(image: string) {
+    setGuestImages([image]);
   }
 
   if (!guestData) {
@@ -157,27 +159,15 @@ export function GuestArea({ onClose, onGuestLoaded }: GuestAreaProps) {
         <ItemDescription className="text-lg">{applyCpfMask(guestData.cpf || '')}</ItemDescription>
       </ItemContent>
 
-      <div className="grid grid-cols-3 gap-3">
-        {guestImages.map((url, index) => (
-          <div key={`img-${index}-${url}`} className="group relative aspect-square overflow-hidden rounded-lg border border-muted bg-muted/50">
-            <img alt={`foto-${index}-${url}`} className="h-full w-full object-cover transition-transform group-hover:scale-110" src={url} />
-            <button
-              className="absolute top-1 right-1 flex size-6 items-center justify-center rounded-full bg-destructive/90 text-white shadow-sm transition-all hover:bg-destructive"
-              onClick={() => setGuestImages((prev) => prev.filter((_, i) => i !== index))}
-              type="button"
-            >
-              <X className="size-3" />
-            </button>
-          </div>
-        ))}
-        {guestImages.length < 5 && (
-          <label className="flex aspect-square cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-muted-foreground/25 border-dashed transition-all hover:border-primary/50 hover:bg-primary/5">
-            <Upload className="size-6 text-muted-foreground" />
-            <span className="mt-1 font-medium text-[10px] text-muted-foreground">Adicionar</span>
-            <input accept="image/*" hidden onChange={handleFileChange} type="file" />
-          </label>
-        )}
-      </div>
+      <ItemContent className="gap-3">
+        <UploadImage value={guestImages[0]} onAddFile={handleAddFile} height={200} />
+        <ItemActions>
+          <Button type="button" variant="outline" size="sm" onClick={() => setCameraOpen(true)}>
+            <Camera className="mr-2 h-4 w-4" />
+            Câmera
+          </Button>
+        </ItemActions>
+      </ItemContent>
 
       <ItemGroup className="gap-2">
         <Button className="h-12! w-full" disabled={updateImage.isPending || !!blockedUntil || guestImages.length === 0} onClick={handleImageUpdate}>
@@ -188,6 +178,8 @@ export function GuestArea({ onClose, onGuestLoaded }: GuestAreaProps) {
           Cancelar
         </Button>
       </ItemGroup>
+
+      <CameraCaptureDialog open={cameraOpen} onClose={() => setCameraOpen(false)} onCapture={handleCameraCapture} />
     </ItemGroup>
   );
 }
