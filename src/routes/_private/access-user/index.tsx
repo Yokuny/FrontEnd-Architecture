@@ -35,10 +35,10 @@ function AccessUserPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#1E3A5F] p-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#1E3A5F] p-2 md:p-4">
       <div className="w-full max-w-4xl">
         <Card>
-          <CardContent className="flex flex-col gap-6 p-8">
+          <CardContent className="flex flex-col gap-6 py-8 md:p-8">
             <ItemContent className="items-center gap-4">
               <img src="/images/logo.svg" alt="Logo" className="h-16 w-auto" />
               <ItemHeader className="w-full">

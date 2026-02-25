@@ -23,7 +23,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
       data-slot="tabs-trigger"
       className={cn(
         // Base layout
-        'relative z-10 inline-flex h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded-none px-4 py-2',
+        'relative z-10 inline-flex h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded-none px-0 py-2 md:px-4',
         // Typography — font-mono para seguir o design system
         'font-medium font-mono text-sm leading-5',
         // Inactive state
