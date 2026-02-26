@@ -76,6 +76,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*:not(input):not(textarea):not(select) {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 code {
   @apply font-mono;
 }

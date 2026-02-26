@@ -52,6 +52,14 @@ function App() {
   );
 }
 
+// Disable zooming
+document.addEventListener('DOMContentLoaded', () => {
+  const meta = document.createElement('meta');
+  meta.setAttribute('name', 'viewport');
+  meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover');
+  document.getElementsByTagName('head')[0].appendChild(meta);
+});
+
 // Render the app
 const rootElement = document.getElementById('app');
 if (rootElement && !rootElement.innerHTML) {
