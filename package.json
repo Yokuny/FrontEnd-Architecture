@@ -19,6 +19,10 @@
     "routes:ai": "npx tsx src/config/extractRoutesMetadata.ts"
   },
   "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/cli": "^8.1.0",
+    "@capacitor/core": "^8.1.0",
+    "@capacitor/ios": "^8.1.0",
     "@faker-js/faker": "^10",
     "@gsap/react": "^2",
     "@hookform/resolvers": "^5",
