@@ -7,6 +7,11 @@
     "npm": ">=10.0.0",
     "pnpm": ">=10.0.0"
   },
+  "pnpm": {
+    "overrides": {
+      "sharp": "^0.34.5"
+    }
+  },
   "scripts": {
     "dev": "vite --port 3000",
     "build": "vite build && tsc --noEmit",
@@ -68,6 +73,7 @@
     "react-dom": "^19",
     "react-hook-form": "^7",
     "recharts": "2",
+    "sharp": "^0.34.5",
     "sonner": "^2",
     "tailwind-merge": "^3",
     "tailwindcss": "^4",
@@ -77,6 +83,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2",
+    "@capacitor/assets": "^3.0.5",
     "@tanstack/devtools-vite": "^0",
     "@tanstack/eslint-plugin-query": "^5",
     "@testing-library/dom": "^10",
