@@ -41,8 +41,8 @@ const PrivateAccessUserIndexRoute = PrivateAccessUserIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
-  '/access-user': typeof PrivateAccessUserIndexRoute;
-  '/app-auth': typeof PublicAppAuthIndexRoute;
+  '/access-user/': typeof PrivateAccessUserIndexRoute;
+  '/app-auth/': typeof PublicAppAuthIndexRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
@@ -59,7 +59,7 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/access-user' | '/app-auth';
+  fullPaths: '/' | '/access-user/' | '/app-auth/';
   fileRoutesByTo: FileRoutesByTo;
   to: '/' | '/access-user' | '/app-auth';
   id:
@@ -82,14 +82,14 @@ declare module '@tanstack/react-router' {
     '/_public': {
       id: '/_public';
       path: '';
-      fullPath: '';
+      fullPath: '/';
       preLoaderRoute: typeof PublicRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/_private': {
       id: '/_private';
       path: '';
-      fullPath: '';
+      fullPath: '/';
       preLoaderRoute: typeof PrivateRouteImport;
       parentRoute: typeof rootRouteImport;
     };
@@ -103,14 +103,14 @@ declare module '@tanstack/react-router' {
     '/_public/app-auth/': {
       id: '/_public/app-auth/';
       path: '/app-auth';
-      fullPath: '/app-auth';
+      fullPath: '/app-auth/';
       preLoaderRoute: typeof PublicAppAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
     };
     '/_private/access-user/': {
       id: '/_private/access-user/';
       path: '/access-user';
-      fullPath: '/access-user';
+      fullPath: '/access-user/';
       preLoaderRoute: typeof PrivateAccessUserIndexRouteImport;
       parentRoute: typeof PrivateRoute;
     };
