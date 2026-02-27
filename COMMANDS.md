@@ -1,11 +1,11 @@
-Faça build
+### Faça build
 
-pnpm run build
+`pnpm run build`
 
-Syncronize com o Capacitor
+### Syncronize com o Capacitor
 
-npx cap sync
+`npx cap sync`
 
-Abra o projeto no Xcode
+### Abra o projeto no Xcode
 
-npx cap open ios
+`npx cap open ios`
