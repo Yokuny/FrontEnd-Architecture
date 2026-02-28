@@ -52,10 +52,37 @@ export function useAuthApi() {
     },
   });
 
+  const forgotPassword = useMutation({
+    mutationFn: async ({ email }: { email: string }) => {
+      const res = await api.post('/user/forgot-password', { email });
+      const data = res.data;
+      if (!data.success) throw new Error(data.message || 'Erro ao enviar e-mail de recuperação');
+      return data;
+    },
+  });
+
+  const completeSignup = useMutation({
+    mutationFn: async ({ id, name, email, password }: { id: string; name: string; email: string; password: string }) => {
+      const res = await api.put(`/auth/signup/${id}`, { name, email, password });
+      const data = res.data;
+      if (!data.success) throw new Error(data.message || 'Falha ao completar cadastro');
+      return data;
+    },
+  });
+
+  const resetPassword = useMutation({
+    mutationFn: async ({ id, email, password, confirmPassword }: { id: string; email: string; password: string; confirmPassword: string }) => {
+      const res = await api.put(`/user/reset-password/${id}`, { email, password, confirmPassword });
+      const data = res.data;
+      if (!data.success) throw new Error(data.message || 'Erro ao redefinir senha');
+      return data;
+    },
+  });
+
   const logout = () => {
     clearAuth();
     queryClient.clear();
   };
 
-  return { login, signup, validateEmail, logout };
+  return { login, signup, validateEmail, logout, forgotPassword, completeSignup, resetPassword };
 }

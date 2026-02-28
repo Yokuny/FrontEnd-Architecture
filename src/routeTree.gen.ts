@@ -14,6 +14,9 @@ import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
 import { Route as PublicScheduleCodeIndexRouteImport } from './routes/_public/schedule/$code/index';
+import { Route as PublicAuthRecoveryIndexRouteImport } from './routes/_public/auth/recovery/index';
+import { Route as PublicAuthNewPasswordCodeIndexRouteImport } from './routes/_public/auth/new-password/$code/index';
+import { Route as PublicAuthFinishSignupCodeIndexRouteImport } from './routes/_public/auth/finish-signup/$code/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -38,16 +41,39 @@ const PublicScheduleCodeIndexRoute = PublicScheduleCodeIndexRouteImport.update({
   path: '/schedule/$code/',
   getParentRoute: () => PublicRoute,
 } as any);
+const PublicAuthRecoveryIndexRoute = PublicAuthRecoveryIndexRouteImport.update({
+  id: '/auth/recovery/',
+  path: '/auth/recovery/',
+  getParentRoute: () => PublicRoute,
+} as any);
+const PublicAuthNewPasswordCodeIndexRoute =
+  PublicAuthNewPasswordCodeIndexRouteImport.update({
+    id: '/auth/new-password/$code/',
+    path: '/auth/new-password/$code/',
+    getParentRoute: () => PublicRoute,
+  } as any);
+const PublicAuthFinishSignupCodeIndexRoute =
+  PublicAuthFinishSignupCodeIndexRouteImport.update({
+    id: '/auth/finish-signup/$code/',
+    path: '/auth/finish-signup/$code/',
+    getParentRoute: () => PublicRoute,
+  } as any);
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
+  '/auth/recovery': typeof PublicAuthRecoveryIndexRoute;
   '/schedule/$code': typeof PublicScheduleCodeIndexRoute;
+  '/auth/finish-signup/$code': typeof PublicAuthFinishSignupCodeIndexRoute;
+  '/auth/new-password/$code': typeof PublicAuthNewPasswordCodeIndexRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
+  '/auth/recovery': typeof PublicAuthRecoveryIndexRoute;
   '/schedule/$code': typeof PublicScheduleCodeIndexRoute;
+  '/auth/finish-signup/$code': typeof PublicAuthFinishSignupCodeIndexRoute;
+  '/auth/new-password/$code': typeof PublicAuthNewPasswordCodeIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
@@ -55,20 +81,38 @@ export interface FileRoutesById {
   '/_private': typeof PrivateRoute;
   '/_public': typeof PublicRouteWithChildren;
   '/_public/auth/': typeof PublicAuthIndexRoute;
+  '/_public/auth/recovery/': typeof PublicAuthRecoveryIndexRoute;
   '/_public/schedule/$code/': typeof PublicScheduleCodeIndexRoute;
+  '/_public/auth/finish-signup/$code/': typeof PublicAuthFinishSignupCodeIndexRoute;
+  '/_public/auth/new-password/$code/': typeof PublicAuthNewPasswordCodeIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/auth' | '/schedule/$code';
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/auth/recovery'
+    | '/schedule/$code'
+    | '/auth/finish-signup/$code'
+    | '/auth/new-password/$code';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/auth' | '/schedule/$code';
+  to:
+    | '/'
+    | '/auth'
+    | '/auth/recovery'
+    | '/schedule/$code'
+    | '/auth/finish-signup/$code'
+    | '/auth/new-password/$code';
   id:
     | '__root__'
     | '/'
     | '/_private'
     | '/_public'
     | '/_public/auth/'
-    | '/_public/schedule/$code/';
+    | '/_public/auth/recovery/'
+    | '/_public/schedule/$code/'
+    | '/_public/auth/finish-signup/$code/'
+    | '/_public/auth/new-password/$code/';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
@@ -114,17 +158,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicScheduleCodeIndexRouteImport;
       parentRoute: typeof PublicRoute;
     };
+    '/_public/auth/recovery/': {
+      id: '/_public/auth/recovery/';
+      path: '/auth/recovery';
+      fullPath: '/auth/recovery';
+      preLoaderRoute: typeof PublicAuthRecoveryIndexRouteImport;
+      parentRoute: typeof PublicRoute;
+    };
+    '/_public/auth/new-password/$code/': {
+      id: '/_public/auth/new-password/$code/';
+      path: '/auth/new-password/$code';
+      fullPath: '/auth/new-password/$code';
+      preLoaderRoute: typeof PublicAuthNewPasswordCodeIndexRouteImport;
+      parentRoute: typeof PublicRoute;
+    };
+    '/_public/auth/finish-signup/$code/': {
+      id: '/_public/auth/finish-signup/$code/';
+      path: '/auth/finish-signup/$code';
+      fullPath: '/auth/finish-signup/$code';
+      preLoaderRoute: typeof PublicAuthFinishSignupCodeIndexRouteImport;
+      parentRoute: typeof PublicRoute;
+    };
   }
 }
 
 interface PublicRouteChildren {
   PublicAuthIndexRoute: typeof PublicAuthIndexRoute;
+  PublicAuthRecoveryIndexRoute: typeof PublicAuthRecoveryIndexRoute;
   PublicScheduleCodeIndexRoute: typeof PublicScheduleCodeIndexRoute;
+  PublicAuthFinishSignupCodeIndexRoute: typeof PublicAuthFinishSignupCodeIndexRoute;
+  PublicAuthNewPasswordCodeIndexRoute: typeof PublicAuthNewPasswordCodeIndexRoute;
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAuthIndexRoute: PublicAuthIndexRoute,
+  PublicAuthRecoveryIndexRoute: PublicAuthRecoveryIndexRoute,
   PublicScheduleCodeIndexRoute: PublicScheduleCodeIndexRoute,
+  PublicAuthFinishSignupCodeIndexRoute: PublicAuthFinishSignupCodeIndexRoute,
+  PublicAuthNewPasswordCodeIndexRoute: PublicAuthNewPasswordCodeIndexRoute,
 };
 
 const PublicRouteWithChildren =

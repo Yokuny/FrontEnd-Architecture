@@ -27,8 +27,8 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
     try {
       await login.mutateAsync(values);
       toast.success('Login bem-sucedido');
-    } catch (e: any) {
-      toast.error(e.message || 'Falha no login');
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : 'Falha no login');
     } finally {
       setIsLoading(false);
     }
@@ -82,8 +82,7 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
       </div>
       <span className="flex gap-2 text-muted-foreground text-sm">
         Esqueceu sua senha?
-        {/* TODO: SEM PAGINA DE REDIRECT DEFINIDA */}
-        <Link to="/" className="font-medium text-primary hover:underline">
+        <Link to="/auth/recovery" className="font-medium text-primary hover:underline">
           Recuperar senha
         </Link>
       </span>
