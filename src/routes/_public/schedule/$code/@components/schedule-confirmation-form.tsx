@@ -4,7 +4,7 @@ import { Check, Loader2, X } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
+import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -38,45 +38,45 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
   };
 
   return (
-    <div className="bg-background flex w-full flex-wrap gap-6 p-8">
+    <div className="flex w-full flex-wrap gap-6 bg-background p-8">
       <div className="flex w-full flex-col items-start justify-between gap-2 md:flex-row">
         <div className="flex flex-col gap-2">
-          <CardTitle className="text-sky-blue dark:text-primary-blue m-0 text-2xl">Confirmação de Agendamento</CardTitle>
-          <CardDescription className="text-md flex">Revise os detalhes do seu agendamento e confirme sua presença</CardDescription>
+          <CardTitle className="m-0 text-2xl text-sky-blue dark:text-primary-blue">Confirmação de Agendamento</CardTitle>
+          <CardDescription className="flex text-md">Revise os detalhes do seu agendamento e confirme sua presença</CardDescription>
         </div>
       </div>
 
       <CardContent className="flex w-full justify-between p-0 md:p-6 md:py-4">
         <div className="flex flex-col justify-center space-y-2 p-6 md:px-2">
-          <span className="text-sm text-muted-foreground uppercase">Dia</span>
-          <span className="text-2xl font-bold">{extractDate(scheduleData.start, '')}</span>
+          <span className="text-muted-foreground text-sm uppercase">Dia</span>
+          <span className="font-bold text-2xl">{extractDate(scheduleData.start, '')}</span>
         </div>
         <div className="flex flex-col justify-center space-y-2 p-6 md:px-2">
-          <span className="text-sm text-muted-foreground uppercase">Horário</span>
+          <span className="text-muted-foreground text-sm uppercase">Horário</span>
           <span className="flex flex-wrap items-center gap-2">
-            <span className="text-2xl font-bold">{extractDate(scheduleData.start, 'hour')}</span>
-            {scheduleData.end && <span className="text-2xl font-bold text-muted-foreground">{extractDate(scheduleData.end, 'hour')}</span>}
+            <span className="font-bold text-2xl">{extractDate(scheduleData.start, 'hour')}</span>
+            {scheduleData.end && <span className="font-bold text-2xl text-muted-foreground">{extractDate(scheduleData.end, 'hour')}</span>}
           </span>
         </div>
       </CardContent>
 
       <CardContent className="flex w-full justify-between p-0 md:p-6 md:py-4">
         <div className="flex flex-col justify-center space-y-2 p-6 md:px-2">
-          <span className="text-sm text-muted-foreground uppercase">Paciente</span>
-          <span className="text-2xl font-bold">{scheduleData.patientName}</span>
+          <span className="text-muted-foreground text-sm uppercase">Paciente</span>
+          <span className="font-bold text-2xl">{scheduleData.patientName}</span>
         </div>
         <div className="flex flex-col justify-center space-y-2 p-6 md:px-2">
-          <span className="text-sm text-muted-foreground uppercase">Profissional</span>
-          <span className="text-xl font-bold md:text-2xl">{scheduleData.professionalName}</span>
+          <span className="text-muted-foreground text-sm uppercase">Profissional</span>
+          <span className="font-bold text-xl md:text-2xl">{scheduleData.professionalName}</span>
         </div>
       </CardContent>
 
       <CardContent className="space-y-2 border-none p-6">
-        <span className="text-sm text-muted-foreground uppercase">Procedimentos</span>
+        <span className="text-muted-foreground text-sm uppercase">Procedimentos</span>
         <ul>
           {scheduleData.procedures.map((procedure: string, index: number) => (
             <li key={index}>
-              <span className="text-2xl font-bold">{procedure}</span>
+              <span className="font-bold text-2xl">{procedure}</span>
             </li>
           ))}
         </ul>
@@ -103,7 +103,7 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
         </Form>
       </div>
       <div className="flex w-full items-center justify-center">
-        <span className="text-muted-foreground max-w-lg text-center text-xs">
+        <span className="max-w-lg text-center text-muted-foreground text-xs">
           Ao confirmar ou cancelar, você será redirecionado automaticamente. Em caso de dúvidas, entre em contato com a clínica.
         </span>
       </div>

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuthApi } from '@/hooks/use-auth-api';
+
 import { SignIn } from './@components/sign-in';
 import { SignUp } from './@components/sign-up';
 
@@ -25,7 +26,7 @@ function AuthenticationPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const previousPage = () => window.history.back();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuthApi();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -39,10 +40,10 @@ function AuthenticationPage() {
         <div className="flex h-full w-full max-w-96 justify-center">
           {loginParam === 'cadastro' ? <SignUp isLoading={isLoading} setIsLoading={setIsLoading} /> : <SignIn isLoading={isLoading} setIsLoading={setIsLoading} />}
         </div>
-        <div className="flex w-full flex-col items-center gap-4 mt-8">
+        <div className="mt-8 flex w-full flex-col items-center gap-4">
           <Button disabled={isLoading} onClick={previousPage} variant="outline" className="group flex w-full max-w-96 gap-4">
             Voltar
-            <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
           </Button>
         </div>
       </div>

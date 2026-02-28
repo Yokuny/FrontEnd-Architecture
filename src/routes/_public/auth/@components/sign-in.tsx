@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
+import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -37,8 +37,8 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-6">
       <div className="flex flex-col items-center gap-2 text-center text-gray-700 dark:text-gray-200">
-        <h1 className="text-2xl font-semibold tracking-tight">Conecte ao serviço</h1>
-        <span className="text-muted-foreground flex justify-center gap-2">
+        <h1 className="font-semibold text-2xl tracking-tight">Conecte ao serviço</h1>
+        <span className="flex justify-center gap-2 text-muted-foreground">
           Não possui conta?
           <Link to="/auth" search={{ interface: 'cadastro' }} className="text-primary hover:underline">
             Comece a usar
@@ -80,9 +80,9 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
           </form>
         </Form>
       </div>
-      <span className="text-muted-foreground flex gap-2 text-sm">
+      <span className="flex gap-2 text-muted-foreground text-sm">
         Esqueceu sua senha?
-        <Link to="/auth/recovery" className="text-primary font-medium hover:underline">
+        <Link to="/auth/recovery" className="font-medium text-primary hover:underline">
           Recuperar senha
         </Link>
       </span>

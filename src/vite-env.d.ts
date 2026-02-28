@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_URI_SUPPORT: string;
   readonly VITE_URI_TIMEOUT: string;
   readonly VITE_API_URL: string;
+  readonly VITE_CORE_URL: string;
 
   // ReCAPTCHA
   readonly VITE_RECAPTCHA_SITE_KEY: string;

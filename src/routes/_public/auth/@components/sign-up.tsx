@@ -4,7 +4,7 @@ import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
+import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -40,7 +40,7 @@ export const SignUp = ({ isLoading, setIsLoading }: LogInProps) => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-6">
       <div className="flex flex-col items-center gap-2 text-center text-gray-700 dark:text-gray-200">
-        <h1 className="text-2xl font-semibold tracking-tight">Criar conta</h1>
+        <h1 className="font-semibold text-2xl tracking-tight">Criar conta</h1>
         <span className="text-muted-foreground leading-6">Insira seu e-mail abaixo para se cadastrar.</span>
       </div>
       <div className="w-full">
@@ -65,13 +65,13 @@ export const SignUp = ({ isLoading, setIsLoading }: LogInProps) => {
           </form>
         </Form>
       </div>
-      <span className="text-muted-foreground text-center text-sm">
+      <span className="text-center text-muted-foreground text-sm">
         Ao clicar em continuar, você está concordando com nossos
-        <Link to="/terms" className="hover:text-primary mx-2 underline underline-offset-4">
+        <Link to="/terms" className="mx-2 underline underline-offset-4 hover:text-primary">
           Termos de serviço
         </Link>
         e
-        <Link to="/privacy" className="hover:text-primary ml-2 underline underline-offset-4">
+        <Link to="/privacy" className="ml-2 underline underline-offset-4 hover:text-primary">
           Politica de privacidade
         </Link>
         .

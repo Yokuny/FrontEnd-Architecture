@@ -37,7 +37,7 @@ function ScheduleConfirmationPage() {
     return (
       <div className="mb-10 flex h-full flex-col items-center justify-between lg:p-8">
         <div className="flex h-full w-full max-w-2xl justify-center">
-          <div className="bg-background flex w-full flex-wrap gap-6 p-8">
+          <div className="flex w-full flex-wrap gap-6 bg-background p-8">
             <div className="flex w-full flex-col items-start justify-between gap-2 md:flex-row">
               <div className="flex flex-col gap-2">
                 <Skeleton className="h-8 w-80" />

@@ -3,7 +3,7 @@
 import { useNavigate } from '@tanstack/react-router';
 import { LogOutIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks/use-auth-api';
 
 export function EnterpriseSwitcher() {
   const { clearAuth } = useAuth();

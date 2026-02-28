@@ -14,10 +14,6 @@ export const ROUTE_LABELS: Record<string, string> = {
 /**
  * Lista de rotas principais da aplicacao.
  */
-export const MAIN_ROUTES = [
-  '/access-user',
-  '/app-auth',
-  '/home',
-] as const;
+export const MAIN_ROUTES = ['/access-user', '/app-auth', '/home'] as const;
 
 export type MainRoute = (typeof MAIN_ROUTES)[number];

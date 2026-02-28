@@ -1,40 +1,33 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
-export const useAppAuth = create<AppAuthStore>()(
+interface AuthState {
+  token: string | null;
+  userId: string | null;
+  user: any | null;
+  isAuthenticated: boolean;
+  setAuth: (token: string, userId: string, user?: any) => void;
+  clearAuth: () => void;
+}
+
+export const useAppAuth = create<AuthState>()(
   persist(
     (set) => ({
-      isAuthenticated: false,
-      token: null,
+      token: localStorage.getItem('token'), // fallback for migration
       userId: null,
-      cpf: null,
-
-      setAuth: (token: string, userId: string, cpf: string) => {
-        set({ isAuthenticated: true, token, userId, cpf });
+      user: null,
+      isAuthenticated: !!localStorage.getItem('token'),
+      setAuth: (token, userId, user) => {
+        localStorage.setItem('token', token);
+        set({ token, userId, user, isAuthenticated: true });
       },
-
       clearAuth: () => {
-        set({ isAuthenticated: false, token: null, userId: null, cpf: null });
+        localStorage.removeItem('token');
+        set({ token: null, userId: null, user: null, isAuthenticated: false });
       },
     }),
     {
-      name: 'app-auth-storage',
-      storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({
-        isAuthenticated: state.isAuthenticated,
-        token: state.token,
-        userId: state.userId,
-        cpf: state.cpf,
-      }),
+      name: 'app-auth',
     },
   ),
 );
-
-type AppAuthStore = {
-  isAuthenticated: boolean;
-  token: string | null;
-  userId: string | null;
-  cpf: string | null;
-  setAuth: (token: string, userId: string, cpf: string) => void;
-  clearAuth: () => void;
-};

@@ -1,0 +1,11 @@
+export type * from './clinic';
+export type * from './financial';
+export type * from './generic';
+export type * from './odontogram';
+export type * from './passkey';
+export type * from './patient';
+export type * from './procedure';
+export type * from './professional';
+export type * from './reminder';
+export type * from './schedule';
+export type * from './user';
