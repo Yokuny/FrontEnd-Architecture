@@ -110,7 +110,12 @@ code {
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --skyBlue: hsl(194.87 100% 54.9%);
+  --primaryBlue: hsl(208.86 86.05% 57.84%);
+  --darkBlue: hsl(213.85 89.34% 52.16%);
 }
+
 
 .dark, [data-theme="dark"] {
   --background: oklch(0.141 0.005 285.823);
@@ -239,11 +244,16 @@ code {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: "SF Pro", var(--font-fallback-sans);
+  --color-sky-blue: var(--skyBlue);
+  --color-primary-blue: var(--primaryBlue);
+  --color-dark-blue: var(--darkBlue);
+
+  --font-sans: "Jost", "SF Pro", var(--font-fallback-sans);
   --font-mono: "League Spartan", var(--font-fallback-mono);
   --font-bebas: "Bebas Neue", var(--font-fallback-sans);
   --font-serif: var(--font-serif);
 }
+
 
 @utility no-scrollbar {
   @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
