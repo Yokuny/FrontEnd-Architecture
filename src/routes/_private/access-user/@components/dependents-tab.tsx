@@ -15,7 +15,7 @@ import {
 import { useAppAuth } from '@/hooks/use-app-auth';
 import { useAccessUserApi, useGetAllSyncStatuses, useGetGuestsByParent } from '../@hooks/use-access-user-api';
 import type { CreateGuestProps } from '../@interface/access-user.interface';
-import { GuestForm } from './guest-form';
+import { DependentForm } from './dependent-form';
 import { GuestList } from './guest-list';
 
 export function DependentsTab() {
@@ -91,10 +91,9 @@ export function DependentsTab() {
           title="Dependentes"
         />
       ) : (
-        <GuestForm
+        <DependentForm
           parentId={userId || ''}
           guestId={selectedGuestId}
-          userType="dependente"
           onCancel={() => {
             setIsFormVisible(false);
             setSelectedGuestId(null);

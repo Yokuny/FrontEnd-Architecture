@@ -20,8 +20,8 @@ import { ItemDescription } from '@/components/ui/item';
 import { useAppAuth } from '@/hooks/use-app-auth';
 import { useAccessUserApi, useGetAllSyncStatuses, useGetGuestsByParent } from '../@hooks/use-access-user-api';
 import type { CreateGuestProps } from '../@interface/access-user.interface';
-import { GuestForm } from './guest-form';
 import { GuestList } from './guest-list';
+import { VisitorForm } from './visitor-form';
 
 export function VisitorsTab() {
   const { userId } = useAppAuth();
@@ -113,10 +113,9 @@ export function VisitorsTab() {
           title="Visitantes"
         />
       ) : (
-        <GuestForm
+        <VisitorForm
           parentId={userId || ''}
           guestId={selectedGuestId}
-          userType="visitante"
           onCancel={() => {
             setIsFormVisible(false);
             setSelectedGuestId(null);

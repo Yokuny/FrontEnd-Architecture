@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
 export const editProfileSchema = z.object({
-  fullName: z.string().min(1, 'field.required'),
+  fullName: z.string().min(1, 'Campo obrigatório'),
   cpf: z.string(),
   birthDate: z.string().optional(),
-  email: z.string().email('email.invalid').optional().or(z.literal('')),
+  email: z.string().email('E-mail inválido').optional().or(z.literal('')),
   primaryPhone: z.string().optional(),
   secondaryPhone: z.string().optional(),
   password: z.string().optional(),

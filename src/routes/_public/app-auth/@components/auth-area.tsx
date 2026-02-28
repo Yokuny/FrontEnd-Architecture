@@ -14,9 +14,10 @@ import { type AppAuthFormData, appAuthSchema } from '../@interface/app-auth.inte
 
 interface AuthAreaProps {
   onGuestMode: () => void;
+  onForgotPassword: () => void;
 }
 
-export function AuthArea({ onGuestMode }: AuthAreaProps) {
+export function AuthArea({ onGuestMode, onForgotPassword }: AuthAreaProps) {
   const [showPassword, setShowPassword] = useState(false);
   const login = useAppLogin();
 
@@ -89,6 +90,9 @@ export function AuthArea({ onGuestMode }: AuthAreaProps) {
 
       <button className="w-full" onClick={onGuestMode} type="button">
         <ItemDescription className="text-muted-foreground underline underline-offset-4 hover:text-foreground">Visitante? Clique aqui para atualizar sua imagem</ItemDescription>
+      </button>
+      <button className="w-full" onClick={onForgotPassword} type="button">
+        <ItemDescription className="text-muted-foreground underline underline-offset-4 hover:text-foreground">Esqueceu a senha?</ItemDescription>
       </button>
     </ItemGroup>
   );

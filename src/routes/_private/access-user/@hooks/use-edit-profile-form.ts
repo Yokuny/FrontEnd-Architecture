@@ -69,33 +69,62 @@ export function useEditProfileForm(user: GuestProps | undefined) {
 
   const onSubmit = form.handleSubmit(async (data) => {
     if (!userId) {
-      toast.error('accessUser.notAuthenticated');
+      toast.error('Usuário não autenticado.');
       return;
     }
 
     if (!data.url_image || data.url_image.length === 0) {
-      toast.error('accessUser.photoRequired');
+      toast.error('Pelo menos uma foto é obrigatória.');
       return;
     }
 
-    const telephones: string[] = [];
-    if (data.primaryPhone?.trim()) telephones.push(data.primaryPhone.replace(/\D/g, ''));
-    if (data.secondaryPhone?.trim()) telephones.push(data.secondaryPhone.replace(/\D/g, ''));
+    // Só envia campos que foram alterados em relação ao original
+    const changedFields: Record<string, any> = {};
 
-    const userData = {
-      name: data.fullName,
-      cpf: user?.cpf || '',
-      birthday: formatDateToISO(data.birthDate),
-      telephones,
-      email: data.email || undefined,
-      url_image: data.url_image,
-    };
+    // url_image sempre deve ser enviada
+    changedFields.url_image = data.url_image;
+
+    // CPF sempre precisa estar presente como referência
+    changedFields.cpf = user?.cpf || '';
+
+    // Nome
+    if (data.fullName !== (user?.name || '')) {
+      changedFields.name = data.fullName;
+    }
+
+    // Data de nascimento
+    const birthdayISO = formatDateToISO(data.birthDate);
+    if (birthdayISO !== (user?.birthday || '')) {
+      changedFields.birthday = birthdayISO;
+    }
+
+    // E-mail
+    if ((data.email || '') !== (user?.email || '')) {
+      changedFields.email = data.email || undefined;
+    }
+
+    // Telefones
+    const telephones: string[] = [];
+    if (data.primaryPhone?.trim()) {
+      telephones.push(data.primaryPhone.replace(/\D/g, ''));
+    }
+    if (data.secondaryPhone?.trim()) {
+      telephones.push(data.secondaryPhone.replace(/\D/g, ''));
+    }
+    const originalPhones = JSON.stringify(user?.telephones || []);
+    const currentPhones = JSON.stringify(telephones);
+    if (currentPhones !== originalPhones) {
+      changedFields.telephones = telephones;
+    }
+
+    // Senha: só envia se o usuário digitou uma senha diferente de vazio
+    const password = data.password?.trim() && data.password !== '********' ? data.password.trim() : undefined;
 
     updateUser.mutate(
-      { userData, password: data.password?.trim() || undefined },
+      { userData: changedFields, password },
       {
-        onSuccess: () => toast.success('accessUser.saveSuccess'),
-        onError: () => toast.error('accessUser.saveError'),
+        onSuccess: () => toast.success('Dados salvos com sucesso!'),
+        onError: () => toast.error('Erro ao salvar dados.'),
       },
     );
   });

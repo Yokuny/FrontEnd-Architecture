@@ -3,7 +3,6 @@ import { Camera, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { CameraCaptureDialog } from '@/components/ui/image-capture';
@@ -11,38 +10,21 @@ import { Input } from '@/components/ui/input';
 import { ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import UploadImage from '@/components/upload-image';
 import { applyCpfMask, applyDateMask, applyPhoneMask } from '@/lib/masks';
-import { useGetGuestById, useGetUserSyncStatus } from '../@hooks/use-access-user-api';
-import type { CreateGuestProps, UserType } from '../@interface/access-user.interface';
+import type { GuestProps } from '@/routes/_private/access-user/@interface/access-user.interface';
+import { type NewUserFormData, newUserFormSchema } from '../@interface/new-user.interface';
 
-const guestFormSchema = z.object({
-  name: z.string().min(1, 'Campo obrigatório'),
-  cpf: z.string().optional(),
-  birthDate: z.string().optional(),
-  email: z.string().email('E-mail inválido').optional().or(z.literal('')),
-  primaryPhone: z.string().optional(),
-  secondaryPhone: z.string().optional(),
-  url_image: z.array(z.string()),
-});
-
-type GuestFormData = z.infer<typeof guestFormSchema>;
-
-interface GuestFormProps {
-  parentId: string;
-  guestId?: string | null;
-  userType: UserType;
-  onCancel: () => void;
-  onSubmit: (data: CreateGuestProps & { id?: string }) => void;
+interface NewUserFormProps {
+  initialData: Partial<GuestProps> & { parentId?: string };
+  guestId: string | null;
+  onSubmit: (data: any) => void;
   isLoading?: boolean;
 }
 
-export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isLoading }: GuestFormProps) {
-  const { data: existingGuest } = useGetGuestById(guestId || null);
-  const { data: syncStatus } = useGetUserSyncStatus(guestId);
-  const [cooldown, setCooldown] = useState(false);
+export function NewUserForm({ initialData, guestId, onSubmit, isLoading }: NewUserFormProps) {
   const [cameraOpen, setCameraOpen] = useState(false);
 
-  const form = useForm<GuestFormData>({
-    resolver: zodResolver(guestFormSchema),
+  const form = useForm<NewUserFormData>({
+    resolver: zodResolver(newUserFormSchema),
     defaultValues: {
       name: '',
       cpf: '',
@@ -57,24 +39,21 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
   const urlImages = form.watch('url_image');
 
   useEffect(() => {
-    if (existingGuest) {
-      const telephones = existingGuest.telephones || [];
+    if (initialData) {
+      const telephones = initialData.telephones || [];
+      const birthDateFormatted = initialData.birthday ? new Date(initialData.birthday).toLocaleDateString('pt-BR') : '';
+
       form.reset({
-        name: existingGuest.name || '',
-        cpf: applyCpfMask(existingGuest.cpf || ''),
-        birthDate: existingGuest.birthday
-          ? (() => {
-              const d = new Date(existingGuest.birthday);
-              return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-            })()
-          : '',
-        email: existingGuest.email || '',
+        name: initialData.name || '',
+        cpf: applyCpfMask(initialData.cpf || ''),
+        birthDate: birthDateFormatted,
+        email: initialData.email || '',
         primaryPhone: telephones[0] ? applyPhoneMask(telephones[0]) : '',
         secondaryPhone: telephones[1] ? applyPhoneMask(telephones[1]) : '',
-        url_image: existingGuest.url_image || [],
+        url_image: initialData.url_image || [],
       });
     }
-  }, [existingGuest, form]);
+  }, [initialData, form]);
 
   function formatDateToISO(dateString: string | undefined): string {
     if (!dateString || dateString.length < 10) return '';
@@ -86,32 +65,55 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
     }
   }
 
-  function handleFormSubmit(data: GuestFormData) {
-    if (cooldown) return;
-
+  function handleFormSubmit(data: NewUserFormData) {
     const telephones: string[] = [];
     if (data.primaryPhone?.trim()) telephones.push(data.primaryPhone.replace(/\D/g, ''));
     if (data.secondaryPhone?.trim()) telephones.push(data.secondaryPhone.replace(/\D/g, ''));
 
-    const payload: CreateGuestProps & { id?: string } = {
-      name: data.name,
-      cpf: data.cpf?.replace(/\D/g, ''),
-      parentId,
-      birthday: formatDateToISO(data.birthDate),
-      telephones,
-      email: data.email || undefined,
-      url_image: data.url_image,
-      user_type: userType,
+    const payload: any = {
+      parentId: initialData.parentId || '',
+      user_type: 'dependente',
     };
 
-    if (guestId) payload.id = guestId;
+    if (guestId) {
+      payload.id = guestId;
+
+      const originalImages = JSON.stringify(initialData?.url_image || []);
+      const currentImages = JSON.stringify(data.url_image || []);
+      if (currentImages !== originalImages && data.url_image && data.url_image.length > 0) {
+        payload.url_image = data.url_image;
+      }
+
+      if (data.name !== (initialData?.name || '')) payload.name = data.name;
+
+      const cpfClean = data.cpf?.replace(/\D/g, '');
+      if (cpfClean !== (initialData?.cpf || '')) payload.cpf = cpfClean;
+
+      const isoDate = formatDateToISO(data.birthDate);
+      if (isoDate !== (initialData?.birthday || '')) payload.birthday = isoDate;
+      if (data.email !== (initialData?.email || '')) payload.email = data.email;
+
+      const originalPhones = JSON.stringify(initialData?.telephones || []);
+      const currentPhones = JSON.stringify(telephones);
+      if (currentPhones !== originalPhones && telephones.length > 0) {
+        payload.telephones = telephones.map((p) => p.replace(/\D/g, ''));
+      }
+    } else {
+      if (data.name) payload.name = data.name;
+      const cpfClean = data.cpf?.replace(/\D/g, '');
+      if (cpfClean) payload.cpf = cpfClean;
+      const isoDate = formatDateToISO(data.birthDate);
+      if (isoDate) payload.birthday = isoDate;
+      if (data.email) payload.email = data.email;
+      if (telephones.length > 0) {
+        payload.telephones = telephones.map((p) => p.replace(/\D/g, ''));
+      }
+      if (data.url_image && data.url_image.length > 0) {
+        payload.url_image = data.url_image;
+      }
+    }
 
     onSubmit(payload);
-
-    if (userType === 'visitante') {
-      setCooldown(true);
-      setTimeout(() => setCooldown(false), 5000);
-    }
   }
 
   function handleAddFile(file: File) {
@@ -130,14 +132,8 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
   return (
     <ItemGroup className="gap-4">
       <ItemHeader>
-        <ItemTitle className="text-lg">
-          {guestId ? 'Editar' : 'Adicionar'} {userType === 'visitante' ? 'Visitante' : 'Dependente'}
-        </ItemTitle>
+        <ItemTitle className="text-lg">Finalizar Cadastro</ItemTitle>
       </ItemHeader>
-
-      {syncStatus?.sync_status && (
-        <div className="rounded-md border bg-muted/50 p-3 text-sm">{syncStatus.synchronized ? 'Cadastro sincronizado com sucesso.' : 'Cadastro pendente de sincronização.'}</div>
-      )}
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleFormSubmit)} className="flex flex-col gap-4">
@@ -162,7 +158,7 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
                 <FormItem>
                   <FormLabel>CPF</FormLabel>
                   <FormControl>
-                    <Input {...field} onChange={(e) => form.setValue('cpf', applyCpfMask(e.target.value))} maxLength={14} disabled={!!guestId} />
+                    <Input {...field} onChange={(e) => form.setValue('cpf', applyCpfMask(e.target.value))} maxLength={14} disabled={!!initialData?.cpf} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -233,11 +229,8 @@ export function GuestForm({ parentId, guestId, userType, onCancel, onSubmit, isL
             </ItemActions>
           </ItemContent>
 
-          <ItemActions className="justify-end gap-2">
-            <Button type="button" variant="outline" onClick={onCancel}>
-              Cancelar
-            </Button>
-            <Button type="submit" disabled={isLoading || cooldown}>
+          <ItemActions className="justify-end">
+            <Button type="submit" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Salvar
             </Button>
