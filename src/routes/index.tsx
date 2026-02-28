@@ -6,7 +6,7 @@ export const Route = createFileRoute('/')({
     const { isAuthenticated } = useAuthStore.getState();
 
     throw redirect({
-      to: isAuthenticated ? '/' : '/',
+      to: isAuthenticated ? '/financial' : '/auth',
     });
   },
   component: () => null,

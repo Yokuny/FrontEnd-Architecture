@@ -306,7 +306,8 @@ const ProceduresSheet = ({ handleProcedure, disabled, fetchProcedures, stringPri
             >
               Fechar
             </Button>
-            <Link to="/settings/procedures">
+            {/* TODO: AINDA FALTA MIGRAR ESSA PAGINA */}
+            <Link to="/">
               <Button variant="outline">
                 <Settings className="size-5" />
               </Button>

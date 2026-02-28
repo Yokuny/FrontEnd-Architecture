@@ -40,7 +40,7 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
         <h1 className="font-semibold text-2xl tracking-tight">Conecte ao serviço</h1>
         <span className="flex justify-center gap-2 text-muted-foreground">
           Não possui conta?
-          <Link to="/auth" search={{ interface: 'cadastro' }} className="text-primary hover:underline">
+          <Link to="/auth/signup" className="text-primary hover:underline">
             Comece a usar
           </Link>
         </span>

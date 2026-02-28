@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/hooks/auth';
 
-import { SignIn } from './@components/sign-in';
+import { SignUp } from '../@components/sign-up';
 
-export const Route = createFileRoute('/_public/auth/')({
-  component: SignInPage,
+export const Route = createFileRoute('/_public/auth/signup/')({
+  component: SignUpPage,
 });
 
-function SignInPage() {
+function SignUpPage() {
   const navigate = Route.useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -28,7 +28,7 @@ function SignInPage() {
     <div className="w-full p-6 md:p-8">
       <div className="mb-10 flex h-full flex-col items-center justify-between">
         <div className="flex h-full w-full max-w-96 justify-center">
-          <SignIn isLoading={isLoading} setIsLoading={setIsLoading} />
+          <SignUp isLoading={isLoading} setIsLoading={setIsLoading} />
         </div>
         <div className="mt-8 flex w-full flex-col items-center gap-4">
           <Button disabled={isLoading} onClick={previousPage} variant="outline" className="group flex w-full max-w-96 gap-4">

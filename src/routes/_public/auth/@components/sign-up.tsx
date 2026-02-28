@@ -41,7 +41,12 @@ export const SignUp = ({ isLoading, setIsLoading }: LogInProps) => {
     <div className="flex w-full flex-col items-center justify-center gap-6">
       <div className="flex flex-col items-center gap-2 text-center text-gray-700 dark:text-gray-200">
         <h1 className="font-semibold text-2xl tracking-tight">Criar conta</h1>
-        <span className="text-muted-foreground leading-6">Insira seu e-mail abaixo para se cadastrar.</span>
+        <span className="flex justify-center gap-2 text-muted-foreground">
+          Já possui conta?
+          <Link to="/auth" className="text-primary hover:underline">
+            Entrar
+          </Link>
+        </span>
       </div>
       <div className="w-full">
         <Form {...form}>

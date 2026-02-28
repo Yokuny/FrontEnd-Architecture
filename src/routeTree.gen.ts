@@ -10,11 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root';
 import { Route as PrivateRouteImport } from './routes/_private';
+import { Route as PrivateFinancialIdRouteImport } from './routes/_private/financial/$id';
+import { Route as PrivateFinancialAddRouteImport } from './routes/_private/financial/add';
+import { Route as PrivateFinancialIndexRouteImport } from './routes/_private/financial/index';
 import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PublicAuthFinishSignupCodeIndexRouteImport } from './routes/_public/auth/finish-signup/$code/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
 import { Route as PublicAuthNewPasswordCodeIndexRouteImport } from './routes/_public/auth/new-password/$code/index';
 import { Route as PublicAuthRecoveryIndexRouteImport } from './routes/_public/auth/recovery/index';
+import { Route as PublicAuthSignupIndexRouteImport } from './routes/_public/auth/signup/index';
 import { Route as PublicScheduleCodeIndexRouteImport } from './routes/_public/schedule/$code/index';
 import { Route as IndexRouteImport } from './routes/index';
 
@@ -36,9 +40,29 @@ const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   path: '/auth/',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateFinancialIndexRoute = PrivateFinancialIndexRouteImport.update({
+  id: '/financial/',
+  path: '/financial/',
+  getParentRoute: () => PrivateRoute,
+} as any);
+const PrivateFinancialAddRoute = PrivateFinancialAddRouteImport.update({
+  id: '/financial/add',
+  path: '/financial/add',
+  getParentRoute: () => PrivateRoute,
+} as any);
+const PrivateFinancialIdRoute = PrivateFinancialIdRouteImport.update({
+  id: '/financial/$id',
+  path: '/financial/$id',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PublicScheduleCodeIndexRoute = PublicScheduleCodeIndexRouteImport.update({
   id: '/schedule/$code/',
   path: '/schedule/$code/',
+  getParentRoute: () => PublicRoute,
+} as any);
+const PublicAuthSignupIndexRoute = PublicAuthSignupIndexRouteImport.update({
+  id: '/auth/signup/',
+  path: '/auth/signup/',
   getParentRoute: () => PublicRoute,
 } as any);
 const PublicAuthRecoveryIndexRoute = PublicAuthRecoveryIndexRouteImport.update({
@@ -61,16 +85,24 @@ const PublicAuthFinishSignupCodeIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
-  '/auth': typeof PublicAuthIndexRoute;
-  '/auth/recovery': typeof PublicAuthRecoveryIndexRoute;
-  '/schedule/$code': typeof PublicScheduleCodeIndexRoute;
-  '/auth/finish-signup/$code': typeof PublicAuthFinishSignupCodeIndexRoute;
-  '/auth/new-password/$code': typeof PublicAuthNewPasswordCodeIndexRoute;
+  '/financial/$id': typeof PrivateFinancialIdRoute;
+  '/financial/add': typeof PrivateFinancialAddRoute;
+  '/financial/': typeof PrivateFinancialIndexRoute;
+  '/auth/': typeof PublicAuthIndexRoute;
+  '/auth/recovery/': typeof PublicAuthRecoveryIndexRoute;
+  '/auth/signup/': typeof PublicAuthSignupIndexRoute;
+  '/schedule/$code/': typeof PublicScheduleCodeIndexRoute;
+  '/auth/finish-signup/$code/': typeof PublicAuthFinishSignupCodeIndexRoute;
+  '/auth/new-password/$code/': typeof PublicAuthNewPasswordCodeIndexRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
+  '/financial/$id': typeof PrivateFinancialIdRoute;
+  '/financial/add': typeof PrivateFinancialAddRoute;
+  '/financial': typeof PrivateFinancialIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/auth/recovery': typeof PublicAuthRecoveryIndexRoute;
+  '/auth/signup': typeof PublicAuthSignupIndexRoute;
   '/schedule/$code': typeof PublicScheduleCodeIndexRoute;
   '/auth/finish-signup/$code': typeof PublicAuthFinishSignupCodeIndexRoute;
   '/auth/new-password/$code': typeof PublicAuthNewPasswordCodeIndexRoute;
@@ -78,10 +110,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
-  '/_private': typeof PrivateRoute;
+  '/_private': typeof PrivateRouteWithChildren;
   '/_public': typeof PublicRouteWithChildren;
+  '/_private/financial/$id': typeof PrivateFinancialIdRoute;
+  '/_private/financial/add': typeof PrivateFinancialAddRoute;
+  '/_private/financial/': typeof PrivateFinancialIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_public/auth/recovery/': typeof PublicAuthRecoveryIndexRoute;
+  '/_public/auth/signup/': typeof PublicAuthSignupIndexRoute;
   '/_public/schedule/$code/': typeof PublicScheduleCodeIndexRoute;
   '/_public/auth/finish-signup/$code/': typeof PublicAuthFinishSignupCodeIndexRoute;
   '/_public/auth/new-password/$code/': typeof PublicAuthNewPasswordCodeIndexRoute;
@@ -90,16 +126,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
-    | '/auth'
-    | '/auth/recovery'
-    | '/schedule/$code'
-    | '/auth/finish-signup/$code'
-    | '/auth/new-password/$code';
+    | '/financial/$id'
+    | '/financial/add'
+    | '/financial/'
+    | '/auth/'
+    | '/auth/recovery/'
+    | '/auth/signup/'
+    | '/schedule/$code/'
+    | '/auth/finish-signup/$code/'
+    | '/auth/new-password/$code/';
   fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
+    | '/financial/$id'
+    | '/financial/add'
+    | '/financial'
     | '/auth'
     | '/auth/recovery'
+    | '/auth/signup'
     | '/schedule/$code'
     | '/auth/finish-signup/$code'
     | '/auth/new-password/$code';
@@ -108,8 +152,12 @@ export interface FileRouteTypes {
     | '/'
     | '/_private'
     | '/_public'
+    | '/_private/financial/$id'
+    | '/_private/financial/add'
+    | '/_private/financial/'
     | '/_public/auth/'
     | '/_public/auth/recovery/'
+    | '/_public/auth/signup/'
     | '/_public/schedule/$code/'
     | '/_public/auth/finish-signup/$code/'
     | '/_public/auth/new-password/$code/';
@@ -117,7 +165,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
-  PrivateRoute: typeof PrivateRoute;
+  PrivateRoute: typeof PrivateRouteWithChildren;
   PublicRoute: typeof PublicRouteWithChildren;
 }
 
@@ -126,14 +174,14 @@ declare module '@tanstack/react-router' {
     '/_public': {
       id: '/_public';
       path: '';
-      fullPath: '';
+      fullPath: '/';
       preLoaderRoute: typeof PublicRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/_private': {
       id: '/_private';
       path: '';
-      fullPath: '';
+      fullPath: '/';
       preLoaderRoute: typeof PrivateRouteImport;
       parentRoute: typeof rootRouteImport;
     };
@@ -147,44 +195,88 @@ declare module '@tanstack/react-router' {
     '/_public/auth/': {
       id: '/_public/auth/';
       path: '/auth';
-      fullPath: '/auth';
+      fullPath: '/auth/';
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/financial/': {
+      id: '/_private/financial/';
+      path: '/financial';
+      fullPath: '/financial/';
+      preLoaderRoute: typeof PrivateFinancialIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/financial/add': {
+      id: '/_private/financial/add';
+      path: '/financial/add';
+      fullPath: '/financial/add';
+      preLoaderRoute: typeof PrivateFinancialAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/financial/$id': {
+      id: '/_private/financial/$id';
+      path: '/financial/$id';
+      fullPath: '/financial/$id';
+      preLoaderRoute: typeof PrivateFinancialIdRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_public/schedule/$code/': {
       id: '/_public/schedule/$code/';
       path: '/schedule/$code';
-      fullPath: '/schedule/$code';
+      fullPath: '/schedule/$code/';
       preLoaderRoute: typeof PublicScheduleCodeIndexRouteImport;
+      parentRoute: typeof PublicRoute;
+    };
+    '/_public/auth/signup/': {
+      id: '/_public/auth/signup/';
+      path: '/auth/signup';
+      fullPath: '/auth/signup/';
+      preLoaderRoute: typeof PublicAuthSignupIndexRouteImport;
       parentRoute: typeof PublicRoute;
     };
     '/_public/auth/recovery/': {
       id: '/_public/auth/recovery/';
       path: '/auth/recovery';
-      fullPath: '/auth/recovery';
+      fullPath: '/auth/recovery/';
       preLoaderRoute: typeof PublicAuthRecoveryIndexRouteImport;
       parentRoute: typeof PublicRoute;
     };
     '/_public/auth/new-password/$code/': {
       id: '/_public/auth/new-password/$code/';
       path: '/auth/new-password/$code';
-      fullPath: '/auth/new-password/$code';
+      fullPath: '/auth/new-password/$code/';
       preLoaderRoute: typeof PublicAuthNewPasswordCodeIndexRouteImport;
       parentRoute: typeof PublicRoute;
     };
     '/_public/auth/finish-signup/$code/': {
       id: '/_public/auth/finish-signup/$code/';
       path: '/auth/finish-signup/$code';
-      fullPath: '/auth/finish-signup/$code';
+      fullPath: '/auth/finish-signup/$code/';
       preLoaderRoute: typeof PublicAuthFinishSignupCodeIndexRouteImport;
       parentRoute: typeof PublicRoute;
     };
   }
 }
 
+interface PrivateRouteChildren {
+  PrivateFinancialIdRoute: typeof PrivateFinancialIdRoute;
+  PrivateFinancialAddRoute: typeof PrivateFinancialAddRoute;
+  PrivateFinancialIndexRoute: typeof PrivateFinancialIndexRoute;
+}
+
+const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateFinancialIdRoute: PrivateFinancialIdRoute,
+  PrivateFinancialAddRoute: PrivateFinancialAddRoute,
+  PrivateFinancialIndexRoute: PrivateFinancialIndexRoute,
+};
+
+const PrivateRouteWithChildren =
+  PrivateRoute._addFileChildren(PrivateRouteChildren);
+
 interface PublicRouteChildren {
   PublicAuthIndexRoute: typeof PublicAuthIndexRoute;
   PublicAuthRecoveryIndexRoute: typeof PublicAuthRecoveryIndexRoute;
+  PublicAuthSignupIndexRoute: typeof PublicAuthSignupIndexRoute;
   PublicScheduleCodeIndexRoute: typeof PublicScheduleCodeIndexRoute;
   PublicAuthFinishSignupCodeIndexRoute: typeof PublicAuthFinishSignupCodeIndexRoute;
   PublicAuthNewPasswordCodeIndexRoute: typeof PublicAuthNewPasswordCodeIndexRoute;
@@ -193,6 +285,7 @@ interface PublicRouteChildren {
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAuthIndexRoute: PublicAuthIndexRoute,
   PublicAuthRecoveryIndexRoute: PublicAuthRecoveryIndexRoute,
+  PublicAuthSignupIndexRoute: PublicAuthSignupIndexRoute,
   PublicScheduleCodeIndexRoute: PublicScheduleCodeIndexRoute,
   PublicAuthFinishSignupCodeIndexRoute: PublicAuthFinishSignupCodeIndexRoute,
   PublicAuthNewPasswordCodeIndexRoute: PublicAuthNewPasswordCodeIndexRoute,
@@ -203,7 +296,7 @@ const PublicRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PrivateRoute: PrivateRoute,
+  PrivateRoute: PrivateRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
 };
 export const routeTree = rootRouteImport
