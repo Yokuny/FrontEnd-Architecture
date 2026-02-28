@@ -1,64 +1,57 @@
 # Recursos Disponiveis no Projeto
 
-## Componentes de Select (68 em `src/components/selects/`)
+## Componentes de Data Inputs (7 em `src/components/data-inputs/`)
 
-Usar os componentes prontos ao inves de criar Select do zero. Ja encapsulam API, loading e erro.
+Usar os componentes prontos ao inves de criar comboboxes e selects do zero. Ja encapsulam estado, loading, busca e erro.
 
 ```tsx
-import { EnterpriseSelect, MachineByEnterpriseSelect, UserSelect } from '@/components/selects';
+import PatientCombobox from '@/components/data-inputs/patient-combobox';
+import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
+import FinancialCombobox from '@/components/data-inputs/financial-combobox';
 
-// Single select
-<EnterpriseSelect mode="single" value={idEnterprise} onChange={setIdEnterprise} />
+// Combobox de paciente
+<PatientCombobox controller={field} fetchPatients={fetchPatients} />
 
-// Multi select
-<MachineByEnterpriseSelect
-  mode="multi"
-  idEnterprise={idEnterprise}
-  value={selectedMachines}
-  onChange={setSelectedMachines}
-/>
+// Combobox de profissional (dentista)
+<ProfessionalCombobox controller={field} fetchProfessionals={fetchProfessionals} />
+
+// Combobox de registro financeiro
+<FinancialCombobox controller={field} patient={idPatient} fetchFinancials={fetchFinancials} />
 ```
 
-**Props padrao:** `mode`, `value`, `onChange`, `disabled?`, `clearable?`, `label?`, `placeholder?`
+**Props padrao:** `controller`, `disabled?`, `fetchFn` (funcao async que retorna `{ value, label }[]`)
 
-**TOP 10 mais usados:**
+**Componentes disponiveis:**
 
-| Componente | Usos |
-|------------|------|
-| `MachineByEnterpriseSelect` | 28 |
-| `EnterpriseSelect` | 27 |
-| `MachineSelect` | 9 |
-| `UserSelect` | 8 |
-| `UnitSelect` | 5 |
-| `SensorByMachineSelect` | 5 |
-| `MaintenancePlanSelect` | 4 |
-| `CustomerSelect` | 4 |
-| `ConsumptionMachineSelect` | 4 |
-| `ModelMachineSelect` | 4 |
+| Componente | Import | Descricao |
+|------------|--------|-----------|
+| `PatientCombobox` | `@/components/data-inputs/patient-combobox` | Selecao de paciente com avatar |
+| `ProfessionalCombobox` | `@/components/data-inputs/professional-combobox` | Selecao de dentista/profissional com avatar |
+| `FinancialCombobox` | `@/components/data-inputs/financial-combobox` | Selecao de registro financeiro por paciente |
+| `OdontogramCombobox` | `@/components/data-inputs/odontogram-combobox` | Selecao de odontograma por paciente |
+| `ProcedureComponent` | `@/components/data-inputs/procedure-component` | Lista editavel de procedimentos (useFieldArray) |
+| `ProceduresSheet` | `@/components/data-inputs/procedures-sheet` | Sheet lateral para selecionar procedimentos cadastrados |
+| `DatePickerButton` | `@/components/data-inputs/date-picker-button` | Botao com popover de calendario |
 
-## Hooks Globais (258 em `src/hooks/`)
+## Componentes de Dominio
 
-**TOP 15 mais usados:**
+| Componente | Import | Descricao |
+|------------|--------|-----------|
+| `DateTimePicker` | `@/components/date-time-picker` | Seletor de data/hora com dia inteiro, intervalo de datas e horarios |
+| `DentalEaseLogo` | `@/components/dental-ease-logo` | Logo do DentalEase com link para home |
+| `ToothNumber` | `@/components/odontogram/tooth-number` | Renderiza SVG de dente por numero (odontograma) com status visual |
 
-| Hook | Usos | Descricao |
-|------|------|-----------|
-| `useEnterpriseFilter` | 90 | idEnterprise do filtro global |
-| `useHasPermission` | 35 | Verifica permissoes do usuario |
-| `useSidebar` | 7 | Estado da sidebar |
-| `useSidebarToggle` | 7 | Toggle da sidebar |
-| `useCMMSKPIs` | 6 | KPIs do CMMS |
-| `useIsMobile` | 5 | Detecta dispositivo mobile |
-| `useMachinesByEnterpriseSelect` | 5 | Maquinas por empresa |
-| `useEnterprisesSelect` | 4 | Empresas para select |
-| `useUsersApi` | 4 | CRUD usuarios |
-| `usePartsApi` | 3 | CRUD pecas |
-| `useModelMachinesApi` | 3 | CRUD modelos |
-| `usePlatformsApi` | 3 | CRUD plataformas |
-| `useAuth` | 3 | Sessao e login |
-| `useSensorsApi` | 3 | CRUD sensores |
-| `useMachinesApi` | 3 | CRUD maquinas |
+## Hooks Globais (em `src/hooks/`)
 
 **ANTES de criar um hook**, verifique se ja existe em `src/hooks/`!
+
+| Hook | Descricao |
+|------|-----------|
+| `useAuth` | Sessao e login do usuario |
+| `useHasPermission` | Verifica permissoes do usuario |
+| `useSidebar` | Estado da sidebar |
+| `useSidebarToggle` | Toggle da sidebar |
+| `useIsMobile` | Detecta dispositivo mobile |
 
 ## Componentes Obrigatorios
 

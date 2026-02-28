@@ -49,5 +49,5 @@ Para padroes detalhados com exemplos, consulte `docs/` conforme o cenario:
 - Estado global (Zustand): `docs/state-management.md`
 - Padroes React e anti-patterns: `docs/react-patterns.md`
 - Graficos (Recharts, cores, tipos): `docs/charts.md`
-- Selects, hooks e componentes existentes: `docs/available-resources.md`
+- Comboboxes, hooks e componentes de clinica existentes: `docs/available-resources.md`
 - Tech stack e versoes: `docs/stack.md`

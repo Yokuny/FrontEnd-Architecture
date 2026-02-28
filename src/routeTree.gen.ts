@@ -9,14 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
-import { Route as IndexRouteImport } from './routes/index';
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PublicScheduleCodeIndexRouteImport } from './routes/_public/schedule/$code/index';
-import { Route as PublicAuthRecoveryIndexRouteImport } from './routes/_public/auth/recovery/index';
-import { Route as PublicAuthNewPasswordCodeIndexRouteImport } from './routes/_public/auth/new-password/$code/index';
+import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PublicAuthFinishSignupCodeIndexRouteImport } from './routes/_public/auth/finish-signup/$code/index';
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PublicAuthNewPasswordCodeIndexRouteImport } from './routes/_public/auth/new-password/$code/index';
+import { Route as PublicAuthRecoveryIndexRouteImport } from './routes/_public/auth/recovery/index';
+import { Route as PublicScheduleCodeIndexRouteImport } from './routes/_public/schedule/$code/index';
+import { Route as IndexRouteImport } from './routes/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',

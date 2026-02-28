@@ -47,8 +47,8 @@ Leia `docs/react-patterns.md` para padroes de componentes, estrutura interna, ea
 ### Quando criar ou usar graficos (Recharts)
 Leia `docs/charts.md` para padroes de graficos, cores com `getChartColor`, tipos de grafico e modelos de referencia.
 
-### Quando precisar usar selects, hooks ou componentes existentes
-Leia `docs/available-resources.md` para a lista de selects, hooks globais e componentes obrigatorios disponiveis.
+### Quando precisar usar comboboxes, hooks ou componentes de clinica existentes
+Leia `docs/available-resources.md` para a lista de comboboxes (paciente, profissional, financeiro, odontograma), componentes de dominio e hooks globais disponiveis.
 
 ### Quando quiser consultar o stack do projeto
 Leia `docs/stack.md` para a tabela completa de tecnologias e versoes.

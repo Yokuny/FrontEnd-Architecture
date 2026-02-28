@@ -110,5 +110,5 @@ Para padroes detalhados com exemplos completos, consulte os docs conforme o cena
 | Gerenciar estado global (Zustand) | `docs/state-management.md` |
 | Padroes de componentes React | `docs/react-patterns.md` |
 | Graficos (Recharts, cores, tipos) | `docs/charts.md` |
-| Buscar selects, hooks ou componentes existentes | `docs/available-resources.md` |
+| Buscar comboboxes, hooks ou componentes de clinica existentes | `docs/available-resources.md` |
 | Consultar tech stack e versoes | `docs/stack.md` |
