@@ -1,3 +1,5 @@
+import { useAuthStore } from '@/hooks/auth';
+
 const API = () => {
   const url = import.meta.env.VITE_CORE_URL || '';
   if (!url) return '';
@@ -31,7 +33,8 @@ const FetchConfig = (body: object, method: Method) => {
     withCredentials: true,
     body: JSON.stringify(body),
   };
-  const token = localStorage.getItem('token');
+  // Token lido do Zustand store via .getState() — funciona fora de componentes React.
+  const token = useAuthStore.getState().accessToken;
   if (token) {
     headers.headers.authorization = `Ease ${token}`;
   }

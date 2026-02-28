@@ -6,28 +6,29 @@ export const publicScheduleKeys = {
   passkey: (code: string) => [...publicScheduleKeys.all, 'passkey', code] as const,
 };
 
-export function usePublicScheduleApi() {
-  const getPasskey = (code: string) =>
-    useQuery({
-      queryKey: publicScheduleKeys.passkey(code),
-      queryFn: async () => {
-        // According to `requestById.helper.ts`, it was a `requestWithoutToken` but `api.get` ignores token if none available.
-        // Actually, we should make sure we're getting from the right path.
-        const res = await api.get<{ success: boolean; data: any; message: string }>(`/passkey/${code}`);
-        if (!res.data.success) throw new Error(res.data.message);
-        return res.data.data;
-      },
-      enabled: !!code,
-      retry: false,
-    });
+async function fetchPasskey(code: string) {
+  const res = await api.get<{ success: boolean; data: any; message: string }>(`/passkey/${code}`);
+  if (!res.data.success) throw new Error(res.data.message);
+  return res.data.data;
+}
 
-  const confirmPresence = useMutation({
+/** Server State do agendamento via link público (passkey). */
+export function usePublicSchedulePasskey(code: string) {
+  return useQuery({
+    queryKey: publicScheduleKeys.passkey(code),
+    queryFn: () => fetchPasskey(code),
+    enabled: !!code,
+    retry: false,
+  });
+}
+
+/** Mutation para confirmar ou cancelar presença no agendamento. */
+export function useConfirmPresence() {
+  return useMutation({
     mutationFn: async ({ scheduleID, status }: { scheduleID: string; status: 'confirmed' | 'canceled_by_patient' }) => {
       const res = await api.put<{ success: boolean; message: string }>(`/schedule/confirm/${scheduleID}`, { status });
       if (!res.data.success) throw new Error(res.data.message);
       return res.data;
     },
   });
-
-  return { getPasskey, confirmPresence };
 }

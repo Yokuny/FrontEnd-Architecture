@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { useAuthApi } from '@/hooks/use-auth-api';
+import { useAuthStore } from '@/hooks/auth';
 
 import { SignIn } from './@components/sign-in';
 import { SignUp } from './@components/sign-up';
@@ -26,11 +26,11 @@ function AuthenticationPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const previousPage = () => window.history.back();
-  const { isAuthenticated } = useAuthApi();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate({ to: '/app' });
+      navigate({ to: '/' });
     }
   }, [navigate, isAuthenticated]);
 

@@ -10,12 +10,12 @@ import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { extractDate } from '@/lib/helpers/formatter.helper';
 import { scheduleConfirmationSchema } from '@/lib/interfaces/schemas/schedule.schema';
-import { usePublicScheduleApi } from '../@hooks/use-schedule';
+import { useConfirmPresence } from '../@hooks/use-schedule';
 
 export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleConfirmationFormProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  const { confirmPresence } = usePublicScheduleApi();
+  const confirmPresence = useConfirmPresence();
 
   const form = useForm<z.infer<typeof scheduleConfirmationSchema>>({
     resolver: zodResolver(scheduleConfirmationSchema),
@@ -29,7 +29,8 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
       const message = status === 'confirmed' ? 'Agendamento confirmado com sucesso!' : 'Agendamento cancelado com sucesso!';
 
       toast.success(message);
-      router.navigate({ to: '/home' });
+      // TODO: Sem redirect definido
+      router.navigate({ to: '/auth' });
     } catch (e: any) {
       toast.error(e.message || 'Erro ao processar solicitação');
     } finally {

@@ -5,7 +5,6 @@ import { CircleAlert } from 'lucide-react';
 
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
-import { LanguageSwitcher } from '@/components/sidebar/switch-language';
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
@@ -14,11 +13,8 @@ export const Route = createRootRoute({
   notFoundComponent: () => {
     return (
       <Card className="m-2">
-        <CardHeader title={'not.found.page'}>
-          <div className="flex gap-2">
-            <ThemeSwitcher />
-            <LanguageSwitcher />
-          </div>
+        <CardHeader title={'Pagina não encontrada'}>
+          <ThemeSwitcher />
         </CardHeader>
         <CardContent>
           <DefaultEmptyData />
@@ -30,10 +26,7 @@ export const Route = createRootRoute({
     return (
       <Card className="m-2">
         <CardHeader title={'error.page'}>
-          <div className="flex gap-2">
-            <ThemeSwitcher />
-            <LanguageSwitcher />
-          </div>
+          <ThemeSwitcher />
         </CardHeader>
         <CardContent>
           <Empty className="border-2 border-destructive/20 bg-destructive/10">
@@ -53,10 +46,7 @@ export const Route = createRootRoute({
     return (
       <Card className="m-2">
         <CardHeader title={'error.page'}>
-          <div className="flex gap-2">
-            <ThemeSwitcher />
-            <LanguageSwitcher />
-          </div>
+          <ThemeSwitcher />
         </CardHeader>
         <CardContent>
           <DefaultLoading />

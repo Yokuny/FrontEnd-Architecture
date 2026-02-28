@@ -10,10 +10,10 @@
 - [ ] Criar `@components/{feature}-form.tsx` (se necessario)
 - [ ] Criar `@consts/{feature}.consts.ts` (se necessario)
 
-## 2. Hook de API
+## 2. Query de API
 
-- [ ] Verificar se ja existe em `src/hooks/`
-- [ ] Se nao, criar em `src/hooks/use-{feature}-api.ts`
+- [ ] Verificar se ja existe em `src/query/`
+- [ ] Se nao, criar em `src/query/{feature}.ts` seguindo `src/query/PATTERN.md`
 
 ## 3. Validacoes
 

@@ -7,9 +7,9 @@ import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useAuthApi } from '@/hooks/use-auth-api';
 import type { LogInProps } from '@/lib/interfaces/generic';
 import { signinSchema } from '@/lib/interfaces/schemas/user.schema';
+import { useAuthApi } from '@/query/auth';
 
 export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
   const { login } = useAuthApi();
@@ -82,7 +82,8 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
       </div>
       <span className="flex gap-2 text-muted-foreground text-sm">
         Esqueceu sua senha?
-        <Link to="/auth/recovery" className="font-medium text-primary hover:underline">
+        {/* TODO: SEM PAGINA DE REDIRECT DEFINIDA */}
+        <Link to="/" className="font-medium text-primary hover:underline">
           Recuperar senha
         </Link>
       </span>

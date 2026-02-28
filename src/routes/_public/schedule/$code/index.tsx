@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScheduleConfirmationForm } from './@components/schedule-confirmation-form';
-import { usePublicScheduleApi } from './@hooks/use-schedule';
+import { usePublicSchedulePasskey } from './@hooks/use-schedule';
 
 export const Route = createFileRoute('/_public/schedule/$code/')({
   component: ScheduleConfirmationPage,
@@ -11,8 +11,7 @@ export const Route = createFileRoute('/_public/schedule/$code/')({
 
 function ScheduleConfirmationPage() {
   const { code } = useParams({ from: '/_public/schedule/$code/' });
-  const { getPasskey } = usePublicScheduleApi();
-  const { data: scheduleData, isLoading, error } = getPasskey(code);
+  const { data: scheduleData, isLoading, error } = usePublicSchedulePasskey(code);
 
   if (error) {
     toast.error(error.message || 'Erro ao carregar dados do agendamento');

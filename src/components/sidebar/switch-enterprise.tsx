@@ -3,15 +3,15 @@
 import { useNavigate } from '@tanstack/react-router';
 import { LogOutIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/use-auth-api';
+import { useAuthStore } from '@/hooks/auth';
 
 export function EnterpriseSwitcher() {
-  const { clearAuth } = useAuth();
   const navigate = useNavigate();
+  const { logout } = useAuthStore.getState();
 
   const onLogout = () => {
-    clearAuth();
-    navigate({ to: '/app-auth' });
+    logout();
+    navigate({ to: '/auth' });
   };
 
   return (

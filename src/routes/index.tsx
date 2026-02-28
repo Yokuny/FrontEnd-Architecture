@@ -1,12 +1,12 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { useAppAuth } from '@/hooks/use-app-auth';
+import { useAuthStore } from '@/hooks/auth';
 
 export const Route = createFileRoute('/')({
   beforeLoad: async () => {
-    const { isAuthenticated } = useAppAuth.getState();
+    const { isAuthenticated } = useAuthStore.getState();
 
     throw redirect({
-      to: isAuthenticated ? '/access-user' : '/app-auth',
+      to: isAuthenticated ? '/' : '/',
     });
   },
   component: () => null,

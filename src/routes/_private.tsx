@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
-import { useAppAuth } from '@/hooks/use-app-auth';
+import { useAuthStore } from '@/hooks/auth';
 
 /**
  * Layout route para rotas privadas (com autenticação)
@@ -12,11 +12,11 @@ function PrivateLayout() {
 
 export const Route = createFileRoute('/_private')({
   beforeLoad: async () => {
-    const { isAuthenticated } = useAppAuth.getState();
+    const { isAuthenticated } = useAuthStore.getState();
 
     if (!isAuthenticated) {
       throw redirect({
-        to: '/app-auth',
+        to: '/auth',
       });
     }
   },

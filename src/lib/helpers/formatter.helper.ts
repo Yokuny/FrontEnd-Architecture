@@ -21,7 +21,7 @@ export const comboboxWithImgFormat = (register: PartialPatient[] | ProfessionalL
   return register.map((data) => ({
     value: data._id,
     label: data.name.trim(),
-    image: data.image || undefined,
+    image: data.image || '',
   }));
 };
 

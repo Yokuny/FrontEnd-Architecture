@@ -8,9 +8,9 @@ import type { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useAuthApi } from '@/hooks/use-auth-api';
 import type { LogInProps } from '@/lib/interfaces/generic';
 import { emailSchema } from '@/lib/interfaces/schemas/user.schema';
+import { useAuthApi } from '@/query/auth';
 
 export const SignUp = ({ isLoading, setIsLoading }: LogInProps) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
@@ -67,11 +67,11 @@ export const SignUp = ({ isLoading, setIsLoading }: LogInProps) => {
       </div>
       <span className="text-center text-muted-foreground text-sm">
         Ao clicar em continuar, você está concordando com nossos
-        <Link to="/terms" className="mx-2 underline underline-offset-4 hover:text-primary">
+        <Link to="/auth" className="mx-2 underline underline-offset-4 hover:text-primary">
           Termos de serviço
         </Link>
         e
-        <Link to="/privacy" className="ml-2 underline underline-offset-4 hover:text-primary">
+        <Link to="/auth" className="ml-2 underline underline-offset-4 hover:text-primary">
           Politica de privacidade
         </Link>
         .

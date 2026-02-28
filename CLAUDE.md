@@ -48,17 +48,25 @@
 
 ## Hooks de API (Padrao TanStack Query)
 ```tsx
-// src/hooks/use-{feature}-api.ts
+// src/query/{feature}.ts
 export const featureKeys = {
   all: ['feature'] as const,
   lists: () => [...featureKeys.all, 'list'] as const,
-  detail: (id: string) => [...featureKeys.all, 'detail', id] as const,
+  list: () => [...featureKeys.lists()] as const,
+  details: () => [...featureKeys.all, 'detail'] as const,
+  detail: (id: string) => [...featureKeys.details(), id] as const,
 };
 
-export function useFeature() {
+async function fetchFeatures(): Promise<Feature[]> {
+  const res = await request('feature/list', GET());
+  if (!res.success) throw new Error(res.message);
+  return res.data as Feature[];
+}
+
+export function useFeaturesQuery() {
   return useQuery({
-    queryKey: featureKeys.lists(),
-    queryFn: async () => (await api.get('/feature/list')).data,
+    queryKey: featureKeys.list(),
+    queryFn: fetchFeatures,
   });
 }
 ```
@@ -96,7 +104,7 @@ Para padroes detalhados com exemplos completos, consulte os docs conforme o cena
 |---------|-----------|
 | Iniciar nova feature / criar pastas | `docs/route-structure.md`, `docs/checklist.md` |
 | Criar pagina de listagem ou formulario | `docs/page-patterns.md` |
-| Criar hooks de API (TanStack Query) | `docs/api-hooks.md` |
+| Criar queries de API (TanStack Query) | `docs/api-hooks.md`, `src/query/PATTERN.md` |
 | Criar formularios (react-hook-form) | `docs/form-hooks.md` |
 | Criar schemas Zod, interfaces, consts | `docs/schemas-types.md` |
 | Gerenciar estado global (Zustand) | `docs/state-management.md` |
