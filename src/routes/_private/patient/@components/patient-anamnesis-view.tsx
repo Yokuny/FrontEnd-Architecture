@@ -67,7 +67,7 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
       <CardContent className="flex flex-col gap-6">
         {attentionCount > 0 && (
           <div className="flex items-center gap-2 rounded-md bg-destructive/10 px-4 py-3 text-destructive">
-            <Badge variant="error">{attentionCount}</Badge>
+            <Badge variant="red">{attentionCount}</Badge>
             <span className="font-semibold">Pontos de atenção encontrados nesta ficha médica.</span>
           </div>
         )}
@@ -100,7 +100,7 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
                 <TableRow>
                   <TableCell className="flex items-center">Diabetes {getSeverityDot(true, 'high')}</TableCell>
                   <TableCell>
-                    <Badge variant="error">Sim</Badge>
+                    <Badge variant="red">Sim</Badge>
                   </TableCell>
                 </TableRow>
               )}
@@ -108,7 +108,7 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
                 <TableRow>
                   <TableCell className="flex items-center">Problemas Cardíacos {getSeverityDot(true, 'high')}</TableCell>
                   <TableCell>
-                    <Badge variant="error">Sim</Badge>
+                    <Badge variant="red">Sim</Badge>
                   </TableCell>
                 </TableRow>
               )}
@@ -116,7 +116,7 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
                 <TableRow>
                   <TableCell className="flex items-center">Hipertensão {getSeverityDot(true, 'high')}</TableCell>
                   <TableCell>
-                    <Badge variant="error">Sim</Badge>
+                    <Badge variant="red">Sim</Badge>
                   </TableCell>
                 </TableRow>
               )}
@@ -124,7 +124,7 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
                 <TableRow>
                   <TableCell className="flex items-center">Asma {getSeverityDot(true, 'medium')}</TableCell>
                   <TableCell>
-                    <Badge variant="secondary">Sim</Badge>
+                    <Badge variant="muted">Sim</Badge>
                   </TableCell>
                 </TableRow>
               )}
@@ -132,7 +132,7 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
                 <TableRow>
                   <TableCell className="flex items-center">Outras Doenças {getSeverityDot(true, 'medium')}</TableCell>
                   <TableCell>
-                    <Badge variant="secondary">Sim</Badge>
+                    <Badge variant="muted">Sim</Badge>
                     <span className="ml-2 text-muted-foreground text-sm">{anamnesis.illnesses.otherIllnesses}</span>
                   </TableCell>
                 </TableRow>

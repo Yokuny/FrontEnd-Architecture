@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 
 import DefaultLoading from '@/components/default-loading';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Status, StatusIndicator, StatusLabel } from '@/components/ui/badge';
+import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -66,7 +66,7 @@ function FinancialDetailPage() {
 
 function FinancialDetailContent({ id, financial, professionals }: { id: string; financial: FullFinancial; professionals: ProfessionalList[] | undefined }) {
   const navigate = useNavigate();
-  const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'neutral';
+  const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
 
   const initialData = useMemo(
     () => ({
@@ -144,10 +144,9 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
                 <p className="font-bold text-2xl">{financialPaymentMethod(financial.paymentMethod || 'none')}</p>
                 <div className="flex items-baseline gap-2">
                   <ItemDescription>Status</ItemDescription>
-                  <Status status={badgeVariant}>
-                    <StatusIndicator status={badgeVariant} />
-                    <StatusLabel>{statusDictionary(financial.status || 'pending')}</StatusLabel>
-                  </Status>
+                  <BadgeIndicator variant={badgeVariant}>
+                    {statusDictionary(financial.status || 'pending')}
+                  </BadgeIndicator>
                 </div>
               </div>
               <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">

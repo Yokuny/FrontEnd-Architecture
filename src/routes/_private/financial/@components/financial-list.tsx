@@ -2,7 +2,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { MoreVertical } from 'lucide-react';
 import { useMemo } from 'react';
 
-import { Badge, Status, StatusIndicator, StatusLabel } from '@/components/ui/badge';
+import { Badge, BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { Dialog } from '@/components/ui/dialog';
@@ -37,7 +37,7 @@ export function FinancialList({ data }: FinancialListProps) {
         header: 'Valor',
         sortable: true,
         render: (_, financial) => (
-          <Badge variant="info" className="hidden w-fit tabular-nums md:flex">
+          <Badge variant="neutral" className="hidden w-fit tabular-nums md:flex">
             {currencyFormat(financial.price)}
           </Badge>
         ),
@@ -47,12 +47,11 @@ export function FinancialList({ data }: FinancialListProps) {
         header: 'Status',
         sortable: true,
         render: (_, financial) => {
-          const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'neutral';
+          const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
           return (
-            <Status status={badgeVariant}>
-              <StatusIndicator status={badgeVariant} />
-              <StatusLabel>{statusDictionary(financial.status)}</StatusLabel>
-            </Status>
+            <BadgeIndicator variant={badgeVariant}>
+              {statusDictionary(financial.status)}
+            </BadgeIndicator>
           );
         },
       },

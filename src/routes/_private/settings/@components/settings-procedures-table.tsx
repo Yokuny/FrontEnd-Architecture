@@ -56,7 +56,7 @@ const EditableCell = ({ value, row, column, table }: { value: any; row: any; col
       ) : column.id === 'periodicity' ? (
         <span className="text-muted-foreground">{cellValue ? `${cellValue} dias` : '-'}</span>
       ) : (
-        <Badge variant={column.id === 'costPrice' ? 'secondary' : column.id === 'suggestedPrice' ? 'outline' : 'default'} className="flex w-fit gap-2">
+        <Badge variant={column.id === 'costPrice' ? 'muted' : column.id === 'suggestedPrice' ? 'outline' : 'neutral'} className="flex w-fit gap-2">
           {currencyFormat(cellValue)}
         </Badge>
       )}

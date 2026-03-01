@@ -1,4 +1,4 @@
-import type { StatusVariant } from '@/components/ui/badge';
+import type { BadgeIndicatorProps } from '@/components/ui/badge';
 
 export const FINANCIAL_STATUS_OPTIONS = [
   { value: 'pending', label: 'Pendente' },
@@ -17,10 +17,10 @@ export const PAYMENT_METHOD_OPTIONS = [
   { value: 'boleto', label: 'Boleto' },
 ] as const;
 
-export const STATUS_TO_BADGE_VARIANT: Record<string, StatusVariant> = {
-  pending: 'warning',
-  partial: 'warning',
-  paid: 'success',
+export const STATUS_TO_BADGE_VARIANT: Record<string, BadgeIndicatorProps['variant']> = {
+  pending: 'pending',
+  partial: 'partial',
+  paid: 'paid',
   canceled: 'canceled',
-  refund: 'error',
+  refund: 'refund',
 };

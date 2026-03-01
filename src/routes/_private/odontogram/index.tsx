@@ -76,7 +76,7 @@ function OdontogramListPage() {
       {
         key: 'finished',
         header: 'Status',
-        render: (_, item) => <div className="flex">{item.finished ? <Badge variant="success">Finalizado</Badge> : <Badge variant="warning">Em andamento</Badge>}</div>,
+        render: (_, item) => <div className="flex">{item.finished ? <Badge variant="completed">Finalizado</Badge> : <Badge variant="pending">Em andamento</Badge>}</div>,
       },
       {
         key: '_id',

@@ -70,7 +70,7 @@ function PatientListPage() {
             </Avatar>
             <div className="flex items-center gap-2">
               <span className="font-medium text-base">{item.name}</span>
-              <Badge variant={item.sex === 'M' ? 'secondary' : 'default'} className="h-5 px-1.5 text-[10px]">
+              <Badge variant={item.sex === 'M' ? 'neutral' : 'pink'} className="h-5 px-1.5 text-[10px]">
                 {item.sex === 'M' ? 'M' : 'F'}
               </Badge>
             </div>
