@@ -1,20 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+import type { ProfessionalList } from '@/lib/interfaces/professional';
 import type { EventColor } from '@/lib/interfaces/schedule';
 
-type ProfessionalColors = Record<string, EventColor>;
-
-type ProfessionalColorsStore = {
-  colors: ProfessionalColors;
-  getColor: (id: string | undefined) => EventColor | null;
-  setColor: (id: string, color: EventColor) => void;
-  clearColor: (id: string) => void;
-};
-
-/**
- * Client State de cores dos profissionais (preferência de UI).
- * Dados dos profissionais (server state) vivem no TanStack Query via useProfessionalsQuery em @/query/professionals.
- */
 export const useProfessionalColors = create<ProfessionalColorsStore>()(
   persist(
     (set, get) => ({
@@ -38,3 +27,33 @@ export const useProfessionalColors = create<ProfessionalColorsStore>()(
     },
   ),
 );
+
+export const useProfessionalStore = create<ProfessionalStore>()(() => ({
+  getName: (professionals, id) => {
+    if (!id || !professionals) return '';
+    return professionals.find((p) => p._id === id)?.name || '';
+  },
+  getImage: (professionals, id) => {
+    if (!id || !professionals) return undefined;
+    return professionals.find((p) => p._id === id)?.image || undefined;
+  },
+  mapToCombobox: (professionals) => {
+    if (!professionals?.length) return [];
+    return comboboxWithImgFormat(professionals);
+  },
+}));
+
+type ProfessionalColors = Record<string, EventColor>;
+
+type ProfessionalColorsStore = {
+  colors: ProfessionalColors;
+  getColor: (id: string | undefined) => EventColor | null;
+  setColor: (id: string, color: EventColor) => void;
+  clearColor: (id: string) => void;
+};
+
+type ProfessionalStore = {
+  getName: (professionals: ProfessionalList[] | undefined, id: string | undefined) => string;
+  getImage: (professionals: ProfessionalList[] | undefined, id: string | undefined) => string | undefined;
+  mapToCombobox: (professionals: ProfessionalList[] | undefined) => { value: string; label: string; image?: string }[];
+};

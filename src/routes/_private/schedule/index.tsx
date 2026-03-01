@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useClinicStore } from '@/hooks/clinic';
-import { useProfessionalColors } from '@/hooks/professionals';
+import { useProfessionalColors, useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useUserStore } from '@/hooks/user';
 import { AgendaDaysToShow, EventGap, EventHeight, WeekCellsHeight } from '@/lib/consts/calendar.constants';
@@ -22,7 +22,7 @@ import type { CalendarView, EventColor, PartialSchedule } from '@/lib/interfaces
 import { scheduleTimeSchema } from '@/lib/interfaces/schemas/schedule.schema';
 import { cn } from '@/lib/utils';
 import { useClinicApi } from '@/query/clinic';
-import { getProfessionalImage as getProfImageUtil, getProfessionalName as getProfNameUtil, useProfessionalsQuery } from '@/query/professionals';
+import { useProfessionalsQuery } from '@/query/professionals';
 import { useScheduleQuery, useUpdateScheduleTime } from '@/query/schedule';
 import { useUserQuery } from '@/query/user';
 import { AgendaView } from './@components/agenda-view';
@@ -52,9 +52,10 @@ function SchedulePage() {
   const { getRoomName: getRoomNameUtil } = useClinicStore();
   const getRoomName = (id: string | undefined) => getRoomNameUtil(clinic, id);
   const { data: professionals } = useProfessionalsQuery();
+  const professionalStore = useProfessionalStore();
   const { getColor: getProfessionalColor, setColor: setProfessionalColor, clearColor: clearProfessionalColor } = useProfessionalColors();
-  const getProfessionalName = (id: string | undefined) => getProfNameUtil(professionals, id);
-  const getProfessionalImage = (id: string | undefined) => getProfImageUtil(professionals, id);
+  const getProfessionalName = (id: string | undefined) => professionalStore.getName(professionals, id);
+  const getProfessionalImage = (id: string | undefined) => professionalStore.getImage(professionals, id);
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [customDateRange, setCustomDateRange] = useState<{ from: Date; to: Date } | null>(null);

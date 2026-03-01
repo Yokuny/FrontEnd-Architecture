@@ -8,9 +8,10 @@ import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { useFinancialDetailQuery, useFinancialMutations } from '@/query/financials';
-import { getProfessionalImage, getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
+import { useProfessionalsQuery } from '@/query/professionals';
 import { FINANCIAL_STATUS_OPTIONS } from '../@consts/financial.consts';
 
 type FinancialViewProps = {
@@ -73,11 +74,11 @@ export function FinancialView({ id }: FinancialViewProps) {
               <div className="flex items-center gap-4 md:max-w-md">
                 <div className="flex w-1/2 items-center space-x-4 rounded-lg p-4 md:border">
                   <Avatar className="border">
-                    <AvatarImage src={getProfessionalImage(professionals, financial.Professional)} alt="Profissional" />
-                    <AvatarFallback>{getProfessionalName(professionals, financial.Professional).slice(0, 2)}</AvatarFallback>
+                    <AvatarImage src={useProfessionalStore.getState().getImage(professionals, financial.Professional)} alt="Profissional" />
+                    <AvatarFallback>{useProfessionalStore.getState().getName(professionals, financial.Professional).slice(0, 2)}</AvatarFallback>
                   </Avatar>
                   <ItemContent className="gap-0">
-                    <ItemTitle className="truncate">{getProfessionalName(professionals, financial.Professional)}</ItemTitle>
+                    <ItemTitle className="truncate">{useProfessionalStore.getState().getName(professionals, financial.Professional)}</ItemTitle>
                     <ItemDescription>Profissional</ItemDescription>
                   </ItemContent>
                 </div>

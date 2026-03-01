@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GET, PATCH, POST, request } from '@/lib/api/client';
-import { valueAndLabel } from '@/lib/helpers/formatter.helper';
+
 import type { DbOdontogram, PartialOdontogram } from '@/lib/interfaces/odontogram';
 
 export const odontogramKeys = {
@@ -69,12 +69,4 @@ export function useOdontogramMutations() {
   });
 
   return { create, updateStatus };
-}
-
-// --- Utilitário puro ---
-
-export function mapOdontogramsToCombobox(odontograms: PartialOdontogram[] | undefined, patientId?: string) {
-  if (!odontograms?.length) return [{ value: '', label: 'Nenhum odontograma encontrado' }];
-  const filtered = patientId ? odontograms.filter((o) => o.patientID === patientId) : odontograms;
-  return filtered.map((o) => valueAndLabel(o._id, new Date(o.createdAt).toLocaleDateString('pt-BR').trim()));
 }

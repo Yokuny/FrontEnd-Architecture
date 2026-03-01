@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GET, PATCH, POST, PUT, request } from '@/lib/api/client';
-import { valueAndLabel } from '@/lib/helpers/formatter.helper';
+
 import type { FinancialList, FullFinancial, PartialFinancial } from '@/lib/interfaces/financial';
 
 export const financialsKeys = {
@@ -102,12 +102,4 @@ export function useFinancialMutations() {
   });
 
   return { create, update, updateStatus };
-}
-
-// --- Utilitários puros ---
-
-export function mapFinancialsToCombobox(financials: FinancialList[] | undefined, patientId?: string) {
-  if (!financials?.length) return [{ value: '', label: 'Nenhum registro encontrado' }];
-  const filtered = patientId ? financials.filter((f) => f.Patient === patientId) : financials;
-  return filtered.map((f) => valueAndLabel(f._id, new Date(f.createdAt).toLocaleDateString('pt-BR').trim()));
 }

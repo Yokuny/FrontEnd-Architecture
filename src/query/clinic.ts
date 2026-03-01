@@ -13,7 +13,6 @@ async function fetchClinic(): Promise<PartialClinic> {
   return res.data as PartialClinic;
 }
 
-/** Server State da clínica. Cache de 5 min; substitui refreshClinic/getClinic do antigo Zustand. */
 export function useClinicApi() {
   return useQuery({
     queryKey: clinicKeys.detail(),
@@ -22,14 +21,6 @@ export function useClinicApi() {
   });
 }
 
-/**
- * Atualiza o cache manualmente após uma mutação.
- * Substitui o antigo setClinic do Zustand.
- *
- * @example
- * const { setClinicCache } = useClinicCache();
- * setClinicCache((old) => ({ ...old, name: 'Novo Nome' }));
- */
 export function useClinicCache() {
   const queryClient = useQueryClient();
 

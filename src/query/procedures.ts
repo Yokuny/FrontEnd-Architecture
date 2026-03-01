@@ -23,7 +23,6 @@ export function useProceduresQuery() {
   });
 }
 
-/** Versão pré-formatada para a "folha" de procedimentos odontológicos. */
 export function useProceduresSheetQuery() {
   return useQuery({
     queryKey: proceduresKeys.sheet(),

@@ -7,9 +7,11 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { usePatientStore } from '@/hooks/patients';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
-import { mapPatientsToCombobox, usePatientsQuery } from '@/query/patients';
-import { mapProfessionalsToCombobox, useProfessionalsQuery } from '@/query/professionals';
+import { usePatientsQuery } from '@/query/patients';
+import { useProfessionalsQuery } from '@/query/professionals';
 import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '../@consts/financial.consts';
 import type { FinancialCreateData } from '../@interface/financial.interface';
 
@@ -18,8 +20,16 @@ export function FinancialForm() {
   const { data: patients } = usePatientsQuery();
   const { data: professionals } = useProfessionalsQuery();
 
-  const fetchPatients = async () => mapPatientsToCombobox(patients);
-  const fetchProfessionals = async () => mapProfessionalsToCombobox(professionals);
+  const fetchPatients = async () =>
+    usePatientStore
+      .getState()
+      .mapToCombobox(patients)
+      .map((p) => ({ ...p, image: p.image || '' }));
+  const fetchProfessionals = async () =>
+    useProfessionalStore
+      .getState()
+      .mapToCombobox(professionals)
+      .map((p) => ({ ...p, image: p.image || '' }));
 
   const sections = [
     {

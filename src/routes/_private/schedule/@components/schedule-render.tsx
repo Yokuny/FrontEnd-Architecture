@@ -11,22 +11,27 @@ import { CardContent } from '@/components/ui/card';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
+import { usePatientStore } from '@/hooks/patients';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PATCH, POST, request } from '@/lib/api/client';
 import { currencyFormat, extractDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule';
 import { cn } from '@/lib/utils';
-import { getPatientImage as getPatientImageUtil, getPatientName as getPatientNameUtil, usePatientsQuery } from '@/query/patients';
-import { getProfessionalImage as getProfessionalImageUtil, getProfessionalName as getProfessionalNameUtil, useProfessionalsQuery } from '@/query/professionals';
+import { usePatientsQuery } from '@/query/patients';
+import { useProfessionalsQuery } from '@/query/professionals';
 
 export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps) => {
   const { data: professionals } = useProfessionalsQuery();
   const { data: patients } = usePatientsQuery();
 
-  const getProfessionalName = (profId: string | undefined) => getProfessionalNameUtil(professionals, profId);
-  const getProfessionalImage = (profId: string | undefined) => getProfessionalImageUtil(professionals, profId);
-  const getPatientName = (patientId: string | undefined) => getPatientNameUtil(patients, patientId);
-  const getPatientImage = (patientId: string | undefined) => getPatientImageUtil(patients, patientId);
+  const professionalNameStore = useProfessionalStore();
+  const patientStore = usePatientStore();
+
+  const getProfessionalName = (profId: string | undefined) => professionalNameStore.getName(professionals, profId);
+  const getProfessionalImage = (profId: string | undefined) => professionalNameStore.getImage(professionals, profId);
+  const getPatientName = (patientId: string | undefined) => patientStore.getName(patients, patientId);
+  const getPatientImage = (patientId: string | undefined) => patientStore.getImage(patients, patientId);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);

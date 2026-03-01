@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { GET, request } from '@/lib/api/client';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+
 import type { ProfessionalList } from '@/lib/interfaces/professional';
 
 export const professionalsKeys = {
@@ -20,21 +20,4 @@ export function useProfessionalsQuery() {
     queryKey: professionalsKeys.list(),
     queryFn: fetchProfessionals,
   });
-}
-
-// --- Utilitários puros (recebem os dados como argumento) ---
-
-export function getProfessionalName(professionals: ProfessionalList[] | undefined, id: string | undefined): string {
-  if (!id || !professionals) return '';
-  return professionals.find((p) => p._id === id)?.name || '';
-}
-
-export function getProfessionalImage(professionals: ProfessionalList[] | undefined, id: string | undefined): string | undefined {
-  if (!id || !professionals) return undefined;
-  return professionals.find((p) => p._id === id)?.image || undefined;
-}
-
-export function mapProfessionalsToCombobox(professionals: ProfessionalList[] | undefined) {
-  if (!professionals?.length) return [];
-  return comboboxWithImgFormat(professionals);
 }

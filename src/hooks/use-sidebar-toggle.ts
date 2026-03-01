@@ -4,19 +4,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 
-type SidebarToggleStore = {
-  isOpen: boolean;
-  isMobileOpen: boolean;
-  isHovered: boolean;
-  isMenuOpen: boolean;
-  setOpen: (open: boolean) => void;
-  setMobileOpen: (open: boolean) => void;
-  setHovered: (hovered: boolean) => void;
-  setMenuOpen: (open: boolean) => void;
-  toggle: () => void;
-  state: 'expanded' | 'collapsed';
-};
-
 const computeState = (isOpen: boolean, isHovered: boolean, isMenuOpen: boolean): 'expanded' | 'collapsed' => (isOpen || isHovered || isMenuOpen ? 'expanded' : 'collapsed');
 
 export const useSidebarToggle = create<SidebarToggleStore>()(
@@ -78,7 +65,6 @@ export const useSidebarToggle = create<SidebarToggleStore>()(
   ),
 );
 
-// Hook wrapper que combina Zustand com detecção mobile
 export function useSidebar() {
   const isMobile = useIsMobile();
   const { isOpen, isMobileOpen, isHovered, isMenuOpen, state, setOpen, setMobileOpen, setHovered, setMenuOpen } = useSidebarToggle();
@@ -107,3 +93,16 @@ export function useSidebar() {
     toggleSidebar: toggle,
   };
 }
+
+type SidebarToggleStore = {
+  isOpen: boolean;
+  isMobileOpen: boolean;
+  isHovered: boolean;
+  isMenuOpen: boolean;
+  setOpen: (open: boolean) => void;
+  setMobileOpen: (open: boolean) => void;
+  setHovered: (hovered: boolean) => void;
+  setMenuOpen: (open: boolean) => void;
+  toggle: () => void;
+  state: 'expanded' | 'collapsed';
+};

@@ -6,10 +6,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { usePatientStore } from '@/hooks/patients';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import { useOdontogramDetailQuery } from '@/query/odontogram';
-import { getPatientImage, getPatientName, usePatientsQuery } from '@/query/patients';
-import { getProfessionalImage, getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
+import { usePatientsQuery } from '@/query/patients';
+import { useProfessionalsQuery } from '@/query/professionals';
 import { OdontogramStatusForm } from './@components/odontogram-status-form';
 
 export const Route = createFileRoute('/_private/odontogram/$id')({
@@ -51,10 +53,10 @@ function OdontogramDetailPage() {
     );
   }
 
-  const patientName = getPatientName(patients, odontogram.Patient);
-  const patientImage = getPatientImage(patients, odontogram.Patient);
-  const professionalName = getProfessionalName(professionals, odontogram.Professional);
-  const professionalImage = getProfessionalImage(professionals, odontogram.Professional);
+  const patientName = usePatientStore((state) => state.getName(patients, odontogram.Patient));
+  const patientImage = usePatientStore((state) => state.getImage(patients, odontogram.Patient));
+  const professionalName = useProfessionalStore((state) => state.getName(professionals, odontogram.Professional));
+  const professionalImage = useProfessionalStore((state) => state.getImage(professionals, odontogram.Professional));
 
   return (
     <Card>

@@ -5,13 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useClinicStore } from '@/hooks/clinic';
+import { usePatientStore } from '@/hooks/patients';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { extractDate, getStatusColor, statusDictionary, stringToDate } from '@/lib/helpers/formatter.helper';
 import type { DbSchedule } from '@/lib/interfaces/schedule';
 import { cn } from '@/lib/utils';
 import { useClinicApi } from '@/query/clinic';
-import { getPatientName as getPatientNameUtil, usePatientsQuery } from '@/query/patients';
-import { getProfessionalName as getProfessionalNameUtil, useProfessionalsQuery } from '@/query/professionals';
+import { usePatientsQuery } from '@/query/patients';
+import { useProfessionalsQuery } from '@/query/professionals';
 import { usePatientSchedulesQuery } from '@/query/schedule';
 
 export const Route = createFileRoute('/_private/schedule/$id')({
@@ -23,7 +25,7 @@ function PatientSchedulePage() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { data: patients } = usePatientsQuery();
-  const getPatientName = (patientId: string | undefined) => getPatientNameUtil(patients, patientId);
+  const getPatientName = (patientId: string | undefined) => usePatientStore.getState().getName(patients, patientId);
   const { data, isLoading } = usePatientSchedulesQuery(id);
 
   const nextEvent = data?.nextEvent ?? null;
@@ -99,7 +101,7 @@ function ScheduleCard({ schedule }: { schedule: DbSchedule }) {
   const { getRoomName: getRoomNameUtil } = useClinicStore();
   const getRoomName = (roomId: string | undefined) => getRoomNameUtil(clinic, roomId);
   const { data: professionals } = useProfessionalsQuery();
-  const getProfessionalName = (profId: string | undefined) => getProfessionalNameUtil(professionals, profId);
+  const getProfessionalName = (profId: string | undefined) => useProfessionalStore.getState().getName(professionals, profId);
   const isMobile = useIsMobile();
 
   const renderScheduleDateTime = () => {

@@ -12,11 +12,12 @@ import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullFinancial } from '@/lib/interfaces/financial';
 import type { ProfessionalList } from '@/lib/interfaces/professional';
 import { useFinancialDetailQuery } from '@/query/financials';
-import { getProfessionalImage, getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
+import { useProfessionalsQuery } from '@/query/professionals';
 import { FinancialEditForm } from './@components/financial-edit-form';
 import { STATUS_TO_BADGE_VARIANT } from './@consts/financial.consts';
 import { useFinancialEditForm } from './@hooks/use-financial-edit-form';
@@ -113,12 +114,12 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
               </div>
               <div className="flex w-full items-center gap-3 rounded-lg border p-4">
                 <Avatar className="size-12">
-                  <AvatarImage src={getProfessionalImage(professionals, financial.Professional)} alt="Profissional" />
-                  <AvatarFallback>{getProfessionalName(professionals, financial.Professional).slice(0, 2)}</AvatarFallback>
+                  <AvatarImage src={useProfessionalStore.getState().getImage(professionals, financial.Professional)} alt="Profissional" />
+                  <AvatarFallback>{useProfessionalStore.getState().getName(professionals, financial.Professional).slice(0, 2)}</AvatarFallback>
                 </Avatar>
                 <ItemContent className="gap-0">
                   <ItemDescription>Profissional</ItemDescription>
-                  <ItemTitle>{getProfessionalName(professionals, financial.Professional)}</ItemTitle>
+                  <ItemTitle>{useProfessionalStore.getState().getName(professionals, financial.Professional)}</ItemTitle>
                 </ItemContent>
               </div>
             </div>

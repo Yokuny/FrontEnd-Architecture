@@ -3,18 +3,6 @@ import { DELETE, GET, PATCH, POST, PUT, request } from '@/lib/api/client';
 import type { DbSchedule, FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule';
 import type { NewSchedule, ScheduledPatient, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 
-export type ScheduleQueryParams = {
-  startDate: Date;
-  endDate: Date;
-  roomID: string;
-};
-
-interface PatientScheduleData {
-  nextEvent: DbSchedule | null;
-  futureEvents: DbSchedule[];
-  pastEvents: DbSchedule[];
-}
-
 export const scheduleKeys = {
   all: ['schedule'] as const,
   lists: () => [...scheduleKeys.all, 'list'] as const,
@@ -166,4 +154,16 @@ export function useRequestScheduleConfirmation() {
       return res;
     },
   });
+}
+
+export type ScheduleQueryParams = {
+  startDate: Date;
+  endDate: Date;
+  roomID: string;
+};
+
+interface PatientScheduleData {
+  nextEvent: DbSchedule | null;
+  futureEvents: DbSchedule[];
+  pastEvents: DbSchedule[];
 }

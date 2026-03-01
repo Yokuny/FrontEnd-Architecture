@@ -13,7 +13,7 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useClinicStore } from '@/hooks/clinic';
-
+import { usePatientStore } from '@/hooks/patients';
 import { DELETE, GET, POST, PUT, request } from '@/lib/api/client';
 import { DefaultEndHour, DefaultStartHour } from '@/lib/consts/calendar.constants';
 import { comboboxWithImgFormat, formatPhone } from '@/lib/helpers/formatter.helper';
@@ -22,7 +22,7 @@ import type { PartialSchedule } from '@/lib/interfaces/schedule';
 import type { NewSchedule, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 import { cn } from '@/lib/utils';
 import { useClinicApi } from '@/query/clinic';
-import { getPatientName as getPatientNameUtil, usePatientsQuery } from '@/query/patients';
+import { usePatientsQuery } from '@/query/patients';
 import { useUserQuery } from '@/query/user';
 
 export function ScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFormProps) {
@@ -32,7 +32,7 @@ export function ScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFormP
   const { getRoomName: getRoomNameUtil } = useClinicStore();
 
   const getRoomName = useCallback((id: string | undefined) => getRoomNameUtil(clinic, id), [clinic, getRoomNameUtil]);
-  const getPatientName = useCallback((id: string | undefined) => getPatientNameUtil(patients, id), [patients]);
+  const getPatientName = useCallback((id: string | undefined) => usePatientStore.getState().getName(patients, id), [patients]);
 
   const [startDateTime, setStartDateTime] = useState<string>('');
   const [endDateTime, setEndDateTime] = useState<string | undefined>(undefined);
