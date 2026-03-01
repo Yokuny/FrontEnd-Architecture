@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from '@tanstack/react-router';
 import { Check, Copy, Pencil, Plus, Settings, Square, SquareCheck } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useProceduresSheetQuery } from '@/query/procedures';
 
 const procedureSchema = z.object({
   procedure: z.string(),
@@ -34,23 +35,16 @@ type ProcedureData = {
   periodicity?: string;
 };
 
-type ProcedureSheet = {
-  groupName: string;
-  procedures: ProcedureData[];
-};
-
 type ProceduresSheetProps = {
   handleProcedure: (procedure: NewProcedure) => void;
   disabled?: boolean;
-  fetchProcedures?: () => Promise<ProcedureSheet[]>;
   stringPriceClean?: (value: any) => number;
   handleCopy?: (value: string) => Promise<void>;
 };
 
-const ProceduresSheet = ({ handleProcedure, disabled, fetchProcedures, stringPriceClean, handleCopy }: ProceduresSheetProps) => {
+const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCopy }: ProceduresSheetProps) => {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [procedures, setProcedures] = useState([] as ProcedureSheet[]);
+  const { data: procedures = [], isLoading } = useProceduresSheetQuery();
   const [procedure, setProcedure] = useState({} as ProcedureData);
   const [btnValue, setBtnValue] = useState({} as NewProcedure);
   const [copiedStates, setCopiedStates] = useState({
@@ -102,22 +96,6 @@ const ProceduresSheet = ({ handleProcedure, disabled, fetchProcedures, stringPri
       toast.error(e.message);
     }
   };
-
-  useEffect(() => {
-    const loadProcedures = async () => {
-      if (!fetchProcedures) return;
-      setIsLoading(true);
-      try {
-        const data = await fetchProcedures();
-        setProcedures(data);
-      } catch (e: any) {
-        toast.error(e.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadProcedures();
-  }, [fetchProcedures]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -283,11 +261,16 @@ const ProceduresSheet = ({ handleProcedure, disabled, fetchProcedures, stringPri
               <AccordionItem key={group.groupName} value={group.groupName}>
                 <AccordionTrigger>{group.groupName.toUpperCase()}</AccordionTrigger>
                 <AccordionContent className="space-y-1">
-                  {group.procedures.map((proc: ProcedureData) => (
-                    <div key={proc.procedure} className="flex w-full cursor-pointer items-center justify-between p-1 px-4" onClick={() => setProcedure(proc)}>
+                  {group.procedures.map((proc: any) => (
+                    <button
+                      type="button"
+                      key={proc.procedure}
+                      className="flex w-full cursor-pointer items-center justify-between p-1 px-4 hover:bg-muted"
+                      onClick={() => setProcedure(proc)}
+                    >
                       <span>{proc.procedure}</span>
                       {proc.procedure === procedure.procedure ? <SquareCheck className={'size-5'} /> : <Square className={'size-5'} />}
-                    </div>
+                    </button>
                   ))}
                 </AccordionContent>
               </AccordionItem>

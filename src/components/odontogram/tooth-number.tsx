@@ -1,12 +1,13 @@
-type ToothStatus = 'normal' | 'missing' | 'extracted' | 'periodontitis' | 'caries' | 'prosthesis' | 'implant';
+import * as TeethComponents from './assets/odontogram';
 
-type ToothProps = {
+export type ToothStatus = 'normal' | 'missing' | 'extracted' | 'periodontitis' | 'caries' | 'prosthesis' | 'implant';
+
+export type ToothProps = {
   toothNumber: number;
   status?: ToothStatus;
-  TeethComponents: Record<string, React.ComponentType<{ fill?: string }>>;
 };
 
-const ToothByNumber = (toothNumber: number, status: ToothStatus | undefined, TeethComponents: Record<string, React.ComponentType<{ fill?: string }>>) => {
+const ToothByNumber = (toothNumber: number, status: ToothStatus | undefined) => {
   const isInactive = ['missing', 'extracted'].includes(status || 'normal');
   const hasProblem = ['periodontitis', 'caries'].includes(status || 'normal');
   const hasReplacement = ['prosthesis', 'implant'].includes(status || 'normal');
@@ -72,7 +73,7 @@ const ToothByNumber = (toothNumber: number, status: ToothStatus | undefined, Tee
   };
 
   const config = toothMap[toothNumber] || { component: 'teeth38_48', mirror: true };
-  const Component = TeethComponents[config.component];
+  const Component = (TeethComponents as unknown as Record<string, React.ComponentType<{ fill?: string }>>)[config.component];
 
   if (!Component) return null;
 
@@ -83,8 +84,8 @@ const ToothByNumber = (toothNumber: number, status: ToothStatus | undefined, Tee
   );
 };
 
-const ToothNumber = ({ toothNumber, status, TeethComponents }: ToothProps) => {
-  return <div className="aspect-auto h-auto w-7">{ToothByNumber(toothNumber, status, TeethComponents)}</div>;
+const ToothNumber = ({ toothNumber, status }: ToothProps) => {
+  return <div className="aspect-auto h-auto w-7">{ToothByNumber(toothNumber, status)}</div>;
 };
 
 export default ToothNumber;

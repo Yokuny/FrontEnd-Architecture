@@ -9,26 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as PrivateRouteImport } from './routes/_private';
-import { Route as PrivateFinancialIdRouteImport } from './routes/_private/financial/$id';
-import { Route as PrivateFinancialAddRouteImport } from './routes/_private/financial/add';
-import { Route as PrivateFinancialIndexRouteImport } from './routes/_private/financial/index';
-import { Route as PrivateSettingsAccessIndexRouteImport } from './routes/_private/settings/access/index';
-import { Route as PrivateSettingsClinicIndexRouteImport } from './routes/_private/settings/clinic/index';
-import { Route as PrivateSettingsIndexRouteImport } from './routes/_private/settings/index';
-import { Route as PrivateSettingsInviteIndexRouteImport } from './routes/_private/settings/invite/index';
-import { Route as PrivateSettingsPermissionsIndexRouteImport } from './routes/_private/settings/permissions/index';
-import { Route as PrivateSettingsProceduresIndexRouteImport } from './routes/_private/settings/procedures/index';
-import { Route as PrivateSettingsProfileIndexRouteImport } from './routes/_private/settings/profile/index';
-import { Route as PrivateSettingsRouteRouteImport } from './routes/_private/settings/route';
 import { Route as PublicRouteImport } from './routes/_public';
-import { Route as PublicAuthFinishSignupCodeIndexRouteImport } from './routes/_public/auth/finish-signup/$code/index';
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PublicAuthNewPasswordCodeIndexRouteImport } from './routes/_public/auth/new-password/$code/index';
-import { Route as PublicAuthRecoveryIndexRouteImport } from './routes/_public/auth/recovery/index';
-import { Route as PublicAuthSignupIndexRouteImport } from './routes/_public/auth/signup/index';
-import { Route as PublicScheduleCodeIndexRouteImport } from './routes/_public/schedule/$code/index';
+import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
+import { Route as PrivateSettingsRouteRouteImport } from './routes/_private/settings/route';
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateSettingsIndexRouteImport } from './routes/_private/settings/index';
+import { Route as PrivateOdontogramIndexRouteImport } from './routes/_private/odontogram/index';
+import { Route as PrivateFinancialIndexRouteImport } from './routes/_private/financial/index';
+import { Route as PrivateOdontogramAddRouteImport } from './routes/_private/odontogram/add';
+import { Route as PrivateOdontogramIdRouteImport } from './routes/_private/odontogram/$id';
+import { Route as PrivateFinancialAddRouteImport } from './routes/_private/financial/add';
+import { Route as PrivateFinancialIdRouteImport } from './routes/_private/financial/$id';
+import { Route as PublicScheduleCodeIndexRouteImport } from './routes/_public/schedule/$code/index';
+import { Route as PublicAuthSignupIndexRouteImport } from './routes/_public/auth/signup/index';
+import { Route as PublicAuthRecoveryIndexRouteImport } from './routes/_public/auth/recovery/index';
+import { Route as PrivateSettingsProfileIndexRouteImport } from './routes/_private/settings/profile/index';
+import { Route as PrivateSettingsProceduresIndexRouteImport } from './routes/_private/settings/procedures/index';
+import { Route as PrivateSettingsPermissionsIndexRouteImport } from './routes/_private/settings/permissions/index';
+import { Route as PrivateSettingsInviteIndexRouteImport } from './routes/_private/settings/invite/index';
+import { Route as PrivateSettingsClinicIndexRouteImport } from './routes/_private/settings/clinic/index';
+import { Route as PrivateSettingsAccessIndexRouteImport } from './routes/_private/settings/access/index';
+import { Route as PublicAuthNewPasswordCodeIndexRouteImport } from './routes/_public/auth/new-password/$code/index';
+import { Route as PublicAuthFinishSignupCodeIndexRouteImport } from './routes/_public/auth/finish-signup/$code/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -58,9 +61,24 @@ const PrivateSettingsIndexRoute = PrivateSettingsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PrivateSettingsRouteRoute,
 } as any);
+const PrivateOdontogramIndexRoute = PrivateOdontogramIndexRouteImport.update({
+  id: '/odontogram/',
+  path: '/odontogram/',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PrivateFinancialIndexRoute = PrivateFinancialIndexRouteImport.update({
   id: '/financial/',
   path: '/financial/',
+  getParentRoute: () => PrivateRoute,
+} as any);
+const PrivateOdontogramAddRoute = PrivateOdontogramAddRouteImport.update({
+  id: '/odontogram/add',
+  path: '/odontogram/add',
+  getParentRoute: () => PrivateRoute,
+} as any);
+const PrivateOdontogramIdRoute = PrivateOdontogramIdRouteImport.update({
+  id: '/odontogram/$id',
+  path: '/odontogram/$id',
   getParentRoute: () => PrivateRoute,
 } as any);
 const PrivateFinancialAddRoute = PrivateFinancialAddRouteImport.update({
@@ -142,7 +160,10 @@ export interface FileRoutesByFullPath {
   '/settings': typeof PrivateSettingsRouteRouteWithChildren;
   '/financial/$id': typeof PrivateFinancialIdRoute;
   '/financial/add': typeof PrivateFinancialAddRoute;
+  '/odontogram/$id': typeof PrivateOdontogramIdRoute;
+  '/odontogram/add': typeof PrivateOdontogramAddRoute;
   '/financial/': typeof PrivateFinancialIndexRoute;
+  '/odontogram/': typeof PrivateOdontogramIndexRoute;
   '/settings/': typeof PrivateSettingsIndexRoute;
   '/auth/': typeof PublicAuthIndexRoute;
   '/settings/access/': typeof PrivateSettingsAccessIndexRoute;
@@ -161,7 +182,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/financial/$id': typeof PrivateFinancialIdRoute;
   '/financial/add': typeof PrivateFinancialAddRoute;
+  '/odontogram/$id': typeof PrivateOdontogramIdRoute;
+  '/odontogram/add': typeof PrivateOdontogramAddRoute;
   '/financial': typeof PrivateFinancialIndexRoute;
+  '/odontogram': typeof PrivateOdontogramIndexRoute;
   '/settings': typeof PrivateSettingsIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/settings/access': typeof PrivateSettingsAccessIndexRoute;
@@ -184,7 +208,10 @@ export interface FileRoutesById {
   '/_private/settings': typeof PrivateSettingsRouteRouteWithChildren;
   '/_private/financial/$id': typeof PrivateFinancialIdRoute;
   '/_private/financial/add': typeof PrivateFinancialAddRoute;
+  '/_private/odontogram/$id': typeof PrivateOdontogramIdRoute;
+  '/_private/odontogram/add': typeof PrivateOdontogramAddRoute;
   '/_private/financial/': typeof PrivateFinancialIndexRoute;
+  '/_private/odontogram/': typeof PrivateOdontogramIndexRoute;
   '/_private/settings/': typeof PrivateSettingsIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/settings/access/': typeof PrivateSettingsAccessIndexRoute;
@@ -206,7 +233,10 @@ export interface FileRouteTypes {
     | '/settings'
     | '/financial/$id'
     | '/financial/add'
+    | '/odontogram/$id'
+    | '/odontogram/add'
     | '/financial/'
+    | '/odontogram/'
     | '/settings/'
     | '/auth/'
     | '/settings/access/'
@@ -225,7 +255,10 @@ export interface FileRouteTypes {
     | '/'
     | '/financial/$id'
     | '/financial/add'
+    | '/odontogram/$id'
+    | '/odontogram/add'
     | '/financial'
+    | '/odontogram'
     | '/settings'
     | '/auth'
     | '/settings/access'
@@ -247,7 +280,10 @@ export interface FileRouteTypes {
     | '/_private/settings'
     | '/_private/financial/$id'
     | '/_private/financial/add'
+    | '/_private/odontogram/$id'
+    | '/_private/odontogram/add'
     | '/_private/financial/'
+    | '/_private/odontogram/'
     | '/_private/settings/'
     | '/_public/auth/'
     | '/_private/settings/access/'
@@ -313,11 +349,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateSettingsIndexRouteImport;
       parentRoute: typeof PrivateSettingsRouteRoute;
     };
+    '/_private/odontogram/': {
+      id: '/_private/odontogram/';
+      path: '/odontogram';
+      fullPath: '/odontogram/';
+      preLoaderRoute: typeof PrivateOdontogramIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_private/financial/': {
       id: '/_private/financial/';
       path: '/financial';
       fullPath: '/financial/';
       preLoaderRoute: typeof PrivateFinancialIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/odontogram/add': {
+      id: '/_private/odontogram/add';
+      path: '/odontogram/add';
+      fullPath: '/odontogram/add';
+      preLoaderRoute: typeof PrivateOdontogramAddRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
+    '/_private/odontogram/$id': {
+      id: '/_private/odontogram/$id';
+      path: '/odontogram/$id';
+      fullPath: '/odontogram/$id';
+      preLoaderRoute: typeof PrivateOdontogramIdRouteImport;
       parentRoute: typeof PrivateRoute;
     };
     '/_private/financial/add': {
@@ -441,14 +498,20 @@ interface PrivateRouteChildren {
   PrivateSettingsRouteRoute: typeof PrivateSettingsRouteRouteWithChildren;
   PrivateFinancialIdRoute: typeof PrivateFinancialIdRoute;
   PrivateFinancialAddRoute: typeof PrivateFinancialAddRoute;
+  PrivateOdontogramIdRoute: typeof PrivateOdontogramIdRoute;
+  PrivateOdontogramAddRoute: typeof PrivateOdontogramAddRoute;
   PrivateFinancialIndexRoute: typeof PrivateFinancialIndexRoute;
+  PrivateOdontogramIndexRoute: typeof PrivateOdontogramIndexRoute;
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateSettingsRouteRoute: PrivateSettingsRouteRouteWithChildren,
   PrivateFinancialIdRoute: PrivateFinancialIdRoute,
   PrivateFinancialAddRoute: PrivateFinancialAddRoute,
+  PrivateOdontogramIdRoute: PrivateOdontogramIdRoute,
+  PrivateOdontogramAddRoute: PrivateOdontogramAddRoute,
   PrivateFinancialIndexRoute: PrivateFinancialIndexRoute,
+  PrivateOdontogramIndexRoute: PrivateOdontogramIndexRoute,
 };
 
 const PrivateRouteWithChildren =

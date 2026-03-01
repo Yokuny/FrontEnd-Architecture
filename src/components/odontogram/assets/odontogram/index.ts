@@ -1,0 +1,17 @@
+export { default as teeth11_21_51_61 } from './teeth11_21_51_61';
+export { default as teeth12_22_52_62 } from './teeth12_22_52_62';
+export { default as teeth13_23_53_63 } from './teeth13_23_53_63';
+export { default as teeth14_24 } from './teeth14_24';
+export { default as teeth15_25 } from './teeth15_25';
+export { default as teeth16_26_54_64 } from './teeth16_26_54_64';
+export { default as teeth17_27_55_65 } from './teeth17_27_55_65';
+export { default as teeth18_28 } from './teeth18_28';
+export { default as teeth31_41_71_81 } from './teeth31_41_71_81';
+export { default as teeth32_42_72_82 } from './teeth32_42_72_82';
+export { default as teeth33_43_73_83 } from './teeth33_43_73_83';
+export { default as teeth34_44 } from './teeth34_44';
+export { default as teeth35_45 } from './teeth35_45';
+export { default as teeth36_46_74_84 } from './teeth36_46_74_84';
+export { default as teeth37_47_75_85 } from './teeth37_47_75_85';
+export { default as teeth38_48 } from './teeth38_48';
+export { default as ToothParts } from './tooth_parts';
