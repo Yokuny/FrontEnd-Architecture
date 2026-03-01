@@ -192,7 +192,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                       <TableRow className="text-xs">
                         <TableCell className="p-0 md:px-0">
                           <Button
-                            variant="ghost"
+                            variant="secondary"
                             size="sm"
                             className="flex w-full gap-2 transition-transform active:scale-90"
                             onClick={(e) => {
@@ -209,7 +209,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                         </TableCell>
                         <TableCell className="p-0 md:px-0">
                           <Button
-                            variant="ghost"
+                            variant="secondary"
                             size="sm"
                             className="flex w-full gap-2 transition-transform active:scale-90"
                             onClick={(e) => {
@@ -230,7 +230,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                         </TableCell>
                         <TableCell className="p-0 md:px-0">
                           <Button
-                            variant="ghost"
+                            variant="secondary"
                             size="sm"
                             className="flex w-full gap-2 transition-transform active:scale-90"
                             onClick={(e) => {

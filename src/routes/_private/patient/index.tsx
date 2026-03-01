@@ -95,7 +95,7 @@ function PatientListPage() {
         render: (_, item) => (
           <DropdownMenu>
             <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-              <Button variant="ghost" size="icon">
+              <Button variant="secondary" size="icon">
                 <MoreVertical className="size-4" />
               </Button>
             </DropdownMenuTrigger>

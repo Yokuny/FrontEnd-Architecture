@@ -105,7 +105,7 @@ export function RemindersList({ reminders }: { reminders: DbReminder[] }) {
         render: (_, reminder) => (
           <DropdownMenu>
             <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-              <Button variant="ghost" size="icon">
+              <Button variant="secondary" size="icon">
                 <MoreVertical className="size-4" />
               </Button>
             </DropdownMenuTrigger>

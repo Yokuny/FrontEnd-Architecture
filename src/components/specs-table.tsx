@@ -118,11 +118,11 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
       <ItemHeader className="mb-6">
         <ItemTitle className="text-xl md:text-2xl">{title}</ItemTitle>
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
+          <Button variant="secondary" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
             {'expand.all'}
           </Button>
           <Separator orientation="vertical" className="h-4 self-center" />
-          <Button variant="ghost" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
+          <Button variant="secondary" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
             {'collapse.all'}
           </Button>
         </div>
@@ -133,7 +133,7 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
           <Collapsible key={category.id} open={openCategories.includes(category.id)} onOpenChange={() => toggleCategory(category.id)}>
             <div className="rounded-lg border bg-card">
               <CollapsibleTrigger asChild>
-                <Button variant="ghost" className="w-full items-center justify-between outline-none hover:bg-secondary focus-visible:ring-2">
+                <Button variant="secondary" className="w-full items-center justify-between outline-none hover:bg-secondary focus-visible:ring-2">
                   <div className="flex items-center gap-3">
                     <ItemMedia variant="icon" className="rounded-lg bg-muted text-foreground">
                       {category.icon}

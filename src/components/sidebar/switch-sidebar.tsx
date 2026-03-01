@@ -17,7 +17,7 @@ export function SidebarSwitcher() {
   const Icon = getIconData();
 
   return (
-    <Button size="icon" variant="ghost" onClick={toggle} aria-label="Toggle Sidebar">
+    <Button size="icon" variant="secondary" onClick={toggle} aria-label="Toggle Sidebar">
       <Icon className="flex h-full w-full items-center justify-center" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>

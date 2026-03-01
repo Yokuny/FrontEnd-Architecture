@@ -206,7 +206,12 @@ export function DataTable<T extends Record<string, any>>({
                           className="h-8 pr-8 text-xs"
                         />
                         {columnFilters[String(column.key)] && (
-                          <Button variant="ghost" size="icon" onClick={() => clearColumnFilter(String(column.key))} className="absolute top-0 right-0 h-8 w-8 hover:bg-transparent">
+                          <Button
+                            variant="secondary"
+                            size="icon"
+                            onClick={() => clearColumnFilter(String(column.key))}
+                            className="absolute top-0 right-0 h-8 w-8 hover:bg-transparent"
+                          >
                             <X className="size-3 text-muted-foreground hover:text-foreground" />
                           </Button>
                         )}

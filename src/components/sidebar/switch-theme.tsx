@@ -22,7 +22,7 @@ export function ThemeSwitcher() {
 
   if (!mounted) {
     return (
-      <Button size="icon" variant="ghost">
+      <Button size="icon" variant="secondary">
         <SunIcon className="flex h-full w-full items-center justify-center" />
       </Button>
     );
@@ -31,7 +31,7 @@ export function ThemeSwitcher() {
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="ghost">
+        <Button size="icon" variant="secondary">
           {theme === 'sunset' ? (
             <SunDimIcon className="flex h-full w-full items-center justify-center" />
           ) : theme === 'ocean-blue' ? (

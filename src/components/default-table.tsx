@@ -85,7 +85,7 @@ const columns: ColumnDef<Item>[] = [
       <div className="text-right">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Button variant="secondary" size="icon" className="h-8 w-8">
               <MoreHorizontal className="size-4" />
               <span className="sr-only">Open menu</span>
             </Button>

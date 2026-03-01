@@ -181,27 +181,27 @@ function ScheduleCard({ schedule }: { schedule: DbSchedule }) {
         <div>{renderScheduleDateTime()}</div>
 
         <div className="flex flex-wrap items-start gap-2 pt-1 md:flex-col md:pt-2">
-          <Button variant="ghost" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
+          <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
             <MapPin className="size-4" />
             <span className="text-muted-foreground text-sm">{getRoomName(schedule.Room)}</span>
           </Button>
 
           {schedule.Professional && (
-            <Button variant="ghost" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
+            <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
               <Stethoscope className="size-4" />
               <span className="text-muted-foreground text-sm">{getProfessionalName(schedule.Professional)}</span>
             </Button>
           )}
 
           {schedule.Financial && (
-            <Button variant="ghost" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
+            <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
               <DollarSign className="size-4" />
               <span className="text-muted-foreground text-sm">Vinculado</span>
             </Button>
           )}
 
           {schedule.title && (
-            <Button variant="ghost" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
+            <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
               <FileText className="size-4" />
               <span className="text-muted-foreground text-sm">{schedule.title}</span>
             </Button>

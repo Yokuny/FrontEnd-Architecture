@@ -17,7 +17,7 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="ghost" aria-label="Open notifications" className="relative">
+        <Button size="icon" variant="secondary" aria-label="Open notifications" className="relative">
           {hasNotifications ? (
             <MessageSquareIcon className="flex h-full w-full items-center justify-center" />
           ) : (

@@ -13,7 +13,7 @@ export function EnterpriseSwitcher() {
   };
 
   return (
-    <Button size="icon" variant="ghost" aria-label={'logout'} onClick={onLogout}>
+    <Button size="icon" variant="secondary" aria-label={'logout'} onClick={onLogout}>
       <LogOutIcon className="size-4" />
       <span className="sr-only">{'logout'}</span>
     </Button>
