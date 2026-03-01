@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { GET, request } from '@/lib/api/client';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { DELETE, GET, PATCH, POST, PUT, request } from '@/lib/api/client';
 import type { DbSchedule, FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule';
+import type { NewSchedule, ScheduledPatient, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 
 export type ScheduleQueryParams = {
   startDate: Date;
@@ -70,5 +71,99 @@ export function usePatientSchedulesQuery(patientId?: string) {
     queryKey: scheduleKeys.byPatient(patientId ?? ''),
     queryFn: () => fetchPatientSchedules(patientId!),
     enabled: !!patientId,
+  });
+}
+
+export function useCreateSchedule() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: NewSchedule) => {
+      const res = await request('schedule/create', POST(data));
+      if (!res.success) throw new Error(res.message);
+      return res;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: scheduleKeys.lists() });
+    },
+  });
+}
+
+export function useCreateScheduledPatient() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: ScheduledPatient) => {
+      const res = await request('schedule/scheduled-patient', POST(data));
+      if (!res.success) throw new Error(res.message);
+      return res;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: scheduleKeys.lists() });
+    },
+  });
+}
+
+export function useUpdateSchedule() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: UpdateSchedule }) => {
+      const res = await request(`schedule/${id}`, PUT(data));
+      if (!res.success) throw new Error(res.message);
+      return res;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: scheduleKeys.lists() });
+    },
+  });
+}
+
+export function useUpdateScheduleTime() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: { start: string; end: string } }) => {
+      const res = await request(`schedule/${id}/time`, PATCH(data));
+      if (!res.success) throw new Error(res.message);
+      return res;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: scheduleKeys.lists() });
+    },
+  });
+}
+
+export function useUpdateScheduleStatus() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      const res = await request(`schedule/${id}/status`, PATCH({ status }));
+      if (!res.success) throw new Error(res.message);
+      return res;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: scheduleKeys.lists() });
+    },
+  });
+}
+
+export function useDeleteSchedule() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const res = await request(`schedule/${id}`, DELETE());
+      if (!res.success) throw new Error(res.message);
+      return res;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: scheduleKeys.lists() });
+    },
+  });
+}
+
+export function useRequestScheduleConfirmation() {
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const res = await request(`schedule/${id}/confirmation-passkey`, POST({}));
+      if (!res.success) throw new Error(res.message);
+      return res;
+    },
   });
 }

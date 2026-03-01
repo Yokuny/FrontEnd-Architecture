@@ -20,6 +20,9 @@
 - [ ] Datas com `@/lib/formatDate`
 - [ ] Estado persistente com Zustand (nao localStorage)
 - [ ] Usando `DefaultLoading` e `DefaultEmptyData`
+- [ ] **Listagem usa `DataTable`** de `@/components/ui/data-table` — NUNCA `ItemGroup`/`Item`
+- [ ] Colunas do `DataTable` declaradas com `useMemo<DataTableColumn<TEntity>[]>`
+- [ ] `DataTable` com `searchable={false}` e `showPagination={false}` quando paginacao e busca sao controladas pela URL
 
 ## 4. Antes de Commitar
 

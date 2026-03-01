@@ -5,9 +5,8 @@ import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ItemGroup } from '@/components/ui/item';
 import { useFinancialsPartialQuery } from '@/query/financials';
-import { FinancialListItem } from './@components/financial-list';
+import { FinancialList } from './@components/financial-list';
 
 export const Route = createFileRoute('/_private/financial/')({
   component: FinancialListPage,
@@ -32,19 +31,7 @@ function FinancialListPage() {
         </CardAction>
       </CardHeader>
 
-      <CardContent>
-        {isLoading ? (
-          <DefaultLoading />
-        ) : !financials?.length ? (
-          <DefaultEmptyData />
-        ) : (
-          <ItemGroup>
-            {financials.map((financial) => (
-              <FinancialListItem key={financial._id} financial={financial} />
-            ))}
-          </ItemGroup>
-        )}
-      </CardContent>
+      <CardContent>{isLoading ? <DefaultLoading /> : !financials?.length ? <DefaultEmptyData /> : <FinancialList data={financials} />}</CardContent>
     </Card>
   );
 }

@@ -1,0 +1,131 @@
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
+import { Trash2 } from 'lucide-react';
+import { useMemo } from 'react';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import DefaultLoading from '@/components/default-loading';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Form } from '@/components/ui/form';
+import { Spinner } from '@/components/ui/spinner';
+
+import { usePatientQuery } from '@/query/patient';
+import { PatientForm } from './@components/patient-form';
+import { usePatientApi } from './@hooks/use-patient-api';
+import { usePatientForm } from './@hooks/use-patient-form';
+
+const searchSchema = z.object({
+  id: z.string().optional(),
+});
+
+export const Route = createFileRoute('/_private/patient/add')({
+  component: PatientAddPage,
+  validateSearch: searchSchema,
+});
+
+function PatientAddPage() {
+  const { id } = useSearch({ from: '/_private/patient/add' });
+  const { data: patient, isLoading } = usePatientQuery(id);
+
+  if (id && isLoading) {
+    return (
+      <Card>
+        <CardHeader />
+        <CardContent className="p-12">
+          <DefaultLoading />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return <PatientAddFormContent initialData={patient} />;
+}
+
+function PatientAddFormContent({ initialData }: { initialData?: any }) {
+  const navigate = useNavigate();
+  const { deletePatient } = usePatientApi();
+
+  const formData = useMemo(() => {
+    if (!initialData) return undefined;
+    return {
+      ...initialData,
+      id: initialData._id,
+    };
+  }, [initialData]);
+
+  const { form, onSubmit, isPending } = usePatientForm(formData);
+
+  const handleDelete = async () => {
+    if (!initialData?._id) return;
+    try {
+      await deletePatient.mutateAsync(initialData._id);
+      toast.success('Excluído com sucesso');
+      navigate({ to: '/patient', search: { page: 1, size: 20 } });
+    } catch {
+      toast.error('Erro ao excluir');
+    }
+  };
+
+  const submitHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await onSubmit(e);
+      toast.success(initialData ? 'Paciente atualizado!' : 'Paciente cadastrado!');
+      navigate({ to: '/patient', search: { page: 1, size: 20 } });
+    } catch (err: any) {
+      toast.error(err.message || 'Erro ao salvar paciente');
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader />
+      <Form {...form}>
+        <form onSubmit={submitHandler}>
+          <CardContent>
+            <PatientForm />
+          </CardContent>
+          <CardFooter>
+            {initialData && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button type="button" variant="destructive" disabled={deletePatient.isPending || isPending}>
+                    {deletePatient.isPending ? <Spinner className="mr-2 size-4" /> : <Trash2 className="mr-2 size-4" />}
+                    Excluir
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                    <AlertDialogDescription>Esta ação não pode ser desfeita e excluirá todos os registros vinculados ao paciente.</AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} className="bg-destructive">
+                      <Trash2 className="size-4" />
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
+            <Button type="submit" disabled={isPending} className="ml-auto min-w-[120px]">
+              {isPending && <Spinner className="mr-2 size-4" />}
+              Salvar
+            </Button>
+          </CardFooter>
+        </form>
+      </Form>
+    </Card>
+  );
+}

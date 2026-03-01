@@ -19,6 +19,7 @@ export const MAIN_ROUTES = [
   '/auth/signup/',
   '/financial/add',
   '/odontogram/add',
+  '/patient/add',
   '/reminders/add',
   '/settings/access/',
   '/settings/clinic/',

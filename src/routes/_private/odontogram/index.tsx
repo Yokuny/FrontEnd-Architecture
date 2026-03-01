@@ -1,5 +1,7 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 import { Activity, MoreVertical, Plus, Search } from 'lucide-react';
+import { useCallback, useMemo } from 'react';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import DefaultEmptyData from '@/components/default-empty-data';
@@ -7,12 +9,13 @@ import DefaultLoading from '@/components/default-loading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { formatDate } from '@/lib/helpers/formatter.helper';
+import type { PartialOdontogram } from '@/lib/interfaces/odontogram';
 import { useOdontogramsQuery } from '@/query/odontogram';
 
 const searchSchema = z.object({
@@ -45,9 +48,81 @@ function OdontogramListPage() {
   const totalPages = Math.ceil(totalCount / size);
   const items = filteredData.slice((page - 1) * size, page * size);
 
-  const handleCopy = (value: string) => {
+  const handleCopy = useCallback((value: string) => {
     navigator.clipboard.writeText(value);
-  };
+    toast.success('Copiado para a área de transferência');
+  }, []);
+
+  const columns = useMemo<DataTableColumn<PartialOdontogram>[]>(
+    () => [
+      {
+        key: 'patient',
+        header: 'Paciente',
+        sortable: true,
+        render: (_, item) => (
+          <div className="flex items-center gap-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-primary/20 text-primary">
+              <Activity className="size-5" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-medium text-base">{item.patient}</span>
+              <span className="text-muted-foreground text-sm">
+                {formatDate(String(item.createdAt))} • {item.procedureCount} Procedimentos
+              </span>
+            </div>
+          </div>
+        ),
+      },
+      {
+        key: 'finished',
+        header: 'Status',
+        render: (_, item) => <div className="flex">{item.finished ? <Badge variant="success">Finalizado</Badge> : <Badge variant="warning">Em andamento</Badge>}</div>,
+      },
+      {
+        key: '_id',
+        header: '',
+        width: '50px',
+        render: (_, item) => (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+              <Button variant="ghost" size="icon">
+                <MoreVertical className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => navigate({ to: '/odontogram/$id', params: { id: item._id } })}>Visualizar</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate({ to: '/financial/$id', params: { id: item.Financial } });
+                }}
+              >
+                Orçamento
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate({ to: '/patient/$id', params: { id: item.patientID } });
+                }}
+              >
+                Paciente
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCopy(item.patient);
+                }}
+              >
+                Copiar nome
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ),
+      },
+    ],
+    [navigate, handleCopy],
+  );
 
   return (
     <Card>
@@ -88,56 +163,15 @@ function OdontogramListPage() {
         ) : items.length === 0 ? (
           <DefaultEmptyData />
         ) : (
-          <ItemGroup>
-            {items.map((item) => (
-              <Item key={item._id} variant="outline" className="cursor-pointer" onClick={() => navigate({ to: '/odontogram/$id', params: { id: item._id } })}>
-                <div className="flex flex-1 items-center gap-4">
-                  <ItemMedia variant="icon">
-                    <Activity className="size-5" />
-                  </ItemMedia>
-                  <ItemContent className="w-full flex-1 gap-0 sm:w-auto">
-                    <div className="flex w-full flex-col sm:flex-row sm:items-center sm:justify-between">
-                      <div className="flex flex-col">
-                        <ItemTitle className="text-base">{item.patient}</ItemTitle>
-                        <ItemDescription>
-                          {formatDate(String(item.createdAt))} • {item.procedureCount} Procedimentos
-                        </ItemDescription>
-                      </div>
-                      <div className="mt-2 sm:mt-0">{item.finished ? <Badge variant="success">Finalizado</Badge> : <Badge variant="warning">Em andamento</Badge>}</div>
-                    </div>
-                  </ItemContent>
-                </div>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                    <Button variant="ghost" size="icon">
-                      <MoreVertical className="size-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => navigate({ to: '/odontogram/$id', params: { id: item._id } })}>Visualizar</DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => {
-                        navigate({ to: '/financial/$id', params: { id: item.Financial } });
-                      }}
-                    >
-                      Orçamento
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => {
-                        // @ts-expect-error
-                        navigate({ to: '/patient/$id', params: { id: item.patientID } });
-                      }}
-                    >
-                      Paciente
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => handleCopy(item.patient)}>Copiar nome</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </Item>
-            ))}
-          </ItemGroup>
+          <DataTable
+            data={items}
+            columns={columns}
+            searchable={false}
+            showPagination={false}
+            bordered={true}
+            className="py-0"
+            onRowClick={(row) => navigate({ to: '/odontogram/$id', params: { id: row._id } })}
+          />
         )}
       </CardContent>
 

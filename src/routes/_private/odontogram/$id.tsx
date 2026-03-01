@@ -92,7 +92,6 @@ function OdontogramDetailPage() {
               variant="link"
               size="sm"
               onClick={() => {
-                // @ts-expect-error Route may be ungenerated
                 navigate({ to: '/patient/$id', params: { id: odontogram.Patient } });
               }}
             >
