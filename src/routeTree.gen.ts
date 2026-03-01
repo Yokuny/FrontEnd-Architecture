@@ -13,6 +13,14 @@ import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as PrivateFinancialIdRouteImport } from './routes/_private/financial/$id';
 import { Route as PrivateFinancialAddRouteImport } from './routes/_private/financial/add';
 import { Route as PrivateFinancialIndexRouteImport } from './routes/_private/financial/index';
+import { Route as PrivateSettingsAccessIndexRouteImport } from './routes/_private/settings/access/index';
+import { Route as PrivateSettingsClinicIndexRouteImport } from './routes/_private/settings/clinic/index';
+import { Route as PrivateSettingsIndexRouteImport } from './routes/_private/settings/index';
+import { Route as PrivateSettingsInviteIndexRouteImport } from './routes/_private/settings/invite/index';
+import { Route as PrivateSettingsPermissionsIndexRouteImport } from './routes/_private/settings/permissions/index';
+import { Route as PrivateSettingsProceduresIndexRouteImport } from './routes/_private/settings/procedures/index';
+import { Route as PrivateSettingsProfileIndexRouteImport } from './routes/_private/settings/profile/index';
+import { Route as PrivateSettingsRouteRouteImport } from './routes/_private/settings/route';
 import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PublicAuthFinishSignupCodeIndexRouteImport } from './routes/_public/auth/finish-signup/$code/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
@@ -35,10 +43,20 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any);
+const PrivateSettingsRouteRoute = PrivateSettingsRouteRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => PrivateRoute,
+} as any);
 const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   id: '/auth/',
   path: '/auth/',
   getParentRoute: () => PublicRoute,
+} as any);
+const PrivateSettingsIndexRoute = PrivateSettingsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PrivateSettingsRouteRoute,
 } as any);
 const PrivateFinancialIndexRoute = PrivateFinancialIndexRouteImport.update({
   id: '/financial/',
@@ -70,6 +88,42 @@ const PublicAuthRecoveryIndexRoute = PublicAuthRecoveryIndexRouteImport.update({
   path: '/auth/recovery/',
   getParentRoute: () => PublicRoute,
 } as any);
+const PrivateSettingsProfileIndexRoute =
+  PrivateSettingsProfileIndexRouteImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => PrivateSettingsRouteRoute,
+  } as any);
+const PrivateSettingsProceduresIndexRoute =
+  PrivateSettingsProceduresIndexRouteImport.update({
+    id: '/procedures/',
+    path: '/procedures/',
+    getParentRoute: () => PrivateSettingsRouteRoute,
+  } as any);
+const PrivateSettingsPermissionsIndexRoute =
+  PrivateSettingsPermissionsIndexRouteImport.update({
+    id: '/permissions/',
+    path: '/permissions/',
+    getParentRoute: () => PrivateSettingsRouteRoute,
+  } as any);
+const PrivateSettingsInviteIndexRoute =
+  PrivateSettingsInviteIndexRouteImport.update({
+    id: '/invite/',
+    path: '/invite/',
+    getParentRoute: () => PrivateSettingsRouteRoute,
+  } as any);
+const PrivateSettingsClinicIndexRoute =
+  PrivateSettingsClinicIndexRouteImport.update({
+    id: '/clinic/',
+    path: '/clinic/',
+    getParentRoute: () => PrivateSettingsRouteRoute,
+  } as any);
+const PrivateSettingsAccessIndexRoute =
+  PrivateSettingsAccessIndexRouteImport.update({
+    id: '/access/',
+    path: '/access/',
+    getParentRoute: () => PrivateSettingsRouteRoute,
+  } as any);
 const PublicAuthNewPasswordCodeIndexRoute =
   PublicAuthNewPasswordCodeIndexRouteImport.update({
     id: '/auth/new-password/$code/',
@@ -85,10 +139,18 @@ const PublicAuthFinishSignupCodeIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
+  '/settings': typeof PrivateSettingsRouteRouteWithChildren;
   '/financial/$id': typeof PrivateFinancialIdRoute;
   '/financial/add': typeof PrivateFinancialAddRoute;
   '/financial/': typeof PrivateFinancialIndexRoute;
+  '/settings/': typeof PrivateSettingsIndexRoute;
   '/auth/': typeof PublicAuthIndexRoute;
+  '/settings/access/': typeof PrivateSettingsAccessIndexRoute;
+  '/settings/clinic/': typeof PrivateSettingsClinicIndexRoute;
+  '/settings/invite/': typeof PrivateSettingsInviteIndexRoute;
+  '/settings/permissions/': typeof PrivateSettingsPermissionsIndexRoute;
+  '/settings/procedures/': typeof PrivateSettingsProceduresIndexRoute;
+  '/settings/profile/': typeof PrivateSettingsProfileIndexRoute;
   '/auth/recovery/': typeof PublicAuthRecoveryIndexRoute;
   '/auth/signup/': typeof PublicAuthSignupIndexRoute;
   '/schedule/$code/': typeof PublicScheduleCodeIndexRoute;
@@ -100,7 +162,14 @@ export interface FileRoutesByTo {
   '/financial/$id': typeof PrivateFinancialIdRoute;
   '/financial/add': typeof PrivateFinancialAddRoute;
   '/financial': typeof PrivateFinancialIndexRoute;
+  '/settings': typeof PrivateSettingsIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
+  '/settings/access': typeof PrivateSettingsAccessIndexRoute;
+  '/settings/clinic': typeof PrivateSettingsClinicIndexRoute;
+  '/settings/invite': typeof PrivateSettingsInviteIndexRoute;
+  '/settings/permissions': typeof PrivateSettingsPermissionsIndexRoute;
+  '/settings/procedures': typeof PrivateSettingsProceduresIndexRoute;
+  '/settings/profile': typeof PrivateSettingsProfileIndexRoute;
   '/auth/recovery': typeof PublicAuthRecoveryIndexRoute;
   '/auth/signup': typeof PublicAuthSignupIndexRoute;
   '/schedule/$code': typeof PublicScheduleCodeIndexRoute;
@@ -112,10 +181,18 @@ export interface FileRoutesById {
   '/': typeof IndexRoute;
   '/_private': typeof PrivateRouteWithChildren;
   '/_public': typeof PublicRouteWithChildren;
+  '/_private/settings': typeof PrivateSettingsRouteRouteWithChildren;
   '/_private/financial/$id': typeof PrivateFinancialIdRoute;
   '/_private/financial/add': typeof PrivateFinancialAddRoute;
   '/_private/financial/': typeof PrivateFinancialIndexRoute;
+  '/_private/settings/': typeof PrivateSettingsIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
+  '/_private/settings/access/': typeof PrivateSettingsAccessIndexRoute;
+  '/_private/settings/clinic/': typeof PrivateSettingsClinicIndexRoute;
+  '/_private/settings/invite/': typeof PrivateSettingsInviteIndexRoute;
+  '/_private/settings/permissions/': typeof PrivateSettingsPermissionsIndexRoute;
+  '/_private/settings/procedures/': typeof PrivateSettingsProceduresIndexRoute;
+  '/_private/settings/profile/': typeof PrivateSettingsProfileIndexRoute;
   '/_public/auth/recovery/': typeof PublicAuthRecoveryIndexRoute;
   '/_public/auth/signup/': typeof PublicAuthSignupIndexRoute;
   '/_public/schedule/$code/': typeof PublicScheduleCodeIndexRoute;
@@ -126,10 +203,18 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
+    | '/settings'
     | '/financial/$id'
     | '/financial/add'
     | '/financial/'
+    | '/settings/'
     | '/auth/'
+    | '/settings/access/'
+    | '/settings/clinic/'
+    | '/settings/invite/'
+    | '/settings/permissions/'
+    | '/settings/procedures/'
+    | '/settings/profile/'
     | '/auth/recovery/'
     | '/auth/signup/'
     | '/schedule/$code/'
@@ -141,7 +226,14 @@ export interface FileRouteTypes {
     | '/financial/$id'
     | '/financial/add'
     | '/financial'
+    | '/settings'
     | '/auth'
+    | '/settings/access'
+    | '/settings/clinic'
+    | '/settings/invite'
+    | '/settings/permissions'
+    | '/settings/procedures'
+    | '/settings/profile'
     | '/auth/recovery'
     | '/auth/signup'
     | '/schedule/$code'
@@ -152,10 +244,18 @@ export interface FileRouteTypes {
     | '/'
     | '/_private'
     | '/_public'
+    | '/_private/settings'
     | '/_private/financial/$id'
     | '/_private/financial/add'
     | '/_private/financial/'
+    | '/_private/settings/'
     | '/_public/auth/'
+    | '/_private/settings/access/'
+    | '/_private/settings/clinic/'
+    | '/_private/settings/invite/'
+    | '/_private/settings/permissions/'
+    | '/_private/settings/procedures/'
+    | '/_private/settings/profile/'
     | '/_public/auth/recovery/'
     | '/_public/auth/signup/'
     | '/_public/schedule/$code/'
@@ -192,12 +292,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/_private/settings': {
+      id: '/_private/settings';
+      path: '/settings';
+      fullPath: '/settings';
+      preLoaderRoute: typeof PrivateSettingsRouteRouteImport;
+      parentRoute: typeof PrivateRoute;
+    };
     '/_public/auth/': {
       id: '/_public/auth/';
       path: '/auth';
       fullPath: '/auth/';
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/settings/': {
+      id: '/_private/settings/';
+      path: '/';
+      fullPath: '/settings/';
+      preLoaderRoute: typeof PrivateSettingsIndexRouteImport;
+      parentRoute: typeof PrivateSettingsRouteRoute;
     };
     '/_private/financial/': {
       id: '/_private/financial/';
@@ -241,6 +355,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthRecoveryIndexRouteImport;
       parentRoute: typeof PublicRoute;
     };
+    '/_private/settings/profile/': {
+      id: '/_private/settings/profile/';
+      path: '/profile';
+      fullPath: '/settings/profile/';
+      preLoaderRoute: typeof PrivateSettingsProfileIndexRouteImport;
+      parentRoute: typeof PrivateSettingsRouteRoute;
+    };
+    '/_private/settings/procedures/': {
+      id: '/_private/settings/procedures/';
+      path: '/procedures';
+      fullPath: '/settings/procedures/';
+      preLoaderRoute: typeof PrivateSettingsProceduresIndexRouteImport;
+      parentRoute: typeof PrivateSettingsRouteRoute;
+    };
+    '/_private/settings/permissions/': {
+      id: '/_private/settings/permissions/';
+      path: '/permissions';
+      fullPath: '/settings/permissions/';
+      preLoaderRoute: typeof PrivateSettingsPermissionsIndexRouteImport;
+      parentRoute: typeof PrivateSettingsRouteRoute;
+    };
+    '/_private/settings/invite/': {
+      id: '/_private/settings/invite/';
+      path: '/invite';
+      fullPath: '/settings/invite/';
+      preLoaderRoute: typeof PrivateSettingsInviteIndexRouteImport;
+      parentRoute: typeof PrivateSettingsRouteRoute;
+    };
+    '/_private/settings/clinic/': {
+      id: '/_private/settings/clinic/';
+      path: '/clinic';
+      fullPath: '/settings/clinic/';
+      preLoaderRoute: typeof PrivateSettingsClinicIndexRouteImport;
+      parentRoute: typeof PrivateSettingsRouteRoute;
+    };
+    '/_private/settings/access/': {
+      id: '/_private/settings/access/';
+      path: '/access';
+      fullPath: '/settings/access/';
+      preLoaderRoute: typeof PrivateSettingsAccessIndexRouteImport;
+      parentRoute: typeof PrivateSettingsRouteRoute;
+    };
     '/_public/auth/new-password/$code/': {
       id: '/_public/auth/new-password/$code/';
       path: '/auth/new-password/$code';
@@ -258,13 +414,38 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface PrivateSettingsRouteRouteChildren {
+  PrivateSettingsIndexRoute: typeof PrivateSettingsIndexRoute;
+  PrivateSettingsAccessIndexRoute: typeof PrivateSettingsAccessIndexRoute;
+  PrivateSettingsClinicIndexRoute: typeof PrivateSettingsClinicIndexRoute;
+  PrivateSettingsInviteIndexRoute: typeof PrivateSettingsInviteIndexRoute;
+  PrivateSettingsPermissionsIndexRoute: typeof PrivateSettingsPermissionsIndexRoute;
+  PrivateSettingsProceduresIndexRoute: typeof PrivateSettingsProceduresIndexRoute;
+  PrivateSettingsProfileIndexRoute: typeof PrivateSettingsProfileIndexRoute;
+}
+
+const PrivateSettingsRouteRouteChildren: PrivateSettingsRouteRouteChildren = {
+  PrivateSettingsIndexRoute: PrivateSettingsIndexRoute,
+  PrivateSettingsAccessIndexRoute: PrivateSettingsAccessIndexRoute,
+  PrivateSettingsClinicIndexRoute: PrivateSettingsClinicIndexRoute,
+  PrivateSettingsInviteIndexRoute: PrivateSettingsInviteIndexRoute,
+  PrivateSettingsPermissionsIndexRoute: PrivateSettingsPermissionsIndexRoute,
+  PrivateSettingsProceduresIndexRoute: PrivateSettingsProceduresIndexRoute,
+  PrivateSettingsProfileIndexRoute: PrivateSettingsProfileIndexRoute,
+};
+
+const PrivateSettingsRouteRouteWithChildren =
+  PrivateSettingsRouteRoute._addFileChildren(PrivateSettingsRouteRouteChildren);
+
 interface PrivateRouteChildren {
+  PrivateSettingsRouteRoute: typeof PrivateSettingsRouteRouteWithChildren;
   PrivateFinancialIdRoute: typeof PrivateFinancialIdRoute;
   PrivateFinancialAddRoute: typeof PrivateFinancialAddRoute;
   PrivateFinancialIndexRoute: typeof PrivateFinancialIndexRoute;
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateSettingsRouteRoute: PrivateSettingsRouteRouteWithChildren,
   PrivateFinancialIdRoute: PrivateFinancialIdRoute,
   PrivateFinancialAddRoute: PrivateFinancialAddRoute,
   PrivateFinancialIndexRoute: PrivateFinancialIndexRoute,
