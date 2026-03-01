@@ -15,9 +15,9 @@ import { GET, request } from '@/lib/api/client';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
 import { useOdontogramMutations } from '@/query/odontogram';
-import Teeth from './@components/teeth';
+import Teeth from '../@components/teeth';
 
-export const Route = createFileRoute('/_private/odontogram/add')({
+export const Route = createFileRoute('/_private/odontogram/add/')({
   component: OdontogramAddPage,
 });
 

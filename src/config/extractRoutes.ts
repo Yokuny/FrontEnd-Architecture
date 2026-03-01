@@ -21,11 +21,9 @@ const __dirname = path.dirname(__filename);
 const ROUTE_TREE_PATH = path.resolve(__dirname, '../routeTree.gen.ts');
 const ROUTE_CONFIG_PATH = path.resolve(__dirname, './routes.ts');
 
-// Rotas públicas a ignorar
-const PUBLIC_ROUTES = ['/', '/auth', '/auth/register', '/auth/reset-password', '/auth/unlock'];
-
 /**
- * Extrai rotas do routeTree.gen.ts usando lógica de profundidade:
+ * Extrai rotas do routeTree.gen.ts filtrando apenas rotas privadas:
+ * - Apenas rotas com prefixo /_private/ na seção FileRoutesById
  * - Rota base do grupo (ex: /permissions)
  * - Primeiro nível de sub-rotas (ex: /permissions/users, /permissions/roles)
  * - Ignora segundo nível e rotas com parâmetros
@@ -33,24 +31,24 @@ const PUBLIC_ROUTES = ['/', '/auth', '/auth/register', '/auth/reset-password', '
 function extractRoutes(): string[] {
   const content = fs.readFileSync(ROUTE_TREE_PATH, 'utf-8');
 
-  // Regex para extrair rotas do FileRoutesByFullPath
-  const regex = /'([^']+)':\s*typeof\s+\w+;/g;
-  const allRoutes: string[] = [];
-
-  // Encontrar a seção FileRoutesByFullPath
-  const sectionMatch = content.match(/export interface FileRoutesByFullPath \{([\s\S]*?)\}/);
+  // Extrair rotas da seção FileRoutesById (contém o prefixo /_private/)
+  const sectionMatch = content.match(/export interface FileRoutesById \{([\s\S]*?)\}/);
   if (!sectionMatch) {
     return [];
   }
 
   const section = sectionMatch[1];
+  const regex = /'([^']+)':\s*typeof\s+\w+;/g;
+  const allRoutes: string[] = [];
 
-  // Extrair todas as rotas primeiro
   for (const match of section.matchAll(regex)) {
-    const route = match[1];
+    const routeId = match[1];
 
-    // Ignorar rotas públicas
-    if (PUBLIC_ROUTES.includes(route)) continue;
+    // Apenas rotas privadas
+    if (!routeId.startsWith('/_private/')) continue;
+
+    // Extrair o path público (sem o prefixo /_private)
+    const route = routeId.replace('/_private', '');
 
     // Ignorar rotas com parâmetros ($id, $slug, etc)
     if (/\$\w+/.test(route)) continue;
@@ -74,28 +72,28 @@ function extractRoutes(): string[] {
   }
 
   // Extrair rotas válidas para a sidebar
-  const filteredRoutes: string[] = [];
+  // Usar Set para evitar duplicatas e normalizar removendo a barra final
+  const uniqueRoutes = new Set<string>();
 
   for (const [baseSegment, routes] of routeGroups) {
-    // Se a rota base é a única no grupo, incluí-la (ex: /schedule, /schedule/)
-    const normalized = routes[0].replace(/\/$/, '');
-    if (routes.length === 1 && normalized === `/${baseSegment}`) {
-      filteredRoutes.push(routes[0]);
-      continue;
-    }
-
-    // Se houver mais rotas, incluir apenas as de primeiro nível (ex: /permissions/users)
     for (const route of routes) {
       const segments = route.split('/').filter(Boolean);
 
-      // Apenas primeiro nível de sub-rotas (2 segmentos)
+      // Incluir se for a rota base (index) do grupo - ex: /financial/ ou /schedule/
+      // A rota base de um grupo sempre terá 1 segmento (o baseSegment)
+      if (segments.length === 1 && segments[0] === baseSegment) {
+        uniqueRoutes.add(route.replace(/\/$/, '') || '/');
+        continue;
+      }
+
+      // Incluir se for primeiro nível de sub-rotas - ex: /permissions/users
       if (segments.length === 2) {
-        filteredRoutes.push(route);
+        uniqueRoutes.add(route.replace(/\/$/, ''));
       }
     }
   }
 
-  return filteredRoutes.sort();
+  return Array.from(uniqueRoutes).sort();
 }
 
 function updateRoutes(routes: string[]): void {

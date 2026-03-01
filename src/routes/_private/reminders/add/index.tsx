@@ -4,10 +4,10 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 
-import { ReminderForm } from './@components/reminder-form';
-import { useReminderForm } from './@hooks/use-reminder-form';
+import { ReminderForm } from '../@components/reminder-form';
+import { useReminderForm } from '../@hooks/use-reminder-form';
 
-export const Route = createFileRoute('/_private/reminders/add')({
+export const Route = createFileRoute('/_private/reminders/add/')({
   component: ReminderAddPage,
 });
 

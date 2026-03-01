@@ -12,9 +12,9 @@ import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import { useOdontogramDetailQuery } from '@/query/odontogram';
 import { usePatientsQuery } from '@/query/patients';
 import { useProfessionalsQuery } from '@/query/professionals';
-import { OdontogramStatusForm } from './@components/odontogram-status-form';
+import { OdontogramStatusForm } from '../../@components/odontogram-status-form';
 
-export const Route = createFileRoute('/_private/odontogram/$id')({
+export const Route = createFileRoute('/_private/odontogram/details/$id/')({
   component: OdontogramDetailPage,
 });
 
@@ -94,7 +94,7 @@ function OdontogramDetailPage() {
               variant="link"
               size="sm"
               onClick={() => {
-                navigate({ to: '/patient/$id', params: { id: odontogram.Patient } });
+                navigate({ to: '/patient/details/$id', params: { id: odontogram.Patient } });
               }}
             >
               Perfil

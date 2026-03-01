@@ -21,21 +21,21 @@ import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 
 import { usePatientQuery } from '@/query/patient';
-import { PatientForm } from './@components/patient-form';
-import { usePatientApi } from './@hooks/use-patient-api';
-import { usePatientForm } from './@hooks/use-patient-form';
+import { PatientForm } from '../@components/patient-form';
+import { usePatientApi } from '../@hooks/use-patient-api';
+import { usePatientForm } from '../@hooks/use-patient-form';
 
 const searchSchema = z.object({
   id: z.string().optional(),
 });
 
-export const Route = createFileRoute('/_private/patient/add')({
+export const Route = createFileRoute('/_private/patient/add/')({
   component: PatientAddPage,
   validateSearch: searchSchema,
 });
 
 function PatientAddPage() {
-  const { id } = useSearch({ from: '/_private/patient/add' });
+  const { id } = useSearch({ from: '/_private/patient/add/' });
   const { data: patient, isLoading } = usePatientQuery(id);
 
   if (id && isLoading) {

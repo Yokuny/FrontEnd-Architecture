@@ -74,7 +74,7 @@ export function FinancialList({ data }: FinancialListProps) {
                 <DropdownMenuItem
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate({ to: '/financial/$id', params: { id: financial._id } });
+                    navigate({ to: '/financial/details/$id', params: { id: financial._id } });
                   }}
                 >
                   Editar financeiro
@@ -113,7 +113,7 @@ export function FinancialList({ data }: FinancialListProps) {
       showPagination={false}
       bordered={true}
       className="py-0"
-      onRowClick={(row) => navigate({ to: '/financial/$id', params: { id: row._id } })}
+      onRowClick={(row) => navigate({ to: '/financial/details/$id', params: { id: row._id } })}
     />
   );
 }

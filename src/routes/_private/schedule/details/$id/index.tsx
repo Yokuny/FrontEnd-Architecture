@@ -16,7 +16,7 @@ import { usePatientsQuery } from '@/query/patients';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { usePatientSchedulesQuery } from '@/query/schedule';
 
-export const Route = createFileRoute('/_private/schedule/$id')({
+export const Route = createFileRoute('/_private/schedule/details/$id/')({
   component: PatientSchedulePage,
 });
 

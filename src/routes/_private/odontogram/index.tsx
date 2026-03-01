@@ -90,11 +90,11 @@ function OdontogramListPage() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => navigate({ to: '/odontogram/$id', params: { id: item._id } })}>Visualizar</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate({ to: '/odontogram/details/$id', params: { id: item._id } })}>Visualizar</DropdownMenuItem>
               <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate({ to: '/financial/$id', params: { id: item.Financial } });
+                  navigate({ to: '/financial/details/$id', params: { id: item.Financial } });
                 }}
               >
                 Orçamento
@@ -102,7 +102,7 @@ function OdontogramListPage() {
               <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate({ to: '/patient/$id', params: { id: item.patientID } });
+                  navigate({ to: '/patient/details/$id', params: { id: item.patientID } });
                 }}
               >
                 Paciente
@@ -170,7 +170,7 @@ function OdontogramListPage() {
             showPagination={false}
             bordered={true}
             className="py-0"
-            onRowClick={(row) => navigate({ to: '/odontogram/$id', params: { id: row._id } })}
+            onRowClick={(row) => navigate({ to: '/odontogram/details/$id', params: { id: row._id } })}
           />
         )}
       </CardContent>

@@ -138,7 +138,7 @@ function PatientListPage() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => navigate({ to: '/patient/add', search: { id: item._id } })}>
+              <DropdownMenuItem onClick={() => navigate({ to: '/patient/details/$id', params: { id: item._id } })}>
                 <User className="mr-2 size-4 text-muted-foreground" />
                 Visualizar cadastro
               </DropdownMenuItem>
@@ -203,7 +203,7 @@ function PatientListPage() {
             showPagination={false}
             bordered={true}
             className="py-0"
-            onRowClick={(row) => navigate({ to: '/patient/add', search: { id: row._id } })}
+            onRowClick={(row) => navigate({ to: '/patient/details/$id', params: { id: row._id } })}
           />
         )}
       </CardContent>

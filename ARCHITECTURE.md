@@ -177,9 +177,10 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
 | Arquivo | Rota Gerada | Descrição / Regra |
 | :--- | :--- | :--- |
 | `index.tsx` | `/` | Define a página raiz do diretório. |
-| `add.tsx` | `/add` | Rota para criação de novos registros. |
-| `$id.tsx` | `/:id` | Rota dinâmica que recebe o ID como parâmetro. |
+| `add/index.tsx` | `/add` | Rota para criação de novos registros (diretório). |
+| `details/$id/index.tsx` | `/details/:id` | Rota dinâmica de detalhe que recebe o ID como parâmetro (diretório). |
 | `edit.$id.tsx` | — | **NÃO UTILIZAR.** (Proibido o uso de `.` em arquivos). |
+| `$id.tsx` / `add.tsx` | — | **NÃO UTILIZAR.** Rotas devem ser criadas como **diretórios** com `index.tsx`. |
 
 
 **2. Estrutura da Página (Componente)**
@@ -254,27 +255,31 @@ As subpastas `@hooks`, `@interface`, `@components`, `@consts` e `@utils` devem s
 
 ```markdown
 src/routes/_private/{module}/
-├── index.tsx                # Página principal da rota
+├── index.tsx                # Página principal da rota (listagem)
 │
-├── {subroute}/              # Outra pasta
-│   ├── @components/         # Componentes específicos da rota
-│   │   └── {ComponentName}.tsx
-│   │
-│   ├── @consts/             # Valores fixos, enums
-│   │   └── {feature}.consts.ts
-│   │
-│   ├── @hooks/              # Hooks específicos da rota
-│   │   ├── use-{feature}-form.ts
-│   │   └── use-{feature}-api.ts
-│   │
-│   ├── @interface/          # Tipos, Interfaces, Schemas Zod
-│   │   ├── {feature}.types.ts
-│   │   └── {feature}.schema.ts
-│   │
-│   ├── @utils/              # Funções auxiliares e processamento
-│   │   └── {feature}.utils.ts
-│   │
-│   └── index.tsx            # Página da subrota
+├── add/                     # Rota de criação (diretório)
+│   └── index.tsx            # Página de criação
+│
+├── details/                 # Rota de detalhe (diretório)
+│   └── $id/
+│       └── index.tsx        # Página de detalhe com parâmetro dinâmico
+│
+├── @components/             # Componentes específicos do módulo
+│   └── {ComponentName}.tsx
+│
+├── @consts/                 # Valores fixos, enums
+│   └── {feature}.consts.ts
+│
+├── @hooks/                  # Hooks específicos do módulo
+│   ├── use-{feature}-form.ts
+│   └── use-{feature}-api.ts
+│
+├── @interface/              # Tipos, Interfaces, Schemas Zod
+│   ├── {feature}.types.ts
+│   └── {feature}.schema.ts
+│
+└── @utils/                  # Funções auxiliares e processamento
+    └── {feature}.utils.ts
 ```
 
  --------- 

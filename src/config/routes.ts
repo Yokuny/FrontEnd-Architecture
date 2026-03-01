@@ -15,13 +15,17 @@ export const ROUTE_LABELS: Record<string, string> = {
  * Lista de rotas principais da aplicacao.
  */
 export const MAIN_ROUTES = [
-  '/auth/recovery/',
-  '/auth/signup/',
-  '/financial/add',
-  '/odontogram/add',
-  '/patient/add',
-  '/reminders/add',
+  '/financial/',
+  '/financial/add/',
+  '/odontogram/',
+  '/odontogram/add/',
+  '/patient/',
+  '/patient/add/',
+  '/reminders/',
+  '/reminders/add/',
   '/schedule/',
+  '/settings',
+  '/settings/',
   '/settings/access/',
   '/settings/clinic/',
   '/settings/invite/',

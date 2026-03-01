@@ -6,27 +6,31 @@ Toda rota segue esta estrutura dentro de `src/routes/_private/{module}/`:
 
 ```
 src/routes/_private/{feature}/
-├── index.tsx           # Pagina principal (listagem)
-├── add.tsx             # Pagina de criacao/edicao
-├── $id.tsx             # Pagina de detalhe (opcional)
-├── @components/        # Componentes especificos da rota
+├── index.tsx                # Pagina principal (listagem)
+├── add/                     # Pagina de criacao (diretório)
+│   └── index.tsx
+├── details/                 # Pagina de detalhe (diretório, opcional)
+│   └── $id/
+│       └── index.tsx
+├── @components/             # Componentes especificos da rota
 │   └── {feature}-form.tsx
-├── @consts/            # Valores fixos, enums, configs
+├── @consts/                 # Valores fixos, enums, configs
 │   └── {feature}.consts.ts
-├── @hooks/             # Hooks especificos da rota
+├── @hooks/                  # Hooks especificos da rota
 │   ├── use-{feature}-form.ts
 │   └── use-{feature}-api.ts  # (se nao for global)
-├── @interface/         # Types, Interfaces, Schemas Zod
+├── @interface/              # Types, Interfaces, Schemas Zod
 │   ├── {feature}.interface.ts
 │   └── {feature}.schema.ts
-└── @utils/             # Funcoes auxiliares (opcional)
+└── @utils/                  # Funcoes auxiliares (opcional)
 ```
 
 ## Regras de Roteamento
 
 - PROIBIDO usar `.` para criar rotas (ex: `edit.$id.tsx`)
+- PROIBIDO criar rotas como arquivos flat (`add.tsx`, `$id.tsx`). Usar **diretórios** com `index.tsx`
 - Toda pasta de rota DEVE ter `index.tsx`
-- Estrutura valida: `index.tsx`, `add.tsx`, `$id.tsx`
+- Estrutura valida: `index.tsx`, `add/index.tsx`, `details/$id/index.tsx`
 - Rotas baseadas em diretorios com `index.tsx` obrigatorio
 
 ## Hooks: Global vs Local

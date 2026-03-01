@@ -18,16 +18,16 @@ import type { FullFinancial } from '@/lib/interfaces/financial';
 import type { ProfessionalList } from '@/lib/interfaces/professional';
 import { useFinancialDetailQuery } from '@/query/financials';
 import { useProfessionalsQuery } from '@/query/professionals';
-import { FinancialEditForm } from './@components/financial-edit-form';
-import { STATUS_TO_BADGE_VARIANT } from './@consts/financial.consts';
-import { useFinancialEditForm } from './@hooks/use-financial-edit-form';
+import { FinancialEditForm } from '../../@components/financial-edit-form';
+import { STATUS_TO_BADGE_VARIANT } from '../../@consts/financial.consts';
+import { useFinancialEditForm } from '../../@hooks/use-financial-edit-form';
 
-export const Route = createFileRoute('/_private/financial/$id')({
+export const Route = createFileRoute('/_private/financial/details/$id/')({
   component: FinancialDetailPage,
 });
 
 function FinancialDetailPage() {
-  const { id } = useParams({ from: '/_private/financial/$id' });
+  const { id } = useParams({ from: '/_private/financial/details/$id/' });
   const navigate = useNavigate();
   const { data: financial, isLoading } = useFinancialDetailQuery(id);
   const { data: professionals } = useProfessionalsQuery();
