@@ -94,7 +94,7 @@ export function SettingsClinic() {
   if (isLoading) return <DefaultLoading />;
 
   return (
-    <Card className="border-none shadow-none">
+    <Card className="border-none">
       <CardHeader className="px-0">
         <CardTitle className="text-xl">Informações da Clínica</CardTitle>
         <CardDescription>Obtenha ou edite as informações da clínica</CardDescription>

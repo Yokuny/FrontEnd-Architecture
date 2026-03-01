@@ -44,7 +44,7 @@ export function SettingsAccess() {
   };
 
   return (
-    <Card className="border-none shadow-none">
+    <Card className="border-none">
       <CardHeader className="px-0">
         <CardTitle className="text-xl">Configuração de Acesso</CardTitle>
         <CardDescription>Configure a senha de acesso ao sistema.</CardDescription>

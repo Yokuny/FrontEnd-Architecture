@@ -90,7 +90,7 @@ export function SettingsPermissions() {
   if (!clinic || !users) return null;
 
   return (
-    <Card className="border-none shadow-none">
+    <Card className="border-none">
       <CardHeader className="px-0">
         <CardTitle className="text-xl">Gerenciar Permissões</CardTitle>
         <CardDescription>Gerencie as funções e salas de atendimento dos usuários da clínica.</CardDescription>

@@ -109,7 +109,7 @@ export function SettingsProcedures() {
   if (isLoading) return <DefaultLoading />;
 
   return (
-    <Card className="border-none shadow-none">
+    <Card className="border-none">
       <CardHeader className="px-0 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <CardTitle className="text-xl">Procedimentos clínicos</CardTitle>

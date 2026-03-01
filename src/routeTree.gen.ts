@@ -9,36 +9,36 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as PrivateRouteImport } from './routes/_private';
-import { Route as PrivateFinancialIdRouteImport } from './routes/_private/financial/$id';
-import { Route as PrivateFinancialAddRouteImport } from './routes/_private/financial/add';
-import { Route as PrivateFinancialIndexRouteImport } from './routes/_private/financial/index';
-import { Route as PrivateOdontogramIdRouteImport } from './routes/_private/odontogram/$id';
-import { Route as PrivateOdontogramAddRouteImport } from './routes/_private/odontogram/add';
-import { Route as PrivateOdontogramIndexRouteImport } from './routes/_private/odontogram/index';
-import { Route as PrivatePatientIdRouteImport } from './routes/_private/patient/$id';
-import { Route as PrivatePatientAddRouteImport } from './routes/_private/patient/add';
-import { Route as PrivatePatientIndexRouteImport } from './routes/_private/patient/index';
-import { Route as PrivateRemindersAddRouteImport } from './routes/_private/reminders/add';
-import { Route as PrivateRemindersIndexRouteImport } from './routes/_private/reminders/index';
-import { Route as PrivateScheduleIdRouteImport } from './routes/_private/schedule/$id';
-import { Route as PrivateScheduleIndexRouteImport } from './routes/_private/schedule/index';
-import { Route as PrivateSettingsAccessIndexRouteImport } from './routes/_private/settings/access/index';
-import { Route as PrivateSettingsClinicIndexRouteImport } from './routes/_private/settings/clinic/index';
-import { Route as PrivateSettingsIndexRouteImport } from './routes/_private/settings/index';
-import { Route as PrivateSettingsInviteIndexRouteImport } from './routes/_private/settings/invite/index';
-import { Route as PrivateSettingsPermissionsIndexRouteImport } from './routes/_private/settings/permissions/index';
-import { Route as PrivateSettingsProceduresIndexRouteImport } from './routes/_private/settings/procedures/index';
-import { Route as PrivateSettingsProfileIndexRouteImport } from './routes/_private/settings/profile/index';
-import { Route as PrivateSettingsRouteRouteImport } from './routes/_private/settings/route';
 import { Route as PublicRouteImport } from './routes/_public';
-import { Route as PublicAuthFinishSignupCodeIndexRouteImport } from './routes/_public/auth/finish-signup/$code/index';
-import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
-import { Route as PublicAuthNewPasswordCodeIndexRouteImport } from './routes/_public/auth/new-password/$code/index';
-import { Route as PublicAuthRecoveryIndexRouteImport } from './routes/_public/auth/recovery/index';
-import { Route as PublicAuthSignupIndexRouteImport } from './routes/_public/auth/signup/index';
-import { Route as PublicScheduleCodeIndexRouteImport } from './routes/_public/schedule/$code/index';
+import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
+import { Route as PrivateSettingsRouteRouteImport } from './routes/_private/settings/route';
+import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateSettingsIndexRouteImport } from './routes/_private/settings/index';
+import { Route as PrivateScheduleIndexRouteImport } from './routes/_private/schedule/index';
+import { Route as PrivateRemindersIndexRouteImport } from './routes/_private/reminders/index';
+import { Route as PrivatePatientIndexRouteImport } from './routes/_private/patient/index';
+import { Route as PrivateOdontogramIndexRouteImport } from './routes/_private/odontogram/index';
+import { Route as PrivateFinancialIndexRouteImport } from './routes/_private/financial/index';
+import { Route as PrivateScheduleIdRouteImport } from './routes/_private/schedule/$id';
+import { Route as PrivateRemindersAddRouteImport } from './routes/_private/reminders/add';
+import { Route as PrivatePatientAddRouteImport } from './routes/_private/patient/add';
+import { Route as PrivatePatientIdRouteImport } from './routes/_private/patient/$id';
+import { Route as PrivateOdontogramAddRouteImport } from './routes/_private/odontogram/add';
+import { Route as PrivateOdontogramIdRouteImport } from './routes/_private/odontogram/$id';
+import { Route as PrivateFinancialAddRouteImport } from './routes/_private/financial/add';
+import { Route as PrivateFinancialIdRouteImport } from './routes/_private/financial/$id';
+import { Route as PublicScheduleCodeIndexRouteImport } from './routes/_public/schedule/$code/index';
+import { Route as PublicAuthSignupIndexRouteImport } from './routes/_public/auth/signup/index';
+import { Route as PublicAuthRecoveryIndexRouteImport } from './routes/_public/auth/recovery/index';
+import { Route as PrivateSettingsProfileIndexRouteImport } from './routes/_private/settings/profile/index';
+import { Route as PrivateSettingsProceduresIndexRouteImport } from './routes/_private/settings/procedures/index';
+import { Route as PrivateSettingsPermissionsIndexRouteImport } from './routes/_private/settings/permissions/index';
+import { Route as PrivateSettingsInviteIndexRouteImport } from './routes/_private/settings/invite/index';
+import { Route as PrivateSettingsClinicIndexRouteImport } from './routes/_private/settings/clinic/index';
+import { Route as PrivateSettingsAccessIndexRouteImport } from './routes/_private/settings/access/index';
+import { Route as PublicAuthNewPasswordCodeIndexRouteImport } from './routes/_public/auth/new-password/$code/index';
+import { Route as PublicAuthFinishSignupCodeIndexRouteImport } from './routes/_public/auth/finish-signup/$code/index';
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',

@@ -21,6 +21,7 @@ export const MAIN_ROUTES = [
   '/odontogram/add',
   '/patient/add',
   '/reminders/add',
+  '/schedule/',
   '/settings/access/',
   '/settings/clinic/',
   '/settings/invite/',

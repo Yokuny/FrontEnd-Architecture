@@ -47,7 +47,7 @@ export function SettingsInvite() {
   if (!clinic) return null;
 
   return (
-    <Card className="border-none shadow-none">
+    <Card className="border-none">
       <CardHeader className="px-0">
         <CardTitle className="text-xl">Convidar integrantes</CardTitle>
         <CardDescription>Envie convites por e-mail para novos usuários criarem suas contas.</CardDescription>

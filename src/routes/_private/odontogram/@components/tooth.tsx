@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 import ProceduresSheet from '@/components/data-inputs/procedures-sheet';
-import { ToothParts } from '@/components/odontogram/assets/odontogram';
+import { ToothParts } from '@/components/odontogram';
 import ToothNumber from '@/components/odontogram/tooth-number';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';

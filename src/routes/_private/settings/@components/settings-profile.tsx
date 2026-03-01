@@ -54,7 +54,7 @@ export function SettingsProfile() {
   if (isLoading) return <DefaultLoading />;
 
   return (
-    <Card className="border-none shadow-none">
+    <Card className="border-none">
       <CardHeader className="px-0">
         <CardTitle className="text-xl">Perfil</CardTitle>
         <CardDescription>Edite seu perfil e ajuste suas configurações de conta.</CardDescription>

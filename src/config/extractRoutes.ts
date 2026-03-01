@@ -77,8 +77,9 @@ function extractRoutes(): string[] {
   const filteredRoutes: string[] = [];
 
   for (const [baseSegment, routes] of routeGroups) {
-    // Se a rota base é a única no grupo, incluí-la (ex: /fleet-manager)
-    if (routes.length === 1 && routes[0] === `/${baseSegment}`) {
+    // Se a rota base é a única no grupo, incluí-la (ex: /schedule, /schedule/)
+    const normalized = routes[0].replace(/\/$/, '');
+    if (routes.length === 1 && normalized === `/${baseSegment}`) {
       filteredRoutes.push(routes[0]);
       continue;
     }
