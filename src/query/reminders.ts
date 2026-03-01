@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { GET, PATCH, request } from '@/lib/api/client';
+import type { z } from 'zod';
+import { GET, PATCH, POST, request } from '@/lib/api/client';
 import type { DbReminder } from '@/lib/interfaces';
-import type { ReminderBulkUpdate, ReminderQuery } from '@/lib/interfaces/schemas/reminder.schema';
+import type { ReminderBulkUpdate, ReminderQuery, reminderSchema } from '@/lib/interfaces/schemas/reminder.schema';
 
 export const remindersKeys = {
   all: ['reminders'] as const,
@@ -25,6 +26,21 @@ export function useRemindersQuery(query: ReminderQuery) {
     queryKey: remindersKeys.list(query),
     queryFn: () => fetchReminders(query),
     enabled: !!query.startDate && !!query.endDate,
+  });
+}
+
+export function useCreateReminder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: z.input<typeof reminderSchema>) => {
+      const res = await request('reminder', POST(data));
+      if (!res.success) throw new Error(res.message || 'Falha ao criar lembrete');
+      return res;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: remindersKeys.lists() });
+    },
   });
 }
 

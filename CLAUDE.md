@@ -15,7 +15,7 @@
 - Estrutura valida: `index.tsx`, `add.tsx`, `$id.tsx`
 
 ## Datas
-- SEMPRE usar `@/lib/formatDate` para formatacao
+- SEMPRE usar `@/lib/helpers/formatDate.utils.ts` para formatacao
 - NUNCA importar `format` diretamente do `date-fns`
 
 ## Estado Global
