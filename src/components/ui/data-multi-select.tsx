@@ -1,49 +1,11 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react';
 import { useState } from 'react';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-
-export interface DataMultiSelectOption<T = unknown> {
-  value: string | number;
-  label: string;
-  data?: T;
-}
-
-interface DataMultiSelectProps<TQuery = unknown, TMapped = TQuery> {
-  /** Optional id for external label association */
-  id?: string;
-  /** Placeholder text when no values are selected */
-  placeholder?: string;
-  /** Currently selected values */
-  value?: (string | number)[];
-  /** Callback when selection changes */
-  onChange: (values: (string | number)[], options: DataMultiSelectOption<TMapped>[]) => void;
-  /** TanStack Query result containing the data */
-  query: UseQueryResult<TQuery[], Error>;
-  /** Function to map query data to select options (optional if valueKey/labelKey provided) */
-  mapToOptions?: (data: TQuery[]) => DataMultiSelectOption<TMapped>[];
-  /** Key to use as value from data objects (default: 'id') */
-  valueKey?: string;
-  /** Key to use as label from data objects (default: 'name') */
-  labelKey?: string;
-  /** Message to show when no options are available */
-  noOptionsMessage?: string;
-  /** Message to show when search returns no results */
-  noResultsMessage?: string;
-  /** Whether the select is disabled */
-  disabled?: boolean;
-  /** Additional CSS classes */
-  className?: string;
-  /** Search placeholder text */
-  searchPlaceholder?: string;
-  /** Maximum number of badges to show before collapsing */
-  maxShownItems?: number;
-}
 
 export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
   id,
@@ -174,4 +136,41 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
       </Popover>
     </div>
   );
+}
+
+export interface DataMultiSelectOption<T = unknown> {
+  value: string | number;
+  label: string;
+  data?: T;
+}
+
+interface DataMultiSelectProps<TQuery = unknown, TMapped = TQuery> {
+  /** Optional id for external label association */
+  id?: string;
+  /** Placeholder text when no values are selected */
+  placeholder?: string;
+  /** Currently selected values */
+  value?: (string | number)[];
+  /** Callback when selection changes */
+  onChange: (values: (string | number)[], options: DataMultiSelectOption<TMapped>[]) => void;
+  /** TanStack Query result containing the data */
+  query: UseQueryResult<TQuery[], Error>;
+  /** Function to map query data to select options (optional if valueKey/labelKey provided) */
+  mapToOptions?: (data: TQuery[]) => DataMultiSelectOption<TMapped>[];
+  /** Key to use as value from data objects (default: 'id') */
+  valueKey?: string;
+  /** Key to use as label from data objects (default: 'name') */
+  labelKey?: string;
+  /** Message to show when no options are available */
+  noOptionsMessage?: string;
+  /** Message to show when search returns no results */
+  noResultsMessage?: string;
+  /** Whether the select is disabled */
+  disabled?: boolean;
+  /** Additional CSS classes */
+  className?: string;
+  /** Search placeholder text */
+  searchPlaceholder?: string;
+  /** Maximum number of badges to show before collapsing */
+  maxShownItems?: number;
 }

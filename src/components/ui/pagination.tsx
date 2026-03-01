@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from 'lucide-react';
 import type * as React from 'react';
-import { type Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { type Button, btnVars } from './button';
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return <nav aria-label="pagination" data-slot="pagination" className={cn('mx-auto flex w-full justify-center', className)} {...props} />;
@@ -27,8 +27,8 @@ function PaginationLink({ className, isActive, size = 'icon', ...props }: Pagina
       data-slot="pagination-link"
       data-active={isActive}
       className={cn(
-        buttonVariants({
-          variant: isActive ? 'outline' : 'ghost',
+        btnVars({
+          variant: isActive ? 'outline' : 'secondary',
           size,
         }),
         className,

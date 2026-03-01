@@ -10,31 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { cn } from '@/lib/utils';
 import DefaultLoading from '../default-loading';
 
-export type DataTableColumn<T> = {
-  key: keyof T;
-  header: React.ReactNode;
-  sortable?: boolean;
-  filterable?: boolean;
-  render?: (value: any, row: T) => React.ReactNode;
-  width?: string;
-};
-
-export type DataTableProps<T> = {
-  data: T[];
-  columns: DataTableColumn<T>[];
-  className?: string;
-  searchable?: boolean;
-  searchPlaceholder?: string;
-  itemsPerPage?: number;
-  showPagination?: boolean;
-  striped?: boolean;
-  hoverable?: boolean;
-  bordered?: boolean;
-  compact?: boolean;
-  loading?: boolean;
-  onRowClick?: (row: T, index: number) => void;
-};
-
 export function DataTable<T extends Record<string, any>>({
   data,
   columns,
@@ -355,3 +330,28 @@ export function DataTable<T extends Record<string, any>>({
     </div>
   );
 }
+
+export type DataTableColumn<T> = {
+  key: keyof T;
+  header: React.ReactNode;
+  sortable?: boolean;
+  filterable?: boolean;
+  render?: (value: any, row: T) => React.ReactNode;
+  width?: string;
+};
+
+export type DataTableProps<T> = {
+  data: T[];
+  columns: DataTableColumn<T>[];
+  className?: string;
+  searchable?: boolean;
+  searchPlaceholder?: string;
+  itemsPerPage?: number;
+  showPagination?: boolean;
+  striped?: boolean;
+  hoverable?: boolean;
+  bordered?: boolean;
+  compact?: boolean;
+  loading?: boolean;
+  onRowClick?: (row: T, index: number) => void;
+};

@@ -1,5 +1,3 @@
-'use client';
-
 import { useMemo } from 'react';
 import { FooterNavigation } from '@/components/sidebar/nav-footer';
 import AppNavigation, { type Route } from '@/components/sidebar/nav-main';

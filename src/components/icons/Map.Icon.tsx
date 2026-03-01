@@ -1,0 +1,9 @@
+const IconMap = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="CurrentColor" strokeWidth="1" strokeLinejoin="round" {...props}>
+    <path d="M3 7.88304C3 6.49159 3 5.79587 3.37752 5.2721C3.75503 4.74832 4.41505 4.52832 5.73509 4.0883L9 3V19L8.26491 19.245C5.86241 20.0459 4.66116 20.4463 3.83058 19.8476C3 19.249 3 17.9828 3 15.4503V7.88304Z"></path>
+    <path d="M9 3L15 5V21L9 19V3Z"></path>
+    <path d="M15 5.00018L15.7351 4.75515C18.1376 3.95431 19.3388 3.5539 20.1694 4.15255C21 4.75119 21 6.01742 21 8.54988V16.1171C21 17.5086 21 18.2043 20.6225 18.7281C20.245 19.2519 19.5849 19.4719 18.2649 19.9119L15 21.0002V5.00018Z"></path>
+  </svg>
+);
+
+export default IconMap;

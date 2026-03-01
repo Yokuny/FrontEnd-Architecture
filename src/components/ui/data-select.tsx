@@ -1,50 +1,10 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-
-export interface DataSelectOption<T = unknown> {
-  value: string | number;
-  label: string;
-  data?: T;
-}
-
-interface DataSelectProps<TQuery = unknown, TMapped = TQuery> {
-  /** Optional id for external label association */
-  id?: string;
-  /** Placeholder text when no value is selected */
-  placeholder?: string;
-  /** Currently selected value */
-  value?: string | number;
-  /** Callback when selection changes */
-  onChange: (value: string | number | undefined, option?: DataSelectOption<TMapped>) => void;
-  /** TanStack Query result containing the data */
-  query: UseQueryResult<TQuery[], Error>;
-  /** Function to map query data to select options (optional if valueKey/labelKey provided) */
-  mapToOptions?: (data: TQuery[]) => DataSelectOption<TMapped>[];
-  /** Key to use as value from data objects (default: 'id') */
-  valueKey?: string;
-  /** Key to use as label from data objects (default: 'name') */
-  labelKey?: string;
-  /** Auto-select if only one option available */
-  oneBlocked?: boolean;
-  /** Message to show when no options are available */
-  noOptionsMessage?: string;
-  /** Message to show when search returns no results */
-  noResultsMessage?: string;
-  /** Whether the select is disabled */
-  disabled?: boolean;
-  /** Whether the select can be cleared */
-  clearable?: boolean;
-  /** Additional CSS classes */
-  className?: string;
-  /** Search placeholder text */
-  searchPlaceholder?: string;
-}
 
 export function DataSelect<TQuery = unknown, TMapped = TQuery>({
   id,
@@ -144,4 +104,43 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
       </Popover>
     </div>
   );
+}
+
+export interface DataSelectOption<T = unknown> {
+  value: string | number;
+  label: string;
+  data?: T;
+}
+
+interface DataSelectProps<TQuery = unknown, TMapped = TQuery> {
+  /** Optional id for external label association */
+  id?: string;
+  /** Placeholder text when no value is selected */
+  placeholder?: string;
+  /** Currently selected value */
+  value?: string | number;
+  /** Callback when selection changes */
+  onChange: (value: string | number | undefined, option?: DataSelectOption<TMapped>) => void;
+  /** TanStack Query result containing the data */
+  query: UseQueryResult<TQuery[], Error>;
+  /** Function to map query data to select options (optional if valueKey/labelKey provided) */
+  mapToOptions?: (data: TQuery[]) => DataSelectOption<TMapped>[];
+  /** Key to use as value from data objects (default: 'id') */
+  valueKey?: string;
+  /** Key to use as label from data objects (default: 'name') */
+  labelKey?: string;
+  /** Auto-select if only one option available */
+  oneBlocked?: boolean;
+  /** Message to show when no options are available */
+  noOptionsMessage?: string;
+  /** Message to show when search returns no results */
+  noResultsMessage?: string;
+  /** Whether the select is disabled */
+  disabled?: boolean;
+  /** Whether the select can be cleared */
+  clearable?: boolean;
+  /** Additional CSS classes */
+  className?: string;
+  /** Search placeholder text */
+  searchPlaceholder?: string;
 }
