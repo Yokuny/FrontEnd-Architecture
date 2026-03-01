@@ -1,4 +1,4 @@
-import * as TeethComponents from './assets/odontogram';
+import * as TeethComponents from './';
 
 export type ToothStatus = 'normal' | 'missing' | 'extracted' | 'periodontitis' | 'caries' | 'prosthesis' | 'implant';
 

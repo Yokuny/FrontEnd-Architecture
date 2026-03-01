@@ -6,7 +6,6 @@ type ToothFaceSelect = {
   left: boolean;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const IconToothParts = ({ select, className, ...props }: IconToothPartsProps) => {
   const paths: { side: keyof ToothFaceSelect; path: string }[] = [
     {
@@ -33,9 +32,10 @@ const IconToothParts = ({ select, className, ...props }: IconToothPartsProps) =>
 
   return (
     <svg viewBox="0 0 27 27" width="2em" fill="none" stroke="CurrentColor" strokeWidth="1" {...props}>
+      <title>Tooth Part</title>
       {paths.map((path, index) => (
         <path
-          key={`path${index}`}
+          key={`${path.side}-${index}`}
           d={path.path}
           style={{
             fill: select[path.side] ? 'hsla(200 100% 50% / 0.6)' : 'none',
