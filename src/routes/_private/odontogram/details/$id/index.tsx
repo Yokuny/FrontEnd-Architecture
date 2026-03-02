@@ -1,6 +1,8 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { ArrowLeft, Stethoscope, User } from 'lucide-react';
 import DefaultLoading from '@/components/default-loading';
+import Back from '@/components/icons/Back.Icon';
+import Clinic from '@/components/icons/Clinic.Icon';
+import User from '@/components/icons/User.Icon';
 import ToothNumber from '@/components/odontogram/tooth-number';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -69,7 +71,7 @@ function OdontogramDetailPage() {
           <CardAction>
             {/* @ts-expect-error Types not matched fully */}
             <Button variant="outline" onClick={() => navigate({ to: '/odontogram' })}>
-              <ArrowLeft className="mr-2 size-4" />
+              <Back className="mr-2 size-4" />
               Voltar
             </Button>
           </CardAction>
@@ -105,7 +107,7 @@ function OdontogramDetailPage() {
             <Avatar className="size-12">
               <AvatarImage src={professionalImage} />
               <AvatarFallback>
-                <Stethoscope className="size-6 text-muted-foreground" />
+                <Clinic className="size-6 text-muted-foreground" />
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">

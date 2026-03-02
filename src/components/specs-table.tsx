@@ -1,7 +1,10 @@
 // extraido de https://www.shadcnblocks.com/block/product-specs1
 
-import { Battery, Box, ChevronDown, Cpu, HardDrive, Monitor, Wifi } from 'lucide-react';
 import { useState } from 'react';
+import Down from '@/components/icons/Down.Icon';
+import Package from '@/components/icons/Package.Icon';
+import Paid from '@/components/icons/Paid.Icon';
+import Pulse from '@/components/icons/Pulse.Icon';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemDescription, ItemGroup, ItemHeader, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
@@ -24,7 +27,7 @@ const DEFAULT_CATEGORIES: SpecCategory[] = [
   {
     id: 'display',
     name: 'Display',
-    icon: <Monitor className="size-4" />,
+    icon: <Pulse className="size-4" />,
     specs: [
       { label: 'Screen Size', value: '6.7" Super Retina XDR' },
       { label: 'Resolution', value: '2796 x 1290 pixels' },
@@ -37,7 +40,7 @@ const DEFAULT_CATEGORIES: SpecCategory[] = [
   {
     id: 'performance',
     name: 'Performance',
-    icon: <Cpu className="size-4" />,
+    icon: <Pulse className="size-4" />,
     specs: [
       { label: 'Processor', value: 'A17 Pro chip' },
       { label: 'CPU Cores', value: '6-core (2 performance + 4 efficiency)' },
@@ -49,7 +52,7 @@ const DEFAULT_CATEGORIES: SpecCategory[] = [
   {
     id: 'storage',
     name: 'Storage',
-    icon: <HardDrive className="size-4" />,
+    icon: <Pulse className="size-4" />,
     specs: [
       { label: 'Internal Storage', value: '256GB / 512GB / 1TB' },
       { label: 'Expandable', value: 'No' },
@@ -59,7 +62,7 @@ const DEFAULT_CATEGORIES: SpecCategory[] = [
   {
     id: 'battery',
     name: 'Battery & Charging',
-    icon: <Battery className="size-4" />,
+    icon: <Paid className="size-4" />,
     specs: [
       { label: 'Battery Capacity', value: '4422 mAh' },
       { label: 'Video Playback', value: 'Up to 29 hours' },
@@ -72,7 +75,7 @@ const DEFAULT_CATEGORIES: SpecCategory[] = [
   {
     id: 'connectivity',
     name: 'Connectivity',
-    icon: <Wifi className="size-4" />,
+    icon: <Pulse className="size-4" />,
     specs: [
       { label: '5G', value: 'Yes (sub-6 GHz, mmWave)' },
       { label: 'Wi-Fi', value: 'Wi-Fi 6E (802.11ax)' },
@@ -85,7 +88,7 @@ const DEFAULT_CATEGORIES: SpecCategory[] = [
   {
     id: 'physical',
     name: 'Physical Specifications',
-    icon: <Box className="size-4" />,
+    icon: <Package className="size-4" />,
     specs: [
       { label: 'Height', value: '159.9 mm' },
       { label: 'Width', value: '76.7 mm' },
@@ -140,7 +143,7 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
                     </ItemMedia>
                     <ItemTitle className="text-base">{category.name}</ItemTitle>
                   </div>
-                  <ChevronDown className={cn('size-5 text-muted-foreground transition-transform duration-200', openCategories.includes(category.id) && 'rotate-180')} />
+                  <Down className={cn('size-5 text-muted-foreground transition-transform duration-200', openCategories.includes(category.id) && 'rotate-180')} />
                 </Button>
               </CollapsibleTrigger>
               <CollapsibleContent>

@@ -1,5 +1,5 @@
-import { ImagePlus } from 'lucide-react';
 import { useRef } from 'react';
+import Add from '@/components/icons/Add.Icon';
 import { ItemDescription, ItemMedia } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 
@@ -36,14 +36,14 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
           </ItemMedia>
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
             <div className="flex size-10 items-center justify-center rounded-md text-white hover:bg-white/20">
-              <ImagePlus className="size-6" />
+              <Add className="size-6" />
             </div>
           </div>
         </>
       ) : (
         <div className="flex flex-col items-center gap-2 p-4">
           <ItemMedia variant="icon" className="text-muted-foreground">
-            <ImagePlus className="size-8" />
+            <Add className="size-8" />
           </ItemMedia>
           <ItemDescription className="text-center text-xs">{'drag.image'}</ItemDescription>
         </div>

@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { CalendarIcon, Plus } from 'lucide-react';
 import { useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { z } from 'zod';
 import DefaultLoading from '@/components/default-loading';
+import Add from '@/components/icons/Add.Icon';
+import Calender from '@/components/icons/Calender.Icon';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -68,7 +69,7 @@ function RemindersListPage() {
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="flex gap-2">
-                  <CalendarIcon className="size-4" />
+                  <Calender className="size-4" />
                   <span>{dateRange?.from && dateRange?.to ? `${extractDate(dateRange.from, 'short')} - ${extractDate(dateRange.to, 'short')}` : 'Selecionar período'}</span>
                 </Button>
               </PopoverTrigger>
@@ -89,7 +90,7 @@ function RemindersListPage() {
             </Popover>
 
             <Button onClick={() => navigate({ to: '/reminders/add' })}>
-              <Plus className="mr-2 size-4" />
+              <Add className="mr-2 size-4" />
               Adicionar
             </Button>
           </div>

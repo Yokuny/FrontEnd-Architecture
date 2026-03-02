@@ -1,8 +1,8 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Plus } from 'lucide-react';
 
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Add from '@/components/icons/Add.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFinancialsPartialQuery } from '@/query/financials';
@@ -25,7 +25,7 @@ function FinancialListPage() {
         </div>
         <CardAction>
           <Button onClick={() => navigate({ to: '/financial/add' })}>
-            <Plus className="mr-2 size-4" />
+            <Add className="mr-2 size-4" />
             Adicionar
           </Button>
         </CardAction>

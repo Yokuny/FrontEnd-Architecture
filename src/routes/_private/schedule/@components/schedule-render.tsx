@@ -1,9 +1,14 @@
 import { useNavigate } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
-import { CalendarIcon, ChevronRight, Clock, ExternalLink, MessageCircle, Pencil } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import Calender from '@/components/icons/Calender.Icon';
+import Chat from '@/components/icons/Chat.Icon';
+import Clock from '@/components/icons/Clock.Icon';
+import Edit from '@/components/icons/Edit.Icon';
+import Link from '@/components/icons/Link.Icon';
+import Right from '@/components/icons/Right.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -85,7 +90,7 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
             <div className="flex flex-row items-center justify-between gap-2">
               <p className="text-muted-foreground text-sm">Data</p>
               <Button variant="outline" size="sm" className="gap-1 text-xs">
-                <CalendarIcon className="hidden size-4 md:block" />
+                <Calender className="hidden size-4 md:block" />
                 <span className="text-muted-foreground tabular-nums tracking-tight">Dia inteiro</span>
               </Button>
             </div>
@@ -125,7 +130,7 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
             <p className="text-muted-foreground text-sm">Horário</p>
             <div className="flex flex-row items-center gap-2">
               <p className="font-bold text-md tabular-nums md:text-xl">{extractDate(schedule?.start, 'hour')}</p>
-              <ChevronRight className="size-4" />
+              <Right className="size-4" />
               <p className="font-bold text-md tabular-nums md:text-xl">{extractDate(schedule?.end || event.end, 'hour')}</p>
             </div>
           </div>
@@ -140,7 +145,7 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
           <div className="flex items-baseline gap-3">
             <p className="font-bold tabular-nums md:text-xl">{extractDate(schedule?.start, 'hour')}</p>
             <div className="flex items-start gap-1">
-              <CalendarIcon className="size-4" />
+              <Calender className="size-4" />
               <p className="text-muted-foreground md:text-lg">{extractDate(schedule?.start, 'short')}</p>
             </div>
           </div>
@@ -150,7 +155,7 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
           <div className="flex items-baseline gap-3">
             <p className="font-bold tabular-nums md:text-xl">{extractDate(schedule?.end || event.end, 'hour')}</p>
             <div className="flex items-start gap-1">
-              <CalendarIcon className="size-4" />
+              <Calender className="size-4" />
               <p className="text-muted-foreground md:text-lg">{extractDate(schedule?.end || event.end, 'short')}</p>
             </div>
           </div>
@@ -214,16 +219,16 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
             </div>
             {schedule.status === 'pending' && schedule.Patient && (
               <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={handleRequestScheduleConfirmation}>
-                <MessageCircle className="size-4 text-green-600" />
+                <Chat className="size-4 text-green-600" />
               </Button>
             )}
             <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={onEdit}>
-              <Pencil className="size-4 md:mr-2" />
+              <Edit className="size-4 md:mr-2" />
               <span className="hidden md:block">Editar</span>
             </Button>
             {schedule.Financial && (
               <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details/$id', params: { id: schedule.Financial! } })}>
-                <ExternalLink className="size-4 md:mr-2" />
+                <Link className="size-4 md:mr-2" />
                 <span className="hidden md:block">Finança</span>
               </Button>
             )}
@@ -246,7 +251,7 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
                     <p className="text-muted-foreground text-sm">Paciente</p>
                     {schedule?.Patient && (
                       <Button type="button" variant="outline" size="sm" onClick={() => window.open(`/patient/${schedule?.Patient}`, '_blank')}>
-                        <ExternalLink className="size-4 md:mr-2" />
+                        <Link className="size-4 md:mr-2" />
                         <span className="hidden text-xs md:block">Paciente</span>
                       </Button>
                     )}

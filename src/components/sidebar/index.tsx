@@ -15,12 +15,12 @@ const convertToNavRoutes = (routes: SidebarRoute[]): Route[] => {
     return {
       id: route.id,
       title,
-      icon: route.icon ? <route.icon className="size-4" /> : undefined,
+      icon: route.icon,
       link: route.path,
       subs: route.children?.map((child) => ({
         title: child.labelKey,
         link: child.path,
-        icon: child.icon ? <child.icon className="size-4" /> : undefined,
+        icon: child.icon,
       })),
     };
   });

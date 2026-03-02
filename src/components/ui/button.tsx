@@ -1,6 +1,6 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import type { ComponentProps } from 'react';
+import type * as React from 'react';
 import { cn } from '@/lib/utils';
 
 const btnVars = cva(
@@ -11,7 +11,7 @@ const btnVars = cva(
         default: 'bg-primary-blue font-semibold text-white saturate-150 hover:bg-dark-blue dark:bg-dark-blue',
         primary:
           'border border-slate-200 text-slate-950 placeholder:text-black hover:bg-slate-100 hover:text-black data-[state=on]:border-transparent data-[state=on]:bg-primary-blue data-[state=on]:text-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white dark:placeholder:text-white',
-        secondary: 'bg-sky-blue font-semibold text-white saturate-150 hover:bg-sky-blue/80 dark:bg-sky-800 dark:hover:bg-sky-700',
+        secondary: 'font-semibold',
         basic: 'border border-slate-100 bg-muted hover:bg-slate-100 hover:bg-slate-100 dark:border-slate-800 dark:hover:bg-slate-900',
         outline: 'border bg-background font-normal hover:bg-muted dark:hover:bg-muted',
         gradient: 'bg-linear-to-r from-sky-blue to-primary-blue font-medium text-white hover:saturate-150 dark:from-dark-blue dark:to-blue-800',
@@ -53,7 +53,7 @@ function Button({
   size,
   asChild = false,
   ...props
-}: ComponentProps<'button'> &
+}: React.ComponentProps<'button'> &
   VariantProps<typeof btnVars> & {
     asChild?: boolean;
   }) {

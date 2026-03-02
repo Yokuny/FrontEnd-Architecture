@@ -1,10 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { addDays, addMonths, addWeeks, endOfDay, endOfMonth, endOfWeek, format, isSameMonth, startOfDay, startOfMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { ChevronDown, ChevronLeft, ChevronRight, Eye, LayoutGrid, Plus, X } from 'lucide-react';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
+import Add from '@/components/icons/Add.Icon';
+import Cross from '@/components/icons/Cross.Icon';
+import Down from '@/components/icons/Down.Icon';
+import Eye from '@/components/icons/Eye.Icon';
+import Grid from '@/components/icons/Grid.Icon';
+import Left from '@/components/icons/Left.Icon';
+import Right from '@/components/icons/Right.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -324,13 +330,13 @@ function SchedulePage() {
             <div className="flex items-center">
               <div className="relative flex items-center md:items-stretch">
                 <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label="Anterior" className="rounded-none rounded-l-md border-r-0 px-2">
-                  <ChevronLeft className="size-5" aria-hidden="true" />
+                  <Left className="size-5" aria-hidden="true" />
                 </Button>
                 <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setCurrentDate(new Date())} className="hidden rounded-none border-x-0 md:block">
                   Hoje
                 </Button>
                 <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handleNext} aria-label="Próximo" className="rounded-none rounded-r-md border-l-0 px-2">
-                  <ChevronRight className="size-5" aria-hidden="true" />
+                  <Right className="size-5" aria-hidden="true" />
                 </Button>
               </div>
             </div>
@@ -343,7 +349,7 @@ function SchedulePage() {
                     </span>
                     <span className="max-[479px]:sr-only">{capitalizeString(viewDictionary[view])}</span>
                   </span>
-                  <ChevronDown className="-me-1 size-5" aria-hidden="true" />
+                  <Down className="-me-1 size-5" aria-hidden="true" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="min-w-32">
@@ -375,7 +381,7 @@ function SchedulePage() {
             </Select>
             {!isMobile && (
               <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                <LayoutGrid className="size-4" />
+                <Grid className="size-4" />
               </Button>
             )}
             <Button
@@ -386,7 +392,7 @@ function SchedulePage() {
                 setIsEventDialogOpen(true);
               }}
             >
-              <Plus className="size-4" aria-hidden="true" />
+              <Add className="size-4" aria-hidden="true" />
               <span className="max-sm:sr-only">Adicionar</span>
             </Button>
           </div>
@@ -479,20 +485,20 @@ function SchedulePage() {
             <div className="flex w-full justify-between gap-2 px-4">
               <div className="flex w-2/3 items-center">
                 <Button variant="outline" size="sm" onClick={handlePrevious} className="w-1/3 rounded-none rounded-l-md border-r-0 px-2">
-                  <ChevronLeft className="size-5" />
+                  <Left className="size-5" />
                 </Button>
                 <Button variant="outline" size="sm" onClick={() => setCurrentDate(new Date())} className="w-1/3 rounded-none border-x-0">
                   Hoje
                 </Button>
                 <Button variant="outline" size="sm" onClick={handleNext} className="w-1/3 rounded-none rounded-r-md border-l-0 px-2">
-                  <ChevronRight className="size-5" />
+                  <Right className="size-5" />
                 </Button>
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="w-1/3 justify-evenly">
                     <span className="overflow-hidden">{viewDictionary[view]}</span>
-                    <ChevronDown className="-me-1 size-5" />
+                    <Down className="-me-1 size-5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="min-w-32">
@@ -602,7 +608,7 @@ function SchedulePage() {
                   </Select>
                   {hasCustomColor && (
                     <Button variant="outline" size="sm" onClick={() => handleRemoveColor(profId)} className="size-8 p-0">
-                      <X className="size-4" />
+                      <Cross className="size-4" />
                     </Button>
                   )}
                 </CardContent>

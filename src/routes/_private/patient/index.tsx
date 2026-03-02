@@ -1,11 +1,18 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Calendar as CalendarIcon, Copy, FileText, MoreVertical, Plus, Receipt, Search, User } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Add from '@/components/icons/Add.Icon';
+import Calender from '@/components/icons/Calender.Icon';
+import Copy from '@/components/icons/Copy.Icon';
+import Dot from '@/components/icons/Dot.Icon';
+import Mail from '@/components/icons/Mail.Icon';
+import Package from '@/components/icons/Package.Icon';
+import Search from '@/components/icons/Search.Icon';
+import User from '@/components/icons/User.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -96,7 +103,7 @@ function PatientListPage() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
               <Button variant="secondary" size="icon">
-                <MoreVertical className="size-4" />
+                <Dot className="size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -107,15 +114,15 @@ function PatientListPage() {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <FileText className="mr-2 size-4 text-muted-foreground" />
+                <Mail className="mr-2 size-4 text-muted-foreground" />
                 Criar odontograma
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Receipt className="mr-2 size-4 text-muted-foreground" />
+                <Package className="mr-2 size-4 text-muted-foreground" />
                 Criar cobrança
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CalendarIcon className="mr-2 size-4 text-muted-foreground" />
+                <Calender className="mr-2 size-4 text-muted-foreground" />
                 Criar agendamento
               </DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -168,7 +175,7 @@ function PatientListPage() {
             />
           </div>
           <Button onClick={() => navigate({ to: '/patient/add' })}>
-            <Plus className="mr-2 size-4" />
+            <Add className="mr-2 size-4" />
             Adicionar
           </Button>
         </div>

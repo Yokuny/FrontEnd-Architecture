@@ -6,14 +6,6 @@ import { useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type EffectType = 'fadeIn' | 'slideInRight' | 'zoomIn' | 'blurIn';
-type RevealOnScrollProps = {
-  effect?: EffectType;
-  scrollTriggerVars?: ScrollTrigger.Vars;
-  fromVars?: gsap.TweenVars;
-  toVars?: gsap.TweenVars;
-} & ComponentProps<'div'>;
-
 export const RevealOnScroll = ({ effect = 'fadeIn', scrollTriggerVars, fromVars, toVars, ...props }: RevealOnScrollProps) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const animationRef = useRef<gsap.core.Tween | null>(null);
@@ -70,3 +62,12 @@ export const RevealOnScroll = ({ effect = 'fadeIn', scrollTriggerVars, fromVars,
 
   return <div {...props} ref={wrapperRef} />;
 };
+
+type EffectType = 'fadeIn' | 'slideInRight' | 'zoomIn' | 'blurIn';
+
+type RevealOnScrollProps = {
+  effect?: EffectType;
+  scrollTriggerVars?: ScrollTrigger.Vars;
+  fromVars?: gsap.TweenVars;
+  toVars?: gsap.TweenVars;
+} & ComponentProps<'div'>;

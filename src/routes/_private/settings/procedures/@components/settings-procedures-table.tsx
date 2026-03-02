@@ -10,8 +10,13 @@ import {
   useReactTable,
   type VisibilityState,
 } from '@tanstack/react-table';
-import { ArrowUpDown, ChevronDown, ChevronLeft, ChevronRight, CloudUpload, Columns } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Column from '@/components/icons/Column.Icon';
+import Down from '@/components/icons/Down.Icon';
+import Left from '@/components/icons/Left.Icon';
+import Right from '@/components/icons/Right.Icon';
+import Up from '@/components/icons/Up.Icon';
+import UploadCloud from '@/components/icons/UploadCloud.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -26,7 +31,7 @@ const SortableComponent = ({ column, title }: { column: any; title: string }) =>
   return (
     <div className="flex w-full cursor-pointer items-center gap-1 hover:text-primary" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
       {title}
-      <ArrowUpDown className="size-3" />
+      <Up className="size-3" />
     </div>
   );
 };
@@ -174,7 +179,7 @@ export function SettingsProceduresTable({ data, hasChanges, saveProcedure, onUpd
         <div className="ml-auto flex gap-2">
           {hasChanges && tableData.length > 0 && (
             <Button onClick={saveProcedure} disabled={isPending} className="flex gap-2" size="sm">
-              {isPending ? <Spinner className="size-4" /> : <CloudUpload className="size-4" />}
+              {isPending ? <Spinner className="size-4" /> : <UploadCloud className="size-4" />}
               <span className="hidden sm:inline">Atualizar Alterações</span>
             </Button>
           )}
@@ -182,9 +187,9 @@ export function SettingsProceduresTable({ data, hasChanges, saveProcedure, onUpd
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
-                <Columns className="mr-2 hidden size-4 sm:inline" />
+                <Column className="mr-2 hidden size-4 sm:inline" />
                 Colunas
-                <ChevronDown className="ml-2 size-3" />
+                <Down className="ml-2 size-3" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -268,10 +273,10 @@ export function SettingsProceduresTable({ data, hasChanges, saveProcedure, onUpd
         </div>
         <div className="flex space-x-2">
           <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()} className="flex h-8 items-center gap-1">
-            <ChevronLeft className="size-4" />
+            <Left className="size-4" />
           </Button>
           <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} className="flex h-8 items-center gap-1">
-            <ChevronRight className="size-4" />
+            <Right className="size-4" />
           </Button>
         </div>
       </div>

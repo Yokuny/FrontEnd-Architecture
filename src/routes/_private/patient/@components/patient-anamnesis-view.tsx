@@ -1,4 +1,4 @@
-import { Edit } from 'lucide-react';
+import Edit from '@/components/icons/Edit.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

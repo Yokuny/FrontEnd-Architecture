@@ -1,10 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from '@tanstack/react-router';
-import { Check, Loader2, X } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
+import Check from '@/components/icons/Check.Icon';
+import Cross from '@/components/icons/Cross.Icon';
+import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -87,7 +89,7 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
         <Form {...form}>
           <div className="flex gap-3">
             <Button type="button" onClick={() => handleConfirm('confirmed')} disabled={isLoading} className="w-full md:w-1/2">
-              {isLoading ? <Loader2 className="mr-2 size-5 animate-spin" /> : <Check className="mr-2 hidden size-5 md:block" />}
+              {isLoading ? <Loader className="mr-2 size-5 animate-spin" /> : <Check className="mr-2 hidden size-5 md:block" />}
               Confirmar presença
             </Button>
             <Button
@@ -97,7 +99,7 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
               variant="outline"
               className="w-1/3 gap-2 font-semibold tracking-wide md:w-1/2"
             >
-              {isLoading ? <Loader2 className="size-5 animate-spin" /> : <X className="size-6" />}
+              {isLoading ? <Loader className="size-5 animate-spin" /> : <Cross className="size-6" />}
               <span className="hidden md:block">Não comparecerei</span>
             </Button>
           </div>

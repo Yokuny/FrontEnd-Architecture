@@ -1,5 +1,12 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { ArrowLeft, Calendar, ChevronRight, Clock, DollarSign, FileText, MapPin, Stethoscope } from 'lucide-react';
+import Back from '@/components/icons/Back.Icon';
+import Calender from '@/components/icons/Calender.Icon';
+import Clinic from '@/components/icons/Clinic.Icon';
+import Clock from '@/components/icons/Clock.Icon';
+import Dollar from '@/components/icons/Dollar.Icon';
+import Mail from '@/components/icons/Mail.Icon';
+import Map from '@/components/icons/Map.Icon';
+import Right from '@/components/icons/Right.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -37,7 +44,7 @@ function PatientSchedulePage() {
       <CardHeader className="fixed right-1 bottom-16 left-1 z-40 flex flex-row items-center justify-between py-4 md:static md:right-auto md:left-auto md:z-auto">
         <CardTitle className="text-lg text-sky-blue tracking-tight md:text-xl dark:text-primary-blue">{getPatientName(id)}</CardTitle>
         <Button type="button" size={isMobile ? 'default' : 'sm'} variant="outline" onClick={() => navigate({ to: '..' })}>
-          <ArrowLeft className="mr-2 size-4" />
+          <Back className="mr-2 size-4" />
           Voltar
         </Button>
       </CardHeader>
@@ -54,7 +61,7 @@ function ScheduleList({ nextEvent, futureEvents, pastEvents }: { nextEvent: DbSc
     return (
       <CardContent className="flex flex-col items-center justify-center">
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <Calendar className="mb-4 size-12 text-muted-foreground" />
+          <Calender className="mb-4 size-12 text-muted-foreground" />
           <p className="mb-2 font-semibold text-muted-foreground">Nenhum agendamento encontrado</p>
           <p className="text-muted-foreground text-sm">Não existe agendamento cadastrado para este paciente.</p>
         </div>
@@ -115,12 +122,12 @@ function ScheduleCard({ schedule }: { schedule: DbSchedule }) {
       return (
         <div className="flex items-center gap-2 md:gap-4">
           <div className="flex items-center gap-2">
-            <Calendar className="size-5" />
+            <Calender className="size-5" />
             <p className="font-bold text-xl tabular-nums md:text-2xl">{startDateStr}</p>
           </div>
-          <ChevronRight className="size-4" />
+          <Right className="size-4" />
           <div className="flex items-center gap-2">
-            <Calendar className="size-5" />
+            <Calender className="size-5" />
             <p className="font-bold text-md tabular-nums md:text-base">{endDateStr}</p>
           </div>
           {!isMobile && (
@@ -137,10 +144,10 @@ function ScheduleCard({ schedule }: { schedule: DbSchedule }) {
       return (
         <div className="flex items-center gap-2 md:gap-4">
           <div className="flex items-center gap-2">
-            <Calendar className="size-5" />
+            <Calender className="size-5" />
             <p className="font-bold text-xl tabular-nums md:text-2xl">{startDateStr}</p>
           </div>
-          <ChevronRight className="size-4" />
+          <Right className="size-4" />
           <div className="flex items-center gap-2">
             <Clock className="size-5" />
             <div className="flex items-center gap-1">
@@ -156,12 +163,12 @@ function ScheduleCard({ schedule }: { schedule: DbSchedule }) {
     return (
       <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-2">
-          <Calendar className="size-5" />
+          <Calender className="size-5" />
           <p className="font-bold text-xl tabular-nums md:text-2xl">{extractDate(startDate, 'default')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <ChevronRight className="size-4" />
-          <Calendar className="size-5" />
+          <Right className="size-4" />
+          <Calender className="size-5" />
           <p className="font-bold text-md tabular-nums md:text-base">{extractDate(endDate, 'default')}</p>
         </div>
       </div>
@@ -182,27 +189,27 @@ function ScheduleCard({ schedule }: { schedule: DbSchedule }) {
 
         <div className="flex flex-wrap items-start gap-2 pt-1 md:flex-col md:pt-2">
           <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
-            <MapPin className="size-4" />
+            <Map className="size-4" />
             <span className="text-muted-foreground text-sm">{getRoomName(schedule.Room)}</span>
           </Button>
 
           {schedule.Professional && (
             <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
-              <Stethoscope className="size-4" />
+              <Clinic className="size-4" />
               <span className="text-muted-foreground text-sm">{getProfessionalName(schedule.Professional)}</span>
             </Button>
           )}
 
           {schedule.Financial && (
             <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
-              <DollarSign className="size-4" />
+              <Dollar className="size-4" />
               <span className="text-muted-foreground text-sm">Vinculado</span>
             </Button>
           )}
 
           {schedule.title && (
             <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
-              <FileText className="size-4" />
+              <Mail className="size-4" />
               <span className="text-muted-foreground text-sm">{schedule.title}</span>
             </Button>
           )}

@@ -61,13 +61,6 @@ const effectPresets = {
   ],
 } as const;
 
-export type SwapProps<T = object> = Omit<ComponentProps<'div'>, 'children'> & {
-  state: T;
-  children: (state: T) => ReactNode;
-  effects?: (keyof typeof effectPresets)[];
-  duration?: number;
-};
-
 const mergeVars = (varsArray: Record<string, string | number>[]) => {
   const merged: Record<string, string | number> = {};
 
@@ -138,4 +131,11 @@ export const Swap = <T,>({ state, children, duration = 0.4, effects = [], ...pro
       </div>
     </div>
   );
+};
+
+export type SwapProps<T = object> = Omit<ComponentProps<'div'>, 'children'> & {
+  state: T;
+  children: (state: T) => ReactNode;
+  effects?: (keyof typeof effectPresets)[];
+  duration?: number;
 };

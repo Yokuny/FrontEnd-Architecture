@@ -1,7 +1,11 @@
-import { ChevronDown, ChevronUp, Filter, Search, X } from 'lucide-react';
 import type React from 'react';
 import { useMemo, useState } from 'react';
 import EmptyData from '@/components/default-empty-data';
+import Cross from '@/components/icons/Cross.Icon';
+import Down from '@/components/icons/Down.Icon';
+import Mixer from '@/components/icons/Mixer.Icon';
+import Search from '@/components/icons/Search.Icon';
+import Up from '@/components/icons/Up.Icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ItemContent, ItemFooter, ItemHeader } from '@/components/ui/item';
@@ -174,13 +178,13 @@ export function DataTable<T extends Record<string, any>>({
                         <span className="font-semibold text-sm">{column.header}</span>
                         {column.sortable && (
                           <div className="flex flex-col">
-                            <ChevronUp
+                            <Up
                               className={cn(
                                 'size-3',
                                 sortConfig.key === column.key && sortConfig.direction === 'asc' ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground/70',
                               )}
                             />
-                            <ChevronDown
+                            <Down
                               className={cn(
                                 '-mt-1 size-3',
                                 sortConfig.key === column.key && sortConfig.direction === 'desc' ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground/70',
@@ -191,7 +195,7 @@ export function DataTable<T extends Record<string, any>>({
                       </div>
                       {column.filterable && (
                         <div className="relative">
-                          <Filter className="size-3 text-muted-foreground/50" />
+                          <Mixer className="size-3 text-muted-foreground/50" />
                         </div>
                       )}
                     </div>
@@ -212,7 +216,7 @@ export function DataTable<T extends Record<string, any>>({
                             onClick={() => clearColumnFilter(String(column.key))}
                             className="absolute top-0 right-0 h-8 w-8 hover:bg-transparent"
                           >
-                            <X className="size-3 text-muted-foreground hover:text-foreground" />
+                            <Cross className="size-3 text-muted-foreground hover:text-foreground" />
                           </Button>
                         )}
                       </div>

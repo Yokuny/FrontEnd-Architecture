@@ -1,18 +1,11 @@
-import { Check, ChevronsUpDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-
+import Check from '@/components/icons/Check.Icon';
+import Up from '@/components/icons/Up.Icon';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-
-type FinancialComboboxProps = {
-  controller: any;
-  patient: string;
-  disabled?: boolean;
-  fetchFinancials: (patient: string) => Promise<{ value: string; label: string }[]>;
-};
 
 const FinancialCombobox = ({ controller, patient, disabled, fetchFinancials }: FinancialComboboxProps) => {
   const [open, setOpen] = useState(false);
@@ -42,7 +35,7 @@ const FinancialCombobox = ({ controller, patient, disabled, fetchFinancials }: F
           <div className="flex items-center gap-2 truncate">
             <span className="text-foreground/90">{financials.find((item) => item.value === financial)?.label || 'Financeiros'}</span>
           </div>
-          <ChevronsUpDown className="size-3 shrink-0 opacity-50" />
+          <Up className="size-3 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[--radix-popover-trigger-width] min-w-[240px] p-0">
@@ -75,3 +68,10 @@ const FinancialCombobox = ({ controller, patient, disabled, fetchFinancials }: F
 };
 
 export default FinancialCombobox;
+
+type FinancialComboboxProps = {
+  controller: any;
+  patient: string;
+  disabled?: boolean;
+  fetchFinancials: (patient: string) => Promise<{ value: string; label: string }[]>;
+};

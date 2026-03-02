@@ -1,6 +1,7 @@
 import type { UseQueryResult } from '@tanstack/react-query';
-import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Check from '@/components/icons/Check.Icon';
+import Up from '@/components/icons/Up.Icon';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -74,7 +75,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
             className={cn('w-full justify-between', !selectedOption && 'text-muted-foreground')}
           >
             <span className="truncate">{isLoading ? 'Loading...' : selectedOption ? selectedOption.label : placeholder}</span>
-            <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 text-muted-foreground/80" aria-hidden="true" />
+            <Up className="ml-2 h-4 w-4 shrink-0 text-muted-foreground/80" aria-hidden="true" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
@@ -92,7 +93,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
                     {options.map((option) => (
                       <CommandItem key={String(option.value)} value={String(option.value)} onSelect={handleSelect}>
                         <span className="truncate">{option.label}</span>
-                        {value === option.value && <CheckIcon size={16} className="ml-auto" />}
+                        {value === option.value && <Check className="ml-auto h-4 w-4" />}
                       </CommandItem>
                     ))}
                   </CommandGroup>

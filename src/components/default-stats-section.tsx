@@ -1,4 +1,4 @@
-import { Leaf } from 'lucide-react';
+import Pulse from '@/components/icons/Pulse.Icon';
 import { Card, CardContent } from '@/components/ui/card';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
@@ -62,7 +62,7 @@ export function DefaultStatsSection() {
             <Item className="flex-col items-center justify-center">
               <ItemContent className="items-center">
                 <ItemTitle className="font-bold text-5xl text-emerald-500 leading-snug">
-                  <Leaf className="mr-2 inline size-10" />
+                  <Pulse className="mr-2 inline size-10" />
                   1,000Kg
                 </ItemTitle>
                 <ItemDescription className="mt-2 font-bold text-foreground">CO2 Emissions Offset</ItemDescription>

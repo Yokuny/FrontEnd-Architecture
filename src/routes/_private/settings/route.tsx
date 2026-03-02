@@ -1,5 +1,8 @@
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
-import { Activity, KeyRound, LayoutDashboard, Lock, Mail, User } from 'lucide-react';
+import Grid from '@/components/icons/Grid.Icon';
+import Lock from '@/components/icons/Lock.Icon';
+import Mail from '@/components/icons/Mail.Icon';
+import User from '@/components/icons/User.Icon';
 import { useUserQuery } from '@/query/user';
 
 export const Route = createFileRoute('/_private/settings')({
@@ -13,11 +16,11 @@ function SettingsLayout() {
 
   const navigationLinks = [
     { to: '/settings/profile', label: 'Perfil', icon: User, adminOnly: false },
-    { to: '/settings/clinic', label: 'Clínica', icon: Activity, adminOnly: true },
-    { to: '/settings/procedures', label: 'Serviços', icon: LayoutDashboard, adminOnly: true },
+    { to: '/settings/clinic', label: 'Clínica', icon: Grid, adminOnly: true },
+    { to: '/settings/procedures', label: 'Serviços', icon: Grid, adminOnly: true },
     { to: '/settings/invite', label: 'Convites', icon: Mail, adminOnly: true },
     { to: '/settings/permissions', label: 'Permissões', icon: Lock, adminOnly: true },
-    { to: '/settings/access', label: 'Acesso', icon: KeyRound, adminOnly: false },
+    { to: '/settings/access', label: 'Acesso', icon: Lock, adminOnly: false },
   ];
 
   const visibleLinks = navigationLinks.filter((nav) => !nav.adminOnly || isAdmin);

@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from '@tanstack/react-router';
-import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
+import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -64,7 +64,7 @@ export const SignUp = ({ isLoading, setIsLoading }: LogInProps) => {
               )}
             />
             <Button className="w-full" disabled={isLoading || isDisabled}>
-              {isLoading && <Loader2 className="mr-2 size-4 animate-spin" />}
+              {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
               Continuar
             </Button>
           </form>

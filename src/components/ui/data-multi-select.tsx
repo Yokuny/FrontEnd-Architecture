@@ -1,6 +1,8 @@
 import type { UseQueryResult } from '@tanstack/react-query';
-import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react';
 import { useState } from 'react';
+import Check from '@/components/icons/Check.Icon';
+import Cross from '@/components/icons/Cross.Icon';
+import Up from '@/components/icons/Up.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
@@ -83,7 +85,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
                           asChild
                         >
                           <span>
-                            <XIcon className="size-3" />
+                            <Cross className="size-3" />
                           </span>
                         </Button>
                       </Badge>
@@ -106,7 +108,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
                 <span className="text-muted-foreground">{placeholder}</span>
               )}
             </div>
-            <ChevronsUpDownIcon className="shrink-0 text-muted-foreground/80" aria-hidden="true" />
+            <Up className="shrink-0 text-muted-foreground/80" aria-hidden="true" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
@@ -124,7 +126,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
                     {options.map((option) => (
                       <CommandItem key={String(option.value)} value={String(option.value)} onSelect={() => toggleSelection(String(option.value))}>
                         <span className="truncate">{option.label}</span>
-                        {selectedValues.includes(String(option.value)) && <CheckIcon size={16} className="ml-auto" />}
+                        {selectedValues.includes(String(option.value)) && <Check className="ml-auto h-4 w-4" />}
                       </CommandItem>
                     ))}
                   </CommandGroup>

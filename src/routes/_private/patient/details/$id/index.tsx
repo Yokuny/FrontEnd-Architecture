@@ -1,8 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 // Icons
-import { Activity, Calendar, DollarSign, FileText, Smile, User } from 'lucide-react';
 import { z } from 'zod';
 import DefaultLoading from '@/components/default-loading';
+import Calender from '@/components/icons/Calender.Icon';
+import Dollar from '@/components/icons/Dollar.Icon';
+import Face from '@/components/icons/Face.Icon';
+import Mail from '@/components/icons/Mail.Icon';
+import Pulse from '@/components/icons/Pulse.Icon';
+import User from '@/components/icons/User.Icon';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePatientQuery } from '@/query/patient';
@@ -57,19 +62,19 @@ function PatientDetailsPage() {
                 <User className="mr-2 size-4" /> Visão Geral
               </TabsTrigger>
               <TabsTrigger value="anamnesis">
-                <Activity className="mr-2 size-4" /> Anamnese
+                <Pulse className="mr-2 size-4" /> Anamnese
               </TabsTrigger>
               <TabsTrigger value="intraoral">
-                <Smile className="mr-2 size-4" /> Intraoral
+                <Face className="mr-2 size-4" /> Intraoral
               </TabsTrigger>
               <TabsTrigger value="odontogram">
-                <FileText className="mr-2 size-4" /> Odontograma
+                <Mail className="mr-2 size-4" /> Odontograma
               </TabsTrigger>
               <TabsTrigger value="schedule">
-                <Calendar className="mr-2 size-4" /> Agendamentos
+                <Calender className="mr-2 size-4" /> Agendamentos
               </TabsTrigger>
               <TabsTrigger value="financial">
-                <DollarSign className="mr-2 size-4" /> Financeiro
+                <Dollar className="mr-2 size-4" /> Financeiro
               </TabsTrigger>
             </TabsList>
 

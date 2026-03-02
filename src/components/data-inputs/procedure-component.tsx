@@ -1,24 +1,11 @@
-import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { toast } from 'sonner';
 import ProceduresSheet from '@/components/data-inputs/procedures-sheet';
+import Add from '@/components/icons/Add.Icon';
+import Delete from '@/components/icons/Delete.Icon';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
-
-type NewProcedure = {
-  procedure: string;
-  price: number;
-  status: string;
-  periodicity?: string;
-};
-
-type ProcedureComponentProps = {
-  form: any;
-  disabled: boolean;
-  currencyFormat: (value: number) => string;
-  statusDictionary: (status: string) => string;
-};
 
 const ProcedureComponent = ({ form, disabled, currencyFormat, statusDictionary }: ProcedureComponentProps) => {
   const [procedures, setProcedures] = useState<NewProcedure[]>([
@@ -101,11 +88,11 @@ const ProcedureComponent = ({ form, disabled, currencyFormat, statusDictionary }
                   {procedure?.procedure && (
                     <div className="flex items-center gap-2">
                       <Button type="button" variant="outline" size="sm" onClick={() => removeProcedure(index)} disabled={disabled}>
-                        <Trash2 className="size-4" />
+                        <Delete className="size-4" />
                       </Button>
                       {index === procedures.length - 1 && (
                         <Button type="button" variant="default" size="sm" className="whitespace-nowrap" onClick={addProcedure} disabled={disabled}>
-                          <Plus className="size-4 stroke-3 md:mr-2" />
+                          <Add className="size-4 stroke-3 md:mr-2" />
                           <p className="hidden md:block">Adicionar</p>
                         </Button>
                       )}
@@ -122,3 +109,17 @@ const ProcedureComponent = ({ form, disabled, currencyFormat, statusDictionary }
 };
 
 export default ProcedureComponent;
+
+type NewProcedure = {
+  procedure: string;
+  price: number;
+  status: string;
+  periodicity?: string;
+};
+
+type ProcedureComponentProps = {
+  form: any;
+  disabled: boolean;
+  currencyFormat: (value: number) => string;
+  statusDictionary: (status: string) => string;
+};

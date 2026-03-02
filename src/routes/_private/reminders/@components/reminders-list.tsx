@@ -1,8 +1,11 @@
-import { CalendarCheck, Check, MoreVertical, Phone } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
 import DefaultEmptyData from '@/components/default-empty-data';
+import CalenderEdit from '@/components/icons/CalenderEdit.Icon';
+import Check from '@/components/icons/Check.Icon';
+import Dot from '@/components/icons/Dot.Icon';
+import Phone from '@/components/icons/Phone.Icon';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
@@ -87,7 +90,7 @@ export function RemindersList({ reminders }: { reminders: DbReminder[] }) {
           return (
             <div className={`flex items-center gap-4 ${reminder.status === 'done' ? 'opacity-60' : ''}`}>
               <div className={`flex size-10 shrink-0 items-center justify-center rounded-md ${isSelected ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'}`}>
-                <CalendarCheck className="size-5" />
+                <CalenderEdit className="size-5" />
               </div>
               <div className="flex flex-col gap-0.5">
                 <span className="font-medium text-base">{reminder.Patient.name}</span>
@@ -106,7 +109,7 @@ export function RemindersList({ reminders }: { reminders: DbReminder[] }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
               <Button variant="secondary" size="icon">
-                <MoreVertical className="size-4" />
+                <Dot className="size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

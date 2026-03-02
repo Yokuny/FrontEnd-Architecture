@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Trash2 } from 'lucide-react';
 import { useMemo } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import DefaultLoading from '@/components/default-loading';
+import Delete from '@/components/icons/Delete.Icon';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,7 +19,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-
 import { usePatientQuery } from '@/query/patient';
 import { PatientForm } from '../@components/patient-form';
 import { usePatientApi } from '../@hooks/use-patient-api';
@@ -101,7 +100,7 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button type="button" variant="destructive" disabled={deletePatient.isPending || isPending}>
-                    {deletePatient.isPending ? <Spinner className="mr-2 size-4" /> : <Trash2 className="mr-2 size-4" />}
+                    {deletePatient.isPending ? <Spinner className="mr-2 size-4" /> : <Delete className="mr-2 size-4" />}
                     Excluir
                   </Button>
                 </AlertDialogTrigger>
@@ -113,7 +112,7 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancelar</AlertDialogCancel>
                     <AlertDialogAction onClick={handleDelete} className="bg-destructive">
-                      <Trash2 className="size-4" />
+                      <Delete className="size-4" />
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

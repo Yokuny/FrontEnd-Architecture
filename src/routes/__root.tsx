@@ -1,10 +1,9 @@
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
-import { CircleAlert } from 'lucide-react';
-
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Notification from '@/components/icons/Notification.Icon';
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
@@ -31,7 +30,7 @@ export const Route = createRootRoute({
         <CardContent>
           <Empty className="border-2 border-destructive/20 bg-destructive/10">
             <EmptyHeader>
-              <CircleAlert className="size-8 animate-pulse text-destructive" />
+              <Notification className="size-8 animate-pulse text-destructive" />
               <EmptyTitle className="text-destructive">{'error.page'}</EmptyTitle>
               <EmptyDescription className="max-w-md break-all rounded-md border bg-background/50 p-4 font-mono text-xs">
                 {error instanceof Error ? error.message : String(error)}

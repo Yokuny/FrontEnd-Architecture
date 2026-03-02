@@ -1,12 +1,12 @@
-import { Plus, Trash2 } from 'lucide-react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import DefaultFormLayout from '@/components/default-form-layout';
+import Add from '@/components/icons/Add.Icon';
+import Delete from '@/components/icons/Delete.Icon';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { formatCpfCnpj, formatDate, formatPhone } from '@/lib/helpers/formatter.helper';
-
 import type { NewPatient } from '@/lib/interfaces/schemas/patient.schema';
 
 export function PatientForm() {
@@ -157,7 +157,7 @@ export function PatientForm() {
           <div className="flex items-center justify-between">
             <h4 className="font-medium text-sm">Lista de Telefones</h4>
             <Button type="button" variant="outline" size="sm" onClick={() => append({ number: '', tag: fields.length === 0 ? 'WhatsApp' : '' })}>
-              <Plus className="mr-2 size-4" />
+              <Add className="mr-2 size-4" />
               Adicionar Telefone
             </Button>
           </div>
@@ -190,7 +190,7 @@ export function PatientForm() {
                 )}
               />
               <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)}>
-                <Trash2 className="size-4" />
+                <Delete className="size-4" />
               </Button>
             </div>
           ))}

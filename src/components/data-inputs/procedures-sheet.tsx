@@ -1,10 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from '@tanstack/react-router';
-import { Check, Copy, Pencil, Plus, Settings, Square, SquareCheck } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import Add from '@/components/icons/Add.Icon';
+import Check from '@/components/icons/Check.Icon';
+import Copy from '@/components/icons/Copy.Icon';
+import Edit from '@/components/icons/Edit.Icon';
+import EmptySquare from '@/components/icons/EmptySquare.Icon';
+import Gear from '@/components/icons/Gear.Icon';
+import SelectedSquare from '@/components/icons/SelectedSquare.Icon';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -19,28 +25,6 @@ const procedureSchema = z.object({
   price: z.coerce.number().min(0).default(0),
   status: z.string().default('pending'),
 });
-
-type NewProcedure = {
-  procedure: string;
-  price: number;
-  status: string;
-  periodicity?: string;
-};
-
-type ProcedureData = {
-  procedure: string;
-  costPrice: number;
-  suggestedPrice: number;
-  savedPrice: number;
-  periodicity?: string;
-};
-
-type ProceduresSheetProps = {
-  handleProcedure: (procedure: NewProcedure) => void;
-  disabled?: boolean;
-  stringPriceClean?: (value: any) => number;
-  handleCopy?: (value: string) => Promise<void>;
-};
 
 const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCopy }: ProceduresSheetProps) => {
   const [open, setOpen] = useState(false);
@@ -110,12 +94,12 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
         >
           {btnValue?.procedure ? (
             <>
-              <Pencil className="size-5 shrink-0" />
+              <Edit className="size-5 shrink-0" />
               <span>Editar</span>
             </>
           ) : (
             <>
-              <Plus className="size-4 shrink-0 stroke-3" />
+              <Add className="size-4 shrink-0 stroke-3" />
               <span>Selecione o procedimento</span>
             </>
           )}
@@ -269,7 +253,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                       onClick={() => setProcedure(proc)}
                     >
                       <span>{proc.procedure}</span>
-                      {proc.procedure === procedure.procedure ? <SquareCheck className={'size-5'} /> : <Square className={'size-5'} />}
+                      {proc.procedure === procedure.procedure ? <SelectedSquare className={'size-5'} /> : <EmptySquare className={'size-5'} />}
                     </button>
                   ))}
                 </AccordionContent>
@@ -292,7 +276,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
             {/* TODO: AINDA FALTA MIGRAR ESSA PAGINA */}
             <Link to="/">
               <Button variant="outline">
-                <Settings className="size-5" />
+                <Gear className="size-5" />
               </Button>
             </Link>
           </div>
@@ -303,3 +287,25 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
 };
 
 export default ProceduresSheet;
+
+type NewProcedure = {
+  procedure: string;
+  price: number;
+  status: string;
+  periodicity?: string;
+};
+
+type ProcedureData = {
+  procedure: string;
+  costPrice: number;
+  suggestedPrice: number;
+  savedPrice: number;
+  periodicity?: string;
+};
+
+type ProceduresSheetProps = {
+  handleProcedure: (procedure: NewProcedure) => void;
+  disabled?: boolean;
+  stringPriceClean?: (value: any) => number;
+  handleCopy?: (value: string) => Promise<void>;
+};

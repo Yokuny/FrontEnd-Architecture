@@ -1,18 +1,12 @@
-import { Check, ChevronsUpDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-
+import Check from '@/components/icons/Check.Icon';
+import Up from '@/components/icons/Up.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-
-type PatientComboboxProps = {
-  controller: any;
-  disabled?: boolean;
-  fetchPatients: () => Promise<{ value: string; label: string; image: string }[]>;
-};
 
 const PatientCombobox = ({ controller, disabled, fetchPatients }: PatientComboboxProps) => {
   const [open, setOpen] = useState(false);
@@ -48,7 +42,7 @@ const PatientCombobox = ({ controller, disabled, fetchPatients }: PatientCombobo
             )}
             <span className="text-foreground/90">{patients.find((item) => item.value === patient)?.label || 'Pacientes'}</span>
           </div>
-          <ChevronsUpDown className="size-3 shrink-0 opacity-50" />
+          <Up className="size-3 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[--radix-popover-trigger-width] min-w-[240px] p-0">
@@ -87,3 +81,9 @@ const PatientCombobox = ({ controller, disabled, fetchPatients }: PatientCombobo
 };
 
 export default PatientCombobox;
+
+type PatientComboboxProps = {
+  controller: any;
+  disabled?: boolean;
+  fetchPatients: () => Promise<{ value: string; label: string; image: string }[]>;
+};

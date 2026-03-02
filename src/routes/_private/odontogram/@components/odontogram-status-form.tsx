@@ -1,6 +1,6 @@
-import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -35,7 +35,7 @@ export function OdontogramStatusForm({ id, initialStatus }: { id: string; initia
           </Select>
         </div>
         <Button type="button" onClick={handleStatusChange} disabled={updateStatus.isPending} className="mt-4">
-          {updateStatus.isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
+          {updateStatus.isPending && <Loader className="mr-2 size-4 animate-spin" />}
           Salvar
         </Button>
       </CardContent>

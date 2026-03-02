@@ -1,12 +1,11 @@
 import { addDays, format, isToday } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
-import { CalendarIcon } from 'lucide-react';
 import { useMemo } from 'react';
+import Calender from '@/components/icons/Calender.Icon';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AgendaDaysToShow } from '@/lib/consts/calendar.constants';
 import { getAgendaEventsForDay } from '@/lib/helpers/calendar.utils';
 import type { PartialSchedule } from '@/lib/interfaces/schedule';
-
 import { EventItem } from './event-item';
 
 export function AgendaView({ currentDate, events, onEventSelect }: AgendaViewProps) {
@@ -25,7 +24,7 @@ export function AgendaView({ currentDate, events, onEventSelect }: AgendaViewPro
     <div className="flex h-full flex-col px-4">
       {!hasEvents ? (
         <div className="flex min-h-[70svh] flex-col items-center justify-center py-16 text-center">
-          <CalendarIcon className="mb-2 size-10 text-muted-foreground" />
+          <Calender className="mb-2 size-10 text-muted-foreground" />
           <p className="font-semibold">Nenhum agendamento</p>
           <p className="text-muted-foreground text-sm">Não há agendamentos para este período.</p>
         </div>

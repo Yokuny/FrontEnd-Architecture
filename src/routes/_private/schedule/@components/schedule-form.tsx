@@ -1,10 +1,13 @@
-import { ArrowLeft, Loader2, Pencil, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
 import DateTimePicker from '@/components/date-time-picker';
+import Back from '@/components/icons/Back.Icon';
+import Delete from '@/components/icons/Delete.Icon';
+import Edit from '@/components/icons/Edit.Icon';
+import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -527,11 +530,11 @@ export function ScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFormP
       <DialogFooter className="flex-row items-center justify-between space-x-2 md:justify-between">
         {event?._id && (
           <Button variant="outline" onClick={handleDelete} disabled={isLoading} aria-label="Apagar agendamento">
-            <Trash2 className="size-4 text-destructive" aria-hidden="true" />
+            <Delete className="size-4 text-destructive" aria-hidden="true" />
           </Button>
         )}
         <Button variant="outline" onClick={handleCancel} disabled={isLoading}>
-          <ArrowLeft className="size-4 md:hidden" />
+          <Back className="size-4 md:hidden" />
           <span className="hidden md:block">Cancelar</span>
         </Button>
         {!(form.getValues('Room') || selectedRoom) ? (
@@ -566,10 +569,10 @@ export function ScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFormP
               }}
               aria-label="Alterar sala"
             >
-              <Pencil className="size-4" />
+              <Edit className="size-4" />
             </Button>
             <Button onClick={handleSave} disabled={isLoading} className="w-full">
-              {isLoading && <Loader2 className="mr-2 size-4 animate-spin" />}
+              {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
               {isEditMode ? 'Salvar' : `Agendar em ${selectedRoomName || ''}`}
             </Button>
           </>

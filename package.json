@@ -60,7 +60,6 @@
     "framer-motion": "^12",
     "gsap": "^3",
     "jwt-decode": "^4",
-    "lucide-react": "^0",
     "next-themes": "^0",
     "radix-ui": "^1",
     "react": "^19",

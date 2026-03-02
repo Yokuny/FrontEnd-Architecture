@@ -1,7 +1,7 @@
 // Apresentação de dados - Preview example em:
 // https://www.shadcnblocks.com/block/experience1
 
-import { Download } from 'lucide-react';
+import Download from '@/components/icons/Download.Icon';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 

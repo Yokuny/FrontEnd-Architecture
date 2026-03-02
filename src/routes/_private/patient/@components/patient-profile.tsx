@@ -1,6 +1,15 @@
 import { useNavigate } from '@tanstack/react-router';
-import { Cake, Check, Clock, Copy, Edit, HelpCircle, IdCard, MapPin, MessageCircle, TrendingUp } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import Cake from '@/components/icons/Cake.Icon';
+import Chat from '@/components/icons/Chat.Icon';
+import Check from '@/components/icons/Check.Icon';
+import Clock from '@/components/icons/Clock.Icon';
+import Copy from '@/components/icons/Copy.Icon';
+import Edit from '@/components/icons/Edit.Icon';
+import Help from '@/components/icons/Help.Icon';
+import ID from '@/components/icons/ID.Icon';
+import Map from '@/components/icons/Map.Icon';
+import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -93,7 +102,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <HelpCircle className="mr-2 size-5 cursor-pointer text-muted-foreground" />
+                      <Help className="mr-2 size-5 cursor-pointer text-muted-foreground" />
                     </TooltipTrigger>
                     <TooltipContent>Última atualização: {patient.updatedAt ? formatDate(String(patient.updatedAt)) : ''}</TooltipContent>
                   </Tooltip>
@@ -116,7 +125,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
                         {copiedPhones[i] ? <Check className="size-3" /> : <Copy className="size-3" />}
                       </Button>
                       <Button variant="outline" size="icon" className="size-7 text-green-600" onClick={() => openWhatsApp(phone.number)}>
-                        <MessageCircle className="size-3" />
+                        <Chat className="size-3" />
                       </Button>
                     </div>
                   </div>
@@ -130,14 +139,14 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
               <div className="flex flex-col space-y-1">
                 <span className="font-semibold text-muted-foreground text-sm uppercase">CPF</span>
                 <div className="flex items-center gap-2">
-                  <IdCard className="size-4 text-muted-foreground" />
+                  <ID className="size-4 text-muted-foreground" />
                   <span className="font-medium">{formatCpfCnpj(patient.cpf) || 'Não informado'}</span>
                 </div>
               </div>
               <div className="flex flex-col space-y-1">
                 <span className="font-semibold text-muted-foreground text-sm uppercase">RG</span>
                 <div className="flex items-center gap-2">
-                  <IdCard className="size-4 text-muted-foreground" />
+                  <ID className="size-4 text-muted-foreground" />
                   <span className="font-medium">{formatRg(patient.rg) || 'Não informado'}</span>
                 </div>
               </div>
@@ -159,7 +168,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
               <div className="flex flex-col space-y-1 md:col-span-2">
                 <span className="font-semibold text-muted-foreground text-sm uppercase">Endereço</span>
                 <div className="flex items-center gap-2">
-                  <MapPin className="size-4 text-muted-foreground" />
+                  <Map className="size-4 text-muted-foreground" />
                   <span className="font-medium">{patient.address || 'Não informado'}</span>
                 </div>
               </div>

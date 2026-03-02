@@ -1,8 +1,8 @@
 import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router';
-import { ArrowLeft } from 'lucide-react';
 import { useMemo } from 'react';
 
 import DefaultLoading from '@/components/default-loading';
+import Back from '@/components/icons/Back.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -53,7 +53,7 @@ function FinancialDetailPage() {
         </CardHeader>
         <CardFooter>
           <Button variant="outline" onClick={() => navigate({ to: '/financial' })}>
-            <ArrowLeft className="mr-2 size-4" />
+            <Back className="mr-2 size-4" />
             Voltar
           </Button>
         </CardFooter>
@@ -90,7 +90,7 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
         </div>
         <CardAction>
           <Button variant="outline" onClick={() => navigate({ to: '/financial' })}>
-            <ArrowLeft className="mr-2 size-4" />
+            <Back className="mr-2 size-4" />
             Voltar
           </Button>
         </CardAction>
@@ -196,7 +196,7 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
               <FinancialEditForm />
               <div className="flex w-full max-w-4xl gap-4 px-6 py-4 md:px-10">
                 <Button variant="outline" type="button" onClick={() => navigate({ to: '/financial' })} disabled={isPending} className="w-1/4">
-                  <ArrowLeft className="mr-2 size-4" />
+                  <Back className="mr-2 size-4" />
                   Voltar
                 </Button>
                 <Button type="submit" disabled={isPending} className="w-3/4">

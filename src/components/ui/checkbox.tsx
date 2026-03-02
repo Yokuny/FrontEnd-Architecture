@@ -1,8 +1,7 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CheckIcon } from 'lucide-react';
 import type * as React from 'react';
-
+import Check from '@/components/icons/Check.Icon';
 import { cn } from '@/lib/utils';
 
 const checkboxVariants = cva(
@@ -36,7 +35,7 @@ function Checkbox({ className, variant, ...props }: React.ComponentProps<typeof 
   return (
     <CheckboxPrimitive.Root data-slot="checkbox" className={cn(checkboxVariants({ variant, className }))} {...props}>
       <CheckboxPrimitive.Indicator data-slot="checkbox-indicator" className="grid place-content-center text-current transition-none">
-        <CheckIcon className="size-3.5" />
+        <Check className="size-3.5" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );

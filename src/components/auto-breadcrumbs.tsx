@@ -1,6 +1,6 @@
 import { Link, useMatches } from '@tanstack/react-router';
-import { Home } from 'lucide-react';
 import { Fragment, useMemo } from 'react';
+import Command from '@/components/icons/Command.Icon';
 import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 
 export function AutoBreadcrumbs() {
@@ -52,7 +52,7 @@ export function AutoBreadcrumbs() {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link to="/">
-              <Home className="size-4" />
+              <Command className="size-4" />
               <span className="sr-only">Home</span>
             </Link>
           </BreadcrumbLink>

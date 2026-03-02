@@ -1,8 +1,14 @@
-import { Bird, CloudOff, Database, FileSearch, Ghost, Inbox, PackageOpen, Search, Telescope } from 'lucide-react';
 import * as React from 'react';
+import Card from '@/components/icons/Card.Icon';
+import Cloud from '@/components/icons/Cloud.Icon';
+import Face from '@/components/icons/Face.Icon';
+import Mail from '@/components/icons/Mail.Icon';
+import Package from '@/components/icons/Package.Icon';
+import Search from '@/components/icons/Search.Icon';
+import Service from '@/components/icons/Service.Icon';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
 
-const ICONS = [FileSearch, Search, Database, Inbox, CloudOff, Ghost, Telescope, Bird, PackageOpen];
+const ICONS = [Search, Search, Card, Mail, Cloud, Face, Service, Service, Package];
 
 const EmptyData = () => {
   const Icon = React.useMemo(() => {

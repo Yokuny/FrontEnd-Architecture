@@ -1,7 +1,9 @@
 import { Link } from '@tanstack/react-router';
-import { ChevronDown, ChevronUp, Star } from 'lucide-react';
 import type React from 'react';
 import { useState } from 'react';
+import Down from '@/components/icons/Down.Icon';
+import Pulse from '@/components/icons/Pulse.Icon';
+import Up from '@/components/icons/Up.Icon';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuItem as SidebarMenuSubItem, useSidebar } from '@/components/ui/sidebar';
 import { useFavorites } from '@/hooks/use-favorites';
@@ -33,7 +35,7 @@ export default function AppNavigation({ routes }: { routes: Route[] }) {
                   >
                     {route.icon}
                     {!isCollapsed && <span className="ml-2 flex-1 truncate">{route.title}</span>}
-                    {!isCollapsed && hasSubRoutes && <span className="ml-auto">{isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}</span>}
+                    {!isCollapsed && hasSubRoutes && <span className="ml-auto">{isOpen ? <Up className="size-4" /> : <Down className="size-4" />}</span>}
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
 
@@ -52,7 +54,7 @@ export default function AppNavigation({ routes }: { routes: Route[] }) {
                                 favorited ? 'text-amber-500/50 opacity-100' : 'text-muted-foreground opacity-0 hover:text-yellow-400 group-hover/sub:opacity-100',
                               )}
                             >
-                              <Star className={cn('size-3', favorited && 'fill-current')} />
+                              <Pulse className={cn('size-3', favorited && 'fill-current')} />
                             </button>
                             <SidebarMenuSubButton size="sm" asChild>
                               <Link to={subRoute.link} className="text-foreground hover:bg-sidebar-muted hover:text-muted-foreground">

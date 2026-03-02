@@ -1,13 +1,8 @@
-import { CalendarIcon } from 'lucide-react';
+import Calender from '@/components/icons/Calender.Icon';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-
-interface DatePickerButtonProps {
-  date?: Date;
-  onSelect: (date: Date | undefined) => void;
-}
 
 const DatePickerButton = ({ date, onSelect }: DatePickerButtonProps) => {
   return (
@@ -15,7 +10,7 @@ const DatePickerButton = ({ date, onSelect }: DatePickerButtonProps) => {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline" className={cn('w-[280px] justify-start', date && 'font-normal')}>
-            <CalendarIcon className="size-5" />
+            <Calender className="size-5" />
             {date ? String(date.toLocaleDateString('pt-BR')) : <span>Selecione uma data</span>}
           </Button>
         </PopoverTrigger>
@@ -28,3 +23,8 @@ const DatePickerButton = ({ date, onSelect }: DatePickerButtonProps) => {
 };
 
 export default DatePickerButton;
+
+interface DatePickerButtonProps {
+  date?: Date;
+  onSelect: (date: Date | undefined) => void;
+}

@@ -1,11 +1,11 @@
-import type { LucideIcon } from 'lucide-react';
+import type React from 'react';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { cn } from '@/lib/utils';
 
 interface KPICardProps {
   title: string;
   value: string | number;
-  icon?: LucideIcon;
+  icon?: React.ReactNode;
   iconColor?: string;
   change?: string;
   changeType?: 'positive' | 'negative';
@@ -13,11 +13,11 @@ interface KPICardProps {
   className?: string;
 }
 
-export function DefaultKPI({ title, value, icon: Icon, iconColor, change, changeType, valueColor, className }: KPICardProps) {
+export function DefaultKPI({ title, value, icon, change, changeType, valueColor, className }: KPICardProps) {
   return (
     <Item variant="outline" className={cn('flex-col', className)}>
       <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
-        {Icon && <Icon className={cn('size-5', iconColor)} />}
+        {icon}
         <ItemDescription className="font-bold text-xs">{title}</ItemDescription>
         {change && <div className={cn('font-medium text-xs', changeType === 'positive' ? 'text-green-800 dark:text-green-400' : 'text-red-800 dark:text-red-400')}>{change}</div>}
       </ItemContent>

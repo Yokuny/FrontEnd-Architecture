@@ -1,8 +1,8 @@
 import type { Transition, Variants } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
-import { Cog } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { forwardRef, type HTMLAttributes, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import Gear from '@/components/icons/Gear.Icon';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
@@ -46,7 +46,7 @@ export function ThemeSwitcher() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme('system')} className={theme === 'system' ? 'bg-accent font-medium' : ''}>
-          <Cog className="mr-2" />
+          <Gear className="mr-2" />
           System {theme === 'system' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('light')} className={theme === 'light' ? 'bg-accent font-medium' : ''}>

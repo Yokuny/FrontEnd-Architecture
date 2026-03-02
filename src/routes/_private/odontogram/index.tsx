@@ -1,11 +1,14 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Activity, MoreVertical, Plus, Search } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Add from '@/components/icons/Add.Icon';
+import Dot from '@/components/icons/Dot.Icon';
+import Pulse from '@/components/icons/Pulse.Icon';
+import Search from '@/components/icons/Search.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -62,7 +65,7 @@ function OdontogramListPage() {
         render: (_, item) => (
           <div className="flex items-center gap-4">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-primary/20 text-primary">
-              <Activity className="size-5" />
+              <Pulse className="size-5" />
             </div>
             <div className="flex flex-col">
               <span className="font-medium text-base">{item.patient}</span>
@@ -86,7 +89,7 @@ function OdontogramListPage() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
               <Button variant="secondary" size="icon">
-                <MoreVertical className="size-4" />
+                <Dot className="size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -150,7 +153,7 @@ function OdontogramListPage() {
               />
             </div>
             <Button onClick={() => navigate({ to: '/odontogram/add' })}>
-              <Plus className="mr-2 size-4" />
+              <Add className="mr-2 size-4" />
               Adicionar
             </Button>
           </div>

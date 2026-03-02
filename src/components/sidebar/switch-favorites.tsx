@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { motion, useAnimation, type Variants } from 'framer-motion';
-import { PinOff } from 'lucide-react';
 import { forwardRef, type HTMLAttributes, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import Cross from '@/components/icons/Cross.Icon';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { useFavorites } from '@/hooks/use-favorites';
@@ -57,7 +57,7 @@ export function FavoritesSwitcher() {
                   }}
                   className="opacity-0 transition-opacity group-hover/fav-item:opacity-100"
                 >
-                  <PinOff className="size-4 text-muted-foreground" />
+                  <Cross className="size-4 text-muted-foreground" />
                 </button>
               </DropdownMenuItem>
             ))

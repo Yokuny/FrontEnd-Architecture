@@ -8,8 +8,13 @@ import {
   type SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { ChevronLeft, ChevronRight, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import Delete from '@/components/icons/Delete.Icon';
+import Dot from '@/components/icons/Dot.Icon';
+import Edit from '@/components/icons/Edit.Icon';
+import Eye from '@/components/icons/Eye.Icon';
+import Left from '@/components/icons/Left.Icon';
+import Right from '@/components/icons/Right.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -86,7 +91,7 @@ const columns: ColumnDef<Item>[] = [
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="h-8 w-8">
-              <MoreHorizontal className="size-4" />
+              <Dot className="size-4" />
               <span className="sr-only">Open menu</span>
             </Button>
           </DropdownMenuTrigger>
@@ -96,12 +101,12 @@ const columns: ColumnDef<Item>[] = [
               View details
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Pencil className="mr-2 size-4" />
+              <Edit className="mr-2 size-4" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive">
-              <Trash2 className="mr-2 size-4" />
+              <Delete className="mr-2 size-4" />
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -260,7 +265,7 @@ export default function Table05() {
         </p>
         <div className="flex items-center gap-1">
           <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-            <ChevronLeft className="size-4" />
+            <Left className="size-4" />
             <span className="sr-only">Previous page</span>
           </Button>
           {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
@@ -269,7 +274,7 @@ export default function Table05() {
             </Button>
           ))}
           <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            <ChevronRight className="size-4" />
+            <Right className="size-4" />
             <span className="sr-only">Next page</span>
           </Button>
         </div>

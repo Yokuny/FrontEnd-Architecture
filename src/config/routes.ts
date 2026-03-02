@@ -1,10 +1,8 @@
-import type { LucideIcon } from 'lucide-react';
-
 // Mapeamento de icones por segmento de rota
-export const ROUTE_ICONS: Record<string, LucideIcon> = {};
+export const ROUTE_ICONS: Record<string, React.ReactNode> = {};
 
 // Icones para sub-rotas especificas
-export const SUB_ROUTE_ICONS: Record<string, LucideIcon> = {};
+export const SUB_ROUTE_ICONS: Record<string, React.ReactNode> = {};
 
 // Chaves para traducao de rotas
 export const ROUTE_LABELS: Record<string, string> = {

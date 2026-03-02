@@ -1,7 +1,8 @@
 import { addHours, endOfDay, format, parse, set, startOfDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
-import { CalendarIcon, Clock } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import Calender from '@/components/icons/Calender.Icon';
+import Clock from '@/components/icons/Clock.Icon';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -173,7 +174,7 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
                 <span className={cn('truncate', !internalStartDate && 'text-muted-foreground')}>
                   {internalStartDate ? format(internalStartDate, 'PPP', { locale: ptBR }) : 'Selecione a data de início'}
                 </span>
-                <CalendarIcon className="size-4 shrink-0" aria-hidden="true" />
+                <Calender className="size-4 shrink-0" aria-hidden="true" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-2" align="start">
@@ -218,7 +219,7 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
                 <span className={cn('truncate', !internalEndDate && 'text-muted-foreground')}>
                   {internalEndDate ? format(internalEndDate, 'PPP', { locale: ptBR }) : 'Selecione a data final'}
                 </span>
-                <CalendarIcon className="size-4 shrink-0" aria-hidden="true" />
+                <Calender className="size-4 shrink-0" aria-hidden="true" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-2" align="start">

@@ -1,7 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
-import { MoreVertical } from 'lucide-react';
 import { useMemo } from 'react';
-
+import Dot from '@/components/icons/Dot.Icon';
 import { Badge, BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
@@ -60,7 +59,7 @@ export function FinancialList({ data }: FinancialListProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
                 <Button variant="secondary" size="icon">
-                  <MoreVertical className="size-4" />
+                  <Dot className="size-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">

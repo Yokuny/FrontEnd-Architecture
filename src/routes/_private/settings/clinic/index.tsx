@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
-import { Plus, Trash2 } from 'lucide-react';
 import { useEffect } from 'react';
 import { type Control, useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import DefaultLoading from '@/components/default-loading';
+import Add from '@/components/icons/Add.Icon';
+import Delete from '@/components/icons/Delete.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -35,7 +36,7 @@ const RoomField = ({ index, remove, control }: { index: number; remove: () => vo
         )}
       />
       <Button className="size-10" type="button" variant="destructive" size="icon" onClick={remove}>
-        <Trash2 className="size-4" />
+        <Delete className="size-4" />
       </Button>
     </div>
   );
@@ -167,7 +168,7 @@ export function SettingsClinic() {
                     disabled={saveClinic.isPending}
                     className="flex items-center gap-2"
                   >
-                    <Plus className="size-4" />
+                    <Add className="size-4" />
                     Adicionar Sala
                   </Button>
                 </div>

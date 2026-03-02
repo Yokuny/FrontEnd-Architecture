@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
-import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
-
+import Back from '@/components/icons/Back.Icon';
+import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -76,7 +76,7 @@ function RecoveryPasswordPage() {
                   )}
                 />
                 <Button className="w-full" disabled={isLoading || isDisabled}>
-                  {isLoading && <Loader2 className="mr-2 size-4 animate-spin" />}
+                  {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
                   {isDisabled ? 'E-mail enviado' : 'Enviar link de recuperação'}
                 </Button>
               </form>
@@ -87,7 +87,7 @@ function RecoveryPasswordPage() {
         <div className="mt-8 flex w-full flex-col items-center gap-4">
           <Button disabled={isLoading} onClick={previousPage} variant="outline" className="group flex w-full max-w-96 gap-4">
             Voltar
-            <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
+            <Back className="size-4 transition-transform group-hover:-translate-x-1" />
           </Button>
         </div>
       </div>

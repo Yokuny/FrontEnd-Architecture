@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
+import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -160,7 +160,7 @@ function OdontogramAddPage() {
                 Cancelar
               </Button>
               <Button form="odontogram-form" type="submit" disabled={create.isPending} className="min-w-[120px]">
-                {create.isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
+                {create.isPending && <Loader className="mr-2 size-4 animate-spin" />}
                 Cadastrar
               </Button>
             </div>

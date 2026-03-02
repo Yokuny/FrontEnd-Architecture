@@ -1,10 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
+import Back from '@/components/icons/Back.Icon';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/hooks/auth';
-
 import { SignUp } from '../@components/sign-up';
 
 export const Route = createFileRoute('/_public/auth/signup/')({
@@ -33,7 +31,7 @@ function SignUpPage() {
         <div className="mt-8 flex w-full flex-col items-center gap-4">
           <Button disabled={isLoading} onClick={previousPage} variant="outline" className="group flex w-full max-w-96 gap-4">
             Voltar
-            <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
+            <Back className="size-4 transition-transform group-hover:-translate-x-1" />
           </Button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router';
-import { LogOutIcon } from 'lucide-react';
+import Exit from '@/components/icons/Exit.Icon';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/hooks/auth';
 
@@ -14,7 +14,7 @@ export function EnterpriseSwitcher() {
 
   return (
     <Button size="icon" variant="secondary" aria-label={'logout'} onClick={onLogout}>
-      <LogOutIcon className="size-4" />
+      <Exit className="size-4" />
       <span className="sr-only">{'logout'}</span>
     </Button>
   );

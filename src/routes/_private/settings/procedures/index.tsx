@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { CloudUpload, Download, Upload } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import DefaultLoading from '@/components/default-loading';
+import Download from '@/components/icons/Download.Icon';
+import Upload from '@/components/icons/Upload.Icon';
+import UploadCloud from '@/components/icons/UploadCloud.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { ProcedureData } from '@/lib/interfaces';
@@ -125,7 +127,7 @@ export function SettingsProcedures() {
             <span className="hidden sm:inline">Modelo CSV</span>
           </Button>
           <Button onClick={() => refetch()} variant="outline" size="sm" className="flex items-center gap-2">
-            <CloudUpload className="size-4" />
+            <UploadCloud className="size-4" />
             <span className="hidden sm:inline">Buscar dados</span>
           </Button>
           <Button onClick={uploadNewCSV} size="sm" className="flex items-center gap-2">

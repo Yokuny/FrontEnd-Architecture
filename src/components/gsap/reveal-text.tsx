@@ -4,14 +4,6 @@ import { SplitText } from 'gsap/SplitText';
 import type { ComponentProps } from 'react';
 import { useMemo, useRef } from 'react';
 
-type SplitType = 'chars' | 'words' | 'lines';
-
-type RevealTextProps = {
-  type?: SplitType;
-  gsapVars?: gsap.TweenVars;
-  splitTextVars?: Partial<SplitText.Vars>;
-} & ComponentProps<'div'>;
-
 const defaultGsapVars: Record<SplitType, gsap.TweenVars> = {
   chars: {
     x: 150,
@@ -98,3 +90,11 @@ export const RevealImage = ({ gsapVars = {}, className, ...props }: RevealImageP
 
   return <img ref={ref} className={className} {...props} />;
 };
+
+type SplitType = 'chars' | 'words' | 'lines';
+
+type RevealTextProps = {
+  type?: SplitType;
+  gsapVars?: gsap.TweenVars;
+  splitTextVars?: Partial<SplitText.Vars>;
+} & ComponentProps<'div'>;
