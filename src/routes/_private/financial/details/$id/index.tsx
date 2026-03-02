@@ -144,9 +144,7 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
                 <p className="font-bold text-2xl">{financialPaymentMethod(financial.paymentMethod || 'none')}</p>
                 <div className="flex items-baseline gap-2">
                   <ItemDescription>Status</ItemDescription>
-                  <BadgeIndicator variant={badgeVariant}>
-                    {statusDictionary(financial.status || 'pending')}
-                  </BadgeIndicator>
+                  <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status || 'pending')}</BadgeIndicator>
                 </div>
               </div>
               <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">

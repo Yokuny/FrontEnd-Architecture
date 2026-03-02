@@ -48,11 +48,7 @@ export function FinancialList({ data }: FinancialListProps) {
         sortable: true,
         render: (_, financial) => {
           const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
-          return (
-            <BadgeIndicator variant={badgeVariant}>
-              {statusDictionary(financial.status)}
-            </BadgeIndicator>
-          );
+          return <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status)}</BadgeIndicator>;
         },
       },
       {
