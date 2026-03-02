@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { FooterNavigation } from '@/components/sidebar/nav-footer';
 import AppNavigation, { type Route } from '@/components/sidebar/nav-main';
-import { EnterpriseSwitcher } from '@/components/sidebar/switch-enterprise';
 import { SidebarSwitcher } from '@/components/sidebar/switch-sidebar';
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
 import { buildSidebarRoutes, type SidebarRoute } from '@/config/sidebarRoutes';
 import { cn } from '@/lib/utils';
+import { NotificationsSwitcher } from './switch-notifications';
 
 const convertToNavRoutes = (routes: SidebarRoute[]): Route[] => {
   return routes.map((route) => {
@@ -41,13 +41,9 @@ export function AppSidebar() {
         <div className="flex items-center">
           <div className={cn('flex items-center', isCollapsed && 'flex-col')}>
             <SidebarSwitcher />
+            <NotificationsSwitcher notifications={[]} />
           </div>
-          {!isCollapsed && (
-            <div className="flex items-center">
-              <ThemeSwitcher />
-              <EnterpriseSwitcher />
-            </div>
-          )}
+          {!isCollapsed && <ThemeSwitcher />}
         </div>
         <SidebarSeparator />
       </SidebarHeader>
