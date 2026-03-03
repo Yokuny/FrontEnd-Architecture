@@ -1,13 +1,13 @@
-import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { CircleAlert } from "lucide-react";
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { CircleAlert } from 'lucide-react';
 
-import DefaultEmptyData from "@/components/default-empty-data";
-import DefaultLoading from "@/components/default-loading";
-import { ThemeSwitcher } from "@/components/sidebar/switch-theme";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
+import DefaultEmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
+import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
 
 export const Route = createRootRoute({
   notFoundComponent: () => {
@@ -63,14 +63,14 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <Outlet />
-      {import.meta.env.VITE_RUN_MODE && (
+      {import.meta.env.DEV && (
         <TanStackDevtools
           config={{
-            position: "bottom-right",
+            position: 'bottom-right',
           }}
           plugins={[
             {
-              name: "Tanstack Router",
+              name: 'Tanstack Router',
               render: <TanStackRouterDevtoolsPanel />,
             },
           ]}
