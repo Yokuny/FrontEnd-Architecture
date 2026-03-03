@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -7,7 +7,14 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["src/**", "*.json", "*.ts", "*.tsx", "*.js", "*.css"]
+    "includes": [
+      "src/**",
+      "*.json",
+      "*.ts",
+      "*.tsx",
+      "*.js",
+      "*.css"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -24,7 +31,12 @@
         "useSortedClasses": {
           "level": "error",
           "options": {
-            "functions": ["cn", "clsx", "twMerge", "cva"]
+            "functions": [
+              "cn",
+              "clsx",
+              "twMerge",
+              "cva"
+            ]
           }
         }
       },
@@ -39,7 +51,12 @@
   },
   "overrides": [
     {
-      "includes": ["src/routeTree.gen.ts", "**/*.gen.ts", "public", "src/styles.css"],
+      "includes": [
+        "src/routeTree.gen.ts",
+        "**/*.gen.ts",
+        "public",
+        "src/styles.css"
+      ],
       "linter": {
         "enabled": false
       },
@@ -48,7 +65,9 @@
       }
     },
     {
-      "includes": ["src/components/ui/chart.tsx"],
+      "includes": [
+        "src/components/ui/chart.tsx"
+      ],
       "linter": {
         "rules": {
           "security": {

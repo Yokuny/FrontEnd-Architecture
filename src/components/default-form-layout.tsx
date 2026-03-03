@@ -22,8 +22,8 @@ export default function DefaultFormLayout({ sections, layout = 'horizontal' }: D
 
                 <div className={cn(sectionLayout === 'horizontal' && 'md:col-span-2')}>
                   <FieldGroup className="grid grid-cols-1 gap-6 sm:grid-cols-6">
-                    {section.fields.map((field, fIndex) => (
-                      <div key={`${section.title}-field-${fIndex}`} className="col-span-full">
+                    {section.fields.map((field) => (
+                      <div key={section.title} className="col-span-full">
                         {field}
                       </div>
                     ))}

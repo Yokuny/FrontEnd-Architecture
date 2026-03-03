@@ -77,8 +77,8 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
       <CardContent className="space-y-2 border-none p-6">
         <span className="text-muted-foreground text-sm uppercase">Procedimentos</span>
         <ul>
-          {scheduleData.procedures.map((procedure: string, index: number) => (
-            <li key={`${index}-${procedure}`}>
+          {scheduleData.procedures.map((procedure: string) => (
+            <li key={procedure}>
               <span className="font-bold text-2xl">{procedure}</span>
             </li>
           ))}

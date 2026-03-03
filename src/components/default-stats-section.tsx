@@ -80,8 +80,8 @@ export function DefaultStatsSection() {
 
         {/* Stats Grid */}
         <div className="grid gap-10 gap-x-20 lg:grid-cols-2">
-          {stats.map((props, index) => (
-            <StatsCard key={`${index}-${props.title}`} {...props} />
+          {stats.map((props) => (
+            <StatsCard key={props.title} {...props} />
           ))}
         </div>
       </div>
