@@ -56,17 +56,19 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <Outlet />
-      <TanStackDevtools
-        config={{
-          position: 'bottom-right',
-        }}
-        plugins={[
-          {
-            name: 'Tanstack Router',
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-        ]}
-      />
+      {import.meta.env.VITE_DEV && (
+        <TanStackDevtools
+          config={{
+            position: 'bottom-right',
+          }}
+          plugins={[
+            {
+              name: 'Tanstack Router',
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+          ]}
+        />
+      )}
     </>
   ),
 });
