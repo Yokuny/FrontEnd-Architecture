@@ -8,7 +8,7 @@ const btnVars = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary-blue font-semibold text-white saturate-150 hover:bg-dark-blue dark:bg-dark-blue',
+        default: "relative inset-shadow-2xs inset-shadow-background flex border border-border bg-muted shadow-blue-950/10 ring-0 duration-150 hover:bg-background",
         primary:
           'border border-slate-200 text-slate-950 placeholder:text-black hover:bg-slate-100 hover:text-black data-[state=on]:border-transparent data-[state=on]:bg-primary-blue data-[state=on]:text-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white dark:placeholder:text-white',
         secondary: 'font-semibold',
