@@ -11,7 +11,6 @@ React 19 + Vite 7 + TanStack Router + TanStack Query + Zustand + ShadCN UI + Tai
 ## Regras Criticas
 
 - Use ShadCN UI (`src/components/ui`) - NUNCA tags HTML puras estilizadas
-- SEMPRE usar `@/lib/formatDate` para datas - NUNCA `format` do `date-fns`
 - Usar Zustand com `persist` - NUNCA `localStorage.setItem` direto
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
 - NUNCA usar Card em componentes comuns - usar `Item`, `ItemTitle`, `ItemDescription`
@@ -25,7 +24,7 @@ React 19 + Vite 7 + TanStack Router + TanStack Query + Zustand + ShadCN UI + Tai
 ## Estrutura de Pagina
 ```tsx
 <Card>
-  <CardHeader title={t('titulo')}>{/* acoes */}</CardHeader>
+  <CardHeader>{/* acoes */}</CardHeader>
   <CardContent>{/* conteudo */}</CardContent>
   <CardFooter layout="multi | single">{/* paginacao */}</CardFooter>
 </Card>

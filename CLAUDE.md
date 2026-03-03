@@ -17,10 +17,6 @@
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
 - Estrutura valida: `index.tsx`, `add.tsx`, `$id.tsx`
 
-## Datas
-- SEMPRE usar `@/lib/formatDate` para formatacao
-- NUNCA importar `format` diretamente do `date-fns`
-
 ## Estado Global
 - Usar Zustand com middleware `persist` para persistencia
 - NUNCA usar `localStorage.setItem` diretamente
@@ -33,7 +29,7 @@
 ## Estrutura de Pagina
 ```tsx
 <Card>
-  <CardHeader title={t('titulo')}>
+  <CardHeader>
     {/* Acoes: botoes, filtros */}
   </CardHeader>
   <CardContent>
@@ -50,12 +46,6 @@
 - Usar `<Item>`, `<ItemTitle>`, `<ItemDescription>`, `<ItemContent>`, `<ItemHeader>`, `<ItemFooter>`, `<ItemActions>` de `src/components/ui/item.tsx`
 - NUNCA `<h1-6>`, `<p>`, `<span>` com classes de tipografia — usar `<ItemTitle>` e `<ItemDescription>`
 - NUNCA `<div className="flex flex-col gap-*">` para layout composicional — usar subcomponentes do Item
-
-## Padrao de Tipagem de Componentes UI
-- Props: `React.ComponentProps<'element'>` (ex: `React.ComponentProps<'div'>`)
-- Merge de classes: `cn(estilos_base, className)` — className por ultimo
-- Identificacao DOM: `data-slot="nome-do-slot"`
-- Variantes: `cva()` + `VariantProps<typeof variants>`
 
 ## Hooks de API (Padrao TanStack Query)
 ```tsx
@@ -85,8 +75,8 @@ export function useFeature() {
 ## Estrutura de Pastas da Rota
 ```
 src/routes/_private/{module}/
-├── index.tsx           # Pagina principal
-├── @components/        # Componentes especificos da rota
+├── index.tsx          # Pagina principal
+├── @components/       # Componentes especificos da rota
 ├── @consts/           # Valores fixos, enums
 ├── @hooks/            # Hooks especificos
 ├── @interface/        # Types, Interfaces, Schemas Zod

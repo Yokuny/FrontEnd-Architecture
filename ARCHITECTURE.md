@@ -6,12 +6,7 @@
   - **⚠️ PROIBIDO tags HTML puras estilizadas**: Toda tipografia e layout em componentes comuns deve usar os componentes de [***`Item.tsx`***](./src/components/ui/item.tsx). Veja [***`docs/item-pattern.md`***](./docs/item-pattern.md) para a documentação completa.
   - **Paleta de Gráficos**: Para manter a consistência em gráficos (Recharts, etc), utilize a função utilitária [***`getChartColor(index)`***](./src/components/ui/chart) Ela cicla entre as cores padrão do Tailwind (Sky, Blue, Indigo, Violet, Purple, Fuchsia, Pink, Rose, Red, Orange, Amber, Yellow, Lime, Green, Emerald, Teal, Cyan) e tons (400, 500, 600...) conforme o índice aumenta, use `index * 2` para ter maior variação das cores.
 
-
 - **Roteamento**: As rotas são baseadas em **diretórios**. Cada pasta de rota deve conter obrigatoriamente um arquivo `index.tsx` com a estrutura principal. É proibido o uso do caractere `.` para criar rotas aninhadas. Isso garante a integridade funcional do `Breadcrumb` e da `Sidebar`.
-
-- **Tratamento de Data**: Toda formatação de data para exibição em tela deve ser feita obrigatoriamente através da função utilitária [***`@/lib/formatDate`***](./src/lib/formatDate.ts). Ela garante a internacionalização correta baseada no idioma selecionado.
-  - **Funções**: `formatDate(date, pattern)` e `formatDistanceToNow(date, options)`.
-  - **Evite**: Importar `format` ou `formatDistanceToNow` diretamente do `date-fns` em componentes, pois isso ignora o locale do sistema.
 
 - **Gerenciamento de Estado**: Utilize **Zustand** para estados globais complexos. Não utilize `localStorage.setItem` diretamente. Utilize o middleware `persist` do Zustand para persistência de dados.
 
@@ -106,7 +101,6 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
 - **Criação e Reutilização de Hooks**:
   **Antes de criar qualquer hook** na pasta `@hooks/` da rota, verifique se já existe na pasta de hooks compartilhados em [***`src/hooks/`***](./src/hooks/).
 
-
   **Árvore de Decisão**:
   ```markdown
     Preciso de `useMachines()` para listar máquinas?
@@ -120,12 +114,9 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
           └─ **NÃO** → Avaliar se deve ir em `src/hooks/`
   ```
 
-
   **Hooks Globais (258 hooks em `src/hooks`) - TOP 15 mais usados:**
   | Hook | Usos | Descrição |
   |------|------|-----------|
-  | `useEnterpriseFilter` | 90 | idEnterprise do filtro global |
-  | `useHasPermission` | 35 | Verifica permissões do usuário |
   | `useSidebar` | 7 | Estado da sidebar |
   | `useSidebarToggle` | 7 | Toggle da sidebar |
   | `useCMMSKPIs` | 6 | KPIs do CMMS |
@@ -139,9 +130,6 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
   | `useAuth` | 3 | Sessão e login |
   | `useSensorsApi` | 3 | CRUD sensores |
   | `useMachinesApi` | 3 | CRUD máquinas |
-
-
-
 
 ### Criação de pagina:
 

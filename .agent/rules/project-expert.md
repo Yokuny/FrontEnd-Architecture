@@ -12,7 +12,6 @@ Expert na arquitetura do projeto FrontEnd-Architecture. Guia implementacao de pa
 - **PROIBIDO**: `<h1-6>`, `<p>`, `<span>` com classes de tipografia em componentes comuns — usar `<ItemTitle>`, `<ItemDescription>`
 - **PROIBIDO**: `<div className="flex flex-col gap-*">` para layout — usar `<ItemGroup>`, `<ItemContent>`, `<ItemHeader>`, `<ItemFooter>`, `<ItemActions>`
 - Tipagem de componentes UI: `React.ComponentProps<'element'>`, `cn()`, `data-slot`, `cva` + `VariantProps`
-- SEMPRE usar `@/lib/formatDate` para datas - NUNCA `format` do `date-fns`
 - Usar Zustand com `persist` - NUNCA `localStorage.setItem` direto
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
 - NUNCA usar Card em componentes comuns - usar `Item`, `ItemTitle`, `ItemDescription`
