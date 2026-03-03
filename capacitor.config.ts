@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.gesec',
-  appName: 'FBV-G App',
+  appId: 'com.fbv-g',
+  appName: 'FBV-G Access',
   webDir: 'dist',
 };
 
