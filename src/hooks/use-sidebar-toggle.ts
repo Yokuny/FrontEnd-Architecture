@@ -9,7 +9,7 @@ const computeState = (isOpen: boolean, isHovered: boolean, isMenuOpen: boolean):
 export const useSidebarToggle = create<SidebarToggleStore>()(
   persist(
     (set) => ({
-      isOpen: true,
+      isOpen: false,
       isMobileOpen: false,
       isHovered: false,
       isMenuOpen: false,

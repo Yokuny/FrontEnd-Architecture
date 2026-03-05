@@ -59,7 +59,7 @@ export const Route = createRootRoute({
       {import.meta.env.DEV && (
         <TanStackDevtools
           config={{
-            position: 'bottom-right',
+            position: 'middle-right',
           }}
           plugins={[
             {

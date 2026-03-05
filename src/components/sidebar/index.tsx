@@ -27,7 +27,7 @@ const convertToNavRoutes = (routes: SidebarRoute[]): Route[] => {
 };
 
 export function AppSidebar() {
-  const { state } = useSidebar();
+  const { state, setHovered } = useSidebar();
   const isCollapsed = state === 'collapsed';
 
   const navRoutes = useMemo(() => {
@@ -36,7 +36,7 @@ export function AppSidebar() {
   }, []);
 
   return (
-    <Sidebar variant="floating" collapsible="icon" className="transition-all duration-300 ease-in-out">
+    <Sidebar variant="floating" collapsible="icon" className="transition-all duration-300 ease-in-out" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <SidebarHeader className="items-center px-2 pt-3">
         <div className="flex items-center">
           <div className={cn('flex items-center', isCollapsed && 'flex-col')}>
