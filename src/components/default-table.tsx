@@ -22,22 +22,23 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { t } from '@/config/translate';
 
 const statusConfig: Record<Status, { label: string; className: string }> = {
   completed: {
-    label: 'Completed',
+    label: t('completed'),
     className: 'bg-emerald-500/15 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400',
   },
   pending: {
-    label: 'Pending',
+    label: t('pending'),
     className: 'bg-amber-500/15 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400',
   },
   processing: {
-    label: 'Processing',
+    label: t('processing'),
     className: 'bg-blue-500/15 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400',
   },
   cancelled: {
-    label: 'Cancelled',
+    label: t('cancelled'),
     className: 'bg-rose-500/15 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400',
   },
 };
@@ -67,21 +68,21 @@ const columns: ColumnDef<Item>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: t('name'),
     cell: ({ row }) => <span className="font-medium">{row.getValue('name')}</span>,
   },
   {
     accessorKey: 'date',
-    header: 'Date',
+    header: t('date'),
   },
   {
     accessorKey: 'status',
-    header: 'Status',
+    header: t('status'),
     cell: ({ row }) => <StatusBadge status={row.getValue('status')} />,
   },
   {
     accessorKey: 'amount',
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div className="text-right">{t('amount')}</div>,
     cell: ({ row }) => <div className="text-right font-medium">{row.getValue('amount')}</div>,
   },
   {
@@ -98,16 +99,16 @@ const columns: ColumnDef<Item>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuItem>
               <Eye className="mr-2 size-4" />
-              View details
+              {t('view.details')}
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Edit className="mr-2 size-4" />
-              Edit
+              {t('edit')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive">
               <Delete className="mr-2 size-4" />
-              Delete
+              {t('delete')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -208,7 +209,7 @@ export default function Table05() {
     <div className="w-full max-w-3xl space-y-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-muted-foreground text-sm">Show</span>
+          <span className="text-muted-foreground text-sm">{t('show')}</span>
           <Select value={String(table.getState().pagination.pageSize)} onValueChange={(value) => table.setPageSize(Number(value))}>
             <SelectTrigger className="h-8 w-16">
               <SelectValue />
@@ -221,9 +222,9 @@ export default function Table05() {
               ))}
             </SelectContent>
           </Select>
-          <span className="text-muted-foreground text-sm">entries</span>
+          <span className="text-muted-foreground text-sm">{t('entries')}</span>
         </div>
-        <Input placeholder="Search..." value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} className="h-8 w-full sm:w-64" />
+        <Input placeholder={t('search')} value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} className="h-8 w-full sm:w-64" />
       </div>
 
       <div className="rounded-lg border">
@@ -249,7 +250,7 @@ export default function Table05() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  {t('no.results')}
                 </TableCell>
               </TableRow>
             )}
@@ -266,7 +267,7 @@ export default function Table05() {
         <div className="flex items-center gap-1">
           <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
             <Left className="size-4" />
-            <span className="sr-only">Previous page</span>
+            <span className="sr-only">{t('previous.page')}</span>
           </Button>
           {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
             <Button key={page} variant={currentPage === page ? 'default' : 'outline'} size="icon" className="h-8 w-8" onClick={() => table.setPageIndex(page - 1)}>
@@ -275,7 +276,7 @@ export default function Table05() {
           ))}
           <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
             <Right className="size-4" />
-            <span className="sr-only">Next page</span>
+            <span className="sr-only">{t('next.page')}</span>
           </Button>
         </div>
       </div>

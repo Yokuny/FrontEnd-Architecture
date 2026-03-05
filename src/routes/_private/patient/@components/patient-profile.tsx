@@ -13,6 +13,7 @@ import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { t } from '@/config/translate';
 import { calculateAge, capitalizeString, currencyFormat, formatCep, formatCpfCnpj, formatDate, formatPhone, formatRg, handleCopy } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import { cn } from '@/lib/utils/cn.util';
@@ -214,22 +215,26 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
               </div>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div className="flex flex-col rounded-md border bg-muted/20 p-4">
-                  <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">Total Gerado</span>
+                  <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">{t('total.generated')}</span>
                   <span className="font-bold text-lg">{currencyFormat(total)}</span>
                   <span className="mt-1 flex items-center justify-center gap-1 text-muted-foreground text-xs">
                     <TrendingUp className="size-3" />
-                    {currencyFormat(generatedLast30Days)} no mês
+                    {currencyFormat(generatedLast30Days)} {t('this.month')}
                   </span>
                 </div>
                 <div className="flex flex-col rounded-md border bg-muted/20 p-4">
-                  <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">Pendente</span>
+                  <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">{t('pending')}</span>
                   <span className="font-bold text-destructive text-lg">{currencyFormat(totalPending)}</span>
-                  <span className="mt-1 text-muted-foreground text-xs">{currencyFormat(totalPaid)} pago</span>
+                  <span className="mt-1 text-muted-foreground text-xs">
+                    {currencyFormat(totalPaid)} {t('paid')}
+                  </span>
                 </div>
                 <div className="flex flex-col rounded-md border bg-muted/20 p-4">
-                  <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">Últimos Pagamentos</span>
+                  <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">{t('last.payments')}</span>
                   <span className="font-bold text-lg text-primary">{currencyFormat(paidLast30Days)}</span>
-                  <span className="mt-1 text-muted-foreground text-xs">{currencyFormat(paidLast3Months)} em 3 meses</span>
+                  <span className="mt-1 text-muted-foreground text-xs">
+                    {currencyFormat(paidLast3Months)} {t('in.3.months')}
+                  </span>
                 </div>
               </div>
             </CardContent>

@@ -16,6 +16,7 @@ import { CardContent } from '@/components/ui/card';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
+import { t } from '@/config/translate';
 import { usePatientStore } from '@/hooks/patients';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -91,7 +92,7 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
               <p className="text-muted-foreground text-sm">Data</p>
               <Button variant="outline" size="sm" className="gap-1 text-xs">
                 <Calender className="hidden size-4 md:block" />
-                <span className="text-muted-foreground tabular-nums tracking-tight">Dia inteiro</span>
+                <span className="text-muted-foreground tabular-nums tracking-tight">{t('all.day')}</span>
               </Button>
             </div>
             <div className="flex flex-row items-center justify-between space-y-0">
@@ -165,15 +166,15 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
   };
 
   const statusOptions = [
-    { value: 'pending', label: 'Pendente' },
-    { value: 'waiting', label: 'Aguardando' },
-    { value: 'confirmed', label: 'Confirmado' },
-    { value: 'completed', label: 'Concluído' },
-    { value: 'in_progress', label: 'Em andamento' },
-    { value: 'no_show', label: 'Não compareceu' },
-    { value: 'canceled', label: 'Cancelado' },
-    { value: 'canceled_by_patient', label: 'Cancelado pelo paciente' },
-    { value: 'canceled_by_professional', label: 'Cancelado pelo profissional' },
+    { value: 'pending', label: t('pending') },
+    { value: 'waiting', label: t('waiting') },
+    { value: 'confirmed', label: t('confirmed') },
+    { value: 'completed', label: t('completed') },
+    { value: 'in_progress', label: t('in.progress') },
+    { value: 'no_show', label: t('no.show') },
+    { value: 'canceled', label: t('cancelled') },
+    { value: 'canceled_by_patient', label: t('canceled.by.patient') },
+    { value: 'canceled_by_professional', label: t('canceled.by.professional') },
   ];
 
   return (

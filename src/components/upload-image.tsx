@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import Add from '@/components/icons/Add.Icon';
 import { ItemDescription, ItemMedia } from '@/components/ui/item';
+import { t } from '@/config/translate';
 import { cn } from '@/lib/utils';
 
 export default function UploadImage({ value, onAddFile, maxSize, className, height }: UploadImageProps) {
@@ -45,7 +46,7 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
           <ItemMedia variant="icon" className="text-muted-foreground">
             <Add className="size-8" />
           </ItemMedia>
-          <ItemDescription className="text-center text-xs">{'drag.image'}</ItemDescription>
+          <ItemDescription className="text-center text-xs">{t('drag.image')}</ItemDescription>
         </div>
       )}
     </button>

@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
 import { toast } from 'sonner';
-
 import DefaultEmptyData from '@/components/default-empty-data';
 import CalenderEdit from '@/components/icons/CalenderEdit.Icon';
 import Check from '@/components/icons/Check.Icon';
@@ -10,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { t } from '@/config/translate';
 import { extractDate } from '@/lib/helpers/formatter.helper';
 import type { DbReminder } from '@/lib/interfaces';
 import { useCheckReminders } from '@/query/reminders';
@@ -49,10 +49,11 @@ export function RemindersList({ reminders }: { reminders: DbReminder[] }) {
 
     try {
       await checkReminders.mutateAsync({ ids: selectedIds, status: 'done' });
-      toast.success(`${selectedIds.length} lembrete${selectedIds.length > 1 ? 's' : ''} concluído${selectedIds.length > 1 ? 's' : ''}`);
+      const label = selectedIds.length > 1 ? t('reminder.completed.plural') : t('reminder.completed.singular');
+      toast.success(`${selectedIds.length} ${label}`);
       setSelectedIds([]);
     } catch (e: unknown) {
-      toast.error((e as Error).message || 'Erro ao concluir lembretes');
+      toast.error((e as Error).message || t('error.completing.reminders'));
     }
   };
 
@@ -129,14 +130,14 @@ export function RemindersList({ reminders }: { reminders: DbReminder[] }) {
                   e.stopPropagation();
                   try {
                     await checkReminders.mutateAsync({ ids: [reminder._id], status: 'done' });
-                    toast.success('Concluído');
+                    toast.success(t('completed'));
                   } catch (err: unknown) {
-                    toast.error((err as Error).message || 'Erro');
+                    toast.error((err as Error).message || t('error'));
                   }
                 }}
               >
                 <Check className="mr-2 size-4" />
-                Marcar como concluído
+                {t('mark.as.completed')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

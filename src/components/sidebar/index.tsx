@@ -4,26 +4,25 @@ import AppNavigation, { type Route } from '@/components/sidebar/nav-main';
 import { SidebarSwitcher } from '@/components/sidebar/switch-sidebar';
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
-import { buildSidebarRoutes, type SidebarRoute } from '@/config/sidebarRoutes';
+import type { SidebarRoute } from '@/config/sidebarRoutes';
+import { buildSidebarRoutes } from '@/config/sidebarRoutes';
+import { t } from '@/config/translate';
+
 import { cn } from '@/lib/utils';
 import { NotificationsSwitcher } from './switch-notifications';
 
 const convertToNavRoutes = (routes: SidebarRoute[]): Route[] => {
-  return routes.map((route) => {
-    const title = route.labelKey;
-
-    return {
-      id: route.id,
-      title,
-      icon: route.icon,
-      link: route.path,
-      subs: route.children?.map((child) => ({
-        title: child.labelKey,
-        link: child.path,
-        icon: child.icon,
-      })),
-    };
-  });
+  return routes.map((route) => ({
+    id: route.id,
+    title: t(route.labelKey),
+    icon: route.icon,
+    link: route.path,
+    subs: route.children?.map((child) => ({
+      title: t(child.labelKey),
+      link: child.path,
+      icon: child.icon,
+    })),
+  }));
 };
 
 export function AppSidebar() {

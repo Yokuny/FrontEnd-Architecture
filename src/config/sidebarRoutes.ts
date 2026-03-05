@@ -1,12 +1,4 @@
-import { MAIN_ROUTES, ROUTE_ICONS, ROUTE_LABELS, SUB_ROUTE_ICONS } from './routes';
-
-export interface SidebarRoute {
-  id: string;
-  path: string;
-  labelKey: string;
-  icon?: React.ReactNode;
-  children?: SidebarRoute[];
-}
+import { MAIN_ROUTES, ROUTE_ICONS, SUB_ROUTE_ICONS } from './routes';
 
 // Agrupar rotas por primeiro segmento
 function groupRoutesBySection(paths: readonly string[]): Record<string, string[]> {
@@ -37,7 +29,7 @@ export function buildSidebarRoutes(): SidebarRoute[] {
       sidebarRoutes.push({
         id: section,
         path: paths[0],
-        labelKey: ROUTE_LABELS[section] || section,
+        labelKey: section,
         icon: ROUTE_ICONS[section],
       });
       continue;
@@ -56,7 +48,7 @@ export function buildSidebarRoutes(): SidebarRoute[] {
         children.push({
           id: `${section}${childName}`,
           path,
-          labelKey: ROUTE_LABELS[childName] || childName,
+          labelKey: childName,
           icon: SUB_ROUTE_ICONS[childName],
         });
       }
@@ -65,11 +57,19 @@ export function buildSidebarRoutes(): SidebarRoute[] {
     sidebarRoutes.push({
       id: section,
       path: `/${section}`,
-      labelKey: ROUTE_LABELS[section] || section,
+      labelKey: section,
       icon: ROUTE_ICONS[section],
       children: children.length > 0 ? children : undefined,
     });
   }
 
   return sidebarRoutes;
+}
+
+export interface SidebarRoute {
+  id: string;
+  path: string;
+  labelKey: string;
+  icon?: React.ReactNode;
+  children?: SidebarRoute[];
 }

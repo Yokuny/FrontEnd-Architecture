@@ -7,6 +7,7 @@ import Package from '@/components/icons/Package.Icon';
 import Search from '@/components/icons/Search.Icon';
 import Service from '@/components/icons/Service.Icon';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
+import { t } from '@/config/translate';
 
 const ICONS = [Search, Search, Card, Mail, Cloud, Face, Service, Service, Package];
 
@@ -19,8 +20,8 @@ const EmptyData = () => {
     <Empty className="border-2 bg-accent/30">
       <EmptyHeader>
         <Icon className="zoom-in-50 size-6 animate-in text-muted-foreground duration-500" />
-        <EmptyTitle>{'not.found'}</EmptyTitle>
-        <EmptyDescription className="font-mono leading-tight">{'not.found.description'}</EmptyDescription>
+        <EmptyTitle>{t('not.found')}</EmptyTitle>
+        <EmptyDescription className="font-mono leading-tight">{t('not.found.description')}</EmptyDescription>
       </EmptyHeader>
     </Empty>
   );

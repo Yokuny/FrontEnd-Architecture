@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { t } from '@/config/translate';
 import { useProceduresSheetQuery } from '@/query/procedures';
 
 const procedureSchema = z.object({
@@ -95,12 +96,12 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
           {btnValue?.procedure ? (
             <>
               <Edit className="size-5 shrink-0" />
-              <span>Editar</span>
+              <span>{t('edit')}</span>
             </>
           ) : (
             <>
               <Add className="size-4 shrink-0 stroke-3" />
-              <span>Selecione o procedimento</span>
+              <span>{t('select.procedure')}</span>
             </>
           )}
         </Button>
@@ -108,8 +109,8 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
       <SheetContent className="flex flex-col justify-between p-2">
         <div className="space-y-2">
           <SheetHeader>
-            <SheetTitle className="text-center text-xl">Procedimentos</SheetTitle>
-            <SheetDescription className="text-center">Selecione o procedimentos cadastrados para adicionar ao orçamento</SheetDescription>
+            <SheetTitle className="text-center text-xl">{t('procedures')}</SheetTitle>
+            <SheetDescription className="text-center">{t('select.procedures.description')}</SheetDescription>
           </SheetHeader>
 
           <Form {...(form as any)}>
@@ -122,12 +123,12 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                       name="price"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-xs md:text-md">Preço</FormLabel>
+                          <FormLabel className="text-xs md:text-md">{t('price')}</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
                               className="w-28 bg-background md:w-44"
-                              placeholder={procedure.savedPrice ? String(procedure.savedPrice) : 'Digite aqui...'}
+                              placeholder={procedure.savedPrice ? String(procedure.savedPrice) : t('type.here')}
                               disabled={isLoading}
                               {...field}
                               value={field.value || 0}
@@ -143,7 +144,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                       name="status"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-xs md:text-md">Pagamento</FormLabel>
+                          <FormLabel className="text-xs md:text-md">{t('payment')}</FormLabel>
                           <FormControl>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <SelectTrigger className="bg-background">
@@ -151,10 +152,10 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="pending" disabled={isLoading}>
-                                  Pendente
+                                  {t('pending')}
                                 </SelectItem>
                                 <SelectItem value="paid" disabled={isLoading}>
-                                  Pago
+                                  {t('paid')}
                                 </SelectItem>
                               </SelectContent>
                             </Select>
@@ -167,9 +168,9 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                   <Table>
                     <TableHeader>
                       <TableRow className="text-xs">
-                        <TableHead className="p-1 text-center">Preço de custo</TableHead>
-                        <TableHead className="p-1 text-center">Preço sugerido</TableHead>
-                        <TableHead className="p-1 text-center">Preço salvo</TableHead>
+                        <TableHead className="p-1 text-center">{t('cost.price')}</TableHead>
+                        <TableHead className="p-1 text-center">{t('suggested.price')}</TableHead>
+                        <TableHead className="p-1 text-center">{t('saved.price')}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -234,7 +235,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                   </Table>
                 </div>
                 <Button variant="default" className="w-full" onClick={form.handleSubmit(onSubmit)} disabled={isLoading}>
-                  Adicionar
+                  {t('add')}
                 </Button>
               </div>
             )}
@@ -271,7 +272,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                 setOpen(false);
               }}
             >
-              Fechar
+              {t('close')}
             </Button>
             {/* TODO: AINDA FALTA MIGRAR ESSA PAGINA */}
             <Link to="/">

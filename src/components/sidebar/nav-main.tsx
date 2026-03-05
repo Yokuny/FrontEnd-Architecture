@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import type React from 'react';
 import { useState } from 'react';
 import Down from '@/components/icons/Down.Icon';
-import Pulse from '@/components/icons/Pulse.Icon';
+import Star from '@/components/icons/Star.Icon';
 import Up from '@/components/icons/Up.Icon';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuItem as SidebarMenuSubItem, useSidebar } from '@/components/ui/sidebar';
@@ -54,7 +54,7 @@ export default function AppNavigation({ routes }: { routes: Route[] }) {
                                 favorited ? 'text-amber-500/50 opacity-100' : 'text-muted-foreground opacity-0 hover:text-yellow-400 group-hover/sub:opacity-100',
                               )}
                             >
-                              <Pulse className={cn('size-3', favorited && 'fill-current')} />
+                              <Star className={cn('size-3', favorited && 'fill-current')} />
                             </button>
                             <SidebarMenuSubButton size="sm" asChild>
                               <Link to={subRoute.link} className="text-foreground hover:bg-sidebar-muted hover:text-muted-foreground">

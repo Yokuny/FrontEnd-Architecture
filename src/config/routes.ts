@@ -1,17 +1,6 @@
-// Mapeamento de icones por segmento de rota
 export const ROUTE_ICONS: Record<string, React.ReactNode> = {};
-
-// Icones para sub-rotas especificas
 export const SUB_ROUTE_ICONS: Record<string, React.ReactNode> = {};
 
-// Chaves para traducao de rotas
-export const ROUTE_LABELS: Record<string, string> = {
-  dashboard: 'dashboard',
-};
-
-/**
- * Lista de rotas principais da aplicacao.
- */
 export const MAIN_ROUTES = [
   '/financial',
   '/financial/add',
