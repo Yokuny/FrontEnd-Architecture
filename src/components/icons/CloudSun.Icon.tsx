@@ -1,6 +1,7 @@
 import type { Variants } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
 import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
+import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { cn } from '@/lib/utils';
 
 export interface CloudSunIconHandle {
@@ -70,7 +71,7 @@ export const CloudSunIcon = forwardRef<CloudSunIconHandle, CloudSunIconProps>(({
   );
 
   return (
-    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <UnstyledButton className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
         height={size}
@@ -91,7 +92,7 @@ export const CloudSunIcon = forwardRef<CloudSunIconHandle, CloudSunIconProps>(({
           <motion.path animate={controls} custom={index + 1} d={d} initial="normal" key={d} variants={SUN_VARIANTS} />
         ))}
       </svg>
-    </div>
+    </UnstyledButton>
   );
 });
 

@@ -1,6 +1,6 @@
 import { useDroppable } from '@dnd-kit/core';
+import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { cn } from '@/lib/utils';
-
 import { useCalendarDnd } from './calendar-dnd-context';
 
 export function DroppableCell({ id, date, time, children, className, onClick }: DroppableCellProps) {
@@ -19,7 +19,7 @@ export function DroppableCell({ id, date, time, children, className, onClick }: 
       : null;
 
   return (
-    <div
+    <UnstyledButton
       ref={setNodeRef}
       onClick={onClick}
       className={cn('flex h-full flex-col overflow-hidden px-0.5 py-1 data-dragging:bg-accent', className)}
@@ -27,7 +27,7 @@ export function DroppableCell({ id, date, time, children, className, onClick }: 
       data-dragging={isOver && activeEvent ? true : undefined}
     >
       {children}
-    </div>
+    </UnstyledButton>
   );
 }
 

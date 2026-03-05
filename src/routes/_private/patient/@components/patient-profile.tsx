@@ -8,7 +8,7 @@ import Copy from '@/components/icons/Copy.Icon';
 import Edit from '@/components/icons/Edit.Icon';
 import Help from '@/components/icons/Help.Icon';
 import ID from '@/components/icons/ID.Icon';
-import Map from '@/components/icons/Map.Icon';
+import MapIcon from '@/components/icons/Map.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
@@ -169,7 +169,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
               <div className="flex flex-col space-y-1 md:col-span-2">
                 <span className="font-semibold text-muted-foreground text-sm uppercase">Endereço</span>
                 <div className="flex items-center gap-2">
-                  <Map className="size-4 text-muted-foreground" />
+                  <MapIcon className="size-4 text-muted-foreground" />
                   <span className="font-medium">{patient.address || 'Não informado'}</span>
                 </div>
               </div>

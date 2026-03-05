@@ -88,7 +88,7 @@ export const RevealImage = ({ gsapVars = {}, className, ...props }: RevealImageP
     { scope: ref },
   );
 
-  return <img ref={ref} className={className} {...props} />;
+  return <img ref={ref} alt="Text Revealing" className={className} {...props} />;
 };
 
 type SplitType = 'chars' | 'words' | 'lines';

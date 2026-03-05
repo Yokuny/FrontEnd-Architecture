@@ -1,6 +1,7 @@
 import type { Transition, Variants } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
 import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
+import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { cn } from '@/lib/utils';
 
 export interface MoonIconHandle {
@@ -61,7 +62,7 @@ export const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(({ onMouseEnte
   );
 
   return (
-    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <UnstyledButton className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <motion.svg
         animate={controls}
         fill="none"
@@ -78,7 +79,7 @@ export const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(({ onMouseEnte
       >
         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
       </motion.svg>
-    </div>
+    </UnstyledButton>
   );
 });
 

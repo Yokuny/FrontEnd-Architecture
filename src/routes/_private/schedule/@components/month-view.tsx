@@ -4,11 +4,11 @@ import type React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { useEventVisibility } from '@/hooks/use-event-visibility';
 import { DefaultStartHour, EventGap, EventHeight } from '@/lib/consts/calendar.constants';
 import { getAllEventsForDay, getEventsForDay, getSpanningEventsForDay, sortEvents } from '@/lib/helpers/calendar.utils';
 import type { PartialSchedule } from '@/lib/interfaces/schedule';
-
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
 import { DroppableCell } from './square';
@@ -136,12 +136,12 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                         {hasMore && (
                           <Popover modal>
                             <PopoverTrigger asChild>
-                              <span
-                                className="mt-[var(--event-gap)] flex h-[var(--event-height)] w-full cursor-pointer select-none items-center gap-1 overflow-hidden px-1 text-left text-[10px] text-muted-foreground outline-none backdrop-blur-md transition hover:bg-muted/50 hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-2 sm:text-xs"
+                              <UnstyledButton
+                                className="mt-[var(--event-gap)] flex h-[var(--event-height)] w-full select-none items-center gap-1 overflow-hidden px-1 text-left text-[10px] text-muted-foreground outline-none backdrop-blur-md transition hover:bg-muted/50 hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-2 sm:text-xs"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 + {remainingCount} <span className="max-sm:sr-only">Ver tudo</span>
-                              </span>
+                              </UnstyledButton>
                             </PopoverTrigger>
                             <PopoverContent align="center" className="max-w-52 p-3" style={{ '--event-height': `${EventHeight}px` } as React.CSSProperties}>
                               <div className="space-y-2">

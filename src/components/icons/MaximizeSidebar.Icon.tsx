@@ -1,6 +1,7 @@
 import type { Transition } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
 import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
+import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { cn } from '@/lib/utils';
 
 export interface MaximizeIconHandle {
@@ -53,7 +54,7 @@ export const MaximizeIcon = forwardRef<MaximizeIconHandle, MaximizeIconProps>(({
   );
 
   return (
-    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <UnstyledButton className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg fill="none" height={size} width={size} stroke="currentColor" strokeWidth="1.4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <title>MaximizeSidebar</title>
         <motion.path
@@ -93,7 +94,7 @@ export const MaximizeIcon = forwardRef<MaximizeIconHandle, MaximizeIconProps>(({
           }}
         />
       </svg>
-    </div>
+    </UnstyledButton>
   );
 });
 

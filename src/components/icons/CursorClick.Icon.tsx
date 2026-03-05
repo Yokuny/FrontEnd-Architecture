@@ -1,6 +1,7 @@
 import type { Variants } from 'framer-motion';
 import { motion, useAnimation } from 'framer-motion';
 import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
+import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { cn } from '@/lib/utils';
 
 export interface CursorClickIconHandle {
@@ -75,7 +76,7 @@ export const CursorClickIcon = forwardRef<CursorClickIconHandle, CursorClickIcon
   );
 
   return (
-    <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+    <UnstyledButton className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg
         fill="none"
         height={size}
@@ -99,7 +100,7 @@ export const CursorClickIcon = forwardRef<CursorClickIconHandle, CursorClickIcon
         <motion.path animate={controls} initial="normal" custom={{ x: -1, y: 1 }} d="m6 12-1.9 2" variants={LINE_VARIANTS} />
         <motion.path animate={controls} initial="normal" custom={{ x: 0, y: -1 }} d="M7.2 2.2 8 5.1" variants={LINE_VARIANTS} />
       </svg>
-    </div>
+    </UnstyledButton>
   );
 });
 

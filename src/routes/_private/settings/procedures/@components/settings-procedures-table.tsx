@@ -24,15 +24,16 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { TableBody, Table as TableBox, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { currencyFormat } from '@/lib/helpers/formatter.helper';
 import type { ProcedureData } from '@/lib/interfaces';
 
 const SortableComponent = ({ column, title }: { column: any; title: string }) => {
   return (
-    <div className="flex w-full cursor-pointer items-center gap-1 hover:text-primary" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+    <UnstyledButton className="flex w-full items-center gap-1 hover:text-primary" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
       {title}
       <Up className="size-3" />
-    </div>
+    </UnstyledButton>
   );
 };
 
@@ -55,7 +56,7 @@ const EditableCell = ({ value, row, column, table }: { value: any; row: any; col
   }
 
   return (
-    <div className="w-full cursor-pointer py-1" onClick={() => setEditing(true)}>
+    <UnstyledButton className="w-full py-1 text-left font-normal" onClick={() => setEditing(true)}>
       {column.id === 'procedure' || column.id === 'group' ? (
         cellValue
       ) : column.id === 'periodicity' ? (
@@ -65,7 +66,7 @@ const EditableCell = ({ value, row, column, table }: { value: any; row: any; col
           {currencyFormat(cellValue)}
         </Badge>
       )}
-    </div>
+    </UnstyledButton>
   );
 };
 

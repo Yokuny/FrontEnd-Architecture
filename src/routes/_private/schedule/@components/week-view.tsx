@@ -19,12 +19,12 @@ import { ptBR } from 'date-fns/locale/pt-BR';
 import type React from 'react';
 import { useMemo } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
 import { EndHour, StartHour, WeekCellsHeight } from '@/lib/consts/calendar.constants';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.utils';
 import type { PartialSchedule } from '@/lib/interfaces/schedule';
 import { cn } from '@/lib/utils';
-
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
 import { DroppableCell } from './square';
@@ -221,9 +221,9 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
               data-outside-cell={(getDay(day) === 0 && dayIndex === 6) || undefined}
             >
               {(processedDayEvents[dayIndex] ?? []).map((positionedEvent) => (
-                <div
+                <UnstyledButton
                   key={positionedEvent.event._id}
-                  className="absolute z-10 px-0.5"
+                  className="absolute z-10 px-0.5 text-left"
                   style={{
                     top: `${positionedEvent.top}px`,
                     height: `${positionedEvent.height}px`,
@@ -242,7 +242,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
                       height={positionedEvent.height}
                     />
                   </div>
-                </div>
+                </UnstyledButton>
               ))}
               {currentTimeVisible && isToday(day) && (
                 <div className="pointer-events-none absolute right-0 left-0 z-20" style={{ top: `${currentTimePosition}%` }}>
