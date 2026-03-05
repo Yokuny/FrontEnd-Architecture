@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <div className="grid grid-cols-7 border-accent border-b font-semibold text-muted-foreground text-xs">
       {['S', 'T', 'Q', 'Q', 'S', 'S', 'D'].map((day, index) => (
-        <div key={`month-header-${index}`} className="flex justify-center py-3">
+        <div key={day} className="flex justify-center py-3">
           <span>{day}</span>
           <span className="sr-only sm:not-sr-only">{['eg', 'er', 'ua', 'ui', 'ex', 'ab', 'om'][index]}</span>
         </div>

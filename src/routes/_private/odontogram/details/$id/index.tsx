@@ -43,6 +43,11 @@ function OdontogramDetailPage() {
   const { data: professionals } = useProfessionalsQuery();
   const { data: patients } = usePatientsQuery();
 
+  const patientName = usePatientStore((state) => state.getName(patients, odontogram?.Patient as string));
+  const patientImage = usePatientStore((state) => state.getImage(patients, odontogram?.Patient as string));
+  const professionalName = useProfessionalStore((state) => state.getName(professionals, odontogram?.Professional as string));
+  const professionalImage = useProfessionalStore((state) => state.getImage(professionals, odontogram?.Professional as string));
+
   if (isLoading) return <DefaultLoading />;
   if (error || !odontogram) {
     return (
@@ -54,11 +59,6 @@ function OdontogramDetailPage() {
       </Card>
     );
   }
-
-  const patientName = usePatientStore((state) => state.getName(patients, odontogram.Patient));
-  const patientImage = usePatientStore((state) => state.getImage(patients, odontogram.Patient));
-  const professionalName = useProfessionalStore((state) => state.getName(professionals, odontogram.Professional));
-  const professionalImage = useProfessionalStore((state) => state.getImage(professionals, odontogram.Professional));
 
   return (
     <Card>
@@ -144,8 +144,8 @@ function OdontogramDetailPage() {
                     <div>
                       <h4 className="mb-2 font-semibold text-lg">Dente {tooth.number}</h4>
                       <ul className="space-y-1">
-                        {facesWithProcedures.map((item, idx) => (
-                          <li key={idx} className="text-sm">
+                        {facesWithProcedures.map((item) => (
+                          <li key={item.face} className="text-sm">
                             <span className="font-medium">{item.face}:</span> <span className="text-muted-foreground">{item.procedure}</span>
                           </li>
                         ))}

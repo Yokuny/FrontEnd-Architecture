@@ -117,7 +117,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {patient.phone?.map((phone, i) => (
-                <div key={i} className="flex flex-col space-y-1">
+                <div key={phone.number} className="flex flex-col space-y-1">
                   <span className="font-semibold text-muted-foreground text-sm uppercase">{capitalizeString(phone.tag) || `Telefone ${i + 1}`}</span>
                   <div className="flex items-center justify-between">
                     <span className="font-medium">{formatPhone(phone.number)}</span>

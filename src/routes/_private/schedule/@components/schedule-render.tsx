@@ -297,8 +297,8 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
               </TableHeader>
               <TableBody>
                 {schedule.financial?.procedures && schedule.financial.procedures.length > 0 ? (
-                  schedule.financial.procedures.map((procedure, i) => (
-                    <TableRow key={procedure.procedure + i}>
+                  schedule.financial.procedures.map((procedure) => (
+                    <TableRow key={procedure.procedure}>
                       <TableCell>{procedure.procedure}</TableCell>
                       <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
                       <TableCell>

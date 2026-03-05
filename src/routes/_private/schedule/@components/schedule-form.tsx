@@ -55,7 +55,9 @@ export function ScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFormP
     const clinicRooms = clinic?.rooms?.map((r: any) => ({ _id: r._id, name: r.name })) ?? [];
     const userRooms = (user?.rooms || []).map((r: any) => ({ _id: r._id, name: getRoomName(r._id) })).filter((r: any) => r.name && r.name.trim() !== '');
     const mergedMap = new Map<string, { _id: string; name: string }>();
-    [...clinicRooms, ...userRooms].forEach((r) => mergedMap.set(r._id, r));
+    for (const r of [...clinicRooms, ...userRooms]) {
+      mergedMap.set(r._id, r);
+    }
     return Array.from(mergedMap.values());
   }, [clinic, user, getRoomName]);
 

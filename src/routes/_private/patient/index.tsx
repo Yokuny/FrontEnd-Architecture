@@ -127,13 +127,13 @@ function PatientListPage() {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {item.phone1 && (
-                <DropdownMenuItem onClick={() => handleCopy(item.phone1!)}>
+                <DropdownMenuItem onClick={() => handleCopy(item.phone1)}>
                   <Copy className="mr-2 size-4 text-muted-foreground" />
                   Copiar telefone
                 </DropdownMenuItem>
               )}
               {item.email && (
-                <DropdownMenuItem onClick={() => handleCopy(item.email!)}>
+                <DropdownMenuItem onClick={() => handleCopy(String(item.email))}>
                   <Copy className="mr-2 size-4 text-muted-foreground" />
                   Copiar email
                 </DropdownMenuItem>

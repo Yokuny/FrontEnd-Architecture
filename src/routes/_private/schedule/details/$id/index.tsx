@@ -5,7 +5,7 @@ import Clinic from '@/components/icons/Clinic.Icon';
 import Clock from '@/components/icons/Clock.Icon';
 import Dollar from '@/components/icons/Dollar.Icon';
 import Mail from '@/components/icons/Mail.Icon';
-import Map from '@/components/icons/Map.Icon';
+import MapIcon from '@/components/icons/Map.Icon';
 import Right from '@/components/icons/Right.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -189,7 +189,7 @@ function ScheduleCard({ schedule }: { schedule: DbSchedule }) {
 
         <div className="flex flex-wrap items-start gap-2 pt-1 md:flex-col md:pt-2">
           <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-1 py-0.5">
-            <Map className="size-4" />
+            <MapIcon className="size-4" />
             <span className="text-muted-foreground text-sm">{getRoomName(schedule.Room)}</span>
           </Button>
 
