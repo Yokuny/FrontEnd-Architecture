@@ -65,6 +65,7 @@ export const MinimizeIcon = forwardRef<MinimizeIconHandle, MinimizeIconProps>(({
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <title>MinimizeSidebar</title>
         <motion.path
           animate={controls}
           d="M8 3v3a2 2 0 0 1-2 2H3"

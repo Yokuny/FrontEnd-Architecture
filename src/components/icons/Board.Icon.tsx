@@ -1,5 +1,6 @@
 const IconBoard = (props: React.SVGProps<SVGSVGElement>) => (
   <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="CurrentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <title>Board</title>
     <rect width="8" height="4" x="8" y="2" rx="1" />
     <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5.5" />
     <path d="M4 13.5V6a2 2 0 0 1 2-2h2" />

@@ -1,5 +1,6 @@
 const IconIDCard = (props: React.SVGProps<SVGSVGElement>) => (
   <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <title>IDCard</title>
     <path d="M16 10h2" />
     <path d="M16 14h2" />
     <path d="M6.17 15a3 3 0 0 1 5.66 0" />

@@ -83,6 +83,7 @@ export const CloudSunIcon = forwardRef<CloudSunIconHandle, CloudSunIconProps>(({
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <title>CloudSun</title>
         <motion.g animate={controls} initial="normal" variants={CLOUD_VARIANTS}>
           <path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" />
         </motion.g>

@@ -65,6 +65,7 @@ export const Maximize2Icon = forwardRef<Maximize2IconHandle, Maximize2IconProps>
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
+        <title>Maximize2Sidebar</title>
         <motion.path
           animate={controls}
           d="M3 16.2V21m0 0h4.8M3 21l6-6"

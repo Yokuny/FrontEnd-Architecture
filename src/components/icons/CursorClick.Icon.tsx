@@ -87,6 +87,7 @@ export const CursorClickIcon = forwardRef<CursorClickIconHandle, CursorClickIcon
         width={size}
         xmlns="http://www.w3.org/2000/svg"
       >
+        <title>CursorClick</title>
         <motion.path
           animate={controls}
           initial="normal"

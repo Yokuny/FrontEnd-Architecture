@@ -1,5 +1,6 @@
 const IconUploadCloud = (props: React.SVGProps<SVGSVGElement>) => (
   <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <title>UploadCloud</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"

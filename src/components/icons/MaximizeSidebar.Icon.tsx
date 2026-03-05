@@ -55,6 +55,7 @@ export const MaximizeIcon = forwardRef<MaximizeIconHandle, MaximizeIconProps>(({
   return (
     <div role="presentation" className={cn(className)} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
       <svg fill="none" height={size} width={size} stroke="currentColor" strokeWidth="1.4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <title>MaximizeSidebar</title>
         <motion.path
           animate={controls}
           d="M8 3H5a2 2 0 0 0-2 2v3"

@@ -1,5 +1,6 @@
 const IconGoogleCalendar = (props: React.SVGProps<SVGSVGElement>) => (
   <svg width="512" height="512" viewBox="0 0 512 512" fill="none" stroke="currentColor" {...props}>
+    <title>GoogleCalendar</title>
     <rect x="174" y="174" width="164" height="164" fill="white" />
     <path d="M100 340h74V174H340v-74H137Q100 100 100 135" fill="#4285f4" />
     <path d="M338 100v76h74v-41q0-35-35-35" fill="#1967d2" />

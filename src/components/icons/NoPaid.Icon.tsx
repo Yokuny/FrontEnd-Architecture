@@ -1,5 +1,6 @@
 const IconNoPaid = (props: React.SVGProps<SVGSVGElement>) => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <title>NoPaid</title>
     <path d="M13 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5" />
     <path d="m17 17 5 5" />
     <path d="M18 12h.01" />

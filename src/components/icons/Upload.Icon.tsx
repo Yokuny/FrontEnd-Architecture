@@ -1,5 +1,6 @@
 const IconUpload = (props: React.SVGProps<SVGSVGElement>) => (
   <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="CurrentColor" strokeWidth="1.6" {...props}>
+    <title>Upload</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"

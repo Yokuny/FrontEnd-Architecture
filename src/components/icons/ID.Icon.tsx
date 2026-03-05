@@ -1,5 +1,6 @@
 const IconID = (props: React.SVGProps<SVGSVGElement>) => (
   <svg width="1.1em" height="1.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <title>ID</title>
     <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
     <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
     <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" />
