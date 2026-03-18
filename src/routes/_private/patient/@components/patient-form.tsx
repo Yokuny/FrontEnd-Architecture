@@ -28,11 +28,13 @@ export function PatientForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome *</FormLabel>
+                <div className="flex gap-2 items-center">
+                  <FormLabel>Nome *</FormLabel>
+                  <FormDescription>Nome completo do paciente.</FormDescription>
+                </div>
                 <FormControl>
                   <Input {...field} placeholder="Digite o nome" />
                 </FormControl>
-                <FormDescription>Nome completo do paciente.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -156,7 +158,7 @@ export function PatientForm() {
         <div key="phones" className="space-y-4">
           <div className="flex items-center justify-between">
             <h4 className="font-medium text-sm">Lista de Telefones</h4>
-            <Button type="button" variant="outline" size="sm" onClick={() => append({ number: '', tag: fields.length === 0 ? 'WhatsApp' : '' })}>
+            <Button type="button" variant="outline" onClick={() => append({ number: '', tag: fields.length === 0 ? 'WhatsApp' : '' })}>
               <Add className="mr-2 size-4" />
               Adicionar Telefone
             </Button>
@@ -189,7 +191,7 @@ export function PatientForm() {
                   </FormItem>
                 )}
               />
-              <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)}>
+              <Button type="button" variant="destructive"  onClick={() => remove(index)}>
                 <Delete className="size-4" />
               </Button>
             </div>
