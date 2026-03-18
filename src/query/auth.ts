@@ -41,7 +41,7 @@ export function useAuthApi() {
 
   const validateEmail = useMutation({
     mutationFn: async ({ email }: { email: string }) => {
-      const res = await api.post('/auth/validate-email', { email });
+      const res = await api.post('/auth/email-validation', { email });
       const data = res.data;
 
       if (!data.success) {
