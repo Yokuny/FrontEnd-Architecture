@@ -9,7 +9,7 @@ export interface CursorClickIconHandle {
   stopAnimation: () => void;
 }
 
-export interface CursorClickIconProps extends HTMLAttributes<HTMLDivElement> {
+export interface CursorClickIconProps extends HTMLAttributes<HTMLButtonElement> {
   size?: number;
 }
 
@@ -54,7 +54,7 @@ export const CursorClickIcon = forwardRef<CursorClickIconHandle, CursorClickIcon
   });
 
   const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseEnter?.(e);
       } else {
@@ -65,7 +65,7 @@ export const CursorClickIcon = forwardRef<CursorClickIconHandle, CursorClickIcon
   );
 
   const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseLeave?.(e);
       } else {

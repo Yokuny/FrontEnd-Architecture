@@ -1,8 +1,8 @@
 import { Link, useLocation, useMatches } from '@tanstack/react-router';
 import { type ComponentProps, Fragment } from 'react';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { HomeIcon } from '@/components/icons/Home.Icon';
 import HelpIcon from '@/components/icons/Help.Icon';
+import { HomeIcon } from '@/components/icons/Home.Icon';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { t } from '@/lib/helpers/translate';
 import { cn } from '@/lib/utils/index';
@@ -16,35 +16,35 @@ function PageBreadcrumb() {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link to="/">
-                <HomeIcon className="h-4 w-4" size={16} />
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          {pathnames.length > 0 && <BreadcrumbSeparator />}
-          {pathnames.map((value, index) => {
-            const isLast = index === pathnames.length - 1;
-            const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-            const translatedValue = t(value);
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link to="/">
+              <HomeIcon className="h-4 w-4" size={16} />
+            </Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        {pathnames.length > 0 && <BreadcrumbSeparator />}
+        {pathnames.map((value, index) => {
+          const isLast = index === pathnames.length - 1;
+          const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+          const translatedValue = t(value);
 
-            return (
-              <Fragment key={to}>
-                <BreadcrumbItem>
-                  {isLast ? (
-                    <BreadcrumbPage>{translatedValue}</BreadcrumbPage>
-                  ) : (
-                    <BreadcrumbLink asChild>
-                      <Link to={to as string}>{translatedValue}</Link>
-                    </BreadcrumbLink>
-                  )}
-                </BreadcrumbItem>
-                {!isLast && <BreadcrumbSeparator />}
-              </Fragment>
-            );
-          })}
-        </BreadcrumbList>
+          return (
+            <Fragment key={to}>
+              <BreadcrumbItem>
+                {isLast ? (
+                  <BreadcrumbPage>{translatedValue}</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link to={to as string}>{translatedValue}</Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+              {!isLast && <BreadcrumbSeparator />}
+            </Fragment>
+          );
+        })}
+      </BreadcrumbList>
     </Breadcrumb>
   );
 }
@@ -53,7 +53,7 @@ function Card({ className, asPage, children, ...props }: ComponentProps<'div'> &
   return (
     <div data-slot="card" className={cn('flex flex-col gap-6 rounded-lg border bg-card py-6 text-card-foreground', className)} {...props}>
       {asPage && (
-        <div className="flex items-center justify-between px-6 -mb-2">
+        <div className="-mb-2 flex items-center justify-between px-6">
           <PageBreadcrumb />
           <CardDescription />
         </div>
@@ -72,7 +72,7 @@ function CardHeader({ className, title, children, ...props }: ComponentProps<'di
 
     for (let i = matches.length - 1; i >= 0; i--) {
       const match = matches[i];
-       if (match && match.staticData) {
+      if (match?.staticData) {
         if (typeof match.staticData.getTitle === 'function') {
           return match.staticData.getTitle();
         }
@@ -103,7 +103,7 @@ function CardTitle({ className, ...props }: ComponentProps<'div'>) {
 function CardDescription({ className, ...props }: ComponentProps<'div'>) {
   const matches = useMatches();
   let description = '';
-  
+
   for (let i = matches.length - 1; i >= 0; i--) {
     const match = matches[i];
     if (match?.staticData && typeof match.staticData.description === 'string') {
@@ -129,7 +129,13 @@ function CardDescription({ className, ...props }: ComponentProps<'div'>) {
 }
 
 function CardAction({ className, ...props }: ComponentProps<'div'>) {
-  return <div data-slot="card-action" className={cn('col-start-2 row-span-2 row-start-1 self-start justify-self-end flex w-full flex-col items-center gap-2 sm:w-auto sm:flex-row', className)} {...props} />;
+  return (
+    <div
+      data-slot="card-action"
+      className={cn('col-start-2 row-span-2 row-start-1 flex w-full flex-col items-center gap-2 self-start justify-self-end sm:w-auto sm:flex-row', className)}
+      {...props}
+    />
+  );
 }
 
 function CardContent({ className, ...props }: ComponentProps<'div'>) {

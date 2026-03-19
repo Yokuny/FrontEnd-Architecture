@@ -7,7 +7,7 @@ import Add from '@/components/icons/Add.Icon';
 import Calender from '@/components/icons/Calender.Icon';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { extractDate } from '@/lib/helpers/formatter.helper';

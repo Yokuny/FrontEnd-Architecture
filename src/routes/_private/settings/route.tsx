@@ -3,9 +3,8 @@ import Grid from '@/components/icons/Grid.Icon';
 import Lock from '@/components/icons/Lock.Icon';
 import Mail from '@/components/icons/Mail.Icon';
 import User from '@/components/icons/User.Icon';
-import { useUserQuery } from '@/query/user';
-
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { useUserQuery } from '@/query/user';
 
 export const Route = createFileRoute('/_private/settings')({
   component: SettingsLayout,
@@ -33,7 +32,7 @@ function SettingsLayout() {
   return (
     <Card asPage>
       <CardHeader />
-      <CardContent className="flex w-full flex-col gap-8 md:flex-row pt-0">
+      <CardContent className="flex w-full flex-col gap-8 pt-0 md:flex-row">
         <aside className="w-full flex-shrink-0 md:w-64">
           <nav className="scrollbar-none flex gap-2 overflow-x-auto pb-4 md:flex-col md:pb-0">
             {visibleLinks.map((nav) => {

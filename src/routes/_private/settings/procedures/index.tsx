@@ -6,7 +6,7 @@ import Download from '@/components/icons/Download.Icon';
 import Upload from '@/components/icons/Upload.Icon';
 import UploadCloud from '@/components/icons/UploadCloud.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { ProcedureData } from '@/lib/interfaces';
 import { useProceduresQuery } from '@/query/procedures';
 import { useSettingsMutations } from '../profile/@hooks/use-settings-api';

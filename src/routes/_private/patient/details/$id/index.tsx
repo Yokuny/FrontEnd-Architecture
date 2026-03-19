@@ -8,7 +8,7 @@ import Face from '@/components/icons/Face.Icon';
 import Mail from '@/components/icons/Mail.Icon';
 import Pulse from '@/components/icons/Pulse.Icon';
 import User from '@/components/icons/User.Icon';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePatientQuery } from '@/query/patient';
 import { PatientAnamnesisView } from '../../@components/patient-anamnesis-view';

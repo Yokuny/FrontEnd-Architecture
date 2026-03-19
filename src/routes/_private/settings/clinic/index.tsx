@@ -7,7 +7,7 @@ import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
 import Delete from '@/components/icons/Delete.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';

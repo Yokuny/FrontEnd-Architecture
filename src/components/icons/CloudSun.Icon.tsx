@@ -9,7 +9,7 @@ export interface CloudSunIconHandle {
   stopAnimation: () => void;
 }
 
-export interface CloudSunIconProps extends HTMLAttributes<HTMLDivElement> {
+export interface CloudSunIconProps extends HTMLAttributes<HTMLButtonElement> {
   size?: number;
 }
 
@@ -49,7 +49,7 @@ export const CloudSunIcon = forwardRef<CloudSunIconHandle, CloudSunIconProps>(({
   });
 
   const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseEnter?.(e);
       } else {
@@ -60,7 +60,7 @@ export const CloudSunIcon = forwardRef<CloudSunIconHandle, CloudSunIconProps>(({
   );
 
   const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseLeave?.(e);
       } else {

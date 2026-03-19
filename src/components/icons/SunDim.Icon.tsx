@@ -9,7 +9,7 @@ export interface SunDimIconHandle {
   stopAnimation: () => void;
 }
 
-export interface SunDimIconProps extends HTMLAttributes<HTMLDivElement> {
+export interface SunDimIconProps extends HTMLAttributes<HTMLButtonElement> {
   size?: number;
 }
 
@@ -34,7 +34,7 @@ export const SunDimIcon = forwardRef<SunDimIconHandle, SunDimIconProps>(({ onMou
   });
 
   const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseEnter?.(e);
       } else {
@@ -45,7 +45,7 @@ export const SunDimIcon = forwardRef<SunDimIconHandle, SunDimIconProps>(({ onMou
   );
 
   const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseLeave?.(e);
       } else {

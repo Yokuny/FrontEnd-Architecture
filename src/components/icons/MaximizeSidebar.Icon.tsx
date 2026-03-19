@@ -9,7 +9,7 @@ export interface MaximizeIconHandle {
   stopAnimation: () => void;
 }
 
-export interface MaximizeIconProps extends HTMLAttributes<HTMLDivElement> {
+export interface MaximizeIconProps extends HTMLAttributes<HTMLButtonElement> {
   size?: number;
 }
 
@@ -32,7 +32,7 @@ export const MaximizeIcon = forwardRef<MaximizeIconHandle, MaximizeIconProps>(({
   });
 
   const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseEnter?.(e);
       } else {
@@ -43,7 +43,7 @@ export const MaximizeIcon = forwardRef<MaximizeIconHandle, MaximizeIconProps>(({
   );
 
   const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseLeave?.(e);
       } else {

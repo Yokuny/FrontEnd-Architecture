@@ -7,7 +7,7 @@ import ToothNumber from '@/components/odontogram/tooth-number';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { usePatientStore } from '@/hooks/patients';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';

@@ -135,30 +135,30 @@ function OdontogramListPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-             <div className="relative w-full sm:max-w-64">
-              <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Buscar paciente..."
-                className="pl-9"
-                defaultValue={search || ''}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    navigate({
-                      search: (prev: SearchParams) => ({
-                        ...prev,
-                        search: e.currentTarget.value || undefined,
-                        page: 1,
-                      }),
-                    });
-                  }
-                }}
-              />
-            </div>
-            <Button onClick={() => navigate({ to: '/odontogram/add' })}>
-              <Add className="mr-2 size-4" />
-              Adicionar
-            </Button>
-         </CardAction>
+          <div className="relative w-full sm:max-w-64">
+            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Buscar paciente..."
+              className="pl-9"
+              defaultValue={search || ''}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  navigate({
+                    search: (prev: SearchParams) => ({
+                      ...prev,
+                      search: e.currentTarget.value || undefined,
+                      page: 1,
+                    }),
+                  });
+                }
+              }}
+            />
+          </div>
+          <Button onClick={() => navigate({ to: '/odontogram/add' })}>
+            <Add className="mr-2 size-4" />
+            Adicionar
+          </Button>
+        </CardAction>
       </CardHeader>
 
       <CardContent>

@@ -9,7 +9,7 @@ export interface MinimizeIconHandle {
   stopAnimation: () => void;
 }
 
-export interface MinimizeIconProps extends HTMLAttributes<HTMLDivElement> {
+export interface MinimizeIconProps extends HTMLAttributes<HTMLButtonElement> {
   size?: number;
 }
 
@@ -32,7 +32,7 @@ export const MinimizeIcon = forwardRef<MinimizeIconHandle, MinimizeIconProps>(({
   });
 
   const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseEnter?.(e);
       } else {
@@ -43,7 +43,7 @@ export const MinimizeIcon = forwardRef<MinimizeIconHandle, MinimizeIconProps>(({
   );
 
   const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseLeave?.(e);
       } else {

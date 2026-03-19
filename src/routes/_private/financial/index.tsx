@@ -4,7 +4,7 @@ import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { useFinancialsPartialQuery } from '@/query/financials';
 import { FinancialList } from './@components/financial-list';
 
@@ -23,7 +23,7 @@ function FinancialListPage() {
   return (
     <Card asPage>
       <CardHeader>
-         <CardAction>
+        <CardAction>
           <Button onClick={() => navigate({ to: '/financial/add' })}>
             <Add className="mr-2 size-4" />
             Adicionar

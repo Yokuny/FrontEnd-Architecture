@@ -8,7 +8,7 @@ export interface ClipboardDocumentListIconHandle {
   stopAnimation: () => void;
 }
 
-export interface ClipboardDocumentListIconProps extends HTMLAttributes<HTMLDivElement> {
+export interface ClipboardDocumentListIconProps extends HTMLAttributes<HTMLButtonElement> {
   size?: number;
 }
 
@@ -75,7 +75,7 @@ export const ClipboardDocumentListIcon = forwardRef<ClipboardDocumentListIconHan
     });
 
     const handleMouseEnter = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: React.MouseEvent<HTMLButtonElement>) => {
         if (isControlledRef.current) {
           onMouseEnter?.(e);
         } else {
@@ -86,7 +86,7 @@ export const ClipboardDocumentListIcon = forwardRef<ClipboardDocumentListIconHan
     );
 
     const handleMouseLeave = useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: React.MouseEvent<HTMLButtonElement>) => {
         if (isControlledRef.current) {
           onMouseLeave?.(e);
         } else {

@@ -9,7 +9,7 @@ export interface MoonIconHandle {
   stopAnimation: () => void;
 }
 
-export interface MoonIconProps extends HTMLAttributes<HTMLDivElement> {
+export interface MoonIconProps extends HTMLAttributes<HTMLButtonElement> {
   size?: number;
 }
 
@@ -40,7 +40,7 @@ export const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(({ onMouseEnte
   });
 
   const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseEnter?.(e);
       } else {
@@ -51,7 +51,7 @@ export const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(({ onMouseEnte
   );
 
   const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseLeave?.(e);
       } else {

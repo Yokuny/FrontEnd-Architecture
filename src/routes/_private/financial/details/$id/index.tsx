@@ -1,12 +1,12 @@
 import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router';
 import { useMemo } from 'react';
-
+import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Back from '@/components/icons/Back.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
@@ -21,8 +21,6 @@ import { useProfessionalsQuery } from '@/query/professionals';
 import { FinancialEditForm } from '../../@components/financial-edit-form';
 import { STATUS_TO_BADGE_VARIANT } from '../../@consts/financial.consts';
 import { useFinancialEditForm } from '../../@hooks/use-financial-edit-form';
-import { EmptyContent } from '@/components/ui/empty';
-import EmptyData from '@/components/default-empty-data';
 
 export const Route = createFileRoute('/_private/financial/details/$id/')({
   component: FinancialDetailPage,
@@ -34,7 +32,7 @@ export const Route = createFileRoute('/_private/financial/details/$id/')({
 
 function FinancialDetailPage() {
   const { id } = useParams({ from: '/_private/financial/details/$id/' });
-   const { data: financial, isLoading } = useFinancialDetailQuery(id);
+  const { data: financial, isLoading } = useFinancialDetailQuery(id);
   const { data: professionals } = useProfessionalsQuery();
 
   if (isLoading) {
@@ -157,7 +155,7 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
                 <TableBody>
                   {financial.procedures?.length > 0 ? (
                     financial.procedures.map((procedure) => (
-                      <TableRow key={ procedure.procedure }>
+                      <TableRow key={procedure.procedure}>
                         <TableCell>{procedure.procedure}</TableCell>
                         <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
                         <TableCell>{statusDictionary(procedure.status)}</TableCell>

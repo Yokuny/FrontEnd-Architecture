@@ -9,7 +9,7 @@ export interface EnvelopeOpenIconHandle {
   stopAnimation: () => void;
 }
 
-export interface EnvelopeOpenIconProps extends HTMLAttributes<HTMLDivElement> {
+export interface EnvelopeOpenIconProps extends HTMLAttributes<HTMLButtonElement> {
   size?: number;
 }
 
@@ -41,7 +41,7 @@ export const EnvelopeOpenIcon = forwardRef<EnvelopeOpenIconHandle, EnvelopeOpenI
   });
 
   const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseEnter?.(e);
       } else {
@@ -52,7 +52,7 @@ export const EnvelopeOpenIcon = forwardRef<EnvelopeOpenIconHandle, EnvelopeOpenI
   );
 
   const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (isControlledRef.current) {
         onMouseLeave?.(e);
       } else {

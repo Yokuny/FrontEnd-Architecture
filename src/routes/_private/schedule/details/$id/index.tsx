@@ -53,9 +53,7 @@ function PatientSchedulePage() {
       </CardHeader>
 
       <div className="px-4 pt-4 md:px-6 md:pt-6">
-        <h2 className="text-lg font-bold text-sky-blue tracking-tight md:text-xl dark:text-primary-blue">
-          Paciente: {getPatientName(id)}
-        </h2>
+        <h2 className="font-bold text-lg text-sky-blue tracking-tight md:text-xl dark:text-primary-blue">Paciente: {getPatientName(id)}</h2>
       </div>
 
       {isLoading || !id ? <ScheduleListSkeleton /> : <ScheduleList nextEvent={nextEvent} futureEvents={futureEvents} pastEvents={pastEvents} />}
