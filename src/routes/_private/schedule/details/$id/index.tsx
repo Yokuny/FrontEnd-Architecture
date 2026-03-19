@@ -25,6 +25,10 @@ import { usePatientSchedulesQuery } from '@/query/schedule';
 
 export const Route = createFileRoute('/_private/schedule/details/$id/')({
   component: PatientSchedulePage,
+  staticData: {
+    title: 'Histórico de Agendamentos',
+    description: 'Visualização completa do histórico de agendamentos e retornos do paciente.',
+  },
 });
 
 function PatientSchedulePage() {
@@ -40,14 +44,19 @@ function PatientSchedulePage() {
   const pastEvents = data?.pastEvents ?? [];
 
   return (
-    <Card className="flex w-full flex-col-reverse pb-14 md:flex-col md:pb-0">
-      <CardHeader className="fixed right-1 bottom-16 left-1 z-40 flex flex-row items-center justify-between py-4 md:static md:right-auto md:left-auto md:z-auto">
-        <CardTitle className="text-lg text-sky-blue tracking-tight md:text-xl dark:text-primary-blue">{getPatientName(id)}</CardTitle>
+    <Card asPage className="flex w-full flex-col">
+      <CardHeader>
         <Button type="button" size={isMobile ? 'default' : 'sm'} variant="outline" onClick={() => navigate({ to: '..' })}>
           <Back className="mr-2 size-4" />
           Voltar
         </Button>
       </CardHeader>
+
+      <div className="px-4 pt-4 md:px-6 md:pt-6">
+        <h2 className="text-lg font-bold text-sky-blue tracking-tight md:text-xl dark:text-primary-blue">
+          Paciente: {getPatientName(id)}
+        </h2>
+      </div>
 
       {isLoading || !id ? <ScheduleListSkeleton /> : <ScheduleList nextEvent={nextEvent} futureEvents={futureEvents} pastEvents={pastEvents} />}
     </Card>

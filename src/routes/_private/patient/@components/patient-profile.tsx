@@ -13,8 +13,8 @@ import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { t } from '@/config/translate';
 import { calculateAge, capitalizeString, currencyFormat, formatCep, formatCpfCnpj, formatDate, formatPhone, formatRg, handleCopy } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate';
 import type { FullPatient } from '@/lib/interfaces';
 import { cn } from '@/lib/utils/cn.util';
 

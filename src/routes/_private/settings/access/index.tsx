@@ -12,6 +12,10 @@ import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
 
 export const Route = createFileRoute('/_private/settings/access/')({
   component: SettingsAccess,
+  staticData: {
+    title: 'Acesso',
+    description: 'Configure a senha de acesso ao sistema.',
+  },
 });
 
 export function SettingsAccess() {
@@ -48,9 +52,8 @@ export function SettingsAccess() {
 
   return (
     <Card className="border-none">
-      <CardHeader className="px-0">
+      <CardHeader className="px-0 pt-0">
         <CardTitle className="text-xl">Configuração de Acesso</CardTitle>
-        <CardDescription>Configure a senha de acesso ao sistema.</CardDescription>
       </CardHeader>
       <CardContent className="px-0">
         <Form {...form}>

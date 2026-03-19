@@ -30,6 +30,10 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/_private/patient/add/')({
   component: PatientAddPage,
+  staticData: {
+    title: 'Adicionar Paciente',
+    description: 'Página de criação de novo cadastro de paciente.',
+  },
   validateSearch: searchSchema,
 });
 
@@ -39,7 +43,7 @@ function PatientAddPage() {
 
   if (id && isLoading) {
     return (
-      <Card>
+      <Card asPage>
         <CardHeader />
         <CardContent className="p-12">
           <DefaultLoading />
@@ -88,7 +92,7 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
   };
 
   return (
-    <Card>
+    <Card asPage>
       <CardHeader />
       <Form {...form}>
         <form onSubmit={submitHandler}>

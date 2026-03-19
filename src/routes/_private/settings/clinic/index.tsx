@@ -18,6 +18,10 @@ import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
 
 export const Route = createFileRoute('/_private/settings/clinic/')({
   component: SettingsClinic,
+  staticData: {
+    title: 'Clínica',
+    description: 'Obtenha ou edite as informações gerenciais e estruturais da clínica',
+  },
 });
 
 const RoomField = ({ index, remove, control }: { index: number; remove: () => void; control: Control<NewClinic> }) => {
@@ -99,9 +103,8 @@ export function SettingsClinic() {
 
   return (
     <Card className="border-none">
-      <CardHeader className="px-0">
+      <CardHeader className="px-0 pt-0">
         <CardTitle className="text-xl">Informações da Clínica</CardTitle>
-        <CardDescription>Obtenha ou edite as informações da clínica</CardDescription>
       </CardHeader>
       <CardContent className="px-0">
         <Form {...form}>

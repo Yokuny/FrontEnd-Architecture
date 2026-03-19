@@ -18,6 +18,10 @@ import { OdontogramStatusForm } from '../../@components/odontogram-status-form';
 
 export const Route = createFileRoute('/_private/odontogram/details/$id/')({
   component: OdontogramDetailPage,
+  staticData: {
+    title: 'Detalhes do Odontograma',
+    description: 'Visualize o histórico e atualize o status dos procedimentos e anotações.',
+  },
 });
 
 function getFacesWithProcedures(faces: any) {
@@ -51,7 +55,7 @@ function OdontogramDetailPage() {
   if (isLoading) return <DefaultLoading />;
   if (error || !odontogram) {
     return (
-      <Card>
+      <Card asPage>
         <CardContent className="p-10 text-center">
           <p className="mb-4 text-destructive">Odontograma não encontrado ou erro ao carregar.</p>
           <Button onClick={() => navigate({ to: '..' })}>Voltar</Button>
@@ -61,21 +65,15 @@ function OdontogramDetailPage() {
   }
 
   return (
-    <Card>
+    <Card asPage>
       <CardHeader>
-        <div className="flex w-full flex-col justify-between md:flex-row md:items-center">
-          <div>
-            <CardTitle>Odontograma • {patientName}</CardTitle>
-            <CardDescription>Visualize o histórico e atualize o status dos procedimentos</CardDescription>
-          </div>
-          <CardAction>
-            {/* @ts-expect-error Types not matched fully */}
-            <Button variant="outline" onClick={() => navigate({ to: '/odontogram' })}>
-              <Back className="mr-2 size-4" />
-              Voltar
-            </Button>
-          </CardAction>
-        </div>
+        <CardAction>
+          {/* @ts-expect-error Types not matched fully */}
+          <Button variant="outline" onClick={() => navigate({ to: '/odontogram' })}>
+            <Back className="mr-2 size-4" />
+            Voltar
+          </Button>
+        </CardAction>
       </CardHeader>
 
       <CardContent className="space-y-8">

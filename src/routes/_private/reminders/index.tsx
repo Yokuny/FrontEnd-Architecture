@@ -22,6 +22,10 @@ type SearchParams = z.infer<typeof searchSchema>;
 
 export const Route = createFileRoute('/_private/reminders/')({
   component: RemindersListPage,
+  staticData: {
+    title: 'Lembretes',
+    description: 'Gestão de tarefas pendentes e acompanhamento de lembretes diários.',
+  },
   validateSearch: (search: Record<string, unknown>): SearchParams => searchSchema.parse(search),
 });
 
@@ -54,9 +58,8 @@ function RemindersListPage() {
   });
 
   return (
-    <Card>
+    <Card asPage>
       <CardHeader>
-        <CardTitle>Lembretes</CardTitle>
         <CardAction>
           <div className="mt-4 flex w-full flex-col items-center gap-4 sm:mt-0 sm:w-auto sm:flex-row">
             <div className="flex items-center gap-2">

@@ -16,6 +16,10 @@ import { useSettingsMutations } from './@hooks/use-settings-api';
 
 export const Route = createFileRoute('/_private/settings/profile/')({
   component: SettingsProfile,
+  staticData: {
+    title: 'Perfil',
+    description: 'Edite seu perfil e ajuste suas configurações de conta.',
+  },
 });
 
 export function SettingsProfile() {
@@ -58,9 +62,8 @@ export function SettingsProfile() {
 
   return (
     <Card className="border-none">
-      <CardHeader className="px-0">
+      <CardHeader className="px-0 pt-0">
         <CardTitle className="text-xl">Perfil</CardTitle>
-        <CardDescription>Edite seu perfil e ajuste suas configurações de conta.</CardDescription>
       </CardHeader>
       <CardContent className="px-0">
         <Form {...form}>

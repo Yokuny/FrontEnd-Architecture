@@ -10,6 +10,10 @@ import { FinancialList } from './@components/financial-list';
 
 export const Route = createFileRoute('/_private/financial/')({
   component: FinancialListPage,
+  staticData: {
+    title: 'Financeiro',
+    description: 'Lista registros financeiros pagos, cancelados ou em aberto.',
+  },
 });
 
 function FinancialListPage() {
@@ -17,13 +21,9 @@ function FinancialListPage() {
   const { data: financials, isLoading } = useFinancialsPartialQuery();
 
   return (
-    <Card>
+    <Card asPage>
       <CardHeader>
-        <div>
-          <CardTitle>Financeiro</CardTitle>
-          <CardDescription>Lista registros financeiros. Pagos, cancelados ou em aberto.</CardDescription>
-        </div>
-        <CardAction>
+         <CardAction>
           <Button onClick={() => navigate({ to: '/financial/add' })}>
             <Add className="mr-2 size-4" />
             Adicionar

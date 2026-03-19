@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { FinancialForm } from '../@components/financial-form';
@@ -9,6 +9,10 @@ import { useFinancialCreateForm } from '../@hooks/use-financial-form';
 
 export const Route = createFileRoute('/_private/financial/add/')({
   component: FinancialAddPage,
+  staticData: {
+    title: 'Novo Registro',
+    description: 'Criação de transações financeiras manuais.',
+  },
 });
 
 function FinancialAddPage() {
@@ -16,24 +20,23 @@ function FinancialAddPage() {
   const { form, onSubmit, isPending } = useFinancialCreateForm();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Novo Registro Financeiro</CardTitle>
-      </CardHeader>
-      <Form {...form}>
-        <form onSubmit={onSubmit}>
-          <CardContent>
-            <FinancialForm />
-          </CardContent>
-          <CardFooter>
-            <Button type="button" variant="outline" onClick={() => navigate({ to: '/financial' })} disabled={isPending}>
+    <Card asPage>
+      <CardHeader> 
+        <CardAction>
+          <Button type="button" variant="outline" onClick={() => navigate({ to: '/financial' })} disabled={isPending}>
               Cancelar
             </Button>
-            <Button type="submit" disabled={isPending} className="ml-auto min-w-[120px]">
+            <Button type="submit" form="financial-form" disabled={isPending} className="ml-auto min-w-[120px]">
               {isPending && <Spinner className="mr-2 size-4" />}
               Cadastrar
             </Button>
-          </CardFooter>
+        </CardAction>
+      </CardHeader>
+      <Form {...form}>
+        <form onSubmit={onSubmit} id="financial-form" >
+          <CardContent>
+            <FinancialForm />
+          </CardContent>
         </form>
       </Form>
     </Card>

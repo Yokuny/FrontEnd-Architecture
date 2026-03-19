@@ -28,7 +28,7 @@ export function PatientForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   <FormLabel>Nome *</FormLabel>
                   <FormDescription>Nome completo do paciente.</FormDescription>
                 </div>
@@ -191,7 +191,7 @@ export function PatientForm() {
                   </FormItem>
                 )}
               />
-              <Button type="button" variant="destructive"  onClick={() => remove(index)}>
+              <Button type="button" variant="destructive" onClick={() => remove(index)}>
                 <Delete className="size-4" />
               </Button>
             </div>

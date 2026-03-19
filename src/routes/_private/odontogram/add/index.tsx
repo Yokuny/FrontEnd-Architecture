@@ -8,7 +8,7 @@ import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
 import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent,  CardHeader  } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { GET, request } from '@/lib/api/client';
@@ -19,6 +19,10 @@ import Teeth from '../@components/teeth';
 
 export const Route = createFileRoute('/_private/odontogram/add/')({
   component: OdontogramAddPage,
+  staticData: {
+    title: 'Novo Odontograma',
+    description: 'Adicione um novo odontograma vinculado ao paciente e profissional.',
+  },
 });
 
 function OdontogramAddPage() {
@@ -77,12 +81,8 @@ function OdontogramAddPage() {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Novo Odontograma</CardTitle>
-        <CardDescription>Adicione um novo odontograma vinculado ao paciente e profissional.</CardDescription>
-      </CardHeader>
-
+    <Card asPage>
+      <CardHeader />
       <CardContent>
         <Form {...(form as any)}>
           <form

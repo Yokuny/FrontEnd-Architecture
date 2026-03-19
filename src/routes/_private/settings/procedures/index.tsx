@@ -14,6 +14,10 @@ import { SettingsProceduresTable } from './@components/settings-procedures-table
 
 export const Route = createFileRoute('/_private/settings/procedures/')({
   component: SettingsProcedures,
+  staticData: {
+    title: 'Serviços',
+    description: 'Configure os serviços prestados pela clínica.',
+  },
 });
 
 export function SettingsProcedures() {
@@ -116,10 +120,9 @@ export function SettingsProcedures() {
 
   return (
     <Card className="border-none">
-      <CardHeader className="px-0 sm:flex-row sm:items-center sm:justify-between">
+      <CardHeader className="px-0 pt-0 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <CardTitle className="text-xl">Procedimentos clínicos</CardTitle>
-          <CardDescription>Configure os serviços prestados pela clínica.</CardDescription>
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-2 sm:mt-0">
           <Button onClick={downloadModelCSV} variant="outline" size="sm" className="flex items-center gap-2">

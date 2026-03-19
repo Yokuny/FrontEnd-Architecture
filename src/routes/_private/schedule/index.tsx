@@ -41,6 +41,10 @@ import { WeekView } from './@components/week-view';
 
 export const Route = createFileRoute('/_private/schedule/')({
   component: SchedulePage,
+  staticData: {
+    title: 'Agenda',
+    description: 'Gestão de horários e calendário clínico multidisciplinar.',
+  },
 });
 
 const viewDictionary: Record<CalendarView, string> = {
@@ -316,7 +320,7 @@ function SchedulePage() {
   };
 
   return (
-    <Card className="flex w-full flex-col-reverse pb-14 md:flex-col md:pb-0">
+    <Card asPage className="flex w-full flex-col-reverse pb-14 md:flex-col md:pb-0">
       <CardHeader className="fixed right-1 bottom-16 left-1 z-40 flex flex-row items-center justify-between py-4 md:static md:right-auto md:left-auto md:z-auto">
         <div className="flex flex-col items-baseline md:flex-row md:gap-2">
           <CardTitle className="flex items-baseline gap-2 text-sky-blue leading-1 dark:text-primary-blue">

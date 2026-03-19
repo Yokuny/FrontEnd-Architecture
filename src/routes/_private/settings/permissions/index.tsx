@@ -15,6 +15,10 @@ import { useRolesAndRoomsQuery, useSettingsMutations } from '../profile/@hooks/u
 
 export const Route = createFileRoute('/_private/settings/permissions/')({
   component: SettingsPermissions,
+  staticData: {
+    title: 'Permissões',
+    description: 'Gerencie as funções e salas de atendimento dos usuários da clínica.',
+  },
 });
 
 export function SettingsPermissions() {
@@ -89,9 +93,8 @@ export function SettingsPermissions() {
 
   return (
     <Card className="border-none">
-      <CardHeader className="px-0">
+      <CardHeader className="px-0 pt-0">
         <CardTitle className="text-xl">Gerenciar Permissões</CardTitle>
-        <CardDescription>Gerencie as funções e salas de atendimento dos usuários da clínica.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-8 px-0">
         <Accordion type="single" collapsible className="space-y-4">

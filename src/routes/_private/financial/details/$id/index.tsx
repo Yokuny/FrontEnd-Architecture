@@ -21,23 +21,26 @@ import { useProfessionalsQuery } from '@/query/professionals';
 import { FinancialEditForm } from '../../@components/financial-edit-form';
 import { STATUS_TO_BADGE_VARIANT } from '../../@consts/financial.consts';
 import { useFinancialEditForm } from '../../@hooks/use-financial-edit-form';
+import { EmptyContent } from '@/components/ui/empty';
+import EmptyData from '@/components/default-empty-data';
 
 export const Route = createFileRoute('/_private/financial/details/$id/')({
   component: FinancialDetailPage,
+  staticData: {
+    title: 'Detalhes do Registro',
+    description: 'Visualização completa e edição de registro financeiro.',
+  },
 });
 
 function FinancialDetailPage() {
   const { id } = useParams({ from: '/_private/financial/details/$id/' });
-  const navigate = useNavigate();
-  const { data: financial, isLoading } = useFinancialDetailQuery(id);
+   const { data: financial, isLoading } = useFinancialDetailQuery(id);
   const { data: professionals } = useProfessionalsQuery();
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Financeiro</CardTitle>
-        </CardHeader>
+      <Card asPage>
+        <CardHeader />
         <CardContent className="p-12">
           <DefaultLoading />
         </CardContent>
@@ -47,16 +50,11 @@ function FinancialDetailPage() {
 
   if (!financial) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Registro não encontrado</CardTitle>
-        </CardHeader>
-        <CardFooter>
-          <Button variant="outline" onClick={() => navigate({ to: '/financial' })}>
-            <Back className="mr-2 size-4" />
-            Voltar
-          </Button>
-        </CardFooter>
+      <Card asPage>
+        <CardHeader />
+        <CardContent className="p-12">
+          <EmptyData />
+        </CardContent>
       </Card>
     );
   }
@@ -82,19 +80,8 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
   const { form, onSubmit, isPending } = useFinancialEditForm(id, initialData);
 
   return (
-    <Card>
-      <CardHeader>
-        <div>
-          <CardTitle>Financeiro</CardTitle>
-          <ItemDescription>Visualize e edite as informações do registro financeiro</ItemDescription>
-        </div>
-        <CardAction>
-          <Button variant="outline" onClick={() => navigate({ to: '/financial' })}>
-            <Back className="mr-2 size-4" />
-            Voltar
-          </Button>
-        </CardAction>
-      </CardHeader>
+    <Card asPage>
+      <CardHeader />
 
       <CardContent>
         <div className="flex flex-col gap-8">
@@ -169,8 +156,8 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
                 </TableHeader>
                 <TableBody>
                   {financial.procedures?.length > 0 ? (
-                    financial.procedures.map((procedure, index) => (
-                      <TableRow key={`${procedure.procedure}-${index}`}>
+                    financial.procedures.map((procedure) => (
+                      <TableRow key={ procedure.procedure }>
                         <TableCell>{procedure.procedure}</TableCell>
                         <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
                         <TableCell>{statusDictionary(procedure.status)}</TableCell>

@@ -11,7 +11,7 @@ import Pulse from '@/components/icons/Pulse.Icon';
 import Search from '@/components/icons/Search.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -31,6 +31,10 @@ type SearchParams = z.infer<typeof searchSchema>;
 
 export const Route = createFileRoute('/_private/odontogram/')({
   component: OdontogramListPage,
+  staticData: {
+    title: 'Odontogramas',
+    description: 'Listagem e gerenciamento de odontogramas dos pacientes',
+  },
   validateSearch: (search: Record<string, unknown>): SearchParams => searchSchema.parse(search),
 });
 
@@ -128,12 +132,10 @@ function OdontogramListPage() {
   );
 
   return (
-    <Card>
+    <Card asPage>
       <CardHeader>
-        <CardTitle>Odontogramas</CardTitle>
         <CardAction>
-          <div className="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
-            <div className="relative w-full sm:max-w-64">
+             <div className="relative w-full sm:max-w-64">
               <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Buscar paciente..."
@@ -156,8 +158,7 @@ function OdontogramListPage() {
               <Add className="mr-2 size-4" />
               Adicionar
             </Button>
-          </div>
-        </CardAction>
+         </CardAction>
       </CardHeader>
 
       <CardContent>

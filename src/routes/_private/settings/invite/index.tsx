@@ -16,6 +16,10 @@ import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
 
 export const Route = createFileRoute('/_private/settings/invite/')({
   component: SettingsInvite,
+  staticData: {
+    title: 'Convites',
+    description: 'Envie convites por e-mail para novos usuários colaborarem na clínica.',
+  },
 });
 
 export function SettingsInvite() {
@@ -51,9 +55,8 @@ export function SettingsInvite() {
 
   return (
     <Card className="border-none">
-      <CardHeader className="px-0">
+      <CardHeader className="px-0 pt-0">
         <CardTitle className="text-xl">Convidar integrantes</CardTitle>
-        <CardDescription>Envie convites por e-mail para novos usuários criarem suas contas.</CardDescription>
       </CardHeader>
       <CardContent className="px-0">
         <Form {...form}>

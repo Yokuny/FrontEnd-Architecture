@@ -21,6 +21,10 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/_private/patient/details/$id/')({
   component: PatientDetailsPage,
+  staticData: {
+    title: 'Prontuário do Paciente',
+    description: 'Visão completa, prontuário, odontograma e histórico do paciente.',
+  },
   validateSearch: searchSchema,
 });
 
@@ -32,7 +36,7 @@ function PatientDetailsPage() {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card asPage>
         <CardHeader />
         <CardContent className="p-12">
           <DefaultLoading />
@@ -51,10 +55,8 @@ function PatientDetailsPage() {
 
   return (
     <div className="flex w-full flex-col gap-6">
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-xl">{patient.name}</CardTitle>
-        </CardHeader>
+      <Card asPage>
+        <CardHeader />
         <CardContent>
           <Tabs value={currentTab} onValueChange={handleTabChange}>
             <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2">

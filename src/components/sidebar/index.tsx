@@ -6,7 +6,7 @@ import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
 import type { SidebarRoute } from '@/config/sidebarRoutes';
 import { buildSidebarRoutes } from '@/config/sidebarRoutes';
-import { t } from '@/config/translate';
+import { t } from '@/lib/helpers/translate';
 
 import { cn } from '@/lib/utils';
 import { NotificationsSwitcher } from './switch-notifications';

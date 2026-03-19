@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import Add from '@/components/icons/Add.Icon';
 import { ItemDescription, ItemMedia } from '@/components/ui/item';
-import { t } from '@/config/translate';
+import { t } from '@/lib/helpers/translate';
 import { cn } from '@/lib/utils';
 
 export default function UploadImage({ value, onAddFile, maxSize, className, height }: UploadImageProps) {

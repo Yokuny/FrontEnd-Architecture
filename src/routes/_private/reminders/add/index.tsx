@@ -9,6 +9,10 @@ import { useReminderForm } from '../@hooks/use-reminder-form';
 
 export const Route = createFileRoute('/_private/reminders/add/')({
   component: ReminderAddPage,
+  staticData: {
+    title: 'Novo Lembrete',
+    description: 'Criação de tarefas e lembretes vinculados à clínica.',
+  },
 });
 
 function ReminderAddPage() {
@@ -21,7 +25,7 @@ function ReminderAddPage() {
   };
 
   return (
-    <Card>
+    <Card asPage>
       <CardHeader />
       <Form {...form}>
         <form onSubmit={handleSubmit}>

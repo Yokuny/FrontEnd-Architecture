@@ -7,7 +7,7 @@ import Package from '@/components/icons/Package.Icon';
 import Search from '@/components/icons/Search.Icon';
 import Service from '@/components/icons/Service.Icon';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
-import { t } from '@/config/translate';
+import { t } from '@/lib/helpers/translate';
 
 const ICONS = [Search, Search, Card, Mail, Cloud, Face, Service, Service, Package];
 

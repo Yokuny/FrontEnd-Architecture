@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { t } from '@/config/translate';
 import { extractDate } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate';
 import type { DbReminder } from '@/lib/interfaces';
 import { useCheckReminders } from '@/query/reminders';
 
