@@ -68,5 +68,11 @@
   "error.completing.reminders": "Erro ao concluir lembretes",
   "reminder.completed.singular": "lembrete concluído",
   "reminder.completed.plural": "lembretes concluídos",
-  "mark.as.completed": "Marcar como concluído"
+  "mark.as.completed": "Marcar como concluído",
+  "pagination": "Paginação",
+  "pagination.previous": "Anterior",
+  "pagination.next": "Próximo",
+  "pagination.go.previous": "Ir para a página anterior",
+  "pagination.go.next": "Ir para a próxima página",
+  "pagination.more": "Mais páginas"
 }

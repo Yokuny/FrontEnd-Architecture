@@ -2,11 +2,12 @@ import type * as React from 'react';
 import Dot from '@/components/icons/Dot.Icon';
 import Left from '@/components/icons/Left.Icon';
 import Right from '@/components/icons/Right.Icon';
+import { t } from '@/lib/helpers/translate';
 import { cn } from '@/lib/utils';
 import { type Button, btnVars } from './button';
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
-  return <nav aria-label="pagination" data-slot="pagination" className={cn('mx-auto flex w-full justify-center', className)} {...props} />;
+  return <nav aria-label={t('pagination')} data-slot="pagination" className={className} {...props} />;
 }
 
 function PaginationContent({ className, ...props }: React.ComponentProps<'ul'>) {
@@ -42,17 +43,17 @@ function PaginationLink({ className, isActive, size = 'icon', ...props }: Pagina
 
 function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
   return (
-    <PaginationLink aria-label="Go to previous page" size="default" className={cn('gap-1 px-2.5 sm:pl-2.5', className)} {...props}>
+    <PaginationLink aria-label={t('pagination.go.previous')} size="default" className={cn('gap-1 px-2.5 sm:pl-2.5', className)} {...props}>
       <Left />
-      <span className="hidden sm:block">Previous</span>
+      <span className="hidden sm:block">{t('pagination.previous')}</span>
     </PaginationLink>
   );
 }
 
 function PaginationNext({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
   return (
-    <PaginationLink aria-label="Go to next page" size="default" className={cn('gap-1 px-2.5 sm:pr-2.5', className)} {...props}>
-      <span className="hidden sm:block">Next</span>
+    <PaginationLink aria-label={t('pagination.go.next')} size="default" className={cn('gap-1 px-2.5 sm:pr-2.5', className)} {...props}>
+      <span className="hidden sm:block">{t('pagination.next')}</span>
       <Right />
     </PaginationLink>
   );
@@ -62,7 +63,7 @@ function PaginationEllipsis({ className, ...props }: React.ComponentProps<'span'
   return (
     <span aria-hidden data-slot="pagination-ellipsis" className={cn('flex size-9 items-center justify-center', className)} {...props}>
       <Dot className="size-4" />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">{t('pagination.more')}</span>
     </span>
   );
 }

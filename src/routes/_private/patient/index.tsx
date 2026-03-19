@@ -194,8 +194,8 @@ function PatientListPage() {
             data={items}
             columns={columns}
             searchable={false}
-            showPagination={false}
-            bordered={true}
+            showPagination={true}
+            bordered={false}
             className="py-0"
             onRowClick={(row) => navigate({ to: '/patient/details/$id', params: { id: row._id } })}
           />
@@ -205,7 +205,7 @@ function PatientListPage() {
       {totalCount > 0 && (
         <CardFooter>
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
-            <span>Exibir</span>
+            <span className="truncate">Exibir</span>
             <Select value={String(size)} onValueChange={(val) => navigate({ search: (prev: SearchParams) => ({ ...prev, size: Number(val), page: 1 }) })}>
               <SelectTrigger className="h-8 w-[70px]">
                 <SelectValue />
@@ -216,11 +216,11 @@ function PatientListPage() {
                 <SelectItem value="50">50</SelectItem>
               </SelectContent>
             </Select>
-            <span>por página</span>
-            <span className="ml-4 tabular-nums">Total: {totalCount}</span>
+            <span className="truncate">por página</span>
+            <span className="ml-4 truncate tabular-nums">Total: {totalCount}</span>
           </div>
 
-          <Pagination className="ml-auto w-auto">
+          <Pagination>
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious

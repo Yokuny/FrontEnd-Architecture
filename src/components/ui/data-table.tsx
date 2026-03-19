@@ -1,25 +1,272 @@
+import type { Cell, Column, ColumnDef, Header, HeaderGroup, Row, SortingState, Table } from '@tanstack/react-table';
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
+import { atom, useAtom } from 'jotai';
+import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon } from 'lucide-react';
 import type React from 'react';
-import { useMemo, useState } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
+import { createContext, memo, useCallback, useContext, useMemo, useState } from 'react';
 import EmptyData from '@/components/default-empty-data';
 import Cross from '@/components/icons/Cross.Icon';
-import Down from '@/components/icons/Down.Icon';
 import Mixer from '@/components/icons/Mixer.Icon';
 import Search from '@/components/icons/Search.Icon';
-import Up from '@/components/icons/Up.Icon';
 import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { ItemContent, ItemFooter, ItemHeader } from '@/components/ui/item';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  TableBody as TableBodyPrimitive,
+  TableCell as TableCellPrimitive,
+  TableHeader as TableHeaderPrimitive,
+  TableHead as TableHeadPrimitive,
+  Table as TablePrimitive,
+  TableRow as TableRowPrimitive,
+} from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import DefaultLoading from '../default-loading';
+
+// ─── Re-exports ──────────────────────────────────────────────────────────────
+
+export type { ColumnDef } from '@tanstack/react-table';
+
+// ─── Sorting atom ─────────────────────────────────────────────────────────────
+
+const sortingAtom = atom<SortingState>([]);
+
+// ─── Context ──────────────────────────────────────────────────────────────────
+
+export const DataTableContext = createContext<{
+  data: unknown[];
+  columns: ColumnDef<unknown, unknown>[];
+  table: Table<unknown> | null;
+}>({
+  data: [],
+  columns: [],
+  table: null,
+});
+
+// ─── Provider ─────────────────────────────────────────────────────────────────
+
+export type DataTableProviderProps<TData, TValue> = {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  children: ReactNode;
+  className?: string;
+  globalFilter?: string;
+  pageSize?: number;
+};
+
+export function DataTableProvider<TData, TValue>({ columns, data, children, className, globalFilter, pageSize }: DataTableProviderProps<TData, TValue>) {
+  const [sorting, setSorting] = useAtom(sortingAtom);
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: (updater) => {
+      // @ts-expect-error updater is a function that returns a sorting object
+      const newSorting = updater(sorting);
+      setSorting(newSorting);
+    },
+    state: {
+      sorting,
+      ...(globalFilter !== undefined && { globalFilter }),
+      ...(pageSize !== undefined && { pagination: { pageIndex: 0, pageSize } }),
+    },
+  });
+
+  return (
+    <DataTableContext.Provider
+      value={{
+        data,
+        columns: columns as never,
+        table: table as never,
+      }}
+    >
+      <TablePrimitive className={className}>{children}</TablePrimitive>
+    </DataTableContext.Provider>
+  );
+}
+
+// ─── DataTableHead ────────────────────────────────────────────────────────────
+
+export type DataTableHeadProps = {
+  header: Header<unknown, unknown>;
+  className?: string;
+};
+
+export const DataTableHead = memo(({ header, className }: DataTableHeadProps) => (
+  <TableHeadPrimitive className={className} key={header.id}>
+    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+  </TableHeadPrimitive>
+));
+
+DataTableHead.displayName = 'DataTableHead';
+
+// ─── DataTableHeaderGroup ─────────────────────────────────────────────────────
+
+export type DataTableHeaderGroupProps = {
+  headerGroup: HeaderGroup<unknown>;
+  children: (props: { header: Header<unknown, unknown> }) => ReactNode;
+};
+
+export const DataTableHeaderGroup = ({ headerGroup, children }: DataTableHeaderGroupProps) => (
+  <TableRowPrimitive key={headerGroup.id}>{headerGroup.headers.map((header) => children({ header }))}</TableRowPrimitive>
+);
+
+// ─── DataTableHeader ──────────────────────────────────────────────────────────
+
+export type DataTableHeaderProps = {
+  className?: string;
+  children: (props: { headerGroup: HeaderGroup<unknown> }) => ReactNode;
+};
+
+export const DataTableHeader = ({ className, children }: DataTableHeaderProps) => {
+  const { table } = useContext(DataTableContext);
+
+  return <TableHeaderPrimitive className={className}>{table?.getHeaderGroups().map((headerGroup) => children({ headerGroup }))}</TableHeaderPrimitive>;
+};
+
+// ─── DataTableColumnHeader (sortable dropdown) ────────────────────────────────
+
+export interface DataTableColumnHeaderProps<TData, TValue> extends HTMLAttributes<HTMLDivElement> {
+  column: Column<TData, TValue>;
+  title: string;
+}
+
+export function DataTableColumnHeader<TData, TValue>({ column, title, className }: DataTableColumnHeaderProps<TData, TValue>) {
+  const handleSortAsc = useCallback(() => {
+    column.toggleSorting(false);
+  }, [column]);
+
+  const handleSortDesc = useCallback(() => {
+    column.toggleSorting(true);
+  }, [column]);
+
+  if (!column.getCanSort()) {
+    return <div className={cn(className)}>{title}</div>;
+  }
+
+  return (
+    <div className={cn('flex items-center space-x-2', className)}>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button className="-ml-3 h-8 data-[state=open]:bg-accent" size="sm" variant="secondary">
+            <span>{title}</span>
+            {column.getIsSorted() === 'desc' ? (
+              <ArrowDownIcon className="ml-2 h-4 w-4" />
+            ) : column.getIsSorted() === 'asc' ? (
+              <ArrowUpIcon className="ml-2 h-4 w-4" />
+            ) : (
+              <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
+            )}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem onClick={handleSortAsc}>
+            <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Crescente
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleSortDesc}>
+            <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Decrescente
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+}
+
+// ─── DataTableCell ────────────────────────────────────────────────────────────
+
+export type DataTableCellProps = {
+  cell: Cell<unknown, unknown>;
+  className?: string;
+};
+
+export const DataTableCell = ({ cell, className }: DataTableCellProps) => (
+  <TableCellPrimitive className={className}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCellPrimitive>
+);
+
+// ─── DataTableRow ─────────────────────────────────────────────────────────────
+
+export type DataTableRowProps = {
+  row: Row<unknown>;
+  children: (props: { cell: Cell<unknown, unknown> }) => ReactNode;
+  className?: string;
+};
+
+export const DataTableRow = ({ row, children, className }: DataTableRowProps) => (
+  <TableRowPrimitive className={className} data-state={row.getIsSelected() && 'selected'} key={row.id}>
+    {row.getVisibleCells().map((cell) => children({ cell }))}
+  </TableRowPrimitive>
+);
+
+// ─── DataTableBody ────────────────────────────────────────────────────────────
+
+export type DataTableBodyProps = {
+  children: (props: { row: Row<unknown> }) => ReactNode;
+  className?: string;
+};
+
+export const DataTableBody = ({ children, className }: DataTableBodyProps) => {
+  const { columns, table } = useContext(DataTableContext);
+  const rows = table?.getRowModel().rows;
+
+  return (
+    <TableBodyPrimitive className={className}>
+      {rows?.length ? (
+        rows.map((row) => children({ row }))
+      ) : (
+        <TableRowPrimitive>
+          <TableCellPrimitive className="h-24 text-center" colSpan={columns.length}>
+            <EmptyData />
+          </TableCellPrimitive>
+        </TableRowPrimitive>
+      )}
+    </TableBodyPrimitive>
+  );
+};
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export type DataTableColumn<T> = {
+  key: keyof T;
+  header: React.ReactNode;
+  sortable?: boolean;
+  filterable?: boolean;
+  render?: (value: any, row: T) => React.ReactNode;
+  width?: string;
+};
+
+export type DataTableProps<T> = {
+  data: T[];
+  columns: DataTableColumn<T>[];
+  className?: string;
+  searchable?: boolean;
+  searchPlaceholder?: string;
+  itemsPerPage?: number;
+  showPagination?: boolean;
+  striped?: boolean;
+  hoverable?: boolean;
+  bordered?: boolean;
+  compact?: boolean;
+  loading?: boolean;
+  onRowClick?: (row: T, index: number) => void;
+};
+
+// ─── DataTable (API simplificada / retrocompatível) ───────────────────────────
 
 export function DataTable<T extends Record<string, any>>({
   data,
   columns,
   className,
   searchable = true,
-  searchPlaceholder = 'Search...',
+  searchPlaceholder = 'Buscar...',
   itemsPerPage = 10,
   showPagination = true,
   striped = false,
@@ -38,11 +285,9 @@ export function DataTable<T extends Record<string, any>>({
   const [currentPage, setCurrentPage] = useState(1);
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({});
 
-  // Filter data based on search and column filters
   const filteredData = useMemo(() => {
     let filtered = [...data];
 
-    // Global search
     if (search) {
       filtered = filtered.filter((row) =>
         columns.some((column) => {
@@ -52,7 +297,6 @@ export function DataTable<T extends Record<string, any>>({
       );
     }
 
-    // Column filters
     Object.entries(columnFilters).forEach(([key, value]) => {
       if (value) {
         filtered = filtered.filter((row) => {
@@ -65,7 +309,6 @@ export function DataTable<T extends Record<string, any>>({
     return filtered;
   }, [data, search, columnFilters, columns]);
 
-  // Sort data
   const sortedData = useMemo(() => {
     const { key, direction } = sortConfig;
     if (!key) return filteredData;
@@ -73,49 +316,39 @@ export function DataTable<T extends Record<string, any>>({
     return [...filteredData].sort((a, b) => {
       const aValue = a[key];
       const bValue = b[key];
-
-      if (aValue < bValue) {
-        return direction === 'asc' ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return direction === 'asc' ? 1 : -1;
-      }
+      if (aValue < bValue) return direction === 'asc' ? -1 : 1;
+      if (aValue > bValue) return direction === 'asc' ? 1 : -1;
       return 0;
     });
   }, [filteredData, sortConfig]);
 
-  // Pagination
   const paginatedData = useMemo(() => {
     if (!showPagination) return sortedData;
-
     const startIndex = (currentPage - 1) * pageSize;
     return sortedData.slice(startIndex, startIndex + pageSize);
   }, [sortedData, currentPage, pageSize, showPagination]);
 
   const totalPages = Math.ceil(sortedData.length / pageSize);
 
-  const handleSort = (key: keyof T) => {
+  const handleSort = useCallback((key: keyof T) => {
     setSortConfig((current) => ({
       key,
       direction: current.key === key && current.direction === 'asc' ? 'desc' : 'asc',
     }));
-  };
+  }, []);
 
-  const handleColumnFilter = (key: string, value: string) => {
-    setColumnFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+  const handleColumnFilter = useCallback((key: string, value: string) => {
+    setColumnFilters((prev) => ({ ...prev, [key]: value }));
     setCurrentPage(1);
-  };
+  }, []);
 
-  const clearColumnFilter = (key: string) => {
+  const clearColumnFilter = useCallback((key: string) => {
     setColumnFilters((prev) => {
-      const newFilters = { ...prev };
-      delete newFilters[key];
-      return newFilters;
+      const next = { ...prev };
+      delete next[key];
+      return next;
     });
-  };
+  }, []);
 
   if (loading) {
     return <DefaultLoading />;
@@ -123,7 +356,7 @@ export function DataTable<T extends Record<string, any>>({
 
   return (
     <div className={cn('flex flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground md:border', className, !bordered && 'border-0')}>
-      {/* Search and Filters */}
+      {/* Search */}
       {searchable && (
         <ItemHeader className="justify-end px-6">
           <div className="flex flex-col items-end gap-4 sm:flex-row sm:items-center">
@@ -156,55 +389,43 @@ export function DataTable<T extends Record<string, any>>({
                     className={cn('text-left align-top font-medium text-muted-foreground', compact ? 'p-4' : 'p-6', column.width && `w-[${column.width}]`)}
                     style={column.width ? { width: column.width } : undefined}
                   >
-                    {/* biome-ignore lint/a11y/noStaticElementInteractions: Interactive only when sortable */}
-                    {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Interactive only when sortable */}
-                    <div
-                      className={cn('flex items-center justify-between gap-2', column.sortable && 'group cursor-pointer transition-colors hover:text-foreground')}
-                      onClick={column.sortable ? () => handleSort(column.key) : undefined}
-                      onKeyDown={
-                        column.sortable
-                          ? (e) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                handleSort(column.key);
-                              }
-                            }
-                          : undefined
-                      }
-                      role={column.sortable ? 'button' : undefined}
-                      tabIndex={column.sortable ? 0 : undefined}
-                    >
+                    {column.sortable ? (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button className="-ml-3 h-8 data-[state=open]:bg-accent" size="sm" variant="secondary">
+                            <span className="font-semibold text-sm">{column.header}</span>
+                            {sortConfig.key === column.key && sortConfig.direction === 'desc' ? (
+                              <ArrowDownIcon className="ml-2 h-4 w-4" />
+                            ) : sortConfig.key === column.key && sortConfig.direction === 'asc' ? (
+                              <ArrowUpIcon className="ml-2 h-4 w-4" />
+                            ) : (
+                              <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
+                            )}
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="start">
+                          <DropdownMenuItem onClick={() => handleSort(column.key)}>
+                            <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                            Crescente
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setSortConfig({ key: column.key, direction: 'desc' })}>
+                            <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                            Decrescente
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    ) : (
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-sm">{column.header}</span>
-                        {column.sortable && (
-                          <div className="flex flex-col">
-                            <Up
-                              className={cn(
-                                'size-3',
-                                sortConfig.key === column.key && sortConfig.direction === 'asc' ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground/70',
-                              )}
-                            />
-                            <Down
-                              className={cn(
-                                '-mt-1 size-3',
-                                sortConfig.key === column.key && sortConfig.direction === 'desc' ? 'text-primary' : 'text-muted-foreground/40 group-hover:text-muted-foreground/70',
-                              )}
-                            />
-                          </div>
-                        )}
+                        {column.filterable && <Mixer className="size-3 text-muted-foreground/50" />}
                       </div>
-                      {column.filterable && (
-                        <div className="relative">
-                          <Mixer className="size-3 text-muted-foreground/50" />
-                        </div>
-                      )}
-                    </div>
-                    {/* Column Filter */}
+                    )}
+
                     {column.filterable && (
                       <div className="relative mt-3">
                         <Input
                           type="text"
-                          placeholder="Filter..."
+                          placeholder="Filtrar..."
                           value={columnFilters[String(column.key)] || ''}
                           onChange={(e) => handleColumnFilter(String(column.key), e.target.value)}
                           className="h-8 pr-8 text-xs"
@@ -262,7 +483,7 @@ export function DataTable<T extends Record<string, any>>({
       {showPagination && sortedData.length > 0 && (
         <ItemFooter className="flex flex-col items-center justify-between gap-4 px-6 py-4 sm:flex-row">
           <div className="order-2 flex items-center gap-2 text-muted-foreground text-sm sm:order-1">
-            <span>{'show'}</span>
+            <span>Exibir</span>
             <Select
               value={String(pageSize)}
               onValueChange={(val) => {
@@ -280,10 +501,8 @@ export function DataTable<T extends Record<string, any>>({
                 <SelectItem value="50">50</SelectItem>
               </SelectContent>
             </Select>
-            <span>{'per.page'}</span>
-            <span className="ml-4 tabular-nums">
-              {'total'}: {sortedData.length}
-            </span>
+            <span>por página</span>
+            <span className="ml-4 tabular-nums">Total: {sortedData.length}</span>
           </div>
 
           <div className="order-1 sm:order-2">
@@ -339,28 +558,3 @@ export function DataTable<T extends Record<string, any>>({
     </div>
   );
 }
-
-export type DataTableColumn<T> = {
-  key: keyof T;
-  header: React.ReactNode;
-  sortable?: boolean;
-  filterable?: boolean;
-  render?: (value: any, row: T) => React.ReactNode;
-  width?: string;
-};
-
-export type DataTableProps<T> = {
-  data: T[];
-  columns: DataTableColumn<T>[];
-  className?: string;
-  searchable?: boolean;
-  searchPlaceholder?: string;
-  itemsPerPage?: number;
-  showPagination?: boolean;
-  striped?: boolean;
-  hoverable?: boolean;
-  bordered?: boolean;
-  compact?: boolean;
-  loading?: boolean;
-  onRowClick?: (row: T, index: number) => void;
-};
