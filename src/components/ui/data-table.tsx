@@ -1,6 +1,5 @@
 import type { Cell, Column, ColumnDef, Header, HeaderGroup, Row, SortingState, Table } from '@tanstack/react-table';
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
-import { atom, useAtom } from 'jotai';
 import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon } from 'lucide-react';
 import type React from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
@@ -30,10 +29,6 @@ import DefaultLoading from '../default-loading';
 
 export type { ColumnDef } from '@tanstack/react-table';
 
-// ─── Sorting atom ─────────────────────────────────────────────────────────────
-
-const sortingAtom = atom<SortingState>([]);
-
 // ─── Context ──────────────────────────────────────────────────────────────────
 
 export const DataTableContext = createContext<{
@@ -58,7 +53,7 @@ export type DataTableProviderProps<TData, TValue> = {
 };
 
 export function DataTableProvider<TData, TValue>({ columns, data, children, className, globalFilter, pageSize }: DataTableProviderProps<TData, TValue>) {
-  const [sorting, setSorting] = useAtom(sortingAtom);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data,
@@ -355,7 +350,7 @@ export function DataTable<T extends Record<string, any>>({
   }
 
   return (
-    <div className={cn('flex flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground md:border', className, !bordered && 'border-0')}>
+    <div className={cn('flex flex-col gap-6 rounded-lg border-sidebar-border bg-background py-6 text-card-foreground', bordered ? 'md:border' : 'border-0 md:border-0', className)}>
       {/* Search */}
       {searchable && (
         <ItemHeader className="justify-end px-6">

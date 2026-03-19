@@ -1,30 +1,21 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { useCallback, useMemo } from 'react';
-import { toast } from 'sonner';
+import type { SortingState, VisibilityState } from '@tanstack/react-table';
+import { flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
+import { useMemo, useState } from 'react';
 import { z } from 'zod';
 
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
-import Calender from '@/components/icons/Calender.Icon';
-import Copy from '@/components/icons/Copy.Icon';
-import Dot from '@/components/icons/Dot.Icon';
-import Mail from '@/components/icons/Mail.Icon';
-import Package from '@/components/icons/Package.Icon';
 import Search from '@/components/icons/Search.Icon';
-import User from '@/components/icons/User.Icon';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { formatPhone } from '@/lib/helpers/formatter.helper';
-import type { PartialPatient } from '@/lib/interfaces/patient';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { usePatientsQuery } from '@/query/patients';
+import { patientColumns } from './columns';
 
 const searchSchema = z.object({
   page: z.number().optional().default(1),
@@ -47,112 +38,30 @@ function PatientListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
   const { page, size, search } = useSearch({ from: '/_private/patient/' });
 
-  const { data, isLoading } = usePatientsQuery();
+  const { data = [], isLoading } = usePatientsQuery();
 
-  const handleCopy = useCallback((value: string) => {
-    navigator.clipboard.writeText(value);
-    toast.success('Copiado para a área de transferência');
-  }, []);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [globalFilter, setGlobalFilter] = useState(search ?? '');
 
-  const filteredData = useMemo(() => {
-    if (!data) return [];
-    if (!search) return data;
-    const lowerSearch = search.toLowerCase();
-    return data.filter((p) => p.name.toLowerCase().includes(lowerSearch) || p.email?.toLowerCase().includes(lowerSearch));
-  }, [data, search]);
+  const columns = useMemo(() => patientColumns(navigate), [navigate]);
 
-  const totalCount = filteredData.length;
+  const table = useReactTable({
+    data,
+    columns,
+    state: { sorting, columnVisibility, globalFilter },
+    onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  });
+
+  const allRows = table.getRowModel().rows;
+  const totalCount = allRows.length;
   const totalPages = Math.ceil(totalCount / size);
-  const items = filteredData.slice((page - 1) * size, page * size);
-
-  const columns = useMemo<DataTableColumn<PartialPatient>[]>(
-    () => [
-      {
-        key: 'name',
-        header: 'Paciente',
-        sortable: true,
-        render: (_, item) => (
-          <div className="flex items-center gap-4">
-            <Avatar className="size-10">
-              <AvatarImage src={item.image} alt={item.name} />
-              <AvatarFallback className="bg-primary/10 text-primary">
-                <User className="size-5" />
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex items-center gap-2">
-              <span className="font-medium text-base">{item.name}</span>
-              <Badge variant={item.sex === 'M' ? 'neutral' : 'pink'} className="h-5 px-1.5 text-[10px]">
-                {item.sex === 'M' ? 'M' : 'F'}
-              </Badge>
-            </div>
-          </div>
-        ),
-      },
-      {
-        key: 'email',
-        header: 'Contato',
-        render: (_, item) => (
-          <div className="flex flex-col gap-1 text-muted-foreground text-sm">
-            {item.phone1 && <span>{formatPhone(item.phone1)}</span>}
-            {item.phone2 && <span>{formatPhone(item.phone2)}</span>}
-            {item.email && <span className="lowercase">{item.email}</span>}
-          </div>
-        ),
-      },
-      {
-        key: '_id',
-        header: '',
-        width: '50px',
-        render: (_, item) => (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-              <Button variant="secondary" size="icon">
-                <Dot className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => navigate({ to: '/patient/details/$id', params: { id: item._id } })}>
-                <User className="mr-2 size-4 text-muted-foreground" />
-                Visualizar cadastro
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Mail className="mr-2 size-4 text-muted-foreground" />
-                Criar odontograma
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Package className="mr-2 size-4 text-muted-foreground" />
-                Criar cobrança
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Calender className="mr-2 size-4 text-muted-foreground" />
-                Criar agendamento
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              {item.phone1 && (
-                <DropdownMenuItem onClick={() => handleCopy(item.phone1)}>
-                  <Copy className="mr-2 size-4 text-muted-foreground" />
-                  Copiar telefone
-                </DropdownMenuItem>
-              )}
-              {item.email && (
-                <DropdownMenuItem onClick={() => handleCopy(String(item.email))}>
-                  <Copy className="mr-2 size-4 text-muted-foreground" />
-                  Copiar email
-                </DropdownMenuItem>
-              )}
-              <DropdownMenuItem onClick={() => handleCopy(item.name)}>
-                <Copy className="mr-2 size-4 text-muted-foreground" />
-                Copiar nome
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ),
-      },
-    ],
-    [navigate, handleCopy],
-  );
+  const paginatedRows = allRows.slice((page - 1) * size, page * size);
 
   return (
     <Card asPage>
@@ -161,19 +70,12 @@ function PatientListPage() {
           <div className="relative w-full sm:max-w-64">
             <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Buscar por nome, email ou CPF"
+              placeholder="Buscar por nome ou email"
               className="pl-9"
-              defaultValue={search || ''}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  navigate({
-                    search: (prev: SearchParams) => ({
-                      ...prev,
-                      search: e.currentTarget.value || undefined,
-                      page: 1,
-                    }),
-                  });
-                }
+              value={globalFilter}
+              onChange={(e) => {
+                setGlobalFilter(e.target.value);
+                navigate({ search: (prev: SearchParams) => ({ ...prev, search: e.target.value || undefined, page: 1 }) });
               }}
             />
           </div>
@@ -184,21 +86,40 @@ function PatientListPage() {
         </CardAction>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="p-0">
         {isLoading ? (
           <DefaultLoading />
-        ) : items.length === 0 ? (
+        ) : allRows.length === 0 ? (
           <DefaultEmptyData />
         ) : (
-          <DataTable
-            data={items}
-            columns={columns}
-            searchable={false}
-            showPagination={true}
-            bordered={false}
-            className="py-0"
-            onRowClick={(row) => navigate({ to: '/patient/details/$id', params: { id: row._id } })}
-          />
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {paginatedRows.length > 0 ? (
+                paginatedRows.map((row) => (
+                  <TableRow key={row.id} className="cursor-pointer" onClick={() => navigate({ to: '/patient/details/$id', params: { id: row.original._id } })}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+                    Nenhum resultado encontrado.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         )}
       </CardContent>
 
