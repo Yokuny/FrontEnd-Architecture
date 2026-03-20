@@ -50,7 +50,7 @@ function SidebarProvider({
             ...style,
           } as CSSProperties
         }
-        className={cn('group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar', className)}
+        className={cn('group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-background', className)}
         {...props}
       >
         {children}
@@ -156,15 +156,7 @@ function Sidebar({
 
 function SidebarInset({ className, ...props }: ComponentProps<'main'>) {
   return (
-    <main
-      data-slot="sidebar-inset"
-      className={cn(
-        'flex w-full min-w-0 flex-1 flex-col',
-        'md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2 md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl',
-        className,
-      )}
-      {...props}
-    />
+    <main data-slot="sidebar-inset" className={cn('flex w-full min-w-0 flex-1 flex-col', 'md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2', className)} {...props} />
   );
 }
 

@@ -1,11 +1,13 @@
-import { Link, useLocation, useMatches } from '@tanstack/react-router';
+import { Link, useLocation, useMatches, useRouter } from '@tanstack/react-router';
 import { type ComponentProps, Fragment } from 'react';
+import ArrowLeftIcon from '@/components/icons/Back.Icon';
 import HelpIcon from '@/components/icons/Help.Icon';
 import { HomeIcon } from '@/components/icons/Home.Icon';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { t } from '@/lib/helpers/translate';
 import { cn } from '@/lib/utils/index';
+import { Button } from './button';
 
 function PageBreadcrumb() {
   const location = useLocation();
@@ -51,7 +53,7 @@ function PageBreadcrumb() {
 
 function Card({ className, asPage, children, ...props }: ComponentProps<'div'> & { asPage?: boolean }) {
   return (
-    <div data-slot="card" className={cn('flex flex-col gap-6 rounded-lg border bg-card py-6 text-card-foreground', className)} {...props}>
+    <div data-slot="card" className={cn('flex h-full flex-col gap-6 rounded-lg border bg-background py-6 text-card-foreground', className)} {...props}>
       {asPage && (
         <div className="-mb-2 flex items-center justify-between px-6">
           <PageBreadcrumb />
@@ -66,6 +68,7 @@ function Card({ className, asPage, children, ...props }: ComponentProps<'div'> &
 function CardHeader({ className, title, children, ...props }: ComponentProps<'div'> & { title?: string }) {
   const location = useLocation();
   const matches = useMatches();
+  const router = useRouter();
 
   const getTitle = (title: string | undefined) => {
     if (title) return title;
@@ -88,16 +91,23 @@ function CardHeader({ className, title, children, ...props }: ComponentProps<'di
     }
   };
 
+  const resolvedTitle = getTitle(title);
+
   return (
     <div data-slot="card-header" className={cn('flex flex-col items-start justify-between gap-2 px-6 sm:flex-row sm:items-center', className)} {...props}>
-      <CardTitle>{getTitle(title)}</CardTitle>
+      <div className="flex items-center gap-2">
+        <Button size="icon" variant="outline" onClick={() => router.history.back()}>
+          <ArrowLeftIcon />
+        </Button>
+        {resolvedTitle && <CardTitle>{resolvedTitle}</CardTitle>}
+      </div>
       {children}
     </div>
   );
 }
 
 function CardTitle({ className, ...props }: ComponentProps<'div'>) {
-  return <div data-slot="card-title" className={cn('font-semibold leading-none', className)} {...props} />;
+  return <div data-slot="card-title" className={cn('font-bold font-mono text-2xl leading-none', className)} {...props} />;
 }
 
 function CardDescription({ className, ...props }: ComponentProps<'div'>) {
@@ -142,8 +152,27 @@ function CardContent({ className, ...props }: ComponentProps<'div'>) {
   return <div data-slot="card-content" className={cn('px-6', className)} {...props} />;
 }
 
-function CardFooter({ className, ...props }: ComponentProps<'div'>) {
-  return <div data-slot="card-footer" className={cn('flex w-full items-center justify-between px-6 [.border-t]:pt-6', className)} {...props} />;
+function CardHeaderActions({ className, ...props }: ComponentProps<'div'>) {
+  return <div data-slot="card-header-actions" className={cn('flex items-center gap-2', className)} {...props} />;
 }
 
-export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };
+interface CardFooterProps extends ComponentProps<'div'> {
+  layout?: 'simple' | 'multi';
+}
+
+function CardFooter({ className, layout = 'simple', ...props }: CardFooterProps) {
+  return (
+    <div
+      data-slot="card-footer"
+      className={cn(
+        'flex gap-4 px-6 [.border-t]:pt-6',
+        layout === 'simple' && 'items-center justify-end',
+        layout === 'multi' && 'flex-col items-center justify-between sm:flex-row',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent, CardHeaderActions };
