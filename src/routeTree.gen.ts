@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root';
 import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
-import { Route as PrivateSettingsRouteRouteImport } from './routes/_private/settings/route';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
 import { Route as PrivateSettingsIndexRouteImport } from './routes/_private/settings/index';
 import { Route as PrivateScheduleIndexRouteImport } from './routes/_private/schedule/index';
@@ -53,20 +52,15 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any);
-const PrivateSettingsRouteRoute = PrivateSettingsRouteRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => PrivateRoute,
-} as any);
 const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   id: '/auth/',
   path: '/auth/',
   getParentRoute: () => PublicRoute,
 } as any);
 const PrivateSettingsIndexRoute = PrivateSettingsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PrivateSettingsRouteRoute,
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => PrivateRoute,
 } as any);
 const PrivateScheduleIndexRoute = PrivateScheduleIndexRouteImport.update({
   id: '/schedule/',
@@ -110,39 +104,39 @@ const PublicAuthRecoveryIndexRoute = PublicAuthRecoveryIndexRouteImport.update({
 } as any);
 const PrivateSettingsProfileIndexRoute =
   PrivateSettingsProfileIndexRouteImport.update({
-    id: '/profile/',
-    path: '/profile/',
-    getParentRoute: () => PrivateSettingsRouteRoute,
+    id: '/settings/profile/',
+    path: '/settings/profile/',
+    getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateSettingsProceduresIndexRoute =
   PrivateSettingsProceduresIndexRouteImport.update({
-    id: '/procedures/',
-    path: '/procedures/',
-    getParentRoute: () => PrivateSettingsRouteRoute,
+    id: '/settings/procedures/',
+    path: '/settings/procedures/',
+    getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateSettingsPermissionsIndexRoute =
   PrivateSettingsPermissionsIndexRouteImport.update({
-    id: '/permissions/',
-    path: '/permissions/',
-    getParentRoute: () => PrivateSettingsRouteRoute,
+    id: '/settings/permissions/',
+    path: '/settings/permissions/',
+    getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateSettingsInviteIndexRoute =
   PrivateSettingsInviteIndexRouteImport.update({
-    id: '/invite/',
-    path: '/invite/',
-    getParentRoute: () => PrivateSettingsRouteRoute,
+    id: '/settings/invite/',
+    path: '/settings/invite/',
+    getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateSettingsClinicIndexRoute =
   PrivateSettingsClinicIndexRouteImport.update({
-    id: '/clinic/',
-    path: '/clinic/',
-    getParentRoute: () => PrivateSettingsRouteRoute,
+    id: '/settings/clinic/',
+    path: '/settings/clinic/',
+    getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateSettingsAccessIndexRoute =
   PrivateSettingsAccessIndexRouteImport.update({
-    id: '/access/',
-    path: '/access/',
-    getParentRoute: () => PrivateSettingsRouteRoute,
+    id: '/settings/access/',
+    path: '/settings/access/',
+    getParentRoute: () => PrivateRoute,
   } as any);
 const PrivateRemindersAddIndexRoute =
   PrivateRemindersAddIndexRouteImport.update({
@@ -206,7 +200,6 @@ const PrivateFinancialDetailsIdIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
-  '/settings': typeof PrivateSettingsRouteRouteWithChildren;
   '/financial/': typeof PrivateFinancialIndexRoute;
   '/odontogram/': typeof PrivateOdontogramIndexRoute;
   '/patient/': typeof PrivatePatientIndexRoute;
@@ -268,7 +261,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute;
   '/_private': typeof PrivateRouteWithChildren;
   '/_public': typeof PublicRouteWithChildren;
-  '/_private/settings': typeof PrivateSettingsRouteRouteWithChildren;
   '/_private/financial/': typeof PrivateFinancialIndexRoute;
   '/_private/odontogram/': typeof PrivateOdontogramIndexRoute;
   '/_private/patient/': typeof PrivatePatientIndexRoute;
@@ -300,7 +292,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
-    | '/settings'
     | '/financial/'
     | '/odontogram/'
     | '/patient/'
@@ -361,7 +352,6 @@ export interface FileRouteTypes {
     | '/'
     | '/_private'
     | '/_public'
-    | '/_private/settings'
     | '/_private/financial/'
     | '/_private/odontogram/'
     | '/_private/patient/'
@@ -419,13 +409,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    '/_private/settings': {
-      id: '/_private/settings';
-      path: '/settings';
-      fullPath: '/settings';
-      preLoaderRoute: typeof PrivateSettingsRouteRouteImport;
-      parentRoute: typeof PrivateRoute;
-    };
     '/_public/auth/': {
       id: '/_public/auth/';
       path: '/auth';
@@ -435,10 +418,10 @@ declare module '@tanstack/react-router' {
     };
     '/_private/settings/': {
       id: '/_private/settings/';
-      path: '/';
+      path: '/settings';
       fullPath: '/settings/';
       preLoaderRoute: typeof PrivateSettingsIndexRouteImport;
-      parentRoute: typeof PrivateSettingsRouteRoute;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/schedule/': {
       id: '/_private/schedule/';
@@ -498,45 +481,45 @@ declare module '@tanstack/react-router' {
     };
     '/_private/settings/profile/': {
       id: '/_private/settings/profile/';
-      path: '/profile';
+      path: '/settings/profile';
       fullPath: '/settings/profile/';
       preLoaderRoute: typeof PrivateSettingsProfileIndexRouteImport;
-      parentRoute: typeof PrivateSettingsRouteRoute;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/settings/procedures/': {
       id: '/_private/settings/procedures/';
-      path: '/procedures';
+      path: '/settings/procedures';
       fullPath: '/settings/procedures/';
       preLoaderRoute: typeof PrivateSettingsProceduresIndexRouteImport;
-      parentRoute: typeof PrivateSettingsRouteRoute;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/settings/permissions/': {
       id: '/_private/settings/permissions/';
-      path: '/permissions';
+      path: '/settings/permissions';
       fullPath: '/settings/permissions/';
       preLoaderRoute: typeof PrivateSettingsPermissionsIndexRouteImport;
-      parentRoute: typeof PrivateSettingsRouteRoute;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/settings/invite/': {
       id: '/_private/settings/invite/';
-      path: '/invite';
+      path: '/settings/invite';
       fullPath: '/settings/invite/';
       preLoaderRoute: typeof PrivateSettingsInviteIndexRouteImport;
-      parentRoute: typeof PrivateSettingsRouteRoute;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/settings/clinic/': {
       id: '/_private/settings/clinic/';
-      path: '/clinic';
+      path: '/settings/clinic';
       fullPath: '/settings/clinic/';
       preLoaderRoute: typeof PrivateSettingsClinicIndexRouteImport;
-      parentRoute: typeof PrivateSettingsRouteRoute;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/settings/access/': {
       id: '/_private/settings/access/';
-      path: '/access';
+      path: '/settings/access';
       fullPath: '/settings/access/';
       preLoaderRoute: typeof PrivateSettingsAccessIndexRouteImport;
-      parentRoute: typeof PrivateSettingsRouteRoute;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/reminders/add/': {
       id: '/_private/reminders/add/';
@@ -611,40 +594,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface PrivateSettingsRouteRouteChildren {
+interface PrivateRouteChildren {
+  PrivateFinancialIndexRoute: typeof PrivateFinancialIndexRoute;
+  PrivateOdontogramIndexRoute: typeof PrivateOdontogramIndexRoute;
+  PrivatePatientIndexRoute: typeof PrivatePatientIndexRoute;
+  PrivateRemindersIndexRoute: typeof PrivateRemindersIndexRoute;
+  PrivateScheduleIndexRoute: typeof PrivateScheduleIndexRoute;
   PrivateSettingsIndexRoute: typeof PrivateSettingsIndexRoute;
+  PrivateFinancialAddIndexRoute: typeof PrivateFinancialAddIndexRoute;
+  PrivateOdontogramAddIndexRoute: typeof PrivateOdontogramAddIndexRoute;
+  PrivatePatientAddIndexRoute: typeof PrivatePatientAddIndexRoute;
+  PrivateRemindersAddIndexRoute: typeof PrivateRemindersAddIndexRoute;
   PrivateSettingsAccessIndexRoute: typeof PrivateSettingsAccessIndexRoute;
   PrivateSettingsClinicIndexRoute: typeof PrivateSettingsClinicIndexRoute;
   PrivateSettingsInviteIndexRoute: typeof PrivateSettingsInviteIndexRoute;
   PrivateSettingsPermissionsIndexRoute: typeof PrivateSettingsPermissionsIndexRoute;
   PrivateSettingsProceduresIndexRoute: typeof PrivateSettingsProceduresIndexRoute;
   PrivateSettingsProfileIndexRoute: typeof PrivateSettingsProfileIndexRoute;
-}
-
-const PrivateSettingsRouteRouteChildren: PrivateSettingsRouteRouteChildren = {
-  PrivateSettingsIndexRoute: PrivateSettingsIndexRoute,
-  PrivateSettingsAccessIndexRoute: PrivateSettingsAccessIndexRoute,
-  PrivateSettingsClinicIndexRoute: PrivateSettingsClinicIndexRoute,
-  PrivateSettingsInviteIndexRoute: PrivateSettingsInviteIndexRoute,
-  PrivateSettingsPermissionsIndexRoute: PrivateSettingsPermissionsIndexRoute,
-  PrivateSettingsProceduresIndexRoute: PrivateSettingsProceduresIndexRoute,
-  PrivateSettingsProfileIndexRoute: PrivateSettingsProfileIndexRoute,
-};
-
-const PrivateSettingsRouteRouteWithChildren =
-  PrivateSettingsRouteRoute._addFileChildren(PrivateSettingsRouteRouteChildren);
-
-interface PrivateRouteChildren {
-  PrivateSettingsRouteRoute: typeof PrivateSettingsRouteRouteWithChildren;
-  PrivateFinancialIndexRoute: typeof PrivateFinancialIndexRoute;
-  PrivateOdontogramIndexRoute: typeof PrivateOdontogramIndexRoute;
-  PrivatePatientIndexRoute: typeof PrivatePatientIndexRoute;
-  PrivateRemindersIndexRoute: typeof PrivateRemindersIndexRoute;
-  PrivateScheduleIndexRoute: typeof PrivateScheduleIndexRoute;
-  PrivateFinancialAddIndexRoute: typeof PrivateFinancialAddIndexRoute;
-  PrivateOdontogramAddIndexRoute: typeof PrivateOdontogramAddIndexRoute;
-  PrivatePatientAddIndexRoute: typeof PrivatePatientAddIndexRoute;
-  PrivateRemindersAddIndexRoute: typeof PrivateRemindersAddIndexRoute;
   PrivateFinancialDetailsIdIndexRoute: typeof PrivateFinancialDetailsIdIndexRoute;
   PrivateOdontogramDetailsIdIndexRoute: typeof PrivateOdontogramDetailsIdIndexRoute;
   PrivatePatientDetailsIdIndexRoute: typeof PrivatePatientDetailsIdIndexRoute;
@@ -652,16 +618,22 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
-  PrivateSettingsRouteRoute: PrivateSettingsRouteRouteWithChildren,
   PrivateFinancialIndexRoute: PrivateFinancialIndexRoute,
   PrivateOdontogramIndexRoute: PrivateOdontogramIndexRoute,
   PrivatePatientIndexRoute: PrivatePatientIndexRoute,
   PrivateRemindersIndexRoute: PrivateRemindersIndexRoute,
   PrivateScheduleIndexRoute: PrivateScheduleIndexRoute,
+  PrivateSettingsIndexRoute: PrivateSettingsIndexRoute,
   PrivateFinancialAddIndexRoute: PrivateFinancialAddIndexRoute,
   PrivateOdontogramAddIndexRoute: PrivateOdontogramAddIndexRoute,
   PrivatePatientAddIndexRoute: PrivatePatientAddIndexRoute,
   PrivateRemindersAddIndexRoute: PrivateRemindersAddIndexRoute,
+  PrivateSettingsAccessIndexRoute: PrivateSettingsAccessIndexRoute,
+  PrivateSettingsClinicIndexRoute: PrivateSettingsClinicIndexRoute,
+  PrivateSettingsInviteIndexRoute: PrivateSettingsInviteIndexRoute,
+  PrivateSettingsPermissionsIndexRoute: PrivateSettingsPermissionsIndexRoute,
+  PrivateSettingsProceduresIndexRoute: PrivateSettingsProceduresIndexRoute,
+  PrivateSettingsProfileIndexRoute: PrivateSettingsProfileIndexRoute,
   PrivateFinancialDetailsIdIndexRoute: PrivateFinancialDetailsIdIndexRoute,
   PrivateOdontogramDetailsIdIndexRoute: PrivateOdontogramDetailsIdIndexRoute,
   PrivatePatientDetailsIdIndexRoute: PrivatePatientDetailsIdIndexRoute,

@@ -3,12 +3,12 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { type PasswordUpdate, passwordUpdateSchema } from '@/lib/interfaces/schemas/user.schema';
 import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
+import { AccessForm } from './@components/access-form';
 
 export const Route = createFileRoute('/_private/settings/access/')({
   component: SettingsAccess,
@@ -51,63 +51,23 @@ export function SettingsAccess() {
   };
 
   return (
-    <Card className="border-none">
-      <CardHeader className="px-0 pt-0">
-        <CardTitle className="text-xl">Configuração de Acesso</CardTitle>
+    <Card asPage>
+      <CardHeader>
+        <CardAction>
+          <Button type="submit" form="access-form" disabled={changePassword.isPending} className="min-w-36">
+            {changePassword.isPending && <Spinner className="mr-2 size-4" />}
+            Atualizar senha
+          </Button>
+        </CardAction>
       </CardHeader>
-      <CardContent className="px-0">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl space-y-8">
-            <FormField
-              control={form.control}
-              name="oldPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Senha antiga</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Digite sua senha antiga" type="password" disabled={changePassword.isPending} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
-            <FormField
-              control={form.control}
-              name="newPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nova senha</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Digite uma nova senha" type="password" disabled={changePassword.isPending} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirmar senha</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Repita a nova senha" type="password" disabled={changePassword.isPending} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      </CardContent>
-      <CardFooter>
-        <Button type="submit" disabled={changePassword.isPending} className="min-w-[150px]">
-          {changePassword.isPending && <Spinner className="mr-2 size-4" />}
-          Atualizar senha
-        </Button>
-      </CardFooter>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} id="access-form">
+          <CardContent className="p-0">
+            <AccessForm form={form} isPending={changePassword.isPending} />
+          </CardContent>
+        </form>
+      </Form>
     </Card>
   );
 }

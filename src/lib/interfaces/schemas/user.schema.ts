@@ -22,6 +22,8 @@ export const userSchema = z.object({
   image: z.string().url().optional(),
 });
 
+export const profileSchema = userSchema.omit({ password: true });
+
 export const passwordUpdateSchema = z.object({
   oldPassword: z.string().trim().min(5, lengthMessage(5, 50)).max(50, lengthMessage(5, 50)).regex(passwordRegExp, passRegexMessage()),
   newPassword: z.string().trim().min(5, lengthMessage(5, 50)).max(50, lengthMessage(5, 50)).regex(passwordRegExp, passRegexMessage()),
@@ -58,6 +60,7 @@ export const updateRoleAndRoomSchema = z.object({
 export type SignIn = z.infer<typeof signinSchema>;
 export type SignUp = z.infer<typeof signupSchema>;
 export type User = z.infer<typeof userSchema>;
+export type Profile = z.infer<typeof profileSchema>;
 export type PasswordUpdate = z.infer<typeof passwordUpdateSchema>;
 export type PasswordReset = z.infer<typeof passwordResetSchema>;
 export type UserInvite = z.infer<typeof userInviteSchema>;

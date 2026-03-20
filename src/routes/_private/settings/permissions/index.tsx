@@ -5,7 +5,7 @@ import DefaultLoading from '@/components/default-loading';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { Switch } from '@/components/ui/switch';
@@ -92,11 +92,16 @@ export function SettingsPermissions() {
   if (!clinic || !users) return null;
 
   return (
-    <Card className="border-none">
-      <CardHeader className="px-0 pt-0">
-        <CardTitle className="text-xl">Gerenciar Permissões</CardTitle>
+    <Card asPage>
+      <CardHeader>
+        <CardAction>
+          <Button onClick={handleSavePermissions} disabled={updatePermissions.isPending} className="min-w-36">
+            {updatePermissions.isPending && <Spinner className="mr-2 size-4" />}
+            Salvar Alterações
+          </Button>
+        </CardAction>
       </CardHeader>
-      <CardContent className="space-y-8 px-0">
+      <CardContent className="space-y-8">
         <Accordion type="single" collapsible className="space-y-4">
           {users.map((user, index) => {
             const permissions = getUserPermissions(user._id ?? '');
@@ -190,13 +195,6 @@ export function SettingsPermissions() {
           })}
         </Accordion>
       </CardContent>
-
-      <CardFooter>
-        <Button onClick={handleSavePermissions} disabled={updatePermissions.isPending} className="min-w-[150px]">
-          {updatePermissions.isPending && <Spinner className="mr-2 size-4" />}
-          Salvar Alterações
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

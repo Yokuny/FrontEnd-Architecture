@@ -6,7 +6,8 @@ import Download from '@/components/icons/Download.Icon';
 import Upload from '@/components/icons/Upload.Icon';
 import UploadCloud from '@/components/icons/UploadCloud.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
 import type { ProcedureData } from '@/lib/interfaces';
 import { useProceduresQuery } from '@/query/procedures';
 import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
@@ -119,28 +120,29 @@ export function SettingsProcedures() {
   if (isLoading) return <DefaultLoading />;
 
   return (
-    <Card className="border-none">
-      <CardHeader className="px-0 pt-0 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <CardTitle className="text-xl">Procedimentos clínicos</CardTitle>
-        </div>
-        <div className="mt-4 flex flex-wrap items-center gap-2 sm:mt-0">
-          <Button onClick={downloadModelCSV} variant="outline" size="sm" className="flex items-center gap-2">
+    <Card asPage>
+      <CardHeader className="sm:flex-row sm:items-center sm:justify-between">
+        <CardAction className="sm:self-center">
+          <Button onClick={saveProcedure} disabled={!hasChanges || updateProcedures.isPending} className="min-w-[120px]">
+            {updateProcedures.isPending && <Spinner className="mr-2 size-4" />}
+            Salvar
+          </Button>
+          <Button onClick={downloadModelCSV} variant="outline" className="flex items-center gap-2">
             <Download className="size-4" />
             <span className="hidden sm:inline">Modelo CSV</span>
           </Button>
-          <Button onClick={() => refetch()} variant="outline" size="sm" className="flex items-center gap-2">
+          <Button onClick={() => refetch()} variant="outline" className="flex items-center gap-2">
             <UploadCloud className="size-4" />
             <span className="hidden sm:inline">Buscar dados</span>
           </Button>
-          <Button onClick={uploadNewCSV} size="sm" className="flex items-center gap-2">
+          <Button onClick={uploadNewCSV} className="flex items-center gap-2">
             <Upload className="size-4" />
             <span className="hidden sm:inline">Upload CSV</span>
           </Button>
-        </div>
+        </CardAction>
       </CardHeader>
 
-      <CardContent className="px-0">
+      <CardContent>
         <SettingsProceduresTable data={procedures} hasChanges={hasChanges} saveProcedure={saveProcedure} onUpdate={handleProcedureUpdate} isPending={updateProcedures.isPending} />
       </CardContent>
     </Card>
