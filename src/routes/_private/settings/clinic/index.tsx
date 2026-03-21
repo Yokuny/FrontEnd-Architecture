@@ -70,8 +70,6 @@ export function SettingsClinic() {
     }
   };
 
-  if (isLoading) return <DefaultLoading />;
-
   return (
     <Card asPage>
       <CardHeader>
@@ -83,13 +81,17 @@ export function SettingsClinic() {
         </CardAction>
       </CardHeader>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} id="clinic-form">
-          <CardContent className="p-0">
-            <ClinicForm form={form} isPending={saveClinic.isPending} />
-          </CardContent>
-        </form>
-      </Form>
+      <CardContent>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} id="clinic-form">
+              <ClinicForm form={form} isPending={saveClinic.isPending} />
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }

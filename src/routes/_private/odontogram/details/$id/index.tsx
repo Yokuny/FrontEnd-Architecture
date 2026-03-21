@@ -52,18 +52,6 @@ function OdontogramDetailPage() {
   const professionalName = useProfessionalStore((state) => state.getName(professionals, odontogram?.Professional as string));
   const professionalImage = useProfessionalStore((state) => state.getImage(professionals, odontogram?.Professional as string));
 
-  if (isLoading) return <DefaultLoading />;
-  if (error || !odontogram) {
-    return (
-      <Card asPage>
-        <CardContent className="p-10 text-center">
-          <p className="mb-4 text-destructive">Odontograma não encontrado ou erro ao carregar.</p>
-          <Button onClick={() => navigate({ to: '..' })}>Voltar</Button>
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card asPage>
       <CardHeader>
@@ -77,98 +65,109 @@ function OdontogramDetailPage() {
       </CardHeader>
 
       <CardContent className="space-y-8">
-        {/* Info */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div className="flex items-center gap-4 rounded-lg border bg-muted/50 p-4">
-            <Avatar className="size-12">
-              <AvatarImage src={patientImage} />
-              <AvatarFallback>
-                <User className="size-6 text-muted-foreground" />
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-              <p className="font-medium text-muted-foreground text-sm">Paciente</p>
-              <h3 className="font-semibold text-lg">{patientName}</h3>
-            </div>
-            <Button
-              variant="link"
-              size="sm"
-              onClick={() => {
-                navigate({ to: '/patient/details/$id', params: { id: odontogram.Patient } });
-              }}
-            >
-              Perfil
-            </Button>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : error || !odontogram ? (
+          <div className="p-10 text-center">
+            <p className="mb-4 text-destructive">Odontograma não encontrado ou erro ao carregar.</p>
+            <Button onClick={() => navigate({ to: '..' })}>Voltar</Button>
           </div>
+        ) : (
+          <>
+            {/* Info */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="flex items-center gap-4 rounded-lg border bg-muted/50 p-4">
+                <Avatar className="size-12">
+                  <AvatarImage src={patientImage} />
+                  <AvatarFallback>
+                    <User className="size-6 text-muted-foreground" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <p className="font-medium text-muted-foreground text-sm">Paciente</p>
+                  <h3 className="font-semibold text-lg">{patientName}</h3>
+                </div>
+                <Button
+                  variant="link"
+                  size="sm"
+                  onClick={() => {
+                    navigate({ to: '/patient/details/$id', params: { id: odontogram.Patient } });
+                  }}
+                >
+                  Perfil
+                </Button>
+              </div>
 
-          <div className="flex items-center gap-4 rounded-lg border bg-muted/50 p-4">
-            <Avatar className="size-12">
-              <AvatarImage src={professionalImage} />
-              <AvatarFallback>
-                <Clinic className="size-6 text-muted-foreground" />
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-              <p className="font-medium text-muted-foreground text-sm">Profissional</p>
-              <h3 className="font-semibold text-lg">{professionalName}</h3>
+              <div className="flex items-center gap-4 rounded-lg border bg-muted/50 p-4">
+                <Avatar className="size-12">
+                  <AvatarImage src={professionalImage} />
+                  <AvatarFallback>
+                    <Clinic className="size-6 text-muted-foreground" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <p className="font-medium text-muted-foreground text-sm">Profissional</p>
+                  <h3 className="font-semibold text-lg">{professionalName}</h3>
+                </div>
+                <Button
+                  variant="link"
+                  size="sm"
+                  onClick={() => {
+                    // @ts-expect-error Route may be ungenerated
+                    navigate({ to: '/professional/$id', params: { id: odontogram.Professional } });
+                  }}
+                >
+                  Perfil
+                </Button>
+              </div>
             </div>
-            <Button
-              variant="link"
-              size="sm"
-              onClick={() => {
-                // @ts-expect-error Route may be ungenerated
-                navigate({ to: '/professional/$id', params: { id: odontogram.Professional } });
-              }}
-            >
-              Perfil
-            </Button>
-          </div>
-        </div>
 
-        {/* Teeth List */}
-        <div className="space-y-4">
-          <h2 className="font-semibold text-xl">Procedimentos por Dente</h2>
-          {odontogram.teeth && odontogram.teeth.length > 0 ? (
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {odontogram.teeth.map((tooth) => {
-                const facesWithProcedures = getFacesWithProcedures(tooth.faces);
-                if (facesWithProcedures.length === 0) return null;
+            {/* Teeth List */}
+            <div className="space-y-4">
+              <h2 className="font-semibold text-xl">Procedimentos por Dente</h2>
+              {odontogram.teeth && odontogram.teeth.length > 0 ? (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {odontogram.teeth.map((tooth) => {
+                    const facesWithProcedures = getFacesWithProcedures(tooth.faces);
+                    if (facesWithProcedures.length === 0) return null;
 
-                return (
-                  <div key={tooth.number} className="flex items-start gap-6 rounded-lg border p-4 shadow-sm">
-                    <div className="w-10">
-                      <ToothNumber toothNumber={tooth.number} />
-                    </div>
-                    <div>
-                      <h4 className="mb-2 font-semibold text-lg">Dente {tooth.number}</h4>
-                      <ul className="space-y-1">
-                        {facesWithProcedures.map((item) => (
-                          <li key={item.face} className="text-sm">
-                            <span className="font-medium">{item.face}:</span> <span className="text-muted-foreground">{item.procedure}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                );
-              })}
+                    return (
+                      <div key={tooth.number} className="flex items-start gap-6 rounded-lg border p-4 shadow-sm">
+                        <div className="w-10">
+                          <ToothNumber toothNumber={tooth.number} />
+                        </div>
+                        <div>
+                          <h4 className="mb-2 font-semibold text-lg">Dente {tooth.number}</h4>
+                          <ul className="space-y-1">
+                            {facesWithProcedures.map((item) => (
+                              <li key={item.face} className="text-sm">
+                                <span className="font-medium">{item.face}:</span> <span className="text-muted-foreground">{item.procedure}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">Nenhum procedimento registrado.</p>
+              )}
             </div>
-          ) : (
-            <p className="text-muted-foreground">Nenhum procedimento registrado.</p>
-          )}
-        </div>
 
-        {/* Formulation / Edicao */}
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="edit" className="border-b-0">
-            <AccordionTrigger className="rounded-lg border px-4 hover:no-underline">
-              <h2 className="font-semibold text-lg">Configuração (Edição)</h2>
-            </AccordionTrigger>
-            <AccordionContent className="pt-4">
-              <OdontogramStatusForm id={odontogram._id} initialStatus={odontogram.finished || false} />
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+            {/* Formulation / Edicao */}
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="edit" className="border-b-0">
+                <AccordionTrigger className="rounded-lg border px-4 hover:no-underline">
+                  <h2 className="font-semibold text-lg">Configuração (Edição)</h2>
+                </AccordionTrigger>
+                <AccordionContent className="pt-4">
+                  <OdontogramStatusForm id={odontogram._id} initialStatus={odontogram.finished || false} />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </>
+        )}
       </CardContent>
     </Card>
   );

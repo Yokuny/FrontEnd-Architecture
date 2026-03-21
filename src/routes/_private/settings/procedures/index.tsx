@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Download from '@/components/icons/Download.Icon';
 import Upload from '@/components/icons/Upload.Icon';
@@ -117,8 +118,6 @@ export function SettingsProcedures() {
     setHasChanges(true);
   };
 
-  if (isLoading) return <DefaultLoading />;
-
   return (
     <Card asPage>
       <CardHeader className="sm:flex-row sm:items-center sm:justify-between">
@@ -143,7 +142,19 @@ export function SettingsProcedures() {
       </CardHeader>
 
       <CardContent>
-        <SettingsProceduresTable data={procedures} hasChanges={hasChanges} saveProcedure={saveProcedure} onUpdate={handleProcedureUpdate} isPending={updateProcedures.isPending} />
+        {isLoading ? (
+          <DefaultLoading />
+        ) : !procedures?.length ? (
+          <DefaultEmptyData />
+        ) : (
+          <SettingsProceduresTable
+            data={procedures}
+            hasChanges={hasChanges}
+            saveProcedure={saveProcedure}
+            onUpdate={handleProcedureUpdate}
+            isPending={updateProcedures.isPending}
+          />
+        )}
       </CardContent>
     </Card>
   );

@@ -34,19 +34,6 @@ function PatientDetailsPage() {
   const { data: patient, isLoading } = usePatientQuery(id);
   const navigate = Route.useNavigate();
 
-  if (isLoading) {
-    return (
-      <Card asPage>
-        <CardHeader />
-        <CardContent className="p-12">
-          <DefaultLoading />
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (!patient) return <div>Paciente não encontrado.</div>;
-
   const currentTab = search.tab;
 
   const handleTabChange = (value: string) => {
@@ -58,47 +45,53 @@ function PatientDetailsPage() {
       <Card asPage>
         <CardHeader />
         <CardContent>
-          <Tabs value={currentTab} onValueChange={handleTabChange}>
-            <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2">
-              <TabsTrigger value="profile">
-                <User className="mr-2 size-4" /> Visão Geral
-              </TabsTrigger>
-              <TabsTrigger value="anamnesis">
-                <Pulse className="mr-2 size-4" /> Anamnese
-              </TabsTrigger>
-              <TabsTrigger value="intraoral">
-                <Face className="mr-2 size-4" /> Intraoral
-              </TabsTrigger>
-              <TabsTrigger value="odontogram">
-                <Mail className="mr-2 size-4" /> Odontograma
-              </TabsTrigger>
-              <TabsTrigger value="schedule">
-                <Calender className="mr-2 size-4" /> Agendamentos
-              </TabsTrigger>
-              <TabsTrigger value="financial">
-                <Dollar className="mr-2 size-4" /> Financeiro
-              </TabsTrigger>
-            </TabsList>
+          {isLoading ? (
+            <DefaultLoading />
+          ) : !patient ? (
+            <div className="p-12 text-center">Paciente não encontrado.</div>
+          ) : (
+            <Tabs value={currentTab} onValueChange={handleTabChange}>
+              <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2">
+                <TabsTrigger value="profile">
+                  <User className="mr-2 size-4" /> Visão Geral
+                </TabsTrigger>
+                <TabsTrigger value="anamnesis">
+                  <Pulse className="mr-2 size-4" /> Anamnese
+                </TabsTrigger>
+                <TabsTrigger value="intraoral">
+                  <Face className="mr-2 size-4" /> Intraoral
+                </TabsTrigger>
+                <TabsTrigger value="odontogram">
+                  <Mail className="mr-2 size-4" /> Odontograma
+                </TabsTrigger>
+                <TabsTrigger value="schedule">
+                  <Calender className="mr-2 size-4" /> Agendamentos
+                </TabsTrigger>
+                <TabsTrigger value="financial">
+                  <Dollar className="mr-2 size-4" /> Financeiro
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="profile" className="mt-6">
-              <PatientProfile patient={patient} />
-            </TabsContent>
-            <TabsContent value="anamnesis" className="mt-6">
-              <PatientAnamnesisView anamnesis={patient.anamnesis} />
-            </TabsContent>
-            <TabsContent value="intraoral" className="mt-6">
-              <PatientIntraoralView intraoral={patient.intraoral} />
-            </TabsContent>
-            <TabsContent value="odontogram" className="mt-6">
-              Em construção: Odontogram
-            </TabsContent>
-            <TabsContent value="schedule" className="mt-6">
-              Em construção: Schedule
-            </TabsContent>
-            <TabsContent value="financial" className="mt-6">
-              Em construção: Financial
-            </TabsContent>
-          </Tabs>
+              <TabsContent value="profile" className="mt-6">
+                <PatientProfile patient={patient} />
+              </TabsContent>
+              <TabsContent value="anamnesis" className="mt-6">
+                <PatientAnamnesisView anamnesis={patient.anamnesis} />
+              </TabsContent>
+              <TabsContent value="intraoral" className="mt-6">
+                <PatientIntraoralView intraoral={patient.intraoral} />
+              </TabsContent>
+              <TabsContent value="odontogram" className="mt-6">
+                Em construção: Odontogram
+              </TabsContent>
+              <TabsContent value="schedule" className="mt-6">
+                Em construção: Schedule
+              </TabsContent>
+              <TabsContent value="financial" className="mt-6">
+                Em construção: Financial
+              </TabsContent>
+            </Tabs>
+          )}
         </CardContent>
       </Card>
     </div>

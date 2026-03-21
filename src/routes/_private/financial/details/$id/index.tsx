@@ -6,7 +6,7 @@ import Back from '@/components/icons/Back.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
@@ -31,46 +31,18 @@ export const Route = createFileRoute('/_private/financial/details/$id/')({
 });
 
 function FinancialDetailPage() {
+  const navigate = useNavigate();
   const { id } = useParams({ from: '/_private/financial/details/$id/' });
   const { data: financial, isLoading } = useFinancialDetailQuery(id);
   const { data: professionals } = useProfessionalsQuery();
 
-  if (isLoading) {
-    return (
-      <Card asPage>
-        <CardHeader />
-        <CardContent className="p-12">
-          <DefaultLoading />
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (!financial) {
-    return (
-      <Card asPage>
-        <CardHeader />
-        <CardContent className="p-12">
-          <EmptyData />
-        </CardContent>
-      </Card>
-    );
-  }
-
-  return <FinancialDetailContent id={id} financial={financial} professionals={professionals} />;
-}
-
-function FinancialDetailContent({ id, financial, professionals }: { id: string; financial: FullFinancial; professionals: ProfessionalList[] | undefined }) {
-  const navigate = useNavigate();
-  const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
-
   const initialData = useMemo(
     () => ({
-      price: financial.price || 0,
-      paid: financial.paid || 0,
-      paymentMethod: financial.paymentMethod || 'none',
-      installments: financial.installments || 1,
-      status: financial.status || 'pending',
+      price: financial?.price || 0,
+      paid: financial?.paid || 0,
+      paymentMethod: financial?.paymentMethod || 'none',
+      installments: financial?.installments || 1,
+      status: financial?.status || 'pending',
     }),
     [financial],
   );
@@ -79,120 +51,133 @@ function FinancialDetailContent({ id, financial, professionals }: { id: string; 
 
   return (
     <Card asPage>
-      <CardHeader />
-
-      <CardContent>
-        <div className="flex flex-col gap-8">
-          {/* Informações do Atendimento */}
-          <div className="flex flex-col gap-4">
-            <ItemTitle className="font-semibold text-base">Informações do Atendimento</ItemTitle>
-            <div className="flex w-full max-w-4xl flex-col gap-4 md:flex-row">
-              <div className="flex w-full items-center gap-3 rounded-lg border p-4">
-                <Avatar className="size-12">
-                  <AvatarImage src={financial.patient?.image} alt={financial.patient?.name} />
-                  <AvatarFallback>{financial.patient?.name?.slice(0, 2)}</AvatarFallback>
-                </Avatar>
-                <ItemContent className="gap-0">
-                  <ItemDescription>Paciente</ItemDescription>
-                  <ItemTitle>{financial.patient?.name}</ItemTitle>
-                </ItemContent>
-              </div>
-              <div className="flex w-full items-center gap-3 rounded-lg border p-4">
-                <Avatar className="size-12">
-                  <AvatarImage src={useProfessionalStore.getState().getImage(professionals, financial.Professional)} alt="Profissional" />
-                  <AvatarFallback>{useProfessionalStore.getState().getName(professionals, financial.Professional).slice(0, 2)}</AvatarFallback>
-                </Avatar>
-                <ItemContent className="gap-0">
-                  <ItemDescription>Profissional</ItemDescription>
-                  <ItemTitle>{useProfessionalStore.getState().getName(professionals, financial.Professional)}</ItemTitle>
-                </ItemContent>
-              </div>
-            </div>
+      <CardHeader>
+        <CardAction>
+          <Button variant="outline" type="button" onClick={() => navigate({ to: '/financial' })} disabled={isPending} className="min-w-32">
+            <Back className="mr-2 size-4" />
+            Voltar
+          </Button>
+          <Button type="submit" form="financial-edit-form" disabled={isPending} className="min-w-40">
+            {isPending && <Spinner className="mr-2 size-4" />}
+            Salvar
+          </Button>
+        </CardAction>
+      </CardHeader>
+      <CardContent className={isLoading || !financial ? 'p-12' : ''}>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : !financial ? (
+          <EmptyData />
+        ) : (
+          <div className="flex flex-col gap-8">
+            <FinancialDetailContent id={id} financial={financial} professionals={professionals} />
+            <Separator />
+            <Form {...form}>
+              <form onSubmit={onSubmit} id="financial-edit-form">
+                <FinancialEditForm />
+              </form>
+            </Form>
           </div>
-
-          <Separator />
-
-          {/* Informações Financeiras */}
-          <div className="flex flex-col gap-4">
-            <ItemTitle className="font-semibold text-base">Informações Financeiras</ItemTitle>
-            <div className="flex w-full max-w-4xl flex-col gap-4 md:flex-row">
-              <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
-                <ItemDescription>Valor Total</ItemDescription>
-                <p className="font-bold text-2xl tabular-nums">{currencyFormat(financial.price || 0)}</p>
-                <div className="flex items-baseline gap-2">
-                  <p className="font-bold text-green-500 tabular-nums dark:text-lime-400">{currencyFormat(financial.paid || 0)}</p>
-                  <ItemDescription>total pago</ItemDescription>
-                </div>
-              </div>
-              <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
-                <ItemDescription>Pagamento</ItemDescription>
-                <p className="font-bold text-2xl">{financialPaymentMethod(financial.paymentMethod || 'none')}</p>
-                <div className="flex items-baseline gap-2">
-                  <ItemDescription>Status</ItemDescription>
-                  <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status || 'pending')}</BadgeIndicator>
-                </div>
-              </div>
-              <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
-                <ItemDescription>Data</ItemDescription>
-                <p className="font-bold text-2xl tabular-nums">{extractDate(financial.createdAt, '')}</p>
-                <div className="flex items-baseline gap-2">
-                  <ItemDescription>Última atualização</ItemDescription>
-                  <p className="font-medium text-sm tabular-nums">{extractDate(financial.updatedAt, '')}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Tabela de procedimentos */}
-            <div className="max-w-4xl rounded-lg border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Procedimento</TableHead>
-                    <TableHead>Preço</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {financial.procedures?.length > 0 ? (
-                    financial.procedures.map((procedure) => (
-                      <TableRow key={procedure.procedure}>
-                        <TableCell>{procedure.procedure}</TableCell>
-                        <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
-                        <TableCell>{statusDictionary(procedure.status)}</TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={3} className="text-center text-muted-foreground">
-                        Nenhum procedimento registrado
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          </div>
-
-          <Separator />
-
-          {/* Formulário de Edição */}
-          <Form {...form}>
-            <form onSubmit={onSubmit}>
-              <FinancialEditForm />
-              <div className="flex w-full max-w-4xl gap-4 px-6 py-4 md:px-10">
-                <Button variant="outline" type="button" onClick={() => navigate({ to: '/financial' })} disabled={isPending} className="w-1/4">
-                  <Back className="mr-2 size-4" />
-                  Voltar
-                </Button>
-                <Button type="submit" disabled={isPending} className="w-3/4">
-                  {isPending && <Spinner className="mr-2 size-4" />}
-                  Salvar
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </div>
+        )}
       </CardContent>
     </Card>
+  );
+}
+
+function FinancialDetailContent({ financial, professionals }: { id: string; financial: FullFinancial; professionals: ProfessionalList[] | undefined }) {
+  const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
+
+  return (
+    <div className="flex flex-col gap-8">
+      {/* Informações do Atendimento */}
+      <div className="flex flex-col gap-4">
+        <ItemTitle className="font-semibold text-base">Informações do Atendimento</ItemTitle>
+        <div className="flex w-full max-w-4xl flex-col gap-4 md:flex-row">
+          <div className="flex w-full items-center gap-3 rounded-lg border p-4">
+            <Avatar className="size-12">
+              <AvatarImage src={financial.patient?.image} alt={financial.patient?.name} />
+              <AvatarFallback>{financial.patient?.name?.slice(0, 2)}</AvatarFallback>
+            </Avatar>
+            <ItemContent className="gap-0">
+              <ItemDescription>Paciente</ItemDescription>
+              <ItemTitle>{financial.patient?.name}</ItemTitle>
+            </ItemContent>
+          </div>
+          <div className="flex w-full items-center gap-3 rounded-lg border p-4">
+            <Avatar className="size-12">
+              <AvatarImage src={useProfessionalStore.getState().getImage(professionals, financial.Professional)} alt="Profissional" />
+              <AvatarFallback>{useProfessionalStore.getState().getName(professionals, financial.Professional).slice(0, 2)}</AvatarFallback>
+            </Avatar>
+            <ItemContent className="gap-0">
+              <ItemDescription>Profissional</ItemDescription>
+              <ItemTitle>{useProfessionalStore.getState().getName(professionals, financial.Professional)}</ItemTitle>
+            </ItemContent>
+          </div>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Informações Financeiras */}
+      <div className="flex flex-col gap-4">
+        <ItemTitle className="font-semibold text-base">Informações Financeiras</ItemTitle>
+        <div className="flex w-full max-w-4xl flex-col gap-4 md:flex-row">
+          <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
+            <ItemDescription>Valor Total</ItemDescription>
+            <p className="font-bold text-2xl tabular-nums">{currencyFormat(financial.price || 0)}</p>
+            <div className="flex items-baseline gap-2">
+              <p className="font-bold text-green-500 tabular-nums dark:text-lime-400">{currencyFormat(financial.paid || 0)}</p>
+              <ItemDescription>total pago</ItemDescription>
+            </div>
+          </div>
+          <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
+            <ItemDescription>Pagamento</ItemDescription>
+            <p className="font-bold text-2xl">{financialPaymentMethod(financial.paymentMethod || 'none')}</p>
+            <div className="flex items-baseline gap-2">
+              <ItemDescription>Status</ItemDescription>
+              <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status || 'pending')}</BadgeIndicator>
+            </div>
+          </div>
+          <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
+            <ItemDescription>Data</ItemDescription>
+            <p className="font-bold text-2xl tabular-nums">{extractDate(financial.createdAt, '')}</p>
+            <div className="flex items-baseline gap-2">
+              <ItemDescription>Última atualização</ItemDescription>
+              <p className="font-medium text-sm tabular-nums">{extractDate(financial.updatedAt, '')}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Tabela de procedimentos */}
+        <div className="max-w-4xl rounded-lg border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Procedimento</TableHead>
+                <TableHead>Preço</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {financial.procedures?.length > 0 ? (
+                financial.procedures.map((procedure) => (
+                  <TableRow key={procedure.procedure}>
+                    <TableCell>{procedure.procedure}</TableCell>
+                    <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
+                    <TableCell>{statusDictionary(procedure.status)}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center text-muted-foreground">
+                    Nenhum procedimento registrado
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </div>
   );
 }

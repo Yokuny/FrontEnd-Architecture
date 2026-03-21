@@ -9,7 +9,7 @@ import MapIcon from '@/components/icons/Map.Icon';
 import Right from '@/components/icons/Right.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useClinicStore } from '@/hooks/clinic';
 import { usePatientStore } from '@/hooks/patients';
@@ -46,10 +46,12 @@ function PatientSchedulePage() {
   return (
     <Card asPage className="flex w-full flex-col">
       <CardHeader>
-        <Button type="button" size={isMobile ? 'default' : 'sm'} variant="outline" onClick={() => navigate({ to: '..' })}>
-          <Back className="mr-2 size-4" />
-          Voltar
-        </Button>
+        <CardAction>
+          <Button type="button" size={isMobile ? 'default' : 'sm'} variant="outline" onClick={() => navigate({ to: '..' })}>
+            <Back className="mr-2 size-4" />
+            Voltar
+          </Button>
+        </CardAction>
       </CardHeader>
 
       <div className="px-4 pt-4 md:px-6 md:pt-6">

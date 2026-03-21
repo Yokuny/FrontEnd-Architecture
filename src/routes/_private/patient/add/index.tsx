@@ -16,7 +16,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { usePatientQuery } from '@/query/patient';
@@ -93,40 +93,41 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
 
   return (
     <Card asPage>
-      <CardHeader />
+      <CardHeader>
+        <CardAction>
+          {initialData && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button type="button" variant="destructive" disabled={deletePatient.isPending || isPending}>
+                  {deletePatient.isPending ? <Spinner className="mr-2 size-4" /> : <Delete className="mr-2 size-4" />}
+                  Excluir
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+                  <AlertDialogDescription>Esta ação não pode ser desfeita e excluirá todos os registros vinculados ao paciente.</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete} className="bg-destructive">
+                    <Delete className="size-4" />
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
+          <Button type="submit" form="patient-form" disabled={isPending} className="ml-auto min-w-[120px]">
+            {isPending && <Spinner className="mr-2 size-4" />}
+            Salvar
+          </Button>
+        </CardAction>
+      </CardHeader>
       <Form {...form}>
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} id="patient-form">
           <CardContent>
             <PatientForm />
           </CardContent>
-          <CardFooter>
-            {initialData && (
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button type="button" variant="destructive" disabled={deletePatient.isPending || isPending}>
-                    {deletePatient.isPending ? <Spinner className="mr-2 size-4" /> : <Delete className="mr-2 size-4" />}
-                    Excluir
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
-                    <AlertDialogDescription>Esta ação não pode ser desfeita e excluirá todos os registros vinculados ao paciente.</AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleDelete} className="bg-destructive">
-                      <Delete className="size-4" />
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            )}
-            <Button type="submit" disabled={isPending} className="ml-auto min-w-[120px]">
-              {isPending && <Spinner className="mr-2 size-4" />}
-              Salvar
-            </Button>
-          </CardFooter>
         </form>
       </Form>
     </Card>

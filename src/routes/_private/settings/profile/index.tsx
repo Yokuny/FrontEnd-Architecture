@@ -57,8 +57,6 @@ export function SettingsProfile() {
     }
   };
 
-  if (isLoading) return <DefaultLoading />;
-
   return (
     <Card asPage>
       <CardHeader>
@@ -70,13 +68,17 @@ export function SettingsProfile() {
         </CardAction>
       </CardHeader>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} id="profile-form">
-          <CardContent className="p-0">
-            <ProfileForm form={form} isPending={updateProfile.isPending} user={user} />
-          </CardContent>
-        </form>
-      </Form>
+      <CardContent>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} id="profile-form">
+              <ProfileForm form={form} isPending={updateProfile.isPending} user={user} />
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }

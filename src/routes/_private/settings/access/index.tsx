@@ -63,7 +63,7 @@ export function SettingsAccess() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} id="access-form">
-          <CardContent className="p-0">
+          <CardContent>
             <AccessForm form={form} isPending={changePassword.isPending} />
           </CardContent>
         </form>

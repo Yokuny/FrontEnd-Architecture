@@ -86,7 +86,7 @@ function PatientListPage() {
         </CardAction>
       </CardHeader>
 
-      <CardContent className="p-0">
+      <CardContent>
         {isLoading ? (
           <DefaultLoading />
         ) : allRows.length === 0 ? (

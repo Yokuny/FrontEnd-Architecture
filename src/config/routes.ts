@@ -11,7 +11,6 @@ export const MAIN_ROUTES = [
   '/reminders',
   '/reminders/add',
   '/schedule',
-  '/settings',
   '/settings/access',
   '/settings/clinic',
   '/settings/invite',

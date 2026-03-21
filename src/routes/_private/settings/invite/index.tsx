@@ -48,9 +48,6 @@ export function SettingsInvite() {
     }
   };
 
-  if (isLoading) return <DefaultLoading />;
-  if (!clinic) return null;
-
   return (
     <Card asPage>
       <CardHeader>
@@ -62,13 +59,17 @@ export function SettingsInvite() {
         </CardAction>
       </CardHeader>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} id="invite-form">
-          <CardContent className="p-0">
-            <InviteForm form={form} isPending={inviteUser.isPending} clinic={clinic} />
-          </CardContent>
-        </form>
-      </Form>
+      <CardContent>
+        {isLoading || !clinic ? (
+          <DefaultLoading />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} id="invite-form">
+              <InviteForm form={form} isPending={inviteUser.isPending} clinic={clinic} />
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }

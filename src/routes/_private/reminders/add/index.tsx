@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -26,21 +26,22 @@ function ReminderAddPage() {
 
   return (
     <Card asPage>
-      <CardHeader />
+      <CardHeader>
+        <CardAction>
+          <Button type="button" variant="outline" disabled={isPending} onClick={() => navigate({ to: '/reminders', search: { showAll: true } })}>
+            Cancelar
+          </Button>
+          <Button type="submit" form="reminder-form" disabled={isPending} className="ml-auto min-w-[120px]">
+            {isPending && <Spinner className="mr-2 size-4" />}
+            Salvar
+          </Button>
+        </CardAction>
+      </CardHeader>
       <Form {...form}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id="reminder-form">
           <CardContent>
             <ReminderForm />
           </CardContent>
-          <CardFooter>
-            <Button type="button" variant="outline" disabled={isPending} onClick={() => navigate({ to: '/reminders', search: { showAll: true } })}>
-              Cancelar
-            </Button>
-            <Button type="submit" disabled={isPending} className="ml-auto min-w-[120px]">
-              {isPending && <Spinner className="mr-2 size-4" />}
-              Salvar
-            </Button>
-          </CardFooter>
         </form>
       </Form>
     </Card>
