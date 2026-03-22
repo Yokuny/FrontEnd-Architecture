@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { z } from 'zod';
 import Back from '@/components/icons/Back.Icon';
 import Calender from '@/components/icons/Calender.Icon';
 import Clinic from '@/components/icons/Clinic.Icon';
@@ -23,8 +24,13 @@ import { usePatientsQuery } from '@/query/patients';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { usePatientSchedulesQuery } from '@/query/schedule';
 
-export const Route = createFileRoute('/_private/schedule/details/$id/')({
+const searchSchema = z.object({
+  id: z.string(),
+});
+
+export const Route = createFileRoute('/_private/schedule/details')({
   component: PatientSchedulePage,
+  validateSearch: searchSchema,
   staticData: {
     title: 'Histórico de Agendamentos',
     description: 'Visualização completa do histórico de agendamentos e retornos do paciente.',
@@ -32,7 +38,8 @@ export const Route = createFileRoute('/_private/schedule/details/$id/')({
 });
 
 function PatientSchedulePage() {
-  const { id } = Route.useParams();
+  const search = Route.useSearch();
+  const id = search.id;
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { data: patients } = usePatientsQuery();

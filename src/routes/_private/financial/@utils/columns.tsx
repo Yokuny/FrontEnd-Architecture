@@ -58,7 +58,7 @@ export const financialColumns = (navigate: (opts: any) => void): DataTableColumn
             <DropdownMenuItem
               onClick={(e) => {
                 e.stopPropagation();
-                navigate({ to: '/financial/details/$id', params: { id: row._id } });
+                navigate({ to: '/financial/details', search: { id: row._id } });
               }}
             >
               Editar financeiro

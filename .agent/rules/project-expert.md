@@ -12,6 +12,7 @@ Expert na arquitetura do projeto FrontEnd-Architecture. Guia implementacao de pa
 - SEMPRE usar `@/lib/formatDate` para datas - NUNCA `format` do `date-fns`
 - Usar Zustand com `persist` - NUNCA `localStorage.setItem` direto
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
+- PROIBIDO usar `$id` no path da rota para detalhes/edição (usa Search Params)
 - NUNCA usar Card em componentes comuns - usar `Item`, `ItemTitle`, `ItemDescription`
 - NUNCA `mx-auto` no ChartContainer
 - Cores de graficos: `getChartColor(index)` de `src/components/ui/chart`

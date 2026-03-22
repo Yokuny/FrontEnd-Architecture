@@ -5,7 +5,7 @@ import ProceduresSheet from '@/components/data-inputs/procedures-sheet';
 import Add from '@/components/icons/Add.Icon';
 import Delete from '@/components/icons/Delete.Icon';
 import { Button } from '@/components/ui/button';
-import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 
 const ProcedureComponent = ({ form, disabled, currencyFormat, statusDictionary }: ProcedureComponentProps) => {
   const [procedures, setProcedures] = useState<NewProcedure[]>([{ procedure: '', price: 0, status: 'pending' }]);
@@ -57,61 +57,47 @@ const ProcedureComponent = ({ form, disabled, currencyFormat, statusDictionary }
     });
   };
 
-  const columns: DataTableColumn<{ id: string; index: number }>[] = [
-    {
-      key: 'id' as any,
-      header: '',
-      render: (_, row) => {
-        const proc = procedures[row.index];
-        return proc?.procedure ? <span>{proc.procedure}</span> : <ProceduresSheet handleProcedure={(p) => handleProcedure(p, row.index)} disabled={disabled} />;
-      },
-    },
-    {
-      key: 'id' as any,
-      header: '',
-      render: (_, row) => {
-        const proc = procedures[row.index];
-        if (!proc?.procedure) return null;
-        return <span className="tabular-nums">{proc.price && proc.price > 0 ? currencyFormat(proc.price) : <span className="text-muted-foreground">Não definido</span>}</span>;
-      },
-    },
-    {
-      key: 'id' as any,
-      header: '',
-      render: (_, row) => {
-        const proc = procedures[row.index];
-        if (!proc?.procedure) return null;
-        return <span>{statusDictionary(proc.status)}</span>;
-      },
-    },
-    {
-      key: 'id' as any,
-      header: '',
-      render: (_, row) => {
-        const proc = procedures[row.index];
-        const isLastItem = row.index === procedures.length - 1;
-        return proc?.procedure ? (
-          <div className="flex items-center justify-end gap-2">
-            <Button type="button" variant="outline" size="sm" onClick={() => removeProcedure(row.index)} disabled={disabled}>
-              <Delete className="size-4" />
-            </Button>
-            {isLastItem && (
-              <Button type="button" variant="default" size="sm" className="whitespace-nowrap" onClick={addProcedure} disabled={disabled}>
-                <Add className="size-4 stroke-3 md:mr-2" />
-                <p className="hidden md:block">Adicionar</p>
-              </Button>
-            )}
-          </div>
-        ) : null;
-      },
-    },
-  ];
-
-  const data = fields.map((f, i) => ({ id: f.id, index: i }));
-
   return (
     <div className="w-full">
-      <DataTable data={data} columns={columns} searchable={false} showPagination={false} bordered={false} hideHeader compact />
+      <Table>
+        <TableBody className="[&_tr]:border-0">
+          {fields.map((field, index) => {
+            const proc = procedures[index];
+            const isLastItem = index === fields.length - 1;
+
+            return (
+              <TableRow key={field.id} className="hover:bg-transparent">
+                <TableCell className="pl-0">
+                  {proc?.procedure ? <span className="text-sm">{proc.procedure}</span> : <ProceduresSheet handleProcedure={(p) => handleProcedure(p, index)} disabled={disabled} />}
+                </TableCell>
+                <TableCell>
+                  {proc?.procedure && (
+                    <span className="text-sm tabular-nums">
+                      {proc.price && proc.price > 0 ? currencyFormat(proc.price) : <span className="text-muted-foreground">Não definido</span>}
+                    </span>
+                  )}
+                </TableCell>
+                <TableCell>{proc?.procedure && <span className="text-sm">{statusDictionary(proc.status)}</span>}</TableCell>
+                <TableCell className="pr-0 text-right">
+                  {proc?.procedure && (
+                    <div className="flex items-center justify-end gap-2">
+                      <Button type="button" variant="outline" size="sm" onClick={() => removeProcedure(index)} disabled={disabled}>
+                        <Delete className="size-4" />
+                      </Button>
+                      {isLastItem && (
+                        <Button type="button" variant="default" size="sm" className="whitespace-nowrap" onClick={addProcedure} disabled={disabled}>
+                          <Add className="size-4 stroke-3 md:mr-2" />
+                          <span className="hidden md:block">Adicionar</span>
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
     </div>
   );
 };

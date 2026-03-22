@@ -41,7 +41,7 @@ export function FinancialForm() {
             control={form.control}
             name="Patient"
             render={({ field }) => (
-              <FormItem className="max-w-xs">
+              <FormItem className="w-full">
                 <FormLabel>Paciente</FormLabel>
                 <FormControl>
                   <PatientCombobox controller={{ ...field }} fetchPatients={fetchPatients} />
@@ -53,7 +53,7 @@ export function FinancialForm() {
             control={form.control}
             name="Professional"
             render={({ field }) => (
-              <FormItem className="max-w-xs">
+              <FormItem className="w-full">
                 <FormLabel>Profissional</FormLabel>
                 <FormControl>
                   <ProfessionalCombobox controller={{ ...field }} fetchProfessionals={fetchProfessionals} />
@@ -77,15 +77,15 @@ export function FinancialForm() {
       title: 'Pagamento',
       description: 'Informações de pagamento e status',
       fields: [
-        <div key="payment" className="flex w-full flex-wrap gap-4">
+        <div key="payment" className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
             name="price"
             render={({ field }) => (
-              <FormItem className="w-fit md:w-full md:max-w-28">
+              <FormItem className="w-full">
                 <FormLabel>Valor total</FormLabel>
                 <FormControl>
-                  <Input type="number" className="max-w-28 text-xs" placeholder="R$ 0,00" value={field.value || 0} onChange={(e) => field.onChange(Number(e.target.value))} />
+                  <Input type="number" className="w-full" placeholder="R$ 0,00" value={field.value || 0} onChange={(e) => field.onChange(Number(e.target.value))} />
                 </FormControl>
               </FormItem>
             )}
@@ -94,17 +94,10 @@ export function FinancialForm() {
             control={form.control}
             name="paid"
             render={({ field }) => (
-              <FormItem className="w-fit md:w-full md:max-w-28">
+              <FormItem className="w-full">
                 <FormLabel>Valor pago</FormLabel>
                 <FormControl>
-                  <Input
-                    type="number"
-                    className="max-w-28 text-xs"
-                    placeholder="R$ 0,00"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    value={field.value || ''}
-                  />
+                  <Input type="number" className="w-full" placeholder="R$ 0,00" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                 </FormControl>
               </FormItem>
             )}
@@ -113,16 +106,16 @@ export function FinancialForm() {
             control={form.control}
             name="paymentMethod"
             render={({ field }) => (
-              <FormItem className="w-fit md:w-full md:max-w-52">
+              <FormItem className="w-full">
                 <FormLabel>Forma de pagamento</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <SelectTrigger className="w-full max-w-52 text-xs">
+                    <SelectTrigger className="w-full md:w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       {PAYMENT_METHOD_OPTIONS.map((opt) => (
-                        <SelectItem key={opt.value} className="text-xs" value={opt.value}>
+                        <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
                         </SelectItem>
                       ))}
@@ -136,16 +129,16 @@ export function FinancialForm() {
             control={form.control}
             name="status"
             render={({ field }) => (
-              <FormItem className="w-fit md:w-full md:max-w-52">
+              <FormItem className="w-full">
                 <FormLabel>Status</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="w-full max-w-52 text-xs">
+                    <SelectTrigger className="w-full md:w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       {FINANCIAL_STATUS_OPTIONS.map((opt) => (
-                        <SelectItem key={opt.value} className="text-xs" value={opt.value}>
+                        <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
                         </SelectItem>
                       ))}
@@ -159,10 +152,10 @@ export function FinancialForm() {
             control={form.control}
             name="installments"
             render={({ field }) => (
-              <FormItem className="w-fit md:w-full md:max-w-20">
+              <FormItem className="w-full">
                 <FormLabel>Parcelas</FormLabel>
                 <FormControl>
-                  <Input type="number" className="max-w-20 text-xs" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
+                  <Input type="number" className="w-full" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                 </FormControl>
               </FormItem>
             )}

@@ -45,7 +45,7 @@ function FinancialListPage() {
             searchable
             itemsPerPage={5}
             bordered={false}
-            onRowClick={(row) => navigate({ to: '/financial/details/$id', params: { id: row._id } })}
+            onRowClick={(row) => navigate({ to: '/financial/details', search: { id: row._id } })}
             renderExpanded={(row, isOpen) => <FinancialView id={row._id} isOpen={isOpen} />}
           />
         )}

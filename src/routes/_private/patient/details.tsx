@@ -11,15 +11,16 @@ import User from '@/components/icons/User.Icon';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePatientQuery } from '@/query/patient';
-import { PatientAnamnesisView } from '../../@components/patient-anamnesis-view';
-import { PatientIntraoralView } from '../../@components/patient-intraoral-view';
-import { PatientProfile } from '../../@components/patient-profile';
+import { PatientAnamnesisView } from './@components/patient-anamnesis-view';
+import { PatientIntraoralView } from './@components/patient-intraoral-view';
+import { PatientProfile } from './@components/patient-profile';
 
 const searchSchema = z.object({
+  id: z.string(),
   tab: z.enum(['profile', 'anamnesis', 'intraoral', 'odontogram', 'schedule', 'financial', 'medicalrecord']).default('profile'),
 });
 
-export const Route = createFileRoute('/_private/patient/details/$id/')({
+export const Route = createFileRoute('/_private/patient/details')({
   component: PatientDetailsPage,
   staticData: {
     title: 'Prontuário do Paciente',
@@ -29,15 +30,15 @@ export const Route = createFileRoute('/_private/patient/details/$id/')({
 });
 
 function PatientDetailsPage() {
-  const { id } = Route.useParams();
   const search = Route.useSearch();
+  const id = search.id;
   const { data: patient, isLoading } = usePatientQuery(id);
   const navigate = Route.useNavigate();
 
   const currentTab = search.tab;
 
   const handleTabChange = (value: string) => {
-    navigate({ search: { tab: value as 'profile' | 'anamnesis' | 'intraoral' | 'odontogram' | 'schedule' | 'financial' | 'medicalrecord' } });
+    navigate({ search: (prev: any) => ({ ...prev, tab: value as 'profile' | 'anamnesis' | 'intraoral' | 'odontogram' | 'schedule' | 'financial' | 'medicalrecord' }) });
   };
 
   return (

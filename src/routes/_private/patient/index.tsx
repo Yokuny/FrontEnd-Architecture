@@ -45,18 +45,16 @@ function PatientListPage() {
         </CardAction>
       </CardHeader>
 
-      <CardContent className="pt-6">
-        {isLoading ? (
-          <DefaultLoading />
-        ) : data.length === 0 ? (
-          <DefaultEmptyData />
-        ) : (
+      <CardContent>
+        {isLoading && <DefaultLoading />}
+        {data.length === 0 && !isLoading && <DefaultEmptyData />}
+        {data.length > 0 && !isLoading && (
           <DataTable
             data={data}
             columns={columns}
             searchable
             searchPlaceholder="Buscar por nome ou email"
-            onRowClick={(row) => navigate({ to: '/patient/details/$id', params: { id: row._id! } })}
+            onRowClick={(row) => navigate({ to: '/patient/details', search: { id: row._id! } })}
             bordered={false}
           />
         )}

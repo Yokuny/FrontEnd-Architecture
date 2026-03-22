@@ -74,7 +74,7 @@ export const patientColumns = (navigate: (opts: any) => void): DataTableColumn<P
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => navigate({ to: '/patient/details/$id', params: { id: patient._id } })}>
+              <DropdownMenuItem onClick={() => navigate({ to: '/patient/details', search: { id: patient._id } })}>
                 <User className="mr-2 size-4 text-muted-foreground" />
                 Visualizar cadastro
               </DropdownMenuItem>

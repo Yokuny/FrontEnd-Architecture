@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { z } from 'zod';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
 import Calender from '@/components/icons/Calender.Icon';
@@ -100,7 +101,11 @@ function RemindersListPage() {
         </CardAction>
       </CardHeader>
 
-      <CardContent>{isLoading ? <DefaultLoading /> : <RemindersList reminders={reminders || []} />}</CardContent>
+      <CardContent>
+        {isLoading && <DefaultLoading />}
+        {!reminders?.length && !isLoading && <DefaultEmptyData />}
+        {!!reminders?.length && !isLoading && <RemindersList reminders={reminders} />}
+      </CardContent>
     </Card>
   );
 }

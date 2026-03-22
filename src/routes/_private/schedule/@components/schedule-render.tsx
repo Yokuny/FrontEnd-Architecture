@@ -228,7 +228,7 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
               <span className="hidden md:block">Editar</span>
             </Button>
             {schedule.Financial && (
-              <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details/$id', params: { id: schedule.Financial! } })}>
+              <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details', search: { id: schedule.Financial! } })}>
                 <Link className="size-4 md:mr-2" />
                 <span className="hidden md:block">Finança</span>
               </Button>

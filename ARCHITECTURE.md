@@ -178,9 +178,10 @@ Estes arquivos servem de modelos a serem seguidos e **não devem ser importados*
 | :--- | :--- | :--- |
 | `index.tsx` | `/` | Define a página raiz do diretório. |
 | `add/index.tsx` | `/add` | Rota para criação de novos registros (diretório). |
-| `details/$id/index.tsx` | `/details/:id` | Rota dinâmica de detalhe que recebe o ID como parâmetro (diretório). |
+| `details.tsx` | `/details` | Rota de detalhe que recebe o ID via **Search Parameters** (`?id=...`). |
 | `edit.$id.tsx` | — | **NÃO UTILIZAR.** (Proibido o uso de `.` em arquivos). |
-| `$id.tsx` / `add.tsx` | — | **NÃO UTILIZAR.** Rotas devem ser criadas como **diretórios** com `index.tsx`. |
+| `$id/index.tsx` | — | **NÃO UTILIZAR.** (Proibido o uso de parâmetros dinâmicos na rota para detalhes/edição para não quebrar o breadcrumb). |
+| `$id.tsx` / `add.tsx` | — | **NÃO UTILIZAR.** Rotas devem ser criadas como **diretórios** com `index.tsx` ou arquivos flat sem `.` (exceto para `details.tsx` ou similares que usam search params). |
 
 
 **2. Estrutura da Página (Componente)**
@@ -260,9 +261,7 @@ src/routes/_private/{module}/
 ├── add/                     # Rota de criação (diretório)
 │   └── index.tsx            # Página de criação
 │
-├── details/                 # Rota de detalhe (diretório)
-│   └── $id/
-│       └── index.tsx        # Página de detalhe com parâmetro dinâmico
+├── details.tsx              # Página de detalhe (ID via search params)
 │
 ├── @components/             # Componentes específicos do módulo
 │   └── {ComponentName}.tsx

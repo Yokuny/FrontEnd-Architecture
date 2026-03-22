@@ -9,9 +9,7 @@ src/routes/_private/{feature}/
 ├── index.tsx                # Pagina principal (listagem)
 ├── add/                     # Pagina de criacao (diretório)
 │   └── index.tsx
-├── details/                 # Pagina de detalhe (diretório, opcional)
-│   └── $id/
-│       └── index.tsx
+├── details.tsx              # Pagina de detalhe (ID via search params)
 ├── @components/             # Componentes especificos da rota
 │   └── {feature}-form.tsx
 ├── @consts/                 # Valores fixos, enums, configs
@@ -28,10 +26,11 @@ src/routes/_private/{feature}/
 ## Regras de Roteamento
 
 - PROIBIDO usar `.` para criar rotas (ex: `edit.$id.tsx`)
-- PROIBIDO criar rotas como arquivos flat (`add.tsx`, `$id.tsx`). Usar **diretórios** com `index.tsx`
+- PROIBIDO criar rotas como arquivos flat (`add.tsx`, `$id.tsx`). Usar **diretórios** com `index.tsx` (exceção: `details.tsx` que utiliza search params)
 - Toda pasta de rota DEVE ter `index.tsx`
-- Estrutura valida: `index.tsx`, `add/index.tsx`, `details/$id/index.tsx`
-- Rotas baseadas em diretorios com `index.tsx` obrigatorio
+- Estrutura valida: `index.tsx`, `add/index.tsx`, `details.tsx`
+- Rotas baseadas em diretorios com `index.tsx` obrigatorio (exceção para detalhes que usam search parameters para não quebrar o Breadcrumb)
+- ROTAS de Detalhes ou Edição que recebem ID amigável devem usar `details.tsx` e `search: { id: string }`
 
 ## Hooks: Global vs Local
 

@@ -1,4 +1,5 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
+import { z } from 'zod';
 import DefaultLoading from '@/components/default-loading';
 import Back from '@/components/icons/Back.Icon';
 import Clinic from '@/components/icons/Clinic.Icon';
@@ -14,10 +15,15 @@ import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import { useOdontogramDetailQuery } from '@/query/odontogram';
 import { usePatientsQuery } from '@/query/patients';
 import { useProfessionalsQuery } from '@/query/professionals';
-import { OdontogramStatusForm } from '../../@components/odontogram-status-form';
+import { OdontogramStatusForm } from './@components/odontogram-status-form';
 
-export const Route = createFileRoute('/_private/odontogram/details/$id/')({
+const searchSchema = z.object({
+  id: z.string(),
+});
+
+export const Route = createFileRoute('/_private/odontogram/details')({
   component: OdontogramDetailPage,
+  validateSearch: searchSchema,
   staticData: {
     title: 'Detalhes do Odontograma',
     description: 'Visualize o histórico e atualize o status dos procedimentos e anotações.',
@@ -40,7 +46,7 @@ function getFacesWithProcedures(faces: any) {
 }
 
 function OdontogramDetailPage() {
-  const { id } = Route.useParams();
+  const { id } = useSearch({ from: '/_private/odontogram/details' });
   const navigate = useNavigate();
 
   const { data: odontogram, isLoading, error } = useOdontogramDetailQuery(id);
@@ -74,7 +80,6 @@ function OdontogramDetailPage() {
           </div>
         ) : (
           <>
-            {/* Info */}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="flex items-center gap-4 rounded-lg border bg-muted/50 p-4">
                 <Avatar className="size-12">
@@ -87,13 +92,7 @@ function OdontogramDetailPage() {
                   <p className="font-medium text-muted-foreground text-sm">Paciente</p>
                   <h3 className="font-semibold text-lg">{patientName}</h3>
                 </div>
-                <Button
-                  variant="link"
-                  size="sm"
-                  onClick={() => {
-                    navigate({ to: '/patient/details/$id', params: { id: odontogram.Patient } });
-                  }}
-                >
+                <Button variant="link" size="sm" onClick={() => navigate({ to: '/patient/details', search: { id: odontogram.Patient } })}>
                   Perfil
                 </Button>
               </div>
@@ -109,20 +108,13 @@ function OdontogramDetailPage() {
                   <p className="font-medium text-muted-foreground text-sm">Profissional</p>
                   <h3 className="font-semibold text-lg">{professionalName}</h3>
                 </div>
-                <Button
-                  variant="link"
-                  size="sm"
-                  onClick={() => {
-                    // @ts-expect-error Route may be ungenerated
-                    navigate({ to: '/professional/$id', params: { id: odontogram.Professional } });
-                  }}
-                >
+                {/* @ts-expect-error route not created yet */}
+                <Button variant="link" size="sm" onClick={() => navigate({ to: '/professional/$id', params: { id: odontogram.Professional } })}>
                   Perfil
                 </Button>
               </div>
             </div>
 
-            {/* Teeth List */}
             <div className="space-y-4">
               <h2 className="font-semibold text-xl">Procedimentos por Dente</h2>
               {odontogram.teeth && odontogram.teeth.length > 0 ? (
@@ -155,7 +147,6 @@ function OdontogramDetailPage() {
               )}
             </div>
 
-            {/* Formulation / Edicao */}
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="edit" className="border-b-0">
                 <AccordionTrigger className="rounded-lg border px-4 hover:no-underline">

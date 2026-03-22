@@ -1,5 +1,6 @@
-import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMemo } from 'react';
+import { z } from 'zod';
 import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Back from '@/components/icons/Back.Icon';
@@ -18,12 +19,17 @@ import type { FullFinancial } from '@/lib/interfaces/financial';
 import type { ProfessionalList } from '@/lib/interfaces/professional';
 import { useFinancialDetailQuery } from '@/query/financials';
 import { useProfessionalsQuery } from '@/query/professionals';
-import { FinancialEditForm } from '../../@components/financial-edit-form';
-import { STATUS_TO_BADGE_VARIANT } from '../../@consts/financial.consts';
-import { useFinancialEditForm } from '../../@hooks/use-financial-edit-form';
+import { FinancialEditForm } from './@components/financial-edit-form';
+import { STATUS_TO_BADGE_VARIANT } from './@consts/financial.consts';
+import { useFinancialEditForm } from './@hooks/use-financial-edit-form';
 
-export const Route = createFileRoute('/_private/financial/details/$id/')({
+const searchSchema = z.object({
+  id: z.string(),
+});
+
+export const Route = createFileRoute('/_private/financial/details')({
   component: FinancialDetailPage,
+  validateSearch: searchSchema,
   staticData: {
     title: 'Detalhes do Registro',
     description: 'Visualização completa e edição de registro financeiro.',
@@ -32,7 +38,8 @@ export const Route = createFileRoute('/_private/financial/details/$id/')({
 
 function FinancialDetailPage() {
   const navigate = useNavigate();
-  const { id } = useParams({ from: '/_private/financial/details/$id/' });
+  const search = Route.useSearch();
+  const id = search.id;
   const { data: financial, isLoading } = useFinancialDetailQuery(id);
   const { data: professionals } = useProfessionalsQuery();
 

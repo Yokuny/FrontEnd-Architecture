@@ -14,6 +14,7 @@ React 19 + Vite 7 + TanStack Router + TanStack Query + Zustand + ShadCN UI + Tai
 - SEMPRE usar `@/lib/formatDate` para datas - NUNCA `format` do `date-fns`
 - Usar Zustand com `persist` - NUNCA `localStorage.setItem` direto
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
+- PROIBIDO usar pastas ou arquivos com `$id` na rota de detalhes/edicao (ex: `details/$id` ou `$id.tsx`) para nao quebrar o breadcrumb. Use `search params` (ex: `?id=...`).
 - NUNCA usar Card em componentes comuns - usar `Item`, `ItemTitle`, `ItemDescription`
 - NUNCA `mx-auto` no ChartContainer. Cores: `getChartColor(index)`
 - ANTES de criar hooks, verificar se ja existe em `src/hooks/`

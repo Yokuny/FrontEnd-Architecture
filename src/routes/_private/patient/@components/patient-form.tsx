@@ -22,7 +22,7 @@ export function PatientForm() {
       title: 'Informações Pessoais',
       description: 'Dados principais do paciente',
       fields: [
-        <div key="row-1" className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div key="personal-row-1" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="name"
@@ -34,60 +34,6 @@ export function PatientForm() {
                 </div>
                 <FormControl>
                   <Input {...field} placeholder="Digite o nome" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="Digite o email" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>,
-        <div key="row-2" className="grid grid-cols-1 gap-4 md:grid-cols-4">
-          <FormField
-            control={form.control}
-            name="cpf"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>CPF</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="000.000.000-00" onChange={(e) => field.onChange(formatCpfCnpj(e.target.value))} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="rg"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>RG</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="Digite o RG" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="birthdate"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nascimento</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="dd/mm/aaaa" onChange={(e) => field.onChange(formatDate(e.target.value))} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,6 +56,68 @@ export function PatientForm() {
                     <SelectItem value="F">Feminino</SelectItem>
                   </SelectContent>
                 </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>,
+        <div key="personal-row-2" className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input {...field} value={field.value || ''} placeholder="Digite o email" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="birthdate"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nascimento</FormLabel>
+                <FormControl>
+                  <Input className="w-full max-w-48" {...field} value={field.value || ''} placeholder="dd/mm/aaaa" onChange={(e) => field.onChange(formatDate(e.target.value))} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>,
+      ],
+    },
+    {
+      title: 'Documentos',
+      description: 'Documentos de identificação do paciente',
+      fields: [
+        <div key="docs-row-1" className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="cpf"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>CPF</FormLabel>
+                <FormControl>
+                  <Input {...field} value={field.value || ''} placeholder="000.000.000-00" onChange={(e) => field.onChange(formatCpfCnpj(e.target.value))} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="rg"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>RG</FormLabel>
+                <FormControl>
+                  <Input {...field} value={field.value || ''} placeholder="Digite o RG" />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

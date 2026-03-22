@@ -81,11 +81,9 @@ function OdontogramListPage() {
       </CardHeader>
 
       <CardContent>
-        {isLoading ? (
-          <DefaultLoading />
-        ) : items.length === 0 ? (
-          <DefaultEmptyData />
-        ) : (
+        {isLoading && <DefaultLoading />}
+        {items.length === 0 && !isLoading && <DefaultEmptyData />}
+        {items.length > 0 && !isLoading && (
           <DataTable
             data={items}
             columns={columns}
@@ -93,7 +91,7 @@ function OdontogramListPage() {
             showPagination={false}
             bordered={true}
             className="py-0"
-            onRowClick={(row) => navigate({ to: '/odontogram/details/$id', params: { id: row._id } })}
+            onRowClick={(row) => navigate({ to: '/odontogram/details', search: { id: row._id } })}
           />
         )}
       </CardContent>

@@ -56,11 +56,11 @@ export const odontogramColumns = (navigate: (opts: any) => void): DataTableColum
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => navigate({ to: '/odontogram/details/$id', params: { id: item._id } })}>Visualizar</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate({ to: '/odontogram/details', search: { id: item._id } })}>Visualizar</DropdownMenuItem>
             <DropdownMenuItem
               onClick={(e) => {
                 e.stopPropagation();
-                navigate({ to: '/financial/details/$id', params: { id: item.Financial } });
+                navigate({ to: '/financial/details', search: { id: item.Financial } });
               }}
             >
               Orçamento
@@ -68,7 +68,7 @@ export const odontogramColumns = (navigate: (opts: any) => void): DataTableColum
             <DropdownMenuItem
               onClick={(e) => {
                 e.stopPropagation();
-                navigate({ to: '/patient/details/$id', params: { id: item.patientID } });
+                navigate({ to: '/patient/details', search: { id: item.patientID } });
               }}
             >
               Paciente

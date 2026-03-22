@@ -12,7 +12,8 @@
 ## Roteamento
 - Rotas baseadas em diretorios com `index.tsx` obrigatorio
 - PROIBIDO usar `.` para criar rotas aninhadas (ex: `edit.$id.tsx`)
-- Estrutura valida: `index.tsx`, `add.tsx`, `$id.tsx`
+- Estrutura valida: `index.tsx`, `add.tsx`
+- PROIBIDO usar rotas dinâmicas com `$id` para páginas de detalhes/edição (ex: `details/$id` ou `$id.tsx`). O segmento da rota entra no breadcrumb e exibe o ID para o usuário. Para detalhes/edição, use a Rota normal e passe o id via search params (`?id=...`).
 
 ## Datas
 - SEMPRE usar `@/lib/helpers/formatDate.utils.ts` para formatacao
