@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { z } from 'zod';
-
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
@@ -13,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useOdontogramsQuery } from '@/query/odontogram';
-import { odontogramColumns } from './columns';
+import { odontogramColumns } from './@utils/columns';
 
 const searchSchema = z.object({
   page: z.number().optional().default(1),

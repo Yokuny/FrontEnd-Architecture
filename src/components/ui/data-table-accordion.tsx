@@ -1,21 +1,13 @@
-'use client';
-
-import ArrowDownIcon from '@/components/icons/Down.Icon';
-import ChevronLeft from '@/components/icons/Left.Icon';
-import ChevronRight from '@/components/icons/Right.Icon';
-import ChevronsUpDownIcon from '@/components/icons/Sort.Icon';
-import ArrowUpIcon from '@/components/icons/Up.Icon';
-
-const ChevronDown = ArrowDownIcon;
-
 import type React from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import EmptyData from '@/components/default-empty-data';
 import ColumnIcon from '@/components/icons/Column.Icon';
-
-const Down = ArrowDownIcon;
-
+import ArrowDownIcon from '@/components/icons/Down.Icon';
+import ChevronLeft from '@/components/icons/Left.Icon';
+import ChevronRight from '@/components/icons/Right.Icon';
 import Search from '@/components/icons/Search.Icon';
+import ChevronsUpDownIcon from '@/components/icons/Sort.Icon';
+import ArrowUpIcon from '@/components/icons/Up.Icon';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -24,34 +16,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import DefaultLoading from '../default-loading';
-
-export type DataTableAccordionColumn<T> = {
-  key: keyof T;
-  header: React.ReactNode;
-  sortable?: boolean;
-  render?: (value: any, row: T, index: number) => React.ReactNode;
-  width?: string;
-};
-
-export type DataTableAccordionProps<T> = {
-  data: T[];
-  columns: DataTableAccordionColumn<T>[];
-  renderExpanded?: (row: T, isOpen: boolean) => React.ReactNode;
-  className?: string;
-  searchable?: boolean;
-  searchPlaceholder?: string;
-  itemsPerPage?: number;
-  showPagination?: boolean;
-  striped?: boolean;
-  hoverable?: boolean;
-  bordered?: boolean;
-  compact?: boolean;
-  loading?: boolean;
-  onRowClick?: (row: T, index: number) => void;
-  hideHeader?: boolean;
-  columnSelector?: boolean;
-  defaultExpandedIndex?: number;
-};
 
 function AccordionRow<T>({
   row,
@@ -101,19 +65,18 @@ function AccordionRow<T>({
           }}
         >
           {hasExpanded && (
-            <TableCell className="w-[40px] p-0 align-middle">
+            <TableCell className="w-[60px] px-4 align-middle">
               <Button
                 data-expand-toggle
                 aria-label={isOpen ? 'Recolher linha' : 'Expandir linha'}
-                className={cn('h-full w-full rounded-none p-3 text-muted-foreground transition-colors', 'hover:bg-transparent hover:text-foreground')}
+                className="h-7 w-12 text-muted-foreground"
+                variant="outline"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsOpen(!isOpen);
                 }}
-                size="icon"
-                variant="blank"
               >
-                {isOpen ? <ChevronDown className="h-4 w-4 transition-transform duration-200" /> : <ChevronRight className="h-4 w-4 transition-transform duration-200" />}
+                {isOpen ? <ArrowDownIcon className="size-3.5 transition-transform duration-200" /> : <ChevronRight className="size-3.5 transition-transform duration-200" />}
               </Button>
             </TableCell>
           )}
@@ -126,13 +89,13 @@ function AccordionRow<T>({
         </TableRow>
 
         {hasExpanded && (
-          <TableRow className="border-t-0 border-b-0 p-0 hover:bg-transparent">
-            <TableCell className="border-0 p-0" colSpan={columns.length + 1}>
-              <CollapsibleContent>
-                <div className="w-full border-border border-b bg-muted/10 p-4">{renderExpanded(row, isOpen)}</div>
-              </CollapsibleContent>
-            </TableCell>
-          </TableRow>
+          <CollapsibleContent asChild>
+            <TableRow className="border-t-0 border-b-0 p-0 hover:bg-transparent">
+              <TableCell className="border-0 p-0 md:p-0" colSpan={columns.length + 1}>
+                <div className="w-full bg-muted/10">{renderExpanded(row, isOpen)}</div>
+              </TableCell>
+            </TableRow>
+          </CollapsibleContent>
         )}
       </TableBody>
     </Collapsible>
@@ -273,7 +236,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
                   <Button variant="outline">
                     <ColumnIcon className="mr-2 hidden size-3.5 sm:inline" />
                     Colunas
-                    <Down className="ml-2 size-3" />
+                    <ArrowDownIcon className="ml-2 size-3" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
@@ -304,7 +267,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
             {!hideHeader && (
               <thead className={cn('bg-muted/30', bordered && 'border-border border-b')}>
                 <tr>
-                  {hasExpanded && <th className={cn('w-[40px] px-3', compact ? 'h-10' : 'h-12')} />}
+                  {hasExpanded && <th className={cn('w-[60px] px-4', compact ? 'h-10' : 'h-12')} />}
                   {visibleColumns.map((column) => (
                     <th
                       key={String(column.key)}
@@ -350,7 +313,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
             {paginatedData.length === 0 ? (
               <tbody>
                 <tr>
-                  <td colSpan={visibleColumns.length + (hasExpanded ? 1 : 0)} className="bg-card py-6 text-center">
+                  <td colSpan={visibleColumns.length + (hasExpanded ? 1 : 0)} className="bg-card text-center">
                     <EmptyData />
                   </td>
                 </tr>
@@ -445,3 +408,31 @@ export function DataTableAccordion<T extends Record<string, any>>({
     </div>
   );
 }
+
+export type DataTableAccordionColumn<T> = {
+  key: keyof T;
+  header: React.ReactNode;
+  sortable?: boolean;
+  render?: (value: any, row: T, index: number) => React.ReactNode;
+  width?: string;
+};
+
+export type DataTableAccordionProps<T> = {
+  data: T[];
+  columns: DataTableAccordionColumn<T>[];
+  renderExpanded?: (row: T, isOpen: boolean) => React.ReactNode;
+  className?: string;
+  searchable?: boolean;
+  searchPlaceholder?: string;
+  itemsPerPage?: number;
+  showPagination?: boolean;
+  striped?: boolean;
+  hoverable?: boolean;
+  bordered?: boolean;
+  compact?: boolean;
+  loading?: boolean;
+  onRowClick?: (row: T, index: number) => void;
+  hideHeader?: boolean;
+  columnSelector?: boolean;
+  defaultExpandedIndex?: number;
+};

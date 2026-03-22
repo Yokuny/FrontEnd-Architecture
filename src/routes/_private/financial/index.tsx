@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { DataTableAccordion } from '@/components/ui/data-table-accordion';
 import { useFinancialsPartialQuery } from '@/query/financials';
-import { financialColumns } from './@components/columns';
 import { FinancialView } from './@components/financial-view';
+import { financialColumns } from './@utils/columns';
 
 export const Route = createFileRoute('/_private/financial/')({
   component: FinancialListPage,

@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import DefaultLoading from '@/components/default-loading';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { DataTable } from '@/components/ui/data-table';
-import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { useFinancialDetailQuery, useFinancialMutations } from '@/query/financials';
@@ -29,9 +26,13 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
     try {
       const res = await updateStatus.mutateAsync({ id, status });
       toast.success(res.message);
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e) {
+      toast.error((e as Error).message);
     }
+  };
+
+  const handleStatusSelection = (value: string) => {
+    handleStatusChange(value);
   };
 
   if (isLoading || !financial) {
@@ -39,99 +40,83 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
   }
 
   return (
-    <div className="w-full pt-2">
-      <div className="mb-6 w-full">
-        <div className="flex w-full flex-col items-start justify-between gap-2 md:flex-row">
-          <h3 className="truncate font-semibold tracking-wide md:text-2xl">Registro Financeiro</h3>
-          <div className="flex w-full items-center justify-end gap-2 md:w-fit">
-            {selectedStatus !== null && (
-              <Button type="button" size="sm" variant="default" onClick={() => handleStatusChange(selectedStatus)} disabled={updateStatus.isPending}>
-                Salvar
-              </Button>
-            )}
-            <Select onValueChange={(value) => setSelectedStatus(value)} defaultValue={financial.status || 'pending'} disabled={updateStatus.isPending}>
-              <SelectTrigger className="w-fit">
-                <SelectValue className="text-xs">{statusDictionary(selectedStatus || financial.status)}</SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {FINANCIAL_STATUS_OPTIONS.map((opt) => (
-                  <SelectItem key={opt.value} className="text-xs" value={opt.value} disabled={updateStatus.isPending}>
-                    {opt.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </div>
+    <div className="flex w-full flex-col">
+      {/* 1. Procedimentos */}
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-muted/30">
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Procedimento</TableHead>
+            <TableHead className="h-7 w-[150px] px-4 py-1.5 font-medium text-foreground text-xs">Status</TableHead>
+            <TableHead className="h-7 w-[150px] px-4 py-1.5 text-right font-medium text-foreground text-xs">Preço</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {financial.procedures?.length ? (
+            financial.procedures.map((proc: { procedure: string; status: string; price: number; _id?: string }, index: number) => (
+              <TableRow key={proc._id || index} className="border-b-0">
+                <TableCell className="px-4 py-2 font-medium text-xs">{proc.procedure}</TableCell>
+                <TableCell className="px-4 py-2 text-muted-foreground text-xs">{statusDictionary(proc.status)}</TableCell>
+                <TableCell className="px-4 py-2 text-right font-mono font-semibold text-xs tabular-nums">{currencyFormat(proc.price)}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={3} className="px-4 py-4 text-center text-muted-foreground text-xs">
+                Nenhum procedimento encontrado.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
 
-      <div className="flex flex-col gap-4 md:gap-6">
-        <div className="flex items-center gap-4 md:max-w-md">
-          <div className="flex w-1/2 items-center space-x-4 rounded-lg p-4 md:border">
-            <Avatar className="border">
-              <AvatarImage src={useProfessionalStore.getState().getImage(professionals, financial.Professional)} alt="Profissional" />
-              <AvatarFallback>{useProfessionalStore.getState().getName(professionals, financial.Professional).slice(0, 2)}</AvatarFallback>
-            </Avatar>
-            <ItemContent className="gap-0">
-              <ItemTitle className="truncate">{useProfessionalStore.getState().getName(professionals, financial.Professional)}</ItemTitle>
-              <ItemDescription>Profissional</ItemDescription>
-            </ItemContent>
-          </div>
-          <div className="flex w-1/2 items-center space-x-4 rounded-lg p-4 md:border">
-            <Avatar>
-              <AvatarImage src={financial.patient?.image} alt="Paciente" />
-              <AvatarFallback>{financial.patient?.name?.slice(0, 2)}</AvatarFallback>
-            </Avatar>
-            <ItemContent className="gap-0">
-              <ItemTitle className="w-20 truncate md:w-auto">{financial.patient?.name}</ItemTitle>
-              <ItemDescription>Paciente</ItemDescription>
-            </ItemContent>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4 md:flex-row md:gap-6">
-          <DataTable
-            className="w-full rounded-xl border p-4 md:max-w-md md:py-8"
-            data={financial.procedures || []}
-            columns={[
-              { key: 'procedure', header: 'Procedimento' },
-              { key: 'price', header: 'Preço', render: (v) => <span className="tabular-nums">{currencyFormat(v)}</span> },
-              { key: 'status', header: 'Status', render: (v) => statusDictionary(v) },
-            ]}
-            searchable={false}
-            showPagination={false}
-            compact
-            bordered={false}
-          />
-
-          <div className="flex h-fit flex-row flex-wrap justify-between gap-4 p-4 md:max-w-md md:flex-col md:p-8">
-            <ItemContent className="w-1/4 gap-0 md:w-full">
-              <ItemDescription>Pagamento</ItemDescription>
-              <ItemTitle>{statusDictionary(financial.status || '')}</ItemTitle>
-            </ItemContent>
-            <ItemContent className="w-1/4 gap-0 md:w-full">
-              <ItemDescription>Valor pago</ItemDescription>
-              <ItemTitle className="tabular-nums">{currencyFormat(financial.paid || 0)}</ItemTitle>
-            </ItemContent>
-            <ItemContent className="w-1/4 gap-0 md:w-full">
-              <ItemDescription>Forma de Pagamento</ItemDescription>
-              <ItemTitle>{financialPaymentMethod(financial.paymentMethod || 'none')}</ItemTitle>
-            </ItemContent>
-            <ItemContent className="w-1/4 gap-0 md:w-full">
-              <ItemDescription>Parcelas</ItemDescription>
-              <ItemTitle className="tabular-nums">{financial.installments || 1}</ItemTitle>
-            </ItemContent>
-            <ItemContent className="w-1/4 gap-0 md:w-full">
-              <ItemDescription>Criado em</ItemDescription>
-              <ItemTitle className="tabular-nums">{extractDate(financial.createdAt, '')}</ItemTitle>
-            </ItemContent>
-            <ItemContent className="w-1/4 gap-0 md:w-full">
-              <ItemDescription>Total</ItemDescription>
-              <ItemTitle className="tabular-nums">{currencyFormat(financial.price)}</ItemTitle>
-            </ItemContent>
-          </div>
-        </div>
-      </div>
+      {/* 2. Resto dos Dados Financeiros */}
+      <Table className="mt-0">
+        <TableHeader>
+          <TableRow className="bg-muted/30">
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Profissional</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Paciente</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Forma de Pagto</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Parcelas</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Data</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Valor Pago</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 text-right font-medium text-foreground text-xs">Total</TableHead>
+            <TableHead className="h-7 w-[150px] px-4 py-1.5 text-right font-medium text-foreground text-xs">Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow className="hover:bg-transparent">
+            <TableCell className="w-[180px] px-4 py-3 text-xs">
+              <span className="max-w-[120px] truncate font-medium" title={useProfessionalStore.getState().getName(professionals, financial.Professional)}>
+                {useProfessionalStore.getState().getName(professionals, financial.Professional)}
+              </span>
+            </TableCell>
+            <TableCell className="w-[180px] px-4 py-3 text-xs">
+              <span className="max-w-[120px] truncate font-medium" title={financial.patient?.name}>
+                {financial.patient?.name}
+              </span>
+            </TableCell>
+            <TableCell className="px-4 py-3 text-muted-foreground text-xs">{financialPaymentMethod(financial.paymentMethod || 'none')}</TableCell>
+            <TableCell className="px-4 py-3 text-xs tabular-nums">{financial.installments || 1}x</TableCell>
+            <TableCell className="px-4 py-3 text-muted-foreground text-xs tabular-nums">{extractDate(financial.createdAt, '')}</TableCell>
+            <TableCell className="px-4 py-3 font-medium font-mono text-xs tabular-nums">{currencyFormat(financial.paid || 0)}</TableCell>
+            <TableCell className="px-4 py-3 text-right font-bold font-mono text-foreground text-xs tabular-nums">{currencyFormat(financial.price)}</TableCell>
+            <TableCell className="p-2 pr-4 text-right">
+              <Select onValueChange={handleStatusSelection} value={selectedStatus || financial.status || 'pending'} disabled={updateStatus.isPending}>
+                <SelectTrigger className="ml-auto h-7 w-fit min-w-[110px] text-xs">
+                  <SelectValue>{statusDictionary(selectedStatus || financial.status || 'pending')}</SelectValue>
+                </SelectTrigger>
+                <SelectContent align="end">
+                  {FINANCIAL_STATUS_OPTIONS.map((opt) => (
+                    <SelectItem key={opt.value} className="text-xs" value={opt.value} disabled={updateStatus.isPending}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </div>
   );
 }

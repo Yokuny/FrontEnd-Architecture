@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
 import { usePatientsQuery } from '@/query/patients';
-import { patientColumns } from './columns';
+import { patientColumns } from './@utils/columns';
 
 const searchSchema = z.object({
   page: z.number().optional().default(1),

@@ -8,17 +8,12 @@ import ColumnIcon from '@/components/icons/Column.Icon';
 import ArrowDownIcon from '@/components/icons/Down.Icon';
 import ChevronLeft from '@/components/icons/Left.Icon';
 import ChevronRight from '@/components/icons/Right.Icon';
+import Search from '@/components/icons/Search.Icon';
 import ChevronsUpDownIcon from '@/components/icons/Sort.Icon';
 import ArrowUpIcon from '@/components/icons/Up.Icon';
-
-// import Down from '@/components/icons/Down.Icon'; // Merged into ArrowDownIcon if needed, but keeping names as aliases for minimal diff.
-const Down = ArrowDownIcon;
-
-import Search from '@/components/icons/Search.Icon';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import {
   TableBody as TableBodyPrimitive,
@@ -30,33 +25,6 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import DefaultLoading from '../default-loading';
-
-// ─── Re-exports ──────────────────────────────────────────────────────────────
-
-export type { ColumnDef } from '@tanstack/react-table';
-
-// ─── Context ──────────────────────────────────────────────────────────────────
-
-export const DataTableContext = createContext<{
-  data: unknown[];
-  columns: ColumnDef<unknown, unknown>[];
-  table: Table<unknown> | null;
-}>({
-  data: [],
-  columns: [],
-  table: null,
-});
-
-// ─── Provider ─────────────────────────────────────────────────────────────────
-
-export type DataTableProviderProps<TData, TValue> = {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  children: ReactNode;
-  className?: string;
-  globalFilter?: string;
-  pageSize?: number;
-};
 
 export function DataTableProvider<TData, TValue>({ columns, data, children, className, globalFilter, pageSize }: DataTableProviderProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -93,13 +61,6 @@ export function DataTableProvider<TData, TValue>({ columns, data, children, clas
   );
 }
 
-// ─── DataTableHead ────────────────────────────────────────────────────────────
-
-export type DataTableHeadProps = {
-  header: Header<unknown, unknown>;
-  className?: string;
-};
-
 export const DataTableHead = memo(({ header, className }: DataTableHeadProps) => (
   <TableHeadPrimitive className={className} key={header.id}>
     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
@@ -108,36 +69,15 @@ export const DataTableHead = memo(({ header, className }: DataTableHeadProps) =>
 
 DataTableHead.displayName = 'DataTableHead';
 
-// ─── DataTableHeaderGroup ─────────────────────────────────────────────────────
-
-export type DataTableHeaderGroupProps = {
-  headerGroup: HeaderGroup<unknown>;
-  children: (props: { header: Header<unknown, unknown> }) => ReactNode;
-};
-
 export const DataTableHeaderGroup = ({ headerGroup, children }: DataTableHeaderGroupProps) => (
   <TableRowPrimitive key={headerGroup.id}>{headerGroup.headers.map((header) => children({ header }))}</TableRowPrimitive>
 );
-
-// ─── DataTableHeader ──────────────────────────────────────────────────────────
-
-export type DataTableHeaderProps = {
-  className?: string;
-  children: (props: { headerGroup: HeaderGroup<unknown> }) => ReactNode;
-};
 
 export const DataTableHeader = ({ className, children }: DataTableHeaderProps) => {
   const { table } = useContext(DataTableContext);
 
   return <TableHeaderPrimitive className={className}>{table?.getHeaderGroups().map((headerGroup) => children({ headerGroup }))}</TableHeaderPrimitive>;
 };
-
-// ─── DataTableColumnHeader (sortable dropdown) ────────────────────────────────
-
-export interface DataTableColumnHeaderProps<TData, TValue> extends HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>;
-  title: string;
-}
 
 export function DataTableColumnHeader<TData, TValue>({ column, title, className }: DataTableColumnHeaderProps<TData, TValue>) {
   const handleSortAsc = useCallback(() => {
@@ -182,37 +122,15 @@ export function DataTableColumnHeader<TData, TValue>({ column, title, className 
   );
 }
 
-// ─── DataTableCell ────────────────────────────────────────────────────────────
-
-export type DataTableCellProps = {
-  cell: Cell<unknown, unknown>;
-  className?: string;
-};
-
 export const DataTableCell = ({ cell, className }: DataTableCellProps) => (
   <TableCellPrimitive className={className}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCellPrimitive>
 );
-
-// ─── DataTableRow ─────────────────────────────────────────────────────────────
-
-export type DataTableRowProps = {
-  row: Row<unknown>;
-  children: (props: { cell: Cell<unknown, unknown> }) => ReactNode;
-  className?: string;
-};
 
 export const DataTableRow = ({ row, children, className }: DataTableRowProps) => (
   <TableRowPrimitive className={className} data-state={row.getIsSelected() && 'selected'} key={row.id}>
     {row.getVisibleCells().map((cell) => children({ cell }))}
   </TableRowPrimitive>
 );
-
-// ─── DataTableBody ────────────────────────────────────────────────────────────
-
-export type DataTableBodyProps = {
-  children: (props: { row: Row<unknown> }) => ReactNode;
-  className?: string;
-};
 
 export const DataTableBody = ({ children, className }: DataTableBodyProps) => {
   const { columns, table } = useContext(DataTableContext);
@@ -232,36 +150,6 @@ export const DataTableBody = ({ children, className }: DataTableBodyProps) => {
     </TableBodyPrimitive>
   );
 };
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-export type DataTableColumn<T> = {
-  key: keyof T;
-  header: React.ReactNode;
-  sortable?: boolean;
-  render?: (value: any, row: T, index: number) => React.ReactNode;
-  width?: string;
-};
-
-export type DataTableProps<T> = {
-  data: T[];
-  columns: DataTableColumn<T>[];
-  className?: string;
-  searchable?: boolean;
-  searchPlaceholder?: string;
-  itemsPerPage?: number;
-  showPagination?: boolean;
-  striped?: boolean;
-  hoverable?: boolean;
-  bordered?: boolean;
-  compact?: boolean;
-  loading?: boolean;
-  onRowClick?: (row: T, index: number) => void;
-  hideHeader?: boolean;
-  columnSelector?: boolean;
-};
-
-// ─── DataTable (API simplificada / retrocompatível) ───────────────────────────
 
 export function DataTable<T extends Record<string, any>>({
   data,
@@ -393,7 +281,7 @@ export function DataTable<T extends Record<string, any>>({
                   <Button variant="outline">
                     <ColumnIcon className="mr-2 hidden size-3.5 sm:inline" />
                     Colunas
-                    <Down className="ml-2 size-3" />
+                    <ArrowDownIcon className="ml-2 size-3" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
@@ -567,3 +455,82 @@ export function DataTable<T extends Record<string, any>>({
     </div>
   );
 }
+
+export type { ColumnDef } from '@tanstack/react-table';
+
+export const DataTableContext = createContext<{
+  data: unknown[];
+  columns: ColumnDef<unknown, unknown>[];
+  table: Table<unknown> | null;
+}>({
+  data: [],
+  columns: [],
+  table: null,
+});
+export type DataTableProviderProps<TData, TValue> = {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  children: ReactNode;
+  className?: string;
+  globalFilter?: string;
+  pageSize?: number;
+};
+
+export type DataTableHeadProps = {
+  header: Header<unknown, unknown>;
+  className?: string;
+};
+
+export type DataTableHeaderGroupProps = {
+  headerGroup: HeaderGroup<unknown>;
+  children: (props: { header: Header<unknown, unknown> }) => ReactNode;
+};
+export type DataTableHeaderProps = {
+  className?: string;
+  children: (props: { headerGroup: HeaderGroup<unknown> }) => ReactNode;
+};
+export interface DataTableColumnHeaderProps<TData, TValue> extends HTMLAttributes<HTMLDivElement> {
+  column: Column<TData, TValue>;
+  title: string;
+}
+export type DataTableCellProps = {
+  cell: Cell<unknown, unknown>;
+  className?: string;
+};
+
+export type DataTableRowProps = {
+  row: Row<unknown>;
+  children: (props: { cell: Cell<unknown, unknown> }) => ReactNode;
+  className?: string;
+};
+
+export type DataTableBodyProps = {
+  children: (props: { row: Row<unknown> }) => ReactNode;
+  className?: string;
+};
+
+export type DataTableColumn<T> = {
+  key: keyof T;
+  header: React.ReactNode;
+  sortable?: boolean;
+  render?: (value: any, row: T, index: number) => React.ReactNode;
+  width?: string;
+};
+
+export type DataTableProps<T> = {
+  data: T[];
+  columns: DataTableColumn<T>[];
+  className?: string;
+  searchable?: boolean;
+  searchPlaceholder?: string;
+  itemsPerPage?: number;
+  showPagination?: boolean;
+  striped?: boolean;
+  hoverable?: boolean;
+  bordered?: boolean;
+  compact?: boolean;
+  loading?: boolean;
+  onRowClick?: (row: T, index: number) => void;
+  hideHeader?: boolean;
+  columnSelector?: boolean;
+};
