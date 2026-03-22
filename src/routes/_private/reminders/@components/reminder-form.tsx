@@ -23,20 +23,42 @@ export function ReminderForm() {
       title: 'Informações do Lembrete',
       description: 'Adicione um novo lembrete para um paciente',
       fields: [
-        <FormField
-          key="Patient"
-          control={form.control}
-          name="Patient"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Paciente *</FormLabel>
-              <FormControl>
-                <PatientCombobox controller={field} fetchPatients={fetchPatientsCombobox} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />,
+        <div key="patient-and-date" className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField
+            key="Patient"
+            control={form.control}
+            name="Patient"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Paciente *</FormLabel>
+                <FormControl>
+                  <PatientCombobox controller={field} fetchPatients={fetchPatientsCombobox} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            key="scheduledDate"
+            control={form.control}
+            name="scheduledDate"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Data do lembrete *</FormLabel>
+                <FormControl>
+                  <DatePickerButton date={field.value ? new Date(field.value) : undefined} onSelect={(date) => field.onChange(date?.toISOString())} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>,
+      ],
+    },
+    {
+      title: 'Descrição',
+      description: 'Detalhes do lembrete',
+      fields: [
         <FormField
           key="description"
           control={form.control}
@@ -46,20 +68,6 @@ export function ReminderForm() {
               <FormLabel>Descrição *</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="Ex: Ligar para confirmar consulta" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />,
-        <FormField
-          key="scheduledDate"
-          control={form.control}
-          name="scheduledDate"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Data do lembrete *</FormLabel>
-              <FormControl>
-                <DatePickerButton date={field.value ? new Date(field.value) : undefined} onSelect={(date) => field.onChange(date?.toISOString())} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Check from '@/components/icons/Check.Icon';
-import Up from '@/components/icons/Up.Icon';
+import Down from '@/components/icons/Down.Icon';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { t } from '@/lib/helpers/translate';
 import { cn } from '@/lib/utils';
 
 const OdontogramCombobox = ({ controller, patient, disabled, fetchOdontograms }: OdontogramComboboxProps) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [odontogram, setOdontogram] = useState('');
-  const [odontograms, setOdontograms] = useState([{ value: '', label: 'Selecione o odontograma...' }]);
+  const [odontograms, setOdontograms] = useState([{ value: '', label: t('select.odontogram') }]);
 
   useEffect(() => {
     const loadOdontograms = async () => {
@@ -33,15 +34,15 @@ const OdontogramCombobox = ({ controller, patient, disabled, fetchOdontograms }:
       <PopoverTrigger asChild>
         <Button role="combobox" variant="outline" aria-expanded={open} disabled={disabled || isLoading}>
           <div className="flex items-center gap-2 truncate">
-            <span className="text-foreground/90">{odontograms.find((item) => item.value === odontogram)?.label || 'Odontogramas'}</span>
+            <span className="text-foreground/90">{odontograms.find((item) => item.value === odontogram)?.label || t('odontograms')}</span>
           </div>
-          <Up className="size-3 shrink-0 opacity-50" />
+          <Down className={cn('ml-2 size-3 shrink-0 stroke-2 opacity-50 transition-transform duration-200', open && 'rotate-180')} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[--radix-popover-trigger-width] min-w-[240px] p-0">
         <Command>
-          <CommandInput placeholder="Buscar odontograma..." className="h-9" disabled={isLoading} />
-          <CommandEmpty>Odontograma não encontrado</CommandEmpty>
+          <CommandInput placeholder={t('search.odontogram')} className="h-9" disabled={isLoading} />
+          <CommandEmpty>{t('odontogram.not.found')}</CommandEmpty>
           <CommandGroup>
             {odontograms.map((item) => (
               <CommandItem

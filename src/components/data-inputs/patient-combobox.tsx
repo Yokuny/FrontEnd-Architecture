@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Check from '@/components/icons/Check.Icon';
-import Up from '@/components/icons/Up.Icon';
+import Down from '@/components/icons/Down.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { t } from '@/lib/helpers/translate';
 import { cn } from '@/lib/utils';
 
 const PatientCombobox = ({ controller, disabled, fetchPatients }: PatientComboboxProps) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [patient, setPatient] = useState('');
-  const [patients, setPatients] = useState([{ value: '', label: 'Selecione o paciente...', image: '' }]);
+  const [patients, setPatients] = useState([{ value: '', label: t('select.patient'), image: '' }]);
 
   useEffect(() => {
     const loadPatients = async () => {
@@ -40,15 +41,15 @@ const PatientCombobox = ({ controller, disabled, fetchPatients }: PatientCombobo
                 <AvatarFallback className="text-xs">{patients.find((item) => item.value === patient)?.label.slice(0, 2)}</AvatarFallback>
               </Avatar>
             )}
-            <span className="text-foreground/90">{patients.find((item) => item.value === patient)?.label || 'Pacientes'}</span>
+            <span className="text-foreground/90">{patients.find((item) => item.value === patient)?.label || t('patients')}</span>
           </div>
-          <Up className="size-3 shrink-0 opacity-50" />
+          <Down className={cn('ml-2 size-3 shrink-0 stroke-2 opacity-50 transition-transform duration-200', open && 'rotate-180')} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[--radix-popover-trigger-width] min-w-[240px] p-0">
         <Command>
-          <CommandInput placeholder="Buscar paciente..." className="h-9" disabled={isLoading} />
-          <CommandEmpty>Paciente não encontrado</CommandEmpty>
+          <CommandInput placeholder={t('search.patient')} className="h-9" disabled={isLoading} />
+          <CommandEmpty>{t('patient.not.found')}</CommandEmpty>
           <CommandGroup>
             {patients.map((item) => (
               <CommandItem

@@ -74,5 +74,21 @@
   "pagination.next": "Próximo",
   "pagination.go.previous": "Ir para a página anterior",
   "pagination.go.next": "Ir para a próxima página",
-  "pagination.more": "Mais páginas"
+  "pagination.more": "Mais páginas",
+  "patients": "Pacientes",
+  "select.patient": "Selecione o paciente...",
+  "search.patient": "Buscar paciente...",
+  "patient.not.found": "Paciente não encontrado",
+  "odontograms": "Odontogramas",
+  "select.odontogram": "Selecione o odontograma...",
+  "search.odontogram": "Buscar odontograma...",
+  "odontogram.not.found": "Odontograma não encontrado",
+  "financials": "Financeiros",
+  "select.record": "Selecione um registro...",
+  "search.record": "Buscar registro...",
+  "financial.record.not.found": "Registro financeiro não encontrado",
+  "professionals": "Profissionais",
+  "select.professional": "Selecione o profissional...",
+  "search.professional": "Buscar profissional...",
+  "professional.not.found": "Profissional não encontrado"
 }

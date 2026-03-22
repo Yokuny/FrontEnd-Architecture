@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Check from '@/components/icons/Check.Icon';
-import Up from '@/components/icons/Up.Icon';
+import Down from '@/components/icons/Down.Icon';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { t } from '@/lib/helpers/translate';
 import { cn } from '@/lib/utils';
 
 const FinancialCombobox = ({ controller, patient, disabled, fetchFinancials }: FinancialComboboxProps) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [financial, setFinancial] = useState('');
-  const [financials, setFinancials] = useState([{ value: '', label: 'Selecione um registro' }]);
+  const [financials, setFinancials] = useState([{ value: '', label: t('select.record') }]);
 
   useEffect(() => {
     const loadFinancials = async () => {
@@ -33,15 +34,15 @@ const FinancialCombobox = ({ controller, patient, disabled, fetchFinancials }: F
       <PopoverTrigger asChild>
         <Button role="combobox" variant="outline" aria-expanded={open} disabled={disabled || isLoading}>
           <div className="flex items-center gap-2 truncate">
-            <span className="text-foreground/90">{financials.find((item) => item.value === financial)?.label || 'Financeiros'}</span>
+            <span className="text-foreground/90">{financials.find((item) => item.value === financial)?.label || t('financials')}</span>
           </div>
-          <Up className="size-3 shrink-0 opacity-50" />
+          <Down className={cn('ml-2 size-3 shrink-0 stroke-2 opacity-50 transition-transform duration-200', open && 'rotate-180')} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[--radix-popover-trigger-width] min-w-[240px] p-0">
         <Command>
-          <CommandInput placeholder="Buscar registro..." className="h-9" disabled={isLoading} />
-          <CommandEmpty>Registro financeiro não encontrado</CommandEmpty>
+          <CommandInput placeholder={t('search.record')} className="h-9" disabled={isLoading} />
+          <CommandEmpty>{t('financial.record.not.found')}</CommandEmpty>
           <CommandGroup>
             {financials.map((item) => (
               <CommandItem

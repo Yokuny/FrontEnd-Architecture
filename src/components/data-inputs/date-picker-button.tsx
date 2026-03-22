@@ -9,7 +9,7 @@ const DatePickerButton = ({ date, onSelect }: DatePickerButtonProps) => {
     <div className="relative">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className={cn('w-[280px] justify-start', date && 'font-normal')}>
+          <Button variant="outline" className={cn('w-full max-w-72 justify-start gap-2', date && 'font-normal')}>
             <Calender className="size-5" />
             {date ? String(date.toLocaleDateString('pt-BR')) : <span>Selecione uma data</span>}
           </Button>
