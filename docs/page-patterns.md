@@ -28,7 +28,13 @@ Exemplo real de `src/routes/_private/patient/index.tsx`:
 
 ```tsx
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { Calendar as CalendarIcon, Copy, MoreVertical, Plus, Search, User } from 'lucide-react';
+import Add from '@/components/icons/Add.Icon';
+import Calender from '@/components/icons/Calender.Icon';
+import Copy from '@/components/icons/Copy.Icon';
+import Search from '@/components/icons/Search.Icon';
+import Sort from '@/components/icons/Sort.Icon';
+import User from '@/components/icons/User.Icon';
+
 import { useCallback, useMemo } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -133,7 +139,7 @@ function PatientListPage() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
               <Button variant="secondary" size="icon">
-                <MoreVertical className="size-4" />
+                <Sort className="size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -182,7 +188,7 @@ function PatientListPage() {
               />
             </div>
             <Button onClick={() => navigate({ to: '/patient/add' })}>
-              <Plus className="mr-2 size-4" />
+              <Add className="mr-2 size-4" />
               Adicionar
             </Button>
           </div>
@@ -335,7 +341,7 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <Button type="button" variant="destructive" disabled={deleteGeofence.isPending || isPending}>
-                    {deleteGeofence.isPending ? <Spinner className="mr-2 size-4" /> : <Trash2 className="mr-2 size-4" />}
+                    {deleteGeofence.isPending ? <Spinner className="mr-2 size-4" /> : <Delete className="mr-2 size-4" />}
                     Excluir
                   </Button>
                 </AlertDialogTrigger>
@@ -347,7 +353,7 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancelar</AlertDialogCancel>
                     <AlertDialogAction onClick={handleDelete} className="bg-destructive">
-                      <Trash2 className="size-4" />
+                      <Delete className="size-4" />
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

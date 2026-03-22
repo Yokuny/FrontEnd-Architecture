@@ -60,6 +60,15 @@ export const Route = createRootRoute({
         <TanStackDevtools
           config={{
             position: 'middle-right',
+            customTrigger: (
+              <button
+                type="button"
+                className="fixed right-10 bottom-10 z-9999 rounded-md border bg-background p-3 opacity-20 shadow-md transition-opacity duration-200 hover:opacity-100"
+                aria-label="Toggle TanStack Devtools"
+              >
+                🛠️
+              </button>
+            ),
           }}
           plugins={[
             {

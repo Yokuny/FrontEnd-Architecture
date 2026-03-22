@@ -1,241 +1,31 @@
-import type { Cell, Column, ColumnDef, Header, HeaderGroup, Row, SortingState, Table } from '@tanstack/react-table';
-import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
-import type React from 'react';
-import type { HTMLAttributes, ReactNode } from 'react';
-import { createContext, memo, useCallback, useContext, useMemo, useState } from 'react';
-import EmptyData from '@/components/default-empty-data';
-import ColumnIcon from '@/components/icons/Column.Icon';
+'use client';
+
 import ArrowDownIcon from '@/components/icons/Down.Icon';
 import ChevronLeft from '@/components/icons/Left.Icon';
 import ChevronRight from '@/components/icons/Right.Icon';
 import ChevronsUpDownIcon from '@/components/icons/Sort.Icon';
 import ArrowUpIcon from '@/components/icons/Up.Icon';
 
-// import Down from '@/components/icons/Down.Icon'; // Merged into ArrowDownIcon if needed, but keeping names as aliases for minimal diff.
+const ChevronDown = ArrowDownIcon;
+
+import type React from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import EmptyData from '@/components/default-empty-data';
+import ColumnIcon from '@/components/icons/Column.Icon';
+
 const Down = ArrowDownIcon;
 
 import Search from '@/components/icons/Search.Icon';
 import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import {
-  TableBody as TableBodyPrimitive,
-  TableCell as TableCellPrimitive,
-  TableHeader as TableHeaderPrimitive,
-  TableHead as TableHeadPrimitive,
-  Table as TablePrimitive,
-  TableRow as TableRowPrimitive,
-} from '@/components/ui/table';
+import { TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import DefaultLoading from '../default-loading';
 
-// ─── Re-exports ──────────────────────────────────────────────────────────────
-
-export type { ColumnDef } from '@tanstack/react-table';
-
-// ─── Context ──────────────────────────────────────────────────────────────────
-
-export const DataTableContext = createContext<{
-  data: unknown[];
-  columns: ColumnDef<unknown, unknown>[];
-  table: Table<unknown> | null;
-}>({
-  data: [],
-  columns: [],
-  table: null,
-});
-
-// ─── Provider ─────────────────────────────────────────────────────────────────
-
-export type DataTableProviderProps<TData, TValue> = {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  children: ReactNode;
-  className?: string;
-  globalFilter?: string;
-  pageSize?: number;
-};
-
-export function DataTableProvider<TData, TValue>({ columns, data, children, className, globalFilter, pageSize }: DataTableProviderProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: (updater) => {
-      // @ts-expect-error updater is a function that returns a sorting object
-      const newSorting = updater(sorting);
-      setSorting(newSorting);
-    },
-    state: {
-      sorting,
-      ...(globalFilter !== undefined && { globalFilter }),
-      ...(pageSize !== undefined && { pagination: { pageIndex: 0, pageSize } }),
-    },
-  });
-
-  return (
-    <DataTableContext.Provider
-      value={{
-        data,
-        columns: columns as never,
-        table: table as never,
-      }}
-    >
-      <TablePrimitive className={className}>{children}</TablePrimitive>
-    </DataTableContext.Provider>
-  );
-}
-
-// ─── DataTableHead ────────────────────────────────────────────────────────────
-
-export type DataTableHeadProps = {
-  header: Header<unknown, unknown>;
-  className?: string;
-};
-
-export const DataTableHead = memo(({ header, className }: DataTableHeadProps) => (
-  <TableHeadPrimitive className={className} key={header.id}>
-    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-  </TableHeadPrimitive>
-));
-
-DataTableHead.displayName = 'DataTableHead';
-
-// ─── DataTableHeaderGroup ─────────────────────────────────────────────────────
-
-export type DataTableHeaderGroupProps = {
-  headerGroup: HeaderGroup<unknown>;
-  children: (props: { header: Header<unknown, unknown> }) => ReactNode;
-};
-
-export const DataTableHeaderGroup = ({ headerGroup, children }: DataTableHeaderGroupProps) => (
-  <TableRowPrimitive key={headerGroup.id}>{headerGroup.headers.map((header) => children({ header }))}</TableRowPrimitive>
-);
-
-// ─── DataTableHeader ──────────────────────────────────────────────────────────
-
-export type DataTableHeaderProps = {
-  className?: string;
-  children: (props: { headerGroup: HeaderGroup<unknown> }) => ReactNode;
-};
-
-export const DataTableHeader = ({ className, children }: DataTableHeaderProps) => {
-  const { table } = useContext(DataTableContext);
-
-  return <TableHeaderPrimitive className={className}>{table?.getHeaderGroups().map((headerGroup) => children({ headerGroup }))}</TableHeaderPrimitive>;
-};
-
-// ─── DataTableColumnHeader (sortable dropdown) ────────────────────────────────
-
-export interface DataTableColumnHeaderProps<TData, TValue> extends HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>;
-  title: string;
-}
-
-export function DataTableColumnHeader<TData, TValue>({ column, title, className }: DataTableColumnHeaderProps<TData, TValue>) {
-  const handleSortAsc = useCallback(() => {
-    column.toggleSorting(false);
-  }, [column]);
-
-  const handleSortDesc = useCallback(() => {
-    column.toggleSorting(true);
-  }, [column]);
-
-  if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>;
-  }
-
-  return (
-    <div className={cn('flex items-center space-x-2', className)}>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button className="-ml-3 h-8 data-[state=open]:bg-accent" size="sm" variant="secondary">
-            <span>{title}</span>
-            {column.getIsSorted() === 'desc' ? (
-              <ArrowDownIcon className="ml-2 h-4 w-4" />
-            ) : column.getIsSorted() === 'asc' ? (
-              <ArrowUpIcon className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
-            )}
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem onClick={handleSortAsc}>
-            <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Crescente
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleSortDesc}>
-            <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Decrescente
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
-  );
-}
-
-// ─── DataTableCell ────────────────────────────────────────────────────────────
-
-export type DataTableCellProps = {
-  cell: Cell<unknown, unknown>;
-  className?: string;
-};
-
-export const DataTableCell = ({ cell, className }: DataTableCellProps) => (
-  <TableCellPrimitive className={className}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCellPrimitive>
-);
-
-// ─── DataTableRow ─────────────────────────────────────────────────────────────
-
-export type DataTableRowProps = {
-  row: Row<unknown>;
-  children: (props: { cell: Cell<unknown, unknown> }) => ReactNode;
-  className?: string;
-};
-
-export const DataTableRow = ({ row, children, className }: DataTableRowProps) => (
-  <TableRowPrimitive className={className} data-state={row.getIsSelected() && 'selected'} key={row.id}>
-    {row.getVisibleCells().map((cell) => children({ cell }))}
-  </TableRowPrimitive>
-);
-
-// ─── DataTableBody ────────────────────────────────────────────────────────────
-
-export type DataTableBodyProps = {
-  children: (props: { row: Row<unknown> }) => ReactNode;
-  className?: string;
-};
-
-export const DataTableBody = ({ children, className }: DataTableBodyProps) => {
-  const { columns, table } = useContext(DataTableContext);
-  const rows = table?.getRowModel().rows;
-
-  return (
-    <TableBodyPrimitive className={className}>
-      {rows?.length ? (
-        rows.map((row) => children({ row }))
-      ) : (
-        <TableRowPrimitive>
-          <TableCellPrimitive className="h-24 text-center" colSpan={columns.length}>
-            <EmptyData />
-          </TableCellPrimitive>
-        </TableRowPrimitive>
-      )}
-    </TableBodyPrimitive>
-  );
-};
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-export type DataTableColumn<T> = {
+export type DataTableAccordionColumn<T> = {
   key: keyof T;
   header: React.ReactNode;
   sortable?: boolean;
@@ -243,9 +33,10 @@ export type DataTableColumn<T> = {
   width?: string;
 };
 
-export type DataTableProps<T> = {
+export type DataTableAccordionProps<T> = {
   data: T[];
-  columns: DataTableColumn<T>[];
+  columns: DataTableAccordionColumn<T>[];
+  renderExpanded?: (row: T, isOpen: boolean) => React.ReactNode;
   className?: string;
   searchable?: boolean;
   searchPlaceholder?: string;
@@ -259,13 +50,99 @@ export type DataTableProps<T> = {
   onRowClick?: (row: T, index: number) => void;
   hideHeader?: boolean;
   columnSelector?: boolean;
+  defaultExpandedIndex?: number;
 };
 
-// ─── DataTable (API simplificada / retrocompatível) ───────────────────────────
+function AccordionRow<T>({
+  row,
+  index,
+  columns,
+  renderExpanded,
+  striped,
+  hoverable,
+  compact,
+  onRowClick,
+  defaultOpen = false,
+}: {
+  row: T;
+  index: number;
+  columns: DataTableAccordionColumn<T>[];
+  renderExpanded?: (row: T, isOpen: boolean) => React.ReactNode;
+  striped?: boolean;
+  hoverable?: boolean;
+  compact?: boolean;
+  onRowClick?: (row: T, index: number) => void;
+  defaultOpen?: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const hasExpanded = !!renderExpanded;
 
-export function DataTable<T extends Record<string, any>>({
+  return (
+    <Collapsible asChild open={isOpen} onOpenChange={setIsOpen}>
+      <TableBody className="[&_tr:last-child]:border-b last:[&_tr:last-child]:border-0">
+        <TableRow
+          className={cn(
+            'border-accent transition-colors',
+            striped && index % 2 === 0 && 'bg-muted/5',
+            hoverable && 'hover:bg-secondary',
+            onRowClick && 'cursor-pointer',
+            isOpen ? 'border-b-0 bg-muted/50 hover:bg-muted/50' : 'border-b last:border-0',
+          )}
+          onClick={(e) => {
+            if (onRowClick) {
+              onRowClick(row, index);
+            } else if (hasExpanded) {
+              const target = e.target as HTMLElement;
+              if (!target.closest('button[data-expand-toggle]')) {
+                setIsOpen(!isOpen);
+                e.stopPropagation();
+              }
+            }
+          }}
+        >
+          {hasExpanded && (
+            <TableCell className="w-[40px] p-0 align-middle">
+              <Button
+                data-expand-toggle
+                aria-label={isOpen ? 'Recolher linha' : 'Expandir linha'}
+                className={cn('h-full w-full rounded-none p-3 text-muted-foreground transition-colors', 'hover:bg-transparent hover:text-foreground')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsOpen(!isOpen);
+                }}
+                size="icon"
+                variant="blank"
+              >
+                {isOpen ? <ChevronDown className="h-4 w-4 transition-transform duration-200" /> : <ChevronRight className="h-4 w-4 transition-transform duration-200" />}
+              </Button>
+            </TableCell>
+          )}
+
+          {columns.map((column) => (
+            <TableCell key={String(column.key)} className={cn('align-middle text-foreground text-sm', compact ? 'p-4' : 'px-6 py-4')}>
+              {column.render ? column.render(row[column.key], row, index) : String(row[column.key] ?? '')}
+            </TableCell>
+          ))}
+        </TableRow>
+
+        {hasExpanded && (
+          <TableRow className="border-t-0 border-b-0 p-0 hover:bg-transparent">
+            <TableCell className="border-0 p-0" colSpan={columns.length + 1}>
+              <CollapsibleContent>
+                <div className="w-full border-border border-b bg-muted/10 p-4">{renderExpanded(row, isOpen)}</div>
+              </CollapsibleContent>
+            </TableCell>
+          </TableRow>
+        )}
+      </TableBody>
+    </Collapsible>
+  );
+}
+
+export function DataTableAccordion<T extends Record<string, any>>({
   data,
   columns,
+  renderExpanded,
   className,
   searchPlaceholder = 'Buscar...',
   searchable = true,
@@ -279,7 +156,8 @@ export function DataTable<T extends Record<string, any>>({
   loading = false,
   onRowClick,
   hideHeader = false,
-}: DataTableProps<T>) {
+  defaultExpandedIndex = -1,
+}: DataTableAccordionProps<T>) {
   const [search, setSearch] = useState('');
   const [sortConfig, setSortConfig] = useState<{
     key: keyof T | null;
@@ -339,6 +217,8 @@ export function DataTable<T extends Record<string, any>>({
   if (loading) {
     return <DefaultLoading />;
   }
+
+  const hasExpanded = !!renderExpanded;
 
   return (
     <div className={cn('w-full space-y-4', className)}>
@@ -420,10 +300,11 @@ export function DataTable<T extends Record<string, any>>({
       {/* Table Area */}
       <div className={cn('rounded-lg border bg-card', bordered ? 'border' : 'border-0')}>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-full">
+          <table className="w-full min-w-full border-collapse">
             {!hideHeader && (
               <thead className={cn('bg-muted/30', bordered && 'border-border border-b')}>
                 <tr>
+                  {hasExpanded && <th className={cn('w-[40px] px-3', compact ? 'h-10' : 'h-12')} />}
                   {visibleColumns.map((column) => (
                     <th
                       key={String(column.key)}
@@ -465,34 +346,31 @@ export function DataTable<T extends Record<string, any>>({
                 </tr>
               </thead>
             )}
-            <tbody>
-              {paginatedData.length === 0 ? (
+
+            {paginatedData.length === 0 ? (
+              <tbody>
                 <tr>
-                  <td colSpan={visibleColumns.length} className="bg-card py-6 text-center">
+                  <td colSpan={visibleColumns.length + (hasExpanded ? 1 : 0)} className="bg-card py-6 text-center">
                     <EmptyData />
                   </td>
                 </tr>
-              ) : (
-                paginatedData.map((row, index) => (
-                  <tr
-                    key={index}
-                    className={cn(
-                      'border-accent border-b transition-colors last:border-0',
-                      striped && index % 2 === 0 && 'bg-muted/5',
-                      hoverable && 'hover:bg-secondary',
-                      onRowClick && 'cursor-pointer',
-                    )}
-                    onClick={() => onRowClick?.(row, index)}
-                  >
-                    {visibleColumns.map((column) => (
-                      <td key={String(column.key)} className={cn('align-middle text-foreground text-sm', compact ? 'p-4' : 'px-6 py-4')}>
-                        {column.render ? column.render(row[column.key], row, index) : String(row[column.key] ?? '')}
-                      </td>
-                    ))}
-                  </tr>
-                ))
-              )}
-            </tbody>
+              </tbody>
+            ) : (
+              paginatedData.map((row, index) => (
+                <AccordionRow
+                  key={index}
+                  row={row}
+                  index={index}
+                  columns={visibleColumns}
+                  renderExpanded={renderExpanded}
+                  striped={striped}
+                  hoverable={hoverable}
+                  compact={compact}
+                  onRowClick={onRowClick}
+                  defaultOpen={defaultExpandedIndex === index}
+                />
+              ))
+            )}
           </table>
         </div>
       </div>

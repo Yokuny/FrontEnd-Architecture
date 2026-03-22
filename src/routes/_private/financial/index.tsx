@@ -1,12 +1,14 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-
+import { useMemo } from 'react';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { DataTableAccordion } from '@/components/ui/data-table-accordion';
 import { useFinancialsPartialQuery } from '@/query/financials';
-import { FinancialList } from './@components/financial-list';
+import { financialColumns } from './@components/columns';
+import { FinancialView } from './@components/financial-view';
 
 export const Route = createFileRoute('/_private/financial/')({
   component: FinancialListPage,
@@ -20,6 +22,8 @@ function FinancialListPage() {
   const navigate = useNavigate();
   const { data: financials, isLoading } = useFinancialsPartialQuery();
 
+  const columns = useMemo(() => financialColumns(navigate), [navigate]);
+
   return (
     <Card asPage>
       <CardHeader>
@@ -31,7 +35,21 @@ function FinancialListPage() {
         </CardAction>
       </CardHeader>
 
-      <CardContent>{isLoading ? <DefaultLoading /> : !financials?.length ? <DefaultEmptyData /> : <FinancialList data={financials} />}</CardContent>
+      <CardContent>
+        {isLoading && <DefaultLoading />}
+        {!financials?.length && !isLoading && <DefaultEmptyData />}
+        {financials?.length && !isLoading && (
+          <DataTableAccordion
+            data={financials}
+            columns={columns}
+            searchable
+            itemsPerPage={5}
+            bordered={false}
+            onRowClick={(row) => navigate({ to: '/financial/details/$id', params: { id: row._id } })}
+            renderExpanded={(row, isOpen) => <FinancialView id={row._id} isOpen={isOpen} />}
+          />
+        )}
+      </CardContent>
     </Card>
   );
 }
