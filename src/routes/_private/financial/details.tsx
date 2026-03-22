@@ -4,15 +4,19 @@ import { z } from 'zod';
 import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Back from '@/components/icons/Back.Icon';
+import IconCalendar from '@/components/icons/Calender.Icon';
+import IconCard from '@/components/icons/Card.Icon';
+import IconDollar from '@/components/icons/Dollar.Icon';
+import IconService from '@/components/icons/Service.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
-import { DataTable } from '@/components/ui/data-table';
 import { Form } from '@/components/ui/form';
-import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullFinancial } from '@/lib/interfaces/financial';
@@ -93,83 +97,198 @@ function FinancialDetailPage() {
 
 function FinancialDetailContent({ financial, professionals }: { id: string; financial: FullFinancial; professionals: ProfessionalList[] | undefined }) {
   const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
+  const professionalName = useProfessionalStore.getState().getName(professionals, financial.Professional);
+  const professionalImage = useProfessionalStore.getState().getImage(professionals, financial.Professional);
 
   return (
-    <div className="flex flex-col gap-8">
-      {/* Informações do Atendimento */}
-      <div className="flex flex-col gap-4">
-        <ItemTitle className="font-semibold text-base">Informações do Atendimento</ItemTitle>
-        <div className="flex w-full max-w-4xl flex-col gap-4 md:flex-row">
-          <div className="flex w-full items-center gap-3 rounded-lg border p-4">
-            <Avatar className="size-12">
+    <div className="space-y-6">
+      {/* Header */}
+      <Item className="justify-between">
+        <div className="flex flex-col gap-4 md:flex-row md:gap-8">
+          <div className="flex items-center gap-3">
+            <Avatar className="size-10">
               <AvatarImage src={financial.patient?.image} alt={financial.patient?.name} />
               <AvatarFallback>{financial.patient?.name?.slice(0, 2)}</AvatarFallback>
             </Avatar>
-            <ItemContent className="gap-0">
-              <ItemDescription>Paciente</ItemDescription>
-              <ItemTitle>{financial.patient?.name}</ItemTitle>
-            </ItemContent>
+            <div className="flex flex-col gap-1">
+              <ItemDescription className="font-medium text-xs uppercase tracking-widest">Paciente</ItemDescription>
+              <ItemTitle className="font-semibold text-2xl tracking-tighter">{financial.patient?.name}</ItemTitle>
+            </div>
           </div>
-          <div className="flex w-full items-center gap-3 rounded-lg border p-4">
-            <Avatar className="size-12">
-              <AvatarImage src={useProfessionalStore.getState().getImage(professionals, financial.Professional)} alt="Profissional" />
-              <AvatarFallback>{useProfessionalStore.getState().getName(professionals, financial.Professional).slice(0, 2)}</AvatarFallback>
+          <div className="flex items-center gap-3">
+            <Avatar className="size-10">
+              <AvatarImage src={professionalImage} alt={professionalName} />
+              <AvatarFallback>{professionalName.slice(0, 2)}</AvatarFallback>
             </Avatar>
-            <ItemContent className="gap-0">
-              <ItemDescription>Profissional</ItemDescription>
-              <ItemTitle>{useProfessionalStore.getState().getName(professionals, financial.Professional)}</ItemTitle>
-            </ItemContent>
+            <div className="flex flex-col gap-1">
+              <ItemDescription className="font-medium text-xs uppercase tracking-widest">Profissional</ItemDescription>
+              <ItemTitle className="font-semibold text-2xl tracking-tighter">{professionalName}</ItemTitle>
+            </div>
           </div>
         </div>
+        <div className="flex items-center gap-2">
+          <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status || 'pending')}</BadgeIndicator>
+        </div>
+      </Item>
+
+      {/* Grid Strip */}
+      <Item className="grid grid-cols-1 rounded-none border-y border-y-border py-6 md:grid-cols-4">
+        <ItemContent className="md:border-r">
+          <ItemDescription className="font-medium text-xs uppercase tracking-widest">Valor Total</ItemDescription>
+          <ItemTitle className="text-2xl tabular-nums leading-none">{currencyFormat(financial.price || 0)}</ItemTitle>
+        </ItemContent>
+
+        <ItemContent className="md:border-r md:px-8">
+          <ItemDescription className="font-medium text-xs uppercase tracking-widest">Total Pago</ItemDescription>
+          <ItemTitle className="text-2xl text-green-500 tabular-nums leading-none dark:text-lime-400">{currencyFormat(financial.paid || 0)}</ItemTitle>
+        </ItemContent>
+
+        <ItemContent className="md:border-r md:px-8">
+          <ItemDescription className="font-medium text-xs uppercase tracking-widest">Pagamento</ItemDescription>
+          <ItemTitle className="text-2xl leading-none">{financialPaymentMethod(financial.paymentMethod || 'none')}</ItemTitle>
+        </ItemContent>
+
+        <ItemContent className="md:px-8">
+          <ItemDescription className="font-medium text-xs uppercase tracking-widest">Data</ItemDescription>
+          <ItemTitle className="text-2xl tabular-nums leading-none">{extractDate(financial.createdAt, '')}</ItemTitle>
+        </ItemContent>
+      </Item>
+
+      {/* Detalhes Financeiros */}
+      <div className="overflow-hidden rounded-lg border bg-card">
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell className="w-60 bg-muted/50 py-4 align-top font-medium" rowSpan={2}>
+                <div className="flex items-center gap-1">
+                  <ItemMedia variant="icon">
+                    <IconDollar className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle>Valores</ItemTitle>
+                </div>
+              </TableCell>
+              <TableCell className="py-4 align-top">
+                <div className="flex flex-col gap-1">
+                  <ItemDescription>Valor Total</ItemDescription>
+                  <ItemTitle className="tabular-nums">{currencyFormat(financial.price || 0)}</ItemTitle>
+                </div>
+              </TableCell>
+              <TableCell className="py-4 align-top">
+                <div className="flex flex-col gap-1">
+                  <ItemDescription>Total Pago</ItemDescription>
+                  <ItemTitle className="text-green-500 tabular-nums dark:text-lime-400">{currencyFormat(financial.paid || 0)}</ItemTitle>
+                </div>
+              </TableCell>
+              <TableCell className="py-4 align-top">
+                <div className="flex flex-col gap-1">
+                  <ItemDescription>Parcelas</ItemDescription>
+                  <ItemTitle className="tabular-nums">{financial.installments || 1}x</ItemTitle>
+                </div>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
 
-      <Separator />
-
-      {/* Informações Financeiras */}
-      <div className="flex flex-col gap-4">
-        <ItemTitle className="font-semibold text-base">Informações Financeiras</ItemTitle>
-        <div className="flex w-full max-w-4xl flex-col gap-4 md:flex-row">
-          <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
-            <ItemDescription>Valor Total</ItemDescription>
-            <p className="font-bold text-2xl tabular-nums">{currencyFormat(financial.price || 0)}</p>
-            <div className="flex items-baseline gap-2">
-              <p className="font-bold text-green-500 tabular-nums dark:text-lime-400">{currencyFormat(financial.paid || 0)}</p>
-              <ItemDescription>total pago</ItemDescription>
-            </div>
-          </div>
-          <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
-            <ItemDescription>Pagamento</ItemDescription>
-            <p className="font-bold text-2xl">{financialPaymentMethod(financial.paymentMethod || 'none')}</p>
-            <div className="flex items-baseline gap-2">
-              <ItemDescription>Status</ItemDescription>
-              <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status || 'pending')}</BadgeIndicator>
-            </div>
-          </div>
-          <div className="flex w-full flex-col items-center gap-2 rounded-lg border p-6">
-            <ItemDescription>Data</ItemDescription>
-            <p className="font-bold text-2xl tabular-nums">{extractDate(financial.createdAt, '')}</p>
-            <div className="flex items-baseline gap-2">
-              <ItemDescription>Última atualização</ItemDescription>
-              <p className="font-medium text-sm tabular-nums">{extractDate(financial.updatedAt, '')}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-4xl rounded-lg border">
-          <DataTable
-            data={financial.procedures || []}
-            columns={[
-              { key: 'procedure', header: 'Procedimento' },
-              { key: 'price', header: 'Preço', render: (v) => <span className="tabular-nums">{currencyFormat(v)}</span> },
-              { key: 'status', header: 'Status', render: (v) => statusDictionary(v) },
-            ]}
-            searchable={false}
-            showPagination={false}
-            compact
-            bordered={false}
-          />
-        </div>
+      <div className="overflow-hidden rounded-lg border bg-card">
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell className="w-60 bg-muted/50 py-4 align-top font-medium">
+                <div className="flex items-center gap-1">
+                  <ItemMedia variant="icon">
+                    <IconCard className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle>Pagamento</ItemTitle>
+                </div>
+              </TableCell>
+              <TableCell className="py-4 align-top">
+                <div className="flex flex-col gap-1">
+                  <ItemDescription>Método</ItemDescription>
+                  <ItemTitle>{financialPaymentMethod(financial.paymentMethod || 'none')}</ItemTitle>
+                </div>
+              </TableCell>
+              <TableCell className="py-4 align-top">
+                <div className="flex flex-col gap-1">
+                  <ItemDescription>Status</ItemDescription>
+                  <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status || 'pending')}</BadgeIndicator>
+                </div>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
+
+      <div className="overflow-hidden rounded-lg border bg-card">
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell className="w-60 bg-muted/50 py-4 align-top font-medium">
+                <div className="flex items-center gap-1">
+                  <ItemMedia variant="icon">
+                    <IconCalendar className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle>Datas</ItemTitle>
+                </div>
+              </TableCell>
+              <TableCell className="py-4 align-top">
+                <div className="flex flex-col gap-1">
+                  <ItemDescription>Criação</ItemDescription>
+                  <ItemTitle className="tabular-nums">{extractDate(financial.createdAt, '')}</ItemTitle>
+                </div>
+              </TableCell>
+              <TableCell className="py-4 align-top">
+                <div className="flex flex-col gap-1">
+                  <ItemDescription>Última Atualização</ItemDescription>
+                  <ItemTitle className="tabular-nums">{extractDate(financial.updatedAt, '')}</ItemTitle>
+                </div>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Procedimentos */}
+      {financial.procedures && financial.procedures.length > 0 && (
+        <div className="overflow-hidden rounded-lg border bg-card">
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell className="w-60 bg-muted/50 py-4 align-top font-medium" rowSpan={financial.procedures.length + 1}>
+                  <div className="flex items-center gap-1">
+                    <ItemMedia variant="icon">
+                      <IconService className="size-4" />
+                    </ItemMedia>
+                    <ItemTitle>Procedimentos</ItemTitle>
+                  </div>
+                </TableCell>
+                <TableCell className="py-4 align-top">
+                  <ItemDescription>Procedimento</ItemDescription>
+                </TableCell>
+                <TableCell className="py-4 align-top">
+                  <ItemDescription>Preço</ItemDescription>
+                </TableCell>
+                <TableCell className="py-4 align-top">
+                  <ItemDescription>Status</ItemDescription>
+                </TableCell>
+              </TableRow>
+              {financial.procedures.map((proc) => (
+                <TableRow key={proc.procedure} className="border-t">
+                  <TableCell className="py-4 align-top">
+                    <ItemTitle>{proc.procedure}</ItemTitle>
+                  </TableCell>
+                  <TableCell className="py-4 align-top">
+                    <ItemTitle className="tabular-nums">{currencyFormat(proc.price)}</ItemTitle>
+                  </TableCell>
+                  <TableCell className="py-4 align-top">
+                    <ItemTitle>{statusDictionary(proc.status)}</ItemTitle>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 }
