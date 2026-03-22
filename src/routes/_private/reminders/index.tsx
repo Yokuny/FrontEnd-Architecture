@@ -143,7 +143,7 @@ function RemindersListPage() {
             </Popover>
 
             {selectedIds.length > 0 && (
-              <Button onClick={handleBulkCheck} disabled={checkReminders.isPending}  className="gap-2">
+              <Button onClick={handleBulkCheck} disabled={checkReminders.isPending} className="gap-2">
                 Concluir ({selectedIds.length}) <Check className="size-4" />
               </Button>
             )}

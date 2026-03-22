@@ -28,12 +28,7 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
   {
     key: '_id',
     header: (
-      <Checkbox
-        checked={allSelected ? true : someSelected ? 'indeterminate' : false}
-        onCheckedChange={handleSelectAll}
-        aria-label="Selecionar todos"
-        className="translate-y-0.5"
-      />
+      <Checkbox checked={allSelected ? true : someSelected ? 'indeterminate' : false} onCheckedChange={handleSelectAll} aria-label="Selecionar todos" className="translate-y-0.5" />
     ),
     width: '40px',
     render: (_, reminder) => {
