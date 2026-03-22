@@ -3,11 +3,11 @@ import { toast } from 'sonner';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { DataTable } from '@/components/ui/data-table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { useFinancialDetailQuery, useFinancialMutations } from '@/query/financials';
@@ -95,32 +95,19 @@ export function FinancialView({ id }: FinancialViewProps) {
               </div>
 
               <div className="flex flex-col gap-4 md:flex-row md:gap-6">
-                <Table className="w-full rounded-xl border p-4 md:max-w-md md:py-8">
-                  <TableHeader>
-                    <TableRow className="font-semibold leading-none">
-                      <TableCell>Procedimento</TableCell>
-                      <TableCell>Preço</TableCell>
-                      <TableCell>Status</TableCell>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {financial.procedures?.length > 0 ? (
-                      financial.procedures.map((procedure, i) => (
-                        <TableRow key={`${procedure.procedure}-${i}`}>
-                          <TableCell>{procedure.procedure}</TableCell>
-                          <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
-                          <TableCell>{statusDictionary(procedure.status)}</TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={3} className="text-center text-muted-foreground">
-                          Nenhum procedimento registrado
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
+                <DataTable
+                  className="w-full rounded-xl border p-4 md:max-w-md md:py-8"
+                  data={financial.procedures || []}
+                  columns={[
+                    { key: 'procedure', header: 'Procedimento' },
+                    { key: 'price', header: 'Preço', render: (v) => <span className="tabular-nums">{currencyFormat(v)}</span> },
+                    { key: 'status', header: 'Status', render: (v) => statusDictionary(v) },
+                  ]}
+                  searchable={false}
+                  showPagination={false}
+                  compact
+                  bordered={false}
+                />
 
                 <div className="flex h-fit flex-row flex-wrap justify-between gap-4 p-4 md:max-w-md md:flex-col md:p-8">
                   <ItemContent className="w-1/4 gap-0 md:w-full">

@@ -13,9 +13,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
+import { DataTable } from '@/components/ui/data-table';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
 import { usePatientStore } from '@/hooks/patients';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -287,34 +287,19 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
 
         <div className="flex flex-col gap-4 md:flex-row md:gap-6">
           {schedule.Patient && (
-            <Table className="w-full rounded-xl py-4 md:max-w-md md:border md:py-8">
-              <TableHeader>
-                <TableRow className="font-semibold leading-none">
-                  <TableCell>Procedimento</TableCell>
-                  <TableCell>Preço</TableCell>
-                  <TableCell>Status</TableCell>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {schedule.financial?.procedures && schedule.financial.procedures.length > 0 ? (
-                  schedule.financial.procedures.map((procedure) => (
-                    <TableRow key={procedure.procedure}>
-                      <TableCell>{procedure.procedure}</TableCell>
-                      <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{statusDictionary(procedure.status)}</Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={3} className="text-center text-muted-foreground">
-                      Nenhum procedimento registrado
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+            <DataTable
+              className="w-full rounded-xl py-4 md:max-w-md md:border md:py-8"
+              data={schedule.financial?.procedures || []}
+              columns={[
+                { key: 'procedure', header: 'Procedimento' },
+                { key: 'price', header: 'Preço', render: (v) => <span className="tabular-nums">{currencyFormat(v)}</span> },
+                { key: 'status', header: 'Status', render: (v) => <Badge variant="outline">{statusDictionary(v)}</Badge> },
+              ]}
+              searchable={false}
+              showPagination={false}
+              compact
+              bordered={false}
+            />
           )}
           {schedule.financial && schedule.financial._id !== null && !schedule.Patient && (
             <div className="flex h-fit flex-row flex-wrap justify-between gap-4 p-4 md:max-w-md md:flex-col md:p-8 md:px-4">

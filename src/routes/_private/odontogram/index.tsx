@@ -1,25 +1,19 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { useCallback, useMemo } from 'react';
-import { toast } from 'sonner';
+import { useMemo } from 'react';
 import { z } from 'zod';
 
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
-import Dot from '@/components/icons/Dot.Icon';
-import Pulse from '@/components/icons/Pulse.Icon';
 import Search from '@/components/icons/Search.Icon';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DataTable } from '@/components/ui/data-table';
 import { Input } from '@/components/ui/input';
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { formatDate } from '@/lib/helpers/formatter.helper';
-import type { PartialOdontogram } from '@/lib/interfaces/odontogram';
 import { useOdontogramsQuery } from '@/query/odontogram';
+import { odontogramColumns } from './columns';
 
 const searchSchema = z.object({
   page: z.number().optional().default(1),
@@ -55,81 +49,7 @@ function OdontogramListPage() {
   const totalPages = Math.ceil(totalCount / size);
   const items = filteredData.slice((page - 1) * size, page * size);
 
-  const handleCopy = useCallback((value: string) => {
-    navigator.clipboard.writeText(value);
-    toast.success('Copiado para a área de transferência');
-  }, []);
-
-  const columns = useMemo<DataTableColumn<PartialOdontogram>[]>(
-    () => [
-      {
-        key: 'patient',
-        header: 'Paciente',
-        sortable: true,
-        render: (_, item) => (
-          <div className="flex items-center gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-primary/20 text-primary">
-              <Pulse className="size-5" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-medium text-base">{item.patient}</span>
-              <span className="text-muted-foreground text-sm">
-                {formatDate(String(item.createdAt))} • {item.procedureCount} Procedimentos
-              </span>
-            </div>
-          </div>
-        ),
-      },
-      {
-        key: 'finished',
-        header: 'Status',
-        render: (_, item) => <div className="flex">{item.finished ? <Badge variant="completed">Finalizado</Badge> : <Badge variant="pending">Em andamento</Badge>}</div>,
-      },
-      {
-        key: '_id',
-        header: '',
-        width: '50px',
-        render: (_, item) => (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-              <Button variant="secondary" size="icon">
-                <Dot className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => navigate({ to: '/odontogram/details/$id', params: { id: item._id } })}>Visualizar</DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate({ to: '/financial/details/$id', params: { id: item.Financial } });
-                }}
-              >
-                Orçamento
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate({ to: '/patient/details/$id', params: { id: item.patientID } });
-                }}
-              >
-                Paciente
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCopy(item.patient);
-                }}
-              >
-                Copiar nome
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ),
-      },
-    ],
-    [navigate, handleCopy],
-  );
+  const columns = useMemo(() => odontogramColumns(navigate), [navigate]);
 
   return (
     <Card asPage>

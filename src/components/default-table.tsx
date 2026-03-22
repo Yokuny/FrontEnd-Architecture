@@ -1,28 +1,23 @@
-import {
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  type SortingState,
-  useReactTable,
-} from '@tanstack/react-table';
-import { useState } from 'react';
 import Delete from '@/components/icons/Delete.Icon';
 import Dot from '@/components/icons/Dot.Icon';
 import Edit from '@/components/icons/Edit.Icon';
 import Eye from '@/components/icons/Eye.Icon';
-import Left from '@/components/icons/Left.Icon';
-import Right from '@/components/icons/Right.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { t } from '@/lib/helpers/translate';
+
+type Status = 'completed' | 'pending' | 'processing' | 'cancelled';
+
+interface Item {
+  id: string;
+  name: string;
+  date: string;
+  status: Status;
+  amount: string;
+}
 
 const statusConfig: Record<Status, { label: string; className: string }> = {
   completed: {
@@ -52,42 +47,52 @@ function StatusBadge({ status }: { status: Status }) {
   );
 }
 
-const columns: ColumnDef<Item>[] = [
+const data: Item[] = [
+  { id: '1', name: 'Project Alpha', date: 'Jan 15, 2024', status: 'completed', amount: '$2,500' },
+  { id: '2', name: 'Website Redesign', date: 'Feb 3, 2024', status: 'processing', amount: '$4,200' },
+  { id: '3', name: 'Mobile App MVP', date: 'Feb 18, 2024', status: 'pending', amount: '$8,750' },
+  { id: '4', name: 'Brand Identity', date: 'Mar 5, 2024', status: 'completed', amount: '$1,800' },
+  { id: '5', name: 'Marketing Campaign', date: 'Mar 22, 2024', status: 'cancelled', amount: '$3,400' },
+  { id: '6', name: 'Analytics Dashboard', date: 'Apr 8, 2024', status: 'processing', amount: '$5,600' },
+  { id: '7', name: 'E-commerce Platform', date: 'Apr 25, 2024', status: 'pending', amount: '$12,000' },
+  { id: '8', name: 'API Integration', date: 'May 10, 2024', status: 'completed', amount: '$3,200' },
+];
+
+const columns: DataTableColumn<Item>[] = [
   {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />,
-    enableSorting: false,
-    enableHiding: false,
+    key: 'id' as const, // Placeholder key for checkbox
+    header: <Checkbox aria-label="Select all" />,
+    sortable: false,
+    render: () => <Checkbox aria-label="Select row" />,
   },
   {
-    accessorKey: 'name',
+    key: 'name',
     header: t('name'),
-    cell: ({ row }) => <span className="font-medium">{row.getValue('name')}</span>,
+    sortable: true,
+    render: (value) => <span className="font-medium">{value}</span>,
   },
   {
-    accessorKey: 'date',
+    key: 'date',
     header: t('date'),
+    sortable: true,
   },
   {
-    accessorKey: 'status',
+    key: 'status',
     header: t('status'),
-    cell: ({ row }) => <StatusBadge status={row.getValue('status')} />,
+    sortable: true,
+    render: (value) => <StatusBadge status={value} />,
   },
   {
-    accessorKey: 'amount',
-    header: () => <div className="text-right">{t('amount')}</div>,
-    cell: ({ row }) => <div className="text-right font-medium">{row.getValue('amount')}</div>,
+    key: 'amount',
+    header: <div className="text-right">{t('amount')}</div>,
+    sortable: true,
+    render: (value) => <div className="text-right font-medium">{value}</div>,
   },
   {
-    id: 'actions',
-    cell: () => (
+    key: 'id', // Reusing ID key for actions
+    header: '',
+    sortable: false,
+    render: () => (
       <div className="text-right">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -117,179 +122,10 @@ const columns: ColumnDef<Item>[] = [
   },
 ];
 
-const data: Item[] = [
-  {
-    id: '1',
-    name: 'Project Alpha',
-    date: 'Jan 15, 2024',
-    status: 'completed',
-    amount: '$2,500',
-  },
-  {
-    id: '2',
-    name: 'Website Redesign',
-    date: 'Feb 3, 2024',
-    status: 'processing',
-    amount: '$4,200',
-  },
-  {
-    id: '3',
-    name: 'Mobile App MVP',
-    date: 'Feb 18, 2024',
-    status: 'pending',
-    amount: '$8,750',
-  },
-  {
-    id: '4',
-    name: 'Brand Identity',
-    date: 'Mar 5, 2024',
-    status: 'completed',
-    amount: '$1,800',
-  },
-  {
-    id: '5',
-    name: 'Marketing Campaign',
-    date: 'Mar 22, 2024',
-    status: 'cancelled',
-    amount: '$3,400',
-  },
-  {
-    id: '6',
-    name: 'Analytics Dashboard',
-    date: 'Apr 8, 2024',
-    status: 'processing',
-    amount: '$5,600',
-  },
-  {
-    id: '7',
-    name: 'E-commerce Platform',
-    date: 'Apr 25, 2024',
-    status: 'pending',
-    amount: '$12,000',
-  },
-  {
-    id: '8',
-    name: 'API Integration',
-    date: 'May 10, 2024',
-    status: 'completed',
-    amount: '$3,200',
-  },
-];
-
-export default function Table05() {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [rowSelection, setRowSelection] = useState({});
-  const [globalFilter, setGlobalFilter] = useState('');
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onSortingChange: setSorting,
-    onRowSelectionChange: setRowSelection,
-    onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: 'includesString',
-    state: {
-      sorting,
-      rowSelection,
-      globalFilter,
-    },
-    initialState: {
-      pagination: { pageSize: 5 },
-    },
-  });
-
-  const pageCount = table.getPageCount();
-  const currentPage = table.getState().pagination.pageIndex + 1;
-
+export default function DefaultTable() {
   return (
-    <div className="w-full max-w-3xl space-y-4">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-muted-foreground text-sm">{t('show')}</span>
-          <Select value={String(table.getState().pagination.pageSize)} onValueChange={(value) => table.setPageSize(Number(value))}>
-            <SelectTrigger className="h-8 w-16">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {[5, 10, 20].map((size) => (
-                <SelectItem key={size} value={String(size)}>
-                  {size}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <span className="text-muted-foreground text-sm">{t('entries')}</span>
-        </div>
-        <Input placeholder={t('search')} value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} className="h-8 w-full sm:w-64" />
-      </div>
-
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  {t('no.results')}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-muted-foreground text-sm">
-          Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
-          {Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)} of{' '}
-          {table.getFilteredRowModel().rows.length} entries
-        </p>
-        <div className="flex items-center gap-1">
-          <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-            <Left className="size-4" />
-            <span className="sr-only">{t('previous.page')}</span>
-          </Button>
-          {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
-            <Button key={page} variant={currentPage === page ? 'default' : 'outline'} size="icon" className="h-8 w-8" onClick={() => table.setPageIndex(page - 1)}>
-              {page}
-            </Button>
-          ))}
-          <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            <Right className="size-4" />
-            <span className="sr-only">{t('next.page')}</span>
-          </Button>
-        </div>
-      </div>
+    <div className="w-full max-w-4xl space-y-4">
+      <DataTable data={data} columns={columns} itemsPerPage={5} searchable searchPlaceholder={t('search')} />
     </div>
   );
-}
-
-type Status = 'completed' | 'pending' | 'processing' | 'cancelled';
-
-interface Item {
-  id: string;
-  name: string;
-  date: string;
-  status: Status;
-  amount: string;
 }

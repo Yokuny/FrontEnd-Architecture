@@ -7,11 +7,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { DataTable } from '@/components/ui/data-table';
 import { Form } from '@/components/ui/form';
 import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullFinancial } from '@/lib/interfaces/financial';
@@ -148,34 +148,19 @@ function FinancialDetailContent({ financial, professionals }: { id: string; fina
           </div>
         </div>
 
-        {/* Tabela de procedimentos */}
         <div className="max-w-4xl rounded-lg border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Procedimento</TableHead>
-                <TableHead>Preço</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {financial.procedures?.length > 0 ? (
-                financial.procedures.map((procedure) => (
-                  <TableRow key={procedure.procedure}>
-                    <TableCell>{procedure.procedure}</TableCell>
-                    <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
-                    <TableCell>{statusDictionary(procedure.status)}</TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={3} className="text-center text-muted-foreground">
-                    Nenhum procedimento registrado
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          <DataTable
+            data={financial.procedures || []}
+            columns={[
+              { key: 'procedure', header: 'Procedimento' },
+              { key: 'price', header: 'Preço', render: (v) => <span className="tabular-nums">{currencyFormat(v)}</span> },
+              { key: 'status', header: 'Status', render: (v) => statusDictionary(v) },
+            ]}
+            searchable={false}
+            showPagination={false}
+            compact
+            bordered={false}
+          />
         </div>
       </div>
     </div>

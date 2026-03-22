@@ -17,7 +17,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+
 import { t } from '@/lib/helpers/translate';
 import { useProceduresSheetQuery } from '@/query/procedures';
 
@@ -165,74 +165,62 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                     />
                   </div>
 
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="text-xs">
-                        <TableHead className="p-1 text-center">{t('cost.price')}</TableHead>
-                        <TableHead className="p-1 text-center">{t('suggested.price')}</TableHead>
-                        <TableHead className="p-1 text-center">{t('saved.price')}</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow className="text-xs">
-                        <TableCell className="p-0 md:px-0">
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="flex w-full gap-2 transition-transform active:scale-90"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handlePriceClick(procedure.costPrice);
-                              handleCopyWithFeedback(procedure.costPrice, 'costPrice');
-                            }}
-                          >
-                            <span>R$ {procedure.costPrice}</span>
-                            <span className="relative">
-                              {copiedStates.costPrice ? <Check className="fade-in size-4 animate-in duration-200" /> : <Copy className="fade-in size-4 animate-in duration-200" />}
-                            </span>
-                          </Button>
-                        </TableCell>
-                        <TableCell className="p-0 md:px-0">
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="flex w-full gap-2 transition-transform active:scale-90"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handlePriceClick(procedure.suggestedPrice);
-                              handleCopyWithFeedback(procedure.suggestedPrice, 'suggestedPrice');
-                            }}
-                          >
-                            <span>R$ {procedure.suggestedPrice}</span>
-                            <span className="relative">
-                              {copiedStates.suggestedPrice ? (
-                                <Check className="fade-in size-4 animate-in duration-200" />
-                              ) : (
-                                <Copy className="fade-in size-4 animate-in duration-200" />
-                              )}
-                            </span>
-                          </Button>
-                        </TableCell>
-                        <TableCell className="p-0 md:px-0">
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="flex w-full gap-2 transition-transform active:scale-90"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handlePriceClick(procedure.savedPrice);
-                              handleCopyWithFeedback(procedure.savedPrice, 'savedPrice');
-                            }}
-                          >
-                            <span>R$ {procedure.savedPrice}</span>
-                            <span className="relative">
-                              {copiedStates.savedPrice ? <Check className="fade-in size-4 animate-in duration-200" /> : <Copy className="fade-in size-4 animate-in duration-200" />}
-                            </span>
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
+                  <div className="grid grid-cols-3 gap-2 px-1 pb-2 md:gap-4 md:px-0">
+                    <div className="flex flex-col gap-1 text-center">
+                      <span className="text-muted-foreground text-xs">{t('cost.price')}</span>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="flex w-full gap-2 transition-transform active:scale-90"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePriceClick(procedure.costPrice);
+                          handleCopyWithFeedback(procedure.costPrice, 'costPrice');
+                        }}
+                      >
+                        <span className="text-xs">R$ {procedure.costPrice}</span>
+                        <span className="relative">
+                          {copiedStates.costPrice ? <Check className="fade-in size-3 animate-in duration-200" /> : <Copy className="fade-in size-3 animate-in duration-200" />}
+                        </span>
+                      </Button>
+                    </div>
+                    <div className="flex flex-col gap-1 text-center">
+                      <span className="text-muted-foreground text-xs">{t('suggested.price')}</span>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="flex w-full gap-2 transition-transform active:scale-90"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePriceClick(procedure.suggestedPrice);
+                          handleCopyWithFeedback(procedure.suggestedPrice, 'suggestedPrice');
+                        }}
+                      >
+                        <span className="text-xs">R$ {procedure.suggestedPrice}</span>
+                        <span className="relative">
+                          {copiedStates.suggestedPrice ? <Check className="fade-in size-3 animate-in duration-200" /> : <Copy className="fade-in size-3 animate-in duration-200" />}
+                        </span>
+                      </Button>
+                    </div>
+                    <div className="flex flex-col gap-1 text-center">
+                      <span className="text-muted-foreground text-xs">{t('saved.price')}</span>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="flex w-full gap-2 transition-transform active:scale-90"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePriceClick(procedure.savedPrice);
+                          handleCopyWithFeedback(procedure.savedPrice, 'savedPrice');
+                        }}
+                      >
+                        <span className="text-xs">R$ {procedure.savedPrice}</span>
+                        <span className="relative">
+                          {copiedStates.savedPrice ? <Check className="fade-in size-3 animate-in duration-200" /> : <Copy className="fade-in size-3 animate-in duration-200" />}
+                        </span>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
                 <Button variant="default" className="w-full" onClick={form.handleSubmit(onSubmit)} disabled={isLoading}>
                   {t('add')}

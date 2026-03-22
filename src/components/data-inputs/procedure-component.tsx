@@ -5,16 +5,10 @@ import ProceduresSheet from '@/components/data-inputs/procedures-sheet';
 import Add from '@/components/icons/Add.Icon';
 import Delete from '@/components/icons/Delete.Icon';
 import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 
 const ProcedureComponent = ({ form, disabled, currencyFormat, statusDictionary }: ProcedureComponentProps) => {
-  const [procedures, setProcedures] = useState<NewProcedure[]>([
-    {
-      procedure: '',
-      price: 0,
-      status: 'pending',
-    },
-  ]);
+  const [procedures, setProcedures] = useState<NewProcedure[]>([{ procedure: '', price: 0, status: 'pending' }]);
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -63,47 +57,61 @@ const ProcedureComponent = ({ form, disabled, currencyFormat, statusDictionary }
     });
   };
 
+  const columns: DataTableColumn<{ id: string; index: number }>[] = [
+    {
+      key: 'id' as any,
+      header: '',
+      render: (_, row) => {
+        const proc = procedures[row.index];
+        return proc?.procedure ? <span>{proc.procedure}</span> : <ProceduresSheet handleProcedure={(p) => handleProcedure(p, row.index)} disabled={disabled} />;
+      },
+    },
+    {
+      key: 'id' as any,
+      header: '',
+      render: (_, row) => {
+        const proc = procedures[row.index];
+        if (!proc?.procedure) return null;
+        return <span className="tabular-nums">{proc.price && proc.price > 0 ? currencyFormat(proc.price) : <span className="text-muted-foreground">Não definido</span>}</span>;
+      },
+    },
+    {
+      key: 'id' as any,
+      header: '',
+      render: (_, row) => {
+        const proc = procedures[row.index];
+        if (!proc?.procedure) return null;
+        return <span>{statusDictionary(proc.status)}</span>;
+      },
+    },
+    {
+      key: 'id' as any,
+      header: '',
+      render: (_, row) => {
+        const proc = procedures[row.index];
+        const isLastItem = row.index === procedures.length - 1;
+        return proc?.procedure ? (
+          <div className="flex items-center justify-end gap-2">
+            <Button type="button" variant="outline" size="sm" onClick={() => removeProcedure(row.index)} disabled={disabled}>
+              <Delete className="size-4" />
+            </Button>
+            {isLastItem && (
+              <Button type="button" variant="default" size="sm" className="whitespace-nowrap" onClick={addProcedure} disabled={disabled}>
+                <Add className="size-4 stroke-3 md:mr-2" />
+                <p className="hidden md:block">Adicionar</p>
+              </Button>
+            )}
+          </div>
+        ) : null;
+      },
+    },
+  ];
+
+  const data = fields.map((f, i) => ({ id: f.id, index: i }));
+
   return (
-    <div className="w-full overflow-x-auto">
-      <Table>
-        <TableBody>
-          {fields.map((field, index) => {
-            const procedure = procedures[index];
-            return (
-              <TableRow key={field.id} className="hover:bg-transparent">
-                {procedure?.procedure ? (
-                  <>
-                    <TableCell className="p-1 pl-2 md:p-2">{procedure.procedure}</TableCell>
-                    <TableCell className="p-1 tabular-nums md:p-2">
-                      {procedure.price && procedure.price > 0 ? currencyFormat(procedure.price) : <span className="text-muted-foreground">Não definido</span>}
-                    </TableCell>
-                    <TableCell className="p-1 md:p-2">{statusDictionary(procedure.status)}</TableCell>
-                  </>
-                ) : (
-                  <TableCell className="w-fit p-1 pl-2 md:p-2">
-                    <ProceduresSheet handleProcedure={(proc) => handleProcedure(proc, index)} disabled={disabled} />
-                  </TableCell>
-                )}
-                <TableCell className="w-fit p-1 md:p-2">
-                  {procedure?.procedure && (
-                    <div className="flex items-center gap-2">
-                      <Button type="button" variant="outline" size="sm" onClick={() => removeProcedure(index)} disabled={disabled}>
-                        <Delete className="size-4" />
-                      </Button>
-                      {index === procedures.length - 1 && (
-                        <Button type="button" variant="default" size="sm" className="whitespace-nowrap" onClick={addProcedure} disabled={disabled}>
-                          <Add className="size-4 stroke-3 md:mr-2" />
-                          <p className="hidden md:block">Adicionar</p>
-                        </Button>
-                      )}
-                    </div>
-                  )}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+    <div className="w-full">
+      <DataTable data={data} columns={columns} searchable={false} showPagination={false} bordered={false} hideHeader compact />
     </div>
   );
 };

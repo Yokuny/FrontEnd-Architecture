@@ -2,7 +2,7 @@ import Edit from '@/components/icons/Edit.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
+import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { Anamnesis } from '@/lib/interfaces';
 import { cn } from '@/lib/utils/cn.util';
@@ -55,6 +55,58 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
     return String(value) === 'true';
   }).length;
 
+  const complaintData = anamnesis.mainComplaint ? [{ complaint: 'Queixa Principal', details: anamnesis.mainComplaint }] : [];
+  const complaintColumns: DataTableColumn<{ complaint: string; details: string }>[] = [
+    { key: 'complaint', header: '', render: (v) => <span className="w-1/3 font-medium">{v}</span> },
+    { key: 'details', header: '', render: (v) => capitalizeString(v) },
+  ];
+
+  const illnessesData = [
+    ...(String(anamnesis.illnesses?.diabetes) === 'true' ? [{ condition: 'Diabetes', state: 'Sim', severity: 'high' as const }] : []),
+    ...(String(anamnesis.illnesses?.heartProblems) === 'true' ? [{ condition: 'Problemas Cardíacos', state: 'Sim', severity: 'high' as const }] : []),
+    ...(String(anamnesis.illnesses?.highBloodPressure) === 'true' ? [{ condition: 'Hipertensão', state: 'Sim', severity: 'high' as const }] : []),
+    ...(String(anamnesis.illnesses?.asthma) === 'true' ? [{ condition: 'Asma', state: 'Sim', severity: 'medium' as const }] : []),
+    ...(anamnesis.illnesses?.otherIllnesses ? [{ condition: 'Outras Doenças', state: 'Sim', severity: 'medium' as const, extra: anamnesis.illnesses.otherIllnesses }] : []),
+  ];
+  const illnessesColumns: DataTableColumn<{ condition: string; state: string; severity: 'high' | 'medium'; extra?: string }>[] = [
+    {
+      key: 'condition',
+      header: 'Condição',
+      render: (v, row) => (
+        <span className="flex items-center">
+          {v} {getSeverityDot(true, row.severity)}
+        </span>
+      ),
+    },
+    {
+      key: 'state',
+      header: 'Status',
+      render: (v, row) => (
+        <span>
+          <Badge variant={row.severity === 'high' ? 'red' : 'muted'}>{v}</Badge>
+          {row.extra && <span className="ml-2 text-muted-foreground text-sm">{row.extra}</span>}
+        </span>
+      ),
+    },
+  ];
+
+  const medicationData = [
+    ...(anamnesis.allergicToMedication ? [{ type: 'Alergia a Medicamentos', severity: 'high' as const, details: anamnesis.medicationAllergy || 'Sim' }] : []),
+    ...(anamnesis.takingMedication ? [{ type: 'Uso Contínuo', severity: 'medium' as const, details: anamnesis.medicationDetails || 'Sim' }] : []),
+  ];
+  const medicationColumns: DataTableColumn<{ type: string; severity: 'high' | 'medium'; details: string }>[] = [
+    {
+      key: 'type',
+      header: '',
+      render: (v, row) => (
+        <span className="flex w-1/3 items-center">
+          {v} {getSeverityDot(true, row.severity)}
+        </span>
+      ),
+    },
+    { key: 'details', header: '', render: (v) => capitalizeString(v) },
+  ];
+
   return (
     <Card className="flex flex-col gap-6">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -74,91 +126,17 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
 
         <div className="space-y-4 rounded-md border p-6">
           <h3 className="font-semibold text-lg tracking-tight">Evolução e Queixa Principal</h3>
-          <Table>
-            <TableBody>
-              {anamnesis.mainComplaint && (
-                <TableRow>
-                  <TableCell className="w-1/3 font-medium">Queixa Principal</TableCell>
-                  <TableCell>{capitalizeString(anamnesis.mainComplaint)}</TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          <DataTable data={complaintData} columns={complaintColumns} searchable={false} showPagination={false} compact bordered={false} />
         </div>
 
         <div className="space-y-4 rounded-md border p-6">
           <h3 className="font-semibold text-lg tracking-tight">Condições Médicas e Doenças</h3>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableCell className="font-semibold">Condição</TableCell>
-                <TableCell className="font-semibold">Status</TableCell>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {String(anamnesis.illnesses?.diabetes) === 'true' && (
-                <TableRow>
-                  <TableCell className="flex items-center">Diabetes {getSeverityDot(true, 'high')}</TableCell>
-                  <TableCell>
-                    <Badge variant="red">Sim</Badge>
-                  </TableCell>
-                </TableRow>
-              )}
-              {String(anamnesis.illnesses?.heartProblems) === 'true' && (
-                <TableRow>
-                  <TableCell className="flex items-center">Problemas Cardíacos {getSeverityDot(true, 'high')}</TableCell>
-                  <TableCell>
-                    <Badge variant="red">Sim</Badge>
-                  </TableCell>
-                </TableRow>
-              )}
-              {String(anamnesis.illnesses?.highBloodPressure) === 'true' && (
-                <TableRow>
-                  <TableCell className="flex items-center">Hipertensão {getSeverityDot(true, 'high')}</TableCell>
-                  <TableCell>
-                    <Badge variant="red">Sim</Badge>
-                  </TableCell>
-                </TableRow>
-              )}
-              {String(anamnesis.illnesses?.asthma) === 'true' && (
-                <TableRow>
-                  <TableCell className="flex items-center">Asma {getSeverityDot(true, 'medium')}</TableCell>
-                  <TableCell>
-                    <Badge variant="muted">Sim</Badge>
-                  </TableCell>
-                </TableRow>
-              )}
-              {anamnesis.illnesses?.otherIllnesses && (
-                <TableRow>
-                  <TableCell className="flex items-center">Outras Doenças {getSeverityDot(true, 'medium')}</TableCell>
-                  <TableCell>
-                    <Badge variant="muted">Sim</Badge>
-                    <span className="ml-2 text-muted-foreground text-sm">{anamnesis.illnesses.otherIllnesses}</span>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          <DataTable data={illnessesData} columns={illnessesColumns} searchable={false} showPagination={false} compact bordered={false} />
         </div>
 
         <div className="space-y-4 rounded-md border p-6">
           <h3 className="font-semibold text-lg tracking-tight">Medicação e Alergias</h3>
-          <Table>
-            <TableBody>
-              {anamnesis.allergicToMedication && (
-                <TableRow>
-                  <TableCell className="flex w-1/3 items-center">Alergia a Medicamentos {getSeverityDot(true, 'high')}</TableCell>
-                  <TableCell>{capitalizeString(anamnesis.medicationAllergy || 'Sim')}</TableCell>
-                </TableRow>
-              )}
-              {anamnesis.takingMedication && (
-                <TableRow>
-                  <TableCell className="flex w-1/3 items-center">Uso Contínuo {getSeverityDot(true, 'medium')}</TableCell>
-                  <TableCell>{capitalizeString(anamnesis.medicationDetails || 'Sim')}</TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          <DataTable data={medicationData} columns={medicationColumns} searchable={false} showPagination={false} compact bordered={false} />
         </div>
       </CardContent>
     </Card>

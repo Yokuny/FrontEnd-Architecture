@@ -126,6 +126,10 @@ export function SettingsProcedures() {
             {updateProcedures.isPending && <Spinner className="mr-2 size-4" />}
             Salvar
           </Button>
+          <Button onClick={uploadNewCSV} className="flex items-center gap-2">
+            <Upload className="size-4" />
+            <span className="hidden sm:inline">Upload CSV</span>
+          </Button>
           <Button onClick={downloadModelCSV} variant="outline" className="flex items-center gap-2">
             <Download className="size-4" />
             <span className="hidden sm:inline">Modelo CSV</span>
@@ -134,27 +138,11 @@ export function SettingsProcedures() {
             <UploadCloud className="size-4" />
             <span className="hidden sm:inline">Buscar dados</span>
           </Button>
-          <Button onClick={uploadNewCSV} className="flex items-center gap-2">
-            <Upload className="size-4" />
-            <span className="hidden sm:inline">Upload CSV</span>
-          </Button>
         </CardAction>
       </CardHeader>
 
       <CardContent>
-        {isLoading ? (
-          <DefaultLoading />
-        ) : !procedures?.length ? (
-          <DefaultEmptyData />
-        ) : (
-          <SettingsProceduresTable
-            data={procedures}
-            hasChanges={hasChanges}
-            saveProcedure={saveProcedure}
-            onUpdate={handleProcedureUpdate}
-            isPending={updateProcedures.isPending}
-          />
-        )}
+        {isLoading ? <DefaultLoading /> : !procedures?.length ? <DefaultEmptyData /> : <SettingsProceduresTable data={procedures} onUpdate={handleProcedureUpdate} />}
       </CardContent>
     </Card>
   );

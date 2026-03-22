@@ -1,68 +1,46 @@
-import {
-  type ColumnDef,
-  type ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  type SortingState,
-  useReactTable,
-  type VisibilityState,
-} from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
-import Column from '@/components/icons/Column.Icon';
-import Down from '@/components/icons/Down.Icon';
-import Left from '@/components/icons/Left.Icon';
-import Right from '@/components/icons/Right.Icon';
-import Up from '@/components/icons/Up.Icon';
-import UploadCloud from '@/components/icons/UploadCloud.Icon';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Spinner } from '@/components/ui/spinner';
-import { TableBody, Table as TableBox, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { currencyFormat } from '@/lib/helpers/formatter.helper';
 import type { ProcedureData } from '@/lib/interfaces';
 
-const SortableComponent = ({ column, title }: { column: any; title: string }) => {
-  return (
-    <UnstyledButton className="flex w-full items-center gap-1 hover:text-primary" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-      {title}
-      <Up className="size-3" />
-    </UnstyledButton>
-  );
-};
-
-const EditableCell = ({ value, row, column, table }: { value: any; row: any; column: any; table: any }) => {
-  const initialValue = value;
+const EditableCell = ({
+  value,
+  rowIndex,
+  columnId,
+  updateData,
+}: {
+  value: any;
+  rowIndex: number;
+  columnId: string;
+  updateData: (rowIndex: number, columnId: string, value: any) => void;
+}) => {
   const [editing, setEditing] = useState(false);
   const [cellValue, setCellValue] = useState(value ?? '');
 
   const onBlur = () => {
     setEditing(false);
-    table.options.meta?.updateData(row.index, column.id, cellValue);
+    updateData(rowIndex, columnId, cellValue);
   };
 
   useEffect(() => {
-    setCellValue(initialValue ?? '');
-  }, [initialValue]);
+    setCellValue(value ?? '');
+  }, [value]);
 
   if (editing) {
-    return <Input value={cellValue ?? ''} onChange={(e) => setCellValue(e.target.value)} onBlur={onBlur} autoFocus className="w-full min-w-[100px]" />;
+    return <Input value={cellValue ?? ''} onChange={(e) => setCellValue(e.target.value)} onBlur={onBlur} autoFocus className="h-8 w-full min-w-[100px] text-xs" />;
   }
 
   return (
     <UnstyledButton className="w-full py-1 text-left font-normal" onClick={() => setEditing(true)}>
-      {column.id === 'procedure' || column.id === 'group' ? (
+      {columnId === 'procedure' || columnId === 'group' ? (
         cellValue
-      ) : column.id === 'periodicity' ? (
+      ) : columnId === 'periodicity' ? (
         <span className="text-muted-foreground">{cellValue ? `${cellValue} dias` : '-'}</span>
       ) : (
-        <Badge variant={column.id === 'costPrice' ? 'muted' : column.id === 'suggestedPrice' ? 'outline' : 'neutral'} className="flex w-fit gap-2">
+        <Badge variant={columnId === 'costPrice' ? 'muted' : columnId === 'suggestedPrice' ? 'outline' : 'neutral'} className="flex w-fit gap-2">
           {currencyFormat(cellValue)}
         </Badge>
       )}
@@ -70,217 +48,86 @@ const EditableCell = ({ value, row, column, table }: { value: any; row: any; col
   );
 };
 
-const columns: ColumnDef<ProcedureData>[] = [
-  {
-    accessorKey: 'procedure',
-    header: ({ column }) => <SortableComponent column={column} title="Procedimento" />,
-    cell: ({ getValue, row, column, table }) => <EditableCell value={getValue()} row={row} column={column} table={table} />,
-  },
-  {
-    accessorKey: 'group',
-    header: ({ column }) => <SortableComponent column={column} title="Agrupador" />,
-    cell: ({ getValue, row, column, table }) => <EditableCell value={getValue()} row={row} column={column} table={table} />,
-  },
-  {
-    accessorKey: 'costPrice',
-    header: ({ column }) => <SortableComponent column={column} title="Custo" />,
-    cell: ({ getValue, row, column, table }) => <EditableCell value={getValue()} row={row} column={column} table={table} />,
-  },
-  {
-    accessorKey: 'suggestedPrice',
-    header: ({ column }) => <SortableComponent column={column} title="Sugerido" />,
-    cell: ({ getValue, row, column, table }) => <EditableCell value={getValue()} row={row} column={column} table={table} />,
-  },
-  {
-    accessorKey: 'savedPrice',
-    header: ({ column }) => <SortableComponent column={column} title="Salvo" />,
-    cell: ({ getValue, row, column, table }) => <EditableCell value={getValue()} row={row} column={column} table={table} />,
-  },
-  {
-    accessorKey: 'periodicity',
-    header: ({ column }) => <SortableComponent column={column} title="Periodicidade" />,
-    cell: ({ getValue, row, column, table }) => <EditableCell value={getValue()} row={row} column={column} table={table} />,
-  },
-];
-
 interface ProcedureTableProps {
   data: ProcedureData[];
-  hasChanges?: boolean;
-  saveProcedure?: () => void;
   onUpdate: (updatedData: ProcedureData[]) => void;
-  isPending?: boolean;
 }
 
-export function SettingsProceduresTable({ data, hasChanges, saveProcedure, onUpdate, isPending }: ProcedureTableProps) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [tableData, setTableData] = useState(data);
+export function SettingsProceduresTable({ data, onUpdate }: ProcedureTableProps) {
+  const [tableData, setTableData] = useState<ProcedureData[]>(data);
 
   useEffect(() => {
     setTableData(data);
   }, [data]);
 
-  const table = useReactTable({
-    data: tableData,
-    columns,
-    initialState: {
-      pagination: { pageSize: 20 },
+  const updateData = (rowIndex: number, columnId: string, value: any) => {
+    const newData = [...tableData];
+    const oldData = newData[rowIndex];
+    if (!oldData) return;
+
+    let processedValue = value;
+
+    if (columnId.includes('Price') || columnId === 'periodicity') {
+      if (value === '' || value === null || value === undefined) {
+        processedValue = columnId === 'periodicity' ? undefined : 0;
+      } else {
+        const numValue = parseFloat(value);
+        processedValue = Number.isNaN(numValue) ? (columnId === 'periodicity' ? undefined : 0) : numValue;
+      }
+    }
+
+    const updatedData: ProcedureData = {
+      ...oldData,
+      [columnId]: processedValue,
+    };
+
+    newData[rowIndex] = updatedData;
+    setTableData(newData);
+    onUpdate(newData);
+  };
+
+  const columns: DataTableColumn<ProcedureData>[] = [
+    {
+      key: 'procedure',
+      header: 'Procedimento',
+      sortable: true,
+      render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="procedure" updateData={updateData} />,
     },
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
+    {
+      key: 'group',
+      header: 'Agrupador',
+      sortable: true,
+      render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="group" updateData={updateData} />,
     },
-    meta: {
-      updateData: (rowIndex: number, columnId: string, value: any) => {
-        const newData = [...tableData];
-        const oldData = newData[rowIndex];
-        if (!oldData) return;
-
-        let processedValue = value;
-
-        if (columnId.includes('Price') || columnId === 'periodicity') {
-          if (value === '' || value === null || value === undefined) {
-            processedValue = columnId === 'periodicity' ? undefined : 0;
-          } else {
-            const numValue = parseFloat(value);
-            processedValue = Number.isNaN(numValue) ? (columnId === 'periodicity' ? undefined : 0) : numValue;
-          }
-        }
-
-        const updatedData: ProcedureData = {
-          ...oldData,
-          [columnId]: processedValue,
-        };
-
-        newData[rowIndex] = updatedData;
-        setTableData(newData);
-        onUpdate(newData);
-      },
+    {
+      key: 'costPrice',
+      header: 'Custo',
+      sortable: true,
+      render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="costPrice" updateData={updateData} />,
     },
-  });
+    {
+      key: 'suggestedPrice',
+      header: 'Sugerido',
+      sortable: true,
+      render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="suggestedPrice" updateData={updateData} />,
+    },
+    {
+      key: 'savedPrice',
+      header: 'Salvo',
+      sortable: true,
+      render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="savedPrice" updateData={updateData} />,
+    },
+    {
+      key: 'periodicity',
+      header: 'Periodicidade',
+      sortable: true,
+      render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="periodicity" updateData={updateData} />,
+    },
+  ];
 
   return (
-    <div className="mt-4 w-full rounded-lg border">
-      <div className="flex w-full items-center justify-between gap-3 bg-muted/30 p-4">
-        <Input
-          placeholder="Buscar procedimento..."
-          value={(table.getColumn('procedure')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('procedure')?.setFilterValue(event.target.value)}
-          className="w-full max-w-[240px] bg-background font-normal text-sm tracking-wide"
-        />
-        <div className="ml-auto flex gap-2">
-          {hasChanges && tableData.length > 0 && (
-            <Button onClick={saveProcedure} disabled={isPending} className="flex gap-2" size="sm">
-              {isPending ? <Spinner className="size-4" /> : <UploadCloud className="size-4" />}
-              <span className="hidden sm:inline">Atualizar Alterações</span>
-            </Button>
-          )}
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Column className="mr-2 hidden size-4 sm:inline" />
-                Colunas
-                <Down className="ml-2 size-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem key={column.id} className="capitalize" checked={column.getIsVisible()} onCheckedChange={(value) => column.toggleVisibility(!!value)}>
-                      {column.id === 'costPrice'
-                        ? 'Custo'
-                        : column.id === 'suggestedPrice'
-                          ? 'Sugerido'
-                          : column.id === 'savedPrice'
-                            ? 'Salvo'
-                            : column.id === 'periodicity'
-                              ? 'Periodicidade'
-                              : column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
-
-      <TableBox>
-        <TableHeader className="bg-muted/50">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className="py-2 text-sm">
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                Sem resultado.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </TableBox>
-
-      <div className="flex items-center justify-between space-x-2 bg-muted/30 p-4">
-        <div className="flex items-center gap-4 text-muted-foreground text-sm">
-          <div className="flex items-center gap-2">
-            <span className="hidden sm:inline">Frequência:</span>
-            <Select onValueChange={(value) => table.setPageSize(parseInt(value, 10))}>
-              <SelectTrigger className="h-8 w-16 gap-2 bg-background">
-                <SelectValue placeholder="20" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="10">10</SelectItem>
-                <SelectItem value="20">20</SelectItem>
-                <SelectItem value="50">50</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="hidden items-center gap-1 sm:flex">
-            <span>
-              Mostrando {table.getRowModel().rows.length} de {tableData.length}.
-            </span>
-            <span>
-              Página {table.getState().pagination.pageIndex + 1} de {table.getPageCount() || 1}.
-            </span>
-          </div>
-        </div>
-        <div className="flex space-x-2">
-          <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()} className="flex h-8 items-center gap-1">
-            <Left className="size-4" />
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} className="flex h-8 items-center gap-1">
-            <Right className="size-4" />
-          </Button>
-        </div>
-      </div>
+    <div className="mt-4 w-full">
+      <DataTable data={tableData} columns={columns} searchable itemsPerPage={20} bordered columnSelector />
     </div>
   );
 }
