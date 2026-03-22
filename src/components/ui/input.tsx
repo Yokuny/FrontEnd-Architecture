@@ -15,7 +15,7 @@ function Input({ className, type, inputSize = 'default', ...props }: InputProps)
         'flex w-full items-center justify-between gap-2 rounded-sm border bg-transparent px-3 py-2 text-sm',
         'whitespace-nowrap outline-none transition-[color,box-shadow] focus-visible:ring-1',
         'disabled:cursor-not-allowed disabled:opacity-50',
-        'data-[size=default]:h-9 data-[size=sm]:h-8',
+        'data-[size=default]:h-10 data-[size=sm]:h-9',
         'tracking-wide dark:placeholder:text-slate-300',
         className,
       )}
