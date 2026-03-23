@@ -28,7 +28,7 @@ import { STATUS_TO_BADGE_VARIANT } from './@consts/financial.consts';
 import { useFinancialEditForm } from './@hooks/use-financial-edit-form';
 
 const searchSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
 });
 
 export const Route = createFileRoute('/_private/financial/details')({
@@ -58,7 +58,7 @@ function FinancialDetailPage() {
     [financial],
   );
 
-  const { form, onSubmit, isPending } = useFinancialEditForm(id, initialData);
+  const { form, onSubmit, isPending } = useFinancialEditForm(id!, initialData);
 
   return (
     <Card asPage>
@@ -81,7 +81,7 @@ function FinancialDetailPage() {
           <EmptyData />
         ) : (
           <div className="flex flex-col gap-8">
-            <FinancialDetailContent id={id} financial={financial} professionals={professionals} />
+            <FinancialDetailContent financial={financial} professionals={professionals} />
             <Separator />
             <Form {...form}>
               <form onSubmit={onSubmit} id="financial-edit-form">
@@ -95,7 +95,7 @@ function FinancialDetailPage() {
   );
 }
 
-function FinancialDetailContent({ financial, professionals }: { id: string; financial: FullFinancial; professionals: ProfessionalList[] | undefined }) {
+function FinancialDetailContent({ financial, professionals }: { financial: FullFinancial; professionals: ProfessionalList[] | undefined }) {
   const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
   const professionalName = useProfessionalStore.getState().getName(professionals, financial.Professional);
   const professionalImage = useProfessionalStore.getState().getImage(professionals, financial.Professional);

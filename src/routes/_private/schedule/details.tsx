@@ -25,7 +25,7 @@ import { useProfessionalsQuery } from '@/query/professionals';
 import { usePatientSchedulesQuery } from '@/query/schedule';
 
 const searchSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
 });
 
 export const Route = createFileRoute('/_private/schedule/details')({

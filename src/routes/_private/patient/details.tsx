@@ -16,7 +16,7 @@ import { PatientIntraoralView } from './@components/patient-intraoral-view';
 import { PatientProfile } from './@components/patient-profile';
 
 const searchSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   tab: z.enum(['profile', 'anamnesis', 'intraoral', 'odontogram', 'schedule', 'financial', 'medicalrecord']).default('profile'),
 });
 

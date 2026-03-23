@@ -18,7 +18,7 @@ import { useProfessionalsQuery } from '@/query/professionals';
 import { OdontogramStatusForm } from './@components/odontogram-status-form';
 
 const searchSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
 });
 
 export const Route = createFileRoute('/_private/odontogram/details')({
