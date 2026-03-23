@@ -90,5 +90,8 @@
   "professionals": "Profissionais",
   "select.professional": "Selecione o profissional...",
   "search.professional": "Buscar profissional...",
-  "professional.not.found": "Profissional não encontrado"
+  "professional.not.found": "Profissional não encontrado",
+  "notifications.empty": "Nenhuma notificação",
+  "alerts": "Alertas",
+  "notifications.viewall": "Visualizar tudo"
 }

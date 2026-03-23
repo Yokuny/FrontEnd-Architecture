@@ -1,9 +1,10 @@
-import { EnvelopeIcon } from '@/components/icons/Envelope.Icon';
-import { EnvelopeOpenIcon } from '@/components/icons/EnvelopeOpen.Icon';
+import { Link } from '@tanstack/react-router';
+import { ScanTextIcon } from '@/components/icons/ScanText.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
+import { t } from '@/lib/helpers/translate';
 
 // --- Switcher ---
 
@@ -16,18 +17,16 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="secondary" aria-label="Open notifications" className="relative">
-          {hasNotifications ? <EnvelopeIcon /> : <EnvelopeOpenIcon />}
-          {hasNotifications && (
-            <span className="absolute top-2 right-1.5 flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500" />
-            </span>
-          )}
+          <ScanTextIcon />
+          <span className="absolute top-1.5 right-1 flex h-2 w-2">
+            <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${hasNotifications ? 'bg-yellow-400' : 'bg-green-400'}`} />
+            <span className={`relative inline-flex h-2 w-2 rounded-full ${hasNotifications ? 'bg-amber-500' : 'bg-green-500'}`} />
+          </span>
           <span className="sr-only">Open notifications</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" className="my-6 w-80">
-        <DropdownMenuLabel>{'alerts'}</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('alerts')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <div className="max-h-72 overflow-y-auto">
           {hasNotifications ? (
@@ -44,11 +43,15 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
               </DropdownMenuItem>
             ))
           ) : (
-            <div className="p-4 text-center text-muted-foreground text-sm">{'notifications.empty'}</div>
+            <div className="p-4 text-center text-muted-foreground text-sm">{t('notifications.empty')}</div>
           )}
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="justify-center font-mono text-muted-foreground text-sm hover:text-primary">{'notifications.viewall'}</DropdownMenuItem>
+        <DropdownMenuItem asChild className="justify-center font-mono text-muted-foreground text-sm hover:text-primary">
+          <Link to="/reminders" search={{ showAll: true }}>
+            {t('notifications.viewall')}
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
