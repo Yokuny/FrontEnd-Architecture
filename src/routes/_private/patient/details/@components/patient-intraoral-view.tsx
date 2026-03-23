@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import Edit from '@/components/icons/Edit.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -5,14 +6,16 @@ import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { Intraoral } from '@/lib/interfaces';
 
-export const PatientIntraoralView = ({ intraoral }: { intraoral?: Intraoral }) => {
+export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Intraoral; patientId: string }) => {
+  const navigate = useNavigate();
+
   if (!intraoral || intraoral.updatedAt === intraoral.createdAt) {
     return (
       <Card>
         <CardContent className="flex flex-col items-center justify-center p-12 text-center">
           <CardTitle className="mb-4 text-xl">Registro Intraoral</CardTitle>
           <p className="mb-4 text-muted-foreground">Nenhum exame intraoral cadastrado para este paciente.</p>
-          <Button onClick={() => alert('Em breve: Formulário Intraoral')} variant="outline">
+          <Button onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })} variant="outline">
             Cadastrar Exame Intraoral
           </Button>
         </CardContent>
@@ -50,7 +53,7 @@ export const PatientIntraoralView = ({ intraoral }: { intraoral?: Intraoral }) =
     <Card className="flex flex-col gap-6">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-xl">Registro Intraoral</CardTitle>
-        <Button variant="outline" onClick={() => alert('Em breve: Formulário Intraoral')}>
+        <Button variant="outline" onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })}>
           <Edit className="mr-2 size-4" /> Editar
         </Button>
       </CardHeader>

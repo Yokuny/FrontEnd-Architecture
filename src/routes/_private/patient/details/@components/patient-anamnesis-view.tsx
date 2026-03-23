@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import Edit from '@/components/icons/Edit.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -26,14 +27,16 @@ export const ANAMNESIS_SEVERITY_MAP = {
   takingMedication: 'medium',
 } as const;
 
-export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) => {
+export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Anamnesis; patientId: string }) => {
+  const navigate = useNavigate();
+
   if (!anamnesis || anamnesis.updatedAt === anamnesis.createdAt) {
     return (
       <Card>
         <CardContent className="flex flex-col items-center justify-center p-12 text-center">
           <CardTitle className="mb-4 text-xl">Registro de Anamnese</CardTitle>
           <p className="mb-4 text-muted-foreground">Nenhuma anamnese cadastrada para este paciente.</p>
-          <Button onClick={() => alert('Em breve: Formulário de Anamnese')} variant="outline">
+          <Button onClick={() => navigate({ to: '/patient/details/anamnesis', search: { id: patientId } })} variant="outline">
             Cadastrar Anamnese
           </Button>
         </CardContent>
@@ -111,7 +114,7 @@ export const PatientAnamnesisView = ({ anamnesis }: { anamnesis?: Anamnesis }) =
     <Card className="flex flex-col gap-6">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-xl">Registro de Anamnese</CardTitle>
-        <Button variant="outline" onClick={() => alert('Em breve: Formulário de Anamnese')}>
+        <Button variant="outline" onClick={() => navigate({ to: '/patient/details/anamnesis', search: { id: patientId } })}>
           <Edit className="mr-2 size-4" /> Editar
         </Button>
       </CardHeader>

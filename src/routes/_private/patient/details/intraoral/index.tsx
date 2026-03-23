@@ -1,0 +1,247 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+
+import DefaultFormLayout from '@/components/default-form-layout';
+import DefaultLoading from '@/components/default-loading';
+import { Button } from '@/components/ui/button';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Spinner } from '@/components/ui/spinner';
+import { PUT, request } from '@/lib/api/client';
+import { type NewIntraoral, intraoralSchema } from '@/lib/interfaces/schemas/patient.schema';
+import { usePatientQuery } from '@/query/patient';
+
+const searchSchema = z.object({
+  id: z.string().optional(),
+});
+
+export const Route = createFileRoute('/_private/patient/details/intraoral/')({
+  component: IntraoralFormPage,
+  staticData: {
+    title: 'Intraoral',
+    description: 'Avaliação da saúde bucal do paciente.',
+  },
+  validateSearch: searchSchema,
+});
+
+function IntraoralFormPage() {
+  const search = Route.useSearch();
+  const id = search.id;
+  const navigate = useNavigate();
+  const { data: patient, isLoading: isLoadingPatient } = usePatientQuery(id);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const intraoral = patient?.intraoral;
+  const hasExisting = intraoral && intraoral.updatedAt !== intraoral.createdAt;
+
+  const form = useForm<NewIntraoral>({
+    resolver: zodResolver(intraoralSchema),
+    defaultValues: {
+      hygiene: intraoral?.hygiene || 'normal',
+      halitosis: intraoral?.halitosis || 'ausente',
+      tartar: intraoral?.tartar || 'ausente',
+      gums: intraoral?.gums || 'normal',
+      mucosa: intraoral?.mucosa || 'normal',
+      tongue: intraoral?.tongue || '',
+      palate: intraoral?.palate || '',
+      oralFloor: intraoral?.oralFloor || '',
+      lips: intraoral?.lips || '',
+      otherObservations: intraoral?.otherObservations || '',
+    },
+    mode: 'onChange',
+  });
+
+  const goBack = () => navigate({ to: '/patient/details', search: { id: id!, tab: 'intraoral' } });
+
+  const onSubmit = form.handleSubmit(async (values) => {
+    if (!id) return;
+    setIsSubmitting(true);
+    try {
+      const res = await request(`patient/${id}/intraoral`, PUT(values));
+      if (!res.success) throw new Error(res.message);
+      toast.success(res.message);
+      goBack();
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : 'Erro ao salvar exame intraoral');
+    } finally {
+      setIsSubmitting(false);
+    }
+  });
+
+  if (isLoadingPatient) return <DefaultLoading />;
+  if (!patient) return <div className="p-12 text-center">Paciente não encontrado.</div>;
+
+  const sections = [
+    {
+      title: 'Avaliação da Saúde Bucal',
+      description: 'Higiene, hálito, tártaro, gengiva e mucosa',
+      fields: [
+        <div key="health" className="grid grid-cols-2 gap-6 md:grid-cols-3">
+          <FormField
+            control={form.control}
+            name="hygiene"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Higiene</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="regular">Regular</SelectItem>
+                      <SelectItem value="deficiente">Deficiente</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="halitosis"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Hálito</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ausente">Ausente</SelectItem>
+                      <SelectItem value="moderada">Moderado</SelectItem>
+                      <SelectItem value="forte">Forte</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="tartar"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tártaro</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ausente">Ausente</SelectItem>
+                      <SelectItem value="pouco">Pouco</SelectItem>
+                      <SelectItem value="muito">Muito</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="gums"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gengiva</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="gengivite">Gengivite</SelectItem>
+                      <SelectItem value="periodontite">Periodontite</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="mucosa"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Mucosa</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="alterada">Alterada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>,
+      ],
+    },
+    {
+      title: 'Exame das Partes da Boca',
+      description: 'Língua, palato, assoalho, lábios e observações',
+      fields: [
+        <div key="regions" className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <FormField control={form.control} name="tongue" render={({ field }) => (<FormItem><FormLabel>Língua</FormLabel><FormControl><Input placeholder="Como está a língua?" disabled={isSubmitting} {...field} /></FormControl><FormMessage /></FormItem>)} />
+          <FormField control={form.control} name="palate" render={({ field }) => (<FormItem><FormLabel>Céu da boca</FormLabel><FormControl><Input placeholder="Como está o céu da boca?" disabled={isSubmitting} {...field} /></FormControl><FormMessage /></FormItem>)} />
+          <FormField control={form.control} name="oralFloor" render={({ field }) => (<FormItem><FormLabel>Assoalho bucal</FormLabel><FormControl><Input placeholder="Descreva o assoalho bucal." disabled={isSubmitting} {...field} /></FormControl><FormMessage /></FormItem>)} />
+          <FormField control={form.control} name="lips" render={({ field }) => (<FormItem><FormLabel>Lábios</FormLabel><FormControl><Input placeholder="Como estão os lábios?" disabled={isSubmitting} {...field} /></FormControl><FormMessage /></FormItem>)} />
+          <FormField
+            control={form.control}
+            name="otherObservations"
+            render={({ field }) => (
+              <FormItem className="md:col-span-2">
+                <FormLabel>Outras Observações</FormLabel>
+                <FormControl>
+                  <Input placeholder="Outros sintomas? Preocupações?" disabled={isSubmitting} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>,
+      ],
+    },
+  ];
+
+  return (
+    <Card asPage>
+      <CardHeader>
+        <CardAction>
+          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting}>
+            Cancelar
+          </Button>
+          <Button type="submit" form="intraoral-form" disabled={isSubmitting} className="min-w-[120px]">
+            {isSubmitting && <Spinner className="mr-2 size-4" />}
+            {hasExisting ? 'Atualizar' : 'Cadastrar'}
+          </Button>
+        </CardAction>
+      </CardHeader>
+      <Form {...form}>
+        <form onSubmit={onSubmit} id="intraoral-form">
+          <CardContent>
+            <DefaultFormLayout sections={sections} />
+          </CardContent>
+        </form>
+      </Form>
+    </Card>
+  );
+}
