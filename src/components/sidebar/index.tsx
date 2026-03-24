@@ -9,8 +9,8 @@ import type { SidebarRoute } from '@/config/sidebarRoutes';
 import { buildSidebarRoutes } from '@/config/sidebarRoutes';
 import { t } from '@/lib/helpers/translate';
 import { cn } from '@/lib/utils';
-import { NotificationsSwitcher } from './switch-notifications';
 import { FavoritesSwitcher } from './switch-favorites';
+import { NotificationsSwitcher } from './switch-notifications';
 
 const convertToNavRoutes = (routes: SidebarRoute[]): Route[] => {
   return routes.map((route) => ({

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import DateTimePicker from '@/components/data-inputs/date-time-picker';
 import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
-import DateTimePicker from '@/components/date-time-picker';
 import Back from '@/components/icons/Back.Icon';
 import Delete from '@/components/icons/Delete.Icon';
 import Edit from '@/components/icons/Edit.Icon';

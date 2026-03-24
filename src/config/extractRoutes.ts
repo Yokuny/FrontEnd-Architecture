@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const ROUTE_TREE_PATH = path.resolve(__dirname, '../routeTree.gen.ts');
-const ROUTE_CONFIG_PATH = path.resolve(__dirname, './routes.ts');
+const ROUTE_CONFIG_PATH = path.resolve(__dirname, './routes.tsx');
 
 /**
  * Extrai rotas do routeTree.gen.ts filtrando apenas rotas privadas:

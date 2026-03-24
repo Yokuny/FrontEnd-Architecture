@@ -24,7 +24,7 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
           <span className="sr-only">Open notifications</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="right" className="my-6 min-w-80 w-full">
+      <DropdownMenuContent side="right" className="my-6 w-full min-w-80">
         <DropdownMenuLabel>{t('alerts')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <div className="max-h-72 overflow-y-auto">
