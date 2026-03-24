@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Activity } from 'react';
 import { z } from 'zod';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -48,7 +49,7 @@ function PatientDetailsPage() {
           {isLoading ? (
             <DefaultLoading />
           ) : !patient ? (
-            <div className="p-12 text-center">Paciente não encontrado.</div>
+            <DefaultEmptyData />
           ) : (
             <Tabs value={currentTab} onValueChange={handleTabChange}>
               <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2">

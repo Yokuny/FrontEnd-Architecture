@@ -159,9 +159,6 @@ function OdontogramEditPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting}>
-            Cancelar
-          </Button>
           <Button type="button" onClick={onSubmit} disabled={isSubmitting} className="min-w-[120px]">
             {isSubmitting && <Spinner className="mr-2 size-4" />}
             Salvar
@@ -176,13 +173,13 @@ function OdontogramEditPage() {
                 control={form.control}
                 name="odontogram"
                 render={() => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-full border">
                     <FormControl>
                       <Tabs defaultValue="permanentes" className="flex w-full flex-col gap-4">
                         {(['permanentes', 'deciduos'] as const).map((teethType) => {
                           const teeth = teethType === 'permanentes' ? permanentTeethNumbers : deciduousTeethNumbers;
                           return (
-                            <TabsContent key={teethType} value={teethType} className="flex flex-col items-center gap-2 rounded-lg border bg-background p-4 md:p-8">
+                            <TabsContent key={teethType} value={teethType} className="flex flex-col items-center gap-2 p-4 md:p-8">
                               <div className="flex min-w-max justify-center gap-0.5 md:gap-1">
                                 {teeth.top.map((toothNumber) => (
                                   <ToothStatusPicker
@@ -209,7 +206,7 @@ function OdontogramEditPage() {
                           );
                         })}
                         <div className="flex w-full justify-center">
-                          <TabsList className="grid h-auto w-fit grid-cols-2 rounded-lg border">
+                          <TabsList className="grid h-auto w-fit grid-cols-2">
                             <TabsTrigger value="permanentes">Permanentes</TabsTrigger>
                             <TabsTrigger value="deciduos">Decíduos</TabsTrigger>
                           </TabsList>

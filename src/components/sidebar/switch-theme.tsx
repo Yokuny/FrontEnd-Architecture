@@ -34,18 +34,18 @@ export function ThemeSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="secondary">
           {theme === 'sunset' ? (
-            <SunDimIcon className="flex h-full w-full items-center justify-center" />
+            <SunDimIcon size={16} className="flex h-full w-full items-center justify-center" />
           ) : theme === 'ocean-blue' ? (
-            <CloudSunIcon className="flex h-full w-full items-center justify-center" />
+            <CloudSunIcon size={16} className="flex h-full w-full items-center justify-center" />
           ) : resolvedTheme === 'dark' ? (
-            <MoonIcon className="flex h-full w-full items-center justify-center" />
+            <MoonIcon size={16} className="flex h-full w-full items-center justify-center" />
           ) : (
-            <SunIcon className="flex h-full w-full items-center justify-center" />
+            <SunIcon size={16} className="flex h-full w-full items-center justify-center" />
           )}
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent>
         <DropdownMenuItem onClick={() => setTheme('system')} className={theme === 'system' ? 'bg-accent font-medium' : ''}>
           <Gear className="mr-2" />
           System {theme === 'system' && '✓'}

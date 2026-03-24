@@ -93,5 +93,8 @@
   "professional.not.found": "Profissional não encontrado",
   "notifications.empty": "Nenhuma notificação",
   "alerts": "Alertas",
-  "notifications.viewall": "Visualizar tudo"
+  "notifications.viewall": "Visualizar tudo",
+  "logout": "Sair",
+  "logout.description": "Deseja realmente sair?",
+  "logout.loading": "Saindo..."
 }

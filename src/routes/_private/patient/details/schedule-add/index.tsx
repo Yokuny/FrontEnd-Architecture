@@ -3,7 +3,6 @@ import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-
 import FinancialCombobox from '@/components/data-inputs/financial-combobox';
 import OdontogramCombobox from '@/components/data-inputs/odontogram-combobox';
 import ProcedureComponent from '@/components/data-inputs/procedure-component';
@@ -210,7 +209,7 @@ function ScheduleAddPage() {
                         }
                       },
                     }}
-                    patient={id}
+                    patient={String(id)}
                     fetchFinancials={fetchFinancials}
                     disabled={selectedProfessional !== '' || selectedOdontogram !== ''}
                   />
@@ -240,7 +239,7 @@ function ScheduleAddPage() {
                         }
                       },
                     }}
-                    patient={id}
+                    patient={String(id)}
                     fetchOdontograms={fetchOdontograms}
                     disabled={selectedProfessional !== '' || selectedFinancial !== ''}
                   />
@@ -267,48 +266,13 @@ function ScheduleAddPage() {
       ],
     },
     {
-      title: 'Data e Horário',
-      description: 'Selecione a data e o horário da consulta',
+      title: selectedRoomName ? `${selectedRoomName} | Data, Horário` : 'Local, Data e Horário',
+      description: selectedRoomName ? `Agendamento na sala ${selectedRoomName}. Selecione a data e o horário.` : 'Selecione a sala, data e o horário da consulta',
       fields: [
-        <div key="datetime">
-          <DateTimePicker
-            startDate={startDateTime ? new Date(startDateTime) : undefined}
-            endDate={endDateTime ? new Date(endDateTime) : undefined}
-            allDay={allDay}
-            onChange={(data) => {
-              setStartDateTime(data.startISO);
-              setEndDateTime(data.endISO);
-              setAllDay(data.allDay);
-              form.setValue('allDay', data.allDay);
-            }}
-            disabled={isSubmitting}
-          />
-        </div>,
-      ],
-    },
-  ];
-
-  return (
-    <Card asPage>
-      <CardHeader>
-        <CardAction>
-          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting}>
-            Cancelar
-          </Button>
-        </CardAction>
-      </CardHeader>
-      <Form {...(form as any)}>
-        <form
-          id="schedule-add-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          <CardContent>
-            <DefaultFormLayout sections={sections} />
-
-            <div className="flex w-full gap-2 px-6 py-8 md:gap-4 md:px-10">
+        <div key="datetime-room" className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <FormLabel>Sala do Atendimento</FormLabel>
+            <div className="flex w-full gap-2">
               {!(form.getValues('Room') || selectedRoom) ? (
                 <Select
                   value={form.getValues('Room')}
@@ -330,10 +294,12 @@ function ScheduleAddPage() {
                   </SelectContent>
                 </Select>
               ) : (
-                <>
+                <div className="flex w-full items-center gap-2 rounded-md border p-2">
+                  <span className="flex-1 font-medium text-sm">{selectedRoomName}</span>
                   <Button
                     type="button"
                     variant="outline"
+                    size="sm"
                     onClick={() => {
                       form.setValue('Room', '');
                       setSelectedRoom('');
@@ -343,13 +309,47 @@ function ScheduleAddPage() {
                   >
                     <Edit className="size-4" />
                   </Button>
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting && <Spinner className="mr-2 size-4" />}
-                    {`Agendar em ${selectedRoomName || ''}`}
-                  </Button>
-                </>
+                </div>
               )}
             </div>
+          </div>
+          <DateTimePicker
+            startDate={startDateTime ? new Date(startDateTime) : undefined}
+            endDate={endDateTime ? new Date(endDateTime) : undefined}
+            allDay={allDay}
+            onChange={(data) => {
+              setStartDateTime(data.startISO);
+              setEndDateTime(data.endISO);
+              setAllDay(data.allDay);
+              form.setValue('allDay', data.allDay);
+            }}
+            disabled={isSubmitting}
+          />
+        </div>,
+      ],
+    },
+  ];
+
+  return (
+    <Card asPage>
+      <CardHeader>
+        <CardAction>
+          <Button form="schedule-add-form" type="submit" disabled={isSubmitting || !selectedRoom}>
+            {isSubmitting && <Spinner className="mr-2 size-4" />}
+            {selectedRoomName ? `Agendar em ${selectedRoomName}` : 'Agendar'}
+          </Button>
+        </CardAction>
+      </CardHeader>
+      <Form {...(form as any)}>
+        <form
+          id="schedule-add-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <CardContent>
+            <DefaultFormLayout sections={sections} />
           </CardContent>
         </form>
       </Form>

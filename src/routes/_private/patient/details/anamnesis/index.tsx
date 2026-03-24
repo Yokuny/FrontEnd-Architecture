@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-
 import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
@@ -199,7 +198,7 @@ function AnamnesisFormPage() {
       title: 'Hábitos Prejudiciais',
       description: 'Fumante, álcool e outros hábitos',
       fields: [
-        <div key="habits" className="grid grid-cols-2 gap-6 md:grid-cols-4">
+        <div key="habits" className="grid grid-cols-2 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
             name="smoker"
@@ -252,7 +251,7 @@ function AnamnesisFormPage() {
             control={form.control}
             name="otherHarmfulHabits"
             render={({ field }) => (
-              <FormItem className="col-span-2 md:col-span-4">
+              <FormItem className="col-span-2">
                 <FormLabel>Outros hábitos prejudiciais</FormLabel>
                 <FormControl>
                   <Input placeholder="Descreva outros hábitos..." disabled={isSubmitting} {...field} />
@@ -267,7 +266,7 @@ function AnamnesisFormPage() {
       title: 'Condições Especiais',
       description: 'Alergias, medicamentos e condições médicas',
       fields: [
-        <div key="conditions" className="grid grid-cols-2 gap-6 md:grid-cols-4">
+        <div key="conditions" className="grid grid-cols-2 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
             name="allergicToMedication"
@@ -419,7 +418,7 @@ function AnamnesisFormPage() {
       title: 'Doenças Crônicas',
       description: 'Condições médicas pré-existentes',
       fields: [
-        <div key="illnesses" className="grid grid-cols-2 gap-6 md:grid-cols-4">
+        <div key="illnesses" className="grid grid-cols-2 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
             name="illnesses.diabetes"
@@ -520,7 +519,7 @@ function AnamnesisFormPage() {
             control={form.control}
             name="illnesses.otherIllnesses"
             render={({ field }) => (
-              <FormItem className="col-span-2 md:col-span-4">
+              <FormItem className="col-span-2">
                 <FormLabel>Outras doenças</FormLabel>
                 <FormControl>
                   <Input placeholder="Descreva outras doenças..." disabled={isSubmitting} {...field} />

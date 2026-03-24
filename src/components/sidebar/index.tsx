@@ -3,13 +3,14 @@ import { FooterNavigation } from '@/components/sidebar/nav-footer';
 import AppNavigation, { type Route } from '@/components/sidebar/nav-main';
 import { SidebarSwitcher } from '@/components/sidebar/switch-sidebar';
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
+import { UserSwitcher } from '@/components/sidebar/switch-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator, useSidebar } from '@/components/ui/sidebar';
 import type { SidebarRoute } from '@/config/sidebarRoutes';
 import { buildSidebarRoutes } from '@/config/sidebarRoutes';
 import { t } from '@/lib/helpers/translate';
-
 import { cn } from '@/lib/utils';
 import { NotificationsSwitcher } from './switch-notifications';
+import { FavoritesSwitcher } from './switch-favorites';
 
 const convertToNavRoutes = (routes: SidebarRoute[]): Route[] => {
   return routes.map((route) => ({
@@ -42,7 +43,13 @@ export function AppSidebar() {
             <SidebarSwitcher />
             <NotificationsSwitcher notifications={[]} />
           </div>
-          {!isCollapsed && <ThemeSwitcher />}
+          {!isCollapsed && (
+            <>
+              <FavoritesSwitcher />
+              <ThemeSwitcher />
+              <UserSwitcher />
+            </>
+          )}
         </div>
         <SidebarSeparator />
       </SidebarHeader>

@@ -7,8 +7,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
 import { t } from '@/lib/helpers/translate';
 
-// --- Switcher ---
-
 export function NotificationsSwitcher({ notifications }: { notifications: Notification[] }) {
   const { setMenuOpen } = useSidebarToggle();
 
@@ -18,7 +16,7 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="secondary" aria-label="Open notifications" className="group/notif relative">
-          {hasNotifications ? <MessageSquareMoreIcon size={20} /> : <MessageSquareCheckIcon size={20} />}
+          {hasNotifications ? <MessageSquareMoreIcon size={16} /> : <MessageSquareCheckIcon size={16} />}
           <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
             <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${hasNotifications ? 'bg-amber-400' : 'bg-green-400'}`} />
             <span className={`relative inline-flex h-2 w-2 rounded-full ${hasNotifications ? 'bg-amber-500' : 'bg-green-500'}`} />
@@ -26,7 +24,7 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
           <span className="sr-only">Open notifications</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="right" className="my-6 w-80">
+      <DropdownMenuContent side="right" className="my-6 min-w-80 w-full">
         <DropdownMenuLabel>{t('alerts')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <div className="max-h-72 overflow-y-auto">

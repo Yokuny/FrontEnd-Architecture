@@ -2,7 +2,7 @@ import { useNavigate } from '@tanstack/react-router';
 import Edit from '@/components/icons/Edit.Icon';
 import { Button } from '@/components/ui/button';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
-import { Item, ItemActions, ItemHeader, ItemTitle, ItemDescription } from '@/components/ui/item';
+import { Item, ItemActions, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { Intraoral } from '@/lib/interfaces';
 

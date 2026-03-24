@@ -17,7 +17,7 @@ export function SidebarSwitcher() {
 
   return (
     <Button size="icon" variant="secondary" onClick={toggle} aria-label="Toggle Sidebar">
-      <Icon />
+      <Icon size={16} />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

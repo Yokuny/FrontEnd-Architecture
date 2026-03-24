@@ -5,7 +5,6 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/c
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
 import { cn } from '@/lib/utils';
 import type { Route } from './nav-main';
-import { FavoritesSwitcher } from './switch-favorites';
 
 export function FooterNavigation({ routes }: { routes: Route[] }) {
   const { state } = useSidebar();
@@ -66,7 +65,6 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
           </SidebarMenuItem>
         );
       })}
-      <FavoritesSwitcher />
     </SidebarMenu>
   );
 }

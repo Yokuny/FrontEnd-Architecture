@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils/index';
 import { Button } from './button';
 
 function PageBreadcrumb() {
+  const matches = useMatches();
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter(Boolean);
 
@@ -29,7 +30,21 @@ function PageBreadcrumb() {
         {pathnames.map((value, index) => {
           const isLast = index === pathnames.length - 1;
           const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-          const translatedValue = t(value);
+
+          const match = matches.find((m) => m.pathname === to || m.pathname === `${to}/`);
+          let translatedValue = '';
+
+          if (match?.staticData) {
+            if (typeof match.staticData.getTitle === 'function') {
+              translatedValue = match.staticData.getTitle();
+            } else if (typeof match.staticData.title === 'string') {
+              translatedValue = match.staticData.title;
+            }
+          }
+
+          if (!translatedValue) {
+            translatedValue = t(value);
+          }
 
           return (
             <Fragment key={to}>
