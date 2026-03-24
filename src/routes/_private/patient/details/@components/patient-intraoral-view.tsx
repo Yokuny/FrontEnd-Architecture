@@ -1,8 +1,8 @@
 import { useNavigate } from '@tanstack/react-router';
 import Edit from '@/components/icons/Edit.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
+import { Item, ItemActions, ItemHeader, ItemTitle, ItemDescription } from '@/components/ui/item';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { Intraoral } from '@/lib/interfaces';
 
@@ -11,15 +11,13 @@ export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Int
 
   if (!intraoral || intraoral.updatedAt === intraoral.createdAt) {
     return (
-      <Card>
-        <CardContent className="flex flex-col items-center justify-center p-12 text-center">
-          <CardTitle className="mb-4 text-xl">Registro Intraoral</CardTitle>
-          <p className="mb-4 text-muted-foreground">Nenhum exame intraoral cadastrado para este paciente.</p>
-          <Button onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })} variant="outline">
-            Cadastrar Exame Intraoral
-          </Button>
-        </CardContent>
-      </Card>
+      <Item variant="outline" className="flex flex-col items-center justify-center p-12 text-center">
+        <ItemTitle className="mb-4 text-xl">Registro Intraoral</ItemTitle>
+        <ItemDescription className="mb-4">Nenhum exame intraoral cadastrado para este paciente.</ItemDescription>
+        <Button onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })} variant="outline">
+          Cadastrar Exame Intraoral
+        </Button>
+      </Item>
     );
   }
 
@@ -50,25 +48,27 @@ export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Int
   ];
 
   return (
-    <Card className="flex flex-col gap-6">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-xl">Registro Intraoral</CardTitle>
-        <Button variant="outline" onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })}>
-          <Edit className="mr-2 size-4" /> Editar
-        </Button>
-      </CardHeader>
+    <div className="flex flex-col gap-6">
+      <ItemHeader className="flex flex-row items-center justify-between">
+        <ItemTitle className="text-xl">Registro Intraoral</ItemTitle>
+        <ItemActions>
+          <Button variant="outline" onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })}>
+            <Edit className="mr-2 size-4" /> Editar
+          </Button>
+        </ItemActions>
+      </ItemHeader>
 
-      <CardContent className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div className="space-y-4 rounded-md border p-6">
-          <h3 className="font-semibold text-lg tracking-tight">Avaliação da Saúde Bucal</h3>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <Item variant="outline" className="flex-col items-start gap-4 p-6">
+          <ItemTitle className="font-semibold text-lg tracking-tight">Avaliação da Saúde Bucal</ItemTitle>
           <DataTable data={healthData} columns={healthColumns} searchable={false} showPagination={false} compact bordered={false} />
-        </div>
+        </Item>
 
-        <div className="space-y-4 rounded-md border p-6">
-          <h3 className="font-semibold text-lg tracking-tight">Regiões Específicas</h3>
+        <Item variant="outline" className="flex-col items-start gap-4 p-6">
+          <ItemTitle className="font-semibold text-lg tracking-tight">Regiões Específicas</ItemTitle>
           <DataTable data={regionData} columns={regionColumns} searchable={false} showPagination={false} compact bordered={false} />
-        </div>
-      </CardContent>
-    </Card>
+        </Item>
+      </div>
+    </div>
   );
 };
