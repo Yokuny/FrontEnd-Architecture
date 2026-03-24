@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { ScanTextIcon } from '@/components/icons/ScanText.Icon';
+import { MessageSquareCheckIcon } from '@/components/icons/MessageSquareCheck.Icon';
+import { MessageSquareMoreIcon } from '@/components/icons/MessageSquareMore.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -16,10 +17,10 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="secondary" aria-label="Open notifications" className="relative">
-          <ScanTextIcon />
-          <span className="absolute top-1.5 right-1 flex h-2 w-2">
-            <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${hasNotifications ? 'bg-yellow-400' : 'bg-green-400'}`} />
+        <Button size="icon" variant="secondary" aria-label="Open notifications" className="group/notif relative">
+          {hasNotifications ? <MessageSquareMoreIcon size={20} /> : <MessageSquareCheckIcon size={20} />}
+          <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
+            <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${hasNotifications ? 'bg-amber-400' : 'bg-green-400'}`} />
             <span className={`relative inline-flex h-2 w-2 rounded-full ${hasNotifications ? 'bg-amber-500' : 'bg-green-500'}`} />
           </span>
           <span className="sr-only">Open notifications</span>

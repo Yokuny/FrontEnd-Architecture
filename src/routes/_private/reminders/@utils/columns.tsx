@@ -2,7 +2,7 @@ import { toast } from 'sonner';
 import Check from '@/components/icons/Check.Icon';
 import Mixer from '@/components/icons/Mixer.Icon';
 import Phone from '@/components/icons/Phone.Icon';
-import { Badge } from '@/components/ui/badge';
+import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import type { DataTableColumn } from '@/components/ui/data-table';
@@ -63,9 +63,9 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
     header: 'Status',
     sortable: true,
     render: (_, reminder) => (
-      <Badge variant={reminder.status === 'done' ? 'completed' : 'pending'} className="w-20 justify-center">
+      <BadgeIndicator variant={reminder.status === 'done' ? 'completed' : 'pending'} pulse>
         {reminder.status === 'done' ? 'Concluído' : 'Pendente'}
-      </Badge>
+      </BadgeIndicator>
     ),
   },
   {

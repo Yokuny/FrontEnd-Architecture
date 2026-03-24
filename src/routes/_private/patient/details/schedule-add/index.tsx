@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -21,7 +21,6 @@ import { useClinicStore } from '@/hooks/clinic';
 import { GET, POST, request } from '@/lib/api/client';
 import { comboboxWithImgFormat, currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { addKey } from '@/lib/helpers/validade.helper';
-import type { NewSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 import { useClinicApi } from '@/query/clinic';
 import { usePatientQuery } from '@/query/patient';
 import { useUserQuery } from '@/query/user';
@@ -98,23 +97,17 @@ function ScheduleAddPage() {
     return comboboxWithImgFormat(res.data);
   }, []);
 
-  const fetchFinancials = useCallback(
-    async (patientId: string) => {
-      const res = await request(`financial/patient/${patientId}`, GET());
-      if (!res.success) return [];
-      return (res.data || []).map((f: any) => ({ value: f._id, label: `${f._id?.slice(-6)} - R$ ${f.price}` }));
-    },
-    [],
-  );
+  const fetchFinancials = useCallback(async (patientId: string) => {
+    const res = await request(`financial/patient/${patientId}`, GET());
+    if (!res.success) return [];
+    return (res.data || []).map((f: any) => ({ value: f._id, label: `${f._id?.slice(-6)} - R$ ${f.price}` }));
+  }, []);
 
-  const fetchOdontograms = useCallback(
-    async (patientId: string) => {
-      const res = await request(`odontogram/patient/${patientId}`, GET());
-      if (!res.success) return [];
-      return (res.data || []).map((o: any) => ({ value: o._id, label: `${o._id?.slice(-6)} - ${o.finished ? 'Finalizado' : 'Em andamento'}` }));
-    },
-    [],
-  );
+  const fetchOdontograms = useCallback(async (patientId: string) => {
+    const res = await request(`odontogram/patient/${patientId}`, GET());
+    if (!res.success) return [];
+    return (res.data || []).map((o: any) => ({ value: o._id, label: `${o._id?.slice(-6)} - ${o.finished ? 'Finalizado' : 'Em andamento'}` }));
+  }, []);
 
   const goBack = () => navigate({ to: '/patient/details', search: { id: id!, tab: 'schedule' } });
 

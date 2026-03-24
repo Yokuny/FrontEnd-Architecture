@@ -4,9 +4,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-
-import ToothNumber from '@/components/odontogram/tooth-number';
 import DefaultLoading from '@/components/default-loading';
+import ToothNumber from '@/components/odontogram/tooth-number';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -186,12 +185,24 @@ function OdontogramEditPage() {
                             <TabsContent key={teethType} value={teethType} className="flex flex-col items-center gap-2 rounded-lg border bg-background p-4 md:p-8">
                               <div className="flex min-w-max justify-center gap-0.5 md:gap-1">
                                 {teeth.top.map((toothNumber) => (
-                                  <ToothStatusPicker key={toothNumber} number={toothNumber} bottom={false} currentStatus={getCurrentToothStatus(toothNumber)} onStatusChange={handleToothStatus} />
+                                  <ToothStatusPicker
+                                    key={toothNumber}
+                                    number={toothNumber}
+                                    bottom={false}
+                                    currentStatus={getCurrentToothStatus(toothNumber)}
+                                    onStatusChange={handleToothStatus}
+                                  />
                                 ))}
                               </div>
                               <div className="flex min-w-max justify-center gap-0.5 md:gap-1">
                                 {teeth.bottom.map((toothNumber) => (
-                                  <ToothStatusPicker key={toothNumber} number={toothNumber} bottom={true} currentStatus={getCurrentToothStatus(toothNumber)} onStatusChange={handleToothStatus} />
+                                  <ToothStatusPicker
+                                    key={toothNumber}
+                                    number={toothNumber}
+                                    bottom={true}
+                                    currentStatus={getCurrentToothStatus(toothNumber)}
+                                    onStatusChange={handleToothStatus}
+                                  />
                                 ))}
                               </div>
                             </TabsContent>

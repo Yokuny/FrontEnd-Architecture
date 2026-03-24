@@ -15,8 +15,8 @@ import { Spinner } from '@/components/ui/spinner';
 import { GET, POST, request } from '@/lib/api/client';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
-import Teeth from '@/routes/_private/odontogram/@components/teeth';
 import { usePatientQuery } from '@/query/patient';
+import Teeth from '@/routes/_private/odontogram/@components/teeth';
 
 const searchSchema = z.object({
   id: z.string().optional(),

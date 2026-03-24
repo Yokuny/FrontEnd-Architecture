@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { PUT, request } from '@/lib/api/client';
-import { type NewIntraoral, intraoralSchema } from '@/lib/interfaces/schemas/patient.schema';
+import { intraoralSchema, type NewIntraoral } from '@/lib/interfaces/schemas/patient.schema';
 import { usePatientQuery } from '@/query/patient';
 
 const searchSchema = z.object({
@@ -200,10 +200,58 @@ function IntraoralFormPage() {
       description: 'Língua, palato, assoalho, lábios e observações',
       fields: [
         <div key="regions" className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <FormField control={form.control} name="tongue" render={({ field }) => (<FormItem><FormLabel>Língua</FormLabel><FormControl><Input placeholder="Como está a língua?" disabled={isSubmitting} {...field} /></FormControl><FormMessage /></FormItem>)} />
-          <FormField control={form.control} name="palate" render={({ field }) => (<FormItem><FormLabel>Céu da boca</FormLabel><FormControl><Input placeholder="Como está o céu da boca?" disabled={isSubmitting} {...field} /></FormControl><FormMessage /></FormItem>)} />
-          <FormField control={form.control} name="oralFloor" render={({ field }) => (<FormItem><FormLabel>Assoalho bucal</FormLabel><FormControl><Input placeholder="Descreva o assoalho bucal." disabled={isSubmitting} {...field} /></FormControl><FormMessage /></FormItem>)} />
-          <FormField control={form.control} name="lips" render={({ field }) => (<FormItem><FormLabel>Lábios</FormLabel><FormControl><Input placeholder="Como estão os lábios?" disabled={isSubmitting} {...field} /></FormControl><FormMessage /></FormItem>)} />
+          <FormField
+            control={form.control}
+            name="tongue"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Língua</FormLabel>
+                <FormControl>
+                  <Input placeholder="Como está a língua?" disabled={isSubmitting} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="palate"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Céu da boca</FormLabel>
+                <FormControl>
+                  <Input placeholder="Como está o céu da boca?" disabled={isSubmitting} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="oralFloor"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Assoalho bucal</FormLabel>
+                <FormControl>
+                  <Input placeholder="Descreva o assoalho bucal." disabled={isSubmitting} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lips"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Lábios</FormLabel>
+                <FormControl>
+                  <Input placeholder="Como estão os lábios?" disabled={isSubmitting} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="otherObservations"

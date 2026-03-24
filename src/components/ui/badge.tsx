@@ -7,7 +7,7 @@ import IconMinus from '../icons/Minus.Icon';
 import IconUp from '../icons/Up.Icon';
 
 const badgeVars = cva(
-  'inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden whitespace-nowrap rounded-sm px-2 py-0.5 font-medium text-xs transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3',
+  'inline-flex w-fit shrink-0 items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-md px-3 py-1.5 font-normal text-xs transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3',
   {
     variants: {
       variant: {
@@ -33,6 +33,7 @@ const badgeVars = cva(
         outline: 'border border-slate-600 border-solid text-foreground dark:border-slate-400',
         muted: 'border border-solid',
         transparent: 'bg-transparent',
+        secondary: '',
 
         red: 'bg-linear-to-r from-red-400 to-red-500 text-white',
         orange: 'bg-linear-to-r from-orange-400 to-orange-500 text-white',

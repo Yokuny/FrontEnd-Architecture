@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { PUT, request } from '@/lib/api/client';
-import { type NewAnamnesis, anamnesisSchema } from '@/lib/interfaces/schemas/patient.schema';
+import { anamnesisSchema } from '@/lib/interfaces/schemas/patient.schema';
 import { usePatientQuery } from '@/query/patient';
 
 const searchSchema = z.object({
@@ -420,14 +420,102 @@ function AnamnesisFormPage() {
       description: 'Condições médicas pré-existentes',
       fields: [
         <div key="illnesses" className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          <FormField control={form.control} name="illnesses.diabetes" render={({ field }) => (<FormItem><FormLabel>Diabetes</FormLabel><FormControl><YesNoSelect field={field} disabled={isSubmitting} /></FormControl></FormItem>)} />
-          <FormField control={form.control} name="illnesses.tuberculosis" render={({ field }) => (<FormItem><FormLabel>Tuberculose</FormLabel><FormControl><YesNoSelect field={field} disabled={isSubmitting} /></FormControl></FormItem>)} />
-          <FormField control={form.control} name="illnesses.heartProblems" render={({ field }) => (<FormItem><FormLabel>Problemas cardíacos</FormLabel><FormControl><YesNoSelect field={field} disabled={isSubmitting} /></FormControl></FormItem>)} />
-          <FormField control={form.control} name="illnesses.arthritis" render={({ field }) => (<FormItem><FormLabel>Artrite</FormLabel><FormControl><YesNoSelect field={field} disabled={isSubmitting} /></FormControl></FormItem>)} />
-          <FormField control={form.control} name="illnesses.asthma" render={({ field }) => (<FormItem><FormLabel>Asma</FormLabel><FormControl><YesNoSelect field={field} disabled={isSubmitting} /></FormControl></FormItem>)} />
-          <FormField control={form.control} name="illnesses.highBloodPressure" render={({ field }) => (<FormItem><FormLabel>Pressão alta</FormLabel><FormControl><YesNoSelect field={field} disabled={isSubmitting} /></FormControl></FormItem>)} />
-          <FormField control={form.control} name="illnesses.kidneyProblems" render={({ field }) => (<FormItem><FormLabel>Problemas renais</FormLabel><FormControl><YesNoSelect field={field} disabled={isSubmitting} /></FormControl></FormItem>)} />
-          <FormField control={form.control} name="illnesses.liverProblems" render={({ field }) => (<FormItem><FormLabel>Problemas hepáticos</FormLabel><FormControl><YesNoSelect field={field} disabled={isSubmitting} /></FormControl></FormItem>)} />
+          <FormField
+            control={form.control}
+            name="illnesses.diabetes"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Diabetes</FormLabel>
+                <FormControl>
+                  <YesNoSelect field={field} disabled={isSubmitting} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="illnesses.tuberculosis"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tuberculose</FormLabel>
+                <FormControl>
+                  <YesNoSelect field={field} disabled={isSubmitting} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="illnesses.heartProblems"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Problemas cardíacos</FormLabel>
+                <FormControl>
+                  <YesNoSelect field={field} disabled={isSubmitting} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="illnesses.arthritis"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Artrite</FormLabel>
+                <FormControl>
+                  <YesNoSelect field={field} disabled={isSubmitting} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="illnesses.asthma"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Asma</FormLabel>
+                <FormControl>
+                  <YesNoSelect field={field} disabled={isSubmitting} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="illnesses.highBloodPressure"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pressão alta</FormLabel>
+                <FormControl>
+                  <YesNoSelect field={field} disabled={isSubmitting} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="illnesses.kidneyProblems"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Problemas renais</FormLabel>
+                <FormControl>
+                  <YesNoSelect field={field} disabled={isSubmitting} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="illnesses.liverProblems"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Problemas hepáticos</FormLabel>
+                <FormControl>
+                  <YesNoSelect field={field} disabled={isSubmitting} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="illnesses.otherIllnesses"

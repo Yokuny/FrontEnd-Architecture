@@ -33,7 +33,11 @@ export const financialColumns = (navigate: (opts: any) => void): DataTableColumn
     sortable: true,
     render: (_, row) => {
       const badgeVariant = STATUS_TO_BADGE_VARIANT[row.status] || 'pending';
-      return <BadgeIndicator variant={badgeVariant}>{statusDictionary(row.status)}</BadgeIndicator>;
+      return (
+        <BadgeIndicator variant={badgeVariant} pulse>
+          {statusDictionary(row.status)}
+        </BadgeIndicator>
+      );
     },
   },
   {
