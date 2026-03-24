@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
@@ -73,9 +73,6 @@ function IntraoralFormPage() {
       setIsSubmitting(false);
     }
   });
-
-  if (isLoadingPatient) return <DefaultLoading />;
-  if (!patient) return <div className="p-12 text-center">Paciente não encontrado.</div>;
 
   const sections = [
     {
@@ -274,22 +271,29 @@ function IntraoralFormPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting}>
+          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
             Cancelar
           </Button>
-          <Button type="submit" form="intraoral-form" disabled={isSubmitting} className="min-w-[120px]">
+          <Button type="submit" form="intraoral-form" disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
             {isSubmitting && <Spinner className="mr-2 size-4" />}
             {hasExisting ? 'Atualizar' : 'Cadastrar'}
           </Button>
         </CardAction>
       </CardHeader>
-      <Form {...form}>
-        <form onSubmit={onSubmit} id="intraoral-form">
-          <CardContent>
-            <DefaultFormLayout sections={sections} />
-          </CardContent>
-        </form>
-      </Form>
+
+      <CardContent>
+        {isLoadingPatient ? (
+          <DefaultLoading />
+        ) : !patient ? (
+          <DefaultEmptyData />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={onSubmit} id="intraoral-form">
+              <DefaultFormLayout sections={sections} />
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }

@@ -6,6 +6,8 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
+import DefaultEmptyData from '@/components/default-empty-data';
+import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
@@ -77,65 +79,79 @@ function OdontogramAddPage() {
     }
   };
 
-  if (isLoadingPatient) return <DefaultLoading />;
-  if (!patient) return <div className="p-12 text-center">Paciente não encontrado.</div>;
+  const sections = [
+    {
+      title: 'Profissional Responsável',
+      description: 'Indique o profissional que realizará os procedimentos deste odontograma.',
+      fields: [
+        <FormField
+          key="professional"
+          control={form.control as any}
+          name="Professional"
+          render={({ field }) => (
+            <FormItem className="w-full max-w-xs">
+              <FormLabel>Profissional</FormLabel>
+              <FormControl>
+                <ProfessionalCombobox controller={field} fetchProfessionals={fetchProfessionals} />
+              </FormControl>
+            </FormItem>
+          )}
+        />,
+      ],
+    },
+    {
+      title: 'Mapa de Execução',
+      description: 'Seleção dos dentes para a prestação dos serviços odontológicos planejados.',
+      layout: 'vertical' as const,
+      fields: [
+        <div key="teeth-map" className="rounded-lg md:bg-muted md:p-6">
+          <ScrollArea>
+            <FormField
+              control={form.control as any}
+              name="teeth"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl className="text-xs md:text-md">
+                    <Teeth form={field} odontogram={patient?.odontogram} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </div>,
+      ],
+    },
+  ];
 
   return (
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting}>
-            Cancelar
-          </Button>
-          <Button form="odontogram-add-form" type="submit" disabled={isSubmitting} className="min-w-[120px]">
+          <Button form="odontogram-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
             {isSubmitting && <Spinner className="mr-2 size-4" />}
             Cadastrar
           </Button>
         </CardAction>
       </CardHeader>
       <CardContent>
-        <Form {...(form as any)}>
-          <form
-            id="odontogram-add-form"
-            className="space-y-5"
-            onSubmit={(e) => {
-              e.preventDefault();
-              onSubmit(form.getValues());
-            }}
-          >
-            <div className="flex flex-col gap-4 px-6">
-              <FormField
-                control={form.control as any}
-                name="Professional"
-                render={({ field }) => (
-                  <FormItem className="w-full max-w-xs">
-                    <FormLabel>Profissional</FormLabel>
-                    <FormControl>
-                      <ProfessionalCombobox controller={field} fetchProfessionals={fetchProfessionals} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="rounded-lg md:bg-muted md:p-6">
-              <ScrollArea>
-                <FormField
-                  control={form.control as any}
-                  name="teeth"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormControl className="text-xs md:text-md">
-                        <Teeth form={field} odontogram={patient.odontogram} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <ScrollBar orientation="horizontal" />
-              </ScrollArea>
-            </div>
-          </form>
-        </Form>
+        {isLoadingPatient ? (
+          <DefaultLoading />
+        ) : !patient ? (
+          <DefaultEmptyData />
+        ) : (
+          <Form {...(form as any)}>
+            <form
+              id="odontogram-add-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                onSubmit(form.getValues());
+              }}
+            >
+              <DefaultFormLayout sections={sections} />
+            </form>
+          </Form>
+        )}
       </CardContent>
     </Card>
   );

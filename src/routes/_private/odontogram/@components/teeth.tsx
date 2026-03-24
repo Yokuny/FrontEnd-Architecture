@@ -73,7 +73,7 @@ export default function Teeth({ form, odontogram }: { form?: any; odontogram?: a
           </TabsContent>
         ))}
         <div className="flex w-full justify-center">
-          <TabsList className="grid h-auto w-fit grid-cols-2 rounded-lg border">
+          <TabsList className="grid h-auto w-fit grid-cols-2">
             <TabsTrigger value="permanentes" onClick={cleanToothFace}>
               Permanentes
             </TabsTrigger>

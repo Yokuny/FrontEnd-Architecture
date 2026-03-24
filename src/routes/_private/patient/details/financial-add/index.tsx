@@ -6,6 +6,7 @@ import { z } from 'zod';
 
 import ProcedureComponent from '@/components/data-inputs/procedure-component';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
@@ -120,9 +121,6 @@ function FinancialAddPage() {
       setIsSubmitting(false);
     }
   };
-
-  if (isLoadingPatient) return <DefaultLoading />;
-  if (!patient) return <div className="p-12 text-center">Paciente não encontrado.</div>;
 
   const sections = [
     {
@@ -250,28 +248,34 @@ function FinancialAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting}>
+          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
             Cancelar
           </Button>
-          <Button type="submit" form="financial-add-form" disabled={isSubmitting} className="min-w-[120px]">
+          <Button type="submit" form="financial-add-form" disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
             {isSubmitting && <Spinner className="mr-2 size-4" />}
             Cadastrar
           </Button>
         </CardAction>
       </CardHeader>
-      <Form {...(form as any)}>
-        <form
-          id="financial-add-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          <CardContent>
-            <DefaultFormLayout sections={sections} />
-          </CardContent>
-        </form>
-      </Form>
+      <CardContent>
+        {isLoadingPatient ? (
+          <DefaultLoading />
+        ) : !patient ? (
+          <DefaultEmptyData />
+        ) : (
+          <Form {...(form as any)}>
+            <form
+              id="financial-add-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+            >
+              <DefaultFormLayout sections={sections} />
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }

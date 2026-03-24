@@ -8,6 +8,7 @@ import FinancialCombobox from '@/components/data-inputs/financial-combobox';
 import OdontogramCombobox from '@/components/data-inputs/odontogram-combobox';
 import ProcedureComponent from '@/components/data-inputs/procedure-component';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import Edit from '@/components/icons/Edit.Icon';
@@ -149,9 +150,6 @@ function ScheduleAddPage() {
       setIsSubmitting(false);
     }
   };
-
-  if (isLoadingPatient) return <DefaultLoading />;
-  if (!patient) return <div className="p-12 text-center">Paciente não encontrado.</div>;
 
   const sections = [
     {
@@ -334,25 +332,31 @@ function ScheduleAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button form="schedule-add-form" type="submit" disabled={isSubmitting || !selectedRoom}>
+          <Button form="schedule-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient || !selectedRoom}>
             {isSubmitting && <Spinner className="mr-2 size-4" />}
             {selectedRoomName ? `Agendar em ${selectedRoomName}` : 'Agendar'}
           </Button>
         </CardAction>
       </CardHeader>
-      <Form {...(form as any)}>
-        <form
-          id="schedule-add-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          <CardContent>
-            <DefaultFormLayout sections={sections} />
-          </CardContent>
-        </form>
-      </Form>
+      <CardContent>
+        {isLoadingPatient ? (
+          <DefaultLoading />
+        ) : !patient ? (
+          <DefaultEmptyData />
+        ) : (
+          <Form {...(form as any)}>
+            <form
+              id="schedule-add-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+            >
+              <DefaultFormLayout sections={sections} />
+            </form>
+          </Form>
+        )}
+      </CardContent>
     </Card>
   );
 }

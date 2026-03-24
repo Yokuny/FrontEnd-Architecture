@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import Cross from '@/components/icons/Cross.Icon';
-import { FolderHeartIcon } from '@/components/icons/FolderHeart.Icon';
+import { StarIcon } from '@/components/icons/StarAnimated.Icon';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useFavorites } from '@/hooks/use-favorites';
@@ -15,7 +15,7 @@ export function FavoritesSwitcher() {
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="secondary" className="flex items-center justify-center">
-          <FolderHeartIcon size={16} className="text-foreground" />
+          <StarIcon size={18} className="text-foreground" />
           <span className="sr-only">Favoritos</span>
         </Button>
       </DropdownMenuTrigger>

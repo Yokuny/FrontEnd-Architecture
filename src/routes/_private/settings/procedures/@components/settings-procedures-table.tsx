@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Badge } from '@/components/ui/badge';
+import { BadgeIndicator } from '@/components/ui/badge';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { Input } from '@/components/ui/input';
 import { UnstyledButton } from '@/components/ui/unstyled-button';
@@ -22,7 +22,9 @@ const EditableCell = ({
 
   const onBlur = () => {
     setEditing(false);
-    updateData(rowIndex, columnId, cellValue);
+    if (cellValue !== String(value ?? '')) {
+      updateData(rowIndex, columnId, cellValue);
+    }
   };
 
   useEffect(() => {
@@ -40,9 +42,9 @@ const EditableCell = ({
       ) : columnId === 'periodicity' ? (
         <span className="text-muted-foreground">{cellValue ? `${cellValue} dias` : '-'}</span>
       ) : (
-        <Badge variant={columnId === 'costPrice' ? 'muted' : columnId === 'suggestedPrice' ? 'outline' : 'neutral'} className="flex w-fit gap-2">
+        <BadgeIndicator variant={columnId === 'costPrice' ? 'pending' : columnId === 'suggestedPrice' ? 'waiting' : 'paid'} className="flex w-fit gap-2">
           {currencyFormat(cellValue)}
-        </Badge>
+        </BadgeIndicator>
       )}
     </UnstyledButton>
   );

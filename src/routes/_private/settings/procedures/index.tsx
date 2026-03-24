@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Cloud from '@/components/icons/Cloud.Icon';
 import Download from '@/components/icons/Download.Icon';
 import Upload from '@/components/icons/Upload.Icon';
-import UploadCloud from '@/components/icons/UploadCloud.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
@@ -113,6 +113,14 @@ export function SettingsProcedures() {
     }
   };
 
+  const fetchFromBackend = async () => {
+    const { data } = await refetch();
+    if (data) {
+      setProcedures(data);
+      setHasChanges(false);
+    }
+  };
+
   const handleProcedureUpdate = (updatedData: ProcedureData[]) => {
     setProcedures(updatedData);
     setHasChanges(true);
@@ -122,10 +130,12 @@ export function SettingsProcedures() {
     <Card asPage>
       <CardHeader className="sm:flex-row sm:items-center sm:justify-between">
         <CardAction className="sm:self-center">
-          <Button onClick={saveProcedure} disabled={!hasChanges || updateProcedures.isPending} className="min-w-[120px]">
-            {updateProcedures.isPending && <Spinner className="mr-2 size-4" />}
-            Salvar
-          </Button>
+          {hasChanges && (
+            <Button onClick={saveProcedure} disabled={updateProcedures.isPending} className="min-w-[120px]">
+              {updateProcedures.isPending && <Spinner className="mr-2 size-4" />}
+              Salvar
+            </Button>
+          )}
           <Button onClick={uploadNewCSV} className="flex items-center gap-2">
             <Upload className="size-4" />
             <span className="hidden sm:inline">Upload CSV</span>
@@ -134,8 +144,8 @@ export function SettingsProcedures() {
             <Download className="size-4" />
             <span className="hidden sm:inline">Modelo CSV</span>
           </Button>
-          <Button onClick={() => refetch()} variant="outline" className="flex items-center gap-2">
-            <UploadCloud className="size-4" />
+          <Button onClick={fetchFromBackend} variant="outline" className="flex items-center gap-2">
+            <Cloud className="size-4" />
             <span className="hidden sm:inline">Buscar dados</span>
           </Button>
         </CardAction>
