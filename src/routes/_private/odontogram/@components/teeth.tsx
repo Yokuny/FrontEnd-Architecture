@@ -1,3 +1,4 @@
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Tooth from './tooth';
 
@@ -48,30 +49,35 @@ export default function Teeth({ form, odontogram }: { form?: any; odontogram?: a
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2 overflow-hidden">
       <Tabs defaultValue="permanentes" className="flex w-full flex-col gap-4">
-        {['permanentes', 'deciduos'].map((teeth) => (
-          <TabsContent key={teeth} value={teeth} className="flex flex-col items-center gap-2 rounded-lg border bg-background p-4 md:p-8">
-            <div className="flex min-w-max justify-center">
-              {teeth === 'permanentes'
-                ? permanentTeethNumbers.top.map((toothNumber) => (
-                    <Tooth handleFace={handleToothFace} number={toothNumber} bottom={false} key={toothNumber} status={getToothStatus(toothNumber)} />
-                  ))
-                : deciduousTeethNumbers.top.map((toothNumber) => (
-                    <Tooth handleFace={handleToothFace} number={toothNumber} bottom={false} key={toothNumber} status={getToothStatus(toothNumber)} />
-                  ))}
-            </div>
-            <div className="flex min-w-max justify-center p-1">
-              {teeth === 'permanentes'
-                ? permanentTeethNumbers.bottom.map((toothNumber) => (
-                    <Tooth handleFace={handleToothFace} number={toothNumber} bottom={true} key={toothNumber} status={getToothStatus(toothNumber)} />
-                  ))
-                : deciduousTeethNumbers.bottom.map((toothNumber) => (
-                    <Tooth handleFace={handleToothFace} number={toothNumber} bottom={true} key={toothNumber} status={getToothStatus(toothNumber)} />
-                  ))}
-            </div>
-          </TabsContent>
-        ))}
+        <ScrollArea className="w-full">
+          {['permanentes', 'deciduos'].map((teeth) => (
+            <TabsContent key={teeth} value={teeth} className="rounded-lg border bg-background">
+              <div className="flex flex-col items-center gap-2 p-4 md:p-8">
+                <div className="flex min-w-max justify-center">
+                  {teeth === 'permanentes'
+                    ? permanentTeethNumbers.top.map((toothNumber) => (
+                        <Tooth handleFace={handleToothFace} number={toothNumber} bottom={false} key={toothNumber} status={getToothStatus(toothNumber)} />
+                      ))
+                    : deciduousTeethNumbers.top.map((toothNumber) => (
+                        <Tooth handleFace={handleToothFace} number={toothNumber} bottom={false} key={toothNumber} status={getToothStatus(toothNumber)} />
+                      ))}
+                </div>
+                <div className="flex min-w-max justify-center p-1">
+                  {teeth === 'permanentes'
+                    ? permanentTeethNumbers.bottom.map((toothNumber) => (
+                        <Tooth handleFace={handleToothFace} number={toothNumber} bottom={true} key={toothNumber} status={getToothStatus(toothNumber)} />
+                      ))
+                    : deciduousTeethNumbers.bottom.map((toothNumber) => (
+                        <Tooth handleFace={handleToothFace} number={toothNumber} bottom={true} key={toothNumber} status={getToothStatus(toothNumber)} />
+                      ))}
+                </div>
+              </div>
+            </TabsContent>
+          ))}
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
         <div className="flex w-full justify-center">
           <TabsList className="grid h-auto w-fit grid-cols-2">
             <TabsTrigger value="permanentes" onClick={cleanToothFace}>

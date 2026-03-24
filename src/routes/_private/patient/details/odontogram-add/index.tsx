@@ -12,7 +12,6 @@ import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Spinner } from '@/components/ui/spinner';
 import { GET, POST, request } from '@/lib/api/client';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
@@ -105,20 +104,17 @@ function OdontogramAddPage() {
       layout: 'vertical' as const,
       fields: [
         <div key="teeth-map" className="rounded-lg md:bg-muted md:p-6">
-          <ScrollArea>
-            <FormField
-              control={form.control as any}
-              name="teeth"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormControl className="text-xs md:text-md">
-                    <Teeth form={field} odontogram={patient?.odontogram} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+          <FormField
+            control={form.control as any}
+            name="teeth"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl className="text-xs md:text-md">
+                  <Teeth form={field} odontogram={patient?.odontogram} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
         </div>,
       ],
     },
