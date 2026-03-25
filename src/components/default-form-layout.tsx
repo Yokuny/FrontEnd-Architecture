@@ -4,9 +4,9 @@ import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
-export default function DefaultFormLayout({ sections, layout = 'horizontal' }: DefaultFormLayoutProps) {
+export default function DefaultFormLayout({ sections, layout = 'horizontal', className }: DefaultFormLayoutProps) {
   return (
-    <div className="flex flex-col gap-8 p-6 md:p-10">
+    <div className={cn('flex flex-col gap-8 p-6 md:p-10', className)}>
       <div className="flex flex-col gap-10">
         {sections.map((section, index) => {
           const sectionLayout = section.layout || layout;
@@ -49,4 +49,5 @@ export interface FormSection {
 interface DefaultFormLayoutProps {
   sections: FormSection[];
   layout?: 'horizontal' | 'vertical';
+  className?: string;
 }

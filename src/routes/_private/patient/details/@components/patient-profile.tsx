@@ -1,7 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useMemo, useState } from 'react';
 import Cake from '@/components/icons/Cake.Icon';
-import Chat from '@/components/icons/Chat.Icon';
 import Check from '@/components/icons/Check.Icon';
 import Clock from '@/components/icons/Clock.Icon';
 import Copy from '@/components/icons/Copy.Icon';
@@ -10,6 +9,7 @@ import Help from '@/components/icons/Help.Icon';
 import ID from '@/components/icons/ID.Icon';
 import MapIcon from '@/components/icons/Map.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
+import Whatsapp from '@/components/icons/Whatsapp.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -108,7 +108,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
                     <TooltipContent>Última atualização: {patient.updatedAt ? formatDate(String(patient.updatedAt)) : ''}</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <Button variant="outline" size="sm" onClick={() => navigate({ to: '/patient/add', search: { id: patient._id } })}>
+                <Button onClick={() => navigate({ to: '/patient/add', search: { id: patient._id } })}>
                   <Edit className="mr-2 size-4" />
                   Editar
                 </Button>
@@ -126,7 +126,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
                         {copiedPhones[i] ? <Check className="size-3" /> : <Copy className="size-3" />}
                       </Button>
                       <Button variant="outline" size="icon" className="size-7 text-green-600" onClick={() => openWhatsApp(phone.number)}>
-                        <Chat className="size-3" />
+                        <Whatsapp className="size-3" />
                       </Button>
                     </div>
                   </div>

@@ -9,9 +9,9 @@ import Link from '@/components/icons/Link.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { BadgeIndicator } from '@/components/ui/badge';
+import { Badge, BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Item, ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useClinicStore } from '@/hooks/clinic';
@@ -72,16 +72,18 @@ const ScheduleSummarySection = ({ patient }: { patient: FullPatient }) => {
   }, [patient.schedules, patient.financials]);
 
   return (
-    <Card>
-      <CardContent className="flex flex-col gap-6 p-6">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl">Resumo dos Agendamentos</CardTitle>
-          <Button variant="outline" size="sm" onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
-            <Add className="mr-2 size-4" />
-            <span className="hidden md:block">Agendar Consulta</span>
+    <Item>
+      <ItemHeader>
+        <ItemTitle className="text-xl">Resumo dos Agendamentos</ItemTitle>
+        <ItemActions>
+          <Button onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
+            <Add className="size-4" />
+            <span className="ml-2 hidden md:block">Agendar Consulta</span>
           </Button>
-        </div>
+        </ItemActions>
+      </ItemHeader>
 
+      <ItemContent>
         <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-2 rounded-md border bg-muted/20 p-6">
             <span className="font-semibold text-muted-foreground text-xs uppercase">Próxima consulta</span>
@@ -127,8 +129,8 @@ const ScheduleSummarySection = ({ patient }: { patient: FullPatient }) => {
             <span className="block text-center text-muted-foreground text-xs">Em média {currencyFormat(summary.averageAmountPerSchedule)} por consulta</span>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </ItemContent>
+    </Item>
   );
 };
 
@@ -165,9 +167,12 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
   };
 
   return (
-    <Card>
-      <CardContent className="flex flex-col gap-6 p-6">
-        <CardTitle className="text-xl">Histórico de Consultas</CardTitle>
+    <Item>
+      <ItemHeader>
+        <ItemTitle className="text-xl">Histórico de Consultas</ItemTitle>
+      </ItemHeader>
+
+      <ItemContent>
         <Accordion type="single" collapsible className="w-full">
           {sortedSchedules.map((el) => {
             const financial = financials?.find((f) => f._id === el.Financial);
@@ -211,7 +216,7 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
                       </Select>
                     </div>
                     {isEditing === el._id && (
-                      <Button size="sm" onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
+                      <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
                         Salvar
                       </Button>
                     )}
@@ -290,10 +295,10 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
                           <p className="font-medium">{formatDate(String(el.createdAt))}</p>
                         </div>
                         {el.Financial && (
-                          <Button variant="outline" size="sm" onClick={() => navigate({ to: '/financial/details', search: { id: el.Financial } })}>
+                          <Badge variant="outline" onClick={() => navigate({ to: '/financial/details', search: { id: el.Financial } })}>
                             <Link className="mr-2 size-4" />
                             Financeiro
-                          </Button>
+                          </Badge>
                         )}
                       </div>
                     </div>
@@ -303,8 +308,8 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
             );
           })}
         </Accordion>
-      </CardContent>
-    </Card>
+      </ItemContent>
+    </Item>
   );
 };
 
@@ -312,19 +317,19 @@ export const PatientScheduleView = ({ patient }: { patient: FullPatient }) => {
   const hasSchedules = patient.schedules && patient.schedules.length > 0;
 
   return (
-    <div className="flex flex-col gap-6">
+    <ItemGroup>
       {hasSchedules ? (
         <>
           <ScheduleSummarySection patient={patient} />
           <ScheduleHistorySection schedules={patient.schedules} financials={patient.financials} patientId={patient._id} />
         </>
       ) : (
-        <Card>
-          <CardContent className="p-6">
+        <Item>
+          <ItemContent>
             <DefaultEmptyData />
-          </CardContent>
-        </Card>
+          </ItemContent>
+        </Item>
       )}
-    </div>
+    </ItemGroup>
   );
 };

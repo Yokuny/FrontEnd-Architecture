@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Item, ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
@@ -79,16 +79,18 @@ const FinancialSummarySection = ({ patient }: { patient: FullPatient }) => {
   }, [patient.financials]);
 
   return (
-    <Card>
-      <CardContent className="flex flex-col gap-6 p-6">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl">Resumo Financeiro</CardTitle>
-          <Button variant="outline" size="sm" onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
-            <Add className="mr-2 size-4" />
-            <span className="hidden md:block">Novo Registro</span>
+    <Item>
+      <ItemHeader>
+        <ItemTitle className="text-xl">Resumo Financeiro</ItemTitle>
+        <ItemActions>
+          <Button onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
+            <Add className="size-4" />
+            <span className="ml-2 hidden md:block">Novo Registro</span>
           </Button>
-        </div>
+        </ItemActions>
+      </ItemHeader>
 
+      <ItemContent>
         <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-2 rounded-md border bg-muted/20 p-6">
             <div className="flex items-center justify-between">
@@ -136,8 +138,8 @@ const FinancialSummarySection = ({ patient }: { patient: FullPatient }) => {
             <span className="block text-center text-muted-foreground text-xs">Adicionados {summary.recentProcedures} em 2 meses</span>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </ItemContent>
+    </Item>
   );
 };
 
@@ -171,9 +173,12 @@ const FinancialHistorySection = ({ financials, patientId }: { financials: DbFina
   };
 
   return (
-    <Card>
-      <CardContent className="flex flex-col gap-6 p-6">
-        <CardTitle className="text-xl">Registros Financeiros</CardTitle>
+    <Item>
+      <ItemHeader>
+        <ItemTitle className="text-xl">Registros Financeiros</ItemTitle>
+      </ItemHeader>
+
+      <ItemContent>
         <Accordion type="single" collapsible className="w-full">
           {sortedFinancials.map((el) => (
             <AccordionItem key={el._id} value={el._id} className="w-full rounded-lg py-1">
@@ -218,11 +223,11 @@ const FinancialHistorySection = ({ financials, patientId }: { financials: DbFina
                     </Select>
                   </div>
                   {isEditing === el._id && (
-                    <Button size="sm" onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
+                    <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
                       Salvar
                     </Button>
                   )}
-                  <Button size="sm" variant="outline" onClick={() => navigate({ to: '/financial/details', search: { id: el._id } })}>
+                  <Button onClick={() => navigate({ to: '/financial/details', search: { id: el._id } })}>
                     <Edit className="mr-2 size-4" />
                     Editar
                   </Button>
@@ -310,8 +315,8 @@ const FinancialHistorySection = ({ financials, patientId }: { financials: DbFina
             </AccordionItem>
           ))}
         </Accordion>
-      </CardContent>
-    </Card>
+      </ItemContent>
+    </Item>
   );
 };
 
@@ -319,19 +324,19 @@ export const PatientFinancialView = ({ patient }: { patient: FullPatient }) => {
   const hasFinancials = patient.financials && patient.financials.length > 0;
 
   return (
-    <div className="flex flex-col gap-6">
+    <ItemGroup>
       {hasFinancials ? (
         <>
           <FinancialSummarySection patient={patient} />
           <FinancialHistorySection financials={patient.financials} patientId={patient._id} />
         </>
       ) : (
-        <Card>
-          <CardContent className="p-6">
+        <Item>
+          <ItemContent>
             <DefaultEmptyData />
-          </CardContent>
-        </Card>
+          </ItemContent>
+        </Item>
       )}
-    </div>
+    </ItemGroup>
   );
 };

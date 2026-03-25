@@ -9,7 +9,7 @@ import ToothNumber from '@/components/odontogram/tooth-number';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Item, ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -120,23 +120,23 @@ const OdontogramSummarySection = ({ patient }: { patient: FullPatient }) => {
   const navigate = useNavigate();
 
   return (
-    <Card>
-      <CardContent className="flex flex-col gap-6 p-6">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl">Odontograma do Paciente</CardTitle>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={() => navigate({ to: '/patient/details/odontogram-add', search: { id: patient._id } })}>
-              <Add className="mr-2 size-4" />
-              <span className="hidden md:block">Adicionar</span>
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => navigate({ to: '/patient/details/odontogram-edit', search: { id: patient._id } })}>
-              <Dental className="mr-2 size-4" />
-              <span className="hidden md:block">Atualizar</span>
-            </Button>
-          </div>
-        </div>
+    <Item>
+      <ItemHeader>
+        <ItemTitle className="text-xl">Odontograma do Paciente</ItemTitle>
+        <ItemActions>
+          <Button onClick={() => navigate({ to: '/patient/details/odontogram-add', search: { id: patient._id } })}>
+            <Add className="size-4" />
+            <span className="ml-2 hidden md:block">Adicionar</span>
+          </Button>
+          <Button onClick={() => navigate({ to: '/patient/details/odontogram-edit', search: { id: patient._id } })}>
+            <Dental className="size-4" />
+            <span className="ml-2 hidden md:block">Atualizar</span>
+          </Button>
+        </ItemActions>
+      </ItemHeader>
 
-        <Tabs defaultValue="permanentes" className="flex w-full flex-col gap-4">
+      <ItemContent>
+        <Tabs defaultValue="permanentes" className="flex w-full flex-col">
           {(['permanentes', 'deciduos'] as const).map((teeth) => (
             <TabsContent key={teeth} value={teeth} className="flex flex-col items-center gap-6 rounded-lg p-4 md:p-10">
               <OdontogramTeethGrid odontogram={patient.odontogram} type={teeth} />
@@ -144,14 +144,14 @@ const OdontogramSummarySection = ({ patient }: { patient: FullPatient }) => {
             </TabsContent>
           ))}
           <div className="flex w-full justify-center">
-            <TabsList className="grid h-auto w-fit grid-cols-2 rounded-lg border">
+            <TabsList className="grid h-auto w-fit grid-cols-2">
               <TabsTrigger value="permanentes">Permanentes</TabsTrigger>
               <TabsTrigger value="deciduos">Decíduos</TabsTrigger>
             </TabsList>
           </div>
         </Tabs>
-      </CardContent>
-    </Card>
+      </ItemContent>
+    </Item>
   );
 };
 
@@ -180,9 +180,12 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
   };
 
   return (
-    <Card>
-      <CardContent className="flex flex-col gap-6 p-6">
-        <CardTitle className="text-xl">Histórico de Odontogramas</CardTitle>
+    <Item variant="outline">
+      <ItemHeader>
+        <ItemTitle className="text-xl">Histórico de Odontogramas</ItemTitle>
+      </ItemHeader>
+
+      <ItemContent className="flex flex-col gap-6">
         <Accordion type="single" collapsible className="w-full">
           {sortedOdontograms.map((el) => (
             <AccordionItem key={el._id} value={el._id} className="w-full rounded-lg py-1">
@@ -214,11 +217,11 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
                     </Select>
                   </div>
                   {isEditing === el._id && (
-                    <Button size="sm" onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.finished)} disabled={isLoading}>
+                    <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.finished)} disabled={isLoading}>
                       Salvar
                     </Button>
                   )}
-                  <Button size="sm" variant="outline" onClick={() => navigate({ to: '/odontogram/details', search: { id: el._id } })}>
+                  <Button onClick={() => navigate({ to: '/odontogram/details', search: { id: el._id } })}>
                     <Edit className="mr-2 size-4" />
                     Editar
                   </Button>
@@ -257,8 +260,8 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
             </AccordionItem>
           ))}
         </Accordion>
-      </CardContent>
-    </Card>
+      </ItemContent>
+    </Item>
   );
 };
 
@@ -266,17 +269,17 @@ export const PatientOdontogramView = ({ patient }: { patient: FullPatient }) => 
   const hasOdontograms = patient.odontograms && patient.odontograms.length > 0;
 
   return (
-    <div className="flex flex-col gap-6">
+    <ItemGroup>
       <OdontogramSummarySection patient={patient} />
       {hasOdontograms ? (
         <OdontogramHistorySection odontograms={patient.odontograms} patientId={patient._id} />
       ) : (
-        <Card>
-          <CardContent className="p-6">
+        <Item>
+          <ItemContent>
             <DefaultEmptyData />
-          </CardContent>
-        </Card>
+          </ItemContent>
+        </Item>
       )}
-    </div>
+    </ItemGroup>
   );
 };
