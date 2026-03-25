@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
-import DefaultLoading from '@/components/default-loading';
 import IconPatients from '@/components/icons/Patients.Icon';
 import IconTrendingDown from '@/components/icons/TrendingDown.Icon';
 import IconTrendingUp from '@/components/icons/TrendingUp.Icon';
 import IconUser from '@/components/icons/User.Icon';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Card, CardContent } from '@/components/ui/card';
 import { type ChartConfig, ChartContainer, ChartTooltip } from '@/components/ui/chart';
-import { ItemDescription, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+
 import { formatDate } from '@/lib/helpers/formatDate.utils';
 import type { DbPatientAnalytics, PatientDemographics, PatientPeriodChart, PatientRegistrationTrends } from '@/lib/interfaces/analytics';
 import { cn } from '@/lib/utils';
@@ -65,9 +64,9 @@ function PatientPeriodChartCard({ chartData }: { chartData: PatientPeriodChart }
   const data = currentData.map((item) => ({ dia: item.day, cadastros: item.amount }));
 
   return (
-    <CardContent className="h-full space-y-4 pb-2">
+    <ItemContent className="h-full space-y-4 pb-2">
       <div className="flex flex-row items-center justify-between space-y-0">
-        <p className="font-medium text-sm">Histórico de Cadastros</p>
+        <ItemTitle>Histórico de Cadastros</ItemTitle>
         <ToggleGroup type="single" value={timeRange} variant="outline" onValueChange={(value) => value && setTimeRange(value as typeof timeRange)}>
           {Object.keys(dataMap).map((period) => (
             <ToggleGroupItem key={period} value={period} size="sm">
@@ -78,18 +77,18 @@ function PatientPeriodChartCard({ chartData }: { chartData: PatientPeriodChart }
       </div>
 
       {currentData.length > 0 ? (
-        <div className="h-[130px] w-full">
+        <div className="h-36 w-full">
           <LineChartCard data={data} labelFormatter={(label: string) => `Dia ${label}`} />
         </div>
       ) : (
-        <div className="flex h-[120px] items-center justify-center">
+        <div className="flex h-36 items-center justify-center">
           <div className="flex items-center gap-2 text-muted-foreground">
             <IconUser className="size-4" />
             <p className="text-sm">Nenhum cadastro no período selecionado</p>
           </div>
         </div>
       )}
-    </CardContent>
+    </ItemContent>
   );
 }
 
@@ -110,8 +109,8 @@ function RegistrationTrendsCard({ trends }: { trends: PatientRegistrationTrends 
   ];
 
   return (
-    <CardContent className="h-full space-y-4 pb-2">
-      <p className="font-medium text-sm">Novos Cadastros</p>
+    <ItemContent className="h-full space-y-4 pb-2">
+      <ItemTitle>Novos Cadastros</ItemTitle>
 
       <div className="flex items-end justify-between gap-4">
         <div className="flex flex-col items-center">
@@ -132,10 +131,10 @@ function RegistrationTrendsCard({ trends }: { trends: PatientRegistrationTrends 
           </div>
         </div>
       </div>
-      <div className="h-25 w-full">
+      <div className="h-24 w-full">
         <LineChartCard data={data} strokeColor={strokeColor} />
       </div>
-    </CardContent>
+    </ItemContent>
   );
 }
 
@@ -144,7 +143,7 @@ function PatientDemographicsCard({ demographics, total: totalPatients }: { demog
   const percentageData = demographics && typeof demographics.malePercentage === 'number' && typeof demographics.femalePercentage === 'number';
 
   return (
-    <CardContent className="h-full space-y-4 p-6 pt-5">
+    <ItemContent className="h-full space-y-4 pb-2">
       <div className="flex flex-row items-center justify-between space-y-0">
         <p className="font-medium text-sm">Total de Pacientes</p>
         <div className="flex items-center gap-2 text-muted-foreground">
@@ -201,7 +200,7 @@ function PatientDemographicsCard({ demographics, total: totalPatients }: { demog
           </div>
         </div>
       )}
-    </CardContent>
+    </ItemContent>
   );
 }
 
@@ -209,15 +208,15 @@ function AnalyticsCards({ analytics }: { analytics: DbPatientAnalytics }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="md:col-span-2 lg:col-span-1">
+        <Item variant="outline" className="md:col-span-2 lg:col-span-1">
           <PatientPeriodChartCard chartData={analytics.periodChart} />
-        </Card>
-        <Card>
+        </Item>
+        <Item variant="outline">
           <RegistrationTrendsCard trends={analytics.registrationTrends} />
-        </Card>
-        <Card>
+        </Item>
+        <Item variant="outline">
           <PatientDemographicsCard demographics={analytics.demographics} total={analytics.totalPatients} />
-        </Card>
+        </Item>
       </div>
       <div className="flex items-baseline justify-end gap-2">
         <ItemDescription>Última atualização:</ItemDescription>
@@ -231,14 +230,21 @@ export default function PatientAnalytics() {
   const { data: analytics, isLoading } = usePatientAnalyticsQuery();
 
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible defaultValue="analytics" className="w-full">
       <AccordionItem value="analytics">
         <AccordionTrigger className="hover:no-underline *:data-[slot=accordion-trigger-icon]:hidden">
-          <ItemTitle>Análises de Pacientes</ItemTitle>
+          <ItemTitle className="underline decoration-dashed underline-offset-4">Análises de Pacientes</ItemTitle>
         </AccordionTrigger>
         <AccordionContent>
-          {isLoading && <DefaultLoading />}
+          {isLoading && <div className="mb-4 text-muted-foreground text-xs italic">Sincronizando estatísticas em tempo real...</div>}
           {analytics && <AnalyticsCards analytics={analytics} />}
+
+          {!isLoading && !analytics && (
+            <div className="flex h-36 items-center justify-center rounded-lg border border-dashed text-muted-foreground text-sm">
+              <IconUser className="mr-2 size-4" />
+              Nenhum dado analítico disponível
+            </div>
+          )}
         </AccordionContent>
       </AccordionItem>
     </Accordion>
