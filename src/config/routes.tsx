@@ -23,7 +23,6 @@ export const MAIN_ROUTES = [
   '/odontogram/add',
   '/patient',
   '/patient/add',
-  '/patient/details',
   '/reminders',
   '/reminders/add',
   '/schedule',

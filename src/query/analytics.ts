@@ -13,9 +13,10 @@ async function fetchPatientAnalytics(): Promise<DbPatientAnalytics> {
   return res.data as DbPatientAnalytics;
 }
 
-export function usePatientAnalyticsQuery() {
+export function usePatientAnalyticsQuery({ enabled = true }: { enabled?: boolean } = {}) {
   return useQuery({
     queryKey: analyticsKeys.patients(),
     queryFn: fetchPatientAnalytics,
+    enabled,
   });
 }

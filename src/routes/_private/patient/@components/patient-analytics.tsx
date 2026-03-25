@@ -227,10 +227,18 @@ function AnalyticsCards({ analytics }: { analytics: DbPatientAnalytics }) {
 }
 
 export default function PatientAnalytics() {
-  const { data: analytics, isLoading } = usePatientAnalyticsQuery();
+  const [opened, setOpened] = useState(false);
+  const { data: analytics, isLoading } = usePatientAnalyticsQuery({ enabled: opened });
 
   return (
-    <Accordion type="single" collapsible defaultValue="analytics" className="w-full">
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full"
+      onValueChange={(value) => {
+        if (value) setOpened(true);
+      }}
+    >
       <AccordionItem value="analytics">
         <AccordionTrigger className="hover:no-underline *:data-[slot=accordion-trigger-icon]:hidden">
           <ItemTitle className="underline decoration-dashed underline-offset-4">Análises de Pacientes</ItemTitle>

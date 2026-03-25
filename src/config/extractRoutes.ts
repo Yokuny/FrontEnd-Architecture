@@ -50,8 +50,10 @@ function extractRoutes(): string[] {
     // Extrair o path público (sem o prefixo /_private)
     const route = routeId.replace('/_private', '');
 
-    // Ignorar rotas de detalhes que requerem ID (agora opcional no schema mas não faz sentido no sidebar)
-    if (route.endsWith('/details')) continue;
+    // Ignorar rotas de detalhes que requerem ID via query param (ex: /patient/details?id=...)
+    // A rota pode ou não terminar com barra, então checamos o último segmento
+    const lastSegment = route.replace(/\/$/, '').split('/').at(-1);
+    if (lastSegment === 'details') continue;
 
     // Ignorar rotas com parâmetros ($id, $slug, etc)
     if (/\$\w+/.test(route)) continue;

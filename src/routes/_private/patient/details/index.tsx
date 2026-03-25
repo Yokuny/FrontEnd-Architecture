@@ -42,51 +42,49 @@ function PatientDetailsPage() {
   };
 
   return (
-    <div className="flex w-full flex-col gap-6">
-      <Card asPage>
-        <CardHeader />
-        <CardContent>
-          {isLoading ? (
-            <DefaultLoading />
-          ) : !patient ? (
-            <DefaultEmptyData />
-          ) : (
-            <Tabs value={currentTab} onValueChange={handleTabChange}>
-              <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2">
-                {tabs.map(({ value, label, icon: Icon }) => (
-                  <TabsTrigger key={value} value={value}>
-                    <Icon className="mr-2 size-4" /> {label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+    <Card asPage>
+      <CardHeader title={patient?.name ? String(patient.name).split(' ')[0] : undefined} />
+      <CardContent>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : !patient ? (
+          <DefaultEmptyData />
+        ) : (
+          <Tabs value={currentTab} onValueChange={handleTabChange}>
+            <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2">
+              {tabs.map(({ value, label, icon: Icon }) => (
+                <TabsTrigger key={value} value={value}>
+                  <Icon className="mr-2 size-4" /> {label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
 
-              <div className="mt-6">
-                <Activity mode={currentTab === 'profile' ? 'visible' : 'hidden'}>
-                  <PatientProfile patient={patient} />
-                </Activity>
-                <Activity mode={currentTab === 'anamnesis' ? 'visible' : 'hidden'}>
-                  <PatientAnamnesisView anamnesis={patient.anamnesis} patientId={patient._id} />
-                </Activity>
-                <Activity mode={currentTab === 'intraoral' ? 'visible' : 'hidden'}>
-                  <PatientIntraoralView intraoral={patient.intraoral} patientId={patient._id} />
-                </Activity>
-                <Activity mode={currentTab === 'odontogram' ? 'visible' : 'hidden'}>
-                  <PatientOdontogramView patient={patient} />
-                </Activity>
-                <Activity mode={currentTab === 'schedule' ? 'visible' : 'hidden'}>
-                  <PatientScheduleView patient={patient} />
-                </Activity>
-                <Activity mode={currentTab === 'financial' ? 'visible' : 'hidden'}>
-                  <PatientFinancialView patient={patient} />
-                </Activity>
-                <Activity mode={currentTab === 'medicalrecord' ? 'visible' : 'hidden'}>
-                  <PatientMedicalRecordView patient={patient} />
-                </Activity>
-              </div>
-            </Tabs>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+            <div className="mt-6">
+              <Activity mode={currentTab === 'profile' ? 'visible' : 'hidden'}>
+                <PatientProfile patient={patient} />
+              </Activity>
+              <Activity mode={currentTab === 'anamnesis' ? 'visible' : 'hidden'}>
+                <PatientAnamnesisView anamnesis={patient.anamnesis} patientId={patient._id} />
+              </Activity>
+              <Activity mode={currentTab === 'intraoral' ? 'visible' : 'hidden'}>
+                <PatientIntraoralView intraoral={patient.intraoral} patientId={patient._id} />
+              </Activity>
+              <Activity mode={currentTab === 'odontogram' ? 'visible' : 'hidden'}>
+                <PatientOdontogramView patient={patient} />
+              </Activity>
+              <Activity mode={currentTab === 'schedule' ? 'visible' : 'hidden'}>
+                <PatientScheduleView patient={patient} />
+              </Activity>
+              <Activity mode={currentTab === 'financial' ? 'visible' : 'hidden'}>
+                <PatientFinancialView patient={patient} />
+              </Activity>
+              <Activity mode={currentTab === 'medicalrecord' ? 'visible' : 'hidden'}>
+                <PatientMedicalRecordView patient={patient} />
+              </Activity>
+            </div>
+          </Tabs>
+        )}
+      </CardContent>
+    </Card>
   );
 }
