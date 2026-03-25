@@ -128,7 +128,7 @@ const FinancialSummarySection = ({ patient }: { patient: FullPatient }) => {
             </div>
           </div>
           <ItemContent className="w-full text-center">
-            <p className="font-bold text-yellow-500 text-xl dark:text-yellow-400">{currencyFormat(summary.totalPending)}</p>
+            <p className="font-bold text-xl text-yellow-500 dark:text-yellow-400">{currencyFormat(summary.totalPending)}</p>
             <ItemDescription>Último pagamento em {summary.lastPaymentDate ? formatDate(String(summary.lastPaymentDate)) : 'N/A'}</ItemDescription>
           </ItemContent>
         </Item>

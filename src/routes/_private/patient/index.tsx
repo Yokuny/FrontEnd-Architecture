@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
 import { usePatientsQuery } from '@/query/patients';
+import PatientAnalytics from './@components/patient-analytics';
 import { patientColumns } from './@utils/columns';
 
 const searchSchema = z.object({
@@ -45,7 +46,9 @@ function PatientListPage() {
         </CardAction>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="space-y-4">
+        <PatientAnalytics />
+
         {isLoading && <DefaultLoading />}
         {data.length === 0 && !isLoading && <DefaultEmptyData />}
         {data.length > 0 && !isLoading && (
