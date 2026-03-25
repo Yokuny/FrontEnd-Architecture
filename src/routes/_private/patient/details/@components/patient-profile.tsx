@@ -184,7 +184,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
                 <CardTitle className="text-xl">Agendamentos</CardTitle>
               </div>
               <div className="grid grid-cols-3 gap-4 text-center">
-                <div className="flex flex-col rounded-md border bg-muted/20 p-4">
+                <div className="flex flex-col rounded-md border bg-secondary p-4">
                   <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">Próxima Consulta</span>
                   <span className="font-bold text-lg text-primary">{scheduleSummary.nextSchedule ? formatDate(String(scheduleSummary.nextSchedule.start)) : 'Nenhuma'}</span>
                   {scheduleSummary.nextSchedule && (
@@ -194,12 +194,12 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col rounded-md border bg-muted/20 p-4">
+                <div className="flex flex-col rounded-md border bg-secondary p-4">
                   <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">Total de Consultas</span>
                   <span className="font-bold text-xl">{scheduleSummary.totalSchedules}</span>
                   <span className="mt-1 text-muted-foreground text-xs">{scheduleSummary.schedulesLast3Months} nos últimos 3 meses</span>
                 </div>
-                <div className="flex flex-col rounded-md border bg-muted/20 p-4">
+                <div className="flex flex-col rounded-md border bg-secondary p-4">
                   <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">Comparecimento</span>
                   <span className="font-bold text-xl">{scheduleSummary.attendanceRate.toFixed(0)}%</span>
                   <span className="mt-1 text-muted-foreground text-xs">{scheduleSummary.completedSchedules} concluídas</span>
@@ -214,7 +214,7 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
                 <CardTitle className="text-xl">Resumo Financeiro</CardTitle>
               </div>
               <div className="grid grid-cols-3 gap-4 text-center">
-                <div className="flex flex-col rounded-md border bg-muted/20 p-4">
+                <div className="flex flex-col rounded-md border bg-secondary p-4">
                   <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">{t('total.generated')}</span>
                   <span className="font-bold text-lg">{currencyFormat(total)}</span>
                   <span className="mt-1 flex items-center justify-center gap-1 text-muted-foreground text-xs">
@@ -222,14 +222,14 @@ export const PatientProfile = ({ patient }: { patient: FullPatient }) => {
                     {currencyFormat(generatedLast30Days)} {t('this.month')}
                   </span>
                 </div>
-                <div className="flex flex-col rounded-md border bg-muted/20 p-4">
+                <div className="flex flex-col rounded-md border bg-secondary p-4">
                   <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">{t('pending')}</span>
                   <span className="font-bold text-destructive text-lg">{currencyFormat(totalPending)}</span>
                   <span className="mt-1 text-muted-foreground text-xs">
                     {currencyFormat(totalPaid)} {t('paid')}
                   </span>
                 </div>
-                <div className="flex flex-col rounded-md border bg-muted/20 p-4">
+                <div className="flex flex-col rounded-md border bg-secondary p-4">
                   <span className="mb-2 font-semibold text-muted-foreground text-xs uppercase">{t('last.payments')}</span>
                   <span className="font-bold text-lg text-primary">{currencyFormat(paidLast30Days)}</span>
                   <span className="mt-1 text-muted-foreground text-xs">

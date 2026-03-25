@@ -11,7 +11,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge, BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Item, ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useClinicStore } from '@/hooks/clinic';
@@ -83,53 +83,65 @@ const ScheduleSummarySection = ({ patient }: { patient: FullPatient }) => {
         </ItemActions>
       </ItemHeader>
 
-      <ItemContent>
-        <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-2 rounded-md border bg-muted/20 p-6">
-            <span className="font-semibold text-muted-foreground text-xs uppercase">Próxima consulta</span>
-            <p className="font-bold text-lg text-primary">{summary.nextSchedule ? formatDate(String(summary.nextSchedule.start)) : 'Sem consulta agendada'}</p>
-            <span className="text-muted-foreground text-xs">{summary.upcomingSchedules} consultas nos próximos 30 dias</span>
-          </div>
+      <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Item variant="outline" className="flex-col items-start bg-secondary">
+          <ItemTitle className="text-muted-foreground text-xs uppercase">Próxima consulta</ItemTitle>
+          <ItemContent className="w-full text-center">
+            <p className="font-bold text-xl">{summary.nextSchedule ? formatDate(String(summary.nextSchedule.start)) : 'Sem consulta agendada'}</p>
+            <ItemDescription>{summary.upcomingSchedules} consultas nos próximos 30 dias</ItemDescription>
+          </ItemContent>
+        </Item>
 
-          <div className="space-y-2 rounded-md border bg-muted/20 p-6">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-muted-foreground text-xs uppercase">Consultas</span>
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <ChartPie className="size-3" />
-                <span className="tabular-nums">
-                  {summary.completedSchedules} de {summary.totalSchedules}
-                </span>
-              </div>
+        <Item variant="outline" className="flex-col items-start bg-secondary">
+          <div className="flex w-full items-center justify-between">
+            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Consultas</ItemTitle>
+            <div className="flex items-baseline gap-1 text-muted-foreground">
+              <ChartPie className="size-3" />
+              <ItemDescription className="tabular-nums leading-none">
+                {summary.completedSchedules} de {summary.totalSchedules}
+              </ItemDescription>
             </div>
-            <p className="text-center font-bold text-xl">{summary.attendanceRate.toFixed(0)}%</p>
-            <span className="block text-center text-muted-foreground text-xs">de comparecimento</span>
           </div>
+          <ItemContent className="w-full text-center">
+            <div className="flex items-baseline justify-center gap-2">
+              <p className="font-bold text-xl">{summary.attendanceRate.toFixed(0)}%</p>
+              <ItemDescription className="text-lg">de comparecimento</ItemDescription>
+            </div>
+            <ItemDescription>+ {summary.recentSchedules} consultas nos últimos 30 dias</ItemDescription>
+          </ItemContent>
+        </Item>
 
-          <div className="space-y-2 rounded-md border bg-muted/20 p-6">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</span>
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <Board className="size-3" />
-                <span>{summary.totalProcedures} no total</span>
-              </div>
+        <Item variant="outline" className="flex-col items-start bg-secondary">
+          <div className="flex w-full items-center justify-between">
+            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</ItemTitle>
+            <div className="flex items-baseline gap-1 text-muted-foreground">
+              <Board className="size-3" />
+              <ItemDescription className="tabular-nums leading-none">{summary.totalProcedures} no total</ItemDescription>
             </div>
-            <p className="text-center font-bold text-lg text-primary">+ {summary.proceduresLast3Months}</p>
-            <span className="block text-center text-muted-foreground text-xs">nos últimos 3 meses</span>
           </div>
+          <ItemContent className="w-full text-center">
+            <div className="flex items-baseline justify-center gap-2">
+              <p className="font-bold text-primary text-xl">+ {summary.proceduresLast3Months}</p>
+              <ItemDescription className="text-lg">nos últimos 3 meses</ItemDescription>
+            </div>
+            <ItemDescription>Em média {summary.avgProceduresPerSchedule.toFixed(1)} procedimentos por consulta</ItemDescription>
+          </ItemContent>
+        </Item>
 
-          <div className="space-y-2 rounded-md border bg-muted/20 p-6">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-muted-foreground text-xs uppercase">Total em Procedimentos</span>
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <TrendingUp className="size-3" />
-                <span className="tabular-nums">{currencyFormat(summary.averageAmountPerSchedule)}</span>
-              </div>
+        <Item variant="outline" className="flex-col items-start bg-secondary">
+          <div className="flex w-full items-center justify-between">
+            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total em Procedimentos</ItemTitle>
+            <div className="flex items-baseline gap-1 text-muted-foreground">
+              <TrendingUp className="size-3" />
+              <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.averageAmountPerSchedule)}</ItemDescription>
             </div>
-            <p className="text-center font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
-            <span className="block text-center text-muted-foreground text-xs">Em média {currencyFormat(summary.averageAmountPerSchedule)} por consulta</span>
           </div>
-        </div>
-      </ItemContent>
+          <ItemContent className="w-full">
+            <p className="font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
+            <ItemDescription>Em média {currencyFormat(summary.averageAmountPerSchedule)} por consulta</ItemDescription>
+          </ItemContent>
+        </Item>
+      </ItemGroup>
     </Item>
   );
 };

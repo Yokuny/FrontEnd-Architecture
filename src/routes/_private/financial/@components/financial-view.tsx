@@ -44,7 +44,7 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
       {/* 1. Procedimentos */}
       <Table>
         <TableHeader>
-          <TableRow className="bg-muted/30">
+          <TableRow className="bg-secondary">
             <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Procedimento</TableHead>
             <TableHead className="h-7 w-[150px] px-4 py-1.5 font-medium text-foreground text-xs">Status</TableHead>
             <TableHead className="h-7 w-[150px] px-4 py-1.5 text-right font-medium text-foreground text-xs">Preço</TableHead>
@@ -72,7 +72,7 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
       {/* 2. Resto dos Dados Financeiros */}
       <Table className="mt-0">
         <TableHeader>
-          <TableRow className="bg-muted/30">
+          <TableRow className="bg-secondary">
             <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Profissional</TableHead>
             <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Paciente</TableHead>
             <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Forma de Pagto</TableHead>

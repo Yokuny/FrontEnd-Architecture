@@ -1,18 +1,10 @@
 import { useMemo } from 'react';
 
 import DefaultEmptyData from '@/components/default-empty-data';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Item, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Timeline, TimelineContent, TimelineDate, TimelineHeader, TimelineIndicator, TimelineItem, TimelineSeparator } from '@/components/ui/timeline';
 import { currencyFormat, formatDate, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
-
-type TimelineEvent = {
-  id: string;
-  title: string;
-  description: string;
-  date: Date | string;
-  type: string;
-};
 
 export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) => {
   const timelineEvents = useMemo(() => {
@@ -85,11 +77,13 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
 
   if (timelineEvents.length === 0) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <DefaultEmptyData />
-        </CardContent>
-      </Card>
+      <ItemGroup>
+        <Item>
+          <ItemContent>
+            <DefaultEmptyData />
+          </ItemContent>
+        </Item>
+      </ItemGroup>
     );
   }
 
@@ -112,24 +106,36 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
   };
 
   return (
-    <Card>
-      <CardContent className="flex flex-col gap-6 p-6">
-        <CardTitle className="text-xl">Histórico de Registros</CardTitle>
+    <ItemGroup>
+      <Item>
+        <ItemHeader>
+          <ItemTitle className="text-xl">Histórico de Registros</ItemTitle>
+        </ItemHeader>
 
-        <Timeline defaultValue={timelineEvents.length}>
-          {timelineEvents.map((event, index) => (
-            <TimelineItem key={event.id} step={index + 1}>
-              <TimelineSeparator className="bg-border" />
-              <TimelineIndicator className={getIndicatorColor(event.type)} />
-              <TimelineHeader>
-                <TimelineDate>{formatDate(String(event.date))}</TimelineDate>
-                <span className="font-semibold text-sm">{event.title}</span>
-              </TimelineHeader>
-              <TimelineContent>{event.description}</TimelineContent>
-            </TimelineItem>
-          ))}
-        </Timeline>
-      </CardContent>
-    </Card>
+        <ItemContent>
+          <Timeline defaultValue={timelineEvents.length}>
+            {timelineEvents.map((event, index) => (
+              <TimelineItem key={event.id} step={index + 1}>
+                <TimelineSeparator className="bg-border" />
+                <TimelineIndicator className={getIndicatorColor(event.type)} />
+                <TimelineHeader>
+                  <TimelineDate>{formatDate(String(event.date))}</TimelineDate>
+                  <span className="font-semibold text-sm">{event.title}</span>
+                </TimelineHeader>
+                <TimelineContent>{event.description}</TimelineContent>
+              </TimelineItem>
+            ))}
+          </Timeline>
+        </ItemContent>
+      </Item>
+    </ItemGroup>
   );
+};
+
+type TimelineEvent = {
+  id: string;
+  title: string;
+  description: string;
+  date: Date | string;
+  type: string;
 };

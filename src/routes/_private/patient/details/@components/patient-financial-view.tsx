@@ -6,11 +6,12 @@ import Add from '@/components/icons/Add.Icon';
 import Board from '@/components/icons/Board.Icon';
 import ChartPie from '@/components/icons/ChartPie.Icon';
 import Edit from '@/components/icons/Edit.Icon';
+import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Item, ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
@@ -90,55 +91,62 @@ const FinancialSummarySection = ({ patient }: { patient: FullPatient }) => {
         </ItemActions>
       </ItemHeader>
 
-      <ItemContent>
-        <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-2 rounded-md border bg-muted/20 p-6">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-muted-foreground text-xs uppercase">Total</span>
-              <span className="text-muted-foreground text-xs tabular-nums">{currencyFormat(summary.totalLastMonth)} este mês</span>
+      <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Item variant="outline" className="flex-col items-start bg-secondary">
+          <div className="flex w-full items-center justify-between">
+            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total</ItemTitle>
+            <div className="flex items-baseline gap-1 text-muted-foreground">
+              <TrendingUp className="size-3" />
+              <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.totalLastMonth)} este mês</ItemDescription>
             </div>
-            <p className="text-center font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
-            <span className="block text-center text-muted-foreground text-xs">{currencyFormat(summary.totalLast3Months)} nos últimos 3 meses</span>
           </div>
+          <ItemContent className="w-full text-center">
+            <p className="font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
+            <ItemDescription>{currencyFormat(summary.totalLast3Months)} nos últimos 3 meses</ItemDescription>
+          </ItemContent>
+        </Item>
 
-          <div className="space-y-2 rounded-md border bg-muted/20 p-6">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-muted-foreground text-xs uppercase">Total Pago</span>
-              <span className="text-muted-foreground text-xs tabular-nums">{currencyFormat(summary.paidLast30Days)} este mês</span>
-            </div>
-            <p className="text-center font-bold text-green-500 text-xl dark:text-lime-400">{currencyFormat(summary.totalPaid)}</p>
-            <span className="block text-center text-muted-foreground text-xs">{currencyFormat(summary.totalLast2Months)} nos últimos 2 meses</span>
+        <Item variant="outline" className="flex-col items-start bg-secondary">
+          <div className="flex w-full items-center justify-between">
+            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total Pago</ItemTitle>
+            <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.paidLast30Days)} este mês</ItemDescription>
           </div>
+          <ItemContent className="w-full text-center">
+            <p className="font-bold text-green-500 text-xl dark:text-lime-400">{currencyFormat(summary.totalPaid)}</p>
+            <ItemDescription>{currencyFormat(summary.totalLast2Months)} nos últimos 2 meses</ItemDescription>
+          </ItemContent>
+        </Item>
 
-          <div className="space-y-2 rounded-md border bg-muted/20 p-6">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-muted-foreground text-xs uppercase">Total Pendente</span>
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <ChartPie className="size-3" />
-                <span>
-                  {summary.paidProcedures} de {summary.procedureCount} pagos
-                </span>
-              </div>
+        <Item variant="outline" className="flex-col items-start bg-secondary">
+          <div className="flex w-full items-center justify-between">
+            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total Pendente</ItemTitle>
+            <div className="flex items-baseline gap-1 text-muted-foreground">
+              <ChartPie className="size-3" />
+              <ItemDescription className="tabular-nums leading-none">
+                {summary.paidProcedures} de {summary.procedureCount} pagos
+              </ItemDescription>
             </div>
-            <p className="text-center font-bold text-xl text-yellow-500 dark:text-yellow-400">{currencyFormat(summary.totalPending)}</p>
-            <span className="block text-center text-muted-foreground text-xs">
-              Último pagamento em {summary.lastPaymentDate ? formatDate(String(summary.lastPaymentDate)) : 'N/A'}
-            </span>
           </div>
+          <ItemContent className="w-full text-center">
+            <p className="font-bold text-yellow-500 text-xl dark:text-yellow-400">{currencyFormat(summary.totalPending)}</p>
+            <ItemDescription>Último pagamento em {summary.lastPaymentDate ? formatDate(String(summary.lastPaymentDate)) : 'N/A'}</ItemDescription>
+          </ItemContent>
+        </Item>
 
-          <div className="space-y-2 rounded-md border bg-muted/20 p-6">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</span>
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <Board className="size-3" />
-                <span>{summary.procedureCount} procedimentos</span>
-              </div>
+        <Item variant="outline" className="flex-col items-start bg-secondary">
+          <div className="flex w-full items-center justify-between">
+            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</ItemTitle>
+            <div className="flex items-baseline gap-1 text-muted-foreground">
+              <Board className="size-3" />
+              <ItemDescription className="tabular-nums leading-none">{summary.procedureCount} procedimentos</ItemDescription>
             </div>
-            <p className="text-center font-bold text-xl">{summary.proceduresLastMonth} no último mês</p>
-            <span className="block text-center text-muted-foreground text-xs">Adicionados {summary.recentProcedures} em 2 meses</span>
           </div>
-        </div>
-      </ItemContent>
+          <ItemContent className="w-full text-center">
+            <p className="font-bold text-xl">{summary.proceduresLastMonth} no último mês</p>
+            <ItemDescription>Adicionados {summary.recentProcedures} em 2 meses</ItemDescription>
+          </ItemContent>
+        </Item>
+      </ItemGroup>
     </Item>
   );
 };

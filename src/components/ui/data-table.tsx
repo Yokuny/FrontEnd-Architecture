@@ -310,7 +310,7 @@ export function DataTable<T extends Record<string, any>>({
         <div className="overflow-x-auto">
           <table className="w-full min-w-full">
             {!hideHeader && (
-              <thead className={cn('bg-muted/30', bordered && 'border-border border-b')}>
+              <thead className={cn('bg-secondary', bordered && 'border-border border-b')}>
                 <tr>
                   {visibleColumns.map((column) => (
                     <th

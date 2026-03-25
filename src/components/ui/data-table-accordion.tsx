@@ -92,7 +92,7 @@ function AccordionRow<T>({
           <CollapsibleContent asChild>
             <TableRow className="border-t-0 border-b-0 p-0 hover:bg-transparent">
               <TableCell className="border-0 p-0 md:p-0" colSpan={columns.length + 1}>
-                <div className="w-full bg-muted/10">{renderExpanded(row, isOpen)}</div>
+                <div className="w-full bg-secondary">{renderExpanded(row, isOpen)}</div>
               </TableCell>
             </TableRow>
           </CollapsibleContent>
@@ -265,7 +265,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
         <div className="overflow-x-auto">
           <table className="w-full min-w-full border-collapse">
             {!hideHeader && (
-              <thead className={cn('bg-muted/30', bordered && 'border-border border-b')}>
+              <thead className={cn('bg-secondary', bordered && 'border-border border-b')}>
                 <tr>
                   {hasExpanded && <th className={cn('w-[60px] px-4', compact ? 'h-10' : 'h-12')} />}
                   {visibleColumns.map((column) => (

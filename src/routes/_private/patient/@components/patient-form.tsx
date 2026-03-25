@@ -172,7 +172,7 @@ export function PatientForm() {
             </Button>
           </div>
           {fields.map((field, index) => (
-            <div key={field.id} className="flex flex-col items-end gap-4 rounded-lg bg-muted/20 p-4 md:flex-row">
+            <div key={field.id} className="flex flex-col items-end gap-4 rounded-lg bg-secondary p-4 md:flex-row">
               <FormField
                 control={form.control}
                 name={`phone.${index}.number`}
