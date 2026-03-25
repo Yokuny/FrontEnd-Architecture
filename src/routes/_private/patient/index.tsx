@@ -1,5 +1,5 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useMemo } from 'react';
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
+import { useCallback, useMemo } from 'react';
 import { z } from 'zod';
 
 import DefaultEmptyData from '@/components/default-empty-data';
@@ -31,9 +31,14 @@ export const Route = createFileRoute('/_private/patient/')({
 
 function PatientListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
+  const { page, size } = useSearch({ from: '/_private/patient/' });
   const { data = [], isLoading } = usePatientsQuery();
 
   const columns = useMemo(() => patientColumns(navigate as any), [navigate]);
+
+  const handlePageChange = useCallback((newPage: number) => navigate({ search: (prev) => ({ ...prev, page: newPage }), replace: true }), [navigate]);
+
+  const handlePageSizeChange = useCallback((newSize: number) => navigate({ search: (prev) => ({ ...prev, size: newSize, page: 1 }), replace: true }), [navigate]);
 
   return (
     <Card asPage>
@@ -57,6 +62,10 @@ function PatientListPage() {
             columns={columns}
             searchable
             searchPlaceholder="Buscar por nome ou email"
+            page={page}
+            size={size}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
             onRowClick={(row) => navigate({ to: '/patient/details', search: { id: row._id! } })}
             bordered={false}
           />

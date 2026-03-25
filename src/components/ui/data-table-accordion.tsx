@@ -120,14 +120,38 @@ export function DataTableAccordion<T extends Record<string, any>>({
   onRowClick,
   hideHeader = false,
   defaultExpandedIndex = -1,
+  page,
+  size,
+  onPageChange,
+  onPageSizeChange,
 }: DataTableAccordionProps<T>) {
   const [search, setSearch] = useState('');
   const [sortConfig, setSortConfig] = useState<{
     key: keyof T | null;
     direction: 'asc' | 'desc';
   }>({ key: null, direction: 'asc' });
-  const [pageSize, setPageSize] = useState(itemsPerPage);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [internalPageSize, setInternalPageSize] = useState(size ?? itemsPerPage);
+  const [internalCurrentPage, setInternalCurrentPage] = useState(page ?? 1);
+
+  const pageSize = size ?? internalPageSize;
+  const currentPage = page ?? internalCurrentPage;
+
+  const setPageSize = useCallback(
+    (val: number) => {
+      setInternalPageSize(val);
+      onPageSizeChange?.(val);
+    },
+    [onPageSizeChange],
+  );
+
+  const setCurrentPage = useCallback(
+    (val: number | ((prev: number) => number)) => {
+      const newVal = typeof val === 'function' ? val(currentPage) : val;
+      setInternalCurrentPage(newVal);
+      onPageChange?.(newVal);
+    },
+    [onPageChange, currentPage],
+  );
   const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>({});
 
   const visibleColumns = useMemo(() => {
@@ -435,4 +459,8 @@ export type DataTableAccordionProps<T> = {
   hideHeader?: boolean;
   columnSelector?: boolean;
   defaultExpandedIndex?: number;
+  page?: number;
+  size?: number;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
 };

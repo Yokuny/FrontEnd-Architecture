@@ -24,7 +24,7 @@ export function useReminderForm() {
     try {
       await createReminder.mutateAsync(data);
       toast.success('Lembrete criado com sucesso!');
-      navigate({ to: '/reminders', search: { showAll: true } });
+      navigate({ to: '/reminders', search: { showAll: true, page: 1, size: 10 } });
     } catch (e: any) {
       toast.error(e.message || 'Erro ao criar lembrete');
     }

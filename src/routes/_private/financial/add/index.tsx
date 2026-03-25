@@ -23,7 +23,7 @@ function FinancialAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="outline" onClick={() => navigate({ to: '/financial' })} disabled={isPending}>
+          <Button type="button" variant="outline" onClick={() => navigate({ to: '/financial', search: { page: 1, size: 5 } })} disabled={isPending}>
             Cancelar
           </Button>
           <Button type="submit" form="financial-form" disabled={isPending} className="ml-auto min-w-[120px]">

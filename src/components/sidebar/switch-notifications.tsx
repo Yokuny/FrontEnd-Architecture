@@ -47,7 +47,7 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="justify-center font-mono text-muted-foreground text-sm hover:text-primary">
-          <Link to="/reminders" search={{ showAll: true }}>
+          <Link to="/reminders" search={{ showAll: true, page: 1, size: 10 }}>
             {t('notifications.viewall')}
           </Link>
         </DropdownMenuItem>

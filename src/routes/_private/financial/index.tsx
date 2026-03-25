@@ -1,5 +1,6 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useMemo } from 'react';
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
+import { useCallback, useMemo } from 'react';
+import { z } from 'zod';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
@@ -10,19 +11,32 @@ import { useFinancialsPartialQuery } from '@/query/financials';
 import { FinancialView } from './@components/financial-view';
 import { financialColumns } from './@utils/columns';
 
+const searchSchema = z.object({
+  page: z.number().optional().default(1),
+  size: z.number().optional().default(5),
+});
+
+type SearchParams = z.infer<typeof searchSchema>;
+
 export const Route = createFileRoute('/_private/financial/')({
   component: FinancialListPage,
   staticData: {
     title: 'Financeiro',
     description: 'Lista registros financeiros pagos, cancelados ou em aberto.',
   },
+  validateSearch: (search: Record<string, unknown>): SearchParams => searchSchema.parse(search),
 });
 
 function FinancialListPage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate({ from: Route.fullPath });
+  const { page, size } = useSearch({ from: '/_private/financial/' });
   const { data: financials, isLoading } = useFinancialsPartialQuery();
 
   const columns = useMemo(() => financialColumns(navigate), [navigate]);
+
+  const handlePageChange = useCallback((newPage: number) => navigate({ search: (prev) => ({ ...prev, page: newPage }), replace: true }), [navigate]);
+
+  const handlePageSizeChange = useCallback((newSize: number) => navigate({ search: (prev) => ({ ...prev, size: newSize, page: 1 }), replace: true }), [navigate]);
 
   return (
     <Card asPage>
@@ -43,7 +57,10 @@ function FinancialListPage() {
             data={financials}
             columns={columns}
             searchable
-            itemsPerPage={5}
+            page={page}
+            size={size}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
             bordered={false}
             onRowClick={(row) => navigate({ to: '/financial/details', search: { id: row._id } })}
             renderExpanded={(row, isOpen) => <FinancialView id={row._id} isOpen={isOpen} />}

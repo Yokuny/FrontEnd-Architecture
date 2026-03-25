@@ -64,7 +64,7 @@ function FinancialDetailPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button variant="outline" type="button" onClick={() => navigate({ to: '/financial' })} disabled={isPending} className="min-w-32">
+          <Button variant="outline" type="button" onClick={() => navigate({ to: '/financial', search: { page: 1, size: 5 } })} disabled={isPending} className="min-w-32">
             <Back className="mr-2 size-4" />
             Voltar
           </Button>

@@ -45,7 +45,7 @@ export function useFinancialCreateForm() {
       const res = await create.mutateAsync(values);
       toast.success(res.message);
       form.reset();
-      navigate({ to: '/financial' });
+      navigate({ to: '/financial', search: { page: 1, size: 5 } });
     } catch (e: any) {
       toast.error(e.message);
     }

@@ -28,7 +28,7 @@ function ReminderAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="outline" disabled={isPending} onClick={() => navigate({ to: '/reminders', search: { showAll: true } })}>
+          <Button type="button" variant="outline" disabled={isPending} onClick={() => navigate({ to: '/reminders', search: { showAll: true, page: 1, size: 10 } })}>
             Cancelar
           </Button>
           <Button type="submit" form="reminder-form" disabled={isPending} className="ml-auto min-w-[120px]">

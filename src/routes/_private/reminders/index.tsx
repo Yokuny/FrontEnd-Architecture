@@ -22,6 +22,8 @@ import { reminderColumns } from './@utils/columns';
 
 const searchSchema = z.object({
   showAll: z.boolean().optional().default(false),
+  page: z.number().optional().default(1),
+  size: z.number().optional().default(10),
 });
 
 type SearchParams = z.infer<typeof searchSchema>;
@@ -49,7 +51,7 @@ function endOfDay(date: Date) {
 
 function RemindersListPage() {
   const navigate = useNavigate({ from: Route.fullPath });
-  const { showAll } = useSearch({ from: '/_private/reminders/' });
+  const { showAll, page, size } = useSearch({ from: '/_private/reminders/' });
   const checkReminders = useCheckReminders();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
@@ -99,6 +101,10 @@ function RemindersListPage() {
     }
   };
 
+  const handlePageChange = useCallback((newPage: number) => navigate({ search: (prev) => ({ ...prev, page: newPage }), replace: true }), [navigate]);
+
+  const handlePageSizeChange = useCallback((newSize: number) => navigate({ search: (prev) => ({ ...prev, size: newSize, page: 1 }), replace: true }), [navigate]);
+
   const allSelected = !!reminders?.length && selectedIds.length === reminders.length;
   const someSelected = selectedIds.length > 0 && (!reminders || selectedIds.length < reminders.length);
 
@@ -113,7 +119,7 @@ function RemindersListPage() {
         <CardAction>
           <div className="mt-4 flex w-full flex-col items-center gap-4 sm:mt-0 sm:w-auto sm:flex-row">
             <div className="flex items-center gap-2">
-              <Checkbox id="showAll" checked={showAll} onCheckedChange={(checked) => navigate({ search: { showAll: !!checked } })} />
+              <Checkbox id="showAll" checked={showAll} onCheckedChange={(checked) => navigate({ search: (prev) => ({ ...prev, showAll: !!checked }), replace: true })} />
               <label htmlFor="showAll" className="cursor-pointer font-medium text-sm leading-none">
                 Mostrar todos
               </label>
@@ -165,7 +171,10 @@ function RemindersListPage() {
             columns={columns}
             searchable={false}
             showPagination={true}
-            itemsPerPage={10}
+            page={page}
+            size={size}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
             bordered={false}
             onRowClick={(row) => {
               const isSelected = selectedIds.includes(row._id);
