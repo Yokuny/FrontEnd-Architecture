@@ -2,8 +2,9 @@ import { useNavigate } from '@tanstack/react-router';
 import Edit from '@/components/icons/Edit.Icon';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { Item, ItemActions, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { formatDate } from '@/lib/helpers/formatDate.utils';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { Anamnesis } from '@/lib/interfaces';
 import { cn } from '@/lib/utils/cn.util';
@@ -56,57 +57,24 @@ export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Ana
     return String(value) === 'true';
   }).length;
 
-  const complaintData = anamnesis.mainComplaint ? [{ complaint: 'Queixa Principal', details: anamnesis.mainComplaint }] : [];
-  const complaintColumns: DataTableColumn<{ complaint: string; details: string }>[] = [
-    { key: 'complaint', header: '', render: (v) => <span className="w-1/3 font-medium">{v}</span> },
-    { key: 'details', header: '', render: (v) => capitalizeString(v) },
-  ];
+  const hasIllnesses =
+    anamnesis.illnesses?.diabetes ||
+    anamnesis.illnesses?.tuberculosis ||
+    anamnesis.illnesses?.heartProblems ||
+    anamnesis.illnesses?.highBloodPressure ||
+    anamnesis.illnesses?.arthritis ||
+    anamnesis.illnesses?.asthma ||
+    anamnesis.illnesses?.kidneyProblems ||
+    anamnesis.illnesses?.liverProblems ||
+    anamnesis.illnesses?.otherIllnesses;
 
-  const illnessesData = [
-    ...(String(anamnesis.illnesses?.diabetes) === 'true' ? [{ condition: 'Diabetes', state: 'Sim', severity: 'high' as const }] : []),
-    ...(String(anamnesis.illnesses?.heartProblems) === 'true' ? [{ condition: 'Problemas Cardíacos', state: 'Sim', severity: 'high' as const }] : []),
-    ...(String(anamnesis.illnesses?.highBloodPressure) === 'true' ? [{ condition: 'Hipertensão', state: 'Sim', severity: 'high' as const }] : []),
-    ...(String(anamnesis.illnesses?.asthma) === 'true' ? [{ condition: 'Asma', state: 'Sim', severity: 'medium' as const }] : []),
-    ...(anamnesis.illnesses?.otherIllnesses ? [{ condition: 'Outras Doenças', state: 'Sim', severity: 'medium' as const, extra: anamnesis.illnesses.otherIllnesses }] : []),
-  ];
-  const illnessesColumns: DataTableColumn<{ condition: string; state: string; severity: 'high' | 'medium'; extra?: string }>[] = [
-    {
-      key: 'condition',
-      header: 'Condição',
-      render: (v, row) => (
-        <span className="flex items-center">
-          {v} {getSeverityDot(true, row.severity)}
-        </span>
-      ),
-    },
-    {
-      key: 'state',
-      header: 'Status',
-      render: (v, row) => (
-        <span>
-          <Badge variant={row.severity === 'high' ? 'red' : 'muted'}>{v}</Badge>
-          {row.extra && <span className="ml-2 text-muted-foreground text-sm">{row.extra}</span>}
-        </span>
-      ),
-    },
-  ];
+  const hasMedication = anamnesis.allergicToMedication || anamnesis.takingMedication || anamnesis.underMedicalTreatment;
 
-  const medicationData = [
-    ...(anamnesis.allergicToMedication ? [{ type: 'Alergia a Medicamentos', severity: 'high' as const, details: anamnesis.medicationAllergy || 'Sim' }] : []),
-    ...(anamnesis.takingMedication ? [{ type: 'Uso Contínuo', severity: 'medium' as const, details: anamnesis.medicationDetails || 'Sim' }] : []),
-  ];
-  const medicationColumns: DataTableColumn<{ type: string; severity: 'high' | 'medium'; details: string }>[] = [
-    {
-      key: 'type',
-      header: '',
-      render: (v, row) => (
-        <span className="flex w-1/3 items-center">
-          {v} {getSeverityDot(true, row.severity)}
-        </span>
-      ),
-    },
-    { key: 'details', header: '', render: (v) => capitalizeString(v) },
-  ];
+  const hasSpecialConditions = anamnesis.pregnant || anamnesis.breastfeeding || anamnesis.gumsBleedEasily || anamnesis.sensitiveTeeth;
+
+  const hasHabits = anamnesis.smoker || anamnesis.alcoholConsumer || anamnesis.bitesPenOrPencil || anamnesis.nailsBiting || anamnesis.otherHarmfulHabits;
+
+  const hasCriticalInfo = anamnesis.importantHealthInformation || anamnesis.infectiousDisease;
 
   return (
     <div className="flex flex-col gap-6">
@@ -121,26 +89,363 @@ export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Ana
 
       <div className="flex flex-col gap-6">
         {attentionCount > 0 && (
-          <div className="flex items-center gap-2 rounded-md bg-destructive/10 px-4 py-3 text-destructive">
+          <div className="flex items-center gap-2 rounded-md bg-destructive/5 px-4 py-3 text-destructive">
             <Badge variant="red">{attentionCount}</Badge>
             <span className="font-semibold">Pontos de atenção encontrados nesta ficha médica.</span>
           </div>
         )}
 
-        <Item variant="outline" className="flex-col items-start gap-4 p-6">
-          <ItemTitle className="font-semibold text-lg tracking-tight">Evolução e Queixa Principal</ItemTitle>
-          <DataTable data={complaintData} columns={complaintColumns} searchable={false} showPagination={false} compact bordered={false} />
+        <Item>
+          <ItemTitle className="font-semibold text-lg tracking-tight">Informações de Anamnese</ItemTitle>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-1/3 font-semibold">Categoria</TableHead>
+                <TableHead className="font-semibold">Informações</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {anamnesis.mainComplaint && (
+                <TableRow>
+                  <TableCell className="align-top font-medium">Queixa Principal</TableCell>
+                  <TableCell>{capitalizeString(anamnesis.mainComplaint)}</TableCell>
+                </TableRow>
+              )}
+
+              {hasIllnesses && (
+                <TableRow>
+                  <TableCell className="align-top font-medium">Condições Médicas</TableCell>
+                  <TableCell>
+                    <Table className="border">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-5/12 font-semibold text-xs">Condição</TableHead>
+                          <TableHead className="w-1/12 font-semibold text-xs">Status</TableHead>
+                          <TableHead className="w-5/12 font-semibold text-xs">Detalhes</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {anamnesis.illnesses?.diabetes && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Diabetes{getSeverityDot(true, 'high')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="red">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.illnesses?.tuberculosis && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Tuberculose{getSeverityDot(true, 'high')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="red">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.illnesses?.heartProblems && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Problemas cardíacos{getSeverityDot(true, 'high')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="red">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.illnesses?.highBloodPressure && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Pressão alta{getSeverityDot(true, 'high')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="red">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.illnesses?.arthritis && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Artrite{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.illnesses?.asthma && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Asma{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.illnesses?.kidneyProblems && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Problemas renais{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.illnesses?.liverProblems && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Problemas hepáticos{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.illnesses?.otherIllnesses && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Outras doenças{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">{capitalizeString(anamnesis.illnesses.otherIllnesses)}</TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableCell>
+                </TableRow>
+              )}
+
+              {hasMedication && (
+                <TableRow>
+                  <TableCell className="align-top font-medium">Medicamentos e Alergias</TableCell>
+                  <TableCell>
+                    <Table className="border">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-5/12 font-semibold text-xs">Aspecto</TableHead>
+                          <TableHead className="w-1/12 font-semibold text-xs">Status</TableHead>
+                          <TableHead className="w-5/12 font-semibold text-xs">Detalhes</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {anamnesis.allergicToMedication && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Alérgico a medicamentos{getSeverityDot(true, 'high')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="red">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">{anamnesis.medicationAllergy ? capitalizeString(anamnesis.medicationAllergy) : '-'}</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.takingMedication && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Tomando medicamentos{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">{anamnesis.medicationDetails ? capitalizeString(anamnesis.medicationDetails) : '-'}</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.underMedicalTreatment && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Em tratamento médico{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">{anamnesis.medicalTreatmentDetails ? capitalizeString(anamnesis.medicalTreatmentDetails) : '-'}</TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableCell>
+                </TableRow>
+              )}
+
+              {hasSpecialConditions && (
+                <TableRow>
+                  <TableCell className="align-top font-medium">Condições Especiais</TableCell>
+                  <TableCell>
+                    <Table className="border">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-5/12 font-semibold text-xs">Condição</TableHead>
+                          <TableHead className="w-1/12 font-semibold text-xs">Status</TableHead>
+                          <TableHead className="w-5/12 font-semibold text-xs">Detalhes</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {anamnesis.pregnant && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Grávida{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">{anamnesis.pregnancyMonth ? `${anamnesis.pregnancyMonth}º mês` : '-'}</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.breastfeeding && (
+                          <TableRow>
+                            <TableCell className="text-sm">
+                              <span className="flex items-center gap-1">Amamentando{getSeverityDot(true, 'medium')}</span>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.gumsBleedEasily && (
+                          <TableRow>
+                            <TableCell className="text-sm">Gengiva sangra facilmente</TableCell>
+                            <TableCell>
+                              <Badge variant="muted">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.sensitiveTeeth && (
+                          <TableRow>
+                            <TableCell className="text-sm">Dentes sensíveis</TableCell>
+                            <TableCell>
+                              <Badge variant="muted">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableCell>
+                </TableRow>
+              )}
+
+              {hasHabits && (
+                <TableRow>
+                  <TableCell className="align-top font-medium">Hábitos</TableCell>
+                  <TableCell>
+                    <Table className="border">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-5/12 font-semibold text-xs">Hábito</TableHead>
+                          <TableHead className="w-1/12 font-semibold text-xs">Status</TableHead>
+                          <TableHead className="w-5/12 font-semibold text-xs">Detalhes</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {anamnesis.smoker && (
+                          <TableRow>
+                            <TableCell className="text-sm">Fumante</TableCell>
+                            <TableCell>
+                              <Badge variant="red">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.alcoholConsumer && (
+                          <TableRow>
+                            <TableCell className="text-sm">Consome álcool</TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.bitesPenOrPencil && (
+                          <TableRow>
+                            <TableCell className="text-sm">Morde caneta/lápis</TableCell>
+                            <TableCell>
+                              <Badge variant="muted">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.nailsBiting && (
+                          <TableRow>
+                            <TableCell className="text-sm">Rói unhas</TableCell>
+                            <TableCell>
+                              <Badge variant="muted">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">-</TableCell>
+                          </TableRow>
+                        )}
+                        {anamnesis.otherHarmfulHabits && (
+                          <TableRow>
+                            <TableCell className="text-sm">Outros hábitos prejudiciais</TableCell>
+                            <TableCell>
+                              <Badge variant="amber">Sim</Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">{capitalizeString(anamnesis.otherHarmfulHabits)}</TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableCell>
+                </TableRow>
+              )}
+
+              {hasCriticalInfo && (
+                <TableRow>
+                  <TableCell className="align-top font-medium">Informações Críticas</TableCell>
+                  <TableCell>
+                    <div className="space-y-2">
+                      {anamnesis.importantHealthInformation && (
+                        <div className="flex items-center justify-between gap-3 rounded-md bg-destructive/5 p-3 px-6">
+                          <div>
+                            <div className="flex items-center gap-1">
+                              {getSeverityDot(true, 'high')}
+                              <span className="text-muted-foreground text-sm">Informações importantes de saúde:</span>
+                            </div>
+                            <span className="font-semibold">{capitalizeString(anamnesis.importantHealthInformation)}</span>
+                          </div>
+                          <Badge variant="red">Atenção</Badge>
+                        </div>
+                      )}
+                      {anamnesis.infectiousDisease && (
+                        <div className="flex items-center justify-between gap-3 rounded-md bg-destructive/5 p-3 px-6">
+                          <div>
+                            <div className="flex items-center gap-1">
+                              {getSeverityDot(true, 'high')}
+                              <span className="text-muted-foreground text-sm">Doença infecciosa:</span>
+                            </div>
+                            <span className="font-semibold">{capitalizeString(anamnesis.infectiousDisease)}</span>
+                          </div>
+                          <Badge variant="red">Atenção</Badge>
+                        </div>
+                      )}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </Item>
 
-        <Item variant="outline" className="flex-col items-start gap-4 p-6">
-          <ItemTitle className="font-semibold text-lg tracking-tight">Condições Médicas e Doenças</ItemTitle>
-          <DataTable data={illnessesData} columns={illnessesColumns} searchable={false} showPagination={false} compact bordered={false} />
-        </Item>
-
-        <Item variant="outline" className="flex-col items-start gap-4 p-6">
-          <ItemTitle className="font-semibold text-lg tracking-tight">Medicação e Alergias</ItemTitle>
-          <DataTable data={medicationData} columns={medicationColumns} searchable={false} showPagination={false} compact bordered={false} />
-        </Item>
+        <div className="flex w-full items-center justify-end gap-2">
+          <ItemDescription>Última atualização:</ItemDescription>
+          <ItemTitle>{formatDate(anamnesis.updatedAt)}</ItemTitle>
+        </div>
       </div>
     </div>
   );

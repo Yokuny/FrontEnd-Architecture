@@ -1,8 +1,9 @@
 import { useNavigate } from '@tanstack/react-router';
 import Edit from '@/components/icons/Edit.Icon';
 import { Button } from '@/components/ui/button';
-import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { Item, ItemActions, ItemDescription, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { formatDate } from '@/lib/helpers/formatDate.utils';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { Intraoral } from '@/lib/interfaces';
 
@@ -37,16 +38,6 @@ export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Int
     ...(intraoral.otherObservations ? [{ region: 'Outras Observações', description: intraoral.otherObservations }] : []),
   ];
 
-  const healthColumns: DataTableColumn<{ aspect: string; condition: string }>[] = [
-    { key: 'aspect', header: 'Aspecto', render: (v) => <span className="font-medium">{v}</span> },
-    { key: 'condition', header: 'Condição', render: (v) => capitalizeString(v) },
-  ];
-
-  const regionColumns: DataTableColumn<{ region: string; description: string }>[] = [
-    { key: 'region', header: 'Região', render: (v) => <span className="font-medium">{v}</span> },
-    { key: 'description', header: 'Descrição/Achados', render: (v) => capitalizeString(v) },
-  ];
-
   return (
     <div className="flex flex-col gap-6">
       <ItemHeader className="flex flex-row items-center justify-between">
@@ -61,13 +52,48 @@ export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Int
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Item variant="outline" className="flex-col items-start gap-4 p-6">
           <ItemTitle className="font-semibold text-lg tracking-tight">Avaliação da Saúde Bucal</ItemTitle>
-          <DataTable data={healthData} columns={healthColumns} searchable={false} showPagination={false} compact bordered={false} />
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Aspecto</TableHead>
+                <TableHead>Condição</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {healthData.map((item) => (
+                <TableRow key={item.aspect}>
+                  <TableCell className="font-medium">{item.aspect}</TableCell>
+                  <TableCell>{capitalizeString(item.condition)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Item>
 
         <Item variant="outline" className="flex-col items-start gap-4 p-6">
           <ItemTitle className="font-semibold text-lg tracking-tight">Regiões Específicas</ItemTitle>
-          <DataTable data={regionData} columns={regionColumns} searchable={false} showPagination={false} compact bordered={false} />
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Região</TableHead>
+                <TableHead>Descrição/Achados</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {regionData.map((item) => (
+                <TableRow key={item.region}>
+                  <TableCell className="font-medium">{item.region}</TableCell>
+                  <TableCell>{capitalizeString(item.description)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Item>
+      </div>
+
+      <div className="flex w-full items-center justify-end gap-2">
+        <ItemDescription>Última atualização:</ItemDescription>
+        <ItemTitle>{formatDate(intraoral.updatedAt)}</ItemTitle>
       </div>
     </div>
   );
