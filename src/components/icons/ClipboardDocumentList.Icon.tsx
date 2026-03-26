@@ -1,7 +1,7 @@
 import { motion, useAnimation, type Variants } from 'framer-motion';
 import { forwardRef, type HTMLAttributes, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import { UnstyledButton } from '@/components/ui/unstyled-button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 export interface ClipboardDocumentListIconHandle {
   startAnimation: () => void;

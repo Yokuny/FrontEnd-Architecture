@@ -1,6 +1,6 @@
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import type { ComponentProps } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import CheckIcon from '../icons/Cross.Icon';
 
 function RadioGroup({ className, ...props }: ComponentProps<typeof RadioGroupPrimitive.Root>) {

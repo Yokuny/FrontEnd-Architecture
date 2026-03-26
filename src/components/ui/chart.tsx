@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { ItemDescription } from './item';
 
 // Format: { THEME_NAME: CSS_SELECTOR }

@@ -13,7 +13,7 @@ import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullFinancial } from '@/lib/interfaces/financial';
 import type { ProfessionalList } from '@/lib/interfaces/professional';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { STATUS_TO_BADGE_VARIANT } from '../../@consts/financial.consts';
 
 interface FinancialDetailContentProps {

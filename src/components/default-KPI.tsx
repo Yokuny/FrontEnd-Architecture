@@ -1,6 +1,6 @@
 import type React from 'react';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 interface KPICardProps {
   title: string;

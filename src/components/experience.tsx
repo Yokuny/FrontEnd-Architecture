@@ -3,7 +3,7 @@
 
 import Download from '@/components/icons/Download.Icon';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 interface Experience1Props {
   className?: string;

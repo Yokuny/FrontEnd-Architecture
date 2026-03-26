@@ -23,7 +23,7 @@ import { PATCH, POST, request } from '@/lib/api/client';
 import { currencyFormat, extractDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate';
 import type { FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { usePatientsQuery } from '@/query/patients';
 import { useProfessionalsQuery } from '@/query/professionals';
 

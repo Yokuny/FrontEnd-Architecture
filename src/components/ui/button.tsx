@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type * as React from 'react';
-import { cn } from '@/lib/utils/index';
+import { cn } from '@/lib/utils/cn.util';
 
 const btnVars = cva(
   'inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md font-medium text-sm transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-slate-300',

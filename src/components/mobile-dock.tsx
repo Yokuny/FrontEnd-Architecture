@@ -5,7 +5,7 @@ import IconDollar from '@/components/icons/Dollar.Icon';
 import IconGear from '@/components/icons/Gear.Icon';
 import IconPatients from '@/components/icons/Patients.Icon';
 import { t } from '@/lib/helpers/translate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 const dockItems = [
   { to: '/schedule', icon: IconCalendar, labelKey: 'schedule' },

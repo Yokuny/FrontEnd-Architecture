@@ -103,7 +103,7 @@ function StatusBadge({ status }: { status: Status }) {
 ## Conditional Classes
 
 ```tsx
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 className={cn(
   'rounded-md font-medium',

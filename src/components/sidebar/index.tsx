@@ -8,7 +8,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarSeparator
 import type { SidebarRoute } from '@/config/sidebarRoutes';
 import { buildSidebarRoutes } from '@/config/sidebarRoutes';
 import { t } from '@/lib/helpers/translate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { FavoritesSwitcher } from './switch-favorites';
 import { NotificationsSwitcher } from './switch-notifications';
 

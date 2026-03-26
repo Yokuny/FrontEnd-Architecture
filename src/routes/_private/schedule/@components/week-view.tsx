@@ -24,7 +24,7 @@ import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
 import { EndHour, StartHour, WeekCellsHeight } from '@/lib/consts/calendar.constants';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.utils';
 import type { PartialSchedule } from '@/lib/interfaces/schedule';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
 import { DroppableCell } from './square';

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { t } from '@/lib/helpers/translate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 const OdontogramCombobox = ({ controller, patient, disabled, fetchOdontograms }: OdontogramComboboxProps) => {
   const [open, setOpen] = useState(false);

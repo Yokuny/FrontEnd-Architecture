@@ -26,7 +26,7 @@ import { addHoursToDate, eventColors } from '@/lib/helpers/calendar.utils';
 import { capitalizeString, extractDate, getEventColorByProfessional } from '@/lib/helpers/formatter.helper';
 import type { CalendarView, EventColor, PartialSchedule } from '@/lib/interfaces/schedule';
 import { scheduleTimeSchema } from '@/lib/interfaces/schemas/schedule.schema';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { useScheduleQuery, useUpdateScheduleTime } from '@/query/schedule';

@@ -11,7 +11,7 @@ import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/i
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { formatDate } from '@/lib/helpers/formatDate.utils';
 import type { DbPatientAnalytics, PatientDemographics, PatientPeriodChart, PatientRegistrationTrends } from '@/lib/interfaces/analytics';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { usePatientAnalyticsQuery } from '@/query/analytics';
 
 function CustomTooltip({ active, payload, label, labelFormatter }: any) {

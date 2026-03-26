@@ -3,7 +3,7 @@ import type * as React from 'react';
 import CheckIcon from '@/components/icons/Check.Icon';
 import CircleIcon from '@/components/icons/Dot.Icon';
 import ChevronRightIcon from '@/components/icons/Right.Icon';
-import { cn } from '@/lib/utils/index';
+import { cn } from '@/lib/utils/cn.util';
 
 function DropdownMenu({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />;

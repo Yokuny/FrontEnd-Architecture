@@ -23,7 +23,7 @@ import {
   Table as TablePrimitive,
   TableRow as TableRowPrimitive,
 } from '@/components/ui/table';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import DefaultLoading from '../default-loading';
 
 export function DataTableProvider<TData, TValue>({ columns, data, children, className, globalFilter, pageSize }: DataTableProviderProps<TData, TValue>) {

@@ -7,7 +7,7 @@ import Up from '@/components/icons/Up.Icon';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuItem as SidebarMenuSubItem, useSidebar } from '@/components/ui/sidebar';
 import { useFavorites } from '@/hooks/use-favorites';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 export default function AppNavigation({ routes }: { routes: Route[] }) {
   const { state } = useSidebar();

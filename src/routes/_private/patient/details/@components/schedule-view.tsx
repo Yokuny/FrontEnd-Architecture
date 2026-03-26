@@ -20,7 +20,7 @@ import { PATCH, request } from '@/lib/api/client';
 import { currencyFormat, extractDate, formatDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import type { DbSchedule } from '@/lib/interfaces/schedule';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { usePatientQuery } from '@/query/patient';
 import { useProfessionalsQuery } from '@/query/professionals';

@@ -1,5 +1,5 @@
 import type { InputHTMLAttributes } from 'react';
-import { cn } from '@/lib/utils/index';
+import { cn } from '@/lib/utils/cn.util';
 
 function Input({ className, type, inputSize = 'default', ...props }: InputProps) {
   return (

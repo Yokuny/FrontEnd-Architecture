@@ -2,7 +2,7 @@ import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type * as React from 'react';
 import Check from '@/components/icons/Check.Icon';
-import { cn } from '@/lib/utils/index';
+import { cn } from '@/lib/utils/cn.util';
 
 const checkboxVariants = cva(
   [

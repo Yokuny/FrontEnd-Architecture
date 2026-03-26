@@ -1,6 +1,6 @@
 import { Accordion as AccordionPrimitive } from 'radix-ui';
 import type * as React from 'react';
-import { cn } from '@/lib/utils/index';
+import { cn } from '@/lib/utils/cn.util';
 import IconDown from '../icons/Down.Icon';
 
 function Accordion({ ...props }: React.ComponentProps<typeof AccordionPrimitive.Root>) {

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import type { Route } from './nav-main';
 
 export function FooterNavigation({ routes }: { routes: Route[] }) {

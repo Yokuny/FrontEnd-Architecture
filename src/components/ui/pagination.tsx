@@ -3,7 +3,7 @@ import Dot from '@/components/icons/Dot.Icon';
 import Left from '@/components/icons/Left.Icon';
 import Right from '@/components/icons/Right.Icon';
 import { t } from '@/lib/helpers/translate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { type Button, btnVars } from './button';
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {

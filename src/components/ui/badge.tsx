@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
-import { cn } from '@/lib/utils/index';
+import { cn } from '@/lib/utils/cn.util';
 import IconDown from '../icons/Down.Icon';
 import IconMinus from '../icons/Minus.Icon';
 import IconUp from '../icons/Up.Icon';

@@ -3,7 +3,7 @@ import { motion, useAnimation } from 'framer-motion';
 import type { HTMLAttributes } from 'react';
 import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 import { UnstyledButton } from '@/components/ui/unstyled-button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 const CHECK_VARIANTS: Variants = {
   normal: {

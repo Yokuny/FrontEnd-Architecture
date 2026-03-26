@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field';
 import { ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 export default function DefaultFormLayout({ sections, layout = 'horizontal', className }: DefaultFormLayoutProps) {
   return (

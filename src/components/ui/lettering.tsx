@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 const Title = ({ children, className, ...props }: ComponentProps<'div'>) => (
   <div data-slot="title" className={cn('font-medium tracking-wide md:text-lg', className)} {...props}>

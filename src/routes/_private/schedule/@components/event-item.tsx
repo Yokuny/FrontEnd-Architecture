@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { getBorderRadiusClasses, getEventColorClasses } from '@/lib/helpers/calendar.utils';
 import type { PartialSchedule } from '@/lib/interfaces/schedule';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 const formatTimeWithOptionalMinutes = (date: Date) => {
   return format(date, getMinutes(date) === 0 ? 'ha' : 'h:mma').toLowerCase();

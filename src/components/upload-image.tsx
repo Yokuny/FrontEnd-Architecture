@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import Add from '@/components/icons/Add.Icon';
 import { ItemDescription, ItemMedia } from '@/components/ui/item';
 import { t } from '@/lib/helpers/translate';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 export default function UploadImage({ value, onAddFile, maxSize, className, height }: UploadImageProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);

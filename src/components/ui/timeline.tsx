@@ -1,6 +1,6 @@
 import { Slot as SlotPrimitive } from '@radix-ui/react-slot';
 import * as React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 type TimelineContextValue = {
   activeStep: number;

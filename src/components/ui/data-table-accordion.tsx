@@ -14,7 +14,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import DefaultLoading from '../default-loading';
 
 function AccordionRow<T>({

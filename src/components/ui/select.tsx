@@ -1,6 +1,6 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
 import type { ComponentProps } from 'react';
-import { cn } from '@/lib/utils/index';
+import { cn } from '@/lib/utils/cn.util';
 import IconCheck from '../icons/Check.Icon';
 import IconDown from '../icons/Down.Icon';
 import IconUp from '../icons/Up.Icon';

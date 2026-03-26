@@ -2,7 +2,7 @@ import { ptBR } from 'date-fns/locale';
 import type { ComponentProps } from 'react';
 import * as React from 'react';
 import { type DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import IconDown from '../icons/Down.Icon';
 import IconLeft from '../icons/Left.Icon';
 import IconRight from '../icons/Right.Icon';

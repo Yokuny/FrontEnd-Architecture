@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 
 function ItemGroup({ className, ...props }: React.ComponentProps<'ul'>) {
   return <ul data-slot="item-group" className={cn('group/item-group flex flex-col gap-2', className)} {...props} />;

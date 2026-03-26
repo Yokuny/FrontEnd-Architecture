@@ -23,7 +23,7 @@ import { comboboxWithImgFormat, formatPhone } from '@/lib/helpers/formatter.help
 import { addKey } from '@/lib/helpers/validade.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule';
 import type { NewSchedule, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { usePatientsQuery } from '@/query/patients';
 import { useUserQuery } from '@/query/user';
