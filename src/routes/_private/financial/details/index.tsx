@@ -1,0 +1,80 @@
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useMemo } from 'react';
+import EmptyData from '@/components/default-empty-data';
+import DefaultLoading from '@/components/default-loading';
+import Back from '@/components/icons/Back.Icon';
+import { Button } from '@/components/ui/button';
+import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Form } from '@/components/ui/form';
+import { Separator } from '@/components/ui/separator';
+import { Spinner } from '@/components/ui/spinner';
+import { useFinancialDetailQuery } from '@/query/financials';
+import { useProfessionalsQuery } from '@/query/professionals';
+import { FinancialDetailContent } from './@components/financial-detail-content';
+import { FinancialEditForm } from './@components/financial-edit-form';
+import { useFinancialEditForm } from './@hooks/use-financial-edit-form';
+import { searchSchema } from './@interface/details.schema';
+
+export const Route = createFileRoute('/_private/financial/details/')({
+  component: FinancialDetailPage,
+  validateSearch: searchSchema,
+  staticData: {
+    title: 'Detalhes do Registro',
+    description: 'Visualização completa e edição de registro financeiro.',
+  },
+});
+
+function FinancialDetailPage() {
+  const navigate = useNavigate();
+  const search = Route.useSearch();
+  const id = search.id;
+  const { data: financial, isLoading } = useFinancialDetailQuery(id);
+  const { data: professionals } = useProfessionalsQuery();
+
+  const initialData = useMemo(
+    () => ({
+      price: financial?.price || 0,
+      paid: financial?.paid || 0,
+      paymentMethod: financial?.paymentMethod || 'none',
+      installments: financial?.installments || 1,
+      status: financial?.status || 'pending',
+    }),
+    [financial],
+  );
+
+  const { form, onSubmit, isPending } = useFinancialEditForm(id!, initialData);
+
+  return (
+    <Card asPage>
+      <CardHeader>
+        <CardAction>
+          <Button variant="outline" type="button" onClick={() => navigate({ to: '/financial', search: { page: 1, size: 5 } })} disabled={isPending} className="min-w-32">
+            <Back className="mr-2 size-4" />
+            Voltar
+          </Button>
+          <Button type="submit" form="financial-edit-form" disabled={isPending} className="min-w-40">
+            {isPending && <Spinner className="mr-2 size-4" />}
+            Salvar
+          </Button>
+        </CardAction>
+      </CardHeader>
+      <CardContent className={isLoading || !financial ? 'p-12' : ''}>
+        {isLoading ? (
+          <DefaultLoading />
+        ) : !financial ? (
+          <EmptyData />
+        ) : (
+          <div className="flex flex-col gap-8">
+            <FinancialDetailContent financial={financial} professionals={professionals} />
+            <Separator />
+            <Form {...form}>
+              <form onSubmit={onSubmit} id="financial-edit-form">
+                <FinancialEditForm />
+              </form>
+            </Form>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}

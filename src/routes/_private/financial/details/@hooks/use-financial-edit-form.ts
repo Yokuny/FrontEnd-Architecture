@@ -3,14 +3,14 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { useFinancialMutations } from '@/query/financials';
-import { type FinancialUpdateData, financialUpdateSchema } from '../@interface/financial.interface';
+import { type FinancialUpdateData, financialUpdateSchema } from '../../@interface/financial.interface';
 
 export function useFinancialEditForm(id: string, initialData?: Partial<FinancialUpdateData>) {
   const { update } = useFinancialMutations();
 
   const form = useForm<FinancialUpdateData>({
     resolver: zodResolver(financialUpdateSchema),
-    defaultValues: {
+    values: {
       price: initialData?.price || 0,
       paid: initialData?.paid || 0,
       paymentMethod: initialData?.paymentMethod || 'none',

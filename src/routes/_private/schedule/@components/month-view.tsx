@@ -137,7 +137,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                           <Popover modal>
                             <PopoverTrigger asChild>
                               <UnstyledButton
-                                className="mt-[var(--event-gap)] flex h-[var(--event-height)] w-full select-none items-center gap-1 overflow-hidden px-1 text-left text-[10px] text-muted-foreground outline-none backdrop-blur-md transition hover:bg-muted/50 hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-2 sm:text-xs"
+                                className="mt-[var(--event-gap)] flex h-[var(--event-height)] w-full select-none items-center gap-1 overflow-hidden px-1 text-left text-[10px] text-muted-foreground outline-none backdrop-blur-md transition hover:bg-accent hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-2 sm:text-xs"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 + {remainingCount} <span className="max-sm:sr-only">Ver tudo</span>

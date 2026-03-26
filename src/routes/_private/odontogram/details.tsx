@@ -81,7 +81,7 @@ function OdontogramDetailPage() {
         ) : (
           <>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="flex items-center gap-4 rounded-lg border bg-muted/50 p-4">
+              <div className="flex items-center gap-4 rounded-lg border bg-accent p-4">
                 <Avatar className="size-12">
                   <AvatarImage src={patientImage} />
                   <AvatarFallback>
@@ -97,7 +97,7 @@ function OdontogramDetailPage() {
                 </Button>
               </div>
 
-              <div className="flex items-center gap-4 rounded-lg border bg-muted/50 p-4">
+              <div className="flex items-center gap-4 rounded-lg border bg-accent p-4">
                 <Avatar className="size-12">
                   <AvatarImage src={professionalImage} />
                   <AvatarFallback>

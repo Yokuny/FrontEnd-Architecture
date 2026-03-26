@@ -50,7 +50,7 @@ function AccordionRow<T>({
             striped && index % 2 === 0 && 'bg-muted/5',
             hoverable && 'hover:bg-secondary',
             onRowClick && 'cursor-pointer',
-            isOpen ? 'border-b-0 bg-muted/50 hover:bg-muted/50' : 'border-b last:border-0',
+            isOpen ? 'border-b-0 bg-accent hover:bg-accent' : 'border-b last:border-0',
           )}
           onClick={(e) => {
             if (onRowClick) {

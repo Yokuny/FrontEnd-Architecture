@@ -4,8 +4,8 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '../@consts/financial.consts';
-import type { FinancialUpdateData } from '../@interface/financial.interface';
+import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '../../@consts/financial.consts';
+import type { FinancialUpdateData } from '../../@interface/financial.interface';
 
 export function FinancialEditForm() {
   const form = useFormContext<FinancialUpdateData>();

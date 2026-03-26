@@ -43,7 +43,7 @@ function PatientDetailsPage() {
 
   return (
     <Card asPage>
-      <CardHeader title={patient?.name ? String(patient.name).split(' ')[0] : undefined} />
+      <CardHeader title={patient?.name} />
       <CardContent>
         {isLoading ? (
           <DefaultLoading />

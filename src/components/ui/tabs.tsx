@@ -33,7 +33,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
         'hover:text-foreground',
         // Hover background pill
         'before:absolute before:inset-x-0.5 before:inset-y-0.5 before:rounded-xs before:bg-transparent before:transition-all before:duration-200',
-        'hover:before:bg-muted/50',
+        'hover:before:bg-accent',
         // Active state — texto visível, remove bg pill, mantém underline via after
         'data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none',
         'data-[state=active]:before:bg-transparent',

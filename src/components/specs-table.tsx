@@ -136,21 +136,21 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
           <Collapsible key={category.id} open={openCategories.includes(category.id)} onOpenChange={() => toggleCategory(category.id)}>
             <div className="rounded-lg border bg-card">
               <CollapsibleTrigger asChild>
-                <Button variant="secondary" className="w-full items-center justify-between outline-none hover:bg-secondary focus-visible:ring-2">
+                <Button variant="secondary" className="w-full items-center justify-between border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2">
                   <div className="flex items-center gap-3">
-                    <ItemMedia variant="icon" className="rounded-lg bg-muted text-foreground">
+                    <ItemMedia variant="icon" className="text-foreground">
                       {category.icon}
                     </ItemMedia>
                     <ItemTitle className="text-base">{category.name}</ItemTitle>
                   </div>
-                  <Down className={cn('size-5 text-muted-foreground transition-transform duration-200', openCategories.includes(category.id) && 'rotate-180')} />
+                  <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes(category.id) && 'rotate-180')} />
                 </Button>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <ItemGroup>
+                <ItemGroup className="gap-0">
                   {category.specs.map((spec, index) => (
                     <div key={`${spec.label}${category.id}`}>
-                      <Item variant="default" size="sm" className="justify-between hover:bg-secondary">
+                      <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                         <ItemDescription className="font-sans">{spec.label}</ItemDescription>
                         <ItemTitle className="font-mono">{spec.value}</ItemTitle>
                       </Item>
