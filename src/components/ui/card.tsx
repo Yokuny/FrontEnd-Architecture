@@ -114,7 +114,7 @@ function CardHeader({ className, title, children, ...props }: ComponentProps<'di
         <Button size="icon" variant="outline" onClick={() => router.history.back()}>
           <ArrowLeftIcon />
         </Button>
-        {resolvedTitle && <CardTitle>{resolvedTitle}</CardTitle>}
+        {resolvedTitle && <CardTitle className="font-abeezee text-3xl">{resolvedTitle}</CardTitle>}
       </div>
       {children}
     </div>

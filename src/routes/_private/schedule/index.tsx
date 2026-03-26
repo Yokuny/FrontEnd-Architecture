@@ -320,11 +320,10 @@ function SchedulePage() {
   };
 
   return (
-    <Card asPage className="flex w-full flex-col-reverse pb-14 md:flex-col md:pb-0">
-      <CardHeader className="fixed right-1 bottom-16 left-1 z-40 flex flex-row items-center justify-between py-4 md:static md:right-auto md:left-auto md:z-auto">
+    <Card className="w-full pb-14 md:pb-0">
+      <CardHeader title={String(currentDate.getDate()).padStart(2, '0')}>
         <div className="flex flex-col items-baseline md:flex-row md:gap-2">
           <CardTitle className="flex items-baseline gap-2 text-sky-blue leading-1 dark:text-primary-blue">
-            <span className="font-bold text-3xl tabular-nums">{String(currentDate.getDate()).padStart(2, '0')}</span>
             <span className="font-bold text-xl">{['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][currentDate.getDay()]}</span>
           </CardTitle>
           <p className="font-mono text-muted-foreground text-sm leading-1 sm:text-lg md:text-xl">{headerTitle}</p>
