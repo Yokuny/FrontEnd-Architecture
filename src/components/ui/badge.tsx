@@ -87,7 +87,7 @@ export const BadgeIndicator = ({ className, variant = 'pending', pulse = false, 
       refund: 'bg-purple-800 dark:bg-purple-500',
     };
 
-    return statusColorMap[status as keyof typeof statusColorMap] || { light: 'bg-gray-400', dark: 'bg-gray-500' };
+    return statusColorMap[status as keyof typeof statusColorMap] || 'bg-gray-400 dark:bg-gray-500';
   };
 
   const Indicator = ({ status = 'pending', pulse = false, className }: { status?: string; pulse?: boolean; className?: string }) => {
@@ -100,6 +100,10 @@ export const BadgeIndicator = ({ className, variant = 'pending', pulse = false, 
       </span>
     );
   };
+
+  if (!children) {
+    return <Indicator status={variant} pulse={pulse} className={className} {...props} />;
+  }
 
   return (
     <Comp data-slot="badge" className={cn(badgeVars({ variant: 'muted' }), className)} {...props}>
@@ -136,7 +140,7 @@ export type BadgeIndicatorProps = ComponentProps<'span'> & {
   variant?: SystemStatus;
   pulse?: boolean;
   asChild?: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export type BadgeWithDeltaProps = ComponentProps<'span'> &

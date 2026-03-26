@@ -5,19 +5,21 @@ import DefaultEmptyData from '@/components/default-empty-data';
 import Add from '@/components/icons/Add.Icon';
 import Board from '@/components/icons/Board.Icon';
 import ChartPie from '@/components/icons/ChartPie.Icon';
+import Down from '@/components/icons/Down.Icon';
 import Link from '@/components/icons/Link.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge, BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useClinicStore } from '@/hooks/clinic';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client';
-import { currencyFormat, extractDate, formatDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { formatDate } from '@/lib/helpers/formatDate.utils';
+import { currencyFormat, extractDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import type { DbSchedule } from '@/lib/interfaces/schedule';
 import { cn } from '@/lib/utils/cn.util';
@@ -185,19 +187,36 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
       </ItemHeader>
 
       <ItemContent>
-        <Accordion type="single" collapsible className="w-full">
+        <div className="w-full">
+          <div className="flex h-12 items-center border-b px-2 text-left text-foreground/80 text-sm">
+            <div className="flex-1 font-semibold">Status do agendamento</div>
+            <div className="flex-1 font-semibold">Data do atendimento</div>
+            <div className="w-48 text-right font-semibold">Sala</div>
+            <div className="w-8" />
+          </div>
           {sortedSchedules.map((el) => {
             const financial = financials?.find((f) => f._id === el.Financial);
 
             return (
-              <AccordionItem key={el._id} value={el._id} className="w-full rounded-lg py-1">
-                <AccordionTrigger className="hover:no-underline">
-                  <div className="flex w-full items-center justify-between">
-                    <BadgeIndicator variant={el.status}>{statusDictionary(el.status)}</BadgeIndicator>
-                    <p className="text-muted-foreground text-sm tabular-nums">{formatDate(String(el.start))}</p>
+              <Collapsible key={el._id} className="w-full border-b">
+                <CollapsibleTrigger className="group w-full text-left transition-colors hover:bg-secondary">
+                  <div className="flex h-16 items-center px-2 text-left text-foreground/60 text-sm">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <BadgeIndicator variant={el.status} pulse />
+                        <ItemTitle className="text-lg">{statusDictionary(el.status)}</ItemTitle>
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="tabular-nums">{formatDate(String(el.start))}</p>
+                    </div>
+                    <div className="w-48 text-right font-medium text-foreground">{getRoomName(el.Room) || '-'}</div>
+                    <div className="ml-4 flex items-center justify-end">
+                      <Down className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                    </div>
                   </div>
-                </AccordionTrigger>
-                <AccordionContent className="my-6 space-y-6 px-2">
+                </CollapsibleTrigger>
+                <CollapsibleContent className="my-6 space-y-6 px-2">
                   <div className="flex items-end gap-2">
                     <div className="flex flex-col gap-2">
                       <span className="text-muted-foreground text-sm">Status do agendamento</span>
@@ -278,8 +297,9 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
                               <TableRow key={procedure._id ?? index}>
                                 <TableCell>{procedure.procedure}</TableCell>
                                 <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
-                                <TableCell>
-                                  <BadgeIndicator variant={procedure.status}>{statusDictionary(procedure.status)}</BadgeIndicator>
+                                <TableCell className="flex items-center gap-2">
+                                  <BadgeIndicator variant={procedure.status} pulse />
+                                  {statusDictionary(procedure.status)}
                                 </TableCell>
                               </TableRow>
                             ))
@@ -315,11 +335,11 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
                       </div>
                     </div>
                   </div>
-                </AccordionContent>
-              </AccordionItem>
+                </CollapsibleContent>
+              </Collapsible>
             );
           })}
-        </Accordion>
+        </div>
       </ItemContent>
     </Item>
   );

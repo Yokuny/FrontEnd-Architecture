@@ -1,8 +1,7 @@
-import { cn } from '@/lib/utils/cn.util';
+// Apresentação de dados - Preview example em:
+// https://www.shadcnblocks.com/block/awards1
 
-interface Awards1Props {
-  className?: string;
-}
+import { cn } from '@/lib/utils/cn.util';
 
 const Awards1 = ({ className }: Awards1Props) => {
   const awards = [
@@ -64,3 +63,7 @@ const Awards1 = ({ className }: Awards1Props) => {
 };
 
 export { Awards1 };
+
+interface Awards1Props {
+  className?: string;
+}
