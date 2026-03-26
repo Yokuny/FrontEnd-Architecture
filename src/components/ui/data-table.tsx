@@ -99,21 +99,21 @@ export function DataTableColumnHeader<TData, TValue>({ column, title, className 
           <Button className="-ml-3 h-8 data-[state=open]:bg-accent" size="sm" variant="secondary">
             <span>{title}</span>
             {column.getIsSorted() === 'desc' ? (
-              <ArrowDownIcon className="ml-2 h-4 w-4" />
+              <ArrowDownIcon className="ml-2 size-4" />
             ) : column.getIsSorted() === 'asc' ? (
-              <ArrowUpIcon className="ml-2 h-4 w-4" />
+              <ArrowUpIcon className="ml-2 size-4" />
             ) : (
-              <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
+              <ChevronsUpDownIcon className="ml-2 size-4" />
             )}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={handleSortAsc}>
-            <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
             Crescente
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleSortDesc}>
-            <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
             Decrescente
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -348,21 +348,21 @@ export function DataTable<T extends Record<string, any>>({
                             <Button className="-ml-3 h-8 data-[state=open]:bg-accent" size="sm" variant="blank">
                               <span className="font-medium text-foreground/80 text-sm">{column.header}</span>
                               {sortConfig.key === column.key && sortConfig.direction === 'desc' ? (
-                                <ArrowDownIcon className="ml-2 h-4 w-4" />
+                                <ArrowDownIcon className="ml-2 size-4" />
                               ) : sortConfig.key === column.key && sortConfig.direction === 'asc' ? (
-                                <ArrowUpIcon className="ml-2 h-4 w-4" />
+                                <ArrowUpIcon className="ml-2 size-4" />
                               ) : (
-                                <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
+                                <ChevronsUpDownIcon className="ml-2 size-4" />
                               )}
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="start">
                             <DropdownMenuItem onClick={() => handleSort(column.key)}>
-                              <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                              <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
                               Crescente
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setSortConfig({ key: column.key, direction: 'desc' })}>
-                              <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                              <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
                               Decrescente
                             </DropdownMenuItem>
                           </DropdownMenuContent>
@@ -424,7 +424,7 @@ export function DataTable<T extends Record<string, any>>({
               disabled={currentPage === 1}
               aria-label="Página anterior"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="size-4" />
               <span className="sr-only">Anterior</span>
             </Button>
 
@@ -470,7 +470,7 @@ export function DataTable<T extends Record<string, any>>({
               disabled={currentPage === totalPages}
               aria-label="Próxima página"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="size-4" />
               <span className="sr-only">Próxima</span>
             </Button>
           </div>

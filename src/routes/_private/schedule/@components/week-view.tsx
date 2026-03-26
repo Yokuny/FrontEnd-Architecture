@@ -247,7 +247,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
               {currentTimeVisible && isToday(day) && (
                 <div className="pointer-events-none absolute right-0 left-0 z-20" style={{ top: `${currentTimePosition}%` }}>
                   <div className="relative flex items-center">
-                    <div className="absolute -left-1 h-2 w-2 rounded-full bg-primary"></div>
+                    <div className="absolute -left-1 size-2 rounded-full bg-primary"></div>
                     <div className="h-[2px] w-full bg-primary"></div>
                   </div>
                 </div>

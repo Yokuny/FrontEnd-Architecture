@@ -75,7 +75,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
             className={cn('w-full justify-between', !selectedOption && 'text-muted-foreground')}
           >
             <span className="truncate">{isLoading ? 'Loading...' : selectedOption ? selectedOption.label : placeholder}</span>
-            <Up className="ml-2 h-4 w-4 shrink-0 text-muted-foreground/80" aria-hidden="true" />
+            <Up className="ml-2 size-4 shrink-0 text-muted-foreground/80" aria-hidden="true" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
@@ -93,7 +93,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
                     {options.map((option) => (
                       <CommandItem key={String(option.value)} value={String(option.value)} onSelect={handleSelect}>
                         <span className="truncate">{option.label}</span>
-                        {value === option.value && <Check className="ml-auto h-4 w-4" />}
+                        {value === option.value && <Check className="ml-auto size-4" />}
                       </CommandItem>
                     ))}
                   </CommandGroup>

@@ -22,7 +22,7 @@ function PageBreadcrumb() {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link to="/">
-              <HomeIcon className="h-4 w-4" size={16} />
+              <HomeIcon className="size-4" size={16} />
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>

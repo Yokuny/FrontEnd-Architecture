@@ -126,7 +126,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
                     {options.map((option) => (
                       <CommandItem key={String(option.value)} value={String(option.value)} onSelect={() => toggleSelection(String(option.value))}>
                         <span className="truncate">{option.label}</span>
-                        {selectedValues.includes(String(option.value)) && <Check className="ml-auto h-4 w-4" />}
+                        {selectedValues.includes(String(option.value)) && <Check className="ml-auto size-4" />}
                       </CommandItem>
                     ))}
                   </CommandGroup>
