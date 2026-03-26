@@ -2,7 +2,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useCallback, useMemo, useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { toast } from 'sonner';
-import { t } from '@/lib/helpers/translate';
+import { t } from '@/lib/helpers/translate.helper';
 import { useCheckReminders, useRemindersQuery } from '@/query/reminders';
 import { reminderColumns } from '../@utils/columns';
 import { endOfDay, startOfDay } from '../@utils/date';

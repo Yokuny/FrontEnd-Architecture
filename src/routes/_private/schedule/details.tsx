@@ -17,7 +17,7 @@ import { usePatientStore } from '@/hooks/patients';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { extractDate, getStatusColor, statusDictionary, stringToDate } from '@/lib/helpers/formatter.helper';
-import type { DbSchedule } from '@/lib/interfaces/schedule';
+import type { DbSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { usePatientsQuery } from '@/query/patients';

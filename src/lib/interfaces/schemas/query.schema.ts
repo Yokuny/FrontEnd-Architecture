@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { validObjectID } from '@/lib/helpers/validade.helper';
+import { validObjectID } from '@/lib/helpers/validate.helper';
 import { lengthMessage, mailMessage, objectIdMessage } from '@/lib/helpers/zodMessage.helper';
 
 export const querySchema = z.object({

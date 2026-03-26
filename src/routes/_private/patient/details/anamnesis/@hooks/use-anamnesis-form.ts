@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { type UseFormReturn, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
-import { PUT, request } from '@/lib/api/client';
+import { PUT, request } from '@/lib/api/client.api';
 import { anamnesisSchema, type UpdateAnamnesis } from '@/lib/interfaces/schemas/patient.schema';
 import { booleanToString, stringToBoolean } from '../@utils/anamnesis-utils';
 

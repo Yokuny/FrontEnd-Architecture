@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { EndHour, StartHour } from '@/lib/consts/calendar.constants';
+import { EndHour, StartHour } from '@/lib/config/calendar.config';
 import { cn } from '@/lib/utils/cn.util';
 
 interface DateTimePickerProps {

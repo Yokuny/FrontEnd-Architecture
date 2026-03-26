@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { valueAndLabel } from '@/lib/helpers/formatter.helper';
-import type { FinancialList } from '@/lib/interfaces/financial';
+import type { FinancialList } from '@/lib/interfaces/financial.interface';
 
 export const useFinancialStore = create<FinancialStore>()(() => ({
   mapToCombobox: (financials, patientId) => {

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { z } from 'zod';
 import { useAuthStore } from '@/hooks/auth';
-import { api } from '@/lib/api/client';
+import { api } from '@/lib/api/client.api';
 import type { signinSchema, signupSchema } from '@/lib/interfaces/schemas/user.schema';
 
 export function useAuthApi() {

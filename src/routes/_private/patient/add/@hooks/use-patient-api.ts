@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { DELETE, POST, PUT, request } from '@/lib/api/client';
+import { DELETE, POST, PUT, request } from '@/lib/api/client.api';
 import type { NewPatient } from '@/lib/interfaces/schemas/patient.schema';
 import { patientKeys } from '@/query/patient';
 import { patientsKeys } from '@/query/patients';

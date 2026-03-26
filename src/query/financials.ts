@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { GET, PATCH, POST, PUT, request } from '@/lib/api/client';
+import { GET, PATCH, POST, PUT, request } from '@/lib/api/client.api';
 
-import type { FinancialList, FullFinancial, PartialFinancial } from '@/lib/interfaces/financial';
+import type { FinancialList, FullFinancial, PartialFinancial } from '@/lib/interfaces/financial.interface';
 
 export const financialsKeys = {
   all: ['financials'] as const,

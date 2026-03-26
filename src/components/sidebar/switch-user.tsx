@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useAuthStore } from '@/hooks/auth';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
-import { t } from '@/lib/helpers/translate';
+import { t } from '@/lib/helpers/translate.helper';
 
 export function UserSwitcher() {
   const { setMenuOpen } = useSidebarToggle();

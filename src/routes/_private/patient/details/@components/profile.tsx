@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { calculateAge, capitalizeString, currencyFormat, formatCep, formatCpfCnpj, formatDate, formatPhone, formatRg, handleCopy } from '@/lib/helpers/formatter.helper';
-import { t } from '@/lib/helpers/translate';
+import { t } from '@/lib/helpers/translate.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import { cn } from '@/lib/utils/cn.util';
 

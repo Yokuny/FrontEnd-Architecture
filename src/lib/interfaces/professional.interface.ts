@@ -1,4 +1,4 @@
-import type { EventColor } from './schedule';
+import type { EventColor } from './schedule.interface';
 
 export type ProfessionalList = {
   _id: string;

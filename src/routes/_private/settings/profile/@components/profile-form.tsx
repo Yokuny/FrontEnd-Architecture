@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import type { Profile } from '@/lib/interfaces/schemas/user.schema';
-import type { PartialUser } from '@/lib/interfaces/user';
+import type { PartialUser } from '@/lib/interfaces/user.interface';
 
 export function ProfileForm({ form, isPending, user }: ProfileFormProps) {
   const sections: FormSection[] = [

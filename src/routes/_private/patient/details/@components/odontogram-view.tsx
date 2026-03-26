@@ -14,10 +14,10 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PATCH, request } from '@/lib/api/client';
+import { PATCH, request } from '@/lib/api/client.api';
 import { capitalizeString, formatDate } from '@/lib/helpers/formatter.helper';
 import type { FullPatient, Tooth } from '@/lib/interfaces';
-import type { DbOdontogram, ToothFace } from '@/lib/interfaces/odontogram';
+import type { DbOdontogram, ToothFace } from '@/lib/interfaces/odontogram.interface';
 import { usePatientQuery } from '@/query/patient';
 
 const permanentTeethNumbers = {

@@ -5,7 +5,7 @@ import HelpIcon from '@/components/icons/Help.Icon';
 import { HomeIcon } from '@/components/icons/Home.Icon';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { t } from '@/lib/helpers/translate';
+import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
 import { Button } from './button';
 

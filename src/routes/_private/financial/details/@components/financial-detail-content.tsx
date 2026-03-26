@@ -11,8 +11,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
-import type { FullFinancial } from '@/lib/interfaces/financial';
-import type { ProfessionalList } from '@/lib/interfaces/professional';
+import type { FullFinancial } from '@/lib/interfaces/financial.interface';
+import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { STATUS_TO_BADGE_VARIANT } from '../../@consts/financial.consts';
 

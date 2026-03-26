@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import type { DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { formatDate } from '@/lib/helpers/formatter.helper';
-import type { PartialOdontogram } from '@/lib/interfaces/odontogram';
+import type { PartialOdontogram } from '@/lib/interfaces/odontogram.interface';
 
 const handleCopy = (value: string) => {
   navigator.clipboard.writeText(value);

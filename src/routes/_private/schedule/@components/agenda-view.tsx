@@ -3,9 +3,9 @@ import { ptBR } from 'date-fns/locale/pt-BR';
 import { useMemo } from 'react';
 import Calender from '@/components/icons/Calender.Icon';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { AgendaDaysToShow } from '@/lib/consts/calendar.constants';
-import { getAgendaEventsForDay } from '@/lib/helpers/calendar.utils';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import { AgendaDaysToShow } from '@/lib/config/calendar.config';
+import { getAgendaEventsForDay } from '@/lib/helpers/calendar.helper';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { EventItem } from './event-item';
 
 export function AgendaView({ currentDate, events, onEventSelect }: AgendaViewProps) {

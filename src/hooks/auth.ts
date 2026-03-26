@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { GET, POST, request } from '../lib/api/client';
+import { GET, POST, request } from '../lib/api/client.api';
 
 export const useAuthStore = create<AuthStore>()(
   persist(

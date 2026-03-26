@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { GET, request } from '@/lib/api/client';
+import { GET, request } from '@/lib/api/client.api';
 
-import type { PartialPatient } from '@/lib/interfaces/patient';
+import type { PartialPatient } from '@/lib/interfaces/patient.interface';
 
 export const patientsKeys = {
   all: ['patients'] as const,

@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
-import { t } from '@/lib/helpers/translate';
+import { t } from '@/lib/helpers/translate.helper';
 
 export function NotificationsSwitcher({ notifications }: { notifications: Notification[] }) {
   const { setMenuOpen } = useSidebarToggle();

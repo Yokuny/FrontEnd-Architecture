@@ -121,23 +121,23 @@ Comboboxes e selects prontos em `src/components/data-inputs/`:
 
 ## Tradução
 
-- Textos do sistema devem ter chave em `src/config/translations.json`
-- Usar `t('chave')` de `@/lib/helpers/translate` para traduzir
+- Textos do sistema devem ter chave em `src/lib/config/translations.json`
+- Usar `t('chave')` de `@/lib/helpers/translate.helper` para traduzir
 - Se a chave não existir, retorna a própria chave como fallback
 
 ```tsx
-import { t } from '@/lib/helpers/translate';
+import { t } from '@/lib/helpers/translate.helper';
 t('pending') // → "Pendente"
 ```
 
 ## Formatação de Datas
 
-- **Sempre** usar `formatDate()` de `@/lib/helpers/formatDate.utils`
+- **Sempre** usar `formatDate()` de `@/lib/helpers/formatDate.helper`
 - **Nunca** importar `format` diretamente do `date-fns`
 - Formato default (sem parâmetro): `dd MMM yyyy` → "01 jan 2026"
 
 ```tsx
-import { formatDate, formatDistanceToNow } from '@/lib/helpers/formatDate.utils';
+import { formatDate, formatDistanceToNow } from '@/lib/helpers/formatDate.helper';
 
 formatDate(new Date())                    // "01 jan 2026"
 formatDate(new Date(), 'PP')              // "1 de jan. de 2026"
@@ -180,7 +180,7 @@ export const featureKeys = {
 };
 ```
 
-- Fetch functions privadas usando `request()` + `GET()`/`POST()` de `@/lib/api/client`
+- Fetch functions privadas usando `request()` + `GET()`/`POST()` de `@/lib/api/client.api`
 - Mutations agrupadas num único hook com `invalidateQueries` no `onSuccess`
 - Ao criar/atualizar/deletar: invalidar as keys corretas para que o TanStack Query gerencie o cache sem refresh manual
 

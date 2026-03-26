@@ -5,7 +5,7 @@ import type { DataTableColumn } from '@/components/ui/data-table';
 import { Dialog } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { currencyFormat, extractDate, handleCopy, statusDictionary } from '@/lib/helpers/formatter.helper';
-import type { PartialFinancial } from '@/lib/interfaces/financial';
+import type { PartialFinancial } from '@/lib/interfaces/financial.interface';
 import { STATUS_TO_BADGE_VARIANT } from '../@consts/financial.consts';
 
 export const financialColumns = (navigate: (opts: { to: string; search?: Record<string, string> }) => void): DataTableColumn<PartialFinancial>[] => [

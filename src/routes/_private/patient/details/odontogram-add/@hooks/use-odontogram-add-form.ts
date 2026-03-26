@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { GET, POST, request } from '@/lib/api/client';
+import { GET, POST, request } from '@/lib/api/client.api';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
 

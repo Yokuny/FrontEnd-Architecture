@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { DELETE, GET, PATCH, POST, PUT, request } from '@/lib/api/client';
-import type { DbSchedule, FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule';
+import { DELETE, GET, PATCH, POST, PUT, request } from '@/lib/api/client.api';
+import type { DbSchedule, FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import type { NewSchedule, ScheduledPatient, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 
 export const scheduleKeys = {

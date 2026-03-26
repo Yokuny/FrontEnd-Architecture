@@ -18,12 +18,12 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useProfessionalStore } from '@/hooks/professionals';
-import { PATCH, request } from '@/lib/api/client';
-import { formatDate } from '@/lib/helpers/formatDate.utils';
+import { PATCH, request } from '@/lib/api/client.api';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
-import type { DbFinancial } from '@/lib/interfaces/financial';
-import type { ProfessionalList } from '@/lib/interfaces/professional';
+import type { DbFinancial } from '@/lib/interfaces/financial.interface';
+import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { usePatientQuery } from '@/query/patient';
 import { useProfessionalsQuery } from '@/query/professionals';

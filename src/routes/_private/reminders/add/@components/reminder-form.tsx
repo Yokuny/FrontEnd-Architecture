@@ -4,7 +4,7 @@ import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import DefaultFormLayout from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { GET, request } from '@/lib/api/client';
+import { GET, request } from '@/lib/api/client.api';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import type { ReminderFormData } from '../@interface/reminder.interface';
 

@@ -1,4 +1,4 @@
-import { GET, PATCH, request } from '../api/fetch.config';
+import { GET, PATCH, request } from '../api/client.api';
 
 interface PresignedUrlResponse {
   uploadUrl: string;

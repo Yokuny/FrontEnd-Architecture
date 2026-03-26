@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { valueAndLabel } from '@/lib/helpers/formatter.helper';
-import type { PartialOdontogram } from '@/lib/interfaces/odontogram';
+import type { PartialOdontogram } from '@/lib/interfaces/odontogram.interface';
 
 export const useOdontogramStore = create<OdontogramStore>()(() => ({
   mapToCombobox: (odontograms, patientId) => {

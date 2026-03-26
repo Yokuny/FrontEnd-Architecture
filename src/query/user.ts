@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { GET, request } from '@/lib/api/client';
-import type { PartialUser } from '@/lib/interfaces/user';
+import { GET, request } from '@/lib/api/client.api';
+import type { PartialUser } from '@/lib/interfaces/user.interface';
 
 export const userKeys = {
   all: ['user'] as const,

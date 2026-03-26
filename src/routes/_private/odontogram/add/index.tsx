@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { GET, request } from '@/lib/api/client';
+import { GET, request } from '@/lib/api/client.api';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
 import { useOdontogramMutations } from '@/query/odontogram';

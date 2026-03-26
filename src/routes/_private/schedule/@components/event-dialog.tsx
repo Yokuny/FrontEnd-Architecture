@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { useScheduleDetailQuery } from '@/query/schedule';
 import { ScheduleForm } from './schedule-form';
 import { ScheduleRender } from './schedule-render';

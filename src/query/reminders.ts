@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { z } from 'zod';
-import { GET, PATCH, POST, request } from '@/lib/api/client';
+import { GET, PATCH, POST, request } from '@/lib/api/client.api';
 import type { DbReminder } from '@/lib/interfaces';
 import type { ReminderBulkUpdate, ReminderQuery, reminderSchema } from '@/lib/interfaces/schemas/reminder.schema';
 

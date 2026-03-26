@@ -19,13 +19,13 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader,
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useClinicStore } from '@/hooks/clinic';
 import { useProfessionalStore } from '@/hooks/professionals';
-import { PATCH, request } from '@/lib/api/client';
-import { formatDate } from '@/lib/helpers/formatDate.utils';
+import { PATCH, request } from '@/lib/api/client.api';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, extractDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
-import type { PartialClinic } from '@/lib/interfaces/clinic';
-import type { ProfessionalList } from '@/lib/interfaces/professional';
-import type { DbSchedule } from '@/lib/interfaces/schedule';
+import type { PartialClinic } from '@/lib/interfaces/clinic.interface';
+import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
+import type { DbSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { usePatientQuery } from '@/query/patient';

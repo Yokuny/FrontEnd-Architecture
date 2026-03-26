@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { PUT, request } from '@/lib/api/client';
+import { PUT, request } from '@/lib/api/client.api';
 import { intraoralSchema, type NewIntraoral } from '@/lib/interfaces/schemas/patient.schema';
 
 export function useIntraoralForm(patientId: string | undefined, initialData: any, onCancel: () => void) {

@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
@@ -60,8 +61,10 @@ export function SettingsInvite() {
       </CardHeader>
 
       <CardContent>
-        {isLoading || !clinic ? (
+        {isLoading ? (
           <DefaultLoading />
+        ) : !clinic ? (
+          <DefaultEmptyData />
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} id="invite-form">

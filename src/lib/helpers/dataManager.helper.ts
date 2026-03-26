@@ -1,5 +1,5 @@
 import type { PartialFinancial, PartialOdontogram } from '@/lib/interfaces';
-import { GET, request } from '../api/fetch.config';
+import { GET, request } from '../api/client.api';
 
 export const refreshOdontogram = async () => {
   const res = await request('odontogram/partial', GET());

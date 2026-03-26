@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
-import type { PartialPatient } from '@/lib/interfaces/patient';
+import type { PartialPatient } from '@/lib/interfaces/patient.interface';
 
 export const usePatientStore = create<PatientStore>()(() => ({
   getName: (patients, id) => {

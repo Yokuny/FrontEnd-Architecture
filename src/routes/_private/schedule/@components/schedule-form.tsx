@@ -17,11 +17,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useClinicStore } from '@/hooks/clinic';
 import { usePatientStore } from '@/hooks/patients';
-import { DELETE, GET, POST, PUT, request } from '@/lib/api/client';
-import { DefaultEndHour, DefaultStartHour } from '@/lib/consts/calendar.constants';
+import { DELETE, GET, POST, PUT, request } from '@/lib/api/client.api';
+import { DefaultEndHour, DefaultStartHour } from '@/lib/config/calendar.config';
 import { comboboxWithImgFormat, formatPhone } from '@/lib/helpers/formatter.helper';
-import { addKey } from '@/lib/helpers/validade.helper';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import { addKey } from '@/lib/helpers/validate.helper';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import type { NewSchedule, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';

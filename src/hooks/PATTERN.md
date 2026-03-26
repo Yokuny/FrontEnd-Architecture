@@ -1,7 +1,7 @@
 # src/hooks — Catalogo de Hooks Globais
 
 > **ANTES de criar um novo hook**, verifique se o que voce precisa ja existe aqui.
-> Para o padrao completo de implementacao, consulte [`docs/api-hooks.md`](../../docs/api-hooks.md).
+> Para o padrao completo de implementacao de queries, consulte [`src/query/PATTERN.md`](../query/PATTERN.md).
 
 ---
 
@@ -9,13 +9,35 @@
 
 | Hook | Arquivo | Proposito |
 |------|---------|-----------|
-| `useAuth` | `use-auth.ts` | Token JWT, usuario decodificado, tipo de login (`normal`/`sso`), estado de conta bloqueada, remember email |
-| `useEnterpriseFilter` | `use-enterprise-filter.ts` | Empresa selecionada globalmente — `idEnterprise` usado por todos os hooks de API |
-| `usePermissions` | `use-permissions.ts` | Cache de permissoes do usuario com `hasPermission(path)`, `useHasPermissions(paths[])`, `useRequirePermission(path)` |
-| `useFavorites` | `use-favorites.ts` | Links favoritos: `toggleFavorite`, `isFavorite` |
-| `useSidebar` | `use-sidebar-toggle.ts` | Estado do sidebar (expandido/colapsado), suporte mobile e hover |
-| `useIsMobile` | `use-mobile.ts` | Detecta viewport mobile (`boolean`) |
-| `useLocale` | `use-locale.ts` | Locale atual para formatacao de datas e numeros |
+| `useAuthStore` | `auth.ts` | Token JWT, usuario autenticado, `login()`, `logout()`, `checkAuthentication()` (persist) |
+| `useUserStore` | `user.ts` | Sala selecionada (`selectedRoom`) para calendario e agendamentos (persist) |
+| `useFavorites` | `use-favorites.ts` | Links favoritos: `toggleFavorite`, `isFavorite` (persist) |
+| `useSidebarToggle` / `useSidebar` | `use-sidebar-toggle.ts` | Estado do sidebar (expandido/colapsado), suporte mobile e hover (persist) |
+| `useProfessionalColors` | `professionals.ts` | Cores persistentes por profissional no calendario (persist) |
+| `useIsMobile` | `use-mobile.ts` | Detecta viewport mobile (`< 768px`) |
+
+---
+
+## Stores Utilitarios (Zustand — sem persist)
+
+| Hook | Arquivo | Proposito |
+|------|---------|-----------|
+| `usePatientStore` | `patients.ts` | `getName(patients, id)`, `getImage(patients, id)`, `mapToCombobox(patients)` |
+| `useProfessionalStore` | `professionals.ts` | `getName(professionals, id)`, `getImage(professionals, id)`, `mapToCombobox(professionals)` |
+| `useFinancialStore` | `financials.ts` | `mapToCombobox(financials, patientId?)` — filtra financeiros por paciente |
+| `useOdontogramStore` | `odontogram.ts` | `mapToCombobox(odontograms, patientId?)` — filtra odontogramas por paciente |
+| `useClinicStore` | `clinic.ts` | `getRoomName(clinic, id)` — nome da sala pelo ID |
+
+---
+
+## Hooks de UI e Layout
+
+| Hook | Arquivo | Proposito |
+|------|---------|-----------|
+| `useCurrentTimeIndicator` | `use-current-time-indicator.ts` | Posicao do indicador de hora atual no calendario (`currentTimePosition`, `currentTimeVisible`) |
+| `useEventVisibility` | `use-event-visibility.ts` | Calcula quantos eventos cabem no container via ResizeObserver (`getVisibleEventCount`) |
+| `useStore` | `use-store.ts` | Helper generico para subscription SSR-safe de Zustand |
+| `ThemeProvider` | `ThemeProvider.tsx` | Provider de tema (light/dark) via `next-themes` |
 
 ---
 
@@ -23,121 +45,93 @@
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Auth mutations | `use-auth-api.ts` | `useLogin`, `useLoginSSO`, `useRegister`, `useVerifyEmail`, `useRequestPasswordReset`, `useResetPassword`, `useSendUnlockCode`, `useVerifyUnlockCode` |
+| Auth mutations | `../query/auth.ts` | `useAuthApi` → `login`, `signup`, `validateEmail`, `forgotPassword`, `completeSignup`, `resetPassword`, `logout` |
 
 ---
 
 ## Hooks de API (TanStack Query)
 
-### Ativos / Maquinas
+> Queries ficam centralizadas em [`src/query/`](../query/). Cada arquivo segue o padrao de [`src/query/PATTERN.md`](../query/PATTERN.md).
+
+### Pacientes
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Maquinas | `use-machines-api.ts` | `useMachines`, `useMachinesByEnterprise`, `useMachine`, `useMachinesApi`, `useMachinesSelect`, `useMachinesByEnterpriseSelect`, `mapMachinesToOptions`, `mapMachinesToOptionsSimple` |
-| Modelos de Maquina | `use-model-machines-api.ts` | `useModelMachines`, `useModelMachinesSelect`, `mapModelMachinesToOptions` |
-| Balizas (Buoys) | `use-buoys-api.ts` | `useBuoys`, `useBuoy`, `useBuoysApi`, `useBuoysSelect`, `mapBuoysToOptions` |
-| Plataformas | `use-platforms-api.ts` | `usePlatforms`, `usePlatformsSelect`, `mapPlatformsToOptions` |
-| Gestores de Maquina | `use-machine-managers-api.ts` | `useMachineManagers`, `useMachineManagersSelect` |
+| Lista parcial | `../query/patients.ts` | `usePatientsQuery` — lista resumida para comboboxes |
+| Detalhe completo | `../query/patient.ts` | `usePatientQuery(id?)` — dados completos do paciente |
+| Analytics | `../query/analytics.ts` | `usePatientAnalyticsQuery({ enabled? })` — metricas e estatisticas |
 
-### Manutencao (CMMS)
+### Agendamentos
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Planos de Manutencao | `use-maintenance-plans-api.ts` | `useMaintenancePlans`, `useMaintenancePlan`, `useMaintenancePlansApi` |
-| Planos por Maquina | `use-maintenance-plans-by-machine-api.ts` | `useMaintenancePlansByMachine` |
-| Tipos de Manutencao | `use-maintenance-types-api.ts` | `useMaintenanceTypes`, `useMaintenanceTypesSelect`, `mapMaintenanceTypesToOptions` |
-| Pecas | `use-parts-api.ts` | `useParts`, `usePart`, `usePartsApi`, `usePartsSelect`, `mapPartsToOptions` |
-| Equipamentos CMMS | `use-cmms-equipment-api.ts` | `useCmmsEquipment`, `useCmmsEquipmentApi` |
-| RVE CMMS | `use-cmms-rve-api.ts` | `useCmmsRve`, `useCmmsRveApi` |
+| Agenda | `../query/schedule.ts` | `useScheduleQuery(params)` — agendamentos por data/sala |
+| Detalhe | `../query/schedule.ts` | `useScheduleDetailQuery(id?)` — agendamento completo |
+| Por paciente | `../query/schedule.ts` | `usePatientSchedulesQuery(patientId?)` — historico do paciente |
+| Criar | `../query/schedule.ts` | `useCreateSchedule` |
+| Criar com paciente | `../query/schedule.ts` | `useCreateScheduledPatient` |
+| Atualizar | `../query/schedule.ts` | `useUpdateSchedule` |
+| Atualizar horario | `../query/schedule.ts` | `useUpdateScheduleTime` — drag & drop no calendario |
+| Atualizar status | `../query/schedule.ts` | `useUpdateScheduleStatus` — confirmado/cancelado/etc |
+| Deletar | `../query/schedule.ts` | `useDeleteSchedule` |
+| Confirmacao | `../query/schedule.ts` | `useRequestScheduleConfirmation` — gera passkey de confirmacao |
 
-### FAS (Folio de Atividade de Servico)
-
-| Hook | Arquivo | Exporta |
-|------|---------|---------|
-| FAS principal | `use-fas-api.ts` | `useFasPaginated`, `useFasDetails`, `useFasOrder`, `useConfirmFasOrder`, `useRequestFasOrder`, `useTransferOrder`, `useCancelOrder`, `useConfirmBMS`, `useRefuseBMS`, `useConfirmPayment`, `useConfirmContract`, `useAddOrderAttachment`, `useDeleteOrderAttachment`, `useExportFas`, `useFasInvoice`, `useFasPresignedUrl` + mais |
-| Fornecedores FAS | `use-fas-planners-api.ts` | `useFasPlanners`, `useFasPlannersApi` |
-| Analytics FAS | `use-fas-analytics-api.ts` | `useFasAnalytics` |
-
-### Sensores e Telemetria
+### Financeiro
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Sensores | `use-sensors-api.ts` | `useSensors`, `useSensor`, `useSensorsApi`, `useSensorsSelect`, `mapSensorsToOptions` |
-| Sensores por Ativo | `use-sensors-by-assets-api.ts` | `useSensorsByAssets` |
-| Sinais de Sensor | `use-sensor-signals-api.ts` | `useSensorSignals`, `useSensorSignalsSelect` |
-| Funcoes de Sensor | `use-sensor-functions-api.ts` | `useSensorFunctions`, `useSensorFunctionsSelect` |
-| Telemetria | `use-telemetry-api.ts` | `useTelemetry`, `useTelemetryApi` |
-| Parametros | `use-params-api.ts` | `useParams`, `useParamsApi` |
+| Lista completa | `../query/financials.ts` | `useFinancialsQuery` |
+| Lista parcial | `../query/financials.ts` | `useFinancialsPartialQuery` — para comboboxes |
+| Detalhe | `../query/financials.ts` | `useFinancialDetailQuery(id?)` |
+| Mutations | `../query/financials.ts` | `useFinancialMutations` → `create`, `update`, `updateStatus` |
 
-### Frota e Rastreamento
+### Odontograma
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Frotas | `use-fleets-api.ts` | `useFleets`, `useFleet`, `useFleetsApi`, `useFleetsSelect`, `mapFleetsToOptions` |
-| Embarcacoes da Frota | `use-fleet-vessels-api.ts` | `useFleetVessels`, `useFleetVesselsApi` |
-| Cercas | `use-fences-api.ts` | `useFences`, `useFence`, `useFencesApi` |
-| Geofences | `use-geofences-api.ts` | `useGeofences`, `useGeofence`, `useGeofencesApi` |
-| Atividade de Rastreamento | `use-tracking-activity-api.ts` | `useTrackingActivity` |
-| Portos | `use-ports-api.ts` | `usePorts`, `usePortsSelect`, `mapPortsToOptions` |
-| Escalas | `use-scales-api.ts` | `useScales`, `useScalesApi` |
+| Lista | `../query/odontogram.ts` | `useOdontogramsQuery` |
+| Detalhe | `../query/odontogram.ts` | `useOdontogramDetailQuery(id?)` |
+| Mutations | `../query/odontogram.ts` | `useOdontogramMutations` → `create`, `updateStatus` |
 
-### Contratos e Consumo
+### Clinica
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Contratos | `use-contracts-api.ts` | `useContractsPaginated`, `useContract`, `useContractsApi` |
-| Ativos de Contrato | `use-contract-assets-api.ts` | `useContractAssets`, `useContractAssetsSelect` |
-| Grupos de Consumo | `use-consumption-groups-api.ts` | `useConsumptionGroups`, `useConsumptionGroupsSelect`, `mapConsumptionGroupsToOptions` |
-| Maquinas de Consumo | `use-consumption-machines-api.ts` | `useConsumptionMachines` |
-| Tipos de Combustivel | `use-fuel-types-api.ts` | `useFuelTypes`, `useFuelTypesSelect`, `mapFuelTypesToOptions` |
-| PTAX | `use-ptax-api.ts` | `usePtax` |
+| Dados da clinica | `../query/clinic.ts` | `useClinicApi` — staleTime de 5min |
+| Cache | `../query/clinic.ts` | `useClinicCache` → `setClinicCache(updater)`, `invalidateClinic()` |
 
-### Usuarios e Permissoes
+### Profissionais (Dentistas)
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Usuarios | `use-users-api.ts` | `useUsers`, `useUsersByEnterprise`, `useUser`, `useUserPermission`, `useUsersApi` |
-| Select de Usuarios | `use-users-select-api.ts` | `useUsersSelect`, `mapUsersToOptions` |
-| Usuarios nao em papel | `use-users-not-in-role.ts` | `useUsersNotInRole` |
-| Papeis (Roles) | `use-roles-api.ts` | `useRoles`, `useRolesAll`, `useRole`, `useRolePaths`, `useChatbotPermissions`, `useRoleUsers`, `useRolesApi`, `useRolesSelect`, `mapRolesToOptions` |
-| Permissoes API | `use-permissions-api.ts` | `usePermissionsApi` |
-| Tipos de Usuario | `use-user-types-api.ts` | `useUserTypes`, `useUserTypesSelect`, `mapUserTypesToOptions` |
-| Usuarios por mesmo nivel | `use-user-same-permission-api.ts` | `useUserSamePermission` |
-| Times de Usuario | `use-user-team-api.ts` | `useUserTeam`, `useUserTeamApi` |
-| Codigo de Integracao | `use-user-code-integration-api.ts` | `useUserCodeIntegration` |
-| Empresas do Usuario | `use-user-enterprises-api.ts` | `useUserEnterprises` |
+| Lista | `../query/professionals.ts` | `useProfessionalsQuery` — todos profissionais da clinica |
 
-### Empresas e Clientes
+### Procedimentos
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Empresas | `use-enterprises-api.ts` | `useEnterprises`, `useEnterprise`, `useEnterprisesApi`, `useEnterprisesSelect`, `mapEnterprisesToOptions` |
-| Clientes | `use-customers-api.ts` | `useCustomers`, `useCustomer`, `useCustomersApi`, `useCustomersSelect`, `mapCustomersToOptions` |
-| Fornecedores | `use-suppliers-api.ts` | `useSuppliers`, `useSupplier`, `useSuppliersApi`, `useSuppliersSelect`, `mapSuppliersToOptions` |
-| Grupos | `use-groups-api.ts` | `useGroups`, `useGroupsSelect`, `mapGroupsToOptions` |
-| Idiomas | `use-languages-api.ts` | `useLanguages`, `useLanguagesSelect`, `mapLanguagesToOptions` |
+| Lista | `../query/procedures.ts` | `useProceduresQuery` — catalogo de procedimentos |
+| Sheet | `../query/procedures.ts` | `useProceduresSheetQuery` — formatado para ProceduresSheet |
 
-### Relatorios e Analytics
+### Lembretes
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Dashboards | `use-dashboards-api.ts` | `useDashboards`, `useDashboard`, `useDashboardsApi` |
-| Estatisticas | `use-statistics-api.ts` | `useStatistics` |
-| ESG | `use-esg-api.ts` | `useEsg`, `useEsgApi` |
-| Metas | `use-goals-api.ts` | `useGoals`, `useGoal`, `useGoalsApi` |
-| QLP | `use-qlp-api.ts` | `useQlp`, `useQlpApi` |
-| Alertas | `use-alerts-api.ts` | `useAlerts`, `useAlert`, `useAlertsApi` |
-| Tipos de Alerta | `use-alert-types-api.ts` | `useAlertTypes`, `useAlertTypesSelect`, `mapAlertTypesToOptions` |
-| Tipos de Problema | `use-type-problems-api.ts` | `useTypeProblems`, `useTypeProblemsSelect`, `mapTypeProblemsTOptions` |
+| Lista | `../query/reminders.ts` | `useRemindersQuery(query)` — por periodo e status |
+| Criar | `../query/reminders.ts` | `useCreateReminder` |
+| Atualizar em lote | `../query/reminders.ts` | `useCheckReminders` — marcar como lido/resolvido |
 
-### Outros
+### Usuario
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Formularios | `use-forms-api.ts` | `useForms`, `useForm`, `useFormsApi` |
-| Status | `use-status-api.ts` | `useStatus`, `useStatusSelect`, `mapStatusToOptions` |
-| Especialidades | `use-specialized-api.ts` | `useSpecialized`, `useSpecializedSelect` |
-| IA | `use-ai-api.ts` | `useAiApi` e hooks de IA generativa |
+| Dados parciais | `../query/user.ts` | `useUserQuery` — dados do usuario logado (staleTime 5min) |
+
+### Passkey (Confirmacao Publica)
+
+| Hook | Arquivo | Exporta |
+|------|---------|---------|
+| Verificar | `../query/passkey.ts` | `usePasskeyQuery(code?)` — endpoint publico, sem token |
 
 ---
 
@@ -146,39 +140,57 @@
 ### Query simples
 
 ```tsx
-import { useMachines } from '@/hooks/use-machines-api';
+import { usePatientsQuery } from '@/query/patients';
 
 function MyComponent() {
-  const { data, isLoading } = useMachines({ idEnterprise });
-  // data.data: Machine[]
-  // data.totalCount: number
+  const { data: patients, isLoading } = usePatientsQuery();
+  // patients: PartialPatient[]
 }
 ```
 
-### Select em formulario
+### Combobox com store utilitario
 
 ```tsx
-import { useMachinesSelect, mapMachinesToOptions } from '@/hooks/use-machines-api';
+import { usePatientsQuery } from '@/query/patients';
+import { usePatientStore } from '@/hooks/patients';
 
 function MyForm() {
-  const { data: machines = [] } = useMachinesSelect(idEnterprise);
-  const options = mapMachinesToOptions(machines);
-  // options: { value, label, data }[]
+  const { data: patients = [] } = usePatientsQuery();
+  const { mapToCombobox } = usePatientStore();
+  const options = mapToCombobox(patients);
+  // options: { value, label, image }[]
 }
 ```
 
 ### Mutations
 
 ```tsx
-import { useMachinesApi } from '@/hooks/use-machines-api';
+import { useFinancialMutations } from '@/query/financials';
 
 function MyForm() {
-  const { createMachine, updateMachine } = useMachinesApi();
+  const { create, update } = useFinancialMutations();
 
   function onSubmit(data) {
-    createMachine.mutate(data, {
-      onSuccess: () => toast.success(t('machine.created')),
+    create.mutate(data, {
+      onSuccess: () => toast.success(t('financial.created')),
     });
+  }
+}
+```
+
+### Agendamento no calendario
+
+```tsx
+import { useScheduleQuery, useUpdateScheduleTime } from '@/query/schedule';
+import { useUserStore } from '@/hooks/user';
+
+function Calendar() {
+  const { selectedRoom } = useUserStore();
+  const { data } = useScheduleQuery({ date: '2026-03-26', room: selectedRoom });
+  const updateTime = useUpdateScheduleTime();
+
+  function onDrop(id: string, newTime: string) {
+    updateTime.mutate({ id, time: newTime });
   }
 }
 ```
@@ -186,21 +198,51 @@ function MyForm() {
 ### Estado global fora de componente (em funcoes de API)
 
 ```tsx
-import { useEnterpriseFilter } from '@/hooks/use-enterprise-filter';
+import { useAuthStore } from '@/hooks/auth';
 
 // Acesso direto ao store (sem hook)
-const idEnterprise = useEnterpriseFilter.getState().idEnterprise;
+const token = useAuthStore.getState().accessToken;
 ```
 
 ---
 
 ## Padrao de Implementacao
 
-Consulte [`docs/api-hooks.md`](../../docs/api-hooks.md) para:
+Consulte [`src/query/PATTERN.md`](../query/PATTERN.md) para:
 - Estrutura completa com query keys, useQuery e useMutation
-- Lista paginada com `placeholderData`
-- Upload de arquivo com FormData
-- Download de Blob (CSV/Excel)
-- Ativacao/desativacao de registros
-- URLSearchParams para arrays
-- Estruturas de resposta comuns
+- Fetch functions privadas com `request()` + `GET()`/`POST()`/`PUT()`/`DELETE()`
+- Invalidacao de cache no `onSuccess`
+- Queries condicionais com `enabled`
+
+---
+
+## Endpoints do Back-End (Referencia Rapida)
+
+> Back-end em [`../../DentalEase/DentalEase-BackEnd/`](../../../DentalEase/DentalEase-BackEnd/)
+
+| Prefixo | Modulo | Operacoes |
+|---------|--------|-----------|
+| `/auth` | Autenticacao | signup, signin, logout, refresh, validate |
+| `/patient` | Pacientes | CRUD + partial + odontogram + anamnesis + intraoral + image + analytics |
+| `/schedule` | Agendamentos | CRUD + partial + status + time + confirmacao passkey |
+| `/financial` | Financeiro | CRUD + partial + list + status + image |
+| `/odontogram` | Odontogramas | CRUD + partial + list + status + image |
+| `/clinic` | Clinica | get + create + update |
+| `/user` | Usuarios | partial + professionals + update + password + invite + roles-rooms + google-token |
+| `/procedure` | Procedimentos | get + update (single/batch) |
+| `/reminder` | Lembretes | get + create + bulk-update |
+| `/s3` | Upload | presigned-url |
+| `/passkey` | Verificacao | get (publico) |
+
+### Padrao CRUD
+
+```
+GET    /{module}           → Lista todos (com query params opcionais)
+GET    /{module}/partial    → Lista resumida (ID + campos minimos para selects)
+GET    /{module}/list       → Lista alternativa (quando existe)
+GET    /{module}/:id        → Detalhe completo
+POST   /{module}/create     → Criar registro
+PUT    /{module}/:id        → Atualizar registro
+PATCH  /{module}/:id/status → Atualizar status
+DELETE /{module}/:id        → Deletar (admin only)
+```

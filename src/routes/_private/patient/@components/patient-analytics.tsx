@@ -9,8 +9,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { type ChartConfig, ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { formatDate } from '@/lib/helpers/formatDate.utils';
-import type { DbPatientAnalytics, PatientDemographics, PatientPeriodChart, PatientRegistrationTrends } from '@/lib/interfaces/analytics';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import type { DbPatientAnalytics, PatientDemographics, PatientPeriodChart, PatientRegistrationTrends } from '@/lib/interfaces/analytics.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { usePatientAnalyticsQuery } from '@/query/analytics';
 

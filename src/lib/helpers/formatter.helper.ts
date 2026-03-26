@@ -1,5 +1,5 @@
 import type { PartialPatient, ProcedureData, ProcedureSheet, ProfessionalList } from '@/lib/interfaces';
-import type { EventColor } from '@/lib/interfaces/schedule';
+import type { EventColor } from '@/lib/interfaces/schedule.interface';
 
 const padStart = (value: number) => String(value).padStart(2, '0');
 export const numClean = (value: string | number) => String(value).replace(/[^0-9]/g, '');

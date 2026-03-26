@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { validObjectID } from '@/lib/helpers/validade.helper';
+import { validObjectID } from '@/lib/helpers/validate.helper';
 import { objectIdMessage } from '@/lib/helpers/zodMessage.helper';
 
 const financialStatus = ['canceled', 'pending', 'partial', 'paid', 'refund'] as const;

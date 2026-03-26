@@ -3,8 +3,8 @@ import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { differenceInMinutes, format, getMinutes, isPast } from 'date-fns';
 import { useMemo } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { getBorderRadiusClasses, getEventColorClasses } from '@/lib/helpers/calendar.utils';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import { getBorderRadiusClasses, getEventColorClasses } from '@/lib/helpers/calendar.helper';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 
 const formatTimeWithOptionalMinutes = (date: Date) => {

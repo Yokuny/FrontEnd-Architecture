@@ -13,7 +13,7 @@ import {
 } from '@dnd-kit/core';
 import { addMinutes, differenceInMinutes } from 'date-fns';
 import { createContext, type ReactNode, useContext, useId, useRef, useState } from 'react';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 
 import { EventItem } from './event-item';
 

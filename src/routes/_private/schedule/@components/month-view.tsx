@@ -6,9 +6,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { useEventVisibility } from '@/hooks/use-event-visibility';
-import { DefaultStartHour, EventGap, EventHeight } from '@/lib/consts/calendar.constants';
-import { getAllEventsForDay, getEventsForDay, getSpanningEventsForDay, sortEvents } from '@/lib/helpers/calendar.utils';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import { DefaultStartHour, EventGap, EventHeight } from '@/lib/config/calendar.config';
+import { getAllEventsForDay, getEventsForDay, getSpanningEventsForDay, sortEvents } from '@/lib/helpers/calendar.helper';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
 import { DroppableCell } from './square';

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { GET, request } from '@/lib/api/client';
+import { GET, request } from '@/lib/api/client.api';
 
-import type { ProfessionalList } from '@/lib/interfaces/professional';
+import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 
 export const professionalsKeys = {
   all: ['professionals'] as const,

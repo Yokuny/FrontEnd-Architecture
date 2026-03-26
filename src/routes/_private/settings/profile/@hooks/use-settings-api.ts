@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { GET, POST, PUT, request } from '@/lib/api/client';
+import { GET, POST, PUT, request } from '@/lib/api/client.api';
 import type { NewClinic } from '@/lib/interfaces/schemas/clinic.schema';
 import type { PasswordUpdate, UpdateRoleAndRoom, UserInvite } from '@/lib/interfaces/schemas/user.schema';
-import type { UserRolesAndRooms } from '@/lib/interfaces/user';
+import type { UserRolesAndRooms } from '@/lib/interfaces/user.interface';
 import { clinicKeys } from '@/query/clinic';
 import { proceduresKeys } from '@/query/procedures';
 import { userKeys } from '@/query/user';

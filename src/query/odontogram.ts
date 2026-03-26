@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { GET, PATCH, POST, request } from '@/lib/api/client';
+import { GET, PATCH, POST, request } from '@/lib/api/client.api';
 
-import type { DbOdontogram, PartialOdontogram } from '@/lib/interfaces/odontogram';
+import type { DbOdontogram, PartialOdontogram } from '@/lib/interfaces/odontogram.interface';
 
 export const odontogramKeys = {
   all: ['odontogram'] as const,

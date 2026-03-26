@@ -2,9 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useClinicStore } from '@/hooks/clinic';
-import { GET, POST, request } from '@/lib/api/client';
+import { GET, POST, request } from '@/lib/api/client.api';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
-import { addKey } from '@/lib/helpers/validade.helper';
+import { addKey } from '@/lib/helpers/validate.helper';
 import { useClinicApi } from '@/query/clinic';
 import { useUserQuery } from '@/query/user';
 

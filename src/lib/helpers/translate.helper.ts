@@ -1,4 +1,4 @@
-import translations from '../../config/translations.json';
+import translations from '../config/translations.json';
 
 /**
  * Função para traduzir chaves em português

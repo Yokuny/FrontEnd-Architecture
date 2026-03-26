@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { requestWithoutToken } from '@/lib/api/client';
-import type { PasskeyResponse } from '@/lib/interfaces/passkey';
+import { requestWithoutToken } from '@/lib/api/client.api';
+import type { PasskeyResponse } from '@/lib/interfaces/passkey.interface';
 
 export const passkeyKeys = {
   all: ['passkey'] as const,

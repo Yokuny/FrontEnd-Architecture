@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { GET, request } from '@/lib/api/client';
+import { GET, request } from '@/lib/api/client.api';
 import type { FullPatient } from '@/lib/interfaces';
 
 export const patientKeys = {

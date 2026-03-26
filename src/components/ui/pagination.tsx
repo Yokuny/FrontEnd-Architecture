@@ -2,7 +2,7 @@ import type * as React from 'react';
 import Dot from '@/components/icons/Dot.Icon';
 import Left from '@/components/icons/Left.Icon';
 import Right from '@/components/icons/Right.Icon';
-import { t } from '@/lib/helpers/translate';
+import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
 import { type Button, btnVars } from './button';
 

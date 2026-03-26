@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 
 export const TimeUpdateDialog = ({ isOpen, onClose, pendingEvent, onConfirm }: TimeUpdateProps) => {
   const handleConfirm = () => {

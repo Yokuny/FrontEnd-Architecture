@@ -3,9 +3,9 @@ import type React from 'react';
 import { useMemo } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
-import { EndHour, StartHour, WeekCellsHeight } from '@/lib/consts/calendar.constants';
-import { isMultiDayEvent } from '@/lib/helpers/calendar.utils';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import { EndHour, StartHour, WeekCellsHeight } from '@/lib/config/calendar.config';
+import { isMultiDayEvent } from '@/lib/helpers/calendar.helper';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 
 import { DraggableEvent } from './draggable-event';

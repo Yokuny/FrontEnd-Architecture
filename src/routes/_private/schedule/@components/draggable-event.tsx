@@ -2,7 +2,7 @@ import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import { differenceInDays } from 'date-fns';
 import { useRef, useState } from 'react';
-import type { PartialSchedule } from '@/lib/interfaces/schedule';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 
 import { useCalendarDnd } from './calendar-dnd-context';
 import { EventItem } from './event-item';

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { PartialClinic } from '@/lib/interfaces/clinic';
+import type { PartialClinic } from '@/lib/interfaces/clinic.interface';
 
 export const useClinicStore = create<ClinicStore>()(() => ({
   getRoomName: (clinic, id) => {

@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import type { DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { formatDate } from '@/lib/helpers/formatDate.utils';
-import { t } from '@/lib/helpers/translate';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { DbReminder } from '@/lib/interfaces';
 
 const openWhatsApp = (phoneNumber: string) => {

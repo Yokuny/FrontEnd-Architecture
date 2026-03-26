@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { numClean } from '@/lib/helpers/formatter.helper';
-import { validObjectID } from '@/lib/helpers/validade.helper';
+import { validObjectID } from '@/lib/helpers/validate.helper';
 import { lengthMessage, objectIdMessage } from '@/lib/helpers/zodMessage.helper';
 import { procedureSchema } from './financial.schema';
 

@@ -1,4 +1,4 @@
-import { MAIN_ROUTES, ROUTE_ICONS, SUB_ROUTE_ICONS } from './routes.tsx';
+import { MAIN_ROUTES, ROUTE_ICONS, SUB_ROUTE_ICONS } from './routes.config.tsx';
 
 // Agrupar rotas por primeiro segmento
 function groupRoutesBySection(paths: readonly string[]): Record<string, string[]> {

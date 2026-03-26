@@ -1,5 +1,5 @@
 import { isSameDay } from 'date-fns';
-import type { EventColor, PartialSchedule } from '@/lib/interfaces/schedule';
+import type { EventColor, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 
 export const eventColors: { value: EventColor; label: string; color: string }[] = [
   { value: 'red', label: 'Vermelho', color: 'bg-red-500' },

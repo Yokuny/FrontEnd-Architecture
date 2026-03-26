@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
-import type { ProfessionalList } from '@/lib/interfaces/professional';
-import type { EventColor } from '@/lib/interfaces/schedule';
+import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
+import type { EventColor } from '@/lib/interfaces/schedule.interface';
 
 export const useProfessionalColors = create<ProfessionalColorsStore>()(
   persist(

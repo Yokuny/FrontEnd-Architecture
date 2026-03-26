@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { GET, request } from '@/lib/api/client';
-import type { DbPatientAnalytics } from '@/lib/interfaces/analytics';
+import { GET, request } from '@/lib/api/client.api';
+import type { DbPatientAnalytics } from '@/lib/interfaces/analytics.interface';
 
 export const analyticsKeys = {
   all: ['analytics'] as const,

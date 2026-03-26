@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { GET, request } from '@/lib/api/client';
-import type { PartialClinic } from '@/lib/interfaces/clinic';
+import { GET, request } from '@/lib/api/client.api';
+import type { PartialClinic } from '@/lib/interfaces/clinic.interface';
 
 export const clinicKeys = {
   all: ['clinic'] as const,

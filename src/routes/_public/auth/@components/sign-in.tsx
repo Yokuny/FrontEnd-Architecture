@@ -7,7 +7,7 @@ import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import type { LogInProps } from '@/lib/interfaces/generic';
+import type { LogInProps } from '@/lib/interfaces/generic.interface';
 import { signinSchema } from '@/lib/interfaces/schemas/user.schema';
 import { useAuthApi } from '@/query/auth';
 

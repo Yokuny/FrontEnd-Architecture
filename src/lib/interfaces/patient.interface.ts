@@ -1,7 +1,7 @@
-import type { DbFinancial } from './financial.js';
-import type { DbOdontogram, ToothStatus } from './odontogram.js';
-import type { DbSchedule } from './schedule.js';
-import type { NewAnamnesis, NewIntraoral } from './schemas/patient.schema.js';
+import type { DbFinancial } from './financial.interface';
+import type { DbOdontogram, ToothStatus } from './odontogram.interface';
+import type { DbSchedule } from './schedule.interface';
+import type { NewAnamnesis, NewIntraoral } from './schemas/patient.schema';
 
 export type PhoneData = {
   number: string;

@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -102,7 +103,7 @@ export function SettingsPermissions() {
         {isLoadingClinic || isLoadingUsers ? (
           <DefaultLoading />
         ) : !clinic || !users ? (
-          <p className="p-10 text-center text-muted-foreground">Dados não encontrados.</p>
+          <DefaultEmptyData />
         ) : (
           <Accordion type="single" collapsible className="space-y-4">
             {users.map((user, index) => {

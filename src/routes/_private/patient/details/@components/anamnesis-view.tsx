@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { formatDate } from '@/lib/helpers/formatDate.utils';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { Anamnesis } from '@/lib/interfaces';
 import { cn } from '@/lib/utils/cn.util';

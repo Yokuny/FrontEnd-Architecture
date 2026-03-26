@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import type { DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { formatPhone } from '@/lib/helpers/formatter.helper';
-import type { PartialPatient } from '@/lib/interfaces/patient';
+import type { PartialPatient } from '@/lib/interfaces/patient.interface';
 
 const handleCopy = (value: string) => {
   navigator.clipboard.writeText(value);
