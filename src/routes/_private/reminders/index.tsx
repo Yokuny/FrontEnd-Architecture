@@ -1,9 +1,5 @@
-import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
-import { useCallback, useMemo, useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
 import type { DateRange } from 'react-day-picker';
-import { toast } from 'sonner';
-import { z } from 'zod';
-
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
@@ -16,17 +12,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DataTable } from '@/components/ui/data-table';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { extractDate } from '@/lib/helpers/formatter.helper';
-import { t } from '@/lib/helpers/translate';
-import { useCheckReminders, useRemindersQuery } from '@/query/reminders';
-import { reminderColumns } from './@utils/columns';
-
-const searchSchema = z.object({
-  showAll: z.boolean().optional().default(false),
-  page: z.number().optional().default(1),
-  size: z.number().optional().default(10),
-});
-
-type SearchParams = z.infer<typeof searchSchema>;
+import { useRemindersList } from './@hooks/use-reminders-list';
+import { type SearchParams, searchSchema } from './@interface/reminders.interface';
+import { endOfDay, startOfDay } from './@utils/date';
 
 export const Route = createFileRoute('/_private/reminders/')({
   component: RemindersListPage,
@@ -37,81 +25,24 @@ export const Route = createFileRoute('/_private/reminders/')({
   validateSearch: (search: Record<string, unknown>): SearchParams => searchSchema.parse(search),
 });
 
-function startOfDay(date: Date) {
-  const newDate = new Date(date);
-  newDate.setHours(0, 0, 0, 0);
-  return newDate;
-}
-
-function endOfDay(date: Date) {
-  const newDate = new Date(date);
-  newDate.setHours(23, 59, 59, 999);
-  return newDate;
-}
-
 function RemindersListPage() {
-  const navigate = useNavigate({ from: Route.fullPath });
-  const { showAll, page, size } = useSearch({ from: '/_private/reminders/' });
-  const checkReminders = useCheckReminders();
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
-  const today = new Date();
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
-    from: startOfDay(today),
-    to: endOfDay(today),
-  });
-
-  const { data: reminders, isLoading } = useRemindersQuery({
-    startDate: dateRange?.from ? dateRange.from.toISOString() : startOfDay(today).toISOString(),
-    endDate: dateRange?.to ? dateRange.to.toISOString() : endOfDay(today).toISOString(),
-    status: showAll ? undefined : 'pending',
-  });
-
-  const handleSelectAll = useCallback(
-    (checked: boolean) => {
-      if (checked && reminders) {
-        setSelectedIds(reminders.map((r) => r._id));
-      } else {
-        setSelectedIds([]);
-      }
-    },
-    [reminders],
-  );
-
-  const handleSelectOne = useCallback((id: string, checked: boolean) => {
-    setSelectedIds((prev) => {
-      if (checked) return [...prev, id];
-      return prev.filter((selectedId) => selectedId !== id);
-    });
-  }, []);
-
-  const handleBulkCheck = async () => {
-    if (selectedIds.length === 0) {
-      toast.error('Selecione pelo menos um lembrete');
-      return;
-    }
-
-    try {
-      await checkReminders.mutateAsync({ ids: selectedIds, status: 'done' });
-      const label = selectedIds.length > 1 ? t('reminder.completed.plural') : t('reminder.completed.singular');
-      toast.success(`${selectedIds.length} ${label}`);
-      setSelectedIds([]);
-    } catch (e: unknown) {
-      toast.error((e as Error).message || t('error.completing.reminders'));
-    }
-  };
-
-  const handlePageChange = useCallback((newPage: number) => navigate({ search: (prev) => ({ ...prev, page: newPage }), replace: true }), [navigate]);
-
-  const handlePageSizeChange = useCallback((newSize: number) => navigate({ search: (prev) => ({ ...prev, size: newSize, page: 1 }), replace: true }), [navigate]);
-
-  const allSelected = !!reminders?.length && selectedIds.length === reminders.length;
-  const someSelected = selectedIds.length > 0 && (!reminders || selectedIds.length < reminders.length);
-
-  const columns = useMemo(
-    () => reminderColumns({ selectedIds, allSelected, someSelected, handleSelectAll, checkReminders }),
-    [selectedIds, allSelected, someSelected, handleSelectAll, checkReminders],
-  );
+  const {
+    reminders,
+    isLoading,
+    showAll,
+    page,
+    size,
+    dateRange,
+    setDateRange,
+    selectedIds,
+    handleBulkCheck,
+    handlePageChange,
+    handlePageSizeChange,
+    handleSelectOne,
+    columns,
+    checkReminders,
+    navigate,
+  } = useRemindersList();
 
   return (
     <Card asPage>
@@ -119,7 +50,7 @@ function RemindersListPage() {
         <CardAction>
           <div className="mt-4 flex w-full flex-col items-center gap-4 sm:mt-0 sm:w-auto sm:flex-row">
             <div className="flex items-center gap-2">
-              <Checkbox id="showAll" checked={showAll} onCheckedChange={(checked) => navigate({ search: (prev) => ({ ...prev, showAll: !!checked }), replace: true })} />
+              <Checkbox id="showAll" checked={showAll} onCheckedChange={(checked) => navigate({ search: (prev: any) => ({ ...prev, showAll: !!checked }), replace: true })} />
               <label htmlFor="showAll" className="cursor-pointer font-medium text-sm leading-none">
                 Mostrar todos
               </label>

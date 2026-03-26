@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
+import DefaultEmptyData from '@/components/default-empty-data';
 import IconPatients from '@/components/icons/Patients.Icon';
 import IconTrendingDown from '@/components/icons/TrendingDown.Icon';
 import IconTrendingUp from '@/components/icons/TrendingUp.Icon';
@@ -8,7 +9,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { type ChartConfig, ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-
 import { formatDate } from '@/lib/helpers/formatDate.utils';
 import type { DbPatientAnalytics, PatientDemographics, PatientPeriodChart, PatientRegistrationTrends } from '@/lib/interfaces/analytics';
 import { cn } from '@/lib/utils';
@@ -246,13 +246,7 @@ export default function PatientAnalytics() {
         <AccordionContent>
           {isLoading && <div className="mb-4 text-muted-foreground text-xs italic">Sincronizando estatísticas em tempo real...</div>}
           {analytics && <AnalyticsCards analytics={analytics} />}
-
-          {!isLoading && !analytics && (
-            <div className="flex h-36 items-center justify-center rounded-lg border border-dashed text-muted-foreground text-sm">
-              <IconUser className="mr-2 size-4" />
-              Nenhum dado analítico disponível
-            </div>
-          )}
+          {!isLoading && !analytics && <DefaultEmptyData />}
         </AccordionContent>
       </AccordionItem>
     </Accordion>

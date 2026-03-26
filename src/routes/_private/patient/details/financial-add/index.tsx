@@ -1,9 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { z } from 'zod';
-
 import ProcedureComponent from '@/components/data-inputs/procedure-component';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
 import DefaultEmptyData from '@/components/default-empty-data';
@@ -15,26 +11,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import { GET, POST, request } from '@/lib/api/client';
-import { comboboxWithImgFormat, currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { usePatientQuery } from '@/query/patient';
-
-const FINANCIAL_STATUS_OPTIONS = [
-  { value: 'pending', label: 'Pendente' },
-  { value: 'partial', label: 'Parcial' },
-  { value: 'paid', label: 'Pago' },
-  { value: 'canceled', label: 'Cancelado' },
-  { value: 'refund', label: 'Reembolsado' },
-] as const;
-
-const PAYMENT_METHOD_OPTIONS = [
-  { value: 'none', label: 'Nenhum' },
-  { value: 'cash', label: 'Dinheiro' },
-  { value: 'card', label: 'Cartão' },
-  { value: 'pix', label: 'Pix' },
-  { value: 'transfer', label: 'Transferência' },
-  { value: 'boleto', label: 'Boleto' },
-] as const;
+import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from './@consts/financial-options';
+import { useFinancialAddForm } from './@hooks/use-financial-add-form';
 
 const searchSchema = z.object({
   id: z.string().optional(),
@@ -54,73 +34,10 @@ function FinancialAddPage() {
   const id = search.id;
   const navigate = useNavigate();
   const { data: patient, isLoading: isLoadingPatient } = usePatientQuery(id);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const form = useForm<any>({
-    defaultValues: {
-      Patient: id || '',
-      Professional: '',
-      procedures: [{ procedure: '', price: 0, status: 'pending' as const }],
-      price: 0,
-      paid: 0,
-      status: 'pending' as const,
-      paymentMethod: 'none',
-      installments: 1,
-    },
-    mode: 'onChange',
-  });
-
-  const procedures = form.watch('procedures') || [];
-  const proceduresWithPrice = procedures.filter((proc: any) => proc.price && proc.price > 0);
-  const allPending = proceduresWithPrice.every((proc: any) => proc.status === 'pending');
-  const allPaid = proceduresWithPrice.every((proc: any) => proc.status === 'paid');
-  const currentStatus = proceduresWithPrice.length === 0 ? 'pending' : allPaid ? 'paid' : allPending ? 'pending' : 'partial';
-  const totalPrice = procedures.reduce((acc: number, curr: any) => acc + (Number(curr.price) || 0), 0);
-
-  useEffect(() => {
-    form.setValue('status', currentStatus);
-    form.setValue('price', totalPrice);
-  }, [currentStatus, totalPrice, form]);
-
-  const fetchProfessionals = async () => {
-    const res = await request('user/professionals', GET());
-    return comboboxWithImgFormat(res.data);
-  };
 
   const goBack = () => navigate({ to: '/patient/details', search: { id: id!, tab: 'financial' } });
 
-  const handleSubmit = async () => {
-    if (!id) return;
-    const values = form.getValues();
-
-    if (!values.Professional) {
-      toast.error('Selecione o profissional');
-      return;
-    }
-
-    const body = {
-      Patient: id,
-      Professional: values.Professional,
-      procedures: values.procedures,
-      price: values.price,
-      paid: values.paid,
-      status: values.status,
-      paymentMethod: values.paymentMethod,
-      installments: values.installments,
-    };
-
-    setIsSubmitting(true);
-    try {
-      const res = await request('financial/create', POST(body));
-      if (!res.success) throw new Error(res.message);
-      toast.success(res.message);
-      goBack();
-    } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao criar registro financeiro');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const { form, isSubmitting, fetchProfessionals, handleSubmit } = useFinancialAddForm(id, goBack);
 
   const sections = [
     {

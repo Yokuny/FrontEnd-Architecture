@@ -6,7 +6,6 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input';
 import { GET, request } from '@/lib/api/client';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
-
 import type { ReminderFormData } from '../@interface/reminder.interface';
 
 async function fetchPatientsCombobox() {

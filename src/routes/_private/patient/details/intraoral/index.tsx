@@ -1,8 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { z } from 'zod';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
@@ -13,9 +9,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import { PUT, request } from '@/lib/api/client';
-import { intraoralSchema, type NewIntraoral } from '@/lib/interfaces/schemas/patient.schema';
 import { usePatientQuery } from '@/query/patient';
+import { useIntraoralForm } from './@hooks/use-intraoral-form';
 
 const searchSchema = z.object({
   id: z.string().optional(),
@@ -35,44 +30,13 @@ function IntraoralFormPage() {
   const id = search.id;
   const navigate = useNavigate();
   const { data: patient, isLoading: isLoadingPatient } = usePatientQuery(id);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const intraoral = patient?.intraoral;
   const hasExisting = intraoral && intraoral.updatedAt !== intraoral.createdAt;
 
-  const form = useForm<NewIntraoral>({
-    resolver: zodResolver(intraoralSchema),
-    defaultValues: {
-      hygiene: intraoral?.hygiene || 'normal',
-      halitosis: intraoral?.halitosis || 'ausente',
-      tartar: intraoral?.tartar || 'ausente',
-      gums: intraoral?.gums || 'normal',
-      mucosa: intraoral?.mucosa || 'normal',
-      tongue: intraoral?.tongue || '',
-      palate: intraoral?.palate || '',
-      oralFloor: intraoral?.oralFloor || '',
-      lips: intraoral?.lips || '',
-      otherObservations: intraoral?.otherObservations || '',
-    },
-    mode: 'onChange',
-  });
-
   const goBack = () => navigate({ to: '/patient/details', search: { id: id!, tab: 'intraoral' } });
 
-  const onSubmit = form.handleSubmit(async (values) => {
-    if (!id) return;
-    setIsSubmitting(true);
-    try {
-      const res = await request(`patient/${id}/intraoral`, PUT(values));
-      if (!res.success) throw new Error(res.message);
-      toast.success(res.message);
-      goBack();
-    } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao salvar exame intraoral');
-    } finally {
-      setIsSubmitting(false);
-    }
-  });
+  const { form, isSubmitting, onSubmit } = useIntraoralForm(id, intraoral, goBack);
 
   const sections = [
     {

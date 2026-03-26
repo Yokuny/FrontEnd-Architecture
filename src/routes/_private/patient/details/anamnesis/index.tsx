@@ -1,8 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { z } from 'zod';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
@@ -11,141 +7,33 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import { PUT, request } from '@/lib/api/client';
-import { anamnesisSchema } from '@/lib/interfaces/schemas/patient.schema';
 import { usePatientQuery } from '@/query/patient';
+import { YesNoSelect } from './@components/yes-no-select';
+import { useAnamnesisForm } from './@hooks/use-anamnesis-form';
 
 const searchSchema = z.object({
   id: z.string().optional(),
 });
 
 export const Route = createFileRoute('/_private/patient/details/anamnesis/')({
-  component: AnamnesisFormPage,
+  component: AnamnesisPage,
   staticData: {
     title: 'Anamnese',
-    description: 'Histórico médico e hábitos do paciente.',
+    description: 'Histórico de saúde do paciente.',
   },
   validateSearch: searchSchema,
 });
 
-const stringToBoolean = (value: string): boolean => value === 'true';
-
-const YesNoSelect = ({ field, disabled }: { field: any; disabled: boolean }) => (
-  <Select onValueChange={field.onChange} value={field.value}>
-    <SelectTrigger className="w-full">
-      <SelectValue />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectItem value="true" disabled={disabled}>
-        Sim
-      </SelectItem>
-      <SelectItem value="false" disabled={disabled}>
-        Não
-      </SelectItem>
-    </SelectContent>
-  </Select>
-);
-
-function AnamnesisFormPage() {
+function AnamnesisPage() {
   const search = Route.useSearch();
   const id = search.id;
   const navigate = useNavigate();
   const { data: patient, isLoading: isLoadingPatient } = usePatientQuery(id);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const anamnesis = patient?.anamnesis;
-  const hasExisting = anamnesis && anamnesis.updatedAt !== anamnesis.createdAt;
-  const sex = patient?.sex;
-
-  const form = useForm<z.input<typeof anamnesisSchema>>({
-    resolver: zodResolver(anamnesisSchema),
-    defaultValues: {
-      mainComplaint: anamnesis?.mainComplaint || '',
-      gumsBleedEasily: anamnesis?.gumsBleedEasily ? 'true' : 'false',
-      sensitiveTeeth: anamnesis?.sensitiveTeeth ? 'true' : 'false',
-      allergicToMedication: anamnesis?.allergicToMedication ? 'true' : 'false',
-      medicationAllergy: anamnesis?.medicationAllergy || '',
-      bitesPenOrPencil: anamnesis?.bitesPenOrPencil ? 'true' : 'false',
-      nailsBiting: anamnesis?.nailsBiting ? 'true' : 'false',
-      otherHarmfulHabits: anamnesis?.otherHarmfulHabits || '',
-      pregnant: sex === 'F' ? (anamnesis?.pregnant ? 'true' : 'false') : 'false',
-      pregnancyMonth: sex === 'F' ? anamnesis?.pregnancyMonth || 0 : 0,
-      breastfeeding: sex === 'F' ? (anamnesis?.breastfeeding ? 'true' : 'false') : 'false',
-      underMedicalTreatment: anamnesis?.underMedicalTreatment ? 'true' : 'false',
-      medicalTreatmentDetails: anamnesis?.medicalTreatmentDetails || '',
-      takingMedication: anamnesis?.takingMedication ? 'true' : 'false',
-      medicationDetails: anamnesis?.medicationDetails || '',
-      infectiousDisease: anamnesis?.infectiousDisease || '',
-      smoker: anamnesis?.smoker ? 'true' : 'false',
-      alcoholConsumer: anamnesis?.alcoholConsumer ? 'true' : 'false',
-      illnesses: {
-        diabetes: anamnesis?.illnesses?.diabetes ? 'true' : 'false',
-        tuberculosis: anamnesis?.illnesses?.tuberculosis ? 'true' : 'false',
-        heartProblems: anamnesis?.illnesses?.heartProblems ? 'true' : 'false',
-        arthritis: anamnesis?.illnesses?.arthritis ? 'true' : 'false',
-        asthma: anamnesis?.illnesses?.asthma ? 'true' : 'false',
-        highBloodPressure: anamnesis?.illnesses?.highBloodPressure ? 'true' : 'false',
-        kidneyProblems: anamnesis?.illnesses?.kidneyProblems ? 'true' : 'false',
-        liverProblems: anamnesis?.illnesses?.liverProblems ? 'true' : 'false',
-        otherIllnesses: anamnesis?.illnesses?.otherIllnesses || '',
-      },
-      importantHealthInformation: anamnesis?.importantHealthInformation || '',
-    },
-    mode: 'onChange',
-  });
 
   const goBack = () => navigate({ to: '/patient/details', search: { id: id!, tab: 'anamnesis' } });
 
-  const onSubmit = form.handleSubmit(async (values) => {
-    if (!id) return;
-    const body = {
-      Patient: id,
-      mainComplaint: values.mainComplaint,
-      gumsBleedEasily: stringToBoolean(values.gumsBleedEasily),
-      sensitiveTeeth: stringToBoolean(values.sensitiveTeeth),
-      allergicToMedication: stringToBoolean(values.allergicToMedication),
-      medicationAllergy: values.medicationAllergy,
-      bitesPenOrPencil: stringToBoolean(values.bitesPenOrPencil),
-      nailsBiting: stringToBoolean(values.nailsBiting),
-      otherHarmfulHabits: values.otherHarmfulHabits,
-      pregnant: sex === 'F' ? stringToBoolean(values.pregnant) : false,
-      pregnancyMonth: sex === 'F' ? Number(values.pregnancyMonth) : 0,
-      breastfeeding: sex === 'F' ? stringToBoolean(values.breastfeeding) : false,
-      underMedicalTreatment: stringToBoolean(values.underMedicalTreatment),
-      medicalTreatmentDetails: values.medicalTreatmentDetails,
-      takingMedication: stringToBoolean(values.takingMedication),
-      medicationDetails: values.medicationDetails,
-      infectiousDisease: values.infectiousDisease,
-      smoker: stringToBoolean(values.smoker),
-      alcoholConsumer: stringToBoolean(values.alcoholConsumer),
-      illnesses: {
-        diabetes: stringToBoolean(values.illnesses.diabetes),
-        tuberculosis: stringToBoolean(values.illnesses.tuberculosis),
-        heartProblems: stringToBoolean(values.illnesses.heartProblems),
-        arthritis: stringToBoolean(values.illnesses.arthritis),
-        asthma: stringToBoolean(values.illnesses.asthma),
-        highBloodPressure: stringToBoolean(values.illnesses.highBloodPressure),
-        kidneyProblems: stringToBoolean(values.illnesses.kidneyProblems),
-        liverProblems: stringToBoolean(values.illnesses.liverProblems),
-        otherIllnesses: values.illnesses.otherIllnesses,
-      },
-      importantHealthInformation: values.importantHealthInformation,
-    };
-
-    setIsSubmitting(true);
-    try {
-      const res = await request(`patient/${id}/anamnesis`, PUT(body));
-      if (!res.success) throw new Error(res.message);
-      toast.success(res.message);
-      goBack();
-    } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao salvar anamnese');
-    } finally {
-      setIsSubmitting(false);
-    }
-  });
+  const { form, isSubmitting, onSubmit, hasExisting } = useAnamnesisForm(id, patient?.anamnesis, patient?.sex, goBack);
 
   const sections = [
     {
@@ -204,7 +92,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Fumante</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -216,7 +104,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Álcool</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -228,7 +116,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Rói caneta/lápis</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -240,7 +128,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Rói unhas</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -272,7 +160,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Alergia a medicamentos</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -298,7 +186,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Gengiva sangra</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -310,12 +198,12 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Dentes sensíveis</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
           />
-          {sex === 'F' && (
+          {patient?.sex === 'F' && (
             <>
               <FormField
                 control={form.control}
@@ -324,7 +212,7 @@ function AnamnesisFormPage() {
                   <FormItem>
                     <FormLabel>Grávida</FormLabel>
                     <FormControl>
-                      <YesNoSelect field={field} disabled={isSubmitting} />
+                      <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -350,7 +238,7 @@ function AnamnesisFormPage() {
                   <FormItem>
                     <FormLabel>Amamentando</FormLabel>
                     <FormControl>
-                      <YesNoSelect field={field} disabled={isSubmitting} />
+                      <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -364,7 +252,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Em tratamento médico</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -390,7 +278,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Tomando medicamentos</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -424,7 +312,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Diabetes</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -436,7 +324,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Tuberculose</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -448,7 +336,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Problemas cardíacos</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -460,7 +348,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Artrite</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -472,7 +360,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Asma</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -484,7 +372,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Pressão alta</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -496,7 +384,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Problemas renais</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -508,7 +396,7 @@ function AnamnesisFormPage() {
               <FormItem>
                 <FormLabel>Problemas hepáticos</FormLabel>
                 <FormControl>
-                  <YesNoSelect field={field} disabled={isSubmitting} />
+                  <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
               </FormItem>
             )}
@@ -534,13 +422,15 @@ function AnamnesisFormPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form="anamnesis-form" disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
+          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
+            Cancelar
+          </Button>
+          <Button type="button" onClick={onSubmit} disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
             {isSubmitting && <Spinner className="mr-2 size-4" />}
             {hasExisting ? 'Atualizar' : 'Cadastrar'}
           </Button>
         </CardAction>
       </CardHeader>
-
       <CardContent>
         {isLoadingPatient ? (
           <DefaultLoading />
@@ -548,9 +438,7 @@ function AnamnesisFormPage() {
           <DefaultEmptyData />
         ) : (
           <Form {...form}>
-            <form onSubmit={onSubmit} id="anamnesis-form">
-              <DefaultFormLayout sections={sections} />
-            </form>
+            <DefaultFormLayout sections={sections} />
           </Form>
         )}
       </CardContent>

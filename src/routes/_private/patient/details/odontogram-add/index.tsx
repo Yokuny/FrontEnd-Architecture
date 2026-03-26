@@ -1,10 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { z } from 'zod';
-
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
@@ -13,11 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-import { GET, POST, request } from '@/lib/api/client';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
-import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
 import { usePatientQuery } from '@/query/patient';
 import Teeth from '@/routes/_private/odontogram/@components/teeth';
+import { useOdontogramAddForm } from './@hooks/use-odontogram-add-form';
 
 const searchSchema = z.object({
   id: z.string().optional(),
@@ -37,46 +30,10 @@ function OdontogramAddPage() {
   const id = search.id;
   const navigate = useNavigate();
   const { data: patient, isLoading: isLoadingPatient } = usePatientQuery(id);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const form = useForm<NewOdontogram>({
-    resolver: zodResolver(odontogramSchema) as any,
-    defaultValues: {
-      Patient: id || '',
-      Professional: '',
-      finished: false,
-      teeth: [],
-    },
-    mode: 'onChange',
-  });
-
-  const fetchProfessionals = async () => {
-    const res = await request('user/professionals', GET());
-    return comboboxWithImgFormat(res.data);
-  };
 
   const goBack = () => navigate({ to: '/patient/details', search: { id: id!, tab: 'odontogram' } });
 
-  const onSubmit = async (values: NewOdontogram) => {
-    if (!id) return;
-    const body = {
-      Patient: id,
-      teeth: values.teeth || [],
-      Professional: values.Professional,
-    };
-
-    setIsSubmitting(true);
-    try {
-      const res = await request('odontogram/create', POST(body));
-      if (!res.success) throw new Error(res.message);
-      toast.success(res.message);
-      goBack();
-    } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao cadastrar odontograma');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const { form, isSubmitting, fetchProfessionals, onSubmit } = useOdontogramAddForm(id, goBack);
 
   const sections = [
     {
