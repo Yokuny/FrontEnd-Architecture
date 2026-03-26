@@ -131,35 +131,36 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
         </div>
       </ItemHeader>
 
-      <div className="space-y-4">
+      <div className="overflow-hidden rounded-lg border bg-card">
         {categories.map((category) => (
           <Collapsible key={category.id} open={openCategories.includes(category.id)} onOpenChange={() => toggleCategory(category.id)}>
-            <div className="rounded-lg border bg-card">
-              <CollapsibleTrigger asChild>
-                <Button variant="secondary" className="w-full items-center justify-between border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2">
-                  <div className="flex items-center gap-3">
-                    <ItemMedia variant="icon" className="text-foreground">
-                      {category.icon}
-                    </ItemMedia>
-                    <ItemTitle className="text-base">{category.name}</ItemTitle>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="secondary"
+                className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
+              >
+                <div className="flex items-center gap-3">
+                  <ItemMedia variant="icon" className="text-foreground">
+                    {category.icon}
+                  </ItemMedia>
+                  <ItemTitle className="text-base">{category.name}</ItemTitle>
+                </div>
+                <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes(category.id) && 'rotate-180')} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ItemGroup className="gap-0">
+                {category.specs.map((spec, index) => (
+                  <div key={`${spec.label}${category.id}`}>
+                    <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                      <ItemDescription className="font-sans">{spec.label}</ItemDescription>
+                      <ItemTitle className="font-mono tabular-nums">{spec.value}</ItemTitle>
+                    </Item>
+                    {index < category.specs.length - 1 && <ItemSeparator />}
                   </div>
-                  <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes(category.id) && 'rotate-180')} />
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <ItemGroup className="gap-0">
-                  {category.specs.map((spec, index) => (
-                    <div key={`${spec.label}${category.id}`}>
-                      <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                        <ItemDescription className="font-sans">{spec.label}</ItemDescription>
-                        <ItemTitle className="font-mono">{spec.value}</ItemTitle>
-                      </Item>
-                      {index < category.specs.length - 1 && <ItemSeparator />}
-                    </div>
-                  ))}
-                </ItemGroup>
-              </CollapsibleContent>
-            </div>
+                ))}
+              </ItemGroup>
+            </CollapsibleContent>
           </Collapsible>
         ))}
       </div>

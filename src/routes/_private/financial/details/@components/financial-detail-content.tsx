@@ -59,7 +59,8 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status || 'pending')}</BadgeIndicator>
+          <BadgeIndicator variant={badgeVariant} pulse />
+          <ItemTitle className="text-2xl">{statusDictionary(financial.status || 'pending')}</ItemTitle>
         </div>
       </Item>
 
@@ -148,7 +149,10 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
               <ItemSeparator />
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                 <ItemDescription className="font-sans">Status</ItemDescription>
-                <BadgeIndicator variant={badgeVariant}>{statusDictionary(financial.status || 'pending')}</BadgeIndicator>
+                <div className="flex items-center gap-2">
+                  <BadgeIndicator variant={badgeVariant} pulse />
+                  <ItemTitle>{statusDictionary(financial.status || 'pending')}</ItemTitle>
+                </div>
               </Item>
             </ItemGroup>
           </CollapsibleContent>
@@ -208,9 +212,9 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
                   <div key={`${proc.procedure}-${proc.price}-${proc.status}`}>
                     <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                       <ItemDescription className="font-sans">{proc.procedure}</ItemDescription>
-                      <div className="flex items-center gap-3">
-                        <ItemTitle className="font-mono tabular-nums">{currencyFormat(proc.price)}</ItemTitle>
-                        <BadgeIndicator variant={STATUS_TO_BADGE_VARIANT[proc.status] || 'pending'}>{statusDictionary(proc.status)}</BadgeIndicator>
+                      <div className="flex items-center gap-2">
+                        <BadgeIndicator variant={STATUS_TO_BADGE_VARIANT[proc.status] || 'pending'} pulse />
+                        <ItemTitle className="tabular-nums">{statusDictionary(proc.status)}</ItemTitle>
                       </div>
                     </Item>
                     {financial.procedures && financial.procedures.length > 1 && index < financial.procedures.length - 1 && <ItemSeparator />}

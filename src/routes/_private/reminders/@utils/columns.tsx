@@ -63,9 +63,10 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
     header: 'Status',
     sortable: true,
     render: (_, reminder) => (
-      <BadgeIndicator variant={reminder.status === 'done' ? 'completed' : 'pending'} pulse>
-        {reminder.status === 'done' ? 'Concluído' : 'Pendente'}
-      </BadgeIndicator>
+      <div className="flex items-center gap-2">
+        <BadgeIndicator variant={reminder.status === 'done' ? 'completed' : 'pending'} pulse />
+        <span className="text-sm">{reminder.status === 'done' ? 'Concluído' : 'Pendente'}</span>
+      </div>
     ),
   },
   {

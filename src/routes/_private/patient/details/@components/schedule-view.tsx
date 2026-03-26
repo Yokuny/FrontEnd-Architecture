@@ -4,23 +4,27 @@ import { toast } from 'sonner';
 import DefaultEmptyData from '@/components/default-empty-data';
 import Add from '@/components/icons/Add.Icon';
 import Board from '@/components/icons/Board.Icon';
+import IconCalendar from '@/components/icons/Calender.Icon';
 import ChartPie from '@/components/icons/ChartPie.Icon';
+import IconDollar from '@/components/icons/Dollar.Icon';
 import Down from '@/components/icons/Down.Icon';
 import Link from '@/components/icons/Link.Icon';
+import IconService from '@/components/icons/Service.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge, BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useClinicStore } from '@/hooks/clinic';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client';
 import { formatDate } from '@/lib/helpers/formatDate.utils';
 import { currencyFormat, extractDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
+import type { PartialClinic } from '@/lib/interfaces/clinic';
+import type { ProfessionalList } from '@/lib/interfaces/professional';
 import type { DbSchedule } from '@/lib/interfaces/schedule';
 import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
@@ -148,19 +152,228 @@ const ScheduleSummarySection = ({ patient }: { patient: FullPatient }) => {
   );
 };
 
+const ScheduleRecordDetail = ({
+  el,
+  financial,
+  professionals,
+  clinic,
+  isLoading,
+  handleStatusChange,
+  isEditing,
+  setIsEditing,
+  setSelectedStatus,
+  selectedStatus,
+}: {
+  el: DbSchedule;
+  financial: FullPatient['financials'][number] | undefined;
+  professionals: ProfessionalList[] | undefined;
+  clinic: PartialClinic | undefined;
+  isLoading: boolean;
+  handleStatusChange: (id: string, status: string) => void;
+  isEditing: string | null;
+  setIsEditing: (id: string | null) => void;
+  setSelectedStatus: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  selectedStatus: Record<string, string>;
+}) => {
+  const navigate = useNavigate();
+  const professionalStore = useProfessionalStore();
+  const clinicStore = useClinicStore();
+  const getProfessionalName = (id?: string) => professionalStore.getName(professionals, id);
+  const getProfessionalImage = (id?: string) => professionalStore.getImage(professionals, id);
+  const getRoomName = (id?: string) => clinicStore.getRoomName(clinic, id);
+
+  const [openCategories, setOpenCategories] = useState<string[]>(['general', 'procedures', 'details']);
+
+  const toggleCategory = (id: string) => {
+    setOpenCategories((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]));
+  };
+
+  return (
+    <CollapsibleContent className="my-4 px-2">
+      <div className="space-y-6">
+        <div className="flex items-end gap-2">
+          <div className="flex flex-col gap-2">
+            <span className="text-muted-foreground text-sm">Status do agendamento</span>
+            <Select
+              value={selectedStatus[el._id] ?? el.status}
+              onValueChange={(value: string) => {
+                setIsEditing(el._id);
+                setSelectedStatus((prev) => ({ ...prev, [el._id]: value }));
+              }}
+              disabled={isLoading}
+            >
+              <SelectTrigger className="w-full">
+                <div className="flex items-center gap-2">
+                  <div className={cn('size-2 rounded-full', getStatusColor(selectedStatus[el._id] ?? el.status))} />
+                  <SelectValue>{statusDictionary(selectedStatus[el._id] ?? el.status)}</SelectValue>
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                {scheduleStatuses.map((status) => (
+                  <SelectItem key={status} value={status} disabled={isLoading}>
+                    <div className="flex items-center gap-2">
+                      <div className={cn('size-2 rounded-full', getStatusColor(status))} />
+                      {statusDictionary(status)}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          {isEditing === el._id && (
+            <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
+              Salvar
+            </Button>
+          )}
+        </div>
+
+        <div className="overflow-hidden rounded-lg border bg-card">
+          {/* Dados Gerais */}
+          <Collapsible open={openCategories.includes('general')} onOpenChange={() => toggleCategory('general')}>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="secondary"
+                className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
+              >
+                <div className="flex items-center gap-3">
+                  <ItemMedia variant="icon" className="text-foreground">
+                    <IconCalendar className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle className="text-base">Dados Gerais</ItemTitle>
+                </div>
+                <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('general') && 'rotate-180')} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ItemGroup className="gap-0">
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="size-8 rounded-md">
+                      <AvatarImage src={getProfessionalImage(el.Professional)} />
+                      <AvatarFallback>{getProfessionalName(el.Professional).slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                    <ItemDescription className="font-sans">Profissional</ItemDescription>
+                  </div>
+                  <ItemTitle className="font-mono">{getProfessionalName(el.Professional)}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Data</ItemDescription>
+                  <ItemTitle className="font-mono">{formatDate(String(el.start))}</ItemTitle>
+                </Item>
+                {!el.allDay && (
+                  <>
+                    <ItemSeparator />
+                    <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                      <ItemDescription className="font-sans">Horário</ItemDescription>
+                      <ItemTitle className="font-mono">
+                        {extractDate(el.start, 'hour')} - {extractDate(el.end, 'hour')}
+                      </ItemTitle>
+                    </Item>
+                  </>
+                )}
+              </ItemGroup>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Procedimentos */}
+          <Collapsible open={openCategories.includes('procedures')} onOpenChange={() => toggleCategory('procedures')}>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="secondary"
+                className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
+              >
+                <div className="flex items-center gap-3">
+                  <ItemMedia variant="icon" className="text-foreground">
+                    <IconService className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle className="text-base">Procedimentos</ItemTitle>
+                </div>
+                <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('procedures') && 'rotate-180')} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ItemGroup className="gap-0">
+                {financial?.procedures?.length ? (
+                  financial.procedures.map((procedure, index) => (
+                    <div key={procedure._id ?? index}>
+                      <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                        <ItemDescription className="font-sans">{procedure.procedure}</ItemDescription>
+                        <ItemTitle className="font-mono">{currencyFormat(procedure.price)}</ItemTitle>
+                      </Item>
+                      {index < financial.procedures.length - 1 && <ItemSeparator />}
+                    </div>
+                  ))
+                ) : (
+                  <Item variant="default" size="sm" className="justify-center py-4">
+                    <ItemDescription className="italic">Nenhum procedimento registrado</ItemDescription>
+                  </Item>
+                )}
+              </ItemGroup>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Detalhes */}
+          <Collapsible open={openCategories.includes('details')} onOpenChange={() => toggleCategory('details')}>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="secondary"
+                className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
+              >
+                <div className="flex items-center gap-3">
+                  <ItemMedia variant="icon" className="text-foreground">
+                    <IconDollar className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle className="text-base">Detalhes</ItemTitle>
+                </div>
+                <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('details') && 'rotate-180')} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ItemGroup className="gap-0">
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Valor Total</ItemDescription>
+                  <ItemTitle className="font-mono">{currencyFormat(financial?.procedures?.reduce((acc, p) => acc + p.price, 0) ?? 0)}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Sala</ItemDescription>
+                  <ItemTitle className="font-mono">{getRoomName(el.Room) || '-'}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Criado em</ItemDescription>
+                  <ItemTitle className="font-mono">{formatDate(String(el.createdAt))}</ItemTitle>
+                </Item>
+                {el.Financial && (
+                  <>
+                    <ItemSeparator />
+                    <Item variant="default" size="sm" className="justify-center py-2 hover:bg-secondary">
+                      <Badge variant="outline" className="cursor-pointer" onClick={() => navigate({ to: '/financial/details', search: { id: el.Financial } })}>
+                        <Link className="mr-2 size-4" />
+                        Ver Financeiro
+                      </Badge>
+                    </Item>
+                  </>
+                )}
+              </ItemGroup>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      </div>
+    </CollapsibleContent>
+  );
+};
+
 const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedules: DbSchedule[]; financials: FullPatient['financials']; patientId: string }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<Record<string, string>>({});
-  const navigate = useNavigate();
   const { data: professionals } = useProfessionalsQuery();
   const { data: clinic } = useClinicApi();
-  const professionalStore = useProfessionalStore();
   const clinicStore = useClinicStore();
   const { refetch } = usePatientQuery(patientId);
 
-  const getProfessionalName = (id?: string) => professionalStore.getName(professionals, id);
-  const getProfessionalImage = (id?: string) => professionalStore.getImage(professionals, id);
   const getRoomName = (id?: string) => clinicStore.getRoomName(clinic, id);
 
   const sortedSchedules = useMemo(() => [...schedules].sort((a, b) => new Date(b.start).getTime() - new Date(a.start).getTime()), [schedules]);
@@ -216,126 +429,18 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
                     </div>
                   </div>
                 </CollapsibleTrigger>
-                <CollapsibleContent className="my-6 space-y-6 px-2">
-                  <div className="flex items-end gap-2">
-                    <div className="flex flex-col gap-2">
-                      <span className="text-muted-foreground text-sm">Status do agendamento</span>
-                      <Select
-                        value={selectedStatus[el._id] ?? el.status}
-                        onValueChange={(value: string) => {
-                          setIsEditing(el._id);
-                          setSelectedStatus((prev) => ({ ...prev, [el._id]: value }));
-                        }}
-                        disabled={isLoading}
-                      >
-                        <SelectTrigger className="w-full">
-                          <div className="flex items-center gap-2">
-                            <div className={cn('size-2 rounded-full', getStatusColor(selectedStatus[el._id] ?? el.status))} />
-                            <SelectValue>{statusDictionary(selectedStatus[el._id] ?? el.status)}</SelectValue>
-                          </div>
-                        </SelectTrigger>
-                        <SelectContent>
-                          {scheduleStatuses.map((status) => (
-                            <SelectItem key={status} value={status} disabled={isLoading}>
-                              <div className="flex items-center gap-2">
-                                <div className={cn('size-2 rounded-full', getStatusColor(status))} />
-                                {statusDictionary(status)}
-                              </div>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    {isEditing === el._id && (
-                      <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
-                        Salvar
-                      </Button>
-                    )}
-                  </div>
-
-                  <div className="flex w-full flex-col gap-4 md:gap-6">
-                    <div className="flex flex-col gap-4 md:max-w-xl md:flex-row">
-                      <div className="flex w-full items-center gap-3 rounded-xl border p-6">
-                        <Avatar>
-                          <AvatarImage src={getProfessionalImage(el.Professional)} />
-                          <AvatarFallback>{getProfessionalName(el.Professional).slice(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col">
-                          <span className="text-muted-foreground text-sm">Profissional</span>
-                          <span className="font-bold">{getProfessionalName(el.Professional)}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex w-full gap-4 rounded-xl border p-6">
-                        <div className="flex flex-col">
-                          <span className="text-muted-foreground text-sm">Data</span>
-                          <span className="font-bold text-lg">{formatDate(String(el.start))}</span>
-                        </div>
-                        {!el.allDay && (
-                          <div className="flex flex-col">
-                            <span className="text-muted-foreground text-sm">Horário</span>
-                            <span className="font-bold text-lg">
-                              {extractDate(el.start, 'hour')} - {extractDate(el.end, 'hour')}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-4 md:flex-row md:gap-6">
-                      <Table className="w-full rounded-xl border p-4 md:max-w-xl">
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Nome</TableHead>
-                            <TableHead>Preço</TableHead>
-                            <TableHead>Status</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {financial?.procedures?.length ? (
-                            financial.procedures.map((procedure, index) => (
-                              <TableRow key={procedure._id ?? index}>
-                                <TableCell>{procedure.procedure}</TableCell>
-                                <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
-                                <TableCell className="flex items-center gap-2">
-                                  <BadgeIndicator variant={procedure.status} pulse />
-                                  {statusDictionary(procedure.status)}
-                                </TableCell>
-                              </TableRow>
-                            ))
-                          ) : (
-                            <TableRow>
-                              <TableCell colSpan={3} className="text-center text-muted-foreground">
-                                Nenhum procedimento registrado
-                              </TableCell>
-                            </TableRow>
-                          )}
-                        </TableBody>
-                      </Table>
-
-                      <div className="flex flex-col gap-4 rounded-xl border p-6 md:max-w-md">
-                        <div className="space-y-1">
-                          <span className="text-muted-foreground text-sm">Valor Total</span>
-                          <p className="font-medium">{currencyFormat(financial?.procedures?.reduce((acc, p) => acc + p.price, 0) ?? 0)}</p>
-                        </div>
-                        <div className="space-y-1">
-                          <span className="text-muted-foreground text-sm">Sala</span>
-                          <p className="font-medium">{getRoomName(el.Room) || '-'}</p>
-                        </div>
-                        <div className="space-y-1">
-                          <span className="text-muted-foreground text-sm">Criado em</span>
-                          <p className="font-medium">{formatDate(String(el.createdAt))}</p>
-                        </div>
-                        {el.Financial && (
-                          <Badge variant="outline" onClick={() => navigate({ to: '/financial/details', search: { id: el.Financial } })}>
-                            <Link className="mr-2 size-4" />
-                            Financeiro
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </CollapsibleContent>
+                <ScheduleRecordDetail
+                  el={el}
+                  financial={financial}
+                  professionals={professionals}
+                  clinic={clinic}
+                  isLoading={isLoading}
+                  handleStatusChange={handleStatusChange}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  setSelectedStatus={setSelectedStatus}
+                  selectedStatus={selectedStatus}
+                />
               </Collapsible>
             );
           })}

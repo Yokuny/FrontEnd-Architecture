@@ -8,7 +8,7 @@ import { currencyFormat, extractDate, handleCopy, statusDictionary } from '@/lib
 import type { PartialFinancial } from '@/lib/interfaces/financial';
 import { STATUS_TO_BADGE_VARIANT } from '../@consts/financial.consts';
 
-export const financialColumns = (navigate: (opts: any) => void): DataTableColumn<PartialFinancial>[] => [
+export const financialColumns = (navigate: (opts: { to: string; search?: Record<string, string> }) => void): DataTableColumn<PartialFinancial>[] => [
   {
     key: 'updatedAt',
     header: 'Data',
@@ -34,9 +34,10 @@ export const financialColumns = (navigate: (opts: any) => void): DataTableColumn
     render: (_, row) => {
       const badgeVariant = STATUS_TO_BADGE_VARIANT[row.status] || 'pending';
       return (
-        <BadgeIndicator variant={badgeVariant} pulse>
-          {statusDictionary(row.status)}
-        </BadgeIndicator>
+        <div className="flex items-center gap-2">
+          <BadgeIndicator variant={badgeVariant} pulse />
+          <span className="text-sm">{statusDictionary(row.status)}</span>
+        </div>
       );
     },
   },

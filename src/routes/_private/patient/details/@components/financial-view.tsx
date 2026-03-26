@@ -4,23 +4,27 @@ import { toast } from 'sonner';
 import DefaultEmptyData from '@/components/default-empty-data';
 import Add from '@/components/icons/Add.Icon';
 import Board from '@/components/icons/Board.Icon';
+import IconCalendar from '@/components/icons/Calender.Icon';
 import ChartPie from '@/components/icons/ChartPie.Icon';
+import IconDollar from '@/components/icons/Dollar.Icon';
 import Down from '@/components/icons/Down.Icon';
 import Edit from '@/components/icons/Edit.Icon';
+import IconService from '@/components/icons/Service.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client';
 import { formatDate } from '@/lib/helpers/formatDate.utils';
 import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import type { DbFinancial } from '@/lib/interfaces/financial';
+import type { ProfessionalList } from '@/lib/interfaces/professional';
+import { cn } from '@/lib/utils/cn.util';
 import { usePatientQuery } from '@/query/patient';
 import { useProfessionalsQuery } from '@/query/professionals';
 
@@ -153,17 +157,220 @@ const FinancialSummarySection = ({ patient }: { patient: FullPatient }) => {
   );
 };
 
+const FinancialRecordDetail = ({
+  el,
+  professionals,
+  isLoading,
+  handleStatusChange,
+  isEditing,
+  setIsEditing,
+  setSelectedStatus,
+  selectedStatus,
+}: {
+  el: DbFinancial;
+  professionals: ProfessionalList[] | undefined;
+  isLoading: boolean;
+  handleStatusChange: (id: string, status: string) => void;
+  isEditing: string | null;
+  setIsEditing: (id: string | null) => void;
+  setSelectedStatus: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  selectedStatus: Record<string, string>;
+}) => {
+  const navigate = useNavigate();
+  const professionalStore = useProfessionalStore();
+  const getProfessionalName = (id?: string) => professionalStore.getName(professionals, id);
+  const getProfessionalImage = (id?: string) => professionalStore.getImage(professionals, id);
+
+  const [openCategories, setOpenCategories] = useState<string[]>(['general', 'procedures', 'financial']);
+
+  const toggleCategory = (id: string) => {
+    setOpenCategories((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]));
+  };
+
+  return (
+    <CollapsibleContent className="my-4 px-2">
+      <div className="space-y-6">
+        <div className="flex items-end gap-2">
+          <div className="flex flex-col gap-2">
+            <span className="text-muted-foreground text-sm">Status do pagamento</span>
+            <Select
+              value={selectedStatus[el._id] ?? el.status}
+              onValueChange={(value: string) => {
+                setIsEditing(el._id);
+                setSelectedStatus((prev) => ({ ...prev, [el._id]: value }));
+              }}
+              disabled={isLoading}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue>{statusDictionary(selectedStatus[el._id] ?? el.status)}</SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="pending" disabled={isLoading}>
+                  Pendente
+                </SelectItem>
+                <SelectItem value="partial" disabled={isLoading}>
+                  Parcial
+                </SelectItem>
+                <SelectItem value="paid" disabled={isLoading}>
+                  Pago
+                </SelectItem>
+                <SelectItem value="refund" disabled={isLoading}>
+                  Reembolsado
+                </SelectItem>
+                <SelectItem value="canceled" disabled={isLoading}>
+                  Cancelado
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {isEditing === el._id && (
+            <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
+              Salvar
+            </Button>
+          )}
+          <Button onClick={() => navigate({ to: '/financial/details', search: { id: el._id } })}>
+            <Edit className="mr-2 size-4" />
+            Editar
+          </Button>
+        </div>
+
+        <div className="overflow-hidden rounded-lg border bg-card">
+          {/* Dados Gerais */}
+          <Collapsible open={openCategories.includes('general')} onOpenChange={() => toggleCategory('general')}>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="secondary"
+                className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
+              >
+                <div className="flex items-center gap-3">
+                  <ItemMedia variant="icon" className="text-foreground">
+                    <IconCalendar className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle className="text-base">Dados Gerais</ItemTitle>
+                </div>
+                <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('general') && 'rotate-180')} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ItemGroup className="gap-0">
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="size-8 rounded-md">
+                      <AvatarImage src={getProfessionalImage(el.Professional)} />
+                      <AvatarFallback>{getProfessionalName(el.Professional).slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                    <ItemDescription className="font-sans">Profissional</ItemDescription>
+                  </div>
+                  <ItemTitle className="font-mono">{getProfessionalName(el.Professional)}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Criado em</ItemDescription>
+                  <ItemTitle className="font-mono">{formatDate(String(el.createdAt))}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Horário</ItemDescription>
+                  <ItemTitle className="font-mono">{extractDate(el.createdAt, 'hour')}</ItemTitle>
+                </Item>
+              </ItemGroup>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Procedimentos */}
+          <Collapsible open={openCategories.includes('procedures')} onOpenChange={() => toggleCategory('procedures')}>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="secondary"
+                className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
+              >
+                <div className="flex items-center gap-3">
+                  <ItemMedia variant="icon" className="text-foreground">
+                    <IconService className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle className="text-base">Procedimentos</ItemTitle>
+                </div>
+                <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('procedures') && 'rotate-180')} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ItemGroup className="gap-0">
+                {el.procedures?.length > 0 ? (
+                  el.procedures.map((procedure, index) => (
+                    <div key={procedure._id ?? procedure.procedure}>
+                      <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                        <ItemDescription className="font-sans">{procedure.procedure}</ItemDescription>
+                        <ItemTitle className="font-mono">{currencyFormat(procedure.price)}</ItemTitle>
+                      </Item>
+                      {index < el.procedures.length - 1 && <ItemSeparator />}
+                    </div>
+                  ))
+                ) : (
+                  <Item variant="default" size="sm" className="justify-center py-4">
+                    <ItemDescription className="italic">Nenhum procedimento registrado</ItemDescription>
+                  </Item>
+                )}
+              </ItemGroup>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Financeiro */}
+          <Collapsible open={openCategories.includes('financial')} onOpenChange={() => toggleCategory('financial')}>
+            <CollapsibleTrigger asChild>
+              <Button
+                variant="secondary"
+                className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
+              >
+                <div className="flex items-center gap-3">
+                  <ItemMedia variant="icon" className="text-foreground">
+                    <IconDollar className="size-4" />
+                  </ItemMedia>
+                  <ItemTitle className="text-base">Financeiro</ItemTitle>
+                </div>
+                <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('financial') && 'rotate-180')} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ItemGroup className="gap-0">
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Pagamento</ItemDescription>
+                  <ItemTitle className="font-mono">{statusDictionary(el.status)}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Valor pago</ItemDescription>
+                  <ItemTitle className="font-mono">{currencyFormat(el.paid || 0)}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Forma de Pagamento</ItemDescription>
+                  <ItemTitle className="font-mono">{financialPaymentMethod(el.paymentMethod || 'none')}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Parcelas</ItemDescription>
+                  <ItemTitle className="font-mono">{el.installments || 1}</ItemTitle>
+                </Item>
+                <ItemSeparator />
+                <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
+                  <ItemDescription className="font-sans">Total</ItemDescription>
+                  <ItemTitle className="font-mono">{currencyFormat(el.price || 0)}</ItemTitle>
+                </Item>
+              </ItemGroup>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      </div>
+    </CollapsibleContent>
+  );
+};
+
 const FinancialHistorySection = ({ financials, patientId }: { financials: DbFinancial[]; patientId: string }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<Record<string, string>>({});
-  const navigate = useNavigate();
   const { data: professionals } = useProfessionalsQuery();
-  const professionalStore = useProfessionalStore();
   const { refetch } = usePatientQuery(patientId);
-
-  const getProfessionalName = (id?: string) => professionalStore.getName(professionals, id);
-  const getProfessionalImage = (id?: string) => professionalStore.getImage(professionals, id);
 
   const sortedFinancials = useMemo(() => [...financials].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()), [financials]);
 
@@ -199,7 +406,7 @@ const FinancialHistorySection = ({ financials, patientId }: { financials: DbFina
           {sortedFinancials.map((el) => (
             <Collapsible key={el._id} className="w-full border-b">
               <CollapsibleTrigger className="group w-full transition-colors hover:bg-secondary">
-                <div className="flex h-20 items-center px-2 text-left text-foreground/60 text-sm">
+                <div className="flex h-16 items-center px-2 text-left text-foreground/60 text-sm">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <BadgeIndicator variant={el.status} pulse />
@@ -215,131 +422,16 @@ const FinancialHistorySection = ({ financials, patientId }: { financials: DbFina
                   </div>
                 </div>
               </CollapsibleTrigger>
-              <CollapsibleContent className="my-6 space-y-6 px-2">
-                <div className="flex items-end gap-2">
-                  <div className="flex flex-col gap-2">
-                    <span className="text-muted-foreground text-sm">Status do pagamento</span>
-                    <Select
-                      value={selectedStatus[el._id] ?? el.status}
-                      onValueChange={(value: string) => {
-                        setIsEditing(el._id);
-                        setSelectedStatus((prev) => ({ ...prev, [el._id]: value }));
-                      }}
-                      disabled={isLoading}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue>{statusDictionary(selectedStatus[el._id] ?? el.status)}</SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending" disabled={isLoading}>
-                          Pendente
-                        </SelectItem>
-                        <SelectItem value="partial" disabled={isLoading}>
-                          Parcial
-                        </SelectItem>
-                        <SelectItem value="paid" disabled={isLoading}>
-                          Pago
-                        </SelectItem>
-                        <SelectItem value="refund" disabled={isLoading}>
-                          Reembolsado
-                        </SelectItem>
-                        <SelectItem value="canceled" disabled={isLoading}>
-                          Cancelado
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  {isEditing === el._id && (
-                    <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
-                      Salvar
-                    </Button>
-                  )}
-                  <Button onClick={() => navigate({ to: '/financial/details', search: { id: el._id } })}>
-                    <Edit className="mr-2 size-4" />
-                    Editar
-                  </Button>
-                </div>
-
-                <div className="flex w-full flex-col gap-4 md:gap-6">
-                  <div className="flex flex-col gap-4 md:max-w-xl md:flex-row">
-                    <div className="flex w-full items-center gap-3 rounded-xl border p-6">
-                      <Avatar>
-                        <AvatarImage src={getProfessionalImage(el.Professional)} />
-                        <AvatarFallback>{getProfessionalName(el.Professional).slice(0, 2)}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col">
-                        <span className="text-muted-foreground text-sm">Profissional</span>
-                        <span className="font-bold">{getProfessionalName(el.Professional)}</span>
-                      </div>
-                    </div>
-                    <div className="flex w-full gap-4 rounded-xl border p-6">
-                      <div className="flex flex-col">
-                        <span className="text-muted-foreground text-sm">Criado em</span>
-                        <span className="font-bold text-lg">{formatDate(String(el.createdAt))}</span>
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-muted-foreground text-sm">Horário</span>
-                        <span className="font-bold text-lg">{extractDate(el.createdAt, 'hour')}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-4 md:flex-row md:gap-6">
-                    <Table className="w-full rounded-xl border p-4 md:max-w-xl">
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Procedimento</TableHead>
-                          <TableHead>Preço</TableHead>
-                          <TableHead>Status</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {el.procedures?.length > 0 ? (
-                          el.procedures.map((procedure) => (
-                            <TableRow key={procedure._id ?? procedure.procedure}>
-                              <TableCell className="max-w-28 truncate md:max-w-none">{procedure.procedure}</TableCell>
-                              <TableCell className="tabular-nums">{currencyFormat(procedure.price)}</TableCell>
-                              <TableCell className="flex items-center gap-2">
-                                <BadgeIndicator variant={procedure.status} pulse />
-                                {statusDictionary(procedure.status)}
-                              </TableCell>
-                            </TableRow>
-                          ))
-                        ) : (
-                          <TableRow>
-                            <TableCell colSpan={3} className="text-center text-muted-foreground">
-                              Nenhum procedimento registrado
-                            </TableCell>
-                          </TableRow>
-                        )}
-                      </TableBody>
-                    </Table>
-
-                    <div className="flex flex-col gap-4 rounded-xl border p-6 md:max-w-md">
-                      <div className="space-y-1">
-                        <span className="text-muted-foreground text-sm">Pagamento</span>
-                        <p className="font-medium">{statusDictionary(el.status)}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-muted-foreground text-sm">Valor pago</span>
-                        <p className="font-medium">{currencyFormat(el.paid || 0)}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-muted-foreground text-sm">Forma de Pagamento</span>
-                        <p className="font-medium">{financialPaymentMethod(el.paymentMethod || 'none')}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-muted-foreground text-sm">Parcelas</span>
-                        <p className="font-medium">{el.installments || 1}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-muted-foreground text-sm">Total</span>
-                        <p className="font-medium">{currencyFormat(el.price || 0)}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CollapsibleContent>
+              <FinancialRecordDetail
+                el={el}
+                professionals={professionals}
+                isLoading={isLoading}
+                handleStatusChange={handleStatusChange}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                setSelectedStatus={setSelectedStatus}
+                selectedStatus={selectedStatus}
+              />
             </Collapsible>
           ))}
         </div>
