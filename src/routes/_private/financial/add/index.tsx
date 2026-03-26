@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-import { FinancialForm } from '../@components/financial-form';
-import { useFinancialCreateForm } from '../@hooks/use-financial-form';
+import { FinancialForm } from './@components/financial-form';
+import { useFinancialCreateForm } from './@hooks/use-financial-form';
 
 export const Route = createFileRoute('/_private/financial/add/')({
   component: FinancialAddPage,

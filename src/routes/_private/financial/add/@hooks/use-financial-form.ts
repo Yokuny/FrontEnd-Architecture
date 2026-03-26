@@ -46,8 +46,8 @@ export function useFinancialCreateForm() {
       toast.success(res.message);
       form.reset();
       navigate({ to: '/financial', search: { page: 1, size: 5 } });
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : 'Ocorreu um erro ao cadastrar');
     }
   });
 

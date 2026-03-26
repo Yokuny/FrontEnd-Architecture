@@ -20,9 +20,9 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { usePatientQuery } from '@/query/patient';
-import { PatientForm } from '../@components/patient-form';
-import { usePatientApi } from '../@hooks/use-patient-api';
-import { usePatientForm } from '../@hooks/use-patient-form';
+import { PatientForm } from './@components/patient-form';
+import { usePatientApi } from './@hooks/use-patient-api';
+import { usePatientForm } from './@hooks/use-patient-form';
 
 const searchSchema = z.object({
   id: z.string().optional(),

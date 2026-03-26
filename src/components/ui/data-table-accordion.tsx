@@ -50,7 +50,7 @@ function AccordionRow<T>({
             striped && index % 2 === 0 && 'bg-muted/5',
             hoverable && 'hover:bg-secondary',
             onRowClick && 'cursor-pointer',
-            isOpen ? 'border-b-0 bg-accent hover:bg-accent' : 'border-b last:border-0',
+            isOpen ? 'border-b-0 hover:bg-secondary' : 'border-b last:border-0',
           )}
           onClick={(e) => {
             if (onRowClick) {
@@ -65,7 +65,7 @@ function AccordionRow<T>({
           }}
         >
           {hasExpanded && (
-            <TableCell className="w-[60px] px-4 align-middle">
+            <TableCell className="w-14 px-4 align-middle">
               <Button
                 data-expand-toggle
                 aria-label={isOpen ? 'Recolher linha' : 'Expandir linha'}

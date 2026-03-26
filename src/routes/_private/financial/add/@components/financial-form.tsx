@@ -12,7 +12,7 @@ import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { usePatientsQuery } from '@/query/patients';
 import { useProfessionalsQuery } from '@/query/professionals';
-import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '../@consts/financial.consts';
+import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '../../@consts/financial.consts';
 import type { FinancialCreateData } from '../@interface/financial.interface';
 
 export function FinancialForm() {
