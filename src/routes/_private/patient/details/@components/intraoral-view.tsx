@@ -1,5 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
+import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout, { type FormSection } from '@/components/default-form-layout';
+
 import Edit from '@/components/icons/Edit.Icon';
 import { Button } from '@/components/ui/button';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
@@ -8,19 +10,7 @@ import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { Intraoral } from '@/lib/interfaces';
 
-export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Intraoral; patientId: string }) => {
-  const navigate = useNavigate();
-
-  if (!intraoral || intraoral.updatedAt === intraoral.createdAt) {
-    return (
-      <Item variant="outline" className="flex flex-col items-center justify-center p-12 text-center">
-        <ItemTitle className="mb-4 text-xl">Registro Intraoral</ItemTitle>
-        <ItemDescription className="mb-4">Nenhum exame intraoral cadastrado para este paciente.</ItemDescription>
-        <Button onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })}>Cadastrar Exame Intraoral</Button>
-      </Item>
-    );
-  }
-
+const IntraoralContent = ({ intraoral }: { intraoral: Intraoral }) => {
   const healthData = [
     ...(intraoral.hygiene ? [{ aspect: 'Higiene', condition: intraoral.hygiene }] : []),
     ...(intraoral.halitosis ? [{ aspect: 'Mau hálito', condition: intraoral.halitosis }] : []),
@@ -87,27 +77,40 @@ export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Int
     });
   }
 
+  return <DefaultFormLayout sections={sections} />;
+};
+
+export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Intraoral; patientId: string }) => {
+  const navigate = useNavigate();
+  const hasData = !!intraoral && (intraoral.updatedAt !== intraoral.createdAt || !!intraoral.mucosa || !!intraoral.hygiene); // Added more checks to ensure data presence if timestamps match
+
   return (
     <Item>
       <ItemHeader>
         <ItemTitle className="text-xl">Registro Intraoral</ItemTitle>
         <ItemActions>
           <Button onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })}>
-            <Edit className="mr-2 size-4" /> Editar
+            {hasData ? (
+              <>
+                <Edit className="mr-2 size-4" /> Editar
+              </>
+            ) : (
+              'Cadastrar'
+            )}
           </Button>
         </ItemActions>
       </ItemHeader>
 
-      <ItemContent>
-        <DefaultFormLayout sections={sections} />
-      </ItemContent>
+      <ItemContent>{hasData ? <IntraoralContent intraoral={intraoral} /> : <DefaultEmptyData />}</ItemContent>
 
-      <ItemFooter>
-        <div className="flex w-full items-center justify-end gap-2">
-          <ItemDescription>Última atualização:</ItemDescription>
-          <ItemTitle>{formatDate(intraoral.updatedAt)}</ItemTitle>
-        </div>
-      </ItemFooter>
+      {hasData && (
+        <ItemFooter>
+          <div className="flex w-full items-center justify-end gap-2">
+            <ItemDescription>Última atualização:</ItemDescription>
+            <ItemTitle>{formatDate(intraoral.updatedAt)}</ItemTitle>
+          </div>
+        </ItemFooter>
+      )}
     </Item>
   );
 };

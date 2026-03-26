@@ -33,9 +33,7 @@ import { useProfessionalsQuery } from '@/query/professionals';
 
 const scheduleStatuses = ['pending', 'waiting', 'confirmed', 'completed', 'in_progress', 'no_show', 'canceled', 'canceled_by_patient', 'canceled_by_professional'] as const;
 
-const ScheduleSummarySection = ({ patient }: { patient: FullPatient }) => {
-  const navigate = useNavigate();
-
+const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
   const summary = useMemo(() => {
     const schedules = patient.schedules || [];
     const financials = patient.financials || [];
@@ -78,77 +76,65 @@ const ScheduleSummarySection = ({ patient }: { patient: FullPatient }) => {
   }, [patient.schedules, patient.financials]);
 
   return (
-    <Item>
-      <ItemHeader>
-        <ItemTitle className="text-xl">Resumo dos Agendamentos</ItemTitle>
-        <ItemActions>
-          <Button onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
-            <Add className="size-4" />
-            <span className="ml-2 hidden md:block">Agendar Consulta</span>
-          </Button>
-        </ItemActions>
-      </ItemHeader>
+    <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <Item variant="outline" className="flex-col items-start bg-secondary">
+        <ItemTitle className="text-muted-foreground text-xs uppercase">Próxima consulta</ItemTitle>
+        <ItemContent className="w-full text-center">
+          <p className="font-bold text-xl">{summary.nextSchedule ? formatDate(String(summary.nextSchedule.start)) : 'Sem consulta agendada'}</p>
+          <ItemDescription>{summary.upcomingSchedules} consultas nos próximos 30 dias</ItemDescription>
+        </ItemContent>
+      </Item>
 
-      <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Item variant="outline" className="flex-col items-start bg-secondary">
-          <ItemTitle className="text-muted-foreground text-xs uppercase">Próxima consulta</ItemTitle>
-          <ItemContent className="w-full text-center">
-            <p className="font-bold text-xl">{summary.nextSchedule ? formatDate(String(summary.nextSchedule.start)) : 'Sem consulta agendada'}</p>
-            <ItemDescription>{summary.upcomingSchedules} consultas nos próximos 30 dias</ItemDescription>
-          </ItemContent>
-        </Item>
-
-        <Item variant="outline" className="flex-col items-start bg-secondary">
-          <div className="flex w-full items-center justify-between">
-            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Consultas</ItemTitle>
-            <div className="flex items-baseline gap-1 text-muted-foreground">
-              <ChartPie className="size-3" />
-              <ItemDescription className="tabular-nums leading-none">
-                {summary.completedSchedules} de {summary.totalSchedules}
-              </ItemDescription>
-            </div>
+      <Item variant="outline" className="flex-col items-start bg-secondary">
+        <div className="flex w-full items-center justify-between">
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Consultas</ItemTitle>
+          <div className="flex items-baseline gap-1 text-muted-foreground">
+            <ChartPie className="size-3" />
+            <ItemDescription className="tabular-nums leading-none">
+              {summary.completedSchedules} de {summary.totalSchedules}
+            </ItemDescription>
           </div>
-          <ItemContent className="w-full text-center">
-            <div className="flex items-baseline justify-center gap-2">
-              <p className="font-bold text-xl">{summary.attendanceRate.toFixed(0)}%</p>
-              <ItemDescription className="text-lg">de comparecimento</ItemDescription>
-            </div>
-            <ItemDescription>+ {summary.recentSchedules} consultas nos últimos 30 dias</ItemDescription>
-          </ItemContent>
-        </Item>
-
-        <Item variant="outline" className="flex-col items-start bg-secondary">
-          <div className="flex w-full items-center justify-between">
-            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</ItemTitle>
-            <div className="flex items-baseline gap-1 text-muted-foreground">
-              <Board className="size-3" />
-              <ItemDescription className="tabular-nums leading-none">{summary.totalProcedures} no total</ItemDescription>
-            </div>
+        </div>
+        <ItemContent className="w-full text-center">
+          <div className="flex items-baseline justify-center gap-2">
+            <p className="font-bold text-xl">{summary.attendanceRate.toFixed(0)}%</p>
+            <ItemDescription className="text-lg">de comparecimento</ItemDescription>
           </div>
-          <ItemContent className="w-full text-center">
-            <div className="flex items-baseline justify-center gap-2">
-              <p className="font-bold text-primary text-xl">+ {summary.proceduresLast3Months}</p>
-              <ItemDescription className="text-lg">nos últimos 3 meses</ItemDescription>
-            </div>
-            <ItemDescription>Em média {summary.avgProceduresPerSchedule.toFixed(1)} procedimentos por consulta</ItemDescription>
-          </ItemContent>
-        </Item>
+          <ItemDescription>+ {summary.recentSchedules} consultas nos últimos 30 dias</ItemDescription>
+        </ItemContent>
+      </Item>
 
-        <Item variant="outline" className="flex-col items-start bg-secondary">
-          <div className="flex w-full items-center justify-between">
-            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total em Procedimentos</ItemTitle>
-            <div className="flex items-baseline gap-1 text-muted-foreground">
-              <TrendingUp className="size-3" />
-              <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.averageAmountPerSchedule)}</ItemDescription>
-            </div>
+      <Item variant="outline" className="flex-col items-start bg-secondary">
+        <div className="flex w-full items-center justify-between">
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</ItemTitle>
+          <div className="flex items-baseline gap-1 text-muted-foreground">
+            <Board className="size-3" />
+            <ItemDescription className="tabular-nums leading-none">{summary.totalProcedures} no total</ItemDescription>
           </div>
-          <ItemContent className="w-full">
-            <p className="font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
-            <ItemDescription>Em média {currencyFormat(summary.averageAmountPerSchedule)} por consulta</ItemDescription>
-          </ItemContent>
-        </Item>
-      </ItemGroup>
-    </Item>
+        </div>
+        <ItemContent className="w-full text-center">
+          <div className="flex items-baseline justify-center gap-2">
+            <p className="font-bold text-primary text-xl">+ {summary.proceduresLast3Months}</p>
+            <ItemDescription className="text-lg">nos últimos 3 meses</ItemDescription>
+          </div>
+          <ItemDescription>Em média {summary.avgProceduresPerSchedule.toFixed(1)} procedimentos por consulta</ItemDescription>
+        </ItemContent>
+      </Item>
+
+      <Item variant="outline" className="flex-col items-start bg-secondary">
+        <div className="flex w-full items-center justify-between">
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total em Procedimentos</ItemTitle>
+          <div className="flex items-baseline gap-1 text-muted-foreground">
+            <TrendingUp className="size-3" />
+            <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.averageAmountPerSchedule)}</ItemDescription>
+          </div>
+        </div>
+        <ItemContent className="w-full">
+          <p className="font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
+          <ItemDescription>Em média {currencyFormat(summary.averageAmountPerSchedule)} por consulta</ItemDescription>
+        </ItemContent>
+      </Item>
+    </ItemGroup>
   );
 };
 
@@ -395,78 +381,76 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
 
   return (
     <Item>
-      <ItemHeader>
-        <ItemTitle className="text-xl">Histórico de Consultas</ItemTitle>
-      </ItemHeader>
+      <ItemContent className="w-full gap-0">
+        <div className="flex h-12 items-center border-b px-2 text-left text-foreground/80 text-sm">
+          <div className="flex-1 font-semibold">Status do agendamento</div>
+          <div className="flex-1 font-semibold">Data do atendimento</div>
+          <div className="w-48 text-right font-semibold">Sala</div>
+          <div className="w-8" />
+        </div>
+        {sortedSchedules.map((el) => {
+          const financial = financials?.find((f) => f._id === el.Financial);
 
-      <ItemContent>
-        <div className="w-full">
-          <div className="flex h-12 items-center border-b px-2 text-left text-foreground/80 text-sm">
-            <div className="flex-1 font-semibold">Status do agendamento</div>
-            <div className="flex-1 font-semibold">Data do atendimento</div>
-            <div className="w-48 text-right font-semibold">Sala</div>
-            <div className="w-8" />
-          </div>
-          {sortedSchedules.map((el) => {
-            const financial = financials?.find((f) => f._id === el.Financial);
-
-            return (
-              <Collapsible key={el._id} className="w-full border-b">
-                <CollapsibleTrigger className="group w-full text-left transition-colors hover:bg-secondary">
-                  <div className="flex h-16 items-center px-2 text-left text-foreground/60 text-sm">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <BadgeIndicator variant={el.status} pulse />
-                        <ItemTitle className="text-lg">{statusDictionary(el.status)}</ItemTitle>
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <p className="tabular-nums">{formatDate(String(el.start))}</p>
-                    </div>
-                    <div className="w-48 text-right font-medium text-foreground">{getRoomName(el.Room) || '-'}</div>
-                    <div className="ml-4 flex items-center justify-end">
-                      <Down className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          return (
+            <Collapsible key={el._id} className="w-full border-b">
+              <CollapsibleTrigger className="group w-full text-left transition-colors hover:bg-secondary">
+                <div className="flex h-16 items-center px-2 text-left text-foreground/60 text-sm">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <BadgeIndicator variant={el.status} pulse />
+                      <ItemTitle className="text-lg">{statusDictionary(el.status)}</ItemTitle>
                     </div>
                   </div>
-                </CollapsibleTrigger>
-                <ScheduleRecordDetail
-                  el={el}
-                  financial={financial}
-                  professionals={professionals}
-                  clinic={clinic}
-                  isLoading={isLoading}
-                  handleStatusChange={handleStatusChange}
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  setSelectedStatus={setSelectedStatus}
-                  selectedStatus={selectedStatus}
-                />
-              </Collapsible>
-            );
-          })}
-        </div>
+                  <div className="flex-1">
+                    <p className="tabular-nums">{formatDate(String(el.start))}</p>
+                  </div>
+                  <div className="w-48 text-right font-medium text-foreground">{getRoomName(el.Room) || '-'}</div>
+                  <div className="ml-4 flex items-center justify-end">
+                    <Down className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  </div>
+                </div>
+              </CollapsibleTrigger>
+              <ScheduleRecordDetail
+                el={el}
+                financial={financial}
+                professionals={professionals}
+                clinic={clinic}
+                isLoading={isLoading}
+                handleStatusChange={handleStatusChange}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                setSelectedStatus={setSelectedStatus}
+                selectedStatus={selectedStatus}
+              />
+            </Collapsible>
+          );
+        })}
       </ItemContent>
     </Item>
   );
 };
 
 export const PatientScheduleView = ({ patient }: { patient: FullPatient }) => {
+  const navigate = useNavigate();
   const hasSchedules = patient.schedules && patient.schedules.length > 0;
 
   return (
     <ItemGroup>
-      {hasSchedules ? (
-        <>
-          <ScheduleSummarySection patient={patient} />
-          <ScheduleHistorySection schedules={patient.schedules} financials={patient.financials} patientId={patient._id} />
-        </>
-      ) : (
-        <Item>
-          <ItemContent>
-            <DefaultEmptyData />
-          </ItemContent>
-        </Item>
-      )}
+      <Item>
+        <ItemHeader>
+          <ItemTitle className="text-xl">Histórico de Consultas</ItemTitle>
+          <ItemActions>
+            <Button onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
+              <Add className="size-4" />
+              <span className="ml-2 hidden md:block">Agendar Consulta</span>
+            </Button>
+          </ItemActions>
+        </ItemHeader>
+
+        <ItemContent>{hasSchedules ? <ScheduleSummaryContent patient={patient} /> : <DefaultEmptyData />}</ItemContent>
+      </Item>
+
+      {hasSchedules && <ScheduleHistorySection schedules={patient.schedules} financials={patient.financials} patientId={patient._id} />}
     </ItemGroup>
   );
 };

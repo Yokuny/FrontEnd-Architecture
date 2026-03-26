@@ -116,42 +116,22 @@ const OdontogramLegend = ({ odontogram }: { odontogram: Tooth[] | null }) => {
   );
 };
 
-const OdontogramSummarySection = ({ patient }: { patient: FullPatient }) => {
-  const navigate = useNavigate();
-
+const OdontogramSummaryContent = ({ patient }: { patient: FullPatient }) => {
   return (
-    <Item>
-      <ItemHeader>
-        <ItemTitle className="text-xl">Odontograma do Paciente</ItemTitle>
-        <ItemActions>
-          <Button onClick={() => navigate({ to: '/patient/details/odontogram-add', search: { id: patient._id } })}>
-            <Add className="size-4" />
-            <span className="ml-2 hidden md:block">Adicionar</span>
-          </Button>
-          <Button onClick={() => navigate({ to: '/patient/details/odontogram-edit', search: { id: patient._id } })}>
-            <Dental className="size-4" />
-            <span className="ml-2 hidden md:block">Atualizar</span>
-          </Button>
-        </ItemActions>
-      </ItemHeader>
-
-      <ItemContent>
-        <Tabs defaultValue="permanentes" className="flex w-full flex-col">
-          {(['permanentes', 'deciduos'] as const).map((teeth) => (
-            <TabsContent key={teeth} value={teeth} className="flex flex-col items-center gap-6 rounded-lg p-4 md:p-10">
-              <OdontogramTeethGrid odontogram={patient.odontogram} type={teeth} />
-              <OdontogramLegend odontogram={patient.odontogram} />
-            </TabsContent>
-          ))}
-          <div className="flex w-full justify-center">
-            <TabsList className="grid h-auto w-fit grid-cols-2">
-              <TabsTrigger value="permanentes">Permanentes</TabsTrigger>
-              <TabsTrigger value="deciduos">Decíduos</TabsTrigger>
-            </TabsList>
-          </div>
-        </Tabs>
-      </ItemContent>
-    </Item>
+    <Tabs defaultValue="permanentes" className="flex w-full flex-col">
+      {(['permanentes', 'deciduos'] as const).map((teeth) => (
+        <TabsContent key={teeth} value={teeth} className="flex flex-col items-center gap-6 rounded-lg p-4 md:p-10">
+          <OdontogramTeethGrid odontogram={patient.odontogram} type={teeth} />
+          <OdontogramLegend odontogram={patient.odontogram} />
+        </TabsContent>
+      ))}
+      <div className="flex w-full justify-center">
+        <TabsList className="grid h-auto w-fit grid-cols-2">
+          <TabsTrigger value="permanentes">Permanentes</TabsTrigger>
+          <TabsTrigger value="deciduos">Decíduos</TabsTrigger>
+        </TabsList>
+      </div>
+    </Tabs>
   );
 };
 
@@ -181,11 +161,7 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
 
   return (
     <Item variant="outline">
-      <ItemHeader>
-        <ItemTitle className="text-xl">Histórico de Odontogramas</ItemTitle>
-      </ItemHeader>
-
-      <ItemContent className="flex flex-col gap-6">
+      <ItemContent className="flex gap-0">
         <Accordion type="single" collapsible className="w-full">
           {sortedOdontograms.map((el) => (
             <AccordionItem key={el._id} value={el._id} className="w-full rounded-lg py-1">
@@ -266,11 +242,31 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
 };
 
 export const PatientOdontogramView = ({ patient }: { patient: FullPatient }) => {
+  const navigate = useNavigate();
   const hasOdontograms = patient.odontograms && patient.odontograms.length > 0;
 
   return (
     <ItemGroup>
-      <OdontogramSummarySection patient={patient} />
+      <Item>
+        <ItemHeader>
+          <ItemTitle className="text-xl">Histórico de Odontogramas</ItemTitle>
+          <ItemActions>
+            <Button onClick={() => navigate({ to: '/patient/details/odontogram-add', search: { id: patient._id } })}>
+              <Add className="size-4" />
+              <span className="ml-2 hidden md:block">Adicionar</span>
+            </Button>
+            <Button onClick={() => navigate({ to: '/patient/details/odontogram-edit', search: { id: patient._id } })}>
+              <Dental className="size-4" />
+              <span className="ml-2 hidden md:block">Atualizar</span>
+            </Button>
+          </ItemActions>
+        </ItemHeader>
+
+        <ItemContent>
+          <OdontogramSummaryContent patient={patient} />
+        </ItemContent>
+      </Item>
+
       {hasOdontograms ? (
         <OdontogramHistorySection odontograms={patient.odontograms} patientId={patient._id} />
       ) : (

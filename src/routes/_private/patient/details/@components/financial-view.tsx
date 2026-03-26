@@ -28,9 +28,7 @@ import { cn } from '@/lib/utils/cn.util';
 import { usePatientQuery } from '@/query/patient';
 import { useProfessionalsQuery } from '@/query/professionals';
 
-const FinancialSummarySection = ({ patient }: { patient: FullPatient }) => {
-  const navigate = useNavigate();
-
+const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
   const summary = useMemo(() => {
     const financials = patient.financials || [];
     const now = new Date();
@@ -86,74 +84,62 @@ const FinancialSummarySection = ({ patient }: { patient: FullPatient }) => {
   }, [patient.financials]);
 
   return (
-    <Item>
-      <ItemHeader>
-        <ItemTitle className="text-xl">Resumo Financeiro</ItemTitle>
-        <ItemActions>
-          <Button onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
-            <Add className="size-4" />
-            <span className="ml-2 hidden md:block">Novo Registro</span>
-          </Button>
-        </ItemActions>
-      </ItemHeader>
-
-      <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Item variant="outline" className="flex-col items-start bg-secondary">
-          <div className="flex w-full items-center justify-between">
-            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total</ItemTitle>
-            <div className="flex items-baseline gap-1 text-muted-foreground">
-              <TrendingUp className="size-3" />
-              <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.totalLastMonth)} este mês</ItemDescription>
-            </div>
+    <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <Item variant="outline" className="flex-col items-start bg-secondary">
+        <div className="flex w-full items-center justify-between">
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total</ItemTitle>
+          <div className="flex items-baseline gap-1 text-muted-foreground">
+            <TrendingUp className="size-3" />
+            <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.totalLastMonth)} este mês</ItemDescription>
           </div>
-          <ItemContent className="w-full text-center">
-            <p className="font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
-            <ItemDescription>{currencyFormat(summary.totalLast3Months)} nos últimos 3 meses</ItemDescription>
-          </ItemContent>
-        </Item>
+        </div>
+        <ItemContent className="w-full text-center">
+          <p className="font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
+          <ItemDescription>{currencyFormat(summary.totalLast3Months)} nos últimos 3 meses</ItemDescription>
+        </ItemContent>
+      </Item>
 
-        <Item variant="outline" className="flex-col items-start bg-secondary">
-          <div className="flex w-full items-center justify-between">
-            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total Pago</ItemTitle>
-            <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.paidLast30Days)} este mês</ItemDescription>
-          </div>
-          <ItemContent className="w-full text-center">
-            <p className="font-bold text-green-500 text-xl dark:text-lime-400">{currencyFormat(summary.totalPaid)}</p>
-            <ItemDescription>{currencyFormat(summary.totalLast2Months)} nos últimos 2 meses</ItemDescription>
-          </ItemContent>
-        </Item>
+      <Item variant="outline" className="flex-col items-start bg-secondary">
+        <div className="flex w-full items-center justify-between">
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total Pago</ItemTitle>
+          <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.paidLast30Days)} este mês</ItemDescription>
+        </div>
+        <ItemContent className="w-full text-center">
+          <p className="font-bold text-green-500 text-xl dark:text-lime-400">{currencyFormat(summary.totalPaid)}</p>
+          <ItemDescription>{currencyFormat(summary.totalLast2Months)} nos últimos 2 meses</ItemDescription>
+        </ItemContent>
+      </Item>
 
-        <Item variant="outline" className="flex-col items-start bg-secondary">
-          <div className="flex w-full items-center justify-between">
-            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total Pendente</ItemTitle>
-            <div className="flex items-baseline gap-1 text-muted-foreground">
-              <ChartPie className="size-3" />
-              <ItemDescription className="tabular-nums leading-none">
-                {summary.paidProcedures} de {summary.procedureCount} pagos
-              </ItemDescription>
-            </div>
+      <Item variant="outline" className="flex-col items-start bg-secondary">
+        <div className="flex w-full items-center justify-between">
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total Pendente</ItemTitle>
+          <div className="flex items-baseline gap-1 text-muted-foreground">
+            <ChartPie className="size-3" />
+            <ItemDescription className="tabular-nums leading-none">
+              {summary.paidProcedures} de {summary.procedureCount} pagos
+            </ItemDescription>
           </div>
-          <ItemContent className="w-full text-center">
-            <p className="font-bold text-xl text-yellow-500 dark:text-yellow-400">{currencyFormat(summary.totalPending)}</p>
-            <ItemDescription>Último pagamento em {summary.lastPaymentDate ? formatDate(String(summary.lastPaymentDate)) : 'N/A'}</ItemDescription>
-          </ItemContent>
-        </Item>
+        </div>
+        <ItemContent className="w-full text-center">
+          <p className="font-bold text-xl text-yellow-500 dark:text-yellow-400">{currencyFormat(summary.totalPending)}</p>
+          <ItemDescription>Último pagamento em {summary.lastPaymentDate ? formatDate(String(summary.lastPaymentDate)) : 'N/A'}</ItemDescription>
+        </ItemContent>
+      </Item>
 
-        <Item variant="outline" className="flex-col items-start bg-secondary">
-          <div className="flex w-full items-center justify-between">
-            <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</ItemTitle>
-            <div className="flex items-baseline gap-1 text-muted-foreground">
-              <Board className="size-3" />
-              <ItemDescription className="tabular-nums leading-none">{summary.procedureCount} procedimentos</ItemDescription>
-            </div>
+      <Item variant="outline" className="flex-col items-start bg-secondary">
+        <div className="flex w-full items-center justify-between">
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</ItemTitle>
+          <div className="flex items-baseline gap-1 text-muted-foreground">
+            <Board className="size-3" />
+            <ItemDescription className="tabular-nums leading-none">{summary.procedureCount} procedimentos</ItemDescription>
           </div>
-          <ItemContent className="w-full text-center">
-            <p className="font-bold text-xl">{summary.proceduresLastMonth} no último mês</p>
-            <ItemDescription>Adicionados {summary.recentProcedures} em 2 meses</ItemDescription>
-          </ItemContent>
-        </Item>
-      </ItemGroup>
-    </Item>
+        </div>
+        <ItemContent className="w-full text-center">
+          <p className="font-bold text-xl">{summary.proceduresLastMonth} no último mês</p>
+          <ItemDescription>Adicionados {summary.recentProcedures} em 2 meses</ItemDescription>
+        </ItemContent>
+      </Item>
+    </ItemGroup>
   );
 };
 
@@ -391,72 +377,70 @@ const FinancialHistorySection = ({ financials, patientId }: { financials: DbFina
 
   return (
     <Item>
-      <ItemHeader>
-        <ItemTitle className="text-xl">Registros Financeiros</ItemTitle>
-      </ItemHeader>
-
-      <ItemContent>
-        <div className="w-full">
-          <div className="flex h-12 items-center border-b px-2 text-left text-foreground/80 text-sm">
-            <div className="flex-1 font-semibold">Status de pagamento</div>
-            <div className="flex-1 font-semibold">Data de criação</div>
-            <div className="w-32 text-right font-semibold">Valor</div>
-            <div className="w-8" />
-          </div>
-          {sortedFinancials.map((el) => (
-            <Collapsible key={el._id} className="w-full border-b">
-              <CollapsibleTrigger className="group w-full transition-colors hover:bg-secondary">
-                <div className="flex h-16 items-center px-2 text-left text-foreground/60 text-sm">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <BadgeIndicator variant={el.status} pulse />
-                      <ItemTitle className="text-lg">{statusDictionary(el.status)}</ItemTitle>
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <p className="tabular-nums">{formatDate(String(el.createdAt))}</p>
-                  </div>
-                  <div className="w-32 text-right font-medium text-foreground tabular-nums">{currencyFormat(el.price || 0)}</div>
-                  <div className="ml-4 flex items-center justify-end">
-                    <Down className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+      <ItemContent className="w-full gap-0">
+        <div className="flex h-12 items-center border-b px-2 text-left text-foreground/80 text-sm">
+          <div className="flex-1 font-semibold">Status de pagamento</div>
+          <div className="flex-1 font-semibold">Data de criação</div>
+          <div className="w-32 text-right font-semibold">Valor</div>
+          <div className="w-8" />
+        </div>
+        {sortedFinancials.map((el) => (
+          <Collapsible key={el._id} className="w-full border-b">
+            <CollapsibleTrigger className="group w-full transition-colors hover:bg-secondary">
+              <div className="flex h-16 items-center px-2 text-left text-foreground/60 text-sm">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <BadgeIndicator variant={el.status} pulse />
+                    <ItemTitle className="text-lg">{statusDictionary(el.status)}</ItemTitle>
                   </div>
                 </div>
-              </CollapsibleTrigger>
-              <FinancialRecordDetail
-                el={el}
-                professionals={professionals}
-                isLoading={isLoading}
-                handleStatusChange={handleStatusChange}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                setSelectedStatus={setSelectedStatus}
-                selectedStatus={selectedStatus}
-              />
-            </Collapsible>
-          ))}
-        </div>
+                <div className="flex-1">
+                  <p className="tabular-nums">{formatDate(String(el.createdAt))}</p>
+                </div>
+                <div className="w-32 text-right font-medium text-foreground tabular-nums">{currencyFormat(el.price || 0)}</div>
+                <div className="ml-4 flex items-center justify-end">
+                  <Down className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </div>
+              </div>
+            </CollapsibleTrigger>
+            <FinancialRecordDetail
+              el={el}
+              professionals={professionals}
+              isLoading={isLoading}
+              handleStatusChange={handleStatusChange}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              setSelectedStatus={setSelectedStatus}
+              selectedStatus={selectedStatus}
+            />
+          </Collapsible>
+        ))}
       </ItemContent>
     </Item>
   );
 };
 
 export const PatientFinancialView = ({ patient }: { patient: FullPatient }) => {
+  const navigate = useNavigate();
   const hasFinancials = patient.financials && patient.financials.length > 0;
 
   return (
     <ItemGroup>
-      {hasFinancials ? (
-        <>
-          <FinancialSummarySection patient={patient} />
-          <FinancialHistorySection financials={patient.financials} patientId={patient._id} />
-        </>
-      ) : (
-        <Item>
-          <ItemContent>
-            <DefaultEmptyData />
-          </ItemContent>
-        </Item>
-      )}
+      <Item>
+        <ItemHeader>
+          <ItemTitle className="text-xl">Registros Financeiros</ItemTitle>
+          <ItemActions>
+            <Button onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
+              <Add className="size-4" />
+              <span className="ml-2 hidden md:block">Novo Registro</span>
+            </Button>
+          </ItemActions>
+        </ItemHeader>
+
+        <ItemContent>{hasFinancials ? <FinancialSummaryContent patient={patient} /> : <DefaultEmptyData />}</ItemContent>
+      </Item>
+
+      {hasFinancials && <FinancialHistorySection financials={patient.financials} patientId={patient._id} />}
     </ItemGroup>
   );
 };

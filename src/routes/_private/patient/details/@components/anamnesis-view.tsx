@@ -1,4 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
+import DefaultEmptyData from '@/components/default-empty-data';
+
 import DefaultFormLayout, { type FormSection } from '@/components/default-form-layout';
 import Edit from '@/components/icons/Edit.Icon';
 import { Badge } from '@/components/ui/badge';
@@ -29,19 +31,7 @@ export const ANAMNESIS_SEVERITY_MAP = {
   takingMedication: 'medium',
 } as const;
 
-export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Anamnesis; patientId: string }) => {
-  const navigate = useNavigate();
-
-  if (!anamnesis || anamnesis.updatedAt === anamnesis.createdAt) {
-    return (
-      <Item variant="outline" className="flex flex-col items-center justify-center p-12 text-center">
-        <ItemTitle className="mb-4 text-xl">Registro de Anamnese</ItemTitle>
-        <ItemDescription className="mb-4">Nenhuma anamnese cadastrada para este paciente.</ItemDescription>
-        <Button onClick={() => navigate({ to: '/patient/details/anamnesis', search: { id: patientId } })}>Cadastrar Anamnese</Button>
-      </Item>
-    );
-  }
-
+const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
   const getSeverityDot = (condition: boolean, severity: 'high' | 'medium' = 'medium') => {
     if (!condition) return null;
     return <div className={cn('ml-2 size-2 rounded-full', severity === 'high' ? 'bg-red-500' : 'bg-yellow-500')} />;
@@ -412,33 +402,50 @@ export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Ana
   }
 
   return (
+    <>
+      {attentionCount > 0 && (
+        <div className="flex items-center gap-2 rounded-md bg-destructive/5 px-4 py-3 text-destructive">
+          <Badge variant="red">{attentionCount}</Badge>
+          <span className="font-semibold">Pontos de atenção encontrados nesta ficha médica.</span>
+        </div>
+      )}
+
+      <DefaultFormLayout sections={sections} />
+    </>
+  );
+};
+
+export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Anamnesis; patientId: string }) => {
+  const navigate = useNavigate();
+  const hasData = !!anamnesis && anamnesis.updatedAt !== anamnesis.createdAt;
+
+  return (
     <Item>
       <ItemHeader>
         <ItemTitle className="text-xl">Registro de Anamnese</ItemTitle>
         <ItemActions>
           <Button onClick={() => navigate({ to: '/patient/details/anamnesis', search: { id: patientId } })}>
-            <Edit className="mr-2 size-4" /> Editar
+            {hasData ? (
+              <>
+                <Edit className="mr-2 size-4" /> Editar
+              </>
+            ) : (
+              'Cadastrar'
+            )}
           </Button>
         </ItemActions>
       </ItemHeader>
 
-      <ItemContent>
-        {attentionCount > 0 && (
-          <div className="flex items-center gap-2 rounded-md bg-destructive/5 px-4 py-3 text-destructive">
-            <Badge variant="red">{attentionCount}</Badge>
-            <span className="font-semibold">Pontos de atenção encontrados nesta ficha médica.</span>
+      <ItemContent>{hasData ? <AnamnesisContent anamnesis={anamnesis} /> : <DefaultEmptyData />}</ItemContent>
+
+      {hasData && (
+        <ItemFooter>
+          <div className="flex w-full items-center justify-end gap-2">
+            <ItemDescription>Última atualização:</ItemDescription>
+            <ItemTitle>{formatDate(anamnesis.updatedAt)}</ItemTitle>
           </div>
-        )}
-
-        <DefaultFormLayout sections={sections} />
-      </ItemContent>
-
-      <ItemFooter>
-        <div className="flex w-full items-center justify-end gap-2">
-          <ItemDescription>Última atualização:</ItemDescription>
-          <ItemTitle>{formatDate(anamnesis.updatedAt)}</ItemTitle>
-        </div>
-      </ItemFooter>
+        </ItemFooter>
+      )}
     </Item>
   );
 };
