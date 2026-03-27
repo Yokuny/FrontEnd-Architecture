@@ -3,7 +3,6 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-
 import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
 import Loader from '@/components/icons/Loader.Icon';
@@ -84,16 +83,6 @@ function OdontogramAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button
-            variant="outline"
-            type="button"
-            onClick={() => {
-              // @ts-expect-error
-              navigate({ to: '/odontogram' });
-            }}
-          >
-            Cancelar
-          </Button>
           <Button form="odontogram-form" type="submit" disabled={create.isPending} className="min-w-[120px]">
             {create.isPending && <Loader className="mr-2 size-4 animate-spin" />}
             Cadastrar

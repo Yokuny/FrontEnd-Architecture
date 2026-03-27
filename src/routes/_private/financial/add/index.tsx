@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
@@ -16,16 +16,12 @@ export const Route = createFileRoute('/_private/financial/add/')({
 });
 
 function FinancialAddPage() {
-  const navigate = useNavigate();
   const { form, onSubmit, isPending } = useFinancialCreateForm();
 
   return (
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="outline" onClick={() => navigate({ to: '/financial', search: { page: 1, size: 5 } })} disabled={isPending}>
-            Cancelar
-          </Button>
           <Button type="submit" form="financial-form" disabled={isPending} className="ml-auto min-w-[120px]">
             {isPending && <Spinner className="mr-2 size-4" />}
             Cadastrar

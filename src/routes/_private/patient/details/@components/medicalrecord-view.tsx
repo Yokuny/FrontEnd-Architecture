@@ -1,10 +1,23 @@
 import { useMemo } from 'react';
 
 import DefaultEmptyData from '@/components/default-empty-data';
-import { Item, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
-import { Timeline, TimelineContent, TimelineDate, TimelineHeader, TimelineIndicator, TimelineItem, TimelineSeparator } from '@/components/ui/timeline';
-import { currencyFormat, formatDate, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Timeline } from '@/components/ui/timeline';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { removeRecordImage, updateRecordImage } from '@/lib/helpers/upload.helper';
 import type { FullPatient } from '@/lib/interfaces';
+
+import { MedicalRecordImageUpload } from './medicalrecord-image-upload';
+
+type TimelineEvent = {
+  id: string;
+  title: string;
+  description: string;
+  date: Date | string;
+  type: string;
+  image?: string;
+};
 
 export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) => {
   const timelineEvents = useMemo(() => {
@@ -37,6 +50,7 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
         description: 'Odontograma criado no sistema',
         date: odontogram.createdAt,
         type: 'odontogram',
+        image: odontogram.image,
       });
     });
 
@@ -57,6 +71,7 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
         description: `${financial.procedures.length} procedimento(s) - ${currencyFormat(financial.procedures.reduce((acc, p) => acc + p.price, 0))}`,
         date: financial.createdAt,
         type: 'financial',
+        image: financial.image,
       });
     });
 
@@ -75,6 +90,14 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     return sorted;
   }, [patient]);
 
+  const handleUploadComplete = (recordID: string, recordType: string) => async (imageUrl: string) => {
+    await updateRecordImage(recordID, recordType as 'odontogram' | 'financial', imageUrl);
+  };
+
+  const handleImageRemove = (recordID: string, recordType: string) => async () => {
+    await removeRecordImage(recordID, recordType as 'odontogram' | 'financial');
+  };
+
   if (timelineEvents.length === 0) {
     return (
       <ItemGroup>
@@ -87,23 +110,24 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     );
   }
 
-  const getIndicatorColor = (type: string) => {
-    switch (type) {
-      case 'anamnesis':
-      case 'intraoral':
-        return 'bg-blue-500';
-      case 'odontogram':
-        return 'bg-violet-500';
-      case 'schedule':
-        return 'bg-amber-500';
-      case 'financial':
-        return 'bg-green-500';
-      case 'patient':
-        return 'bg-primary';
-      default:
-        return 'bg-muted-foreground';
-    }
-  };
+  const timelineData = timelineEvents.map((event) => ({
+    title: event.title,
+    content: (
+      <div>
+        <ItemTitle className="mb-2">{formatDate(event.date)}</ItemTitle>
+        <ItemDescription>{event.description}</ItemDescription>
+
+        {(event.type === 'odontogram' || event.type === 'financial') && event.id && (
+          <MedicalRecordImageUpload
+            recordID={event.id}
+            imgURL={event.image || ''}
+            onUploadComplete={handleUploadComplete(event.id, event.type)}
+            onImageRemove={handleImageRemove(event.id, event.type)}
+          />
+        )}
+      </div>
+    ),
+  }));
 
   return (
     <ItemGroup>
@@ -113,29 +137,11 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
         </ItemHeader>
 
         <ItemContent>
-          <Timeline defaultValue={timelineEvents.length}>
-            {timelineEvents.map((event, index) => (
-              <TimelineItem key={event.id} step={index + 1}>
-                <TimelineSeparator className="bg-border" />
-                <TimelineIndicator className={getIndicatorColor(event.type)} />
-                <TimelineHeader>
-                  <TimelineDate>{formatDate(String(event.date))}</TimelineDate>
-                  <span className="font-semibold text-sm">{event.title}</span>
-                </TimelineHeader>
-                <TimelineContent>{event.description}</TimelineContent>
-              </TimelineItem>
-            ))}
-          </Timeline>
+          <div className="relative w-full overflow-clip">
+            <Timeline data={timelineData} />
+          </div>
         </ItemContent>
       </Item>
     </ItemGroup>
   );
-};
-
-type TimelineEvent = {
-  id: string;
-  title: string;
-  description: string;
-  date: Date | string;
-  type: string;
 };

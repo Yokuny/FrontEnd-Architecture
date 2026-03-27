@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -16,7 +16,6 @@ export const Route = createFileRoute('/_private/reminders/add/')({
 });
 
 function ReminderAddPage() {
-  const navigate = useNavigate();
   const { form, onSubmit, isPending } = useReminderForm();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,9 +27,6 @@ function ReminderAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="outline" disabled={isPending} onClick={() => navigate({ to: '/reminders', search: { showAll: true, page: 1, size: 10 } })}>
-            Cancelar
-          </Button>
           <Button type="submit" form="reminder-form" disabled={isPending} className="ml-auto min-w-[120px]">
             {isPending && <Spinner className="mr-2 size-4" />}
             Salvar

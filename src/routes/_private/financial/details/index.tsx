@@ -1,8 +1,7 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
-import Back from '@/components/icons/Back.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -25,7 +24,6 @@ export const Route = createFileRoute('/_private/financial/details/')({
 });
 
 function FinancialDetailPage() {
-  const navigate = useNavigate();
   const search = Route.useSearch();
   const id = search.id;
   const { data: financial, isLoading } = useFinancialDetailQuery(id);
@@ -48,10 +46,6 @@ function FinancialDetailPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button variant="outline" type="button" onClick={() => navigate({ to: '/financial', search: { page: 1, size: 5 } })} disabled={isPending} className="min-w-32">
-            <Back className="mr-2 size-4" />
-            Voltar
-          </Button>
           <Button type="submit" form="financial-edit-form" disabled={isPending} className="min-w-40">
             {isPending && <Spinner className="mr-2 size-4" />}
             Salvar
