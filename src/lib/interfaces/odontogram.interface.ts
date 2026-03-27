@@ -23,7 +23,7 @@ export type PartialOdontogram = {
   _id: string;
   patient: string;
   patientID: string;
-  professionalID: string;
+  ProfessionalID: string;
   Financial: string;
   finished: boolean;
   createdAt: Date;

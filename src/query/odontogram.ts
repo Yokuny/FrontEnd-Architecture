@@ -7,13 +7,15 @@ export const odontogramKeys = {
   all: ['odontogram'] as const,
   lists: () => [...odontogramKeys.all, 'list'] as const,
   list: () => [...odontogramKeys.lists()] as const,
+  partials: () => [...odontogramKeys.all, 'partial'] as const,
+  partial: () => [...odontogramKeys.partials()] as const,
   details: () => [...odontogramKeys.all, 'detail'] as const,
   detail: (id: string) => [...odontogramKeys.details(), id] as const,
   byPatient: (patientId: string) => [...odontogramKeys.all, 'patient', patientId] as const,
 };
 
-async function fetchOdontograms(): Promise<PartialOdontogram[]> {
-  const res = await request('odontogram/list', GET());
+async function fetchOdontogramsPartial(): Promise<PartialOdontogram[]> {
+  const res = await request('odontogram/partial', GET());
   if (!res.success) throw new Error(res.message);
   return res.data as PartialOdontogram[];
 }
@@ -37,8 +39,8 @@ async function updateOdontogramStatus({ id, finished }: { id: string; finished: 
 
 export function useOdontogramsQuery() {
   return useQuery({
-    queryKey: odontogramKeys.list(),
-    queryFn: fetchOdontograms,
+    queryKey: odontogramKeys.partial(),
+    queryFn: fetchOdontogramsPartial,
   });
 }
 
@@ -56,14 +58,14 @@ export function useOdontogramMutations() {
   const create = useMutation({
     mutationFn: createOdontogram,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: odontogramKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: odontogramKeys.partials() });
     },
   });
 
   const updateStatus = useMutation({
     mutationFn: updateOdontogramStatus,
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: odontogramKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: odontogramKeys.partials() });
       queryClient.invalidateQueries({ queryKey: odontogramKeys.detail(variables.id) });
     },
   });

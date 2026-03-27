@@ -1,20 +1,14 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
-import Loader from '@/components/icons/Loader.Icon';
+import DefaultFormLayout from '@/components/default-form-layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { GET, request } from '@/lib/api/client.api';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
-import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
-import { useOdontogramMutations } from '@/query/odontogram';
+import { Spinner } from '@/components/ui/spinner';
 import Teeth from '../@components/teeth';
+import { useOdontogramAddForm } from './@hooks/use-odontogram-add-form';
 
 export const Route = createFileRoute('/_private/odontogram/add/')({
   component: OdontogramAddPage,
@@ -26,65 +20,101 @@ export const Route = createFileRoute('/_private/odontogram/add/')({
 
 function OdontogramAddPage() {
   const navigate = useNavigate({ from: Route.fullPath });
-  const [patientOdontogram, setPatientOdontogram] = useState<any>(null);
-  const { create } = useOdontogramMutations();
 
-  const form = useForm<NewOdontogram>({
-    resolver: zodResolver(odontogramSchema) as any,
-    defaultValues: {
-      Patient: '',
-      Professional: '',
-      finished: false,
-      teeth: [],
+  const handleSuccess = (patientId: string) => {
+    if (patientId) {
+      navigate({ to: '/patient/details', search: { id: patientId, tab: 'odontogram' } });
+    } else {
+      // @ts-expect-error
+      navigate({ to: '/odontogram' });
+    }
+  };
+
+  const { form, patientOdontogram, isPending, fetchPatients, fetchProfessionals, fetchPatientOdontogram, clearPatientOdontogram, onSubmit } = useOdontogramAddForm(handleSuccess);
+
+  const sections = [
+    {
+      title: 'Paciente',
+      description: 'Selecione o paciente para o qual o odontograma será criado.',
+      fields: [
+        <FormField
+          key="patient"
+          control={form.control as any}
+          name="Patient"
+          render={({ field }) => (
+            <FormItem className="w-full max-w-xs">
+              <FormLabel>Paciente</FormLabel>
+              <FormControl>
+                <PatientCombobox
+                  controller={{
+                    ...field,
+                    onChange: (value: string) => {
+                      field.onChange(value);
+                      if (value) {
+                        fetchPatientOdontogram(value);
+                      } else {
+                        clearPatientOdontogram();
+                      }
+                    },
+                  }}
+                  fetchPatients={fetchPatients}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />,
+      ],
     },
-    mode: 'onChange',
-  });
-
-  const fetchPatients = async () => {
-    const res = await request('patient/partial', GET());
-    return comboboxWithImgFormat(res.data);
-  };
-
-  const fetchProfessionals = async () => {
-    const res = await request('user/professionals', GET());
-    return comboboxWithImgFormat(res.data);
-  };
-
-  const fetchPatientOdontogram = async (patientID: string) => {
-    try {
-      const res = await request(`patient/${patientID}/odontogram`, GET());
-      if (res.success) {
-        setPatientOdontogram(res.data);
-      }
-    } catch (e: any) {
-      toast.error(e.message);
-    }
-  };
-
-  const onSubmit = async (values: NewOdontogram) => {
-    try {
-      await create.mutateAsync(values);
-      toast.success('Odontograma cadastrado com sucesso');
-      form.reset();
-
-      if (values.Patient) {
-        // @ts-expect-error
-        navigate({ to: '/patient/$id/odontogram', params: { id: values.Patient } });
-      } else {
-        // @ts-expect-error
-        navigate({ to: '/odontogram' });
-      }
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao cadastrar odontograma');
-    }
-  };
+    {
+      title: 'Profissional Responsável',
+      description: 'Indique o profissional que realizará os procedimentos deste odontograma.',
+      fields: [
+        <FormField
+          key="professional"
+          control={form.control as any}
+          name="Professional"
+          render={({ field }) => (
+            <FormItem className="w-full max-w-xs">
+              <FormLabel>Profissional</FormLabel>
+              <FormControl>
+                <ProfessionalCombobox controller={field} fetchProfessionals={fetchProfessionals} />
+              </FormControl>
+            </FormItem>
+          )}
+        />,
+      ],
+    },
+    {
+      title: 'Mapa de Execução',
+      description: 'Seleção dos dentes para a prestação dos serviços odontológicos planejados.',
+      layout: 'vertical' as const,
+      fields: [
+        <div key="teeth-map" className="rounded-lg md:bg-muted md:p-6">
+          <ScrollArea>
+            <FormField
+              control={form.control as any}
+              name="teeth"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl className="text-xs md:text-md">
+                    <Teeth form={field} odontogram={patientOdontogram?.odontogram} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </div>,
+      ],
+    },
+  ];
 
   return (
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button form="odontogram-form" type="submit" disabled={create.isPending} className="min-w-[120px]">
-            {create.isPending && <Loader className="mr-2 size-4 animate-spin" />}
+          <Button form="odontogram-add-form" type="submit" disabled={isPending} className="min-w-30">
+            {isPending && <Spinner className="mr-2 size-4" />}
             Cadastrar
           </Button>
         </CardAction>
@@ -92,67 +122,13 @@ function OdontogramAddPage() {
       <CardContent>
         <Form {...(form as any)}>
           <form
-            id="odontogram-form"
-            className="space-y-5"
+            id="odontogram-add-form"
             onSubmit={(e) => {
               e.preventDefault();
               onSubmit(form.getValues());
             }}
           >
-            <div className="flex flex-col gap-4 md:flex-row md:px-6">
-              <FormField
-                control={form.control as any}
-                name="Patient"
-                render={({ field }) => (
-                  <FormItem className="w-full max-w-xs">
-                    <FormControl>
-                      <PatientCombobox
-                        controller={{
-                          ...field,
-                          onChange: (value: string) => {
-                            field.onChange(value);
-                            if (value) {
-                              fetchPatientOdontogram(value);
-                            } else {
-                              setPatientOdontogram(null);
-                            }
-                          },
-                        }}
-                        fetchPatients={fetchPatients}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control as any}
-                name="Professional"
-                render={({ field }) => (
-                  <FormItem className="w-full max-w-xs">
-                    <FormControl>
-                      <ProfessionalCombobox controller={field} fetchProfessionals={fetchProfessionals} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="rounded-lg md:bg-muted md:p-6">
-              <ScrollArea>
-                <FormField
-                  control={form.control as any}
-                  name="teeth"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormControl className="text-xs md:text-md">
-                        <Teeth form={field} odontogram={patientOdontogram?.odontogram} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <ScrollBar orientation="horizontal" />
-              </ScrollArea>
-            </div>
+            <DefaultFormLayout sections={sections} />
           </form>
         </Form>
       </CardContent>
