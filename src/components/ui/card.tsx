@@ -157,30 +157,23 @@ function CardAction({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-action"
-      className={cn('col-start-2 row-span-2 row-start-1 flex w-full flex-col items-end gap-2 self-start justify-self-end sm:w-auto sm:flex-row', className)}
+      className={cn('col-start-2 row-span-2 row-start-1 flex w-full justify-end gap-2 sm:w-auto sm:flex-row', className)}
       {...props}
     />
   );
 }
 
 function CardContent({ className, ...props }: ComponentProps<'div'>) {
-  return <div data-slot="card-content" className={cn('px-6', className)} {...props} />;
+  return <div data-slot="card-content" className={cn('px-2 md:px-6', className)} {...props} />;
 }
 
-function CardHeaderActions({ className, ...props }: ComponentProps<'div'>) {
-  return <div data-slot="card-header-actions" className={cn('flex items-center gap-2', className)} {...props} />;
-}
-
-interface CardFooterProps extends ComponentProps<'div'> {
-  layout?: 'simple' | 'multi';
-}
 
 function CardFooter({ className, layout = 'simple', ...props }: CardFooterProps) {
   return (
     <div
       data-slot="card-footer"
       className={cn(
-        'flex gap-4 px-6 [.border-t]:pt-6',
+        'flex gap-4 px-4 md:px-6 [.border-t]:pt-6',
         layout === 'simple' && 'items-center justify-end',
         layout === 'multi' && 'flex-col items-center justify-between sm:flex-row',
         className,
@@ -190,4 +183,8 @@ function CardFooter({ className, layout = 'simple', ...props }: CardFooterProps)
   );
 }
 
-export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent, CardHeaderActions };
+export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };
+
+interface CardFooterProps extends ComponentProps<'div'> {
+  layout?: 'simple' | 'multi';
+}

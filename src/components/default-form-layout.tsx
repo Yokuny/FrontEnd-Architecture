@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils/cn.util';
 
 export default function DefaultFormLayout({ sections, layout = 'horizontal', className }: DefaultFormLayoutProps) {
   return (
-    <div className={cn('flex flex-col gap-8 p-6 md:p-10', className)}>
+    <div className={cn('flex flex-col gap-8 p-4 md:p-10', className)}>
       <div className="flex flex-col gap-10">
         {sections.map((section, index) => {
           const sectionLayout = section.layout || layout;

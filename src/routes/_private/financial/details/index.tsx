@@ -47,7 +47,7 @@ function FinancialDetailPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form="financial-edit-form" disabled={isPending} className="min-w-40">
+          <Button type="submit" form="financial-edit-form" disabled={isPending} >
             {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Salvar</span>
           </Button>

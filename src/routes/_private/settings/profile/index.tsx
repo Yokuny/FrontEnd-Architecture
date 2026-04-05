@@ -62,7 +62,7 @@ export function SettingsProfile() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form="profile-form" disabled={updateProfile.isPending} className="min-w-32">
+          <Button type="submit" form="profile-form" disabled={updateProfile.isPending}>
             {updateProfile.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Salvar</span>
           </Button>

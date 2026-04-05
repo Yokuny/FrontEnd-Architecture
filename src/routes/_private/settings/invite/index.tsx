@@ -54,7 +54,7 @@ export function SettingsInvite() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form="invite-form" disabled={inviteUser.isPending} className="min-w-36">
+          <Button type="submit" form="invite-form" disabled={inviteUser.isPending} >
             {inviteUser.isPending ? <Spinner className="size-4" /> : <Send className="size-4" />}
             <span className="sr-only md:not-sr-only">Enviar convite</span>
           </Button>

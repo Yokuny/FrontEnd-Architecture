@@ -75,7 +75,7 @@ export function SettingsClinic() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form="clinic-form" disabled={saveClinic.isPending} className="min-w-32">
+          <Button type="submit" form="clinic-form" disabled={saveClinic.isPending} >
             {saveClinic.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Salvar</span>
           </Button>

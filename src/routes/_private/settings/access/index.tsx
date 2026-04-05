@@ -55,7 +55,7 @@ export function SettingsAccess() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form="access-form" disabled={changePassword.isPending} className="min-w-36">
+          <Button type="submit" form="access-form" disabled={changePassword.isPending} >
             {changePassword.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Atualizar senha</span>
           </Button>

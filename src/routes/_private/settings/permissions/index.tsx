@@ -94,7 +94,7 @@ export function SettingsPermissions() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button onClick={handleSavePermissions} disabled={updatePermissions.isPending} className="min-w-36">
+          <Button onClick={handleSavePermissions} disabled={updatePermissions.isPending}>
             {updatePermissions.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Salvar Alterações</span>
           </Button>

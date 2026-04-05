@@ -132,7 +132,7 @@ export function SettingsProcedures() {
       <CardHeader>
         <CardAction>
           {hasChanges && (
-            <Button onClick={saveProcedure} disabled={updateProcedures.isPending} className="min-w-[120px]">
+            <Button onClick={saveProcedure} disabled={updateProcedures.isPending}>
               {updateProcedures.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
               <span className="sr-only md:not-sr-only">Salvar</span>
             </Button>
