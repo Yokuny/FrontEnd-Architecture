@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { addDays, addMonths, addWeeks, endOfDay, endOfMonth, endOfWeek, isSameMonth, startOfDay, startOfMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
+import { addDays, addMonths, addWeeks, endOfWeek, isSameMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
 import type React from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import Add from '@/components/icons/Add.Icon';
 import Cross from '@/components/icons/Cross.Icon';
@@ -31,7 +31,6 @@ import { scheduleTimeSchema } from '@/lib/interfaces/schemas/schedule.schema';
 import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { useProfessionalsQuery } from '@/query/professionals';
-import { useScheduleQuery, useUpdateScheduleTime } from '@/query/schedule';
 import { useUserQuery } from '@/query/user';
 import { AgendaView } from './@components/agenda-view';
 import { CalendarDndProvider } from './@components/calendar-dnd-context';
@@ -40,6 +39,10 @@ import { EventDialog } from './@components/event-dialog';
 import { MonthView } from './@components/month-view';
 import { TimeUpdateDialog } from './@components/time-update-dialog';
 import { WeekView } from './@components/week-view';
+import { viewDictionary } from './@consts/schedule.consts';
+import { useScheduleApi } from './@hooks/use-schedule-api';
+import type { CustomDateRange } from './@interface/schedule.interface';
+import { computeUpcomingPerProfessional } from './@utils/schedule.utils';
 
 export const Route = createFileRoute('/_private/schedule/')({
   component: SchedulePage,
@@ -49,13 +52,6 @@ export const Route = createFileRoute('/_private/schedule/')({
   },
 });
 
-const viewDictionary: Record<CalendarView, string> = {
-  month: 'Mês',
-  week: 'Semana',
-  day: 'Dia',
-  agenda: 'Agenda',
-};
-
 function SchedulePage() {
   // Context hooks
   const isMobile = useIsMobile();
@@ -64,13 +60,12 @@ function SchedulePage() {
   const { selectedRoom, setSelectedRoom } = useUserStore();
   const { getRoomName: getRoomNameUtil } = useClinicStore();
   const professionalStore = useProfessionalStore();
-  const { getColor: getProfessionalColor, setColor: setProfessionalColor, clearColor: clearProfessionalColor } = useProfessionalColors();
+  const { setColor: setProfessionalColor, clearColor: clearProfessionalColor } = useProfessionalColors();
 
   // Query hooks
   const { data: user } = useUserQuery();
   const { data: clinic } = useClinicApi();
   const { data: professionals } = useProfessionalsQuery();
-  const updateScheduleTime = useUpdateScheduleTime();
 
   // Derived values
   const getRoomName = (id: string | undefined) => getRoomNameUtil(clinic, id);
@@ -79,8 +74,7 @@ function SchedulePage() {
 
   // useState
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [customDateRange, setCustomDateRange] = useState<{ from: Date; to: Date } | null>(null);
-  const [events, setEvents] = useState<PartialSchedule[]>([]);
+  const [customDateRange, setCustomDateRange] = useState<CustomDateRange | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<PartialSchedule | null>(null);
   const [isEventDialogOpen, setIsEventDialogOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -88,6 +82,14 @@ function SchedulePage() {
   const [pendingEventUpdate, setPendingEventUpdate] = useState<PartialSchedule | null>(null);
   const [selectedRoomID, setSelectedRoomID] = useState('');
   const [view, setView] = useState<CalendarView>('week');
+
+  // Route-specific API hook (events state + query + mutation)
+  const { events, setEvents, startDate, endDate, updateScheduleTime, getProfessionalColor } = useScheduleApi({
+    currentDate,
+    view,
+    customDateRange,
+    selectedRoomID,
+  });
 
   // useMemo
   const headerTitle = useMemo(() => {
@@ -118,47 +120,16 @@ function SchedulePage() {
     return Array.from(new Set(allIds));
   }, [events]);
 
-  // useCallback
-  const getDateRange = useCallback(() => {
-    if (customDateRange && view === 'agenda') {
-      return { startDate: startOfDay(customDateRange.from), endDate: endOfDay(customDateRange.to) };
-    }
-    const startDate = startOfDay(currentDate);
-    const endDate = endOfDay(currentDate);
-    if (view === 'month') return { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) };
-    if (view === 'week') return { startDate: startOfWeek(startDate, { weekStartsOn: 1 }), endDate: endOfWeek(endDate, { weekStartsOn: 1 }) };
-    if (view === 'day' || view === 'agenda') return { startDate, endDate: addDays(endDate, 1) };
-    return { startDate, endDate };
-  }, [currentDate, view, customDateRange]);
-
-  // Query with state-derived params
-  const { startDate, endDate } = getDateRange();
-  const { data: scheduleData } = useScheduleQuery({
-    startDate,
-    endDate,
-    roomID: selectedRoomID,
-  });
+  const upcomingPerProfessional = useMemo(() => computeUpcomingPerProfessional(events), [events]);
 
   // useEffect
   useEffect(() => {
-    if (selectedRoom) {
-      setSelectedRoomID(selectedRoom);
-    }
+    if (selectedRoom) setSelectedRoomID(selectedRoom);
   }, [selectedRoom]);
 
   useEffect(() => {
     if (view !== 'agenda') setCustomDateRange(null);
   }, [view]);
-
-  useEffect(() => {
-    if (scheduleData) {
-      const eventsWithColors = scheduleData.map((event) => ({
-        ...event,
-        color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status),
-      }));
-      setEvents(eventsWithColors);
-    }
-  }, [scheduleData, getProfessionalColor]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -216,8 +187,7 @@ function SchedulePage() {
       start.setSeconds(0);
       start.setMilliseconds(0);
     }
-
-    const newEvent: PartialSchedule = {
+    setSelectedEvent({
       _id: '',
       title: '',
       start,
@@ -227,26 +197,23 @@ function SchedulePage() {
       Professional: '',
       Room: selectedRoomID,
       status: 'pending',
-    };
-    setSelectedEvent(newEvent);
+    });
     setIsEventDialogOpen(true);
   };
 
   const handleEventSave = (event: PartialSchedule) => {
     if (event._id && event.color) {
-      const updatedEvent = {
-        ...event,
-        color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status),
-      };
-      setEvents(events.map((e) => (e._id === event._id ? updatedEvent : e)));
+      setEvents(events.map((e) => (e._id === event._id ? { ...event, color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status) } : e)));
       toast('Agendamento atualizado', { description: formatDate(event.start, 'd MMM yyyy') });
     } else {
-      const newEventWithColor = {
-        ...event,
-        _id: event._id || Math.random().toString(36).substring(2, 11),
-        color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status),
-      };
-      setEvents([...events, newEventWithColor]);
+      setEvents([
+        ...events,
+        {
+          ...event,
+          _id: event._id || Math.random().toString(36).substring(2, 11),
+          color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status),
+        },
+      ]);
       toast('Agendamento adicionado', { description: formatDate(event.start, 'd MMM yyyy') });
     }
     setIsEventDialogOpen(false);
@@ -275,18 +242,18 @@ function SchedulePage() {
 
   const handleConfirmTimeUpdate = async (confirmedEvent: PartialSchedule) => {
     try {
-      const timeData = {
+      const validatedData = scheduleTimeSchema.parse({
         start: new Date(confirmedEvent.start).toISOString(),
         end: new Date(confirmedEvent.end).toISOString(),
-      };
-      const validatedData = scheduleTimeSchema.parse(timeData);
+      });
       await updateScheduleTime.mutateAsync({ id: confirmedEvent._id, data: validatedData });
-
-      const updatedEvent = {
-        ...confirmedEvent,
-        color: getEventColorByProfessional(confirmedEvent.Professional || '', getProfessionalColor, confirmedEvent.status),
-      };
-      setEvents(events.map((event) => (event._id === confirmedEvent._id ? updatedEvent : event)));
+      setEvents(
+        events.map((event) =>
+          event._id === confirmedEvent._id
+            ? { ...confirmedEvent, color: getEventColorByProfessional(confirmedEvent.Professional || '', getProfessionalColor, confirmedEvent.status) }
+            : event,
+        ),
+      );
       toast('Horário do agendamento atualizado', { description: formatDate(confirmedEvent.start, 'dd/MM/yyyy HH:mm') });
     } catch (e) {
       toast.error('Erro ao atualizar horário', { description: e instanceof Error ? e.message : 'Erro desconhecido' });
@@ -298,20 +265,22 @@ function SchedulePage() {
 
   const handleColorChange = (professionalID: string, color: EventColor) => {
     setProfessionalColor(professionalID, color);
-    const updatedEvents = events.map((event) =>
-      event.Professional === professionalID ? { ...event, color: getEventColorByProfessional(event.Professional, getProfessionalColor, event.status) } : event,
+    setEvents(
+      events.map((event) =>
+        event.Professional === professionalID ? { ...event, color: getEventColorByProfessional(event.Professional, getProfessionalColor, event.status) } : event,
+      ),
     );
-    setEvents(updatedEvents);
     toast.success('Cor atualizada');
   };
 
   const handleRemoveColor = (professionalId: string | undefined) => {
     if (!professionalId) return;
     clearProfessionalColor(professionalId);
-    const updatedEvents = events.map((event) =>
-      event.Professional === professionalId ? { ...event, color: getEventColorByProfessional(event.Professional, getProfessionalColor, event.status) } : event,
+    setEvents(
+      events.map((event) =>
+        event.Professional === professionalId ? { ...event, color: getEventColorByProfessional(event.Professional, getProfessionalColor, event.status) } : event,
+      ),
     );
-    setEvents(updatedEvents);
     toast.success('Cor baseada no status');
   };
 
@@ -530,58 +499,43 @@ function SchedulePage() {
 
           {/* Upcoming Appointments */}
           <ItemGroup className="w-full">
-            {events.length === 0 ? (
+            {upcomingPerProfessional.length === 0 ? (
               <Item className="flex-col gap-1 p-6">
                 <ItemTitle>Próximas Consultas</ItemTitle>
                 <ItemDescription>Nenhuma consulta agendada</ItemDescription>
               </Item>
             ) : (
-              (() => {
-                const now = new Date();
-                const professionalEvents = new Map<string, PartialSchedule[]>();
-                events.forEach((event) => {
-                  if (new Date(event.start) > now && event.Professional) {
-                    const list = professionalEvents.get(event.Professional) || [];
-                    professionalEvents.set(event.Professional, [...list, event]);
-                  }
-                });
-                const profNextEvents = Array.from(professionalEvents.entries()).map(([prof, profEvents]) => ({
-                  Professional: prof,
-                  nextEvent: profEvents.sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())[0],
-                }));
-
-                return profNextEvents.map((doc) => (
-                  <Item key={doc.Professional} className="flex-col gap-2 rounded-md p-4">
-                    <ItemHeader>
-                      <ItemActions>
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={getProfessionalImage(doc.Professional) || undefined} />
-                          <AvatarFallback>{getProfessionalName(doc.Professional).slice(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <ItemDescription className="line-clamp-1">{getProfessionalName(doc.Professional)}</ItemDescription>
-                      </ItemActions>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setSelectedEvent(doc.nextEvent || null);
-                          setIsEventDialogOpen(true);
-                        }}
-                        className="gap-1 transition-colors"
-                      >
-                        <Eye className="size-4" />
-                        <ItemDescription className="text-xs tabular-nums">Ver</ItemDescription>
-                      </Button>
-                    </ItemHeader>
-                    <ItemActions className="items-baseline gap-4">
-                      <ItemTitle className="text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
-                        {doc.nextEvent?.start ? extractDate(doc.nextEvent.start, 'hour') : '--:--'}
-                      </ItemTitle>
-                      <ItemDescription className="text-sm">{doc.nextEvent?.start ? extractDate(doc.nextEvent.start, '') : '--:--'}</ItemDescription>
+              upcomingPerProfessional.map((doc) => (
+                <Item key={doc.Professional} className="flex-col gap-2 rounded-md p-4">
+                  <ItemHeader>
+                    <ItemActions>
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={getProfessionalImage(doc.Professional) || undefined} />
+                        <AvatarFallback>{getProfessionalName(doc.Professional).slice(0, 2)}</AvatarFallback>
+                      </Avatar>
+                      <ItemDescription className="line-clamp-1">{getProfessionalName(doc.Professional)}</ItemDescription>
                     </ItemActions>
-                  </Item>
-                ));
-              })()
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedEvent(doc.nextEvent || null);
+                        setIsEventDialogOpen(true);
+                      }}
+                      className="gap-1 transition-colors"
+                    >
+                      <Eye className="size-4" />
+                      <ItemDescription className="text-xs tabular-nums">Ver</ItemDescription>
+                    </Button>
+                  </ItemHeader>
+                  <ItemActions className="items-baseline gap-4">
+                    <ItemTitle className="text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
+                      {doc.nextEvent?.start ? extractDate(doc.nextEvent.start, 'hour') : '--:--'}
+                    </ItemTitle>
+                    <ItemDescription className="text-sm">{doc.nextEvent?.start ? extractDate(doc.nextEvent.start, '') : '--:--'}</ItemDescription>
+                  </ItemActions>
+                </Item>
+              ))
             )}
           </ItemGroup>
 
