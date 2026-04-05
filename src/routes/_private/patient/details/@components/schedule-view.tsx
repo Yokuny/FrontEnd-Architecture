@@ -80,7 +80,7 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
       <Item variant="outline" className="flex-col items-start bg-secondary">
         <ItemTitle className="text-muted-foreground text-xs uppercase">Próxima consulta</ItemTitle>
         <ItemContent className="w-full text-center">
-          <p className="font-bold text-xl">{summary.nextSchedule ? formatDate(String(summary.nextSchedule.start)) : 'Sem consulta agendada'}</p>
+          <p className="font-bold text-sky-400 text-xl dark:text-blue-400">{summary.nextSchedule ? formatDate(String(summary.nextSchedule.start)) : 'Sem consulta agendada'}</p>
           <ItemDescription>{summary.upcomingSchedules} consultas nos próximos 30 dias</ItemDescription>
         </ItemContent>
       </Item>
@@ -97,7 +97,7 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
         </div>
         <ItemContent className="w-full text-center">
           <div className="flex items-baseline justify-center gap-2">
-            <p className="font-bold text-xl">{summary.attendanceRate.toFixed(0)}%</p>
+            <p className="font-bold text-lime-500 text-xl dark:text-indigo-400">{summary.attendanceRate.toFixed(0)}%</p>
             <ItemDescription className="text-lg">de comparecimento</ItemDescription>
           </div>
           <ItemDescription>+ {summary.recentSchedules} consultas nos últimos 30 dias</ItemDescription>
@@ -130,7 +130,7 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
           </div>
         </div>
         <ItemContent className="w-full">
-          <p className="font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
+          <p className="font-bold text-teal-400 text-xl dark:text-teal-400">{currencyFormat(summary.totalAmount)}</p>
           <ItemDescription>Em média {currencyFormat(summary.averageAmountPerSchedule)} por consulta</ItemDescription>
         </ItemContent>
       </Item>

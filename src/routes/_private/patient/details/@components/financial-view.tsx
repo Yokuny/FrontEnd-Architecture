@@ -94,7 +94,7 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
           </div>
         </div>
         <ItemContent className="w-full text-center">
-          <p className="font-bold text-xl">{currencyFormat(summary.totalAmount)}</p>
+          <p className="font-bold text-sky-400 text-xl dark:text-sky-400">{currencyFormat(summary.totalAmount)}</p>
           <ItemDescription>{currencyFormat(summary.totalLast3Months)} nos últimos 3 meses</ItemDescription>
         </ItemContent>
       </Item>
@@ -105,7 +105,7 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
           <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.paidLast30Days)} este mês</ItemDescription>
         </div>
         <ItemContent className="w-full text-center">
-          <p className="font-bold text-green-500 text-xl dark:text-lime-400">{currencyFormat(summary.totalPaid)}</p>
+          <p className="font-bold text-teal-400 text-xl dark:text-teal-400">{currencyFormat(summary.totalPaid)}</p>
           <ItemDescription>{currencyFormat(summary.totalLast2Months)} nos últimos 2 meses</ItemDescription>
         </ItemContent>
       </Item>
@@ -121,7 +121,7 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
           </div>
         </div>
         <ItemContent className="w-full text-center">
-          <p className="font-bold text-xl text-yellow-500 dark:text-yellow-400">{currencyFormat(summary.totalPending)}</p>
+          <p className="font-bold text-lime-500 text-xl dark:text-lime-400">{currencyFormat(summary.totalPending)}</p>
           <ItemDescription>Último pagamento em {summary.lastPaymentDate ? formatDate(String(summary.lastPaymentDate)) : 'N/A'}</ItemDescription>
         </ItemContent>
       </Item>
@@ -135,7 +135,7 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
           </div>
         </div>
         <ItemContent className="w-full text-center">
-          <p className="font-bold text-xl">{summary.proceduresLastMonth} no último mês</p>
+          <p className="font-bold text-amber-400 text-xl dark:text-amber-400">{summary.proceduresLastMonth} no último mês</p>
           <ItemDescription>Adicionados {summary.recentProcedures} em 2 meses</ItemDescription>
         </ItemContent>
       </Item>
