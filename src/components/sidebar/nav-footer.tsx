@@ -1,64 +1,78 @@
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
-import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
+import Down from '@/components/icons/Down.Icon';
+import Star from '@/components/icons/Star.Icon';
+import Up from '@/components/icons/Up.Icon';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuItem as SidebarMenuSubItem, useSidebar } from '@/components/ui/sidebar';
+import { useFavorites } from '@/hooks/use-favorites';
 import { cn } from '@/lib/utils/cn.util';
 import type { Route } from './nav-main';
 
 export function FooterNavigation({ routes }: { routes: Route[] }) {
   const { state } = useSidebar();
-  const { setMenuOpen } = useSidebarToggle();
+  const { toggleFavorite, isFavorite } = useFavorites();
   const isCollapsed = state === 'collapsed';
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
 
   return (
     <SidebarMenu>
       {routes.map((route) => {
+        const isOpen = !isCollapsed && openCollapsible === route.id;
         const hasSubRoutes = !!route.subs?.length;
 
         return (
           <SidebarMenuItem key={route.id}>
             {hasSubRoutes ? (
-              <DropdownMenu
-                onOpenChange={(open) => {
-                  setOpenDropdown(open ? route.id : null);
-                  setMenuOpen(open);
-                }}
-              >
-                <DropdownMenuTrigger asChild>
+              <Collapsible open={isOpen} onOpenChange={(open) => setOpenCollapsible(open ? route.id : null)} className="w-full">
+                <CollapsibleTrigger asChild>
                   <SidebarMenuButton
-                    size="default"
                     className={cn(
-                      'transition-all',
-                      openDropdown === route.id ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
-                      isCollapsed ? 'justify-center' : 'justify-start',
+                      'flex w-full items-center transition-colors',
+                      isOpen ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
+                      isCollapsed && 'justify-center',
                     )}
                   >
                     {route.icon}
                     {!isCollapsed && <span className="ml-2 flex-1 truncate text-left">{route.title}</span>}
+                    {!isCollapsed && hasSubRoutes && <span className="ml-auto">{isOpen ? <Up className="size-4" /> : <Down className="size-4" />}</span>}
                   </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" side="right" className="min-w-48">
-                  {route.subs?.map((sub) => (
-                    <DropdownMenuItem key={sub.link} asChild>
-                      <Link to={sub.link} className="flex items-center gap-2">
-                        {sub.icon}
-                        <span>{sub.title}</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </CollapsibleTrigger>
+
+                {!isCollapsed && (
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {route.subs?.map((subRoute) => {
+                        const favorited = isFavorite(subRoute.link);
+                        return (
+                          <SidebarMenuSubItem key={`${route.id}${subRoute.title}`} className="group/sub flex h-auto items-center">
+                            <button
+                              type="button"
+                              onClick={() => toggleFavorite({ title: subRoute.title, link: subRoute.link })}
+                              className={cn(
+                                'mb-0.5 cursor-pointer transition-opacity duration-2000 ease-initial',
+                                favorited ? 'text-amber-500/50 opacity-100' : 'text-muted-foreground opacity-0 hover:text-yellow-400 group-hover/sub:opacity-100',
+                              )}
+                            >
+                              <Star className={cn('size-3', favorited && 'fill-current')} />
+                            </button>
+                            <SidebarMenuSubButton size="sm" asChild>
+                              <Link to={subRoute.link} className="text-foreground hover:bg-sidebar-muted hover:text-muted-foreground">
+                                {subRoute.title}
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                )}
+              </Collapsible>
             ) : (
-              <SidebarMenuButton
-                size="default"
-                className={cn('text-muted-foreground transition-all hover:bg-sidebar-muted hover:text-foreground', isCollapsed ? 'justify-center' : 'justify-start')}
-                asChild
-              >
-                <Link to={route.link}>
+              <SidebarMenuButton className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', isCollapsed && 'justify-center')} asChild>
+                <Link to={route.link} className={cn('flex items-center rounded-lg px-2', isCollapsed && 'justify-center')}>
                   {route.icon}
-                  {!isCollapsed && <span className="ml-2 flex-1 truncate text-left">{route.title}</span>}
+                  {!isCollapsed && <span className="ml-2">{route.title}</span>}
                 </Link>
               </SidebarMenuButton>
             )}

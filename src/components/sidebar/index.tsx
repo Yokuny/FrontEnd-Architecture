@@ -30,9 +30,14 @@ export function AppSidebar() {
   const { state, setHovered } = useSidebar();
   const isCollapsed = state === 'collapsed';
 
-  const navRoutes = useMemo(() => {
+  const { mainRoutes, footerRoutes } = useMemo(() => {
     const sidebarRoutes = buildSidebarRoutes();
-    return convertToNavRoutes(sidebarRoutes);
+    const allRoutes = convertToNavRoutes(sidebarRoutes);
+
+    return {
+      mainRoutes: allRoutes.filter((route) => route.id !== 'settings'),
+      footerRoutes: allRoutes.filter((route) => route.id === 'settings'),
+    };
   }, []);
 
   return (
@@ -54,10 +59,10 @@ export function AppSidebar() {
         <SidebarSeparator />
       </SidebarHeader>
       <SidebarContent className="px-2 py-1 text-muted-foreground">
-        <AppNavigation routes={navRoutes} />
+        <AppNavigation routes={mainRoutes} />
       </SidebarContent>
       <SidebarFooter className="px-2 pb-3">
-        <FooterNavigation routes={[]} />
+        <FooterNavigation routes={footerRoutes} />
       </SidebarFooter>
     </Sidebar>
   );
