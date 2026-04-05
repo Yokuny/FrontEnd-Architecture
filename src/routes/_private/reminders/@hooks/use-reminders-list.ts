@@ -4,6 +4,7 @@ import type { DateRange } from 'react-day-picker';
 import { toast } from 'sonner';
 import { t } from '@/lib/helpers/translate.helper';
 import { useCheckReminders, useRemindersQuery } from '@/query/reminders';
+import type { SearchParams } from '../@interface/reminders.interface';
 import { reminderColumns } from '../@utils/columns';
 import { endOfDay, startOfDay } from '../@utils/date';
 
@@ -59,9 +60,23 @@ export function useRemindersList() {
     }
   };
 
-  const handlePageChange = useCallback((newPage: number) => navigate({ search: (prev: any) => ({ ...prev, page: newPage }), replace: true }), [navigate]);
+  const handlePageChange = useCallback(
+    (newPage: number) =>
+      navigate({
+        search: ((prev: any) => ({ ...prev, page: newPage }) satisfies SearchParams) as any,
+        replace: true,
+      } as any),
+    [navigate],
+  );
 
-  const handlePageSizeChange = useCallback((newSize: number) => navigate({ search: (prev: any) => ({ ...prev, size: newSize, page: 1 }), replace: true }), [navigate]);
+  const handlePageSizeChange = useCallback(
+    (newSize: number) =>
+      navigate({
+        search: ((prev: any) => ({ ...prev, size: newSize, page: 1 }) satisfies SearchParams) as any,
+        replace: true,
+      } as any),
+    [navigate],
+  );
 
   const allSelected = !!reminders?.length && selectedIds.length === reminders.length;
   const someSelected = selectedIds.length > 0 && (!reminders || selectedIds.length < reminders.length);

@@ -20,6 +20,8 @@ const searchSchema = z.object({
   tab: z.enum(tabValues).default('profile'),
 });
 
+type SearchParams = z.infer<typeof searchSchema>;
+
 export const Route = createFileRoute('/_private/patient/details/')({
   component: PatientDetailsPage,
   staticData: {
@@ -38,7 +40,7 @@ function PatientDetailsPage() {
   const currentTab = search.tab;
 
   const handleTabChange = (value: string) => {
-    navigate({ search: (prev) => ({ ...prev, tab: value as (typeof tabValues)[number] }) });
+    navigate({ search: ((prev: any) => ({ ...prev, tab: value as (typeof tabValues)[number] }) satisfies SearchParams) as any } as any);
   };
 
   return (

@@ -28,15 +28,29 @@ export const Route = createFileRoute('/_private/financial/')({
 });
 
 function FinancialListPage() {
-  const navigate = useNavigate({ from: Route.fullPath });
+  const navigate = useNavigate();
   const { page, size } = useSearch({ from: '/_private/financial/' });
   const { data: financials, isLoading } = useFinancialsPartialQuery();
 
   const columns = useMemo(() => financialColumns(navigate), [navigate]);
 
-  const handlePageChange = useCallback((newPage: number) => navigate({ search: (prev) => ({ ...prev, page: newPage }), replace: true }), [navigate]);
+  const handlePageChange = useCallback(
+    (newPage: number) =>
+      navigate({
+        search: ((prev: any) => ({ ...prev, page: newPage }) satisfies SearchParams) as any,
+        replace: true,
+      } as any),
+    [navigate],
+  );
 
-  const handlePageSizeChange = useCallback((newSize: number) => navigate({ search: (prev) => ({ ...prev, size: newSize, page: 1 }), replace: true }), [navigate]);
+  const handlePageSizeChange = useCallback(
+    (newSize: number) =>
+      navigate({
+        search: ((prev: any) => ({ ...prev, size: newSize, page: 1 }) satisfies SearchParams) as any,
+        replace: true,
+      } as any),
+    [navigate],
+  );
 
   return (
     <Card asPage>

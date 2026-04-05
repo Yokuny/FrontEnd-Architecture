@@ -50,7 +50,11 @@ function RemindersListPage() {
         <CardAction>
           <div className="mt-4 flex w-full flex-col items-center gap-4 sm:mt-0 sm:w-auto sm:flex-row">
             <div className="flex items-center gap-2">
-              <Checkbox id="showAll" checked={showAll} onCheckedChange={(checked) => navigate({ search: (prev: any) => ({ ...prev, showAll: !!checked }), replace: true })} />
+              <Checkbox
+                id="showAll"
+                checked={showAll}
+                onCheckedChange={(checked) => navigate({ search: ((prev: any) => ({ ...prev, showAll: !!checked }) satisfies SearchParams) as any, replace: true } as any)}
+              />
               <label htmlFor="showAll" className="cursor-pointer font-medium text-sm leading-none">
                 Mostrar todos
               </label>
