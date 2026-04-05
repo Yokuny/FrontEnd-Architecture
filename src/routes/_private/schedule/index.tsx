@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { addDays, addMonths, addWeeks, endOfDay, endOfMonth, endOfWeek, format, isSameMonth, startOfDay, startOfMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { addDays, addMonths, addWeeks, endOfDay, endOfMonth, endOfWeek, isSameMonth, startOfDay, startOfMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
@@ -17,6 +16,7 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { Calendar } from '@/components/ui/calendar';
 import { CardAction, CardContent, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useClinicStore } from '@/hooks/clinic';
 import { useProfessionalColors, useProfessionalStore } from '@/hooks/professionals';
@@ -24,6 +24,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useUserStore } from '@/hooks/user';
 import { AgendaDaysToShow, EventGap, EventHeight, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { addHoursToDate, eventColors } from '@/lib/helpers/calendar.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString, extractDate, getEventColorByProfessional } from '@/lib/helpers/formatter.helper';
 import type { CalendarView, EventColor, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { scheduleTimeSchema } from '@/lib/interfaces/schemas/schedule.schema';
@@ -56,18 +57,27 @@ const viewDictionary: Record<CalendarView, string> = {
 };
 
 function SchedulePage() {
+  // Context hooks
   const isMobile = useIsMobile();
+
+  // Zustand hooks
   const { selectedRoom, setSelectedRoom } = useUserStore();
-  const { data: user } = useUserQuery();
-  const { data: clinic } = useClinicApi();
   const { getRoomName: getRoomNameUtil } = useClinicStore();
-  const getRoomName = (id: string | undefined) => getRoomNameUtil(clinic, id);
-  const { data: professionals } = useProfessionalsQuery();
   const professionalStore = useProfessionalStore();
   const { getColor: getProfessionalColor, setColor: setProfessionalColor, clearColor: clearProfessionalColor } = useProfessionalColors();
+
+  // Query hooks
+  const { data: user } = useUserQuery();
+  const { data: clinic } = useClinicApi();
+  const { data: professionals } = useProfessionalsQuery();
+  const updateScheduleTime = useUpdateScheduleTime();
+
+  // Derived values
+  const getRoomName = (id: string | undefined) => getRoomNameUtil(clinic, id);
   const getProfessionalName = (id: string | undefined) => professionalStore.getName(professionals, id);
   const getProfessionalImage = (id: string | undefined) => professionalStore.getImage(professionals, id);
 
+  // useState
   const [currentDate, setCurrentDate] = useState(new Date());
   const [customDateRange, setCustomDateRange] = useState<{ from: Date; to: Date } | null>(null);
   const [events, setEvents] = useState<PartialSchedule[]>([]);
@@ -76,20 +86,39 @@ function SchedulePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isConfirmTimeUpdateDialogOpen, setIsConfirmTimeUpdateDialogOpen] = useState(false);
   const [pendingEventUpdate, setPendingEventUpdate] = useState<PartialSchedule | null>(null);
-
   const [selectedRoomID, setSelectedRoomID] = useState('');
-  useEffect(() => {
-    if (selectedRoom) {
-      setSelectedRoomID(selectedRoom);
-    }
-  }, [selectedRoom]);
-
   const [view, setView] = useState<CalendarView>('week');
 
-  useEffect(() => {
-    if (view !== 'agenda') setCustomDateRange(null);
-  }, [view]);
+  // useMemo
+  const headerTitle = useMemo(() => {
+    if (isMobile) return formatDate(currentDate, 'MMMM');
+    switch (view) {
+      case 'week': {
+        const startWeek = startOfWeek(currentDate, { weekStartsOn: 0 });
+        const endWeek = endOfWeek(currentDate, { weekStartsOn: 0 });
+        if (isSameMonth(startWeek, endWeek)) return formatDate(startWeek, 'MMMM yyyy');
+        return `${formatDate(startWeek, 'MMM')} - ${formatDate(endWeek, 'MMM yyyy')}`;
+      }
+      case 'agenda': {
+        if (customDateRange) {
+          if (isSameMonth(customDateRange.from, customDateRange.to)) return formatDate(customDateRange.from, 'MMMM yyyy');
+          return `${formatDate(customDateRange.from, 'MMM')} - ${formatDate(customDateRange.to, 'MMM yyyy')}`;
+        }
+        const endAgenda = addDays(currentDate, AgendaDaysToShow - 1);
+        if (isSameMonth(currentDate, endAgenda)) return formatDate(currentDate, 'MMMM yyyy');
+        return `${formatDate(currentDate, 'MMM')} - ${formatDate(endAgenda, 'MMM yyyy')}`;
+      }
+      default:
+        return formatDate(currentDate, 'MMMM yyyy');
+    }
+  }, [currentDate, view, customDateRange, isMobile]);
 
+  const uniqueProfessionalIds = useMemo(() => {
+    const allIds = events.map((event) => event.Professional).filter(Boolean);
+    return Array.from(new Set(allIds));
+  }, [events]);
+
+  // useCallback
   const getDateRange = useCallback(() => {
     if (customDateRange && view === 'agenda') {
       return { startDate: startOfDay(customDateRange.from), endDate: endOfDay(customDateRange.to) };
@@ -102,12 +131,24 @@ function SchedulePage() {
     return { startDate, endDate };
   }, [currentDate, view, customDateRange]);
 
+  // Query with state-derived params
   const { startDate, endDate } = getDateRange();
   const { data: scheduleData } = useScheduleQuery({
     startDate,
     endDate,
     roomID: selectedRoomID,
   });
+
+  // useEffect
+  useEffect(() => {
+    if (selectedRoom) {
+      setSelectedRoomID(selectedRoom);
+    }
+  }, [selectedRoom]);
+
+  useEffect(() => {
+    if (view !== 'agenda') setCustomDateRange(null);
+  }, [view]);
 
   useEffect(() => {
     if (scheduleData) {
@@ -118,22 +159,6 @@ function SchedulePage() {
       setEvents(eventsWithColors);
     }
   }, [scheduleData, getProfessionalColor]);
-
-  const updateScheduleTime = useUpdateScheduleTime();
-
-  const handlePrevious = () => {
-    if (view === 'month') setCurrentDate(subMonths(currentDate, 1));
-    else if (view === 'week') setCurrentDate(subWeeks(currentDate, 1));
-    else if (view === 'day') setCurrentDate(addDays(currentDate, -1));
-    else if (view === 'agenda') setCurrentDate(addDays(currentDate, -AgendaDaysToShow));
-  };
-
-  const handleNext = () => {
-    if (view === 'month') setCurrentDate(addMonths(currentDate, 1));
-    else if (view === 'week') setCurrentDate(addWeeks(currentDate, 1));
-    else if (view === 'day') setCurrentDate(addDays(currentDate, 1));
-    else if (view === 'agenda') setCurrentDate(addDays(currentDate, AgendaDaysToShow));
-  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -167,6 +192,21 @@ function SchedulePage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isEventDialogOpen, isConfirmTimeUpdateDialogOpen, isSidebarOpen]);
 
+  // Handlers
+  const handlePrevious = () => {
+    if (view === 'month') setCurrentDate(subMonths(currentDate, 1));
+    else if (view === 'week') setCurrentDate(subWeeks(currentDate, 1));
+    else if (view === 'day') setCurrentDate(addDays(currentDate, -1));
+    else if (view === 'agenda') setCurrentDate(addDays(currentDate, -AgendaDaysToShow));
+  };
+
+  const handleNext = () => {
+    if (view === 'month') setCurrentDate(addMonths(currentDate, 1));
+    else if (view === 'week') setCurrentDate(addWeeks(currentDate, 1));
+    else if (view === 'day') setCurrentDate(addDays(currentDate, 1));
+    else if (view === 'agenda') setCurrentDate(addDays(currentDate, AgendaDaysToShow));
+  };
+
   const handleEventCreate = (start: Date) => {
     const minutes = start.getMinutes();
     const remainder = minutes % 15;
@@ -199,7 +239,7 @@ function SchedulePage() {
         color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status),
       };
       setEvents(events.map((e) => (e._id === event._id ? updatedEvent : e)));
-      toast('Agendamento atualizado', { description: format(new Date(event.start), 'd MMM yyyy', { locale: ptBR }) });
+      toast('Agendamento atualizado', { description: formatDate(event.start, 'd MMM yyyy') });
     } else {
       const newEventWithColor = {
         ...event,
@@ -207,7 +247,7 @@ function SchedulePage() {
         color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status),
       };
       setEvents([...events, newEventWithColor]);
-      toast('Agendamento adicionado', { description: format(new Date(event.start), 'd MMM yyyy', { locale: ptBR }) });
+      toast('Agendamento adicionado', { description: formatDate(event.start, 'd MMM yyyy') });
     }
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
@@ -229,7 +269,7 @@ function SchedulePage() {
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
     if (deletedEvent) {
-      toast(`"${deletedEvent.title}" excluído`, { description: format(new Date(deletedEvent.start), 'd MMM yyy', { locale: ptBR }) });
+      toast(`"${deletedEvent.title}" excluído`, { description: formatDate(deletedEvent.start, 'd MMM yyy') });
     }
   };
 
@@ -247,37 +287,14 @@ function SchedulePage() {
         color: getEventColorByProfessional(confirmedEvent.Professional || '', getProfessionalColor, confirmedEvent.status),
       };
       setEvents(events.map((event) => (event._id === confirmedEvent._id ? updatedEvent : event)));
-      toast('Horário do agendamento atualizado', { description: format(new Date(confirmedEvent.start), 'dd/MM/yyyy HH:mm', { locale: ptBR }) });
-    } catch (e: any) {
-      toast.error('Erro ao atualizar horário', { description: e.message });
+      toast('Horário do agendamento atualizado', { description: formatDate(confirmedEvent.start, 'dd/MM/yyyy HH:mm') });
+    } catch (e) {
+      toast.error('Erro ao atualizar horário', { description: e instanceof Error ? e.message : 'Erro desconhecido' });
     } finally {
       setIsConfirmTimeUpdateDialogOpen(false);
       setPendingEventUpdate(null);
     }
   };
-
-  const headerTitle = useMemo(() => {
-    if (isMobile) return format(currentDate, 'MMMM', { locale: ptBR });
-    switch (view) {
-      case 'week': {
-        const startWeek = startOfWeek(currentDate, { weekStartsOn: 0 });
-        const endWeek = endOfWeek(currentDate, { weekStartsOn: 0 });
-        if (isSameMonth(startWeek, endWeek)) return format(startWeek, 'MMMM yyyy', { locale: ptBR });
-        return `${format(startWeek, 'MMM', { locale: ptBR })} - ${format(endWeek, 'MMM yyyy', { locale: ptBR })}`;
-      }
-      case 'agenda': {
-        if (customDateRange) {
-          if (isSameMonth(customDateRange.from, customDateRange.to)) return format(customDateRange.from, 'MMMM yyyy', { locale: ptBR });
-          return `${format(customDateRange.from, 'MMM', { locale: ptBR })} - ${format(customDateRange.to, 'MMM yyyy', { locale: ptBR })}`;
-        }
-        const endAgenda = addDays(currentDate, AgendaDaysToShow - 1);
-        if (isSameMonth(currentDate, endAgenda)) return format(currentDate, 'MMMM yyyy', { locale: ptBR });
-        return `${format(currentDate, 'MMM', { locale: ptBR })} - ${format(endAgenda, 'MMM yyyy', { locale: ptBR })}`;
-      }
-      default:
-        return format(currentDate, 'MMMM yyyy', { locale: ptBR });
-    }
-  }, [currentDate, view, customDateRange, isMobile]);
 
   const handleColorChange = (professionalID: string, color: EventColor) => {
     setProfessionalColor(professionalID, color);
@@ -297,11 +314,6 @@ function SchedulePage() {
     setEvents(updatedEvents);
     toast.success('Cor baseada no status');
   };
-
-  const uniqueProfessionalIds = useMemo(() => {
-    const allIds = events.map((event) => event.Professional).filter(Boolean);
-    return Array.from(new Set(allIds));
-  }, [events]);
 
   const handleRangeSelect = (range: { from: Date | undefined; to?: Date | undefined } | undefined) => {
     if (range?.from && range?.to) {
@@ -323,16 +335,16 @@ function SchedulePage() {
   return (
     <div className="flex h-full w-full flex-col gap-6 rounded-lg border bg-background py-6 pb-14 text-card-foreground md:pb-0">
       <div className="flex items-start justify-between gap-2 px-4 sm:items-center md:px-6">
-        <div className="flex items-center gap-3">
+        <ItemContent className="flex-row items-center gap-3">
           <CardTitle className="text-sky-blue dark:text-primary-blue">{String(currentDate.getDate()).padStart(2, '0')}</CardTitle>
 
-          <div className="flex flex-col items-baseline md:flex-row md:gap-2">
+          <ItemContent className="items-baseline md:flex-row md:gap-2">
             <CardTitle className="flex items-baseline gap-2 text-sky-blue leading-1 dark:text-primary-blue">
               <span className="font-bold text-xl">{['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][currentDate.getDay()]}</span>
             </CardTitle>
-            <p className="font-mono text-muted-foreground text-sm leading-1 sm:text-lg md:text-xl">{headerTitle}</p>
-          </div>
-        </div>
+            <ItemDescription className="leading-1 sm:text-lg md:text-xl">{headerTitle}</ItemDescription>
+          </ItemContent>
+        </ItemContent>
 
         <CardAction>
           <ButtonGroup>
@@ -398,7 +410,7 @@ function SchedulePage() {
               setIsEventDialogOpen(true);
             }}
           >
-            <Add className="-ms-1 size-4" aria-hidden="true" />
+            <Add className="size-4 md:-ms-1" aria-hidden="true" />
             <span className="sr-only md:not-sr-only">Adicionar</span>
           </Button>
         </CardAction>
@@ -452,7 +464,7 @@ function SchedulePage() {
           className={cn('flex flex-col gap-4 md:self-start', isMobile ? 'w-full' : 'w-72', isMobile ? 'opacity-100' : isSidebarOpen ? 'opacity-100' : 'opacity-0 md:hidden')}
         >
           {/* Mini Calendar Navigation */}
-          <div className="flex w-full flex-col gap-3">
+          <ItemContent className="w-full gap-3">
             {view === 'day' && (
               <Calendar
                 mode="single"
@@ -487,8 +499,8 @@ function SchedulePage() {
                 onMonthChange={setCurrentDate}
               />
             )}
-            <div className="flex w-full justify-between gap-2 px-4">
-              <div className="flex w-2/3 items-center">
+            <ItemHeader className="px-4">
+              <ItemActions className="w-2/3">
                 <Button variant="outline" size="sm" onClick={handlePrevious} className="w-1/3 rounded-none rounded-l-md border-r-0 px-2">
                   <Left className="size-5" />
                 </Button>
@@ -498,7 +510,7 @@ function SchedulePage() {
                 <Button variant="outline" size="sm" onClick={handleNext} className="w-1/3 rounded-none rounded-r-md border-l-0 px-2">
                   <Right className="size-5" />
                 </Button>
-              </div>
+              </ItemActions>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="w-1/3 justify-evenly">
@@ -513,16 +525,16 @@ function SchedulePage() {
                   <DropdownMenuItem onClick={() => setView('agenda')}>Agenda</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            </div>
-          </div>
+            </ItemHeader>
+          </ItemContent>
 
           {/* Upcoming Appointments */}
-          <div className="flex w-full flex-col">
+          <ItemGroup className="w-full">
             {events.length === 0 ? (
-              <div className="flex flex-col p-6">
-                <p className="font-semibold">Próximas Consultas</p>
-                <p className="text-muted-foreground text-sm">Nenhuma consulta agendada</p>
-              </div>
+              <Item className="flex-col gap-1 p-6">
+                <ItemTitle>Próximas Consultas</ItemTitle>
+                <ItemDescription>Nenhuma consulta agendada</ItemDescription>
+              </Item>
             ) : (
               (() => {
                 const now = new Date();
@@ -539,15 +551,15 @@ function SchedulePage() {
                 }));
 
                 return profNextEvents.map((doc) => (
-                  <div key={doc.Professional} className="space-y-2 rounded-md p-4">
-                    <div className="flex flex-row items-center justify-between gap-4">
-                      <div className="flex items-center gap-2">
+                  <Item key={doc.Professional} className="flex-col gap-2 rounded-md p-4">
+                    <ItemHeader>
+                      <ItemActions>
                         <Avatar className="h-8 w-8">
                           <AvatarImage src={getProfessionalImage(doc.Professional) || undefined} />
                           <AvatarFallback>{getProfessionalName(doc.Professional).slice(0, 2)}</AvatarFallback>
                         </Avatar>
-                        <p className="text-sm">{getProfessionalName(doc.Professional)}</p>
-                      </div>
+                        <ItemDescription className="line-clamp-1">{getProfessionalName(doc.Professional)}</ItemDescription>
+                      </ItemActions>
                       <Button
                         variant="outline"
                         size="sm"
@@ -558,39 +570,39 @@ function SchedulePage() {
                         className="gap-1 transition-colors"
                       >
                         <Eye className="size-4" />
-                        <span className="text-muted-foreground text-xs tabular-nums">Ver</span>
+                        <ItemDescription className="text-xs tabular-nums">Ver</ItemDescription>
                       </Button>
-                    </div>
-                    <div className="flex flex-row items-baseline gap-4">
-                      <span className="font-bold text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
+                    </ItemHeader>
+                    <ItemActions className="items-baseline gap-4">
+                      <ItemTitle className="text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
                         {doc.nextEvent?.start ? extractDate(doc.nextEvent.start, 'hour') : '--:--'}
-                      </span>
-                      <span className="text-muted-foreground text-sm">{doc.nextEvent?.start ? extractDate(doc.nextEvent.start, '') : '--:--'}</span>
-                    </div>
-                  </div>
+                      </ItemTitle>
+                      <ItemDescription className="text-sm">{doc.nextEvent?.start ? extractDate(doc.nextEvent.start, '') : '--:--'}</ItemDescription>
+                    </ItemActions>
+                  </Item>
                 ));
               })()
             )}
-          </div>
+          </ItemGroup>
 
           {/* Professional Color Manager */}
-          <div className="flex w-full flex-col gap-4 px-2">
+          <ItemGroup className="w-full px-2">
             {uniqueProfessionalIds.map((profId) => {
               const hasCustomColor = getProfessionalColor(profId);
               const displayColor = hasCustomColor ? eventColors.find((c) => c.value === hasCustomColor) : null;
 
               return (
-                <CardContent key={profId} className="flex items-center justify-evenly gap-2 p-3 md:justify-between">
-                  <div className="flex items-center gap-3">
+                <Item key={profId} className="flex-nowrap items-center justify-evenly gap-2 p-3 md:justify-between">
+                  <ItemActions className="gap-3">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={getProfessionalImage(profId) || undefined} />
                       <AvatarFallback>{getProfessionalName(profId).slice(0, 2)}</AvatarFallback>
                     </Avatar>
-                    <div>
-                      <p className="truncate font-semibold text-md leading-none">{getProfessionalName(profId).slice(0, 8)}</p>
-                      <p className="truncate text-muted-foreground text-sm">{hasCustomColor ? displayColor?.label : 'Cor do status'}</p>
-                    </div>
-                  </div>
+                    <ItemContent className="flex-none">
+                      <ItemTitle className="truncate text-md leading-none">{getProfessionalName(profId).slice(0, 8)}</ItemTitle>
+                      <ItemDescription className="truncate">{hasCustomColor ? displayColor?.label : 'Cor do status'}</ItemDescription>
+                    </ItemContent>
+                  </ItemActions>
                   <Select
                     value={hasCustomColor || ''}
                     onValueChange={(color: EventColor) => {
@@ -616,10 +628,10 @@ function SchedulePage() {
                       <Cross className="size-4" />
                     </Button>
                   )}
-                </CardContent>
+                </Item>
               );
             })}
-          </div>
+          </ItemGroup>
         </CardContent>
       </div>
     </div>
