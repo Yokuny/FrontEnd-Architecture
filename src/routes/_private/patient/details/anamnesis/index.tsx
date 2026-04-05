@@ -3,6 +3,8 @@ import { z } from 'zod';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
+import Check from '@/components/icons/Check.Icon';
+import Cross from '@/components/icons/Cross.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
@@ -423,11 +425,12 @@ function AnamnesisPage() {
       <CardHeader>
         <CardAction>
           <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
-            Cancelar
+            <Cross className="size-4" />
+            <span className="sr-only md:not-sr-only">Cancelar</span>
           </Button>
           <Button type="button" onClick={onSubmit} disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
-            {isSubmitting && <Spinner className="mr-2 size-4" />}
-            {hasExisting ? 'Atualizar' : 'Cadastrar'}
+            {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">{hasExisting ? 'Atualizar' : 'Cadastrar'}</span>
           </Button>
         </CardAction>
       </CardHeader>

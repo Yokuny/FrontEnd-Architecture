@@ -57,8 +57,8 @@ function OdontogramListPage() {
       <CardHeader>
         <CardAction>
           <Button onClick={() => navigate({ to: '/odontogram/add' })}>
-            <Add className="mr-2 size-4" />
-            Adicionar
+            <Add className="size-4" />
+            <span className="sr-only md:not-sr-only">Adicionar</span>
           </Button>
         </CardAction>
       </CardHeader>

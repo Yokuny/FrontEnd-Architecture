@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
 import DefaultFormLayout from '@/components/default-form-layout';
+import Check from '@/components/icons/Check.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
@@ -114,8 +115,8 @@ function OdontogramAddPage() {
       <CardHeader>
         <CardAction>
           <Button form="odontogram-add-form" type="submit" disabled={isPending} className="min-w-30">
-            {isPending && <Spinner className="mr-2 size-4" />}
-            Cadastrar
+            {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">Cadastrar</span>
           </Button>
         </CardAction>
       </CardHeader>

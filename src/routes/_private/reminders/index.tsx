@@ -64,7 +64,9 @@ function RemindersListPage() {
               <PopoverTrigger asChild>
                 <Button variant="outline" className="flex gap-2">
                   <Calender className="size-4" />
-                  <span>{dateRange?.from && dateRange?.to ? `${extractDate(dateRange.from, 'short')} - ${extractDate(dateRange.to, 'short')}` : 'Selecionar período'}</span>
+                  <span className="sr-only md:not-sr-only">
+                    {dateRange?.from && dateRange?.to ? `${extractDate(dateRange.from, 'short')} - ${extractDate(dateRange.to, 'short')}` : 'Selecionar período'}
+                  </span>
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="end">
@@ -85,13 +87,14 @@ function RemindersListPage() {
 
             {selectedIds.length > 0 && (
               <Button onClick={handleBulkCheck} disabled={checkReminders.isPending} className="gap-2">
-                Concluir ({selectedIds.length}) <Check className="size-4" />
+                <Check className="size-4" />
+                <span className="sr-only md:not-sr-only">Concluir ({selectedIds.length})</span>
               </Button>
             )}
 
             <Button onClick={() => navigate({ to: '/reminders/add' })}>
-              <Add className="mr-2 size-4" />
-              Adicionar
+              <Add className="size-4" />
+              <span className="sr-only md:not-sr-only">Adicionar</span>
             </Button>
           </div>
         </CardAction>

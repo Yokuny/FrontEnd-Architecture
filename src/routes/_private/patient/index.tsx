@@ -27,11 +27,11 @@ function PatientListPage() {
 
   return (
     <Card asPage>
-      <CardHeader className="sm:flex-row sm:items-center sm:justify-between">
-        <CardAction className="sm:self-center">
+      <CardHeader>
+        <CardAction>
           <Button onClick={() => navigate({ to: '/patient/add' })}>
-            <Add className="mr-2 size-4" />
-            Adicionar
+            <Add className="size-4" />
+            <span className="sr-only md:not-sr-only">Adicionar</span>
           </Button>
         </CardAction>
       </CardHeader>

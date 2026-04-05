@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import DefaultLoading from '@/components/default-loading';
+import Check from '@/components/icons/Check.Icon';
 import Delete from '@/components/icons/Delete.Icon';
 import {
   AlertDialog,
@@ -99,8 +100,8 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button type="button" variant="destructive" disabled={deletePatient.isPending || isPending}>
-                  {deletePatient.isPending ? <Spinner className="mr-2 size-4" /> : <Delete className="mr-2 size-4" />}
-                  Excluir
+                  {deletePatient.isPending ? <Spinner className="size-4" /> : <Delete className="size-4" />}
+                  <span className="sr-only md:not-sr-only">Excluir</span>
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -118,8 +119,8 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
             </AlertDialog>
           )}
           <Button type="submit" form="patient-form" disabled={isPending} className="ml-auto min-w-[120px]">
-            {isPending && <Spinner className="mr-2 size-4" />}
-            Salvar
+            {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">Salvar</span>
           </Button>
         </CardAction>
       </CardHeader>

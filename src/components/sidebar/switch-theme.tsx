@@ -47,23 +47,23 @@ export function ThemeSwitcher() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem onClick={() => setTheme('system')} className={theme === 'system' ? 'bg-accent font-medium' : ''}>
-          <Gear className="mr-2" />
+          <Gear />
           System {theme === 'system' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('light')} className={theme === 'light' ? 'bg-accent font-medium' : ''}>
-          <SunIcon className="mr-2" />
+          <SunIcon />
           Light {theme === 'light' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('sunset')} className={theme === 'sunset' ? 'bg-accent font-medium' : ''}>
-          <SunDimIcon className="mr-2" />
+          <SunDimIcon />
           Sunset {theme === 'sunset' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('dark')} className={theme === 'dark' ? 'bg-accent font-medium' : ''}>
-          <MoonIcon className="mr-2" />
+          <MoonIcon />
           Dark {theme === 'dark' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('ocean-blue')} className={theme === 'ocean-blue' ? 'bg-accent font-medium' : ''}>
-          <CloudSunIcon className="mr-2" />
+          <CloudSunIcon />
           Ocean Blue {theme === 'ocean-blue' && '✓'}
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Check from '@/components/icons/Check.Icon';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -94,8 +95,8 @@ export function SettingsPermissions() {
       <CardHeader>
         <CardAction>
           <Button onClick={handleSavePermissions} disabled={updatePermissions.isPending} className="min-w-36">
-            {updatePermissions.isPending && <Spinner className="mr-2 size-4" />}
-            Salvar Alterações
+            {updatePermissions.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">Salvar Alterações</span>
           </Button>
         </CardAction>
       </CardHeader>

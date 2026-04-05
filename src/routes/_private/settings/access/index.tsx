@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import Check from '@/components/icons/Check.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -55,8 +56,8 @@ export function SettingsAccess() {
       <CardHeader>
         <CardAction>
           <Button type="submit" form="access-form" disabled={changePassword.isPending} className="min-w-36">
-            {changePassword.isPending && <Spinner className="mr-2 size-4" />}
-            Atualizar senha
+            {changePassword.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">Atualizar senha</span>
           </Button>
         </CardAction>
       </CardHeader>

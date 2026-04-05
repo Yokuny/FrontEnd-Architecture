@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Check from '@/components/icons/Check.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -47,8 +48,8 @@ function FinancialDetailPage() {
       <CardHeader>
         <CardAction>
           <Button type="submit" form="financial-edit-form" disabled={isPending} className="min-w-40">
-            {isPending && <Spinner className="mr-2 size-4" />}
-            Salvar
+            {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">Salvar</span>
           </Button>
         </CardAction>
       </CardHeader>

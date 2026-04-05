@@ -70,7 +70,7 @@ function Card({ className, asPage, children, ...props }: ComponentProps<'div'> &
   return (
     <div data-slot="card" className={cn('flex h-full flex-col gap-6 rounded-lg border bg-background py-6 text-card-foreground', className)} {...props}>
       {asPage && (
-        <div className="-mb-2 flex items-center justify-between px-6">
+        <div className="-mb-2 flex items-center justify-between px-4 md:px-6">
           <PageBreadcrumb />
           <CardDescription />
         </div>
@@ -109,12 +109,12 @@ function CardHeader({ className, title, children, ...props }: ComponentProps<'di
   const resolvedTitle = getTitle(title);
 
   return (
-    <div data-slot="card-header" className={cn('flex flex-col items-start justify-between gap-2 px-6 sm:flex-row sm:items-center', className)} {...props}>
+    <div data-slot="card-header" className={cn('flex items-start justify-between gap-2 px-4 sm:items-center md:px-6', className)} {...props}>
       <div className="flex items-center gap-2">
         <Button size="icon" variant="outline" onClick={() => router.history.back()}>
           <ArrowLeftIcon />
         </Button>
-        {resolvedTitle && <CardTitle className="font-abeezee text-3xl">{resolvedTitle}</CardTitle>}
+        {resolvedTitle && <CardTitle>{resolvedTitle}</CardTitle>}
       </div>
       {children}
     </div>
@@ -122,7 +122,7 @@ function CardHeader({ className, title, children, ...props }: ComponentProps<'di
 }
 
 function CardTitle({ className, ...props }: ComponentProps<'div'>) {
-  return <div data-slot="card-title" className={cn('font-bold font-mono text-2xl leading-none', className)} {...props} />;
+  return <div data-slot="card-title" className={cn('font-mono font-semibold text-2xl leading-none tracking-tight md:text-3xl', className)} {...props} />;
 }
 
 function CardDescription({ className, ...props }: ComponentProps<'div'>) {
@@ -157,7 +157,7 @@ function CardAction({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-action"
-      className={cn('col-start-2 row-span-2 row-start-1 flex w-full flex-col items-center gap-2 self-start justify-self-end sm:w-auto sm:flex-row', className)}
+      className={cn('col-start-2 row-span-2 row-start-1 flex w-full flex-col items-end gap-2 self-start justify-self-end sm:w-auto sm:flex-row', className)}
       {...props}
     />
   );

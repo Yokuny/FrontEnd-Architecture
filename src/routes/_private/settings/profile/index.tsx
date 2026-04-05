@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import DefaultLoading from '@/components/default-loading';
+import Check from '@/components/icons/Check.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -62,8 +63,8 @@ export function SettingsProfile() {
       <CardHeader>
         <CardAction>
           <Button type="submit" form="profile-form" disabled={updateProfile.isPending} className="min-w-32">
-            {updateProfile.isPending && <Spinner className="mr-2 size-4" />}
-            Salvar
+            {updateProfile.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">Salvar</span>
           </Button>
         </CardAction>
       </CardHeader>

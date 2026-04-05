@@ -14,7 +14,7 @@ import Right from '@/components/icons/Right.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useClinicStore } from '@/hooks/clinic';
@@ -328,7 +328,7 @@ function SchedulePage() {
           </CardTitle>
           <p className="font-mono text-muted-foreground text-sm leading-1 sm:text-lg md:text-xl">{headerTitle}</p>
         </div>
-        <div className="flex items-center justify-between gap-1 md:gap-4">
+        <CardAction>
           <div className="flex items-center justify-between gap-1 md:gap-4 lg:flex-none">
             <div className="flex items-center">
               <div className="relative flex items-center md:items-stretch">
@@ -388,7 +388,6 @@ function SchedulePage() {
               </Button>
             )}
             <Button
-              className="gap-1.5 max-[479px]:aspect-square max-[479px]:p-0!"
               size={isMobile ? 'default' : 'sm'}
               onClick={() => {
                 setSelectedEvent(null);
@@ -396,10 +395,10 @@ function SchedulePage() {
               }}
             >
               <Add className="size-4" aria-hidden="true" />
-              <span className="max-sm:sr-only">Adicionar</span>
+              <span className="sr-only md:not-sr-only">Adicionar</span>
             </Button>
           </div>
-        </div>
+        </CardAction>
       </CardHeader>
 
       <div className={cn('flex transition-all duration-300 ease-in-out', isMobile ? 'flex-col gap-1' : 'gap-3')}>

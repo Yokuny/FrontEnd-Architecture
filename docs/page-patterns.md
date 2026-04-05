@@ -145,12 +145,12 @@ function PatientListPage() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
               <DropdownMenuItem onClick={() => navigate({ to: '/patient/details', search: { id: item._id } })}>
-                <User className="mr-2 size-4 text-muted-foreground" />
+                <User className="size-4 text-muted-foreground" />
                 Visualizar cadastro
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => handleCopy(item.name)}>
-                <Copy className="mr-2 size-4 text-muted-foreground" />
+                <Copy className="size-4 text-muted-foreground" />
                 Copiar nome
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -188,7 +188,7 @@ function PatientListPage() {
               />
             </div>
             <Button onClick={() => navigate({ to: '/patient/add' })}>
-              <Add className="mr-2 size-4" />
+              <Add className="size-4" />
               Adicionar
             </Button>
           </div>
@@ -341,7 +341,7 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <Button type="button" variant="destructive" disabled={deleteGeofence.isPending || isPending}>
-                    {deleteGeofence.isPending ? <Spinner className="mr-2 size-4" /> : <Delete className="mr-2 size-4" />}
+                    {deleteGeofence.isPending ? <Spinner className="size-4" /> : <Delete className="size-4" />}
                     Excluir
                   </Button>
                 </AlertDialogTrigger>
@@ -360,7 +360,7 @@ function GeofenceAddFormContent({ initialData }: { initialData?: any }) {
               </AlertDialog>
             )}
             <Button type="submit" disabled={isPending} className="ml-auto min-w-[120px]">
-              {isPending && <Spinner className="mr-2 size-4" />}
+              {isPending && <Spinner className="size-4" />}
               Salvar
             </Button>
           </CardFooter>

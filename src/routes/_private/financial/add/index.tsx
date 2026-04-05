@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import Check from '@/components/icons/Check.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -23,8 +24,8 @@ function FinancialAddPage() {
       <CardHeader>
         <CardAction>
           <Button type="submit" form="financial-form" disabled={isPending} className="ml-auto min-w-[120px]">
-            {isPending && <Spinner className="mr-2 size-4" />}
-            Cadastrar
+            {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">Cadastrar</span>
           </Button>
         </CardAction>
       </CardHeader>

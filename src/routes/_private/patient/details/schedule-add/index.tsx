@@ -8,6 +8,7 @@ import ProfessionalCombobox from '@/components/data-inputs/professional-combobox
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
+import Check from '@/components/icons/Check.Icon';
 import Edit from '@/components/icons/Edit.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
@@ -248,8 +249,8 @@ function ScheduleAddPage() {
       <CardHeader>
         <CardAction>
           <Button form="schedule-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient || !selectedRoom}>
-            {isSubmitting && <Spinner className="mr-2 size-4" />}
-            {selectedRoomName ? `Agendar em ${selectedRoomName}` : 'Agendar'}
+            {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">{selectedRoomName ? `Agendar em ${selectedRoomName}` : 'Agendar'}</span>
           </Button>
         </CardAction>
       </CardHeader>

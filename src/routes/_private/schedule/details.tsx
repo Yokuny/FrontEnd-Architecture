@@ -55,8 +55,8 @@ function PatientSchedulePage() {
       <CardHeader>
         <CardAction>
           <Button type="button" size={isMobile ? 'default' : 'sm'} variant="outline" onClick={() => navigate({ to: '..' })}>
-            <Back className="mr-2 size-4" />
-            Voltar
+            <Back className="size-4" />
+            <span className="sr-only md:not-sr-only">Voltar</span>
           </Button>
         </CardAction>
       </CardHeader>

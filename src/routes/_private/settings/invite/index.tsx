@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Send from '@/components/icons/Send.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -54,8 +55,8 @@ export function SettingsInvite() {
       <CardHeader>
         <CardAction>
           <Button type="submit" form="invite-form" disabled={inviteUser.isPending} className="min-w-36">
-            {inviteUser.isPending && <Spinner className="mr-2 size-4" />}
-            Enviar convite
+            {inviteUser.isPending ? <Spinner className="size-4" /> : <Send className="size-4" />}
+            <span className="sr-only md:not-sr-only">Enviar convite</span>
           </Button>
         </CardAction>
       </CardHeader>

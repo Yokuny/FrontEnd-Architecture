@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
+import Check from '@/components/icons/Check.Icon';
 import Cloud from '@/components/icons/Cloud.Icon';
 import Download from '@/components/icons/Download.Icon';
 import Upload from '@/components/icons/Upload.Icon';
@@ -128,25 +129,25 @@ export function SettingsProcedures() {
 
   return (
     <Card asPage>
-      <CardHeader className="sm:flex-row sm:items-center sm:justify-between">
-        <CardAction className="sm:self-center">
+      <CardHeader>
+        <CardAction>
           {hasChanges && (
             <Button onClick={saveProcedure} disabled={updateProcedures.isPending} className="min-w-[120px]">
-              {updateProcedures.isPending && <Spinner className="mr-2 size-4" />}
-              Salvar
+              {updateProcedures.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+              <span className="sr-only md:not-sr-only">Salvar</span>
             </Button>
           )}
-          <Button onClick={uploadNewCSV} className="flex items-center gap-2">
+          <Button onClick={uploadNewCSV}>
             <Upload className="size-4" />
-            <span className="hidden sm:inline">Upload CSV</span>
+            <span className="sr-only md:not-sr-only">Upload CSV</span>
           </Button>
-          <Button onClick={downloadModelCSV} variant="outline" className="flex items-center gap-2">
+          <Button onClick={downloadModelCSV} variant="outline">
             <Download className="size-4" />
-            <span className="hidden sm:inline">Modelo CSV</span>
+            <span className="sr-only md:not-sr-only">Modelo CSV</span>
           </Button>
-          <Button onClick={fetchFromBackend} variant="outline" className="flex items-center gap-2">
+          <Button onClick={fetchFromBackend} variant="outline">
             <Cloud className="size-4" />
-            <span className="hidden sm:inline">Buscar dados</span>
+            <span className="sr-only md:not-sr-only">Buscar dados</span>
           </Button>
         </CardAction>
       </CardHeader>
