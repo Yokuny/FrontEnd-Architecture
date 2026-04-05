@@ -303,18 +303,12 @@ function SchedulePage() {
 
   return (
     <div className="flex h-full w-full flex-col gap-6 rounded-lg border bg-background py-6 pb-14 text-card-foreground md:pb-0">
-      <div className="flex items-start justify-between gap-2 px-4 sm:items-center md:px-6">
-        <ItemContent className="flex-row items-center gap-3">
-          <CardTitle className="text-sky-blue dark:text-primary-blue">{String(currentDate.getDate()).padStart(2, '0')}</CardTitle>
-
-          <ItemContent className="items-baseline md:flex-row md:gap-2">
-            <CardTitle className="flex items-baseline gap-2 text-sky-blue leading-1 dark:text-primary-blue">
-              <span className="font-bold text-xl">{['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][currentDate.getDay()]}</span>
-            </CardTitle>
-            <ItemDescription className="leading-1 sm:text-lg md:text-xl">{headerTitle}</ItemDescription>
-          </ItemContent>
+      <div className="flex items-end justify-between gap-2 px-4 md:px-6">
+        <ItemContent className="flex-row items-baseline gap-2 text-sky-blue text-xl dark:text-primary-blue">
+          <CardTitle>{String(currentDate.getDate()).padStart(2, '0')}</CardTitle>
+          <CardTitle className="leading-none">{['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][currentDate.getDay()]}</CardTitle>
+          <ItemDescription className="leading-none">{headerTitle}</ItemDescription>
         </ItemContent>
-
         <CardAction>
           <ButtonGroup>
             <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label="Anterior" className="rounded-none rounded-l-md border-r-0 px-2">
@@ -367,7 +361,7 @@ function SchedulePage() {
             </SelectContent>
           </Select>
           {!isMobile && (
-            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+            <Button size="sm" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
               <Grid className="size-4" />
             </Button>
           )}

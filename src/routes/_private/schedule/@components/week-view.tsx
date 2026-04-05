@@ -216,7 +216,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
           {days.map((day, dayIndex) => (
             <div
               key={day.toString()}
-              className="relative grid auto-cols-fr border-accent border-r last:border-r-0 data-outside-cell:bg-slate-50 data-outside-cell:text-muted-foreground dark:data-outside-cell:bg-slate-900"
+              className="relative grid auto-cols-fr border-accent border-r last:border-r-0 data-outside-cell:bg-accent/50 data-outside-cell:text-muted-foreground"
               data-today={isToday(day) || undefined}
               data-outside-cell={(getDay(day) === 0 && dayIndex === 6) || undefined}
             >

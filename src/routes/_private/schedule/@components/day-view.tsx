@@ -95,7 +95,7 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
   return (
     <div data-slot="day-view" className="flex h-full flex-col">
       {showAllDaySection && (
-        <div className="rounded-t-sm border-accent bg-slate-50 dark:bg-slate-900">
+        <div className="rounded-t-sm border-accent bg-accent/50">
           <div className="grid grid-cols-[3rem_1fr] sm:grid-cols-[4rem_1fr]">
             <div className="relative flex items-center justify-center">
               <div className="text-center text-muted-foreground text-xs">Dia inteiro</div>

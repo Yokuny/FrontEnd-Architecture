@@ -87,7 +87,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                 return (
                   <div
                     key={day.toString()}
-                    className="group border-accent border-r border-b last:border-r-0 data-outside-cell:bg-slate-50 data-outside-cell:text-muted-foreground dark:data-outside-cell:bg-slate-900"
+                    className="group border-accent border-r border-b last:border-r-0 data-outside-cell:bg-accent/50 data-outside-cell:text-muted-foreground"
                     data-today={isToday(day) || undefined}
                     data-outside-cell={!isCurrentMonth || (isSunday && dayIndex === 6) || undefined}
                   >
