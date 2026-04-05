@@ -1,140 +1,180 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils/cn.util';
 import IconDown from '../icons/Down.Icon';
 import IconMinus from '../icons/Minus.Icon';
 import IconUp from '../icons/Up.Icon';
 
+// ─── CVA ────────────────────────────────────────────────────────────────────
+
 const badgeVars = cva(
-  'inline-flex w-fit shrink-0 items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-md px-3 py-1.5 font-normal text-xs transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3',
+  'inline-flex w-fit shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1 font-medium text-xs transition-colors [&>svg]:pointer-events-none [&>svg]:size-3',
   {
     variants: {
       variant: {
-        pending: 'bg-linear-to-r from-yellow-400 to-yellow-500 text-white',
-        waiting: 'bg-linear-to-r from-sky-400 to-sky-500 text-white',
-        confirmed: 'bg-linear-to-r from-emerald-400 to-emerald-500 text-white',
-        completed: 'bg-linear-to-r from-green-400 to-green-500 text-white',
-        in_progress: 'bg-linear-to-r from-indigo-400 to-indigo-500 text-white',
-        no_show: 'bg-linear-to-r from-red-400 to-red-500 text-white',
-        canceled: 'bg-linear-to-r from-slate-400 to-slate-500 text-white',
-        canceled_by_patient: 'bg-linear-to-r from-orange-400 to-orange-500 text-white',
-        canceled_by_professional: 'bg-linear-to-r from-amber-400 to-amber-500 text-white',
+        // ── Semânticas / UI ──────────────────────────────────────────────
+        default: 'bg-blue-50 text-blue-900 ring-1 ring-blue-500/30 ring-inset dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30',
+        secondary: 'bg-gray-50 text-gray-900 ring-1 ring-gray-500/30 ring-inset dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20',
+        outline: 'bg-transparent text-foreground ring-1 ring-border ring-inset',
+        muted: 'bg-transparent text-foreground ring-1 ring-border ring-inset',
+        success: 'bg-emerald-50 text-emerald-900 ring-1 ring-emerald-600/30 ring-inset dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20',
+        active: 'bg-emerald-50 text-emerald-900 ring-1 ring-emerald-600/30 ring-inset dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20',
+        warning: 'bg-yellow-50 text-yellow-900 ring-1 ring-yellow-600/30 ring-inset dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20',
+        error: 'bg-red-50 text-red-900 ring-1 ring-red-600/20 ring-inset dark:bg-red-400/10 dark:text-red-400 dark:ring-red-400/20',
+        info: 'bg-blue-50 text-blue-900 ring-1 ring-blue-500/30 ring-inset dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30',
+        neutral: 'bg-gray-50 text-gray-900 ring-1 ring-gray-500/30 ring-inset dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20',
+        orange: 'bg-orange-50 text-orange-900 ring-1 ring-orange-500/30 ring-inset dark:bg-orange-400/10 dark:text-orange-400 dark:ring-orange-400/20',
 
-        partial: 'bg-linear-to-r from-lime-400 to-lime-500 text-white',
-        paid: 'bg-linear-to-r from-teal-400 to-teal-500 text-white',
-        refund: 'bg-linear-to-r from-cyan-400 to-cyan-500 text-white',
+        // ── Status de agendamento ────────────────────────────────────────
+        pending: 'bg-yellow-50 text-yellow-900 ring-1 ring-yellow-600/30 ring-inset dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20',
+        waiting: 'bg-sky-50 text-sky-900 ring-1 ring-sky-500/30 ring-inset dark:bg-sky-400/10 dark:text-sky-400 dark:ring-sky-400/30',
+        confirmed: 'bg-emerald-50 text-emerald-900 ring-1 ring-emerald-600/30 ring-inset dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20',
+        completed: 'bg-green-50 text-green-900 ring-1 ring-green-600/30 ring-inset dark:bg-green-400/10 dark:text-green-400 dark:ring-green-400/20',
+        in_progress: 'bg-indigo-50 text-indigo-900 ring-1 ring-indigo-500/30 ring-inset dark:bg-indigo-400/10 dark:text-indigo-400 dark:ring-indigo-400/30',
+        no_show: 'bg-red-50 text-red-900 ring-1 ring-red-600/20 ring-inset dark:bg-red-400/10 dark:text-red-400 dark:ring-red-400/20',
+        canceled: 'bg-slate-50 text-slate-900 ring-1 ring-slate-500/20 ring-inset dark:bg-slate-400/10 dark:text-slate-400 dark:ring-slate-400/20',
+        canceled_by_patient: 'bg-orange-50 text-orange-900 ring-1 ring-orange-500/30 ring-inset dark:bg-orange-400/10 dark:text-orange-400 dark:ring-orange-400/20',
+        canceled_by_professional: 'bg-amber-50 text-amber-900 ring-1 ring-amber-500/30 ring-inset dark:bg-amber-400/10 dark:text-amber-400 dark:ring-amber-400/20',
 
-        positive: 'bg-linear-to-r from-emerald-400 to-emerald-500 text-white',
-        neutral: 'bg-linear-to-r from-sky-400 to-sky-500 text-white',
-        negative: 'bg-linear-to-r from-red-400 to-red-500 text-white',
-        pink: 'bg-linear-to-r from-pink-400 to-pink-500 text-white',
-        alert: 'bg-linear-to-r from-yellow-400 to-yellow-500 text-white',
-        outline: 'border border-slate-600 border-solid text-foreground dark:border-slate-400',
-        muted: 'border border-solid',
-        transparent: 'bg-transparent',
-        secondary: '',
+        // ── Status financeiro ────────────────────────────────────────────
+        partial: 'bg-lime-50 text-lime-900 ring-1 ring-lime-500/30 ring-inset dark:bg-lime-400/10 dark:text-lime-400 dark:ring-lime-400/20',
+        paid: 'bg-teal-50 text-teal-900 ring-1 ring-teal-500/30 ring-inset dark:bg-teal-400/10 dark:text-teal-400 dark:ring-teal-400/20',
+        refund: 'bg-cyan-50 text-cyan-900 ring-1 ring-cyan-500/30 ring-inset dark:bg-cyan-400/10 dark:text-cyan-400 dark:ring-cyan-400/30',
 
-        red: 'bg-linear-to-r from-red-400 to-red-500 text-white',
-        orange: 'bg-linear-to-r from-orange-400 to-orange-500 text-white',
-        amber: 'bg-linear-to-r from-amber-400 to-amber-500 text-white',
-        yellow: 'bg-linear-to-r from-yellow-400 to-yellow-500 text-white',
-        lime: 'bg-linear-to-r from-lime-400 to-lime-500 text-white',
-        green: 'bg-linear-to-r from-green-400 to-green-500 text-white',
-        emerald: 'bg-linear-to-r from-emerald-400 to-emerald-500 text-white',
-        teal: 'bg-linear-to-r from-teal-400 to-teal-500 text-white',
-        cyan: 'bg-linear-to-r from-cyan-400 to-cyan-500 text-white',
-        sky: 'bg-linear-to-r from-sky-400 to-sky-500 text-white',
-        blue: 'bg-linear-to-r from-blue-400 to-blue-500 text-white',
-        indigo: 'bg-linear-to-r from-indigo-400 to-indigo-500 text-white',
-        violet: 'bg-linear-to-r from-violet-400 to-violet-500 text-white',
-        purple: 'bg-linear-to-r from-purple-400 to-purple-500 text-white',
-        fuchsia: 'bg-linear-to-r from-fuchsia-400 to-fuchsia-500 text-white',
-        rose: 'bg-linear-to-r from-rose-400 to-rose-500 text-white',
-        slate: 'bg-linear-to-r from-slate-400 to-slate-500 text-white',
-        stone: 'bg-linear-to-r from-stone-400 to-stone-500 text-white',
+        // ── Cores diretas ────────────────────────────────────────────────
+        red: 'bg-red-50 text-red-900 ring-1 ring-red-600/20 ring-inset dark:bg-red-400/10 dark:text-red-400 dark:ring-red-400/20',
+        amber: 'bg-amber-50 text-amber-900 ring-1 ring-amber-500/30 ring-inset dark:bg-amber-400/10 dark:text-amber-400 dark:ring-amber-400/20',
+        yellow: 'bg-yellow-50 text-yellow-900 ring-1 ring-yellow-600/30 ring-inset dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20',
+        lime: 'bg-lime-50 text-lime-900 ring-1 ring-lime-500/30 ring-inset dark:bg-lime-400/10 dark:text-lime-400 dark:ring-lime-400/20',
+        green: 'bg-green-50 text-green-900 ring-1 ring-green-600/30 ring-inset dark:bg-green-400/10 dark:text-green-400 dark:ring-green-400/20',
+        emerald: 'bg-emerald-50 text-emerald-900 ring-1 ring-emerald-600/30 ring-inset dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20',
+        teal: 'bg-teal-50 text-teal-900 ring-1 ring-teal-500/30 ring-inset dark:bg-teal-400/10 dark:text-teal-400 dark:ring-teal-400/20',
+        cyan: 'bg-cyan-50 text-cyan-900 ring-1 ring-cyan-500/30 ring-inset dark:bg-cyan-400/10 dark:text-cyan-400 dark:ring-cyan-400/30',
+        sky: 'bg-sky-50 text-sky-900 ring-1 ring-sky-500/30 ring-inset dark:bg-sky-400/10 dark:text-sky-400 dark:ring-sky-400/30',
+        blue: 'bg-blue-50 text-blue-900 ring-1 ring-blue-500/30 ring-inset dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30',
+        indigo: 'bg-indigo-50 text-indigo-900 ring-1 ring-indigo-500/30 ring-inset dark:bg-indigo-400/10 dark:text-indigo-400 dark:ring-indigo-400/30',
+        violet: 'bg-violet-50 text-violet-900 ring-1 ring-violet-500/30 ring-inset dark:bg-violet-400/10 dark:text-violet-400 dark:ring-violet-400/30',
+        purple: 'bg-purple-50 text-purple-900 ring-1 ring-purple-500/30 ring-inset dark:bg-purple-400/10 dark:text-purple-400 dark:ring-purple-400/30',
+        fuchsia: 'bg-fuchsia-50 text-fuchsia-900 ring-1 ring-fuchsia-500/30 ring-inset dark:bg-fuchsia-400/10 dark:text-fuchsia-400 dark:ring-fuchsia-400/20',
+        pink: 'bg-pink-50 text-pink-900 ring-1 ring-pink-500/30 ring-inset dark:bg-pink-400/10 dark:text-pink-400 dark:ring-pink-400/20',
+        rose: 'bg-rose-50 text-rose-900 ring-1 ring-rose-500/30 ring-inset dark:bg-rose-400/10 dark:text-rose-400 dark:ring-rose-400/20',
+        slate: 'bg-slate-50 text-slate-900 ring-1 ring-slate-500/20 ring-inset dark:bg-slate-400/10 dark:text-slate-400 dark:ring-slate-400/20',
+        stone: 'bg-stone-50 text-stone-900 ring-1 ring-stone-500/20 ring-inset dark:bg-stone-400/10 dark:text-stone-400 dark:ring-stone-400/20',
       },
     },
     defaultVariants: {
-      variant: 'neutral',
+      variant: 'default',
     },
   },
 );
 
-function Badge({ className, variant, asChild = false, ...props }: ComponentProps<'span'> & VariantProps<typeof badgeVars> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : 'span';
+// ─── Badge ───────────────────────────────────────────────────────────────────
 
+function Badge({ className, variant, asChild = false, ...props }: BadgeProps) {
+  const Comp = asChild ? Slot : 'span';
   return <Comp data-slot="badge" className={cn(badgeVars({ variant }), className)} {...props} />;
 }
 
-export const BadgeIndicator = ({ className, variant = 'pending', pulse = false, asChild = false, children, ...props }: BadgeIndicatorProps) => {
+// ─── BadgeIndicator ───────────────────────────────────────────────────────────
+
+const indicatorColorMap: Record<string, string> = {
+  pending: 'bg-yellow-500',
+  waiting: 'bg-sky-500',
+  confirmed: 'bg-emerald-500',
+  completed: 'bg-green-500',
+  in_progress: 'bg-indigo-500',
+  no_show: 'bg-red-500',
+  canceled: 'bg-slate-500',
+  canceled_by_patient: 'bg-orange-500',
+  canceled_by_professional: 'bg-amber-500',
+  partial: 'bg-lime-600',
+  paid: 'bg-teal-500',
+  refund: 'bg-purple-500',
+  success: 'bg-emerald-500',
+  active: 'bg-emerald-500',
+  warning: 'bg-yellow-500',
+  error: 'bg-red-500',
+  info: 'bg-blue-500',
+  neutral: 'bg-gray-500',
+};
+
+function Dot({ status, pulse, className }: { status: string; pulse?: boolean; className?: string }) {
+  const color = indicatorColorMap[status] ?? 'bg-gray-400 dark:bg-gray-500';
+  return (
+    <span className={cn('relative flex size-2', className)}>
+      {pulse && <span className={cn('absolute inline-flex h-full w-full animate-ping rounded-full opacity-75', color)} />}
+      <span className={cn('relative inline-flex size-2 rounded-full', color)} />
+    </span>
+  );
+}
+
+function BadgeIndicator({ className, variant = 'pending', pulse = false, asChild = false, children, ...props }: BadgeIndicatorProps) {
   const Comp = asChild ? Slot : 'span';
 
-  const getIndicatorColor = (status: string) => {
-    const statusColorMap = {
-      pending: 'bg-yellow-400 dark:bg-yellow-500',
-      waiting: 'bg-sky-400 dark:bg-sky-500',
-      confirmed: 'bg-emerald-400 dark:bg-emerald-500',
-      completed: 'bg-green-400 dark:bg-green-500',
-      in_progress: 'bg-indigo-400 dark:bg-indigo-500',
-      no_show: 'bg-red-400 dark:bg-red-500',
-      canceled: 'bg-slate-400 dark:bg-slate-500',
-      canceled_by_patient: 'bg-orange-400 dark:bg-orange-500',
-      canceled_by_professional: 'bg-amber-400 dark:bg-amber-500',
+  if (!children) return <Dot status={variant} pulse={pulse} className={className} />;
 
-      partial: 'bg-lime-600 dark:bg-teal-700',
-      paid: 'bg-green-400 dark:bg-green-500',
-      refund: 'bg-purple-800 dark:bg-purple-500',
-    };
+  return (
+    <Comp data-slot="badge" className={cn(badgeVars({ variant: 'muted' }), className)} {...props}>
+      <Dot status={variant} pulse={pulse} />
+      {children}
+    </Comp>
+  );
+}
 
-    return statusColorMap[status as keyof typeof statusColorMap] || 'bg-gray-400 dark:bg-gray-500';
-  };
+// ─── BadgeWithDelta ───────────────────────────────────────────────────────────
 
-  const Indicator = ({ status = 'pending', pulse = false, className }: { status?: string; pulse?: boolean; className?: string }) => {
-    const colors = getIndicatorColor(status);
-
-    return (
-      <span className={cn('relative flex size-2', className)}>
-        {pulse && <span className={cn('absolute inline-flex h-full w-full animate-ping rounded-full opacity-75', colors)} />}
-        <span className={cn('relative inline-flex size-2 rounded-full', colors)} />
-      </span>
+function BadgeWithDelta({ className, delta, asChild = false, children, ...props }: BadgeWithDeltaProps) {
+  const Comp = asChild ? Slot : 'span';
+  const DeltaIcon =
+    delta === 0 ? (
+      <IconMinus className="size-3 stroke-2 text-sky-500" />
+    ) : delta > 0 ? (
+      <IconUp className="size-3 stroke-2 text-emerald-500" />
+    ) : (
+      <IconDown className="size-3 stroke-2 text-rose-500" />
     );
-  };
-
-  if (!children) {
-    return <Indicator status={variant} pulse={pulse} className={className} {...props} />;
-  }
 
   return (
     <Comp data-slot="badge" className={cn(badgeVars({ variant: 'muted' }), className)} {...props}>
-      <Indicator status={variant} pulse={pulse} />
+      {DeltaIcon}
       {children}
     </Comp>
   );
-};
+}
 
-export const BadgeWithDelta = ({ className, delta, asChild = false, children, ...props }: BadgeWithDeltaProps) => {
-  const Comp = asChild ? Slot : 'span';
+// ─── Status (badge1 pattern) ──────────────────────────────────────────────────
 
-  const BadgeDelta = ({ delta, className }: { delta: number; className?: string }) => {
-    if (!delta) return <IconMinus className={cn('size-3 stroke-2 text-sky-blue', className)} />;
-    if (delta > 0) return <IconUp className={cn('size-3 stroke-2 text-emerald-500', className)} />;
-    return <IconDown className={cn('size-3 stroke-2 text-rose-500', className)} />;
-  };
+const Status = ({ className, status, ...props }: StatusProps) => <Badge className={cn('group flex items-center gap-2', status, className)} variant={status} {...props} />;
 
+const StatusIndicator = ({ className, status, ...props }: StatusIndicatorProps) => {
+  const color = status ? (indicatorColorMap[status] ?? '') : '';
   return (
-    <Comp data-slot="badge" className={cn(badgeVars({ variant: 'muted' }), className)} {...props}>
-      <BadgeDelta delta={delta} />
-      {children}
-    </Comp>
+    <span className="relative flex size-2" {...props}>
+      <span className={cn('absolute inline-flex h-full w-full animate-ping rounded-full opacity-75', color)} />
+      <span className={cn('relative inline-flex size-2 rounded-full', color)} />
+    </span>
   );
 };
 
-export { Badge, badgeVars };
+const StatusLabel = ({ className, children, ...props }: StatusLabelProps) => (
+  <span className={cn('text-current', className)} {...props}>
+    {children}
+  </span>
+);
+
+// ─── Exports ──────────────────────────────────────────────────────────────────
+
+export { Badge, badgeVars, BadgeIndicator, BadgeWithDelta, Status, StatusIndicator, StatusLabel };
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 type ScheduleStatus = 'pending' | 'waiting' | 'confirmed' | 'completed' | 'in_progress' | 'no_show' | 'canceled' | 'canceled_by_patient' | 'canceled_by_professional';
 type FinancialStatus = 'pending' | 'partial' | 'paid' | 'refund' | 'canceled';
 type SystemStatus = ScheduleStatus | FinancialStatus;
+export type StatusVariant = 'success' | 'active' | 'warning' | 'pending' | 'error' | 'canceled' | 'info' | 'neutral';
+
+type BadgeProps = ComponentProps<'span'> & VariantProps<typeof badgeVars> & { asChild?: boolean };
 
 export type BadgeIndicatorProps = ComponentProps<'span'> & {
   variant?: SystemStatus;
@@ -149,3 +189,7 @@ export type BadgeWithDeltaProps = ComponentProps<'span'> &
     asChild?: boolean;
     children: React.ReactNode;
   };
+
+export type StatusIndicatorProps = HTMLAttributes<HTMLSpanElement> & { status?: StatusVariant };
+export type StatusProps = ComponentProps<typeof Badge> & { status: StatusVariant };
+export type StatusLabelProps = HTMLAttributes<HTMLSpanElement>;

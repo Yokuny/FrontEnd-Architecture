@@ -4,7 +4,12 @@ import { cn } from '@/lib/utils/cn.util';
 import { ItemDescription } from './item';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = { light: '', dark: '.dark' } as const;
+const THEMES = {
+  light: '',
+  dark: '.dark',
+  'ocean-blue': '.ocean-blue',
+  sunset: '.sunset',
+} as const;
 
 const ChartContext = React.createContext<ChartContextProps | null>(null);
 

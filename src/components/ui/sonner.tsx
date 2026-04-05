@@ -13,7 +13,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       swipeDirections={['top', 'bottom'] as ToasterProps['swipeDirections']}
       position={isMobile ? 'top-center' : 'bottom-right'}
       toastOptions={{
-        descriptionClassName: 'dark:!text-sky-blue !font-bold !text-primary-blue',
+        descriptionClassName: 'dark:!text-sky-blue ocean-blue:!text-sky-blue sunset:!text-orange-500 !font-bold !text-primary-blue',
       }}
       style={
         {

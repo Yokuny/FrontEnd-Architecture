@@ -29,7 +29,7 @@ export const patientColumns = (navigate: (opts: any) => void): DataTableColumn<P
     header: 'Sexo',
     sortable: true,
     render: (_, row) => (
-      <Badge variant={row.sex === 'M' ? 'neutral' : 'pink'} className="w-8 justify-center">
+      <Badge variant={row.sex === 'M' ? 'sky' : 'pink'} className="w-8 justify-center">
         {row.sex === 'M' ? 'M' : 'F'}
       </Badge>
     ),

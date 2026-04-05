@@ -68,7 +68,7 @@ function Calendar({
         range_start: defaultClassNames.range_start,
         range_middle: defaultClassNames.range_middle,
         range_end: defaultClassNames.range_end,
-        today: cn('rounded-md bg-primary-blue/10 text-accent-foreground dark:bg-primary-blue/50', defaultClassNames.today),
+        today: cn('rounded-md bg-primary-blue/10 ocean-blue:bg-primary-blue/50 sunset:bg-primary/30 text-accent-foreground dark:bg-primary-blue/50', defaultClassNames.today),
         outside: cn('text-muted-foreground aria-selected:text-muted-foreground', defaultClassNames.outside),
         disabled: cn('text-muted-foreground opacity-50', defaultClassNames.disabled),
         hidden: cn('invisible', defaultClassNames.hidden),
