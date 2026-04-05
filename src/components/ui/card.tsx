@@ -154,19 +154,12 @@ function CardDescription({ className, ...props }: ComponentProps<'div'>) {
 }
 
 function CardAction({ className, ...props }: ComponentProps<'div'>) {
-  return (
-    <div
-      data-slot="card-action"
-      className={cn('col-start-2 row-span-2 row-start-1 flex w-full justify-end gap-2 sm:w-auto sm:flex-row', className)}
-      {...props}
-    />
-  );
+  return <div data-slot="card-action" className={cn('col-start-2 row-span-2 row-start-1 flex w-full justify-end gap-2 sm:w-auto sm:flex-row', className)} {...props} />;
 }
 
 function CardContent({ className, ...props }: ComponentProps<'div'>) {
   return <div data-slot="card-content" className={cn('px-2 md:px-6', className)} {...props} />;
 }
-
 
 function CardFooter({ className, layout = 'simple', ...props }: CardFooterProps) {
   return (

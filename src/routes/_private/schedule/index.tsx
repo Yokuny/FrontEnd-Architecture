@@ -13,8 +13,9 @@ import Left from '@/components/icons/Left.Icon';
 import Right from '@/components/icons/Right.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Calendar } from '@/components/ui/calendar';
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardAction, CardContent, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useClinicStore } from '@/hooks/clinic';
@@ -320,86 +321,88 @@ function SchedulePage() {
   };
 
   return (
-    <Card className="w-full pb-14 md:pb-0">
-      <CardHeader title={String(currentDate.getDate()).padStart(2, '0')}>
-        <div className="flex flex-col items-baseline md:flex-row md:gap-2">
-          <CardTitle className="flex items-baseline gap-2 text-sky-blue leading-1 dark:text-primary-blue">
-            <span className="font-bold text-xl">{['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][currentDate.getDay()]}</span>
-          </CardTitle>
-          <p className="font-mono text-muted-foreground text-sm leading-1 sm:text-lg md:text-xl">{headerTitle}</p>
-        </div>
-        <CardAction>
-          <div className="flex items-center justify-between gap-1 md:gap-4 lg:flex-none">
-            <div className="flex items-center">
-              <div className="relative flex items-center md:items-stretch">
-                <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label="Anterior" className="rounded-none rounded-l-md border-r-0 px-2">
-                  <Left className="size-5" aria-hidden="true" />
-                </Button>
-                <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setCurrentDate(new Date())} className="hidden rounded-none border-x-0 md:block">
-                  Hoje
-                </Button>
-                <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handleNext} aria-label="Próximo" className="rounded-none rounded-r-md border-l-0 px-2">
-                  <Right className="size-5" aria-hidden="true" />
-                </Button>
-              </div>
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size={isMobile ? 'default' : 'sm'} className="gap-1.5">
-                  <span>
-                    <span className="min-[480px]:hidden" aria-hidden="true">
-                      {viewDictionary[view].charAt(0).toUpperCase()}
-                    </span>
-                    <span className="max-[479px]:sr-only">{capitalizeString(viewDictionary[view])}</span>
-                  </span>
-                  <Down className="-me-1 size-5" aria-hidden="true" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-32">
-                <DropdownMenuItem onClick={() => setView('month')}>Mês</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setView('week')}>Semana</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setView('day')}>Dia</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setView('agenda')}>Agenda</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Select
-              value={selectedRoomID}
-              onValueChange={(value) => {
-                setSelectedRoom(value);
-                setSelectedRoomID(value);
-                setEvents([]);
-              }}
-            >
-              <SelectTrigger size={isMobile ? 'default' : 'sm'}>
-                <SelectValue placeholder="Selecione uma sala" />
-              </SelectTrigger>
-              <SelectContent>
-                {user?.rooms?.map((room: any) => (
-                  <SelectItem key={room._id} value={room._id}>
-                    {getRoomName(room._id)}
-                  </SelectItem>
-                ))}
-                {user?.role?.includes('assistant') && <SelectItem value="all">Todas as salas</SelectItem>}
-              </SelectContent>
-            </Select>
-            {!isMobile && (
-              <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                <Grid className="size-4" />
-              </Button>
-            )}
-            <Button
-              size={isMobile ? 'default' : 'sm'}
-              onClick={() => {
-                setSelectedEvent(null);
-                setIsEventDialogOpen(true);
-              }}
-            >
-              <Add className="size-4" aria-hidden="true" />
-              <span className="sr-only md:not-sr-only">Adicionar</span>
-            </Button>
+    <div className="flex h-full w-full flex-col gap-6 rounded-lg border bg-background py-6 pb-14 text-card-foreground md:pb-0">
+      <div className="flex items-start justify-between gap-2 px-4 sm:items-center md:px-6">
+        <div className="flex items-center gap-3">
+          <CardTitle className="text-sky-blue dark:text-primary-blue">{String(currentDate.getDate()).padStart(2, '0')}</CardTitle>
+
+          <div className="flex flex-col items-baseline md:flex-row md:gap-2">
+            <CardTitle className="flex items-baseline gap-2 text-sky-blue leading-1 dark:text-primary-blue">
+              <span className="font-bold text-xl">{['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][currentDate.getDay()]}</span>
+            </CardTitle>
+            <p className="font-mono text-muted-foreground text-sm leading-1 sm:text-lg md:text-xl">{headerTitle}</p>
           </div>
+        </div>
+
+        <CardAction>
+          <ButtonGroup>
+            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label="Anterior" className="rounded-none rounded-l-md border-r-0 px-2">
+              <Left className="size-5" aria-hidden="true" />
+            </Button>
+            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setCurrentDate(new Date())} className="hidden rounded-none border-x-0 px-1 md:block">
+              Hoje
+            </Button>
+            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handleNext} aria-label="Próximo" className="rounded-none rounded-r-md border-l-0 px-2">
+              <Right className="size-5" aria-hidden="true" />
+            </Button>
+          </ButtonGroup>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size={isMobile ? 'default' : 'sm'} className="gap-1 px-2">
+                <span>
+                  <span className="min-[480px]:hidden" aria-hidden="true">
+                    {viewDictionary[view].charAt(0).toUpperCase()}
+                  </span>
+                  <span className="max-[479px]:sr-only">{capitalizeString(viewDictionary[view])}</span>
+                </span>
+                <Down className="-ms-1 size-5" aria-hidden="true" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="min-w-32">
+              <DropdownMenuItem onClick={() => setView('month')}>Mês</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setView('week')}>Semana</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setView('day')}>Dia</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setView('agenda')}>Agenda</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Select
+            value={selectedRoomID}
+            onValueChange={(value) => {
+              setSelectedRoom(value);
+              setSelectedRoomID(value);
+              setEvents([]);
+            }}
+          >
+            <SelectTrigger size={isMobile ? 'default' : 'sm'} className="px-2">
+              <SelectValue placeholder="Selecione uma sala" />
+            </SelectTrigger>
+            <SelectContent>
+              {user?.rooms?.map((room: any) => (
+                <SelectItem key={room._id} value={room._id}>
+                  {getRoomName(room._id)}
+                </SelectItem>
+              ))}
+              {user?.role?.includes('assistant') && <SelectItem value="all">Todas as salas</SelectItem>}
+            </SelectContent>
+          </Select>
+          {!isMobile && (
+            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+              <Grid className="size-4" />
+            </Button>
+          )}
+          <Button
+            size={isMobile ? 'default' : 'sm'}
+            className="px-2"
+            onClick={() => {
+              setSelectedEvent(null);
+              setIsEventDialogOpen(true);
+            }}
+          >
+            <Add className="-ms-1 size-4" aria-hidden="true" />
+            <span className="sr-only md:not-sr-only">Adicionar</span>
+          </Button>
         </CardAction>
-      </CardHeader>
+      </div>
 
       <div className={cn('flex transition-all duration-300 ease-in-out', isMobile ? 'flex-col gap-1' : 'gap-3')}>
         <CardContent
@@ -619,6 +622,6 @@ function SchedulePage() {
           </div>
         </CardContent>
       </div>
-    </Card>
+    </div>
   );
 }
