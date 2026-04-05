@@ -2,7 +2,7 @@ import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import { differenceInDays } from 'date-fns';
 import { useRef, useState } from 'react';
-import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import type { DraggableEventProps } from '../@interface/schedule.interface';
 
 import { useCalendarDnd } from './calendar-dnd-context';
 import { EventItem } from './event-item';
@@ -87,15 +87,3 @@ export function DraggableEvent({ event, view, showTime, onClick, height, isMulti
     </div>
   );
 }
-
-type DraggableEventProps = {
-  event: PartialSchedule;
-  view: 'month' | 'week' | 'day';
-  showTime?: boolean;
-  onClick?: (e: React.MouseEvent) => void;
-  height?: number;
-  isMultiDay?: boolean;
-  multiDayWidth?: number;
-  isFirstDay?: boolean;
-  isLastDay?: boolean;
-};

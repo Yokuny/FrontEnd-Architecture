@@ -1,4 +1,5 @@
-import { addDays, endOfDay, endOfMonth, endOfWeek, startOfDay, startOfMonth, startOfWeek } from 'date-fns';
+import { addDays, endOfDay, endOfMonth, endOfWeek, getMinutes, startOfDay, startOfMonth, startOfWeek } from 'date-fns';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import type { CalendarView, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import type { CustomDateRange } from '../@interface/schedule.interface';
 
@@ -30,4 +31,14 @@ export function computeUpcomingPerProfessional(events: PartialSchedule[]): Array
     Professional: prof,
     nextEvent: profEvents.sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())[0],
   }));
+}
+
+export function formatTimeWithOptionalMinutes(date: Date): string {
+  return formatDate(date, getMinutes(date) === 0 ? 'ha' : 'h:mma').toLowerCase();
+}
+
+export function extractTimeFromISO(iso?: string): string | undefined {
+  if (!iso) return undefined;
+  const date = new Date(iso);
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
 }

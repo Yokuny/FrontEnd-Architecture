@@ -1,12 +1,14 @@
-import { addHours, areIntervalsOverlapping, differenceInMinutes, eachHourOfInterval, format, getHours, getMinutes, isSameDay, startOfDay } from 'date-fns';
+import { addHours, areIntervalsOverlapping, differenceInMinutes, eachHourOfInterval, getHours, getMinutes, isSameDay, startOfDay } from 'date-fns';
 import type React from 'react';
 import { useMemo } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
 import { EndHour, StartHour, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
+import type { DayViewProps, PositionedEvent } from '../@interface/schedule.interface';
 
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
@@ -129,7 +131,7 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
               <div key={hour.toString()} className="relative h-[var(--week-cells-height)] border-accent border-b last:border-b-0">
                 {index > 0 && (
                   <span className="absolute -top-3 left-0 flex h-6 w-16 max-w-full items-center justify-end bg-background pe-2 text-[10px] text-muted-foreground sm:pe-4 sm:text-xs">
-                    {format(hour, 'h a')}
+                    {formatDate(hour, 'h a')}
                   </span>
                 )}
               </div>
@@ -198,19 +200,3 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
     </div>
   );
 }
-
-type DayViewProps = {
-  currentDate: Date;
-  events: PartialSchedule[];
-  onEventSelect: (event: PartialSchedule) => void;
-  onEventCreate: (start: Date) => void;
-};
-
-type PositionedEvent = {
-  event: PartialSchedule;
-  top: number;
-  height: number;
-  left: number;
-  width: number;
-  zIndex: number;
-};

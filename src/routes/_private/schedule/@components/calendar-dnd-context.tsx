@@ -12,28 +12,11 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { addMinutes, differenceInMinutes } from 'date-fns';
-import { createContext, type ReactNode, useContext, useId, useRef, useState } from 'react';
+import { createContext, useContext, useId, useRef, useState } from 'react';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import type { CalendarDndContextType, CalendarDndProviderProps } from '../@interface/schedule.interface';
 
 import { EventItem } from './event-item';
-
-type CalendarDndContextType = {
-  activeEvent: PartialSchedule | null;
-  activeId: UniqueIdentifier | null;
-  activeView: 'month' | 'week' | 'day' | null;
-  currentTime: Date | null;
-  eventHeight: number | null;
-  isMultiDay: boolean;
-  multiDayWidth: number | null;
-  dragHandlePosition: {
-    x?: number;
-    y?: number;
-    data?: {
-      isFirstDay?: boolean;
-      isLastDay?: boolean;
-    };
-  } | null;
-};
 
 const CalendarDndContext = createContext<CalendarDndContextType>({
   activeEvent: null,
@@ -46,12 +29,9 @@ const CalendarDndContext = createContext<CalendarDndContextType>({
   dragHandlePosition: null,
 });
 
-export const useCalendarDnd = () => useContext(CalendarDndContext);
-
-type CalendarDndProviderProps = {
-  children: ReactNode;
-  onEventUpdate: (event: PartialSchedule) => void;
-};
+export function useCalendarDnd() {
+  return useContext(CalendarDndContext);
+}
 
 export function CalendarDndProvider({ children, onEventUpdate }: CalendarDndProviderProps) {
   const [activeEvent, setActiveEvent] = useState<PartialSchedule | null>(null);

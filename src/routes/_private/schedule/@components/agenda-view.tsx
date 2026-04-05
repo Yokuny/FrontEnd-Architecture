@@ -1,11 +1,12 @@
-import { addDays, format, isToday } from 'date-fns';
-import { ptBR } from 'date-fns/locale/pt-BR';
+import { addDays, isToday } from 'date-fns';
 import { useMemo } from 'react';
 import Calender from '@/components/icons/Calender.Icon';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AgendaDaysToShow } from '@/lib/config/calendar.config';
 import { getAgendaEventsForDay } from '@/lib/helpers/calendar.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import type { AgendaViewProps } from '../@interface/schedule.interface';
 import { EventItem } from './event-item';
 
 export function AgendaView({ currentDate, events, onEventSelect }: AgendaViewProps) {
@@ -41,7 +42,7 @@ export function AgendaView({ currentDate, events, onEventSelect }: AgendaViewPro
                     className="absolute -top-3 left-0 flex h-6 items-center bg-background pe-4 text-muted-foreground text-xs data-today:font-semibold sm:pe-4 md:text-sm"
                     data-today={isToday(day) || undefined}
                   >
-                    {format(day, 'd MMM, EEEE', { locale: ptBR })}
+                    {formatDate(day, 'd MMM, EEEE')}
                   </span>
                   <div className="mt-6 space-y-2">
                     {dayEvents.map((event) => (
@@ -57,9 +58,3 @@ export function AgendaView({ currentDate, events, onEventSelect }: AgendaViewPro
     </div>
   );
 }
-
-type AgendaViewProps = {
-  currentDate: Date;
-  events: PartialSchedule[];
-  onEventSelect: (event: PartialSchedule) => void;
-};

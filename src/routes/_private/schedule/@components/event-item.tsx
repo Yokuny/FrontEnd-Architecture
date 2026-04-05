@@ -1,15 +1,10 @@
-import type { DraggableAttributes } from '@dnd-kit/core';
-import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
-import { differenceInMinutes, format, getMinutes, isPast } from 'date-fns';
+import { differenceInMinutes, isPast } from 'date-fns';
 import { useMemo } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { getBorderRadiusClasses, getEventColorClasses } from '@/lib/helpers/calendar.helper';
-import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
-
-const formatTimeWithOptionalMinutes = (date: Date) => {
-  return format(date, getMinutes(date) === 0 ? 'ha' : 'h:mma').toLowerCase();
-};
+import type { EventItemProps, EventWrapperProps } from '../@interface/schedule.interface';
+import { formatTimeWithOptionalMinutes } from '../@utils/schedule.utils';
 
 function EventWrapper({
   event,
@@ -171,35 +166,3 @@ export function EventItem({
     </button>
   );
 }
-
-type EventWrapperProps = {
-  event: PartialSchedule;
-  isFirstDay?: boolean;
-  isLastDay?: boolean;
-  isDragging?: boolean;
-  onClick?: (e: React.MouseEvent) => void;
-  className?: string;
-  children: React.ReactNode;
-  currentTime?: Date;
-  dndListeners?: SyntheticListenerMap;
-  dndAttributes?: DraggableAttributes;
-  onMouseDown?: (e: React.MouseEvent) => void;
-  onTouchStart?: (e: React.TouchEvent) => void;
-};
-
-export type EventItemProps = {
-  event: PartialSchedule;
-  view: 'month' | 'week' | 'day' | 'agenda';
-  isDragging?: boolean;
-  onClick?: (e: React.MouseEvent) => void;
-  showTime?: boolean;
-  currentTime?: Date;
-  isFirstDay?: boolean;
-  isLastDay?: boolean;
-  children?: React.ReactNode;
-  className?: string;
-  dndListeners?: SyntheticListenerMap;
-  dndAttributes?: DraggableAttributes;
-  onMouseDown?: (e: React.MouseEvent) => void;
-  onTouchStart?: (e: React.TouchEvent) => void;
-};

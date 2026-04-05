@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { ItemDescription } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { useScheduleDetailQuery } from '@/query/schedule';
+import type { EventDialogProps } from '../@interface/schedule.interface';
 import { ScheduleForm } from './schedule-form';
 import { ScheduleRender } from './schedule-render';
 
@@ -51,7 +53,7 @@ function EventRenderWrapper({ event, onEdit, onClose }: { event: PartialSchedule
             <Skeleton className="h-7 w-[200px] md:h-8 md:w-[250px]" />
           </div>
           <div className="flex flex-col gap-4 md:gap-6 md:px-6">
-            <p className="text-muted-foreground text-sm">Atendimento</p>
+            <ItemDescription>Atendimento</ItemDescription>
             <div className="flex w-full flex-col gap-4 md:flex-row md:gap-6">
               <Skeleton className="flex w-full flex-row items-start py-16 md:max-w-lg md:flex-col" />
               <div className="flex w-full flex-row items-start justify-between gap-4 md:flex-col">
@@ -66,11 +68,3 @@ function EventRenderWrapper({ event, onEdit, onClose }: { event: PartialSchedule
     </DialogContent>
   );
 }
-
-type EventDialogProps = {
-  event: PartialSchedule | null;
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (event: PartialSchedule) => void;
-  onDelete: (eventId: string) => void;
-};

@@ -1,6 +1,4 @@
 import { useNavigate } from '@tanstack/react-router';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale/pt-BR';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import Calender from '@/components/icons/Calender.Icon';
@@ -12,22 +10,24 @@ import Right from '@/components/icons/Right.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CardContent } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { usePatientStore } from '@/hooks/patients';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PATCH, POST, request } from '@/lib/api/client.api';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, extractDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
-import type { FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { usePatientsQuery } from '@/query/patients';
 import { useProfessionalsQuery } from '@/query/professionals';
+import { statusOptions } from '../@consts/schedule.consts';
+import type { ScheduleRenderProps } from '../@interface/schedule.interface';
 
-export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps) => {
+export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps) {
   const { data: professionals } = useProfessionalsQuery();
   const { data: patients } = usePatientsQuery();
 
@@ -81,116 +81,104 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
   const renderScheduleDateTime = () => {
     const startDate = new Date(schedule.start);
     const endDate = schedule.end ? new Date(schedule.end) : startDate;
-    const isSameDay = format(startDate, 'yyyy-MM-dd') === format(endDate, 'yyyy-MM-dd');
+    const isSameDay = formatDate(startDate, 'yyyy-MM-dd') === formatDate(endDate, 'yyyy-MM-dd');
 
     if (schedule.allDay) {
       const daysDuration = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
       return (
-        <div className="flex flex-row items-center justify-between gap-4 md:flex-col">
-          <CardContent className="w-full space-y-2 p-4 md:px-6">
-            <div className="flex flex-row items-center justify-between gap-2">
-              <p className="text-muted-foreground text-sm">Data</p>
+        <Item className="flex-row items-center justify-between gap-4 md:flex-col">
+          <ItemContent className="w-full space-y-2 p-4 md:px-6">
+            <ItemActions className="w-full items-center justify-between gap-2">
+              <ItemDescription>Data</ItemDescription>
               <Button variant="outline" size="sm" className="gap-1 text-xs">
                 <Calender className="hidden size-4 md:block" />
-                <span className="text-muted-foreground tabular-nums tracking-tight">{t('all.day')}</span>
+                <ItemTitle className="text-muted-foreground tabular-nums tracking-tight">{t('all.day')}</ItemTitle>
               </Button>
-            </div>
-            <div className="flex flex-row items-center justify-between space-y-0">
-              <p className="font-bold text-md tabular-nums md:text-xl">{format(startDate, 'dd - MMM', { locale: ptBR })}</p>
-              <p className="text-muted-foreground text-sm tracking-tight">{format(startDate, 'EEEEEE', { locale: ptBR })}</p>
-            </div>
-          </CardContent>
+            </ItemActions>
+            <ItemActions className="w-full items-center justify-between space-y-0">
+              <ItemTitle className="text-md tabular-nums md:text-xl">{formatDate(startDate, 'dd - MMM')}</ItemTitle>
+              <ItemDescription className="tracking-tight">{formatDate(startDate, 'EEEEEE')}</ItemDescription>
+            </ItemActions>
+          </ItemContent>
 
           {!isSameDay && (
-            <CardContent className="w-full space-y-2 p-4 md:px-6">
-              <div className="flex flex-row items-center justify-between gap-2">
-                <p className="text-muted-foreground text-sm">Data Final</p>
+            <ItemContent className="w-full space-y-2 p-4 md:px-6">
+              <ItemActions className="w-full items-center justify-between gap-2">
+                <ItemDescription>Data Final</ItemDescription>
                 <Button variant="outline" size="sm" className="gap-1 px-2 text-xs">
                   <Clock className="hidden size-4 md:block" />
-                  <span className="text-muted-foreground tabular-nums tracking-tight">{daysDuration} dias</span>
+                  <ItemTitle className="text-muted-foreground tabular-nums tracking-tight">{daysDuration} dias</ItemTitle>
                 </Button>
-              </div>
-              <div className="flex flex-row items-center justify-between space-y-0">
-                <p className="font-bold text-md tabular-nums md:text-xl">{format(endDate, 'dd - MMM', { locale: ptBR })}</p>
-                <p className="text-muted-foreground text-sm tracking-tight">{format(endDate, 'EEEEEE', { locale: ptBR })}</p>
-              </div>
-            </CardContent>
+              </ItemActions>
+              <ItemActions className="w-full items-center justify-between space-y-0">
+                <ItemTitle className="text-md tabular-nums md:text-xl">{formatDate(endDate, 'dd - MMM')}</ItemTitle>
+                <ItemDescription className="tracking-tight">{formatDate(endDate, 'EEEEEE')}</ItemDescription>
+              </ItemActions>
+            </ItemContent>
           )}
-        </div>
+        </Item>
       );
     }
 
     if (isSameDay) {
       return (
-        <div className="flex flex-row items-center justify-between gap-4 md:flex-col">
-          <div className="flex w-full flex-col items-start gap-2 space-x-4 rounded-lg p-2 md:border md:p-4">
-            <p className="text-muted-foreground text-sm">Dia</p>
-            <p className="font-bold tabular-nums md:text-xl">{extractDate(schedule?.start, '')}</p>
-          </div>
-          <div className="flex w-full flex-col items-start gap-2 space-x-4 rounded-lg p-2 md:border md:p-4">
-            <p className="text-muted-foreground text-sm">Horário</p>
-            <div className="flex flex-row items-center gap-2">
-              <p className="font-bold text-md tabular-nums md:text-xl">{extractDate(schedule?.start, 'hour')}</p>
+        <Item className="flex-row items-center justify-between gap-4 md:flex-col">
+          <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
+            <ItemDescription>Dia</ItemDescription>
+            <ItemTitle className="tabular-nums md:text-xl">{extractDate(schedule?.start, '')}</ItemTitle>
+          </Item>
+          <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
+            <ItemDescription>Horário</ItemDescription>
+            <ItemActions className="items-center gap-2">
+              <ItemTitle className="text-md tabular-nums md:text-xl">{extractDate(schedule?.start, 'hour')}</ItemTitle>
               <Right className="size-4" />
-              <p className="font-bold text-md tabular-nums md:text-xl">{extractDate(schedule?.end || event.end, 'hour')}</p>
-            </div>
-          </div>
-        </div>
+              <ItemTitle className="text-md tabular-nums md:text-xl">{extractDate(schedule?.end || event.end, 'hour')}</ItemTitle>
+            </ItemActions>
+          </Item>
+        </Item>
       );
     }
 
     return (
-      <div className="flex flex-row items-center justify-between gap-4 md:flex-col">
-        <div className="flex w-full flex-col items-start gap-2 space-x-4 rounded-lg p-2 md:border md:p-4">
-          <p className="text-muted-foreground text-sm">Data Início</p>
-          <div className="flex items-baseline gap-3">
-            <p className="font-bold tabular-nums md:text-xl">{extractDate(schedule?.start, 'hour')}</p>
-            <div className="flex items-start gap-1">
+      <Item className="flex-row items-center justify-between gap-4 md:flex-col">
+        <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
+          <ItemDescription>Data Início</ItemDescription>
+          <ItemActions className="items-baseline gap-3">
+            <ItemTitle className="tabular-nums md:text-xl">{extractDate(schedule?.start, 'hour')}</ItemTitle>
+            <ItemActions className="items-start gap-1">
               <Calender className="size-4" />
-              <p className="text-muted-foreground md:text-lg">{extractDate(schedule?.start, 'short')}</p>
-            </div>
-          </div>
-        </div>
-        <div className="flex w-full flex-col items-start gap-2 space-x-4 rounded-lg p-2 md:border md:p-4">
-          <p className="text-muted-foreground text-sm">Data Final</p>
-          <div className="flex items-baseline gap-3">
-            <p className="font-bold tabular-nums md:text-xl">{extractDate(schedule?.end || event.end, 'hour')}</p>
-            <div className="flex items-start gap-1">
+              <ItemDescription className="md:text-lg">{extractDate(schedule?.start, 'short')}</ItemDescription>
+            </ItemActions>
+          </ItemActions>
+        </Item>
+        <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
+          <ItemDescription>Data Final</ItemDescription>
+          <ItemActions className="items-baseline gap-3">
+            <ItemTitle className="tabular-nums md:text-xl">{extractDate(schedule?.end || event.end, 'hour')}</ItemTitle>
+            <ItemActions className="items-start gap-1">
               <Calender className="size-4" />
-              <p className="text-muted-foreground md:text-lg">{extractDate(schedule?.end || event.end, 'short')}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+              <ItemDescription className="md:text-lg">{extractDate(schedule?.end || event.end, 'short')}</ItemDescription>
+            </ItemActions>
+          </ItemActions>
+        </Item>
+      </Item>
     );
   };
-
-  const statusOptions = [
-    { value: 'pending', label: t('pending') },
-    { value: 'waiting', label: t('waiting') },
-    { value: 'confirmed', label: t('confirmed') },
-    { value: 'completed', label: t('completed') },
-    { value: 'in_progress', label: t('in.progress') },
-    { value: 'no_show', label: t('no.show') },
-    { value: 'canceled', label: t('cancelled') },
-    { value: 'canceled_by_patient', label: t('canceled.by.patient') },
-    { value: 'canceled_by_professional', label: t('canceled.by.professional') },
-  ];
 
   return (
     <>
       <DialogHeader className="w-full">
-        <div className="flex w-full flex-col items-start justify-between gap-2 md:flex-row">
+        <Item className="w-full flex-col items-start justify-between gap-2 md:flex-row">
           <DialogTitle className="truncate text-sky-blue tracking-wide md:text-2xl dark:text-primary-blue">Agendamento</DialogTitle>
-          <div className="flex flex-row items-end gap-2">
-            <div className="flex items-end gap-2">
+          <ItemActions className="items-end gap-2">
+            <ItemActions className="items-end gap-2">
               {isEditing && (
                 <Button size={isMobile ? 'sm' : 'sm'} variant="default" onClick={handleStatusChange} disabled={isLoading}>
                   Salvar
                 </Button>
               )}
-              <div className="flex flex-col gap-2">
-                <p className="text-muted-foreground text-sm">Status do agendamento</p>
+              <Item className="flex-col gap-2">
+                <ItemDescription>Status do agendamento</ItemDescription>
                 <Select
                   value={selectedStatus}
                   disabled={isLoading}
@@ -200,24 +188,24 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
                   }}
                 >
                   <SelectTrigger size="sm" className="w-full">
-                    <div className="flex items-center gap-2">
+                    <ItemActions className="items-center gap-2">
                       <div className={cn('size-2 rounded-full', getStatusColor(selectedStatus))} />
                       <SelectValue className="text-xs">{statusDictionary(selectedStatus)}</SelectValue>
-                    </div>
+                    </ItemActions>
                   </SelectTrigger>
                   <SelectContent>
                     {statusOptions.map((opt) => (
                       <SelectItem key={opt.value} className="text-xs" disabled={isLoading} value={opt.value}>
-                        <div className="flex items-center gap-2">
+                        <ItemActions className="items-center gap-2">
                           <div className={cn('size-2 rounded-full', getStatusColor(opt.value))} />
                           {opt.label}
-                        </div>
+                        </ItemActions>
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-            </div>
+              </Item>
+            </ItemActions>
             {schedule.status === 'pending' && schedule.Patient && (
               <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={handleRequestScheduleConfirmation}>
                 <Chat className="size-4 text-green-600" />
@@ -225,74 +213,74 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
             )}
             <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={onEdit}>
               <Edit className="size-4 md:mr-2" />
-              <span className="hidden md:block">Editar</span>
+              <ItemTitle className="hidden md:block">Editar</ItemTitle>
             </Button>
             {schedule.Financial && (
               <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details', search: { id: schedule.Financial! } })}>
                 <Link className="size-4 md:mr-2" />
-                <span className="hidden md:block">Finança</span>
+                <ItemTitle className="hidden md:block">Finança</ItemTitle>
               </Button>
             )}
-          </div>
-        </div>
+          </ItemActions>
+        </Item>
       </DialogHeader>
 
-      <div className="flex flex-col gap-4 md:gap-6 md:px-6">
-        <p className="mt-2 font-medium text-muted-foreground text-sm md:mt-0">{!schedule.Patient ? 'Evento' : 'Atendimento'}</p>
-        <div className="flex flex-col gap-4 md:flex-row md:gap-6">
+      <Item className="flex-col gap-4 md:gap-6 md:px-6">
+        <ItemTitle className="mt-2 font-medium text-muted-foreground text-sm md:mt-0">{!schedule.Patient ? 'Evento' : 'Atendimento'}</ItemTitle>
+        <ItemActions className="flex-col gap-4 md:flex-row md:gap-6">
           {schedule.Patient ? (
-            <div className="flex w-full flex-row items-start gap-6 rounded-lg p-0 md:max-w-md md:flex-col md:border md:p-6">
-              <div className="flex w-full items-center gap-1 md:gap-4">
+            <Item className="w-full flex-row items-start gap-6 rounded-lg p-0 md:max-w-md md:flex-col md:border md:p-6">
+              <ItemActions className="w-full items-center gap-1 md:gap-4">
                 <Avatar className="group relative flex items-center justify-center">
                   <AvatarImage src={patientImage} alt="img paciente" />
                   <AvatarFallback>{patientName?.slice(0, 2)}</AvatarFallback>
                 </Avatar>
-                <div className="w-full">
-                  <div className="flex w-full items-center justify-between">
-                    <p className="text-muted-foreground text-sm">Paciente</p>
+                <Item className="w-full">
+                  <ItemActions className="w-full items-center justify-between">
+                    <ItemDescription>Paciente</ItemDescription>
                     {schedule?.Patient && (
                       <Button type="button" variant="outline" size="sm" onClick={() => window.open(`/patient/${schedule?.Patient}`, '_blank')}>
                         <Link className="size-4 md:mr-2" />
-                        <span className="hidden text-xs md:block">Paciente</span>
+                        <ItemTitle className="hidden text-xs md:block">Paciente</ItemTitle>
                       </Button>
                     )}
-                  </div>
-                  <p className="max-w-32 overflow-hidden truncate font-medium md:max-w-none">{patientName}</p>
-                </div>
-              </div>
-              <div className="flex w-full items-center gap-1 md:gap-4">
+                  </ItemActions>
+                  <ItemTitle className="max-w-32 overflow-hidden truncate font-medium md:max-w-none">{patientName}</ItemTitle>
+                </Item>
+              </ItemActions>
+              <ItemActions className="w-full items-center gap-1 md:gap-4">
                 <Avatar className="group relative flex items-center justify-center">
                   <AvatarImage src={professionalImage} alt="img profissional" />
                   <AvatarFallback>{professionalName?.slice(0, 2)}</AvatarFallback>
                 </Avatar>
-                <div className="flex w-full items-center justify-between">
-                  <div className="space-y-1">
-                    <p className="text-muted-foreground text-sm">Profissional</p>
-                    <p className="truncate font-medium">{professionalName}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <ItemActions className="w-full items-center justify-between">
+                  <Item className="space-y-1">
+                    <ItemDescription>Profissional</ItemDescription>
+                    <ItemTitle className="truncate font-medium">{professionalName}</ItemTitle>
+                  </Item>
+                </ItemActions>
+              </ItemActions>
+            </Item>
           ) : (
-            <div className="flex w-full flex-row items-start justify-between gap-4 rounded-lg border p-4 md:max-w-md md:flex-col md:p-6">
-              <div className="space-y-1">
-                <p className="text-muted-foreground text-sm">Descrição</p>
-                <p className="truncate font-semibold text-md">{schedule.title}</p>
-              </div>
-            </div>
+            <Item className="w-full flex-row items-start justify-between gap-4 rounded-lg border p-4 md:max-w-md md:flex-col md:p-6">
+              <Item className="space-y-1">
+                <ItemDescription>Descrição</ItemDescription>
+                <ItemTitle className="truncate font-semibold text-md">{schedule.title}</ItemTitle>
+              </Item>
+            </Item>
           )}
 
           {renderScheduleDateTime()}
-        </div>
+        </ItemActions>
 
-        <div className="flex flex-col gap-4 md:flex-row md:gap-6">
+        <ItemActions className="flex-col gap-4 md:flex-row md:gap-6">
           {schedule.Patient && (
             <DataTable
               className="w-full rounded-xl py-4 md:max-w-md md:border md:py-8"
               data={schedule.financial?.procedures || []}
               columns={[
                 { key: 'procedure', header: 'Procedimento' },
-                { key: 'price', header: 'Preço', render: (v) => <span className="tabular-nums">{currencyFormat(v)}</span> },
+                { key: 'price', header: 'Preço', render: (v) => <ItemTitle className="tabular-nums">{currencyFormat(v)}</ItemTitle> },
                 { key: 'status', header: 'Status', render: (v) => <Badge variant="outline">{statusDictionary(v)}</Badge> },
               ]}
               searchable={false}
@@ -302,34 +290,27 @@ export const ScheduleRender = ({ schedule, event, onEdit }: ScheduleRenderProps)
             />
           )}
           {schedule.financial && schedule.financial._id !== null && !schedule.Patient && (
-            <div className="flex h-fit flex-row flex-wrap justify-between gap-4 p-4 md:max-w-md md:flex-col md:p-8 md:px-4">
-              <div className="w-1/4 space-y-1 md:w-full">
-                <p className="text-muted-foreground text-sm">Total</p>
-                <p className="font-semibold text-md tabular-nums">{currencyFormat(schedule.financial?.price || 0)}</p>
-              </div>
-              <div className="w-1/4 space-y-1 md:w-full">
-                <p className="text-muted-foreground text-sm">Pago</p>
-                <p className="font-semibold text-md tabular-nums">{currencyFormat(schedule.financial?.paid || 0)}</p>
-              </div>
-              <div className="w-1/4 space-y-1 md:w-full">
-                <p className="text-muted-foreground text-sm">Status Pagamento</p>
-                <p className="font-semibold text-md">{statusDictionary(schedule.financial?.status || '')}</p>
-              </div>
-              <div className="w-1/4 space-y-1 md:w-full">
-                <p className="text-muted-foreground text-sm">Status Consulta</p>
-                <p className="font-semibold text-md">{statusDictionary(schedule.status)}</p>
-              </div>
-            </div>
+            <Item className="h-fit flex-row flex-wrap justify-between gap-4 p-4 md:max-w-md md:flex-col md:p-8 md:px-4">
+              <Item className="w-1/4 space-y-1 md:w-full">
+                <ItemDescription>Total</ItemDescription>
+                <ItemTitle className="font-semibold text-md tabular-nums">{currencyFormat(schedule.financial?.price || 0)}</ItemTitle>
+              </Item>
+              <Item className="w-1/4 space-y-1 md:w-full">
+                <ItemDescription>Pago</ItemDescription>
+                <ItemTitle className="font-semibold text-md tabular-nums">{currencyFormat(schedule.financial?.paid || 0)}</ItemTitle>
+              </Item>
+              <Item className="w-1/4 space-y-1 md:w-full">
+                <ItemDescription>Status Pagamento</ItemDescription>
+                <ItemTitle className="font-semibold text-md">{statusDictionary(schedule.financial?.status || '')}</ItemTitle>
+              </Item>
+              <Item className="w-1/4 space-y-1 md:w-full">
+                <ItemDescription>Status Consulta</ItemDescription>
+                <ItemTitle className="font-semibold text-md">{statusDictionary(schedule.status)}</ItemTitle>
+              </Item>
+            </Item>
           )}
-        </div>
-      </div>
+        </ItemActions>
+      </Item>
     </>
   );
-};
-
-type ScheduleRenderProps = {
-  schedule: FullSchedule;
-  event: PartialSchedule;
-  onEdit: () => void;
-  onClose: () => void;
-};
+}

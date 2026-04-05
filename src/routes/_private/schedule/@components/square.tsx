@@ -1,6 +1,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { cn } from '@/lib/utils/cn.util';
+import type { DroppableCellProps } from '../@interface/schedule.interface';
 import { useCalendarDnd } from './calendar-dnd-context';
 
 export function DroppableCell({ id, date, time, children, className, onClick }: DroppableCellProps) {
@@ -30,12 +31,3 @@ export function DroppableCell({ id, date, time, children, className, onClick }: 
     </UnstyledButton>
   );
 }
-
-type DroppableCellProps = {
-  id: string;
-  date: Date;
-  time?: number;
-  children?: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
-};

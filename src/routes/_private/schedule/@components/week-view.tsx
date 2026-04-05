@@ -5,7 +5,6 @@ import {
   eachDayOfInterval,
   eachHourOfInterval,
   endOfWeek,
-  format,
   getDay,
   getHours,
   getMinutes,
@@ -15,7 +14,6 @@ import {
   startOfDay,
   startOfWeek,
 } from 'date-fns';
-import { ptBR } from 'date-fns/locale/pt-BR';
 import type React from 'react';
 import { useMemo } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -23,17 +21,19 @@ import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
 import { EndHour, StartHour, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
+import type { PositionedEvent, WeekViewProps } from '../@interface/schedule.interface';
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
 import { DroppableCell } from './square';
 
-const Header = ({ days }: { days: Date[] }) => {
+function Header({ days }: { days: Date[] }) {
   return (
     <div className="sticky top-0 z-30 grid grid-cols-8 rounded-t-sm font-medium text-muted-foreground text-xs backdrop-blur-md">
       <div className="py-2 text-center">
-        <span className="max-[479px]:sr-only">{format(new Date(), 'O')}</span>
+        <span className="max-[479px]:sr-only">{formatDate(new Date(), 'O')}</span>
       </div>
       {days.map((day) => (
         <div
@@ -42,12 +42,12 @@ const Header = ({ days }: { days: Date[] }) => {
           data-today={isToday(day) || undefined}
           data-outside-cell={(getDay(day) === 0 && days.indexOf(day) === 6) || undefined}
         >
-          <span>{format(day, 'EEEEEE dd', { locale: ptBR })}</span>
+          <span>{formatDate(day, 'EEEEEE dd')}</span>
         </div>
       ))}
     </div>
   );
-};
+}
 
 export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: WeekViewProps) {
   const days = useMemo(() => {
@@ -207,7 +207,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
               <div key={hour.toString()} className="relative min-h-[var(--week-cells-height)] border-accent border-b last:border-b-0">
                 {index > 0 && (
                   <span className="absolute -top-3 left-0 flex h-6 w-14 max-w-full items-center justify-end pe-2 text-[10px] text-muted-foreground sm:pe-4 sm:text-xs">
-                    {format(hour, 'h a')}
+                    {formatDate(hour, 'h a')}
                   </span>
                 )}
               </div>
@@ -290,19 +290,3 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
     </div>
   );
 }
-
-type WeekViewProps = {
-  currentDate: Date;
-  events: PartialSchedule[];
-  onEventSelect: (event: PartialSchedule) => void;
-  onEventCreate: (start: Date) => void;
-};
-
-type PositionedEvent = {
-  event: PartialSchedule;
-  top: number;
-  height: number;
-  left: number;
-  width: number;
-  zIndex: number;
-};

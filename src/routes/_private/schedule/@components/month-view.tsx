@@ -1,5 +1,4 @@
-import { eachDayOfInterval, endOfMonth, endOfWeek, format, getDay, isSameDay, isSameMonth, isToday, startOfMonth, startOfWeek } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { eachDayOfInterval, endOfMonth, endOfWeek, getDay, isSameDay, isSameMonth, isToday, startOfMonth, startOfWeek } from 'date-fns';
 import type React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -8,12 +7,14 @@ import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { useEventVisibility } from '@/hooks/use-event-visibility';
 import { DefaultStartHour, EventGap, EventHeight } from '@/lib/config/calendar.config';
 import { getAllEventsForDay, getEventsForDay, getSpanningEventsForDay, sortEvents } from '@/lib/helpers/calendar.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import type { MonthViewProps } from '../@interface/schedule.interface';
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
 import { DroppableCell } from './square';
 
-const Header = () => {
+function Header() {
   return (
     <div className="grid grid-cols-7 border-accent border-b font-semibold text-muted-foreground text-xs">
       {['S', 'T', 'Q', 'Q', 'S', 'S', 'D'].map((day, index) => (
@@ -24,7 +25,7 @@ const Header = () => {
       ))}
     </div>
   );
-};
+}
 
 export function MonthView({ currentDate, events, onEventSelect, onEventCreate }: MonthViewProps) {
   const days = useMemo(() => {
@@ -100,7 +101,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                       }}
                     >
                       <div className="inline-flex size-5 items-center justify-center rounded-full font-mono text-xs group-data-today:bg-sky-blue group-data-today:font-bold group-data-today:text-white dark:group-data-today:bg-dark-blue">
-                        {format(day, 'd')}
+                        {formatDate(day, 'd')}
                       </div>
                       <div
                         ref={isReferenceCell ? contentRef : null}
@@ -118,7 +119,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                               <div key={`spanning-${event._id}-${day.toISOString().slice(0, 10)}`} className="aria-hidden:hidden" aria-hidden={isHidden ? 'true' : undefined}>
                                 <EventItem onClick={(e) => handleEventClick(event, e)} event={event} view="month" isFirstDay={isFirstDay} isLastDay={isLastDay}>
                                   <div className="invisible" aria-hidden={true}>
-                                    {!event.allDay && <span>{format(new Date(event.start), 'h:mm')} </span>}
+                                    {!event.allDay && <span>{formatDate(new Date(event.start), 'h:mm')} </span>}
                                     {event.title}
                                   </div>
                                 </EventItem>
@@ -145,7 +146,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                             </PopoverTrigger>
                             <PopoverContent align="center" className="max-w-52 p-3" style={{ '--event-height': `${EventHeight}px` } as React.CSSProperties}>
                               <div className="space-y-2">
-                                <p className="font-semibold text-sm">{format(day, 'd MMMM, EEE', { locale: ptBR })}</p>
+                                <p className="font-semibold text-sm">{formatDate(day, 'd MMMM, EEE')}</p>
                                 <div className="space-y-1">
                                   {sortEvents(allEvents).map((event) => {
                                     const eventStart = new Date(event.start);
@@ -180,10 +181,3 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
     </div>
   );
 }
-
-type MonthViewProps = {
-  currentDate: Date;
-  events: PartialSchedule[];
-  onEventSelect: (event: PartialSchedule) => void;
-  onEventCreate: (start: Date) => void;
-};
