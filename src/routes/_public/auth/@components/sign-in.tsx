@@ -7,11 +7,14 @@ import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { ItemDescription, ItemTitle } from '@/components/ui/item';
+import { Separator } from '@/components/ui/separator';
+import { t } from '@/lib/helpers/translate.helper';
 import type { LogInProps } from '@/lib/interfaces/generic.interface';
 import { signinSchema } from '@/lib/interfaces/schemas/user.schema';
 import { useAuthApi } from '@/query/auth';
 
-export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
+export function SignIn({ isLoading, setIsLoading }: LogInProps) {
   const { login } = useAuthApi();
 
   const form = useForm<z.infer<typeof signinSchema>>({
@@ -35,18 +38,20 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-6">
-      <div className="flex flex-col items-center gap-2 text-center text-gray-700 dark:text-gray-200">
-        <h1 className="font-semibold text-2xl tracking-tight">Conecte ao serviço</h1>
-        <span className="flex justify-center gap-2 text-muted-foreground">
-          Não possui conta?
-          <Link to="/auth/signup" className="text-primary hover:underline">
-            Comece a usar
+    <div className="flex w-full flex-col gap-8">
+      {/* Header */}
+      <div className="flex flex-col items-center gap-1.5 text-center">
+        <ItemTitle className="font-semibold text-3xl tracking-tight">{t('welcome.back')}</ItemTitle>
+        <ItemDescription className="flex gap-2">
+          {t('no.account')}
+          <Link to="/auth/signup" className="font-medium text-foreground decoration-dashed">
+            {t('start.using')}
           </Link>
-        </span>
+        </ItemDescription>
       </div>
 
-      <div className="w-full">
+      {/* Form */}
+      <div className="w-full space-y-4">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-3">
             <FormField
@@ -55,7 +60,7 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="E-mail" type="email" autoCapitalize="none" autoComplete="email" autoCorrect="off" className="!h-10" disabled={isLoading} {...field} />
+                    <Input placeholder={t('email')} type="email" autoCapitalize="none" autoComplete="email" autoCorrect="off" className="h-12!" disabled={isLoading} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -67,25 +72,40 @@ export const SignIn = ({ isLoading, setIsLoading }: LogInProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Senha" type="password" autoCapitalize="none" autoComplete="password" autoCorrect="off" className="!h-10" disabled={isLoading} {...field} />
+                    <Input
+                      placeholder={t('password')}
+                      type="password"
+                      autoCapitalize="none"
+                      autoComplete="current-password"
+                      autoCorrect="off"
+                      className="h-12!"
+                      disabled={isLoading}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className="w-full" disabled={isLoading}>
+            <Button className="w-full" size="lg" disabled={isLoading}>
               {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
-              Entrar
+              {t('login')}
             </Button>
           </form>
         </Form>
       </div>
-      <span className="flex gap-2 text-muted-foreground text-sm">
-        Esqueceu sua senha?
-        <Link to="/auth/recovery" className="font-medium text-primary hover:underline">
-          Recuperar senha
+      <div className="flex items-center gap-4">
+        <Separator className="flex-1" />
+        <span className="text-muted-foreground text-xs uppercase tracking-wide">ou</span>
+        <Separator className="flex-1" />
+      </div>
+
+      <ItemDescription className="flex justify-center gap-2">
+        {t('forgot.password')}
+        <Link to="/auth/recovery" className="font-medium text-foreground decoration-dashed">
+          {t('recover.password')}
         </Link>
-      </span>
+      </ItemDescription>
     </div>
   );
-};
+}

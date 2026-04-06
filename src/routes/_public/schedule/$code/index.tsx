@@ -16,16 +16,20 @@ function ScheduleConfirmationPage() {
   if (error) {
     toast.error(error.message || 'Erro ao carregar dados do agendamento');
     return (
-      <div className="mb-10 flex h-full flex-col items-center justify-center p-8 text-center text-muted-foreground">
-        <p>Não foi possível carregar as informações do seu agendamento.</p>
+      <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
+          <div className="flex flex-col items-center gap-4 py-4 text-center text-muted-foreground">
+            <p>Não foi possível carregar as informações do seu agendamento.</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (scheduleData) {
     return (
-      <div className="mb-10 flex h-full flex-col items-center justify-between lg:p-8">
-        <div className="flex h-full w-full max-w-2xl justify-center">
+      <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
           <ScheduleConfirmationForm scheduleData={scheduleData.content} scheduleID={scheduleData.id} />
         </div>
       </div>
@@ -34,14 +38,12 @@ function ScheduleConfirmationPage() {
 
   if (isLoading) {
     return (
-      <div className="mb-10 flex h-full flex-col items-center justify-between lg:p-8">
-        <div className="flex h-full w-full max-w-2xl justify-center">
-          <div className="flex w-full flex-wrap gap-6 bg-background p-8">
-            <div className="flex w-full flex-col items-start justify-between gap-2 md:flex-row">
-              <div className="flex flex-col gap-2">
-                <Skeleton className="h-8 w-80" />
-                <Skeleton className="h-5 w-96" />
-              </div>
+      <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
+          <div className="flex w-full flex-col gap-8">
+            <div className="flex flex-col items-center gap-2">
+              <Skeleton className="h-8 w-80" />
+              <Skeleton className="h-5 w-96" />
             </div>
 
             <Skeleton className="flex h-28 w-full p-0 md:p-6 md:py-4" />
@@ -57,7 +59,7 @@ function ScheduleConfirmationPage() {
             <div className="w-full">
               <div className="flex gap-3">
                 <Skeleton className="h-12 w-full md:w-1/2" />
-                <Skeleton className="h-12 w-1/3 md:w-1/2" />
+                <Skeleton className="h-12 w-1/4 md:w-1/2" />
               </div>
             </div>
           </div>

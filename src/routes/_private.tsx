@@ -6,7 +6,7 @@ import { useAuthStore } from '@/hooks/auth';
 
 function PrivateLayout() {
   return (
-    <main className="bg-accent md:p-2 md:pl-1">
+    <main className="mx-auto flex min-h-dvh max-w-xl flex-col bg-accent md:p-2 md:pl-1">
       <SidebarProvider defaultOpen={false}>
         <AppSidebar />
         <SidebarInset>

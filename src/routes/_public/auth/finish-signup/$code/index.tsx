@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { toast } from 'sonner';
-
-import DefaultLoading from '@/components/default-loading';
+import { ItemDescription } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePasskeyQuery } from '@/query/passkey';
 
 import { FinishSignupForm } from './@components/finish-signup-form';
@@ -13,30 +13,40 @@ export const Route = createFileRoute('/_public/auth/finish-signup/$code/')({
 
 function FinishSignupPage() {
   const { code } = Route.useParams();
-  const { data, isLoading, error } = usePasskeyQuery(code);
+  const { data, isPending, isError, error } = usePasskeyQuery(code);
+  alert(JSON.stringify({ data, isPending, isError, error }, null, 2));
 
-  if (error) {
-    toast.error(error.message || 'Link de cadastro inválido ou expirado');
+  if (isPending) {
     return (
-      <div className="mb-10 flex h-full flex-col items-center justify-center p-8 text-center text-muted-foreground">
-        <p>Não foi possível carregar as informações de cadastro.</p>
+      <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
+          <div className="flex w-full flex-col gap-8">
+            <div className="flex flex-col items-center gap-1.5">
+              <Skeleton className="h-9 w-4/5" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+            <div className="w-full space-y-3">
+              <Skeleton className="h-12 w-full rounded-xl" />
+              <Skeleton className="h-12 w-full rounded-xl" />
+              <Skeleton className="h-12 w-full rounded-xl" />
+              <Skeleton className="h-11 w-full rounded-xl" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
-  if (isLoading) {
+  if (isError) {
+    toast.error(error.message || 'Link de cadastro inválido ou expirado');
     return (
-      <div className="mb-10 flex h-full flex-col items-center justify-between lg:p-8">
-        <div className="flex h-full w-full max-w-96 flex-col items-center justify-center space-y-6">
-          <div className="mb-6 flex w-full flex-col items-center space-y-4 text-center">
-            <Skeleton className="h-8 w-4/5" />
-            <Skeleton className="h-4 w-5/6" />
-          </div>
-          <div className="w-full space-y-4">
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-10 w-full" />
+      <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
+          <div className="flex flex-col items-center gap-4 py-4 text-center">
+            <ItemDescription>Não foi possível carregar as informações de cadastro.</ItemDescription>
+            <Link to="/auth" className="font-medium text-foreground text-sm hover:underline">
+              ← {t('back')}
+            </Link>
           </div>
         </div>
       </div>
@@ -45,13 +55,24 @@ function FinishSignupPage() {
 
   if (data?.content?.email) {
     return (
-      <div className="mb-10 flex h-full flex-col items-center justify-between lg:p-8">
-        <div className="flex h-full w-full max-w-96 justify-center">
+      <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
           <FinishSignupForm userEmail={data.content.email} passkeyId={data.id} />
         </div>
       </div>
     );
   }
 
-  return <DefaultLoading />;
+  return (
+    <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+      <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
+        <div className="flex flex-col items-center gap-4 py-4 text-center">
+          <ItemDescription>{t('link.invalid.expired')}</ItemDescription>
+          <Link to="/auth" className="font-medium text-foreground text-sm hover:underline">
+            ← {t('back')}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 }

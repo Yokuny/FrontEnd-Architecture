@@ -41,7 +41,7 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
   };
 
   return (
-    <div className="flex w-full flex-wrap gap-6 bg-background p-8">
+    <div className="flex w-full flex-col gap-8">
       <div className="flex w-full flex-col items-start justify-between gap-2 md:flex-row">
         <div className="flex flex-col gap-2">
           <CardTitle className="m-0 text-2xl text-sky-blue dark:text-primary-blue">Confirmação de Agendamento</CardTitle>

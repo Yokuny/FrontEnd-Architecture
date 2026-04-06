@@ -7,6 +7,8 @@ import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { ItemDescription, ItemTitle } from '@/components/ui/item';
+import { t } from '@/lib/helpers/translate.helper';
 import { passwordResetSchema } from '@/lib/interfaces/schemas/user.schema';
 import { useAuthApi } from '@/query/auth';
 
@@ -39,16 +41,18 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-6">
-      <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="font-semibold text-2xl tracking-tight">Redefinir senha</h1>
-        <span className="text-muted-foreground leading-6">Crie uma nova senha para sua conta.</span>
+    <div className="flex w-full flex-col gap-8">
+      {/* Header */}
+      <div className="flex flex-col items-center gap-1.5 text-center">
+        <ItemTitle className="font-semibold text-2xl tracking-tight">{t('reset.password')}</ItemTitle>
+        <ItemDescription>{t('reset.password.description')}</ItemDescription>
       </div>
 
+      {/* Form */}
       <div className="w-full">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-3">
-            <Input value={userEmail} placeholder="E-mail" type="email" className="!h-10" disabled />
+            <Input value={userEmail} placeholder={t('email')} type="email" className="h-12!" disabled />
 
             <FormField
               control={form.control}
@@ -57,12 +61,12 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder="Nova senha"
+                      placeholder={t('new.password')}
                       type="password"
                       autoCapitalize="none"
                       autoComplete="new-password"
                       autoCorrect="off"
-                      className="!h-10"
+                      className="h-12!"
                       disabled={resetPassword.isPending}
                       {...field}
                     />
@@ -79,12 +83,12 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder="Confirmar nova senha"
+                      placeholder={t('confirm.password')}
                       type="password"
                       autoCapitalize="none"
                       autoComplete="new-password"
                       autoCorrect="off"
-                      className="!h-10"
+                      className="h-12!"
                       disabled={resetPassword.isPending}
                       {...field}
                     />
@@ -94,9 +98,9 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={resetPassword.isPending}>
+            <Button type="submit" className="h-12! w-full" size="lg" disabled={resetPassword.isPending}>
               {resetPassword.isPending && <Loader className="mr-2 size-4 animate-spin" />}
-              Redefinir senha
+              {t('reset.password')}
             </Button>
           </form>
         </Form>
