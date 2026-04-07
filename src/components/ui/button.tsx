@@ -4,7 +4,7 @@ import type * as React from 'react';
 import { cn } from '@/lib/utils/cn.util';
 
 const btnVars = cva(
-  'inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-slate-300',
+  'inline-flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap rounded-md font-medium text-sm transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 md:gap-2 dark:focus-visible:ring-slate-300',
   {
     variants: {
       variant: {
@@ -28,11 +28,11 @@ const btnVars = cva(
         glassy: 'border border-border bg-background/70 text-slate-950 backdrop-blur-xs hover:bg-background dark:text-white',
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-10 rounded-md px-3 md:h-9',
-        lg: 'h-11 rounded-md px-8',
+        default: 'h-10 px-2 py-2 md:px-4',
+        sm: 'h-10 rounded-md px-1.5 md:h-9 md:px-3',
+        lg: 'h-11 rounded-md px-3 md:px-8',
         icon: 'size-10',
-        link: 'h-8 px-4',
+        link: 'h-8 px-1.5 md:px-4',
         'link-sm': 'h-5 leading-0',
         'icon-sm': 'size-8',
         'icon-md': 'h-9 w-8 md:h-10 md:w-10',

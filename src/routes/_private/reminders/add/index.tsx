@@ -28,7 +28,7 @@ function ReminderAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form="reminder-form" disabled={isPending} className="ml-auto min-w-[120px]">
+          <Button type="submit" form="reminder-form" disabled={isPending} className="ml-auto">
             {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Salvar</span>
           </Button>

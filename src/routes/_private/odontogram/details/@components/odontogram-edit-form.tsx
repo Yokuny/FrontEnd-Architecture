@@ -38,7 +38,7 @@ export function OdontogramEditForm({ id, initialStatus }: OdontogramEditFormProp
     <div className="flex flex-col gap-4">
       <DefaultFormLayout sections={sections} />
       <div className="px-6 pb-6 md:px-10">
-        <Button type="button" onClick={handleSave} disabled={isPending} className="min-w-[120px]">
+        <Button type="button" onClick={handleSave} disabled={isPending}>
           {isPending && <Spinner className="mr-2 size-4" />}
           Salvar
         </Button>

@@ -23,7 +23,7 @@ function FinancialAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form="financial-form" disabled={isPending} className="ml-auto min-w-[120px]">
+          <Button type="submit" form="financial-form" disabled={isPending} className="ml-auto">
             {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Cadastrar</span>
           </Button>

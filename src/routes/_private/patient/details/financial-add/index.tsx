@@ -171,7 +171,7 @@ function FinancialAddPage() {
             <Cross className="size-4" />
             <span className="sr-only md:not-sr-only">Cancelar</span>
           </Button>
-          <Button type="submit" form="financial-add-form" disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
+          <Button type="submit" form="financial-add-form" disabled={isSubmitting || isLoadingPatient || !patient}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Cadastrar</span>
           </Button>

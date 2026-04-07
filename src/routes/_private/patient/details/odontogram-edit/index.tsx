@@ -104,7 +104,7 @@ function OdontogramEditPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" onClick={onSubmit} disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
+          <Button type="button" onClick={onSubmit} disabled={isSubmitting || isLoadingPatient || !patient}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Salvar</span>
           </Button>

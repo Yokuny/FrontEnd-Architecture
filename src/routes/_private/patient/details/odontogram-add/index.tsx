@@ -82,7 +82,7 @@ function OdontogramAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button form="odontogram-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient} className="min-w-[120px]">
+          <Button form="odontogram-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
             <span className="sr-only md:not-sr-only">Cadastrar</span>
           </Button>
