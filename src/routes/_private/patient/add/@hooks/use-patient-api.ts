@@ -20,7 +20,7 @@ export function usePatientApi() {
 
   const updatePatient = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<NewPatient> }) => {
-      const res = await request(`patient?id=${id}`, PUT(data));
+      const res = await request(`patient/${id}`, PUT(data));
       if (!res.success) throw new Error(res.message);
       return res;
     },
@@ -32,7 +32,7 @@ export function usePatientApi() {
 
   const deletePatient = useMutation({
     mutationFn: async (id: string) => {
-      const res = await request(`patient?id=${id}`, DELETE());
+      const res = await request(`patient/${id}`, DELETE());
       if (!res.success) throw new Error(res.message);
       return res;
     },

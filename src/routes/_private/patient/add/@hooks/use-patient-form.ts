@@ -5,7 +5,7 @@ import type { NewPatient } from '@/lib/interfaces/schemas/patient.schema';
 import { patientSchema } from '@/lib/interfaces/schemas/patient.schema';
 import { usePatientApi } from './use-patient-api';
 
-export function usePatientForm(initialData?: Partial<NewPatient> & { id?: string }) {
+export function usePatientForm(initialData?: Partial<NewPatient> & { id?: string }, onSuccess?: (id: string) => void) {
   const { createPatient, updatePatient } = usePatientApi();
 
   const form = useForm<NewPatient>({
@@ -29,9 +29,11 @@ export function usePatientForm(initialData?: Partial<NewPatient> & { id?: string
     if (initialData?.id) {
       const result = await updatePatient.mutateAsync({ id: initialData.id, data });
       toast.success(result.message);
+      onSuccess?.(initialData.id);
     } else {
       const result = await createPatient.mutateAsync(data);
       toast.success(result.message);
+      onSuccess?.(result.data._id);
     }
   });
 

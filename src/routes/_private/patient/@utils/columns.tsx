@@ -1,6 +1,7 @@
 import { toast } from 'sonner';
 import Calender from '@/components/icons/Calender.Icon';
 import Copy from '@/components/icons/Copy.Icon';
+import Edit from '@/components/icons/Edit.Icon';
 import Mail from '@/components/icons/Mail.Icon';
 import Mixer from '@/components/icons/Mixer.Icon';
 import Package from '@/components/icons/Package.Icon';
@@ -77,6 +78,10 @@ export const patientColumns = (navigate: (opts: any) => void): DataTableColumn<P
               <DropdownMenuItem onClick={() => navigate({ to: '/patient/details', search: { id: patient._id } })}>
                 <User className="mr-2 size-4 text-muted-foreground" />
                 Visualizar cadastro
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate({ to: '/patient/add', search: { id: patient._id } })}>
+                <Edit className="mr-2 size-4 text-muted-foreground" />
+                Editar cadastro
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>

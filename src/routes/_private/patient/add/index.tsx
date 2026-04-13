@@ -68,7 +68,9 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
     };
   }, [initialData]);
 
-  const { form, onSubmit, isPending } = usePatientForm(formData);
+  const { form, onSubmit, isPending } = usePatientForm(formData, (id) => {
+    navigate({ to: '/patient/details', search: { id } });
+  });
 
   const handleDelete = async () => {
     if (!initialData?._id) return;
@@ -85,7 +87,6 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
     e.preventDefault();
     try {
       await onSubmit(e);
-      navigate({ to: '/patient', search: { page: 1, size: 20 } });
     } catch {
       // error handled globally via MutationCache.onError
     }
