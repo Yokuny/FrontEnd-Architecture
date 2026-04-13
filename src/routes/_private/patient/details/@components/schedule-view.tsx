@@ -21,7 +21,7 @@ import { useClinicStore } from '@/hooks/clinic';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
-import { currencyFormat, extractDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { currencyFormat, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import type { PartialClinic } from '@/lib/interfaces/clinic.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
@@ -253,7 +253,7 @@ const ScheduleRecordDetail = ({
                     <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                       <ItemDescription className="font-sans">Horário</ItemDescription>
                       <ItemTitle className="font-mono">
-                        {extractDate(el.start, 'hour')} - {extractDate(el.end, 'hour')}
+                        {formatDate(el.start, 'HH:mm')} - {formatDate(el.end, 'HH:mm')}
                       </ItemTitle>
                     </Item>
                   </>

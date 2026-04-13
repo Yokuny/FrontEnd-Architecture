@@ -10,7 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { useProfessionalStore } from '@/hooks/professionals';
-import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullFinancial } from '@/lib/interfaces/financial.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 import { cn } from '@/lib/utils/cn.util';
@@ -83,7 +84,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
 
         <ItemContent className="md:px-8">
           <ItemDescription className="font-medium text-xs uppercase tracking-widest">Data</ItemDescription>
-          <ItemTitle className="text-2xl tabular-nums leading-none">{extractDate(financial.createdAt, '')}</ItemTitle>
+          <ItemTitle className="text-2xl tabular-nums leading-none">{formatDate(financial.createdAt)}</ItemTitle>
         </ItemContent>
       </Item>
 
@@ -178,12 +179,12 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
             <ItemGroup className="gap-0">
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                 <ItemDescription className="font-sans">Criação</ItemDescription>
-                <ItemTitle className="font-mono tabular-nums">{extractDate(financial.createdAt, '')}</ItemTitle>
+                <ItemTitle className="font-mono tabular-nums">{formatDate(financial.createdAt)}</ItemTitle>
               </Item>
               <ItemSeparator />
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                 <ItemDescription className="font-sans">Última Atualização</ItemDescription>
-                <ItemTitle className="font-mono tabular-nums">{extractDate(financial.updatedAt, '')}</ItemTitle>
+                <ItemTitle className="font-mono tabular-nums">{formatDate(financial.updatedAt)}</ItemTitle>
               </Item>
             </ItemGroup>
           </CollapsibleContent>

@@ -1,25 +1,20 @@
-import { useMemo } from 'react';
-
+import { useMemo, useState } from 'react';
 import DefaultEmptyData from '@/components/default-empty-data';
+import Chat from '@/components/icons/Chat.Icon';
+import Cross from '@/components/icons/Cross.Icon';
+import { Button } from '@/components/ui/button';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
-import { Timeline } from '@/components/ui/timeline';
+import { Textarea } from '@/components/ui/textarea';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { removeRecordImage, updateRecordImage } from '@/lib/helpers/upload.helper';
 import type { FullPatient } from '@/lib/interfaces';
-
 import { MedicalRecordImageUpload } from './medicalrecord-image-upload';
 
-type TimelineEvent = {
-  id: string;
-  title: string;
-  description: string;
-  date: Date | string;
-  type: string;
-  image?: string;
-};
-
 export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) => {
+  const [openDescriptions, setOpenDescriptions] = useState<Record<string, boolean>>({});
+  const [descriptions, setDescriptions] = useState<Record<string, string>>({});
+
   const timelineEvents = useMemo(() => {
     const events: TimelineEvent[] = [];
 
@@ -110,24 +105,7 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     );
   }
 
-  const timelineData = timelineEvents.map((event) => ({
-    title: event.title,
-    content: (
-      <div>
-        <ItemTitle className="mb-2">{formatDate(event.date)}</ItemTitle>
-        <ItemDescription>{event.description}</ItemDescription>
-
-        {(event.type === 'odontogram' || event.type === 'financial') && event.id && (
-          <MedicalRecordImageUpload
-            recordID={event.id}
-            imgURL={event.image || ''}
-            onUploadComplete={handleUploadComplete(event.id, event.type)}
-            onImageRemove={handleImageRemove(event.id, event.type)}
-          />
-        )}
-      </div>
-    ),
-  }));
+  const toggleDescription = (id: string) => setOpenDescriptions((prev) => ({ ...prev, [id]: !prev[id] }));
 
   return (
     <ItemGroup>
@@ -137,11 +115,54 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
         </ItemHeader>
 
         <ItemContent>
-          <div className="relative w-full overflow-clip">
-            <Timeline data={timelineData} />
-          </div>
+          <ul className="w-full">
+            {timelineEvents.map((event, index) => (
+              <li key={event.id} className="relative flex flex-col gap-4 border-t py-6 md:flex-row md:gap-10 md:py-8">
+                <div className="flex size-10 shrink-0 items-center justify-center bg-muted text-sm tracking-tighter">{String(index + 1).padStart(2, '0')}</div>
+
+                <div className="flex flex-1 flex-col gap-2">
+                  <ItemTitle>{event.title}</ItemTitle>
+                  <ItemDescription>{formatDate(event.date)}</ItemDescription>
+                  <ItemDescription>{event.description}</ItemDescription>
+
+                  {(event.type === 'odontogram' || event.type === 'financial') && (
+                    <MedicalRecordImageUpload
+                      recordID={event.id}
+                      imgURL={event.image || ''}
+                      onUploadComplete={handleUploadComplete(event.id, event.type)}
+                      onImageRemove={handleImageRemove(event.id, event.type)}
+                    />
+                  )}
+
+                  <div className="mt-1 flex flex-col gap-2">
+                    <Button variant="basic" size="sm" className="w-fit gap-2" onClick={() => toggleDescription(event.id)}>
+                      {openDescriptions[event.id] ? <Cross className="size-4" /> : <Chat className="size-4" />}
+                      {openDescriptions[event.id] ? 'Fechar descrição' : 'Adicionar descrição'}
+                    </Button>
+
+                    {openDescriptions[event.id] && (
+                      <Textarea
+                        placeholder="Adicione uma descrição..."
+                        value={descriptions[event.id] ?? ''}
+                        onChange={(e) => setDescriptions((prev) => ({ ...prev, [event.id]: e.target.value }))}
+                      />
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </ItemContent>
       </Item>
     </ItemGroup>
   );
+};
+
+type TimelineEvent = {
+  id: string;
+  title: string;
+  description: string;
+  date: Date | string;
+  type: string;
+  image?: string;
 };

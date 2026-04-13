@@ -20,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
-import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import type { DbFinancial } from '@/lib/interfaces/financial.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
@@ -257,7 +257,7 @@ const FinancialRecordDetail = ({
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                   <ItemDescription className="font-sans">Horário</ItemDescription>
-                  <ItemTitle className="font-mono">{extractDate(el.createdAt, 'hour')}</ItemTitle>
+                  <ItemTitle className="font-mono">{formatDate(el.createdAt, 'HH:mm')}</ItemTitle>
                 </Item>
               </ItemGroup>
             </CollapsibleContent>

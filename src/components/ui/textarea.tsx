@@ -6,7 +6,7 @@ function Textarea({ className, ...props }: TextareaHTMLAttributes<HTMLTextAreaEl
     <textarea
       data-slot="textarea"
       className={cn(
-        'flex min-h-15 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-md',
+        'flex min-h-15 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm',
         'placeholder:text-muted-foreground',
         'focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring',
         'disabled:cursor-not-allowed disabled:opacity-50',

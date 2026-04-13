@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { formatCpfCnpj, formatDate, formatPhone } from '@/lib/helpers/formatter.helper';
+import { maskDate } from '@/lib/helpers/formatDate.helper';
+import { formatCpfCnpj, formatPhone } from '@/lib/helpers/formatter.helper';
 import type { NewPatient } from '@/lib/interfaces/schemas/patient.schema';
 
 export function PatientForm() {
@@ -82,7 +83,7 @@ export function PatientForm() {
               <FormItem>
                 <FormLabel>Nascimento</FormLabel>
                 <FormControl>
-                  <Input className="w-full max-w-48" {...field} value={field.value || ''} placeholder="dd/mm/aaaa" onChange={(e) => field.onChange(formatDate(e.target.value))} />
+                  <Input className="w-full max-w-48" {...field} value={field.value || ''} placeholder="dd/mm/aaaa" onChange={(e) => field.onChange(maskDate(e.target.value))} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

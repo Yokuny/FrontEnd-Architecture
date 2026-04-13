@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import type { DataTableColumn } from '@/components/ui/data-table';
 import { Dialog } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { currencyFormat, extractDate, handleCopy, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { currencyFormat, handleCopy, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { PartialFinancial } from '@/lib/interfaces/financial.interface';
 import { STATUS_TO_BADGE_VARIANT } from '../@consts/financial.consts';
 
@@ -13,7 +14,7 @@ export const financialColumns = (navigate: (opts: { to: string; search?: Record<
     key: 'updatedAt',
     header: 'Data',
     sortable: true,
-    render: (_, row) => <span className="text-muted-foreground text-sm">{extractDate(row.updatedAt, '')}</span>,
+    render: (_, row) => <span className="text-muted-foreground text-sm">{formatDate(row.updatedAt)}</span>,
   },
   {
     key: 'patient',

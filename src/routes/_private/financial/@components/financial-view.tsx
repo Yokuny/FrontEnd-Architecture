@@ -4,7 +4,8 @@ import DefaultLoading from '@/components/default-loading';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
-import { currencyFormat, extractDate, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { useFinancialDetailQuery, useFinancialMutations } from '@/query/financials';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { FINANCIAL_STATUS_OPTIONS } from '../@consts/financial.consts';
@@ -97,7 +98,7 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
             </TableCell>
             <TableCell className="px-4 py-3 text-muted-foreground text-xs">{financialPaymentMethod(financial.paymentMethod || 'none')}</TableCell>
             <TableCell className="px-4 py-3 text-xs tabular-nums">{financial.installments || 1}x</TableCell>
-            <TableCell className="px-4 py-3 text-muted-foreground text-xs tabular-nums">{extractDate(financial.createdAt, '')}</TableCell>
+            <TableCell className="px-4 py-3 text-muted-foreground text-xs tabular-nums">{formatDate(financial.createdAt)}</TableCell>
             <TableCell className="px-4 py-3 font-medium font-mono text-xs tabular-nums">{currencyFormat(financial.paid || 0)}</TableCell>
             <TableCell className="px-4 py-3 text-right font-bold font-mono text-foreground text-xs tabular-nums">{currencyFormat(financial.price)}</TableCell>
             <TableCell className="p-2 pr-4 text-right">

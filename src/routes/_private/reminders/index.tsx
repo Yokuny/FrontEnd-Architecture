@@ -11,7 +11,7 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTable } from '@/components/ui/data-table';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { extractDate } from '@/lib/helpers/formatter.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { useRemindersList } from './@hooks/use-reminders-list';
 import { type SearchParams, searchSchema } from './@interface/reminders.interface';
 import { endOfDay, startOfDay } from './@utils/date';
@@ -65,7 +65,7 @@ function RemindersListPage() {
                 <Button variant="outline" className="flex gap-2">
                   <Calender className="size-4" />
                   <span className="sr-only md:not-sr-only">
-                    {dateRange?.from && dateRange?.to ? `${extractDate(dateRange.from, 'short')} - ${extractDate(dateRange.to, 'short')}` : 'Selecionar período'}
+                    {dateRange?.from && dateRange?.to ? `${formatDate(dateRange.from, 'dd/MM')} - ${formatDate(dateRange.to, 'dd/MM')}` : 'Selecionar período'}
                   </span>
                 </Button>
               </PopoverTrigger>

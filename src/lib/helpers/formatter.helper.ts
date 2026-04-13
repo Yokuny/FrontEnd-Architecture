@@ -1,7 +1,6 @@
 import type { PartialPatient, ProcedureData, ProcedureSheet, ProfessionalList } from '@/lib/interfaces';
 import type { EventColor } from '@/lib/interfaces/schedule.interface';
 
-const padStart = (value: number) => String(value).padStart(2, '0');
 export const numClean = (value: string | number) => String(value).replace(/[^0-9]/g, '');
 export const stringToDate = (data: Date | string) => new Date(data);
 
@@ -121,16 +120,6 @@ export const formatCep = (value: string | undefined | null) => {
   return num.replace(/(\d{5})(\d)/, '$1-$2');
 };
 
-export const formatDate = (value: string | undefined | null) => {
-  if (!value) return '';
-  const num = numClean(value);
-  return num
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d)/, '$1/$2')
-    .replace(/(\d{2})\/(\d{2})(\d)/, '$1/$2/$3')
-    .slice(0, 10);
-};
-
 export const stringPriceClean = (value: string | number): number => {
   if (typeof value === 'number') {
     if (value >= 0) return value;
@@ -155,31 +144,6 @@ export const currencyFormat = (price: number | string | undefined | null) => {
   if (!price) return price;
   if (typeof price === 'string') price = parseFloat(price);
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price);
-};
-
-export const extractDate = (data: Date | string | undefined | null, format: 'hour' | 'full' | 'default' | 'short' | '') => {
-  if (!data) return '';
-  const date = stringToDate(data);
-
-  const hour = padStart(date.getHours());
-  const minute = padStart(date.getMinutes());
-  const day = padStart(date.getDate());
-  const month = padStart(date.getMonth() + 1);
-
-  const hourAndMinute = `${hour}:${minute}`;
-
-  switch (format) {
-    case 'hour':
-      return `${hourAndMinute}`;
-    case 'full':
-      return `${day} ${month} ${date.getFullYear()} ${hourAndMinute}`;
-    case 'default':
-      return `${day}/${month} ${hourAndMinute}`;
-    case 'short':
-      return `${day}/${month}`;
-    default:
-      return `${day} ${month} ${date.getFullYear()}`;
-  }
 };
 
 export const statusDictionary = (status: string): string => {

@@ -9,7 +9,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { usePatientStore } from '@/hooks/patients';
 import { useProfessionalStore } from '@/hooks/professionals';
-import { capitalizeString, extractDate } from '@/lib/helpers/formatter.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { DbOdontogram } from '@/lib/interfaces/odontogram.interface';
 import type { PartialPatient } from '@/lib/interfaces/patient.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
@@ -85,7 +86,7 @@ export function OdontogramDetailContent({ odontogram, patients, professionals }:
         </ItemContent>
         <ItemContent className="md:px-8">
           <ItemDescription className="font-medium text-xs uppercase tracking-widest">Data</ItemDescription>
-          <ItemTitle className="text-2xl tabular-nums leading-none">{extractDate(odontogram.createdAt, '')}</ItemTitle>
+          <ItemTitle className="text-2xl tabular-nums leading-none">{formatDate(odontogram.createdAt)}</ItemTitle>
         </ItemContent>
       </Item>
 

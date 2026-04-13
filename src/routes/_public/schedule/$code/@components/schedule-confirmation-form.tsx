@@ -10,7 +10,7 @@ import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
-import { extractDate } from '@/lib/helpers/formatter.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { scheduleConfirmationSchema } from '@/lib/interfaces/schemas/schedule.schema';
 import { useConfirmPresence } from '../@hooks/use-schedule';
 
@@ -49,13 +49,13 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
       <CardContent className="flex w-full justify-between p-0 md:p-6 md:py-4">
         <div className="flex flex-col justify-center space-y-2 p-6 md:px-2">
           <span className="text-muted-foreground text-sm uppercase">Dia</span>
-          <span className="font-bold text-2xl">{extractDate(scheduleData.start, '')}</span>
+          <span className="font-bold text-2xl">{formatDate(scheduleData.start)}</span>
         </div>
         <div className="flex flex-col justify-center space-y-2 p-6 md:px-2">
           <span className="text-muted-foreground text-sm uppercase">Horário</span>
           <span className="flex flex-wrap items-center gap-2">
-            <span className="font-bold text-2xl">{extractDate(scheduleData.start, 'hour')}</span>
-            {scheduleData.end && <span className="font-bold text-2xl text-muted-foreground">{extractDate(scheduleData.end, 'hour')}</span>}
+            <span className="font-bold text-2xl">{formatDate(scheduleData.start, 'HH:mm')}</span>
+            {scheduleData.end && <span className="font-bold text-2xl text-muted-foreground">{formatDate(scheduleData.end, 'HH:mm')}</span>}
           </span>
         </div>
       </CardContent>

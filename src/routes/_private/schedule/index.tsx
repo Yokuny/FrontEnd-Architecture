@@ -25,7 +25,7 @@ import { useUserStore } from '@/hooks/user';
 import { AgendaDaysToShow, EventGap, EventHeight, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { addHoursToDate, eventColors } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
-import { capitalizeString, extractDate, getEventColorByProfessional } from '@/lib/helpers/formatter.helper';
+import { capitalizeString, getEventColorByProfessional } from '@/lib/helpers/formatter.helper';
 import type { CalendarView, EventColor, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { scheduleTimeSchema } from '@/lib/interfaces/schemas/schedule.schema';
 import { cn } from '@/lib/utils/cn.util';
@@ -524,9 +524,9 @@ function SchedulePage() {
                   </ItemHeader>
                   <ItemActions className="items-baseline gap-4">
                     <ItemTitle className="text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
-                      {doc.nextEvent?.start ? extractDate(doc.nextEvent.start, 'hour') : '--:--'}
+                      {doc.nextEvent?.start ? formatDate(doc.nextEvent.start, 'HH:mm') : '--:--'}
                     </ItemTitle>
-                    <ItemDescription className="text-sm">{doc.nextEvent?.start ? extractDate(doc.nextEvent.start, '') : '--:--'}</ItemDescription>
+                    <ItemDescription className="text-sm">{doc.nextEvent?.start ? formatDate(doc.nextEvent.start) : '--:--'}</ItemDescription>
                   </ItemActions>
                 </Item>
               ))

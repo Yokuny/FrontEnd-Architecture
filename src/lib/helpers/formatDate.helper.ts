@@ -1,6 +1,24 @@
 import { formatDistanceToNow as dateFnsFormatDistanceToNow, type FormatDistanceToNowOptions, type FormatOptions, format, isValid } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
+const numClean = (value: string | number) => String(value).replace(/[^0-9]/g, '');
+
+/**
+ * Masks a string as a date (dd/mm/yyyy).
+ *
+ * @param value - The raw string input
+ * @returns The masked string
+ */
+export const maskDate = (value: string | undefined | null) => {
+  if (!value) return '';
+  const num = numClean(value);
+  return num
+    .replace(/\D/g, '')
+    .replace(/(\d{2})(\d)/, '$1/$2')
+    .replace(/(\d{2})\/(\d{2})(\d)/, '$1/$2/$3')
+    .slice(0, 10);
+};
+
 /**
  * Formats a date using ptBR locale.
  *

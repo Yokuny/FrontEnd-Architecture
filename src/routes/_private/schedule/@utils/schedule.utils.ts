@@ -39,6 +39,5 @@ export function formatTimeWithOptionalMinutes(date: Date): string {
 
 export function extractTimeFromISO(iso?: string): string | undefined {
   if (!iso) return undefined;
-  const date = new Date(iso);
-  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+  return formatDate(iso, 'HH:mm');
 }

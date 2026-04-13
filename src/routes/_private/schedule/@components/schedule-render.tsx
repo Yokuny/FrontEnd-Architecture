@@ -19,7 +19,7 @@ import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PATCH, POST, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
-import { currencyFormat, extractDate, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { currencyFormat, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
 import { usePatientsQuery } from '@/query/patients';
@@ -125,14 +125,14 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
         <Item className="flex-row items-center justify-between gap-4 md:flex-col">
           <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
             <ItemDescription>Dia</ItemDescription>
-            <ItemTitle className="tabular-nums md:text-xl">{extractDate(schedule?.start, '')}</ItemTitle>
+            <ItemTitle className="tabular-nums md:text-xl">{formatDate(schedule?.start)}</ItemTitle>
           </Item>
           <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
             <ItemDescription>Horário</ItemDescription>
             <ItemActions className="items-center gap-2">
-              <ItemTitle className="text-md tabular-nums md:text-xl">{extractDate(schedule?.start, 'hour')}</ItemTitle>
+              <ItemTitle className="text-md tabular-nums md:text-xl">{formatDate(schedule?.start, 'HH:mm')}</ItemTitle>
               <Right className="size-4" />
-              <ItemTitle className="text-md tabular-nums md:text-xl">{extractDate(schedule?.end || event.end, 'hour')}</ItemTitle>
+              <ItemTitle className="text-md tabular-nums md:text-xl">{formatDate(schedule?.end || event.end, 'HH:mm')}</ItemTitle>
             </ItemActions>
           </Item>
         </Item>
@@ -144,20 +144,20 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
         <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
           <ItemDescription>Data Início</ItemDescription>
           <ItemActions className="items-baseline gap-3">
-            <ItemTitle className="tabular-nums md:text-xl">{extractDate(schedule?.start, 'hour')}</ItemTitle>
+            <ItemTitle className="tabular-nums md:text-xl">{formatDate(schedule?.start, 'HH:mm')}</ItemTitle>
             <ItemActions className="items-start gap-1">
               <Calender className="size-4" />
-              <ItemDescription className="md:text-lg">{extractDate(schedule?.start, 'short')}</ItemDescription>
+              <ItemDescription className="md:text-lg">{formatDate(schedule?.start, 'dd/MM')}</ItemDescription>
             </ItemActions>
           </ItemActions>
         </Item>
         <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
           <ItemDescription>Data Final</ItemDescription>
           <ItemActions className="items-baseline gap-3">
-            <ItemTitle className="tabular-nums md:text-xl">{extractDate(schedule?.end || event.end, 'hour')}</ItemTitle>
+            <ItemTitle className="tabular-nums md:text-xl">{formatDate(schedule?.end || event.end, 'HH:mm')}</ItemTitle>
             <ItemActions className="items-start gap-1">
               <Calender className="size-4" />
-              <ItemDescription className="md:text-lg">{extractDate(schedule?.end || event.end, 'short')}</ItemDescription>
+              <ItemDescription className="md:text-lg">{formatDate(schedule?.end || event.end, 'dd/MM')}</ItemDescription>
             </ItemActions>
           </ItemActions>
         </Item>

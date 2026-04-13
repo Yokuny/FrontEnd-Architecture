@@ -3,7 +3,8 @@ import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { DataTableColumn } from '@/components/ui/data-table';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { extractDate, handleCopy } from '@/lib/helpers/formatter.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { handleCopy } from '@/lib/helpers/formatter.helper';
 import type { PartialOdontogram } from '@/lib/interfaces/odontogram.interface';
 
 export const odontogramColumns = (navigate: (opts: any) => void): DataTableColumn<PartialOdontogram>[] => [
@@ -11,7 +12,7 @@ export const odontogramColumns = (navigate: (opts: any) => void): DataTableColum
     key: 'createdAt',
     header: 'Data',
     sortable: true,
-    render: (_, row) => <span className="text-muted-foreground text-sm">{extractDate(row.createdAt, '')}</span>,
+    render: (_, row) => <span className="text-muted-foreground text-sm">{formatDate(row.createdAt)}</span>,
   },
   {
     key: 'patient',
