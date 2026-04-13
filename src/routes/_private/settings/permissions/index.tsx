@@ -73,8 +73,8 @@ export function SettingsPermissions() {
       const dataToSend: UpdateRoleAndRoom = {
         permissions: userPermissions,
       };
-      await updatePermissions.mutateAsync(dataToSend);
-      toast.success('Permissões atualizadas com sucesso!');
+      const result = await updatePermissions.mutateAsync(dataToSend);
+      toast.success(result.message);
     } catch {
       // error handled globally via MutationCache.onError
     }

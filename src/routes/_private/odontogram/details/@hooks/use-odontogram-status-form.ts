@@ -8,8 +8,8 @@ export function useOdontogramStatusForm(id: string, initialStatus: boolean) {
 
   const handleSave = async () => {
     try {
-      await updateStatus.mutateAsync({ id, finished: selectedStatus });
-      toast.success('Status atualizado com sucesso');
+      const result = await updateStatus.mutateAsync({ id, finished: selectedStatus });
+      toast.success(result.message);
     } catch {
       // error handled globally via MutationCache.onError
     }

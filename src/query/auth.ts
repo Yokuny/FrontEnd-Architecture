@@ -19,7 +19,7 @@ export function useAuthApi() {
 
       const { accessToken, userId, user } = data.data;
       setAuth(accessToken, userId, user);
-      return data.data;
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries();

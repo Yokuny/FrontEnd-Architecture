@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import type { NewPatient } from '@/lib/interfaces/schemas/patient.schema';
 import { patientSchema } from '@/lib/interfaces/schemas/patient.schema';
 import { usePatientApi } from './use-patient-api';
@@ -26,9 +27,11 @@ export function usePatientForm(initialData?: Partial<NewPatient> & { id?: string
 
   const onSubmit = form.handleSubmit(async (data) => {
     if (initialData?.id) {
-      await updatePatient.mutateAsync({ id: initialData.id, data });
+      const result = await updatePatient.mutateAsync({ id: initialData.id, data });
+      toast.success(result.message);
     } else {
-      await createPatient.mutateAsync(data);
+      const result = await createPatient.mutateAsync(data);
+      toast.success(result.message);
     }
   });
 

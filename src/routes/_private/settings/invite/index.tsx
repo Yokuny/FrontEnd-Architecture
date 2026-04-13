@@ -38,12 +38,12 @@ export function SettingsInvite() {
 
   const onSubmit = async (values: UserInvite) => {
     try {
-      await inviteUser.mutateAsync({
+      const result = await inviteUser.mutateAsync({
         email: values.email,
         role: values.role,
         rooms: values.rooms,
       });
-      toast.success('Convite enviado com sucesso');
+      toast.success(result.message);
       form.reset();
     } catch {
       // error handled globally via MutationCache.onError

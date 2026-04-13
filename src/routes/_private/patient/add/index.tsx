@@ -73,8 +73,8 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
   const handleDelete = async () => {
     if (!initialData?._id) return;
     try {
-      await deletePatient.mutateAsync(initialData._id);
-      toast.success('Excluído com sucesso');
+      const result = await deletePatient.mutateAsync(initialData._id);
+      toast.success(result.message);
       navigate({ to: '/patient', search: { page: 1, size: 20 } });
     } catch {
       // error handled globally via MutationCache.onError
@@ -85,7 +85,6 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
     e.preventDefault();
     try {
       await onSubmit(e);
-      toast.success(initialData ? 'Paciente atualizado!' : 'Paciente cadastrado!');
       navigate({ to: '/patient', search: { page: 1, size: 20 } });
     } catch {
       // error handled globally via MutationCache.onError

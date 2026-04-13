@@ -30,9 +30,9 @@ function RecoveryPasswordPage() {
   async function onSubmit(values: z.infer<typeof emailSchema>) {
     setIsLoading(true);
     try {
-      await forgotPassword.mutateAsync(values);
+      const result = await forgotPassword.mutateAsync(values);
       setIsDisabled(true);
-      toast.success('E-mail de recuperação enviado com sucesso!');
+      toast.success(result.message);
     } catch {
       setIsDisabled(false);
       // error handled globally via MutationCache.onError

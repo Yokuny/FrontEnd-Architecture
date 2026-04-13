@@ -22,8 +22,8 @@ export function useReminderForm() {
 
   const onSubmit = form.handleSubmit(async (data) => {
     try {
-      await createReminder.mutateAsync(data);
-      toast.success('Lembrete criado com sucesso!');
+      const result = await createReminder.mutateAsync(data);
+      toast.success(result.message);
       navigate({ to: '/reminders', search: { showAll: true, page: 1, size: 10 } });
     } catch {
       // error handled globally via MutationCache.onError

@@ -106,9 +106,9 @@ export function SettingsProcedures() {
 
   const saveProcedure = async () => {
     try {
-      await updateProcedures.mutateAsync(procedures);
+      const result = await updateProcedures.mutateAsync(procedures);
       setHasChanges(false);
-      toast.success('Procedimentos atualizados!');
+      toast.success(result.message);
     } catch {
       // error handled globally via MutationCache.onError
     }

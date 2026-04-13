@@ -28,8 +28,8 @@ export function SignIn({ isLoading, setIsLoading }: LogInProps) {
   async function onSubmit(values: z.infer<typeof signinSchema>) {
     setIsLoading(true);
     try {
-      await login.mutateAsync(values);
-      toast.success('Login bem-sucedido');
+      const result = await login.mutateAsync(values);
+      toast.success(result.message);
     } catch {
       // error handled globally via MutationCache.onError
     } finally {

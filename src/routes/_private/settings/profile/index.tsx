@@ -51,8 +51,8 @@ export function SettingsProfile() {
     };
 
     try {
-      await updateProfile.mutateAsync(body);
-      toast.success('Perfil atualizado com sucesso');
+      const result = await updateProfile.mutateAsync(body);
+      toast.success(result.message);
     } catch {
       // error handled globally via MutationCache.onError
     }

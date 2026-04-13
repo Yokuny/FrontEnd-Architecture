@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import type { z } from 'zod';
 import Check from '@/components/icons/Check.Icon';
 import Cross from '@/components/icons/Cross.Icon';
@@ -25,11 +26,8 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
   const handleConfirm = async (status: 'confirmed' | 'canceled_by_patient') => {
     setIsLoading(true);
     try {
-      await confirmPresence.mutateAsync({ scheduleID, status });
-
-      const message = status === 'confirmed' ? 'Agendamento confirmado com sucesso!' : 'Agendamento cancelado com sucesso!';
-
-      toast.success(message);
+      const result = await confirmPresence.mutateAsync({ scheduleID, status });
+      toast.success(result.message);
       // TODO: Sem redirect definido
       router.navigate({ to: '/auth' });
     } catch {

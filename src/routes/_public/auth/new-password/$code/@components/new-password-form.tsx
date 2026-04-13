@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import type { z } from 'zod';
 import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
@@ -31,8 +32,8 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
 
   async function onSubmit(values: z.infer<typeof passwordResetSchema>) {
     try {
-      await resetPassword.mutateAsync({ id: passkeyId, email: values.email, password: values.password, confirmPassword: values.confirmPassword });
-      toast.success('Senha redefinida com sucesso!');
+      const result = await resetPassword.mutateAsync({ id: passkeyId, email: values.email, password: values.password, confirmPassword: values.confirmPassword });
+      toast.success(result.message);
       navigate({ to: '/auth' });
     } catch {
       // error handled globally via MutationCache.onError

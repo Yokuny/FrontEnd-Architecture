@@ -64,8 +64,8 @@ export function SettingsClinic() {
     };
 
     try {
-      await saveClinic.mutateAsync({ data, isUpdate: !!clinic });
-      toast.success('Clínica salva com sucesso');
+      const result = await saveClinic.mutateAsync({ data, isUpdate: !!clinic });
+      toast.success(result.message);
     } catch {
       // error handled globally via MutationCache.onError
     }

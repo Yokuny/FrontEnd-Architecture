@@ -45,8 +45,8 @@ export function useOdontogramAddForm(onSuccess: (patientId: string) => void) {
 
   const onSubmit = async (values: NewOdontogram) => {
     try {
-      await create.mutateAsync(values);
-      toast.success('Odontograma cadastrado com sucesso');
+      const result = await create.mutateAsync(values);
+      toast.success(result.message);
       form.reset();
       onSuccess(values.Patient);
     } catch {

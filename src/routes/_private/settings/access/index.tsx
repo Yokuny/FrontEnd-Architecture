@@ -39,8 +39,8 @@ export function SettingsAccess() {
     }
 
     try {
-      await changePassword.mutateAsync({ oldPassword: values.oldPassword, newPassword: values.newPassword });
-      toast.success('Senha atualizada com sucesso');
+      const result = await changePassword.mutateAsync({ oldPassword: values.oldPassword, newPassword: values.newPassword });
+      toast.success(result.message);
       form.reset();
     } catch {
       // error handled globally via MutationCache.onError

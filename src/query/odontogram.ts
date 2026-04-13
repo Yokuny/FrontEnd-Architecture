@@ -26,15 +26,16 @@ async function fetchOdontogram(id: string): Promise<DbOdontogram> {
   return res.data as DbOdontogram;
 }
 
-async function createOdontogram(data: any): Promise<{ _id: string }> {
+async function createOdontogram(data: any) {
   const res = await request('odontogram/create', POST(data));
   if (!res.success) throw new Error(res.message);
-  return res.data as { _id: string };
+  return res;
 }
 
-async function updateOdontogramStatus({ id, finished }: { id: string; finished: boolean }): Promise<void> {
+async function updateOdontogramStatus({ id, finished }: { id: string; finished: boolean }) {
   const res = await request(`odontogram/${id}/status`, PATCH({ finished }));
   if (!res.success) throw new Error(res.message);
+  return res;
 }
 
 export function useOdontogramsQuery() {

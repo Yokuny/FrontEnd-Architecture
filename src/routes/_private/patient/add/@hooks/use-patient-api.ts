@@ -11,7 +11,7 @@ export function usePatientApi() {
     mutationFn: async (data: NewPatient) => {
       const res = await request('patient', POST(data));
       if (!res.success) throw new Error(res.message);
-      return res.data;
+      return res;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: patientsKeys.lists() });
@@ -22,7 +22,7 @@ export function usePatientApi() {
     mutationFn: async ({ id, data }: { id: string; data: Partial<NewPatient> }) => {
       const res = await request(`patient?id=${id}`, PUT(data));
       if (!res.success) throw new Error(res.message);
-      return res.data;
+      return res;
     },
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: patientsKeys.lists() });
@@ -34,7 +34,7 @@ export function usePatientApi() {
     mutationFn: async (id: string) => {
       const res = await request(`patient?id=${id}`, DELETE());
       if (!res.success) throw new Error(res.message);
-      return res.data;
+      return res;
     },
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: patientsKeys.lists() });
