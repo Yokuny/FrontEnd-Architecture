@@ -30,8 +30,8 @@ export function SignIn({ isLoading, setIsLoading }: LogInProps) {
     try {
       await login.mutateAsync(values);
       toast.success('Login bem-sucedido');
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : 'Falha no login');
+    } catch {
+      // error handled globally via MutationCache.onError
     } finally {
       setIsLoading(false);
     }

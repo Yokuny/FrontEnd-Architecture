@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import type { z } from 'zod';
 import Loader from '@/components/icons/Loader.Icon';
 import { Button } from '@/components/ui/button';
@@ -35,8 +34,8 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
       await resetPassword.mutateAsync({ id: passkeyId, email: values.email, password: values.password, confirmPassword: values.confirmPassword });
       toast.success('Senha redefinida com sucesso!');
       navigate({ to: '/auth' });
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao redefinir senha');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   }
 

@@ -53,8 +53,8 @@ export function SettingsProfile() {
     try {
       await updateProfile.mutateAsync(body);
       toast.success('Perfil atualizado com sucesso');
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao atualizar perfil');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

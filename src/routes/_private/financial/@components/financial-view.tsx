@@ -26,8 +26,8 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
     try {
       const res = await updateStatus.mutateAsync({ id, status });
       toast.success(res.message);
-    } catch (e) {
-      toast.error((e as Error).message);
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

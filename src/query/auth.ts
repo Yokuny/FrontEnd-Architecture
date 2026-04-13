@@ -14,7 +14,7 @@ export function useAuthApi() {
       const data = res.data;
 
       if (!data.success) {
-        throw new Error(data.message || 'Falha na autenticação');
+        throw new Error(data.message);
       }
 
       const { accessToken, userId, user } = data.data;
@@ -32,7 +32,7 @@ export function useAuthApi() {
       const data = res.data;
 
       if (!data.success) {
-        throw new Error(data.message || 'Falha no cadastro');
+        throw new Error(data.message);
       }
 
       return data.data;
@@ -45,7 +45,7 @@ export function useAuthApi() {
       const data = res.data;
 
       if (!data.success) {
-        throw new Error(data.message || 'Houve um erro na validação do E-mail');
+        throw new Error(data.message);
       }
 
       return data;
@@ -56,7 +56,7 @@ export function useAuthApi() {
     mutationFn: async ({ email }: { email: string }) => {
       const res = await api.post('/user/forgot-password', { email });
       const data = res.data;
-      if (!data.success) throw new Error(data.message || 'Erro ao enviar e-mail de recuperação');
+      if (!data.success) throw new Error(data.message);
       return data;
     },
   });
@@ -65,7 +65,7 @@ export function useAuthApi() {
     mutationFn: async ({ id, name, email, password }: { id: string; name: string; email: string; password: string }) => {
       const res = await api.put(`/auth/signup/${id}`, { name, email, password });
       const data = res.data;
-      if (!data.success) throw new Error(data.message || 'Falha ao completar cadastro');
+      if (!data.success) throw new Error(data.message);
       return data;
     },
   });
@@ -74,7 +74,7 @@ export function useAuthApi() {
     mutationFn: async ({ id, email, password, confirmPassword }: { id: string; email: string; password: string; confirmPassword: string }) => {
       const res = await api.put(`/user/reset-password/${id}`, { email, password, confirmPassword });
       const data = res.data;
-      if (!data.success) throw new Error(data.message || 'Erro ao redefinir senha');
+      if (!data.success) throw new Error(data.message);
       return data;
     },
   });

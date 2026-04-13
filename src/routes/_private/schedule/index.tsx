@@ -255,8 +255,8 @@ function SchedulePage() {
         ),
       );
       toast('Horário do agendamento atualizado', { description: formatDate(confirmedEvent.start, 'dd/MM/yyyy HH:mm') });
-    } catch (e) {
-      toast.error('Erro ao atualizar horário', { description: e instanceof Error ? e.message : 'Erro desconhecido' });
+    } catch {
+      // error handled globally via MutationCache.onError
     } finally {
       setIsConfirmTimeUpdateDialogOpen(false);
       setPendingEventUpdate(null);

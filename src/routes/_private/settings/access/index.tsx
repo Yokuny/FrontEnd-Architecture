@@ -33,21 +33,17 @@ export function SettingsAccess() {
   });
 
   const onSubmit = async (values: PasswordUpdate) => {
+    if (values.newPassword !== values.confirmPassword) {
+      toast.error('Você digitou senhas diferentes');
+      return;
+    }
+
     try {
-      if (values.newPassword !== values.confirmPassword) {
-        throw new Error('Você digitou senhas diferentes');
-      }
-
-      const body = {
-        oldPassword: values.oldPassword,
-        newPassword: values.newPassword,
-      };
-
-      await changePassword.mutateAsync(body);
+      await changePassword.mutateAsync({ oldPassword: values.oldPassword, newPassword: values.newPassword });
       toast.success('Senha atualizada com sucesso');
       form.reset();
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao atualizar senha');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

@@ -14,8 +14,8 @@ export function OdontogramStatusForm({ id, initialStatus }: { id: string; initia
     try {
       await updateStatus.mutateAsync({ id, finished: selectedStatus });
       toast.success('Status atualizado com sucesso');
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao atualizar status');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

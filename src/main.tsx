@@ -1,9 +1,9 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Toaster } from 'sonner';
+import { Toaster, toast } from 'sonner';
 
 import { routeTree } from './routeTree.gen';
 
@@ -11,6 +11,16 @@ import './styles.css';
 
 // Create QueryClient instance
 const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => {
+      toast.error(error.message || 'Ocorreu um erro inesperado');
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error) => {
+      toast.error(error.message || 'Ocorreu um erro inesperado');
+    },
+  }),
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5,

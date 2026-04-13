@@ -77,7 +77,7 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
       toast.success('Excluído com sucesso');
       navigate({ to: '/patient', search: { page: 1, size: 20 } });
     } catch {
-      toast.error('Erro ao excluir');
+      // error handled globally via MutationCache.onError
     }
   };
 
@@ -87,8 +87,8 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
       await onSubmit(e);
       toast.success(initialData ? 'Paciente atualizado!' : 'Paciente cadastrado!');
       navigate({ to: '/patient', search: { page: 1, size: 20 } });
-    } catch (err: any) {
-      toast.error(err.message || 'Erro ao salvar paciente');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

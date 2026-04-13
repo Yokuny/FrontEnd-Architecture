@@ -1,5 +1,4 @@
 import { createFileRoute, useParams } from '@tanstack/react-router';
-import { toast } from 'sonner';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScheduleConfirmationForm } from './@components/schedule-confirmation-form';
@@ -14,7 +13,6 @@ function ScheduleConfirmationPage() {
   const { data: scheduleData, isLoading, error } = usePublicSchedulePasskey(code);
 
   if (error) {
-    toast.error(error.message || 'Erro ao carregar dados do agendamento');
     return (
       <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
         <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">

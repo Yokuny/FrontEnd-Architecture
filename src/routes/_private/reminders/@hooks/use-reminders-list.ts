@@ -55,8 +55,8 @@ export function useRemindersList() {
       const label = selectedIds.length > 1 ? t('reminder.completed.plural') : t('reminder.completed.singular');
       toast.success(`${selectedIds.length} ${label}`);
       setSelectedIds([]);
-    } catch (e: unknown) {
-      toast.error((e as Error).message || t('error.completing.reminders'));
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

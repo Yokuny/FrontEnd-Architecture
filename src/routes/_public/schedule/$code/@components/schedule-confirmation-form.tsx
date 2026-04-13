@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import type { z } from 'zod';
 import Check from '@/components/icons/Check.Icon';
 import Cross from '@/components/icons/Cross.Icon';
@@ -33,8 +32,8 @@ export const ScheduleConfirmationForm = ({ scheduleData, scheduleID }: ScheduleC
       toast.success(message);
       // TODO: Sem redirect definido
       router.navigate({ to: '/auth' });
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao processar solicitação');
+    } catch {
+      // error handled globally via MutationCache.onError
     } finally {
       setIsLoading(false);
     }

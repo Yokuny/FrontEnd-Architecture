@@ -45,8 +45,8 @@ export function SettingsInvite() {
       });
       toast.success('Convite enviado com sucesso');
       form.reset();
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao enviar convite');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

@@ -23,8 +23,8 @@ export function useFinancialEditForm(id: string, initialData?: Partial<Financial
     try {
       const res = await update.mutateAsync({ id, body: values });
       toast.success(res.message);
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   });
 

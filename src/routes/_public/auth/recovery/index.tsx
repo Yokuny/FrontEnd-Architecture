@@ -33,9 +33,9 @@ function RecoveryPasswordPage() {
       await forgotPassword.mutateAsync(values);
       setIsDisabled(true);
       toast.success('E-mail de recuperação enviado com sucesso!');
-    } catch (e) {
+    } catch {
       setIsDisabled(false);
-      toast.error(e instanceof Error ? e.message : 'Erro ao enviar e-mail de recuperação');
+      // error handled globally via MutationCache.onError
     } finally {
       setIsLoading(false);
     }

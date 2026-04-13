@@ -109,8 +109,8 @@ export function SettingsProcedures() {
       await updateProcedures.mutateAsync(procedures);
       setHasChanges(false);
       toast.success('Procedimentos atualizados!');
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao salvar procedures');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

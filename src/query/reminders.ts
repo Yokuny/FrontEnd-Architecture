@@ -17,7 +17,7 @@ async function fetchReminders(query: ReminderQuery): Promise<DbReminder[]> {
   if (query.status) params.append('status', query.status);
 
   const res = await request(`reminder?${params.toString()}`, GET());
-  if (!res.success) throw new Error(res.message || 'Falha ao carregar lembretes');
+  if (!res.success) throw new Error(res.message);
   return res.data as DbReminder[];
 }
 
@@ -35,7 +35,7 @@ export function useCreateReminder() {
   return useMutation({
     mutationFn: async (data: z.input<typeof reminderSchema>) => {
       const res = await request('reminder', POST(data));
-      if (!res.success) throw new Error(res.message || 'Falha ao criar lembrete');
+      if (!res.success) throw new Error(res.message);
       return res;
     },
     onSuccess: () => {
@@ -50,7 +50,7 @@ export function useCheckReminders() {
   return useMutation({
     mutationFn: async (data: ReminderBulkUpdate) => {
       const res = await request('reminder', PATCH(data));
-      if (!res.success) throw new Error(res.message || 'Falha ao marcar lembretes como concluídos');
+      if (!res.success) throw new Error(res.message);
       return res;
     },
     onSuccess: () => {

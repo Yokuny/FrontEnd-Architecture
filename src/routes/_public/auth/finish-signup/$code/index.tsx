@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { toast } from 'sonner';
 import { ItemDescription } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { t } from '@/lib/helpers/translate.helper';
@@ -38,7 +37,6 @@ function FinishSignupPage() {
   }
 
   if (isError) {
-    toast.error(error.message || 'Link de cadastro inválido ou expirado');
     return (
       <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
         <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">

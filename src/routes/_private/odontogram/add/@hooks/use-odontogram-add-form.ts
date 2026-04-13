@@ -49,8 +49,8 @@ export function useOdontogramAddForm(onSuccess: (patientId: string) => void) {
       toast.success('Odontograma cadastrado com sucesso');
       form.reset();
       onSuccess(values.Patient);
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao cadastrar odontograma');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

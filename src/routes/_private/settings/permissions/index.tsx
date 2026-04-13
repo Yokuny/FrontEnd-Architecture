@@ -75,8 +75,8 @@ export function SettingsPermissions() {
       };
       await updatePermissions.mutateAsync(dataToSend);
       toast.success('Permissões atualizadas com sucesso!');
-    } catch (e: any) {
-      toast.error(e.message || 'Erro ao atualizar permissões');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   };
 

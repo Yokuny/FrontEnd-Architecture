@@ -95,8 +95,8 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
                 try {
                   await checkReminders.mutateAsync({ ids: [reminder._id], status: 'done' });
                   toast.success(t('completed'));
-                } catch (err: unknown) {
-                  toast.error((err as Error).message || t('error'));
+                } catch {
+                  // error handled globally via MutationCache.onError
                 }
               }}
             >

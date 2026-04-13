@@ -31,9 +31,9 @@ export function SignUp({ isLoading, setIsLoading }: LogInProps) {
       const res = await validateEmail.mutateAsync({ email: values.email });
       setIsDisabled(true);
       toast.success(res.message || 'Email validado com sucesso');
-    } catch (e: any) {
+    } catch {
       setIsDisabled(false);
-      toast.error(e.message || 'Houve um erro na validação do E-mail');
+      // error handled globally via MutationCache.onError
     } finally {
       setIsLoading(false);
     }

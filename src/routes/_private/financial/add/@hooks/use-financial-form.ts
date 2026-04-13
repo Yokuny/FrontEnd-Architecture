@@ -40,14 +40,17 @@ export function useFinancialCreateForm() {
   }, [currentStatus, totalPrice, form]);
 
   const onSubmit = form.handleSubmit(async (values) => {
+    if (!values.Professional) {
+      toast.error('Selecione o profissional');
+      return;
+    }
     try {
-      if (!values.Professional) throw new Error('Selecione o profissional');
       const res = await create.mutateAsync(values);
       toast.success(res.message);
       form.reset();
       navigate({ to: '/financial', search: { page: 1, size: 5 } });
-    } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Ocorreu um erro ao cadastrar');
+    } catch {
+      // error handled globally via MutationCache.onError
     }
   });
 
