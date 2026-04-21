@@ -4,14 +4,15 @@ import { toast } from 'sonner';
 import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 import { useClinicStore } from '@/hooks/clinic';
 import { usePatientStore } from '@/hooks/patients';
-import { DELETE, GET, POST, PUT, request } from '@/lib/api/client.api';
+import { useProfessionalStore } from '@/hooks/professionals';
+import { DELETE, POST, PUT, request } from '@/lib/api/client.api';
 import { DefaultEndHour, DefaultStartHour } from '@/lib/config/calendar.config';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import { addKey } from '@/lib/helpers/validate.helper';
 import type { NewSchedule, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 import { useClinicApi } from '@/query/clinic';
 import { usePatientsQuery } from '@/query/patients';
+import { useProfessionalsQuery } from '@/query/professionals';
 import { useUserQuery } from '@/query/user';
 import { extractTimeFromISO } from '../@utils/schedule.utils';
 
@@ -19,6 +20,7 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
   const { data: user } = useUserQuery();
   const { data: clinic } = useClinicApi();
   const { data: patients } = usePatientsQuery();
+  const { data: professionals } = useProfessionalsQuery();
   const { getRoomName: getRoomNameUtil } = useClinicStore();
 
   const getRoomName = useCallback((id: string | undefined) => getRoomNameUtil(clinic, id), [clinic, getRoomNameUtil]);
@@ -140,16 +142,18 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
   }
 
   const fetchPatients = useCallback(async () => {
-    const res = await request('patient', GET());
-    if (!res.success) throw new Error(res.message);
-    return comboboxWithImgFormat(res.data);
-  }, []);
+    return usePatientStore
+      .getState()
+      .mapToCombobox(patients)
+      .map((p) => ({ ...p, image: p.image || '' }));
+  }, [patients]);
 
   const fetchProfessionals = useCallback(async () => {
-    const res = await request('professional', GET());
-    if (!res.success) throw new Error(res.message);
-    return comboboxWithImgFormat(res.data);
-  }, []);
+    return useProfessionalStore
+      .getState()
+      .mapToCombobox(professionals)
+      .map((p) => ({ ...p, image: p.image || '' }));
+  }, [professionals]);
 
   async function handleSave() {
     const values = form.getValues();

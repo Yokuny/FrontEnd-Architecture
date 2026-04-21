@@ -1,7 +1,6 @@
 import { addHours, areIntervalsOverlapping, differenceInMinutes, eachHourOfInterval, getHours, getMinutes, isSameDay, startOfDay } from 'date-fns';
 import type React from 'react';
 import { useMemo } from 'react';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
 import { EndHour, StartHour, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.helper';
@@ -94,7 +93,7 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
   const { currentTimePosition, currentTimeVisible } = useCurrentTimeIndicator(currentDate, 'day');
 
   return (
-    <div data-slot="day-view" className="flex h-full flex-col">
+    <div data-slot="day-view" className="flex h-full flex-col rounded-md border">
       {showAllDaySection && (
         <div className="rounded-t-sm border-accent bg-accent/50">
           <div className="grid grid-cols-[3rem_1fr] sm:grid-cols-[4rem_1fr]">
@@ -125,79 +124,77 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
           </div>
         </div>
       )}
-      <ScrollArea className="md:h-[calc(100vh-10.8rem)]">
-        <div className="grid grid-cols-[3rem_1fr] sm:grid-cols-[4rem_1fr]">
-          <div>
-            {hours.map((hour, index) => (
-              <div key={hour.toString()} className="relative h-[var(--week-cells-height)] border-accent border-b last:border-b-0">
-                {index > 0 && (
-                  <span className="absolute -top-3 left-0 flex h-6 w-16 max-w-full items-center justify-end bg-background pe-2 text-[10px] text-muted-foreground sm:pe-4 sm:text-xs">
-                    {formatDate(hour, 'h a')}
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="relative">
-            {positionedEvents.map((positionedEvent) => (
-              <div
-                key={positionedEvent.event._id}
-                className="absolute z-10 px-0.5"
-                style={{
-                  top: `${positionedEvent.top}px`,
-                  height: `${positionedEvent.height}px`,
-                  left: `${positionedEvent.left * 100}%`,
-                  width: `${positionedEvent.width * 100}%`,
-                  zIndex: positionedEvent.zIndex,
-                }}
-              >
-                <div className="size-full">
-                  <DraggableEvent event={positionedEvent.event} view="day" onClick={(e) => handleEventClick(positionedEvent.event, e)} showTime height={positionedEvent.height} />
-                </div>
-              </div>
-            ))}
-            {currentTimeVisible && (
-              <div className="pointer-events-none absolute right-0 left-0 z-20" style={{ top: `${currentTimePosition}%` }}>
-                <div className="relative flex items-center">
-                  <div className="absolute -left-1 size-2 rounded-full bg-primary"></div>
-                  <div className="h-[2px] w-full bg-primary"></div>
-                </div>
-              </div>
-            )}
-            {hours.map((hour) => {
-              const hourValue = getHours(hour);
-              return (
-                <div key={hour.toString()} className="relative h-[var(--week-cells-height)] border-accent border-b last:border-b-0">
-                  {[0, 1, 2, 3].map((quarter) => {
-                    const quarterHourTime = hourValue + quarter * 0.25;
-                    return (
-                      <DroppableCell
-                        key={`${hour.toString()}-${quarter}`}
-                        id={`day-cell-${currentDate.toISOString()}-${quarterHourTime}`}
-                        date={currentDate}
-                        time={quarterHourTime}
-                        className={cn(
-                          'absolute h-[calc(var(--week-cells-height)/4)] w-full',
-                          quarter === 0 && 'top-0',
-                          quarter === 1 && 'top-[calc(var(--week-cells-height)/4)]',
-                          quarter === 2 && 'top-[calc(var(--week-cells-height)/4*2)]',
-                          quarter === 3 && 'top-[calc(var(--week-cells-height)/4*3)]',
-                        )}
-                        onClick={() => {
-                          const start = new Date(currentDate);
-                          start.setHours(hourValue);
-                          start.setMinutes(quarter * 15);
-                          onEventCreate(start);
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
+      <div className="grid grid-cols-[3rem_1fr] sm:grid-cols-[4rem_1fr]">
+        <div>
+          {hours.map((hour, index) => (
+            <div key={hour.toString()} className="relative h-[var(--week-cells-height)] border-accent border-b last:border-b-0">
+              {index > 0 && (
+                <span className="absolute -top-3 left-0 flex h-6 w-16 max-w-full items-center justify-end bg-background pe-2 text-[10px] text-muted-foreground sm:pe-4 sm:text-xs">
+                  {formatDate(hour, 'h a')}
+                </span>
+              )}
+            </div>
+          ))}
         </div>
-      </ScrollArea>
+        <div className="relative">
+          {positionedEvents.map((positionedEvent) => (
+            <div
+              key={positionedEvent.event._id}
+              className="absolute z-10 px-0.5"
+              style={{
+                top: `${positionedEvent.top}px`,
+                height: `${positionedEvent.height}px`,
+                left: `${positionedEvent.left * 100}%`,
+                width: `${positionedEvent.width * 100}%`,
+                zIndex: positionedEvent.zIndex,
+              }}
+            >
+              <div className="size-full">
+                <DraggableEvent event={positionedEvent.event} view="day" onClick={(e) => handleEventClick(positionedEvent.event, e)} showTime height={positionedEvent.height} />
+              </div>
+            </div>
+          ))}
+          {currentTimeVisible && (
+            <div className="pointer-events-none absolute right-0 left-0 z-20" style={{ top: `${currentTimePosition}%` }}>
+              <div className="relative flex items-center">
+                <div className="absolute -left-1 size-2 rounded-full bg-primary"></div>
+                <div className="h-[2px] w-full bg-primary"></div>
+              </div>
+            </div>
+          )}
+          {hours.map((hour) => {
+            const hourValue = getHours(hour);
+            return (
+              <div key={hour.toString()} className="relative h-[var(--week-cells-height)] border-accent border-b last:border-b-0">
+                {[0, 1, 2, 3].map((quarter) => {
+                  const quarterHourTime = hourValue + quarter * 0.25;
+                  return (
+                    <DroppableCell
+                      key={`${hour.toString()}-${quarter}`}
+                      id={`day-cell-${currentDate.toISOString()}-${quarterHourTime}`}
+                      date={currentDate}
+                      time={quarterHourTime}
+                      className={cn(
+                        'absolute h-[calc(var(--week-cells-height)/4)] w-full',
+                        quarter === 0 && 'top-0',
+                        quarter === 1 && 'top-[calc(var(--week-cells-height)/4)]',
+                        quarter === 2 && 'top-[calc(var(--week-cells-height)/4*2)]',
+                        quarter === 3 && 'top-[calc(var(--week-cells-height)/4*3)]',
+                      )}
+                      onClick={() => {
+                        const start = new Date(currentDate);
+                        start.setHours(hourValue);
+                        start.setMinutes(quarter * 15);
+                        onEventCreate(start);
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
