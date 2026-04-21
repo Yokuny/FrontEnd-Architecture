@@ -103,8 +103,8 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
       return (
         <Item className="flex-row items-center justify-between gap-4 md:flex-col">
           <ItemContent className="w-full space-y-2 p-4 md:px-6">
-              <ItemActions className="w-full items-center justify-between gap-2">
-                <ItemDescription>{t('date')}</ItemDescription>
+            <ItemActions className="w-full items-center justify-between gap-2">
+              <ItemDescription>{t('date')}</ItemDescription>
               <Button variant="outline" size="sm" className="gap-1 text-xs">
                 <Calender className="hidden size-4 md:block" />
                 <ItemTitle className="text-muted-foreground tabular-nums tracking-tight">{t('all.day')}</ItemTitle>

@@ -5,8 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
-import { t } from '@/lib/helpers/translate.helper';
 import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { useFinancialDetailQuery, useFinancialMutations } from '@/query/financials';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { FINANCIAL_STATUS_OPTIONS } from '../@consts/financial.consts';

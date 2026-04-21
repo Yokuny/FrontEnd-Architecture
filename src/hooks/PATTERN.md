@@ -10,7 +10,6 @@
 | Hook | Arquivo | Proposito |
 |------|---------|-----------|
 | `useAuthStore` | `auth.ts` | Token JWT, usuario autenticado, `login()`, `logout()`, `checkAuthentication()` (persist) |
-| `useUserStore` | `user.ts` | Sala selecionada (`selectedRoom`) para calendario e agendamentos (persist) |
 | `useFavorites` | `use-favorites.ts` | Links favoritos: `toggleFavorite`, `isFavorite` (persist) |
 | `useSidebarToggle` / `useSidebar` | `use-sidebar-toggle.ts` | Estado do sidebar (expandido/colapsado), suporte mobile e hover (persist) |
 | `useProfessionalColors` | `professionals.ts` | Cores persistentes por profissional no calendario (persist) |
@@ -26,7 +25,7 @@
 | `useProfessionalStore` | `professionals.ts` | `getName(professionals, id)`, `getImage(professionals, id)`, `mapToCombobox(professionals)` |
 | `useFinancialStore` | `financials.ts` | `mapToCombobox(financials, patientId?)` — filtra financeiros por paciente |
 | `useOdontogramStore` | `odontogram.ts` | `mapToCombobox(odontograms, patientId?)` — filtra odontogramas por paciente |
-| `useClinicStore` | `clinic.ts` | `getRoomName(clinic, id)` — nome da sala pelo ID |
+| `useClinicStore` | `clinic.ts` | `selectedRoom`, `setSelectedRoom`, `getRoomName(clinic, id)` — sala selecionada (persist) e nome da sala pelo ID |
 
 ---
 
@@ -182,10 +181,10 @@ function MyForm() {
 
 ```tsx
 import { useScheduleQuery, useUpdateScheduleTime } from '@/query/schedule';
-import { useUserStore } from '@/hooks/user';
+import { useClinicStore } from '@/hooks/clinic';
 
 function Calendar() {
-  const { selectedRoom } = useUserStore();
+  const { selectedRoom } = useClinicStore();
   const { data } = useScheduleQuery({ date: '2026-03-26', room: selectedRoom });
   const updateTime = useUpdateScheduleTime();
 

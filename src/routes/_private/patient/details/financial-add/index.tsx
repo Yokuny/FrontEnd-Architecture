@@ -84,7 +84,13 @@ function FinancialAddPage() {
               <FormItem className="w-full">
                 <FormLabel>{t('total.amount')}</FormLabel>
                 <FormControl>
-                  <Input type="number" className="w-full" placeholder={t('currency.placeholder')} value={field.value || 0} onChange={(e) => field.onChange(Number(e.target.value))} />
+                  <Input
+                    type="number"
+                    className="w-full"
+                    placeholder={t('currency.placeholder')}
+                    value={field.value || 0}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -96,7 +102,14 @@ function FinancialAddPage() {
               <FormItem className="w-full">
                 <FormLabel>{t('amount.paid')}</FormLabel>
                 <FormControl>
-                  <Input type="number" className="w-full" placeholder={t('currency.placeholder')} {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
+                  <Input
+                    type="number"
+                    className="w-full"
+                    placeholder={t('currency.placeholder')}
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    value={field.value || ''}
+                  />
                 </FormControl>
               </FormItem>
             )}

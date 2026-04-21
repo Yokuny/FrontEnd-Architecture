@@ -182,9 +182,7 @@ function ScheduleAddPage() {
     },
     {
       title: selectedRoomName ? `${selectedRoomName} | ${t('date.time')}` : t('location.date.time'),
-      description: selectedRoomName
-        ? `${t('schedule.in.room')} ${selectedRoomName}. ${t('select.datetime')}`
-        : t('select.room.datetime.description'),
+      description: selectedRoomName ? `${t('schedule.in.room')} ${selectedRoomName}. ${t('select.datetime')}` : t('select.room.datetime.description'),
       fields: [
         <div key="datetime-room" className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">

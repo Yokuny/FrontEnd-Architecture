@@ -12,7 +12,7 @@ export const Route = createFileRoute('/_public/auth/finish-signup/$code/')({
 
 function FinishSignupPage() {
   const { code } = Route.useParams();
-  const { data, isPending, isError, error } = usePasskeyQuery(code);
+  const { data, isPending, isError } = usePasskeyQuery(code);
 
   if (isPending) {
     return (

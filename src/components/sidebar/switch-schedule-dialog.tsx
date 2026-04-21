@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { ClipboardCheckIcon } from '@/components/icons/ClipboardCheck.Icon';
 import { ScheduleDialog } from '@/components/schedule/schedule-dialog';
 import { Button } from '@/components/ui/button';
-import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { t } from '@/lib/helpers/translate.helper';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { scheduleKeys } from '@/query/schedule';
 
 export function ScheduleDialogSwitcher() {

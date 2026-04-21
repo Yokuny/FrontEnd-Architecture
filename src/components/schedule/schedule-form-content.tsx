@@ -7,6 +7,7 @@ import Back from '@/components/icons/Back.Icon';
 import Delete from '@/components/icons/Delete.Icon';
 import Edit from '@/components/icons/Edit.Icon';
 import Loader from '@/components/icons/Loader.Icon';
+import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -17,7 +18,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatPhone } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import { useScheduleForm } from '@/routes/_private/schedule/@hooks/use-schedule-form';
-import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 
 export type ScheduleFormContentProps = ScheduleFormProps & {
   /** Quando true, não renderiza o rodapé (ex.: página com botão Salvar no header). */
@@ -104,214 +104,214 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                 </TabsList>
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
-                 <TabsContent value="appointment">
-                  <DefaultFormLayout
-                    className={layoutClassName}
-                    sections={[
-                      {
-                        title: t('section.patient.professional'),
-                        description: t('section.patient.professional.description'),
-                        fields: [
-                          <div key="patient-professional" className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            <FormField
-                              control={form.control as any}
-                              name="Patient"
-                              render={({ field }) => (
-                                <FormItem className="flex flex-col">
-                                  <FormLabel>{t('patient')}</FormLabel>
-                                  <FormControl>
-                                    <PatientCombobox
-                                      controller={{
-                                        ...field,
-                                        onChange: (value: string) => {
-                                          field.onChange(value);
-                                          setSelectedPatient(value);
-                                        },
-                                      }}
-                                      fetchPatients={fetchPatients}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control as any}
-                              name="Professional"
-                              render={({ field }) => (
-                                <FormItem className="flex flex-col">
-                                  <FormLabel>{t('professional.label')}</FormLabel>
-                                  <FormControl>
-                                    <ProfessionalCombobox
-                                      controller={{
-                                        ...field,
-                                        onChange: (value: string) => {
-                                          field.onChange(value);
-                                          setSelectedProfessional(value);
-                                        },
-                                      }}
-                                      fetchProfessionals={fetchProfessionals}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>,
-                        ],
-                      },
-                    ]}
-                  />
-                </TabsContent>
-
-                <TabsContent value="roomevent">
-                  <DefaultFormLayout
-                    className={layoutClassName}
-                    sections={[
-                      {
-                        title: t('room.event'),
-                        description: t('room.event.description'),
-                        fields: [
+              <TabsContent value="appointment">
+                <DefaultFormLayout
+                  className={layoutClassName}
+                  sections={[
+                    {
+                      title: t('section.patient.professional'),
+                      description: t('section.patient.professional.description'),
+                      fields: [
+                        <div key="patient-professional" className="grid grid-cols-1 gap-4 md:grid-cols-2">
                           <FormField
-                            key="title"
                             control={form.control as any}
-                            name="title"
+                            name="Patient"
                             render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>{t('event.title')}</FormLabel>
+                              <FormItem className="flex flex-col">
+                                <FormLabel>{t('patient')}</FormLabel>
                                 <FormControl>
-                                  <Input {...field} placeholder={t('room.event.placeholder')} />
+                                  <PatientCombobox
+                                    controller={{
+                                      ...field,
+                                      onChange: (value: string) => {
+                                        field.onChange(value);
+                                        setSelectedPatient(value);
+                                      },
+                                    }}
+                                    fetchPatients={fetchPatients}
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />,
-                        ],
-                      },
-                    ]}
-                  />
-                </TabsContent>
+                          />
+                          <FormField
+                            control={form.control as any}
+                            name="Professional"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-col">
+                                <FormLabel>{t('professional.label')}</FormLabel>
+                                <FormControl>
+                                  <ProfessionalCombobox
+                                    controller={{
+                                      ...field,
+                                      onChange: (value: string) => {
+                                        field.onChange(value);
+                                        setSelectedProfessional(value);
+                                      },
+                                    }}
+                                    fetchProfessionals={fetchProfessionals}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>,
+                      ],
+                    },
+                  ]}
+                />
+              </TabsContent>
 
-                <TabsContent value="newpatient">
-                  <DefaultFormLayout
-                    className={layoutClassName}
-                    sections={[
-                      {
-                        title: t('new.patient.section'),
-                        description: t('new.patient.section.description'),
-                        fields: [
-                          <div key="new-patient-fields" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            <FormField
-                              control={form.control as any}
-                              name="patient.name"
-                              render={({ field }) => (
-                                <FormItem className="flex flex-col sm:col-span-2">
-                                  <FormLabel>{t('patient.name')}</FormLabel>
-                                  <FormControl>
-                                    <Input {...field} placeholder={t('full.name')} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control as any}
-                              name="patient.sex"
-                              render={({ field }) => (
-                                <FormItem className="flex flex-col">
-                                  <FormLabel>{t('sex')}</FormLabel>
-                                  <FormControl>
-                                    <Select value={field.value} onValueChange={field.onChange}>
-                                      <SelectTrigger className="w-full">
-                                        <SelectValue placeholder={t('select.generic')} />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        <SelectItem value="M">{t('sex.male')}</SelectItem>
-                                        <SelectItem value="F">{t('sex.female')}</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control as any}
-                              name="patient.phone"
-                              render={({ field }) => (
-                                <FormItem className="flex flex-col">
-                                  <FormLabel>{t('phone')}</FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      placeholder="(00) 0000-0000"
-                                      className="w-full"
-                                      value={field.value || ''}
-                                      onChange={(e) => field.onChange(formatPhone(e.target.value))}
-                                      onBlur={field.onBlur}
-                                      name={field.name}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control as any}
-                              name="Professional"
-                              render={({ field }) => (
-                                <FormItem className="flex flex-col sm:col-span-2">
-                                  <FormLabel>{t('professional.label')}</FormLabel>
-                                  <FormControl>
-                                    <ProfessionalCombobox
-                                      controller={{
-                                        ...field,
-                                        onChange: (value: string) => {
-                                          field.onChange(value);
-                                          setSelectedProfessional(value);
-                                        },
-                                      }}
-                                      fetchProfessionals={fetchProfessionals}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>,
-                        ],
-                      },
-                    ]}
-                  />
-                </TabsContent>
-             </Tabs>
+              <TabsContent value="roomevent">
+                <DefaultFormLayout
+                  className={layoutClassName}
+                  sections={[
+                    {
+                      title: t('room.event'),
+                      description: t('room.event.description'),
+                      fields: [
+                        <FormField
+                          key="title"
+                          control={form.control as any}
+                          name="title"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>{t('event.title')}</FormLabel>
+                              <FormControl>
+                                <Input {...field} placeholder={t('room.event.placeholder')} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />,
+                      ],
+                    },
+                  ]}
+                />
+              </TabsContent>
+
+              <TabsContent value="newpatient">
+                <DefaultFormLayout
+                  className={layoutClassName}
+                  sections={[
+                    {
+                      title: t('new.patient.section'),
+                      description: t('new.patient.section.description'),
+                      fields: [
+                        <div key="new-patient-fields" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                          <FormField
+                            control={form.control as any}
+                            name="patient.name"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-col sm:col-span-2">
+                                <FormLabel>{t('patient.name')}</FormLabel>
+                                <FormControl>
+                                  <Input {...field} placeholder={t('full.name')} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control as any}
+                            name="patient.sex"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-col">
+                                <FormLabel>{t('sex')}</FormLabel>
+                                <FormControl>
+                                  <Select value={field.value} onValueChange={field.onChange}>
+                                    <SelectTrigger className="w-full">
+                                      <SelectValue placeholder={t('select.generic')} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="M">{t('sex.male')}</SelectItem>
+                                      <SelectItem value="F">{t('sex.female')}</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control as any}
+                            name="patient.phone"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-col">
+                                <FormLabel>{t('phone')}</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    placeholder="(00) 0000-0000"
+                                    className="w-full"
+                                    value={field.value || ''}
+                                    onChange={(e) => field.onChange(formatPhone(e.target.value))}
+                                    onBlur={field.onBlur}
+                                    name={field.name}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control as any}
+                            name="Professional"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-col sm:col-span-2">
+                                <FormLabel>{t('professional.label')}</FormLabel>
+                                <FormControl>
+                                  <ProfessionalCombobox
+                                    controller={{
+                                      ...field,
+                                      onChange: (value: string) => {
+                                        field.onChange(value);
+                                        setSelectedProfessional(value);
+                                      },
+                                    }}
+                                    fetchProfessionals={fetchProfessionals}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>,
+                      ],
+                    },
+                  ]}
+                />
+              </TabsContent>
+            </Tabs>
           )}
 
-             <DefaultFormLayout
-              className={layoutClassName}
-              sections={[
-                {
-                  title: t('section.datetime'),
-                  description: t('section.datetime.description'),
-                  fields: [
-                    <DateTimePicker
-                      key="schedule-datetime"
-                      startDate={startDateTime ? new Date(startDateTime) : undefined}
-                      endDate={endDateTime ? new Date(endDateTime) : undefined}
-                      startTime={!allDay ? extractTimeFromISO(startDateTime) : undefined}
-                      endTime={!allDay ? extractTimeFromISO(endDateTime) : undefined}
-                      allDay={allDay}
-                      onChange={(data) => {
-                        setStartDateTime(data.startISO);
-                        setEndDateTime(data.endISO);
-                        setAllDay(data.allDay);
-                      }}
-                      disabled={isLoading}
-                    />,
-                  ],
-                },
-              ]}
-            />
-         </form>
+          <DefaultFormLayout
+            className={layoutClassName}
+            sections={[
+              {
+                title: t('section.datetime'),
+                description: t('section.datetime.description'),
+                fields: [
+                  <DateTimePicker
+                    key="schedule-datetime"
+                    startDate={startDateTime ? new Date(startDateTime) : undefined}
+                    endDate={endDateTime ? new Date(endDateTime) : undefined}
+                    startTime={!allDay ? extractTimeFromISO(startDateTime) : undefined}
+                    endTime={!allDay ? extractTimeFromISO(endDateTime) : undefined}
+                    allDay={allDay}
+                    onChange={(data) => {
+                      setStartDateTime(data.startISO);
+                      setEndDateTime(data.endISO);
+                      setAllDay(data.allDay);
+                    }}
+                    disabled={isLoading}
+                  />,
+                ],
+              },
+            ]}
+          />
+        </form>
       </Form>
 
       {(!hideFooter || (hideFooter && formId)) && (

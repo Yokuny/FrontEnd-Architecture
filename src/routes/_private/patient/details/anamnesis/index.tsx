@@ -175,7 +175,7 @@ function AnamnesisPage() {
               render={({ field }) => (
                 <FormItem className="col-span-2">
                   <FormLabel>{t('which.medications')}</FormLabel>
-                <FormControl>
+                  <FormControl>
                     <Input placeholder={t('placeholder.allergy')} disabled={isSubmitting} {...field} />
                   </FormControl>
                 </FormItem>
@@ -267,7 +267,7 @@ function AnamnesisPage() {
               render={({ field }) => (
                 <FormItem className="col-span-2">
                   <FormLabel>{t('treatment.details')}</FormLabel>
-                <FormControl>
+                  <FormControl>
                     <Input placeholder={t('placeholder.treatment')} disabled={isSubmitting} {...field} />
                   </FormControl>
                 </FormItem>
@@ -293,7 +293,7 @@ function AnamnesisPage() {
               render={({ field }) => (
                 <FormItem className="col-span-2">
                   <FormLabel>{t('medication.details.label')}</FormLabel>
-                <FormControl>
+                  <FormControl>
                     <Input placeholder={t('placeholder.medications')} disabled={isSubmitting} {...field} />
                   </FormControl>
                 </FormItem>

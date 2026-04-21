@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 import { useClinicStore } from '@/hooks/clinic';
 import { usePatientStore } from '@/hooks/patients';
 import { DELETE, GET, POST, PUT, request } from '@/lib/api/client.api';
@@ -12,7 +13,6 @@ import type { NewSchedule, UpdateSchedule } from '@/lib/interfaces/schemas/sched
 import { useClinicApi } from '@/query/clinic';
 import { usePatientsQuery } from '@/query/patients';
 import { useUserQuery } from '@/query/user';
-import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 import { extractTimeFromISO } from '../@utils/schedule.utils';
 
 export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFormProps) {

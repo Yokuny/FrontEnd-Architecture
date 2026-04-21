@@ -42,7 +42,7 @@ export function useScheduleQuery(params: ScheduleQueryParams) {
   return useQuery({
     queryKey: scheduleKeys.list(params),
     queryFn: () => fetchSchedules(params),
-    enabled: !!params.startDate && !!params.endDate,
+    enabled: !!params.startDate && !!params.endDate && !!params.roomID,
   });
 }
 

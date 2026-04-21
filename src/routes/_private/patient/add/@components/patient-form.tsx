@@ -84,7 +84,13 @@ export function PatientForm() {
               <FormItem>
                 <FormLabel>{t('birthdate')}</FormLabel>
                 <FormControl>
-                  <Input className="w-full max-w-48" {...field} value={field.value || ''} placeholder={t('date.placeholder.br')} onChange={(e) => field.onChange(maskDate(e.target.value))} />
+                  <Input
+                    className="w-full max-w-48"
+                    {...field}
+                    value={field.value || ''}
+                    placeholder={t('date.placeholder.br')}
+                    onChange={(e) => field.onChange(maskDate(e.target.value))}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -182,7 +188,12 @@ export function PatientForm() {
                   <FormItem className="w-full">
                     <FormLabel>{`#${index + 1} ${t('phone')}`}</FormLabel>
                     <FormControl>
-                      <Input {...inputField} value={inputField.value || ''} placeholder={t('placeholder.phone')} onChange={(e) => inputField.onChange(formatPhone(e.target.value))} />
+                      <Input
+                        {...inputField}
+                        value={inputField.value || ''}
+                        placeholder={t('placeholder.phone')}
+                        onChange={(e) => inputField.onChange(formatPhone(e.target.value))}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

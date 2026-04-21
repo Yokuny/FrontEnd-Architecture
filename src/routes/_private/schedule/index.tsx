@@ -10,6 +10,7 @@ import Eye from '@/components/icons/Eye.Icon';
 import Grid from '@/components/icons/Grid.Icon';
 import Left from '@/components/icons/Left.Icon';
 import Right from '@/components/icons/Right.Icon';
+import { ScheduleDialog } from '@/components/schedule';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -21,7 +22,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useClinicStore } from '@/hooks/clinic';
 import { useProfessionalColors, useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useUserStore } from '@/hooks/user';
 import { AgendaDaysToShow, EventGap, EventHeight, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { addHoursToDate, eventColors } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
@@ -33,7 +33,6 @@ import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { useUserQuery } from '@/query/user';
-import { ScheduleDialog } from '@/components/schedule';
 import { AgendaView } from './@components/agenda-view';
 import { CalendarDndProvider } from './@components/calendar-dnd-context';
 import { DayView } from './@components/day-view';
@@ -58,8 +57,7 @@ function SchedulePage() {
   const isMobile = useIsMobile();
 
   // Zustand hooks
-  const { selectedRoom, setSelectedRoom } = useUserStore();
-  const { getRoomName: getRoomNameUtil } = useClinicStore();
+  const { selectedRoom, setSelectedRoom, getRoomName: getRoomNameUtil } = useClinicStore();
   const professionalStore = useProfessionalStore();
   const { setColor: setProfessionalColor, clearColor: clearProfessionalColor } = useProfessionalColors();
 
@@ -317,13 +315,25 @@ function SchedulePage() {
         </ItemContent>
         <CardAction>
           <ButtonGroup>
-            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label={t('pagination.previous')} className="rounded-none rounded-l-md border-r-0 px-2">
+            <Button
+              variant="outline"
+              size={isMobile ? 'default' : 'sm'}
+              onClick={handlePrevious}
+              aria-label={t('pagination.previous')}
+              className="rounded-none rounded-l-md border-r-0 px-2"
+            >
               <Left className="size-5" aria-hidden="true" />
             </Button>
             <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setCurrentDate(new Date())} className="hidden rounded-none border-x-0 px-1 md:block">
               {t('today')}
             </Button>
-            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handleNext} aria-label={t('pagination.next')} className="rounded-none rounded-r-md border-l-0 px-2">
+            <Button
+              variant="outline"
+              size={isMobile ? 'default' : 'sm'}
+              onClick={handleNext}
+              aria-label={t('pagination.next')}
+              className="rounded-none rounded-r-md border-l-0 px-2"
+            >
               <Right className="size-5" aria-hidden="true" />
             </Button>
           </ButtonGroup>
@@ -354,7 +364,12 @@ function SchedulePage() {
               setEvents([]);
             }}
           >
-            <SelectTrigger size={isMobile ? 'default' : 'sm'} className="px-2">
+            <SelectTrigger
+              size={isMobile ? 'default' : 'sm'}
+              aria-invalid={!selectedRoomID}
+              aria-required
+              className={cn('px-2', !selectedRoomID && 'data-placeholder:text-destructive [&_svg]:text-destructive')}
+            >
               <SelectValue placeholder={t('select.room')} />
             </SelectTrigger>
             <SelectContent>

@@ -231,7 +231,7 @@ export const useUserStore = create<UserStore>()(
       selectedRoom: '',
       setSelectedRoom: (room) => set({ selectedRoom: room }),
     }),
-    { name: 'user-ui' },
+    { name: 'clinic-ui' },
   ),
 );
 ```

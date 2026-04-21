@@ -20,10 +20,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientQuery } from '@/query/patient';
 import { PatientForm } from './@components/patient-form';
 import { usePatientApi } from './@hooks/use-patient-api';
-import { t } from '@/lib/helpers/translate.helper';
 import { usePatientForm } from './@hooks/use-patient-form';
 
 const searchSchema = z.object({

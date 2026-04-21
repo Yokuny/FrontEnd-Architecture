@@ -45,10 +45,10 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
             <ItemTitle className="text-md tabular-nums md:text-base">{endDateStr}</ItemTitle>
           </div>
           {!isMobile && (
-            <Button variant="outline" size="sm" className="gap-2 text-xs">
-              <Clock className="size-4" />
+            <Badge variant="outline" className="gap-2 [&>svg]:size-4">
+              <Clock />
               {t('all.day')}
-            </Button>
+            </Badge>
           )}
         </div>
       );

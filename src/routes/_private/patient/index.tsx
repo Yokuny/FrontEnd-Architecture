@@ -6,9 +6,9 @@ import Add from '@/components/icons/Add.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
+import { t } from '@/lib/helpers/translate.helper';
 import PatientAnalytics from './@components/patient-analytics';
 import { usePatientList } from './@hooks/use-patient-list';
-import { t } from '@/lib/helpers/translate.helper';
 import { searchSchema } from './@interface/patient.interface';
 import { patientColumns } from './@utils/columns';
 
