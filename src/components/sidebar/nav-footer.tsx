@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Down from '@/components/icons/Down.Icon';
 import Star from '@/components/icons/Star.Icon';
 import Up from '@/components/icons/Up.Icon';
+import { PatientSearchSwitcher } from '@/components/sidebar/switch-patient-search';
 import { ScheduleDialogSwitcher } from '@/components/sidebar/switch-schedule-dialog';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuItem as SidebarMenuSubItem, useSidebar } from '@/components/ui/sidebar';
@@ -18,7 +19,8 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
 
   return (
     <>
-      <div className={cn('mb-2 flex w-full', isCollapsed ? 'justify-center' : 'justify-start')}>
+      <div className={cn('mb-2 flex w-full gap-2', isCollapsed ? 'justify-center' : 'justify-start')}>
+        <PatientSearchSwitcher />
         <ScheduleDialogSwitcher />
       </div>
       <SidebarMenu>

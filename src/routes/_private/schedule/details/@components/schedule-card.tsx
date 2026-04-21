@@ -123,7 +123,6 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
             <span className="text-muted-foreground text-xs">{schedule.title}</span>
           </Button>
         )}
-        Space-y-3
       </ItemFooter>
     </Item>
   );
