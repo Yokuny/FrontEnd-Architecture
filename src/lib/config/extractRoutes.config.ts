@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ROUTE_TREE_PATH = path.resolve(__dirname, '../routeTree.gen.ts');
+const ROUTE_TREE_PATH = path.resolve(__dirname, '../../routeTree.gen.ts');
 const ROUTE_CONFIG_PATH = path.resolve(__dirname, './routes.config.tsx');
 
 /**

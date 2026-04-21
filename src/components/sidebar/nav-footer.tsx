@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Down from '@/components/icons/Down.Icon';
 import Star from '@/components/icons/Star.Icon';
 import Up from '@/components/icons/Up.Icon';
+import { ScheduleDialogSwitcher } from '@/components/sidebar/switch-schedule-dialog';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuItem as SidebarMenuSubItem, useSidebar } from '@/components/ui/sidebar';
 import { useFavorites } from '@/hooks/use-favorites';
@@ -16,7 +17,11 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
   const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
 
   return (
-    <SidebarMenu>
+    <>
+      <div className={cn('mb-2 flex w-full', isCollapsed ? 'justify-center' : 'justify-start')}>
+        <ScheduleDialogSwitcher />
+      </div>
+      <SidebarMenu>
       {routes.map((route) => {
         const isOpen = !isCollapsed && openCollapsible === route.id;
         const hasSubRoutes = !!route.subs?.length;
@@ -80,5 +85,6 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
         );
       })}
     </SidebarMenu>
+    </>
   );
 }
