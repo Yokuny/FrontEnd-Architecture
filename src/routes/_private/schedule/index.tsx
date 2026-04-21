@@ -26,6 +26,7 @@ import { AgendaDaysToShow, EventGap, EventHeight, WeekCellsHeight } from '@/lib/
 import { addHoursToDate, eventColors } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString, getEventColorByProfessional } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { CalendarView, EventColor, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { scheduleTimeSchema } from '@/lib/interfaces/schemas/schedule.schema';
 import { cn } from '@/lib/utils/cn.util';
@@ -47,8 +48,8 @@ import { computeUpcomingPerProfessional } from './@utils/schedule.utils';
 export const Route = createFileRoute('/_private/schedule/')({
   component: SchedulePage,
   staticData: {
-    title: 'Agenda',
-    description: 'Gestão de horários e calendário clínico multidisciplinar.',
+    title: t('agenda'),
+    description: t('agenda.description'),
   },
 });
 
@@ -121,6 +122,11 @@ function SchedulePage() {
   }, [events]);
 
   const upcomingPerProfessional = useMemo(() => computeUpcomingPerProfessional(events), [events]);
+
+  const weekdayShortLabels = useMemo(() => {
+    const sunday = new Date(2024, 0, 7);
+    return Array.from({ length: 7 }, (_, i) => formatDate(addDays(sunday, i), 'EEE'));
+  }, []);
 
   // useEffect
   useEffect(() => {
@@ -204,7 +210,7 @@ function SchedulePage() {
   const handleEventSave = (event: PartialSchedule) => {
     if (event._id && event.color) {
       setEvents(events.map((e) => (e._id === event._id ? { ...event, color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status) } : e)));
-      toast('Agendamento atualizado', { description: formatDate(event.start, 'd MMM yyyy') });
+      toast(t('toast.appointment.updated'), { description: formatDate(event.start, 'd MMM yyyy') });
     } else {
       setEvents([
         ...events,
@@ -214,7 +220,7 @@ function SchedulePage() {
           color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status),
         },
       ]);
-      toast('Agendamento adicionado', { description: formatDate(event.start, 'd MMM yyyy') });
+      toast(t('toast.appointment.added'), { description: formatDate(event.start, 'd MMM yyyy') });
     }
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
@@ -236,7 +242,7 @@ function SchedulePage() {
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
     if (deletedEvent) {
-      toast(`"${deletedEvent.title}" excluído`, { description: formatDate(deletedEvent.start, 'd MMM yyy') });
+      toast(`"${deletedEvent.title}" ${t('removed')}`, { description: formatDate(deletedEvent.start, 'd MMM yyy') });
     }
   };
 
@@ -254,7 +260,7 @@ function SchedulePage() {
             : event,
         ),
       );
-      toast('Horário do agendamento atualizado', { description: formatDate(confirmedEvent.start, 'dd/MM/yyyy HH:mm') });
+      toast(t('toast.appointment.time.updated'), { description: formatDate(confirmedEvent.start, 'dd/MM/yyyy HH:mm') });
     } catch {
       // error handled globally via MutationCache.onError
     } finally {
@@ -270,7 +276,7 @@ function SchedulePage() {
         event.Professional === professionalID ? { ...event, color: getEventColorByProfessional(event.Professional, getProfessionalColor, event.status) } : event,
       ),
     );
-    toast.success('Cor atualizada');
+    toast.success(t('toast.color.updated'));
   };
 
   const handleRemoveColor = (professionalId: string | undefined) => {
@@ -281,7 +287,7 @@ function SchedulePage() {
         event.Professional === professionalId ? { ...event, color: getEventColorByProfessional(event.Professional, getProfessionalColor, event.status) } : event,
       ),
     );
-    toast.success('Cor baseada no status');
+    toast.success(t('toast.color.from.status'));
   };
 
   const handleRangeSelect = (range: { from: Date | undefined; to?: Date | undefined } | undefined) => {
@@ -306,18 +312,18 @@ function SchedulePage() {
       <div className="flex items-end justify-between gap-2 px-4 md:px-6">
         <ItemContent className="flex-row items-baseline gap-2 text-sky-blue text-xl dark:text-primary-blue">
           <CardTitle>{String(currentDate.getDate()).padStart(2, '0')}</CardTitle>
-          <CardTitle className="leading-none">{['dom.', 'seg.', 'ter.', 'qua.', 'qui.', 'sex.', 'sáb.'][currentDate.getDay()]}</CardTitle>
+          <CardTitle className="leading-none">{weekdayShortLabels[currentDate.getDay()]}</CardTitle>
           <ItemDescription className="leading-none">{headerTitle}</ItemDescription>
         </ItemContent>
         <CardAction>
           <ButtonGroup>
-            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label="Anterior" className="rounded-none rounded-l-md border-r-0 px-2">
+            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label={t('pagination.previous')} className="rounded-none rounded-l-md border-r-0 px-2">
               <Left className="size-5" aria-hidden="true" />
             </Button>
             <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setCurrentDate(new Date())} className="hidden rounded-none border-x-0 px-1 md:block">
-              Hoje
+              {t('today')}
             </Button>
-            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handleNext} aria-label="Próximo" className="rounded-none rounded-r-md border-l-0 px-2">
+            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handleNext} aria-label={t('pagination.next')} className="rounded-none rounded-r-md border-l-0 px-2">
               <Right className="size-5" aria-hidden="true" />
             </Button>
           </ButtonGroup>
@@ -334,10 +340,10 @@ function SchedulePage() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-32">
-              <DropdownMenuItem onClick={() => setView('month')}>Mês</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setView('week')}>Semana</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setView('day')}>Dia</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setView('agenda')}>Agenda</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setView('month')}>{t('month')}</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setView('week')}>{t('week')}</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setView('day')}>{t('day')}</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setView('agenda')}>{t('agenda')}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Select
@@ -349,7 +355,7 @@ function SchedulePage() {
             }}
           >
             <SelectTrigger size={isMobile ? 'default' : 'sm'} className="px-2">
-              <SelectValue placeholder="Selecione uma sala" />
+              <SelectValue placeholder={t('select.room')} />
             </SelectTrigger>
             <SelectContent>
               {user?.rooms?.map((room: any) => (
@@ -357,7 +363,7 @@ function SchedulePage() {
                   {getRoomName(room._id)}
                 </SelectItem>
               ))}
-              {user?.role?.includes('assistant') && <SelectItem value="all">Todas as salas</SelectItem>}
+              {user?.role?.includes('assistant') && <SelectItem value="all">{t('all.rooms')}</SelectItem>}
             </SelectContent>
           </Select>
           {!isMobile && (
@@ -374,7 +380,7 @@ function SchedulePage() {
             }}
           >
             <Add className="size-4 md:-ms-1" aria-hidden="true" />
-            <span className="sr-only md:not-sr-only">Adicionar</span>
+            <span className="sr-only md:not-sr-only">{t('add')}</span>
           </Button>
         </CardAction>
       </div>
@@ -469,7 +475,7 @@ function SchedulePage() {
                   <Left className="size-5" />
                 </Button>
                 <Button variant="outline" size="sm" onClick={() => setCurrentDate(new Date())} className="w-1/3 rounded-none border-x-0">
-                  Hoje
+                  {t('today')}
                 </Button>
                 <Button variant="outline" size="sm" onClick={handleNext} className="w-1/3 rounded-none rounded-r-md border-l-0 px-2">
                   <Right className="size-5" />
@@ -483,10 +489,10 @@ function SchedulePage() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="min-w-32">
-                  <DropdownMenuItem onClick={() => setView('month')}>Mês</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setView('week')}>Semana</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setView('day')}>Dia</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setView('agenda')}>Agenda</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setView('month')}>{t('month')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setView('week')}>{t('week')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setView('day')}>{t('day')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setView('agenda')}>{t('agenda')}</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </ItemHeader>
@@ -496,8 +502,8 @@ function SchedulePage() {
           <ItemGroup className="w-full">
             {upcomingPerProfessional.length === 0 ? (
               <Item className="flex-col gap-1 p-6">
-                <ItemTitle>Próximas Consultas</ItemTitle>
-                <ItemDescription>Nenhuma consulta agendada</ItemDescription>
+                <ItemTitle>{t('upcoming.consults')}</ItemTitle>
+                <ItemDescription>{t('no.upcoming.consults')}</ItemDescription>
               </Item>
             ) : (
               upcomingPerProfessional.map((doc) => (
@@ -520,7 +526,7 @@ function SchedulePage() {
                       className="gap-1 transition-colors"
                     >
                       <Eye className="size-4" />
-                      <ItemDescription className="text-xs tabular-nums">Ver</ItemDescription>
+                      <ItemDescription className="text-xs tabular-nums">{t('view')}</ItemDescription>
                     </Button>
                   </ItemHeader>
                   <ItemActions className="items-baseline gap-4">
@@ -549,7 +555,7 @@ function SchedulePage() {
                     </Avatar>
                     <ItemContent className="flex-none">
                       <ItemTitle className="truncate text-md leading-none">{getProfessionalName(profId).slice(0, 8)}</ItemTitle>
-                      <ItemDescription className="truncate">{hasCustomColor ? displayColor?.label : 'Cor do status'}</ItemDescription>
+                      <ItemDescription className="truncate">{hasCustomColor ? displayColor?.label : t('color.from.status')}</ItemDescription>
                     </ItemContent>
                   </ItemActions>
                   <Select
@@ -559,7 +565,7 @@ function SchedulePage() {
                     }}
                   >
                     <SelectTrigger size="sm" className="w-30 truncate px-2">
-                      <SelectValue placeholder="Cor" />
+                      <SelectValue placeholder={t('color')} />
                     </SelectTrigger>
                     <SelectContent>
                       {eventColors.map((color) => (

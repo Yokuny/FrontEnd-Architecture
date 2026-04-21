@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import { type UserInvite, userInviteSchema } from '@/lib/interfaces/schemas/user.schema';
 import { useClinicApi } from '@/query/clinic';
 import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
@@ -17,8 +18,8 @@ import { InviteForm } from './@components/invite-form';
 export const Route = createFileRoute('/_private/settings/invite/')({
   component: SettingsInvite,
   staticData: {
-    title: 'Convites',
-    description: 'Envie convites por e-mail para novos usuários colaborarem na clínica.',
+    title: t('invite'),
+    description: t('invite.page.description'),
   },
 });
 
@@ -56,7 +57,7 @@ export function SettingsInvite() {
         <CardAction>
           <Button type="submit" form="invite-form" disabled={inviteUser.isPending}>
             {inviteUser.isPending ? <Spinner className="size-4" /> : <Send className="size-4" />}
-            <span className="sr-only md:not-sr-only">Enviar convite</span>
+            <span className="sr-only md:not-sr-only">{t('invite.send')}</span>
           </Button>
         </CardAction>
       </CardHeader>

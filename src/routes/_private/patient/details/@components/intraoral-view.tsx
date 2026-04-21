@@ -8,36 +8,37 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemHeader
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { Intraoral } from '@/lib/interfaces';
 
 const IntraoralContent = ({ intraoral }: { intraoral: Intraoral }) => {
   const healthData = [
-    ...(intraoral.hygiene ? [{ aspect: 'Higiene', condition: intraoral.hygiene }] : []),
-    ...(intraoral.halitosis ? [{ aspect: 'Mau hálito', condition: intraoral.halitosis }] : []),
-    ...(intraoral.tartar ? [{ aspect: 'Tártaro', condition: intraoral.tartar }] : []),
-    ...(intraoral.gums ? [{ aspect: 'Gengivas', condition: intraoral.gums }] : []),
-    ...(intraoral.mucosa ? [{ aspect: 'Mucosa', condition: intraoral.mucosa }] : []),
+    ...(intraoral.hygiene ? [{ aspect: t('hygiene'), condition: intraoral.hygiene }] : []),
+    ...(intraoral.halitosis ? [{ aspect: t('bad.breath'), condition: intraoral.halitosis }] : []),
+    ...(intraoral.tartar ? [{ aspect: t('tartar'), condition: intraoral.tartar }] : []),
+    ...(intraoral.gums ? [{ aspect: t('gums'), condition: intraoral.gums }] : []),
+    ...(intraoral.mucosa ? [{ aspect: t('mucosa'), condition: intraoral.mucosa }] : []),
   ];
 
   const regionData = [
-    ...(intraoral.tongue ? [{ region: 'Língua', description: intraoral.tongue }] : []),
-    ...(intraoral.palate ? [{ region: 'Palato (Céu da boca)', description: intraoral.palate }] : []),
-    ...(intraoral.oralFloor ? [{ region: 'Assoalho bucal', description: intraoral.oralFloor }] : []),
-    ...(intraoral.lips ? [{ region: 'Lábios', description: intraoral.lips }] : []),
-    ...(intraoral.otherObservations ? [{ region: 'Outras Observações', description: intraoral.otherObservations }] : []),
+    ...(intraoral.tongue ? [{ region: t('tongue'), description: intraoral.tongue }] : []),
+    ...(intraoral.palate ? [{ region: t('palate.full'), description: intraoral.palate }] : []),
+    ...(intraoral.oralFloor ? [{ region: t('oral.floor'), description: intraoral.oralFloor }] : []),
+    ...(intraoral.lips ? [{ region: t('lips'), description: intraoral.lips }] : []),
+    ...(intraoral.otherObservations ? [{ region: t('other.observations'), description: intraoral.otherObservations }] : []),
   ];
 
   const sections: FormSection[] = [];
 
   if (healthData.length > 0) {
     sections.push({
-      title: 'Avaliação da Saúde Bucal',
+      title: t('oral.health.assessment'),
       fields: [
         <Table key="health-table" className="border">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-1/2 font-semibold text-xs">Aspecto</TableHead>
-              <TableHead className="w-1/2 font-semibold text-xs">Condição</TableHead>
+              <TableHead className="w-1/2 font-semibold text-xs">{t('aspect')}</TableHead>
+              <TableHead className="w-1/2 font-semibold text-xs">{t('condition')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -55,13 +56,13 @@ const IntraoralContent = ({ intraoral }: { intraoral: Intraoral }) => {
 
   if (regionData.length > 0) {
     sections.push({
-      title: 'Regiões Específicas',
+      title: t('specific.regions'),
       fields: [
         <Table key="region-table" className="border">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-1/2 font-semibold text-xs">Região</TableHead>
-              <TableHead className="w-1/2 font-semibold text-xs">Descrição/Achados</TableHead>
+              <TableHead className="w-1/2 font-semibold text-xs">{t('region')}</TableHead>
+              <TableHead className="w-1/2 font-semibold text-xs">{t('description.findings')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -87,15 +88,15 @@ export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Int
   return (
     <Item>
       <ItemHeader>
-        <ItemTitle className="text-xl">Registro Intraoral</ItemTitle>
+        <ItemTitle className="text-xl">{t('intraoral.record')}</ItemTitle>
         <ItemActions>
           <Button onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })}>
             {hasData ? (
               <>
-                <Edit className="mr-2 size-4" /> Editar
+                <Edit className="mr-2 size-4" /> {t('edit')}
               </>
             ) : (
-              'Cadastrar'
+              t('register')
             )}
           </Button>
         </ItemActions>
@@ -106,7 +107,7 @@ export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Int
       {hasData && (
         <ItemFooter>
           <div className="flex w-full items-center justify-end gap-2">
-            <ItemDescription>Última atualização:</ItemDescription>
+            <ItemDescription>{t('last.updated')}</ItemDescription>
             <ItemTitle>{formatDate(intraoral.updatedAt)}</ItemTitle>
           </div>
         </ItemFooter>

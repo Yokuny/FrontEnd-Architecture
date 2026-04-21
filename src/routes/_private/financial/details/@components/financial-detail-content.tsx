@@ -11,6 +11,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { FullFinancial } from '@/lib/interfaces/financial.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
@@ -44,7 +45,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
               <AvatarFallback>{financial.patient?.name?.slice(0, 2)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-1">
-              <ItemDescription className="font-medium text-xs uppercase tracking-widest">Paciente</ItemDescription>
+              <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('patient')}</ItemDescription>
               <ItemTitle className="font-semibold text-2xl tracking-tighter">{financial.patient?.name}</ItemTitle>
             </div>
           </div>
@@ -54,7 +55,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
               <AvatarFallback>{professionalName.slice(0, 2)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col gap-1">
-              <ItemDescription className="font-medium text-xs uppercase tracking-widest">Profissional</ItemDescription>
+              <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('professional')}</ItemDescription>
               <ItemTitle className="font-semibold text-2xl tracking-tighter">{professionalName}</ItemTitle>
             </div>
           </div>
@@ -68,22 +69,22 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
       {/* Grid Strip */}
       <Item className="grid grid-cols-1 rounded-none border-y border-y-border py-6 md:grid-cols-4">
         <ItemContent className="md:border-r">
-          <ItemDescription className="font-medium text-xs uppercase tracking-widest">Valor Total</ItemDescription>
+          <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('amount.total')}</ItemDescription>
           <ItemTitle className="text-2xl tabular-nums leading-none">{currencyFormat(financial.price || 0)}</ItemTitle>
         </ItemContent>
 
         <ItemContent className="md:border-r md:px-8">
-          <ItemDescription className="font-medium text-xs uppercase tracking-widest">Total Pago</ItemDescription>
+          <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('total.paid')}</ItemDescription>
           <ItemTitle className="text-2xl text-green-500 tabular-nums leading-none dark:text-lime-400">{currencyFormat(financial.paid || 0)}</ItemTitle>
         </ItemContent>
 
         <ItemContent className="md:border-r md:px-8">
-          <ItemDescription className="font-medium text-xs uppercase tracking-widest">Pagamento</ItemDescription>
+          <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('payment')}</ItemDescription>
           <ItemTitle className="text-2xl leading-none">{financialPaymentMethod(financial.paymentMethod || 'none')}</ItemTitle>
         </ItemContent>
 
         <ItemContent className="md:px-8">
-          <ItemDescription className="font-medium text-xs uppercase tracking-widest">Data</ItemDescription>
+          <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('date')}</ItemDescription>
           <ItemTitle className="text-2xl tabular-nums leading-none">{formatDate(financial.createdAt)}</ItemTitle>
         </ItemContent>
       </Item>
@@ -100,7 +101,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
                 <ItemMedia variant="icon" className="text-foreground">
                   <IconDollar className="size-4" />
                 </ItemMedia>
-                <ItemTitle className="text-base">Valores</ItemTitle>
+                <ItemTitle className="text-base">{t('values.section')}</ItemTitle>
               </div>
               <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('values') && 'rotate-180')} />
             </Button>
@@ -108,17 +109,17 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
           <CollapsibleContent>
             <ItemGroup className="gap-0">
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                <ItemDescription className="font-sans">Valor Total</ItemDescription>
+                <ItemDescription className="font-sans">{t('amount.total')}</ItemDescription>
                 <ItemTitle className="font-mono tabular-nums">{currencyFormat(financial.price || 0)}</ItemTitle>
               </Item>
               <ItemSeparator />
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                <ItemDescription className="font-sans">Total Pago</ItemDescription>
+                <ItemDescription className="font-sans">{t('total.paid')}</ItemDescription>
                 <ItemTitle className="font-mono text-green-500 tabular-nums dark:text-lime-400">{currencyFormat(financial.paid || 0)}</ItemTitle>
               </Item>
               <ItemSeparator />
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                <ItemDescription className="font-sans">Parcelas</ItemDescription>
+                <ItemDescription className="font-sans">{t('installments')}</ItemDescription>
                 <ItemTitle className="font-mono tabular-nums">{financial.installments || 1}x</ItemTitle>
               </Item>
             </ItemGroup>
@@ -136,7 +137,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
                 <ItemMedia variant="icon" className="text-foreground">
                   <IconCard className="size-4" />
                 </ItemMedia>
-                <ItemTitle className="text-base">Pagamento</ItemTitle>
+                <ItemTitle className="text-base">{t('payment')}</ItemTitle>
               </div>
               <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('payment') && 'rotate-180')} />
             </Button>
@@ -144,12 +145,12 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
           <CollapsibleContent>
             <ItemGroup className="gap-0">
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                <ItemDescription className="font-sans">Método</ItemDescription>
+                <ItemDescription className="font-sans">{t('method')}</ItemDescription>
                 <ItemTitle className="font-mono">{financialPaymentMethod(financial.paymentMethod || 'none')}</ItemTitle>
               </Item>
               <ItemSeparator />
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                <ItemDescription className="font-sans">Status</ItemDescription>
+                <ItemDescription className="font-sans">{t('status')}</ItemDescription>
                 <div className="flex items-center gap-2">
                   <BadgeIndicator variant={badgeVariant} pulse />
                   <ItemTitle>{statusDictionary(financial.status || 'pending')}</ItemTitle>
@@ -170,7 +171,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
                 <ItemMedia variant="icon" className="text-foreground">
                   <IconCalendar className="size-4" />
                 </ItemMedia>
-                <ItemTitle className="text-base">Datas</ItemTitle>
+                <ItemTitle className="text-base">{t('dates')}</ItemTitle>
               </div>
               <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('dates') && 'rotate-180')} />
             </Button>
@@ -178,12 +179,12 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
           <CollapsibleContent>
             <ItemGroup className="gap-0">
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                <ItemDescription className="font-sans">Criação</ItemDescription>
+                <ItemDescription className="font-sans">{t('created.at')}</ItemDescription>
                 <ItemTitle className="font-mono tabular-nums">{formatDate(financial.createdAt)}</ItemTitle>
               </Item>
               <ItemSeparator />
               <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                <ItemDescription className="font-sans">Última Atualização</ItemDescription>
+                <ItemDescription className="font-sans">{t('last.updated')}</ItemDescription>
                 <ItemTitle className="font-mono tabular-nums">{formatDate(financial.updatedAt)}</ItemTitle>
               </Item>
             </ItemGroup>
@@ -202,7 +203,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
                   <ItemMedia variant="icon" className="text-foreground">
                     <IconService className="size-4" />
                   </ItemMedia>
-                  <ItemTitle className="text-base">Procedimentos</ItemTitle>
+                  <ItemTitle className="text-base">{t('procedures')}</ItemTitle>
                 </div>
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('procedures') && 'rotate-180')} />
               </Button>

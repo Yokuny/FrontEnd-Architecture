@@ -2,6 +2,7 @@ import { Slot } from '@radix-ui/react-slot';
 import type { ComponentProps } from 'react';
 import Dot from '@/components/icons/Dot.Icon';
 import Right from '@/components/icons/Right.Icon';
+import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
 
 function Breadcrumb({ ...props }: ComponentProps<'nav'>) {
@@ -50,7 +51,7 @@ function BreadcrumbEllipsis({ className, ...props }: ComponentProps<'span'>) {
   return (
     <span data-slot="breadcrumb-ellipsis" role="presentation" aria-hidden="true" className={cn('flex size-9 items-center justify-center', className)} {...props}>
       <Dot className="size-4" />
-      <span className="sr-only">More</span>
+      <span className="sr-only">{t('breadcrumb.more')}</span>
     </span>
   );
 }

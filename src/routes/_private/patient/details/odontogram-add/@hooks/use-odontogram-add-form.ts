@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { GET, POST, request } from '@/lib/api/client.api';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
 
 export function useOdontogramAddForm(patientId: string | undefined, onCancel: () => void) {
@@ -40,7 +41,7 @@ export function useOdontogramAddForm(patientId: string | undefined, onCancel: ()
       toast.success(res.message);
       onCancel();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao cadastrar odontograma');
+      toast.error(e instanceof Error ? e.message : t('error.create.odontogram'));
     } finally {
       setIsSubmitting(false);
     }

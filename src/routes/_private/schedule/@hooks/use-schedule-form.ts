@@ -6,12 +6,13 @@ import { usePatientStore } from '@/hooks/patients';
 import { DELETE, GET, POST, PUT, request } from '@/lib/api/client.api';
 import { DefaultEndHour, DefaultStartHour } from '@/lib/config/calendar.config';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { addKey } from '@/lib/helpers/validate.helper';
 import type { NewSchedule, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 import { useClinicApi } from '@/query/clinic';
 import { usePatientsQuery } from '@/query/patients';
 import { useUserQuery } from '@/query/user';
-import type { ScheduleFormProps } from '../@interface/schedule.interface';
+import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 import { extractTimeFromISO } from '../@utils/schedule.utils';
 
 export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFormProps) {
@@ -155,26 +156,26 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
     setIsLoading(true);
     try {
       if (!values.Room && !selectedRoom) {
-        toast.error('Selecione a sala do atendimento');
+        toast.error(t('error.select.appointment.room'));
         return;
       }
 
       if (activeTab === 'newpatient') {
         if (!values.patient?.name || values.patient.name.trim().length < 5) {
-          toast.error('Nome do paciente deve ter pelo menos 5 caracteres');
+          toast.error(t('error.patient.name.length'));
           return;
         }
         if (!values.patient?.sex) {
-          toast.error('Selecione o sexo do paciente');
+          toast.error(t('error.select.patient.sex'));
           return;
         }
         const phoneLength = values.patient?.phone?.replace(/\D/g, '').length || 0;
         if (!values.patient?.phone || phoneLength < 10 || phoneLength > 11) {
-          toast.error('Telefone deve ter 10 ou 11 dígitos');
+          toast.error(t('error.phone.digits'));
           return;
         }
         if (!values.Professional) {
-          toast.error('Selecione um profissional');
+          toast.error(t('error.select.a.professional'));
           return;
         }
       }
@@ -217,7 +218,7 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
         toast.success(res.message);
         onSave({
           _id: res.data.scheduleID,
-          title: 'Atendimento de novo paciente',
+          title: t('new.patient.visit.title'),
           start: new Date(startDateTime),
           end: endDateTime ? new Date(endDateTime) : new Date(startDateTime),
           allDay,
@@ -246,7 +247,7 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
       }
       if (roomEvent) {
         if (!values.title || values.title.trim() === '') {
-          toast.error('Título é obrigatório para eventos de sala');
+          toast.error(t('error.room.event.title'));
           return;
         }
         addKey(body, 'title', values.title);
@@ -279,14 +280,14 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
     try {
       const res = await request(`schedule/${event._id}`, DELETE());
       if (res.success === false) throw new Error(res.message);
-      toast.success(res.message || 'Agendamento excluído com sucesso');
+      toast.success(res.message || t('appointment.deleted.success'));
       onDelete(event._id);
       setSelectedRoom('');
       setSelectedRoomName('');
       form.setValue('Room', '');
       onClose();
     } catch (e: any) {
-      toast.error(e.message || 'Erro ao excluir agendamento');
+      toast.error(e.message || t('appointment.delete.error'));
     } finally {
       setIsLoading(false);
     }

@@ -7,12 +7,13 @@ import Notification from '@/components/icons/Notification.Icon';
 import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
+import { t } from '@/lib/helpers/translate.helper';
 
 export const Route = createRootRoute({
   notFoundComponent: () => {
     return (
       <Card className="m-2">
-        <CardHeader title={'Pagina não encontrada'}>
+        <CardHeader title={t('page.not.found')}>
           <ThemeSwitcher />
         </CardHeader>
         <CardContent>
@@ -24,14 +25,14 @@ export const Route = createRootRoute({
   errorComponent: ({ error }) => {
     return (
       <Card className="m-2">
-        <CardHeader title={'error.page'}>
+        <CardHeader title={t('error')}>
           <ThemeSwitcher />
         </CardHeader>
         <CardContent>
           <Empty className="border-2 border-destructive/20 bg-destructive/10">
             <EmptyHeader>
               <Notification className="size-8 animate-pulse text-destructive" />
-              <EmptyTitle className="text-destructive">{'error.page'}</EmptyTitle>
+              <EmptyTitle className="text-destructive">{t('error')}</EmptyTitle>
               <EmptyDescription className="max-w-md break-all rounded-md border bg-background/50 p-4 font-mono text-xs">
                 {error instanceof Error ? error.message : String(error)}
               </EmptyDescription>
@@ -44,7 +45,7 @@ export const Route = createRootRoute({
   pendingComponent: () => {
     return (
       <Card className="m-2">
-        <CardHeader title={'error.page'}>
+        <CardHeader title={t('error')}>
           <ThemeSwitcher />
         </CardHeader>
         <CardContent>

@@ -21,6 +21,7 @@ import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import type { DbFinancial } from '@/lib/interfaces/financial.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
@@ -87,56 +88,72 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
     <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
-          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total</ItemTitle>
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
             <TrendingUp className="size-3" />
-            <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.totalLastMonth)} este mês</ItemDescription>
+            <ItemDescription className="tabular-nums leading-none">
+              {currencyFormat(summary.totalLastMonth)} {t('this.month.calendar')}
+            </ItemDescription>
           </div>
         </div>
         <ItemContent className="w-full text-center">
           <p className="font-bold text-sky-400 text-xl dark:text-sky-400">{currencyFormat(summary.totalAmount)}</p>
-          <ItemDescription>{currencyFormat(summary.totalLast3Months)} nos últimos 3 meses</ItemDescription>
+          <ItemDescription>
+            {currencyFormat(summary.totalLast3Months)} {t('last.3.months.suffix')}
+          </ItemDescription>
         </ItemContent>
       </Item>
 
       <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
-          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total Pago</ItemTitle>
-          <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.paidLast30Days)} este mês</ItemDescription>
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total.paid')}</ItemTitle>
+          <ItemDescription className="tabular-nums leading-none">
+            {currencyFormat(summary.paidLast30Days)} {t('this.month.calendar')}
+          </ItemDescription>
         </div>
         <ItemContent className="w-full text-center">
           <p className="font-bold text-teal-400 text-xl dark:text-teal-400">{currencyFormat(summary.totalPaid)}</p>
-          <ItemDescription>{currencyFormat(summary.totalLast2Months)} nos últimos 2 meses</ItemDescription>
+          <ItemDescription>
+            {currencyFormat(summary.totalLast2Months)} {t('last.2.months.suffix')}
+          </ItemDescription>
         </ItemContent>
       </Item>
 
       <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
-          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total Pendente</ItemTitle>
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total.pending')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
             <ChartPie className="size-3" />
             <ItemDescription className="tabular-nums leading-none">
-              {summary.paidProcedures} de {summary.procedureCount} pagos
+              {summary.paidProcedures} {t('of')} {summary.procedureCount} {t('paids')}
             </ItemDescription>
           </div>
         </div>
         <ItemContent className="w-full text-center">
           <p className="font-bold text-lime-500 text-xl dark:text-lime-400">{currencyFormat(summary.totalPending)}</p>
-          <ItemDescription>Último pagamento em {summary.lastPaymentDate ? formatDate(String(summary.lastPaymentDate)) : 'N/A'}</ItemDescription>
+          <ItemDescription>
+            {t('last.payment.on')} {summary.lastPaymentDate ? formatDate(String(summary.lastPaymentDate)) : 'N/A'}
+          </ItemDescription>
         </ItemContent>
       </Item>
 
       <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
-          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</ItemTitle>
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('procedures')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
             <Board className="size-3" />
-            <ItemDescription className="tabular-nums leading-none">{summary.procedureCount} procedimentos</ItemDescription>
+            <ItemDescription className="tabular-nums leading-none">
+              {summary.procedureCount} {t('procedures.lower')}
+            </ItemDescription>
           </div>
         </div>
         <ItemContent className="w-full text-center">
-          <p className="font-bold text-amber-400 text-xl dark:text-amber-400">{summary.proceduresLastMonth} no último mês</p>
-          <ItemDescription>Adicionados {summary.recentProcedures} em 2 meses</ItemDescription>
+          <p className="font-bold text-amber-400 text-xl dark:text-amber-400">
+            {summary.proceduresLastMonth} {t('last.month.procedures')}
+          </p>
+          <ItemDescription>
+            {t('added')} {summary.recentProcedures} {t('in.two.months')}
+          </ItemDescription>
         </ItemContent>
       </Item>
     </ItemGroup>
@@ -178,7 +195,7 @@ const FinancialRecordDetail = ({
       <div className="space-y-6">
         <div className="flex items-end gap-2">
           <div className="flex flex-col gap-2">
-            <span className="text-muted-foreground text-sm">Status do pagamento</span>
+            <span className="text-muted-foreground text-sm">{t('payment.status.label')}</span>
             <Select
               value={selectedStatus[el._id] ?? el.status}
               onValueChange={(value: string) => {
@@ -192,31 +209,31 @@ const FinancialRecordDetail = ({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="pending" disabled={isLoading}>
-                  Pendente
+                  {t('pending')}
                 </SelectItem>
                 <SelectItem value="partial" disabled={isLoading}>
-                  Parcial
+                  {t('partial')}
                 </SelectItem>
                 <SelectItem value="paid" disabled={isLoading}>
-                  Pago
+                  {t('paid')}
                 </SelectItem>
                 <SelectItem value="refund" disabled={isLoading}>
-                  Reembolsado
+                  {t('refunded')}
                 </SelectItem>
                 <SelectItem value="canceled" disabled={isLoading}>
-                  Cancelado
+                  {t('cancelled')}
                 </SelectItem>
               </SelectContent>
             </Select>
           </div>
           {isEditing === el._id && (
             <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
-              Salvar
+              {t('save')}
             </Button>
           )}
           <Button onClick={() => navigate({ to: '/financial/details', search: { id: el._id } })}>
             <Edit className="mr-2 size-4" />
-            Editar
+            {t('edit')}
           </Button>
         </div>
 
@@ -232,7 +249,7 @@ const FinancialRecordDetail = ({
                   <ItemMedia variant="icon" className="text-foreground">
                     <IconCalendar className="size-4" />
                   </ItemMedia>
-                  <ItemTitle className="text-base">Dados Gerais</ItemTitle>
+                  <ItemTitle className="text-base">{t('general.data')}</ItemTitle>
                 </div>
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('general') && 'rotate-180')} />
               </Button>
@@ -245,18 +262,18 @@ const FinancialRecordDetail = ({
                       <AvatarImage src={getProfessionalImage(el.Professional)} />
                       <AvatarFallback>{getProfessionalName(el.Professional).slice(0, 2)}</AvatarFallback>
                     </Avatar>
-                    <ItemDescription className="font-sans">Profissional</ItemDescription>
+                    <ItemDescription className="font-sans">{t('professional')}</ItemDescription>
                   </div>
                   <ItemTitle className="font-mono">{getProfessionalName(el.Professional)}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Criado em</ItemDescription>
+                  <ItemDescription className="font-sans">{t('created.at')}</ItemDescription>
                   <ItemTitle className="font-mono">{formatDate(String(el.createdAt))}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Horário</ItemDescription>
+                  <ItemDescription className="font-sans">{t('time')}</ItemDescription>
                   <ItemTitle className="font-mono">{formatDate(el.createdAt, 'HH:mm')}</ItemTitle>
                 </Item>
               </ItemGroup>
@@ -274,7 +291,7 @@ const FinancialRecordDetail = ({
                   <ItemMedia variant="icon" className="text-foreground">
                     <IconService className="size-4" />
                   </ItemMedia>
-                  <ItemTitle className="text-base">Procedimentos</ItemTitle>
+                  <ItemTitle className="text-base">{t('procedures')}</ItemTitle>
                 </div>
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('procedures') && 'rotate-180')} />
               </Button>
@@ -293,7 +310,7 @@ const FinancialRecordDetail = ({
                   ))
                 ) : (
                   <Item variant="default" size="sm" className="justify-center py-4">
-                    <ItemDescription className="italic">Nenhum procedimento registrado</ItemDescription>
+                    <ItemDescription className="italic">{t('no.procedures.registered')}</ItemDescription>
                   </Item>
                 )}
               </ItemGroup>
@@ -311,7 +328,7 @@ const FinancialRecordDetail = ({
                   <ItemMedia variant="icon" className="text-foreground">
                     <IconDollar className="size-4" />
                   </ItemMedia>
-                  <ItemTitle className="text-base">Financeiro</ItemTitle>
+                  <ItemTitle className="text-base">{t('financial')}</ItemTitle>
                 </div>
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('financial') && 'rotate-180')} />
               </Button>
@@ -319,27 +336,27 @@ const FinancialRecordDetail = ({
             <CollapsibleContent>
               <ItemGroup className="gap-0">
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Pagamento</ItemDescription>
+                  <ItemDescription className="font-sans">{t('payment')}</ItemDescription>
                   <ItemTitle className="font-mono">{statusDictionary(el.status)}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Valor pago</ItemDescription>
+                  <ItemDescription className="font-sans">{t('amount.paid')}</ItemDescription>
                   <ItemTitle className="font-mono">{currencyFormat(el.paid || 0)}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Forma de Pagamento</ItemDescription>
+                  <ItemDescription className="font-sans">{t('payment.method')}</ItemDescription>
                   <ItemTitle className="font-mono">{financialPaymentMethod(el.paymentMethod || 'none')}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Parcelas</ItemDescription>
+                  <ItemDescription className="font-sans">{t('installments')}</ItemDescription>
                   <ItemTitle className="font-mono">{el.installments || 1}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Total</ItemDescription>
+                  <ItemDescription className="font-sans">{t('total')}</ItemDescription>
                   <ItemTitle className="font-mono">{currencyFormat(el.price || 0)}</ItemTitle>
                 </Item>
               </ItemGroup>
@@ -368,7 +385,7 @@ const FinancialHistorySection = ({ financials, patientId }: { financials: DbFina
       toast.success(res.message);
       refetch();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao atualizar status');
+      toast.error(e instanceof Error ? e.message : t('error.update.status'));
     } finally {
       setIsLoading(false);
       setIsEditing(null);
@@ -379,9 +396,9 @@ const FinancialHistorySection = ({ financials, patientId }: { financials: DbFina
     <Item>
       <ItemContent className="w-full gap-0">
         <div className="flex h-12 items-center border-b px-2 text-left text-foreground/80 text-sm">
-          <div className="flex-1 font-semibold">Status de pagamento</div>
-          <div className="flex-1 font-semibold">Data de criação</div>
-          <div className="w-32 text-right font-semibold">Valor</div>
+          <div className="flex-1 font-semibold">{t('payment.status.column')}</div>
+          <div className="flex-1 font-semibold">{t('creation.date')}</div>
+          <div className="w-32 text-right font-semibold">{t('amount')}</div>
           <div className="w-8" />
         </div>
         {sortedFinancials.map((el) => (
@@ -428,11 +445,11 @@ export const PatientFinancialView = ({ patient }: { patient: FullPatient }) => {
     <ItemGroup>
       <Item>
         <ItemHeader>
-          <ItemTitle className="text-xl">Registros Financeiros</ItemTitle>
+          <ItemTitle className="text-xl">{t('financial.records')}</ItemTitle>
           <ItemActions>
             <Button onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
               <Add className="size-4" />
-              <span className="ml-2 hidden md:block">Novo Registro</span>
+              <span className="ml-2 hidden md:block">{t('new.record')}</span>
             </Button>
           </ItemActions>
         </ItemHeader>

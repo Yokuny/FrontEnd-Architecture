@@ -4,13 +4,14 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
+import { t } from '@/lib/helpers/translate.helper';
 import type { UserInvite } from '@/lib/interfaces/schemas/user.schema';
 
 export function InviteForm({ form, isPending, clinic }: InviteFormProps) {
   const sections: FormSection[] = [
     {
-      title: 'Dados do Integrante',
-      description: 'Informe o e-mail do usuário e determine o nível de acesso à plataforma.',
+      title: t('member.data'),
+      description: t('invite.member.description'),
       fields: [
         <FormField
           key="email"
@@ -18,9 +19,9 @@ export function InviteForm({ form, isPending, clinic }: InviteFormProps) {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>E-mail do usuário</FormLabel>
+              <FormLabel>{t('user.email')}</FormLabel>
               <FormControl>
-                <Input placeholder="Digite o e-mail do usuário" disabled={isPending} {...field} />
+                <Input placeholder={t('user.email.placeholder')} disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -32,23 +33,23 @@ export function InviteForm({ form, isPending, clinic }: InviteFormProps) {
           name="role"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Função</FormLabel>
+              <FormLabel>{t('role.label')}</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isPending}>
                   <SelectTrigger className="w-full max-w-48">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="professional">Médico</SelectItem>
-                    <SelectItem value="assistant">Recepcionista</SelectItem>
-                    <SelectItem value="guest">Visitante</SelectItem>
+                    <SelectItem value="professional">{t('invite.role.professional')}</SelectItem>
+                    <SelectItem value="assistant">{t('role.assistant')}</SelectItem>
+                    <SelectItem value="guest">{t('role.guest')}</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
               <FormDescription>
-                {field.value === 'professional' && 'Visível nos seletores de profissional. Pode criar, visualizar e editar dados associados ao seu nome.'}
-                {field.value === 'assistant' && 'Tem foco em agendamentos e dados dos clientes. Pode criar, visualizar e editar todos os dados da clínica.'}
-                {field.value === 'guest' && 'Pode visualizar dados da agenda e pacientes cadastrados.'}
+                {field.value === 'professional' && t('role.professional.description.invite')}
+                {field.value === 'assistant' && t('role.assistant.description')}
+                {field.value === 'guest' && t('role.guest.description.invite')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -57,8 +58,8 @@ export function InviteForm({ form, isPending, clinic }: InviteFormProps) {
       ],
     },
     {
-      title: 'Salas de Atendimento',
-      description: 'Libere acesso para o integrante visualizar e agendar nas salas selecionadas.',
+      title: t('rooms.service'),
+      description: t('invite.rooms.description'),
       fields: [
         <FormField
           key="rooms"

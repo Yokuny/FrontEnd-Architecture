@@ -10,6 +10,7 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { numClean } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { clinicSchema, type NewClinic } from '@/lib/interfaces/schemas/clinic.schema';
 import { useClinicApi } from '@/query/clinic';
 import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
@@ -18,8 +19,8 @@ import { ClinicForm } from './@components/clinic-form';
 export const Route = createFileRoute('/_private/settings/clinic/')({
   component: SettingsClinic,
   staticData: {
-    title: 'Clínica',
-    description: 'Obtenha ou edite as informações gerenciais e estruturais da clínica',
+    title: t('clinic'),
+    description: t('clinic.page.description'),
   },
 });
 
@@ -34,7 +35,7 @@ export function SettingsClinic() {
       email: '',
       code: '',
       cnpj: '',
-      rooms: [{ name: 'Sala 1' }],
+      rooms: [{ name: `${t('room.prefix')} 1` }],
     },
     mode: 'onChange',
   });
@@ -77,7 +78,7 @@ export function SettingsClinic() {
         <CardAction>
           <Button type="submit" form="clinic-form" disabled={saveClinic.isPending}>
             {saveClinic.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Salvar</span>
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>
       </CardHeader>

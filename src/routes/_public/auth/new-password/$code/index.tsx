@@ -21,7 +21,7 @@ function NewPasswordPage() {
       <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
         <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
           <div className="flex flex-col items-center gap-4 py-4 text-center">
-            <ItemDescription>Não foi possível carregar as informações de recuperação.</ItemDescription>
+            <ItemDescription>{t('recovery.load.error')}</ItemDescription>
             <Link to="/auth/recovery" className="font-medium text-foreground text-sm hover:underline">
               ← {t('back')}
             </Link>

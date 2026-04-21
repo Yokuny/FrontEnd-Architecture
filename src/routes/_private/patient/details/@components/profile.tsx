@@ -120,23 +120,25 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
         <div className="flex flex-col gap-4">
           <ItemHeader>
             <div className="flex items-center gap-2">
-              <ItemTitle className="text-xl">Informações Pessoais</ItemTitle>
+              <ItemTitle className="text-xl">{t('personal.information')}</ItemTitle>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Help className="size-4 cursor-pointer text-muted-foreground" />
                   </TooltipTrigger>
-                  <TooltipContent>Última atualização: {patient.updatedAt ? formatDate(String(patient.updatedAt)) : '-'}</TooltipContent>
+                  <TooltipContent>
+                    {t('last.updated')} {patient.updatedAt ? formatDate(String(patient.updatedAt)) : '-'}
+                  </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
             <div className="flex items-center gap-1">
               <Button variant="secondary" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
-                Expandir
+                {t('expand')}
               </Button>
               <Separator orientation="vertical" className="h-4 self-center" />
               <Button variant="secondary" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
-                Recolher
+                {t('collapse')}
               </Button>
               <Separator orientation="vertical" className="h-4 self-center" />
               <Button size="sm" onClick={() => navigate({ to: '/patient/add', search: { id: patient._id } })}>
@@ -158,7 +160,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     <ItemMedia variant="icon" className="text-foreground">
                       <Phone className="size-4" />
                     </ItemMedia>
-                    <ItemTitle className="text-base">Contato</ItemTitle>
+                    <ItemTitle className="text-base">{t('contact')}</ItemTitle>
                   </div>
                   <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('contact') && 'rotate-180')} />
                 </Button>
@@ -169,7 +171,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     <div key={phone.number}>
                       <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                         <ItemContent>
-                          <ItemDescription className="font-sans">{capitalizeString(phone.tag) || `Telefone ${i + 1}`}</ItemDescription>
+                          <ItemDescription className="font-sans">{capitalizeString(phone.tag) || `${t('phone')} ${i + 1}`}</ItemDescription>
                           <ItemTitle className="font-mono tabular-nums">{formatPhone(phone.number)}</ItemTitle>
                         </ItemContent>
                         <ItemActions>
@@ -190,7 +192,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                         <Mail className="size-3.5" />
                         {t('email')}
                       </ItemDescription>
-                      <ItemTitle className="font-mono tabular-nums">{patient.email || 'Não informado'}</ItemTitle>
+                      <ItemTitle className="font-mono tabular-nums">{patient.email || t('not.informed')}</ItemTitle>
                     </ItemContent>
                     {patient.email && (
                       <ItemActions>
@@ -215,7 +217,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     <ItemMedia variant="icon" className="text-foreground">
                       <IDCard className="size-4" />
                     </ItemMedia>
-                    <ItemTitle className="text-base">Documentos</ItemTitle>
+                    <ItemTitle className="text-base">{t('documents')}</ItemTitle>
                   </div>
                   <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('documents') && 'rotate-180')} />
                 </Button>
@@ -225,17 +227,17 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                   <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                     <ItemDescription className="flex items-center gap-1.5 font-sans">
                       <IDCard className="size-3.5" />
-                      CPF
+                      {t('cpf')}
                     </ItemDescription>
-                    <ItemTitle className="font-mono tabular-nums">{formatCpfCnpj(patient.cpf) || 'Não informado'}</ItemTitle>
+                    <ItemTitle className="font-mono tabular-nums">{formatCpfCnpj(patient.cpf) || t('not.informed')}</ItemTitle>
                   </Item>
                   <ItemSeparator />
                   <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                     <ItemDescription className="flex items-center gap-1.5 font-sans">
                       <ID className="size-3.5" />
-                      RG
+                      {t('rg')}
                     </ItemDescription>
-                    <ItemTitle className="font-mono tabular-nums">{formatRg(patient.rg) || 'Não informado'}</ItemTitle>
+                    <ItemTitle className="font-mono tabular-nums">{formatRg(patient.rg) || t('not.informed')}</ItemTitle>
                   </Item>
                 </ItemGroup>
               </CollapsibleContent>
@@ -252,7 +254,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     <ItemMedia variant="icon" className="text-foreground">
                       <User className="size-4" />
                     </ItemMedia>
-                    <ItemTitle className="text-base">Dados Pessoais</ItemTitle>
+                    <ItemTitle className="text-base">{t('personal.data')}</ItemTitle>
                   </div>
                   <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('personal') && 'rotate-180')} />
                 </Button>
@@ -260,20 +262,20 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
               <CollapsibleContent>
                 <ItemGroup className="gap-0">
                   <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                    <ItemDescription className="font-sans">Sexo</ItemDescription>
+                    <ItemDescription className="font-sans">{t('sex')}</ItemDescription>
                     <ItemTitle className="font-mono tabular-nums">
                       <div className={cn('size-2.5 rounded-full', patient.sex === 'M' ? 'bg-blue-500' : 'bg-pink-500')} />
-                      {patient.sex === 'M' ? 'Masculino' : 'Feminino'}
+                      {patient.sex === 'M' ? t('male') : t('female')}
                     </ItemTitle>
                   </Item>
                   <ItemSeparator />
                   <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                     <ItemDescription className="flex items-center gap-1.5 font-sans">
                       <Cake className="size-3.5" />
-                      Data de Nascimento
+                      {t('birth.date')}
                     </ItemDescription>
                     <ItemTitle className="font-mono tabular-nums">
-                      {patient.birthdate ? `${formatDate(String(patient.birthdate))} (${calculateAge(patient.birthdate)} anos)` : 'Não informado'}
+                      {patient.birthdate ? `${formatDate(String(patient.birthdate))} (${calculateAge(patient.birthdate)} ${t('years.old')})` : t('not.informed')}
                     </ItemTitle>
                   </Item>
                 </ItemGroup>
@@ -291,7 +293,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     <ItemMedia variant="icon" className="text-foreground">
                       <MapIcon className="size-4" />
                     </ItemMedia>
-                    <ItemTitle className="text-base">Endereço</ItemTitle>
+                    <ItemTitle className="text-base">{t('address')}</ItemTitle>
                   </div>
                   <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('address') && 'rotate-180')} />
                 </Button>
@@ -301,17 +303,17 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                   <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                     <ItemDescription className="flex items-center gap-1.5 font-sans">
                       <Point className="size-3.5" />
-                      CEP
+                      {t('cep')}
                     </ItemDescription>
-                    <ItemTitle className="font-mono tabular-nums">{formatCep(patient.cep) || 'Não informado'}</ItemTitle>
+                    <ItemTitle className="font-mono tabular-nums">{formatCep(patient.cep) || t('not.informed')}</ItemTitle>
                   </Item>
                   <ItemSeparator />
                   <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                     <ItemDescription className="flex items-center gap-1.5 font-sans">
                       <MapIcon className="size-3.5" />
-                      Endereço
+                      {t('address')}
                     </ItemDescription>
-                    <ItemTitle className="font-mono tabular-nums">{patient.address || 'Não informado'}</ItemTitle>
+                    <ItemTitle className="font-mono tabular-nums">{patient.address || t('not.informed')}</ItemTitle>
                   </Item>
                 </ItemGroup>
               </CollapsibleContent>
@@ -336,40 +338,46 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     <TooltipTrigger asChild>
                       <Help className="size-4 cursor-pointer text-muted-foreground" />
                     </TooltipTrigger>
-                    <TooltipContent>Última atualização: {patient.schedules?.[0] ? formatDate(String(patient.schedules[0].updatedAt)) : 'N/A'}</TooltipContent>
+                    <TooltipContent>
+                      {t('last.updated')} {patient.schedules?.[0] ? formatDate(String(patient.schedules[0].updatedAt)) : 'N/A'}
+                    </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
                 <Button variant="basic" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
                   <Add className="size-4" />
-                  <span className="hidden md:inline">Agendar</span>
+                  <span className="hidden md:inline">{t('book.appointment')}</span>
                 </Button>
                 <Button variant="basic" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'schedule' } })}>
                   <Eye className="size-4" />
-                  <span className="hidden md:inline">Ver mais</span>
+                  <span className="hidden md:inline">{t('see.more')}</span>
                 </Button>
               </ItemActions>
             </div>
             <ItemGroup className="gap-0">
               <Item className="grid grid-cols-1 rounded-none border-t border-t-border py-6 md:grid-cols-3">
                 <ItemContent className="px-4 md:border-r md:px-6">
-                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">Próxima Consulta</ItemDescription>
-                  <ItemTitle className="text-2xl leading-none">{scheduleSummary.nextSchedule ? formatDate(String(scheduleSummary.nextSchedule.start)) : 'Nenhuma'}</ItemTitle>
+                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('next.appointment.title')}</ItemDescription>
+                  <ItemTitle className="text-2xl leading-none">{scheduleSummary.nextSchedule ? formatDate(String(scheduleSummary.nextSchedule.start)) : t('none.f')}</ItemTitle>
                   {scheduleSummary.nextSchedule && (
                     <ItemDescription className="flex items-center gap-1">
                       <Clock className="size-3" />
-                      {new Date(scheduleSummary.nextSchedule.start).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} h
+                      {new Date(scheduleSummary.nextSchedule.start).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} {t('hour.suffix')}
                     </ItemDescription>
                   )}
                 </ItemContent>
                 <ItemContent className="px-4 md:border-r md:px-8">
-                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">Total de Consultas</ItemDescription>
+                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('total.appointments')}</ItemDescription>
                   <ItemTitle className="text-2xl leading-none">{scheduleSummary.totalSchedules}</ItemTitle>
-                  <ItemDescription>{scheduleSummary.schedulesLast3Months} nos últimos 3 meses</ItemDescription>
+                  <ItemDescription>
+                    {scheduleSummary.schedulesLast3Months} {t('last.3.months.suffix')}
+                  </ItemDescription>
                 </ItemContent>
                 <ItemContent className="px-4 md:px-8">
-                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">Comparecimento</ItemDescription>
+                  <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('attendance')}</ItemDescription>
                   <ItemTitle className="text-2xl leading-none">{scheduleSummary.attendanceRate.toFixed(0)}%</ItemTitle>
-                  <ItemDescription>{scheduleSummary.completedSchedules} concluídas</ItemDescription>
+                  <ItemDescription>
+                    {scheduleSummary.completedSchedules} {t('completeds')}
+                  </ItemDescription>
                 </ItemContent>
               </Item>
             </ItemGroup>
@@ -382,7 +390,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                 <ItemMedia variant="icon" className="text-foreground">
                   <Dollar className="size-4" />
                 </ItemMedia>
-                <ItemTitle className="text-base">Resumo Financeiro</ItemTitle>
+                <ItemTitle className="text-base">{t('financial.summary')}</ItemTitle>
               </div>
               <ItemActions>
                 <TooltipProvider>
@@ -390,7 +398,9 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     <TooltipTrigger asChild>
                       <Help className="size-4 cursor-pointer text-muted-foreground" />
                     </TooltipTrigger>
-                    <TooltipContent>Última atualização: {patient.financials?.[0] ? formatDate(String(patient.financials[0].updatedAt)) : 'N/A'}</TooltipContent>
+                    <TooltipContent>
+                      {t('last.updated')} {patient.financials?.[0] ? formatDate(String(patient.financials[0].updatedAt)) : 'N/A'}
+                    </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
                 <Button variant="basic" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
@@ -399,7 +409,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                 </Button>
                 <Button variant="basic" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'financial' } })}>
                   <Eye className="size-4" />
-                  <span className="hidden md:inline">Ver mais</span>
+                  <span className="hidden md:inline">{t('see.more')}</span>
                 </Button>
               </ItemActions>
             </div>

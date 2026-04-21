@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 
 import { ReminderForm } from './@components/reminder-form';
 import { useReminderForm } from './@hooks/use-reminder-form';
@@ -11,8 +12,8 @@ import { useReminderForm } from './@hooks/use-reminder-form';
 export const Route = createFileRoute('/_private/reminders/add/')({
   component: ReminderAddPage,
   staticData: {
-    title: 'Novo Lembrete',
-    description: 'Criação de tarefas e lembretes vinculados à clínica.',
+    title: t('reminder.new.title'),
+    description: t('reminder.new.description'),
   },
 });
 
@@ -30,7 +31,7 @@ function ReminderAddPage() {
         <CardAction>
           <Button type="submit" form="reminder-form" disabled={isPending} className="ml-auto">
             {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Salvar</span>
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>
       </CardHeader>

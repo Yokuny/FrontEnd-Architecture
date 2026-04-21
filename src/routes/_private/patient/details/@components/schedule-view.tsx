@@ -22,6 +22,7 @@ import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import type { PartialClinic } from '@/lib/interfaces/clinic.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
@@ -78,16 +79,20 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
   return (
     <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Item variant="outline" className="flex-col items-start bg-secondary">
-        <ItemTitle className="text-muted-foreground text-xs uppercase">Próxima consulta</ItemTitle>
+        <ItemTitle className="text-muted-foreground text-xs uppercase">{t('next.appointment.lower')}</ItemTitle>
         <ItemContent className="w-full text-center">
-          <p className="font-bold text-sky-400 text-xl dark:text-blue-400">{summary.nextSchedule ? formatDate(String(summary.nextSchedule.start)) : 'Sem consulta agendada'}</p>
-          <ItemDescription>{summary.upcomingSchedules} consultas nos próximos 30 dias</ItemDescription>
+          <p className="font-bold text-sky-400 text-xl dark:text-blue-400">
+            {summary.nextSchedule ? formatDate(String(summary.nextSchedule.start)) : t('no.appointment.scheduled')}
+          </p>
+          <ItemDescription>
+            {summary.upcomingSchedules} {t('appointments.next.30.days')}
+          </ItemDescription>
         </ItemContent>
       </Item>
 
       <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
-          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Consultas</ItemTitle>
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('appointments')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
             <ChartPie className="size-3" />
             <ItemDescription className="tabular-nums leading-none">
@@ -98,32 +103,38 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
         <ItemContent className="w-full text-center">
           <div className="flex items-baseline justify-center gap-2">
             <p className="font-bold text-lime-500 text-xl dark:text-indigo-400">{summary.attendanceRate.toFixed(0)}%</p>
-            <ItemDescription className="text-lg">de comparecimento</ItemDescription>
+            <ItemDescription className="text-lg">{t('attendance.suffix')}</ItemDescription>
           </div>
-          <ItemDescription>+ {summary.recentSchedules} consultas nos últimos 30 dias</ItemDescription>
+          <ItemDescription>
+            + {summary.recentSchedules} {t('appointments.last.30.days')}
+          </ItemDescription>
         </ItemContent>
       </Item>
 
       <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
-          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Procedimentos</ItemTitle>
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('procedures')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
             <Board className="size-3" />
-            <ItemDescription className="tabular-nums leading-none">{summary.totalProcedures} no total</ItemDescription>
+            <ItemDescription className="tabular-nums leading-none">
+              {summary.totalProcedures} {t('in.total')}
+            </ItemDescription>
           </div>
         </div>
         <ItemContent className="w-full text-center">
           <div className="flex items-baseline justify-center gap-2">
             <p className="font-bold text-primary text-xl">+ {summary.proceduresLast3Months}</p>
-            <ItemDescription className="text-lg">nos últimos 3 meses</ItemDescription>
+            <ItemDescription className="text-lg">{t('last.3.months.label')}</ItemDescription>
           </div>
-          <ItemDescription>Em média {summary.avgProceduresPerSchedule.toFixed(1)} procedimentos por consulta</ItemDescription>
+          <ItemDescription>
+            {t('avg')} {summary.avgProceduresPerSchedule.toFixed(1)} {t('procedures.per.visit')}
+          </ItemDescription>
         </ItemContent>
       </Item>
 
       <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
-          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">Total em Procedimentos</ItemTitle>
+          <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total.in.procedures')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
             <TrendingUp className="size-3" />
             <ItemDescription className="tabular-nums leading-none">{currencyFormat(summary.averageAmountPerSchedule)}</ItemDescription>
@@ -131,7 +142,9 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
         </div>
         <ItemContent className="w-full">
           <p className="font-bold text-teal-400 text-xl dark:text-teal-400">{currencyFormat(summary.totalAmount)}</p>
-          <ItemDescription>Em média {currencyFormat(summary.averageAmountPerSchedule)} por consulta</ItemDescription>
+          <ItemDescription>
+            {t('avg')} {currencyFormat(summary.averageAmountPerSchedule)} {t('per.appointment')}
+          </ItemDescription>
         </ItemContent>
       </Item>
     </ItemGroup>
@@ -179,7 +192,7 @@ const ScheduleRecordDetail = ({
       <div className="space-y-6">
         <div className="flex items-end gap-2">
           <div className="flex flex-col gap-2">
-            <span className="text-muted-foreground text-sm">Status do agendamento</span>
+            <span className="text-muted-foreground text-sm">{t('schedule.status.label')}</span>
             <Select
               value={selectedStatus[el._id] ?? el.status}
               onValueChange={(value: string) => {
@@ -208,7 +221,7 @@ const ScheduleRecordDetail = ({
           </div>
           {isEditing === el._id && (
             <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
-              Salvar
+              {t('save')}
             </Button>
           )}
         </div>
@@ -225,7 +238,7 @@ const ScheduleRecordDetail = ({
                   <ItemMedia variant="icon" className="text-foreground">
                     <IconCalendar className="size-4" />
                   </ItemMedia>
-                  <ItemTitle className="text-base">Dados Gerais</ItemTitle>
+                  <ItemTitle className="text-base">{t('general.data')}</ItemTitle>
                 </div>
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('general') && 'rotate-180')} />
               </Button>
@@ -238,20 +251,20 @@ const ScheduleRecordDetail = ({
                       <AvatarImage src={getProfessionalImage(el.Professional)} />
                       <AvatarFallback>{getProfessionalName(el.Professional).slice(0, 2)}</AvatarFallback>
                     </Avatar>
-                    <ItemDescription className="font-sans">Profissional</ItemDescription>
+                    <ItemDescription className="font-sans">{t('professional')}</ItemDescription>
                   </div>
                   <ItemTitle className="font-mono">{getProfessionalName(el.Professional)}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Data</ItemDescription>
+                  <ItemDescription className="font-sans">{t('date')}</ItemDescription>
                   <ItemTitle className="font-mono">{formatDate(String(el.start))}</ItemTitle>
                 </Item>
                 {!el.allDay && (
                   <>
                     <ItemSeparator />
                     <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                      <ItemDescription className="font-sans">Horário</ItemDescription>
+                      <ItemDescription className="font-sans">{t('time')}</ItemDescription>
                       <ItemTitle className="font-mono">
                         {formatDate(el.start, 'HH:mm')} - {formatDate(el.end, 'HH:mm')}
                       </ItemTitle>
@@ -273,7 +286,7 @@ const ScheduleRecordDetail = ({
                   <ItemMedia variant="icon" className="text-foreground">
                     <IconService className="size-4" />
                   </ItemMedia>
-                  <ItemTitle className="text-base">Procedimentos</ItemTitle>
+                  <ItemTitle className="text-base">{t('procedures')}</ItemTitle>
                 </div>
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('procedures') && 'rotate-180')} />
               </Button>
@@ -292,7 +305,7 @@ const ScheduleRecordDetail = ({
                   ))
                 ) : (
                   <Item variant="default" size="sm" className="justify-center py-4">
-                    <ItemDescription className="italic">Nenhum procedimento registrado</ItemDescription>
+                    <ItemDescription className="italic">{t('no.procedures.registered')}</ItemDescription>
                   </Item>
                 )}
               </ItemGroup>
@@ -310,7 +323,7 @@ const ScheduleRecordDetail = ({
                   <ItemMedia variant="icon" className="text-foreground">
                     <IconDollar className="size-4" />
                   </ItemMedia>
-                  <ItemTitle className="text-base">Detalhes</ItemTitle>
+                  <ItemTitle className="text-base">{t('details')}</ItemTitle>
                 </div>
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('details') && 'rotate-180')} />
               </Button>
@@ -318,17 +331,17 @@ const ScheduleRecordDetail = ({
             <CollapsibleContent>
               <ItemGroup className="gap-0">
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Valor Total</ItemDescription>
+                  <ItemDescription className="font-sans">{t('total.amount')}</ItemDescription>
                   <ItemTitle className="font-mono">{currencyFormat(financial?.procedures?.reduce((acc, p) => acc + p.price, 0) ?? 0)}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Sala</ItemDescription>
+                  <ItemDescription className="font-sans">{t('room')}</ItemDescription>
                   <ItemTitle className="font-mono">{getRoomName(el.Room) || '-'}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
-                  <ItemDescription className="font-sans">Criado em</ItemDescription>
+                  <ItemDescription className="font-sans">{t('created.at')}</ItemDescription>
                   <ItemTitle className="font-mono">{formatDate(String(el.createdAt))}</ItemTitle>
                 </Item>
                 {el.Financial && (
@@ -337,7 +350,7 @@ const ScheduleRecordDetail = ({
                     <Item variant="default" size="sm" className="justify-center py-2 hover:bg-secondary">
                       <Badge variant="outline" className="cursor-pointer" onClick={() => navigate({ to: '/financial/details', search: { id: el.Financial } })}>
                         <Link className="mr-2 size-4" />
-                        Ver Financeiro
+                        {t('view.financial')}
                       </Badge>
                     </Item>
                   </>
@@ -372,7 +385,7 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
       toast.success(res.message);
       refetch();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao atualizar status');
+      toast.error(e instanceof Error ? e.message : t('error.update.status'));
     } finally {
       setIsLoading(false);
       setIsEditing(null);
@@ -383,9 +396,9 @@ const ScheduleHistorySection = ({ schedules, financials, patientId }: { schedule
     <Item>
       <ItemContent className="w-full gap-0">
         <div className="flex h-12 items-center border-b px-2 text-left text-foreground/80 text-sm">
-          <div className="flex-1 font-semibold">Status do agendamento</div>
-          <div className="flex-1 font-semibold">Data do atendimento</div>
-          <div className="w-48 text-right font-semibold">Sala</div>
+          <div className="flex-1 font-semibold">{t('schedule.status.column')}</div>
+          <div className="flex-1 font-semibold">{t('appointment.date')}</div>
+          <div className="w-48 text-right font-semibold">{t('room')}</div>
           <div className="w-8" />
         </div>
         {sortedSchedules.map((el) => {
@@ -438,11 +451,11 @@ export const PatientScheduleView = ({ patient }: { patient: FullPatient }) => {
     <ItemGroup>
       <Item>
         <ItemHeader>
-          <ItemTitle className="text-xl">Histórico de Consultas</ItemTitle>
+          <ItemTitle className="text-xl">{t('appointment.history')}</ItemTitle>
           <ItemActions>
             <Button onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
               <Add className="size-4" />
-              <span className="ml-2 hidden md:block">Agendar Consulta</span>
+              <span className="ml-2 hidden md:block">{t('schedule.appointment')}</span>
             </Button>
           </ItemActions>
         </ItemHeader>

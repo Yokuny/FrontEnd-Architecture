@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { maskDate } from '@/lib/helpers/formatDate.helper';
 import { formatCpfCnpj, formatPhone } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { NewPatient } from '@/lib/interfaces/schemas/patient.schema';
 
 export function PatientForm() {
@@ -20,8 +21,8 @@ export function PatientForm() {
 
   const sections = [
     {
-      title: 'Informações Pessoais',
-      description: 'Dados principais do paciente',
+      title: t('personal.information'),
+      description: t('patient.main.data'),
       fields: [
         <div key="personal-row-1" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
@@ -30,11 +31,11 @@ export function PatientForm() {
             render={({ field }) => (
               <FormItem>
                 <div className="flex items-center gap-2">
-                  <FormLabel>Nome *</FormLabel>
-                  <FormDescription>Nome completo do paciente.</FormDescription>
+                  <FormLabel>{t('name.required')}</FormLabel>
+                  <FormDescription>{t('full.name.description')}</FormDescription>
                 </div>
                 <FormControl>
-                  <Input {...field} placeholder="Digite o nome" />
+                  <Input {...field} placeholder={t('placeholder.enter.name')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -45,16 +46,16 @@ export function PatientForm() {
             name="sex"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Sexo *</FormLabel>
+                <FormLabel>{t('sex.required')}</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecione..." />
+                      <SelectValue placeholder={t('select.placeholder')} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="M">Masculino</SelectItem>
-                    <SelectItem value="F">Feminino</SelectItem>
+                    <SelectItem value="M">{t('male')}</SelectItem>
+                    <SelectItem value="F">{t('female')}</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -68,9 +69,9 @@ export function PatientForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t('email')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="Digite o email" />
+                  <Input {...field} value={field.value || ''} placeholder={t('placeholder.enter.email')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,9 +82,9 @@ export function PatientForm() {
             name="birthdate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nascimento</FormLabel>
+                <FormLabel>{t('birthdate')}</FormLabel>
                 <FormControl>
-                  <Input className="w-full max-w-48" {...field} value={field.value || ''} placeholder="dd/mm/aaaa" onChange={(e) => field.onChange(maskDate(e.target.value))} />
+                  <Input className="w-full max-w-48" {...field} value={field.value || ''} placeholder={t('date.placeholder.br')} onChange={(e) => field.onChange(maskDate(e.target.value))} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -93,8 +94,8 @@ export function PatientForm() {
       ],
     },
     {
-      title: 'Documentos',
-      description: 'Documentos de identificação do paciente',
+      title: t('documents'),
+      description: t('patient.identification.documents'),
       fields: [
         <div key="docs-row-1" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
@@ -102,9 +103,9 @@ export function PatientForm() {
             name="cpf"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>CPF</FormLabel>
+                <FormLabel>{t('cpf')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="000.000.000-00" onChange={(e) => field.onChange(formatCpfCnpj(e.target.value))} />
+                  <Input {...field} value={field.value || ''} placeholder={t('placeholder.cpf')} onChange={(e) => field.onChange(formatCpfCnpj(e.target.value))} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -115,9 +116,9 @@ export function PatientForm() {
             name="rg"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>RG</FormLabel>
+                <FormLabel>{t('rg')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="Digite o RG" />
+                  <Input {...field} value={field.value || ''} placeholder={t('placeholder.enter.rg')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -127,8 +128,8 @@ export function PatientForm() {
       ],
     },
     {
-      title: 'Endereço',
-      description: 'Opções de endereço do paciente',
+      title: t('address'),
+      description: t('patient.address.options'),
       fields: [
         <div key="row-3" className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_3fr]">
           <FormField
@@ -136,9 +137,9 @@ export function PatientForm() {
             name="cep"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>CEP</FormLabel>
+                <FormLabel>{t('cep')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="00000-000" />
+                  <Input {...field} value={field.value || ''} placeholder={t('placeholder.cep')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -149,9 +150,9 @@ export function PatientForm() {
             name="address"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Endereço Completo</FormLabel>
+                <FormLabel>{t('full.address')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder="Digite rua, número, etc..." />
+                  <Input {...field} value={field.value || ''} placeholder={t('placeholder.full.address')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -161,15 +162,15 @@ export function PatientForm() {
       ],
     },
     {
-      title: 'Contatos',
-      description: 'Telefones de contato do paciente',
+      title: t('contacts'),
+      description: t('patient.contact.phones'),
       fields: [
         <div key="phones" className="space-y-4">
           <div className="flex items-center justify-between">
-            <h4 className="font-medium text-sm">Lista de Telefones</h4>
+            <h4 className="font-medium text-sm">{t('phone.list')}</h4>
             <Button type="button" variant="outline" onClick={() => append({ number: '', tag: fields.length === 0 ? 'WhatsApp' : '' })}>
               <Add className="mr-2 size-4" />
-              Adicionar Telefone
+              {t('add.phone')}
             </Button>
           </div>
           {fields.map((field, index) => (
@@ -179,9 +180,9 @@ export function PatientForm() {
                 name={`phone.${index}.number`}
                 render={({ field: inputField }) => (
                   <FormItem className="w-full">
-                    <FormLabel>#{index + 1} Telefone</FormLabel>
+                    <FormLabel>{`#${index + 1} ${t('phone')}`}</FormLabel>
                     <FormControl>
-                      <Input {...inputField} value={inputField.value || ''} placeholder="(00) 00000-0000" onChange={(e) => inputField.onChange(formatPhone(e.target.value))} />
+                      <Input {...inputField} value={inputField.value || ''} placeholder={t('placeholder.phone')} onChange={(e) => inputField.onChange(formatPhone(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -192,9 +193,9 @@ export function PatientForm() {
                 name={`phone.${index}.tag`}
                 render={({ field: inputField }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Identificação</FormLabel>
+                    <FormLabel>{t('identification')}</FormLabel>
                     <FormControl>
-                      <Input {...inputField} value={inputField.value || ''} placeholder="Ex: Principal, WhatsApp" />
+                      <Input {...inputField} value={inputField.value || ''} placeholder={t('placeholder.phone.tag')} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -205,7 +206,7 @@ export function PatientForm() {
               </Button>
             </div>
           ))}
-          {fields.length === 0 && <div className="rounded-lg border border-dashed p-4 text-center text-muted-foreground text-sm">Nenhum telefone cadastrado.</div>}
+          {fields.length === 0 && <div className="rounded-lg border border-dashed p-4 text-center text-muted-foreground text-sm">{t('no.phones.registered')}</div>}
         </div>,
       ],
     },

@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DataTable } from '@/components/ui/data-table';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { useRemindersList } from './@hooks/use-reminders-list';
 import { type SearchParams, searchSchema } from './@interface/reminders.interface';
 import { endOfDay, startOfDay } from './@utils/date';
@@ -19,8 +20,8 @@ import { endOfDay, startOfDay } from './@utils/date';
 export const Route = createFileRoute('/_private/reminders/')({
   component: RemindersListPage,
   staticData: {
-    title: 'Lembretes',
-    description: 'Gestão de tarefas pendentes e acompanhamento de lembretes diários.',
+    title: t('reminders'),
+    description: t('reminders.page.description'),
   },
   validateSearch: (search: Record<string, unknown>): SearchParams => searchSchema.parse(search),
 });
@@ -56,7 +57,7 @@ function RemindersListPage() {
                 onCheckedChange={(checked) => navigate({ search: ((prev: any) => ({ ...prev, showAll: !!checked }) satisfies SearchParams) as any, replace: true } as any)}
               />
               <label htmlFor="showAll" className="cursor-pointer font-medium text-sm leading-none">
-                Mostrar todos
+                {t('show.all')}
               </label>
             </div>
 
@@ -65,7 +66,7 @@ function RemindersListPage() {
                 <Button variant="outline" className="flex gap-2">
                   <Calender className="size-4" />
                   <span className="sr-only md:not-sr-only">
-                    {dateRange?.from && dateRange?.to ? `${formatDate(dateRange.from, 'dd/MM')} - ${formatDate(dateRange.to, 'dd/MM')}` : 'Selecionar período'}
+                    {dateRange?.from && dateRange?.to ? `${formatDate(dateRange.from, 'dd/MM')} - ${formatDate(dateRange.to, 'dd/MM')}` : t('select.period')}
                   </span>
                 </Button>
               </PopoverTrigger>
@@ -88,13 +89,15 @@ function RemindersListPage() {
             {selectedIds.length > 0 && (
               <Button onClick={handleBulkCheck} disabled={checkReminders.isPending} className="gap-2">
                 <Check className="size-4" />
-                <span className="sr-only md:not-sr-only">Concluir ({selectedIds.length})</span>
+                <span className="sr-only md:not-sr-only">
+                  {t('complete')} ({selectedIds.length})
+                </span>
               </Button>
             )}
 
             <Button onClick={() => navigate({ to: '/reminders/add' })}>
               <Add className="size-4" />
-              <span className="sr-only md:not-sr-only">Adicionar</span>
+              <span className="sr-only md:not-sr-only">{t('add')}</span>
             </Button>
           </div>
         </CardAction>

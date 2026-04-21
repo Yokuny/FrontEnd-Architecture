@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { useFinancialDetailQuery, useFinancialMutations } from '@/query/financials';
 import { useProfessionalsQuery } from '@/query/professionals';
@@ -46,9 +47,9 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
       <Table>
         <TableHeader>
           <TableRow className="bg-secondary">
-            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Procedimento</TableHead>
-            <TableHead className="h-7 w-[150px] px-4 py-1.5 font-medium text-foreground text-xs">Status</TableHead>
-            <TableHead className="h-7 w-[150px] px-4 py-1.5 text-right font-medium text-foreground text-xs">Preço</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">{t('procedure.singular')}</TableHead>
+            <TableHead className="h-7 w-[150px] px-4 py-1.5 font-medium text-foreground text-xs">{t('status')}</TableHead>
+            <TableHead className="h-7 w-[150px] px-4 py-1.5 text-right font-medium text-foreground text-xs">{t('price')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -63,7 +64,7 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
           ) : (
             <TableRow>
               <TableCell colSpan={3} className="px-4 py-4 text-center text-muted-foreground text-xs">
-                Nenhum procedimento encontrado.
+                {t('procedures.none.found')}
               </TableCell>
             </TableRow>
           )}
@@ -74,14 +75,14 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
       <Table className="mt-0">
         <TableHeader>
           <TableRow className="bg-secondary">
-            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Profissional</TableHead>
-            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Paciente</TableHead>
-            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Forma de Pagto</TableHead>
-            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Parcelas</TableHead>
-            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Data</TableHead>
-            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">Valor Pago</TableHead>
-            <TableHead className="h-7 px-4 py-1.5 text-right font-medium text-foreground text-xs">Total</TableHead>
-            <TableHead className="h-7 w-[150px] px-4 py-1.5 text-right font-medium text-foreground text-xs">Status</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">{t('professional')}</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">{t('patient')}</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">{t('payment.method.short')}</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">{t('installments')}</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">{t('date')}</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 font-medium text-foreground text-xs">{t('amount.paid')}</TableHead>
+            <TableHead className="h-7 px-4 py-1.5 text-right font-medium text-foreground text-xs">{t('total')}</TableHead>
+            <TableHead className="h-7 w-[150px] px-4 py-1.5 text-right font-medium text-foreground text-xs">{t('status')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

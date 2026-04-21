@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { PUT, request } from '@/lib/api/client.api';
+import { t } from '@/lib/helpers/translate.helper';
 import { intraoralSchema, type NewIntraoral } from '@/lib/interfaces/schemas/patient.schema';
 
 export function useIntraoralForm(patientId: string | undefined, initialData: any, onCancel: () => void) {
@@ -34,7 +35,7 @@ export function useIntraoralForm(patientId: string | undefined, initialData: any
       toast.success(res.message);
       onCancel();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao salvar exame intraoral');
+      toast.error(e instanceof Error ? e.message : t('error.save.intraoral'));
     } finally {
       setIsSubmitting(false);
     }

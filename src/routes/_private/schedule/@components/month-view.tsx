@@ -1,4 +1,4 @@
-import { eachDayOfInterval, endOfMonth, endOfWeek, getDay, isSameDay, isSameMonth, isToday, startOfMonth, startOfWeek } from 'date-fns';
+import { addDays, eachDayOfInterval, endOfMonth, endOfWeek, getDay, isSameDay, isSameMonth, isToday, startOfMonth, startOfWeek } from 'date-fns';
 import type React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -8,6 +8,7 @@ import { useEventVisibility } from '@/hooks/use-event-visibility';
 import { DefaultStartHour, EventGap, EventHeight } from '@/lib/config/calendar.config';
 import { getAllEventsForDay, getEventsForDay, getSpanningEventsForDay, sortEvents } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import type { MonthViewProps } from '../@interface/schedule.interface';
 import { DraggableEvent } from './draggable-event';
@@ -15,14 +16,18 @@ import { EventItem } from './event-item';
 import { DroppableCell } from './square';
 
 function Header() {
+  const monday = new Date(2024, 0, 1);
   return (
     <div className="grid grid-cols-7 border-accent border-b font-semibold text-muted-foreground text-xs">
-      {['S', 'T', 'Q', 'Q', 'S', 'S', 'D'].map((day, index) => (
-        <div key={day} className="flex justify-center py-3">
-          <span>{day}</span>
-          <span className="sr-only sm:not-sr-only">{['eg', 'er', 'ua', 'ui', 'ex', 'ab', 'om'][index]}</span>
-        </div>
-      ))}
+      {Array.from({ length: 7 }, (_, i) => {
+        const d = addDays(monday, i);
+        return (
+          <div key={d.toISOString()} className="flex justify-center py-3">
+            <span>{formatDate(d, 'EEEEE')}</span>
+            <span className="sr-only">{formatDate(d, 'EEEE')}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -141,7 +146,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
                                 className="mt-[var(--event-gap)] flex h-[var(--event-height)] w-full select-none items-center gap-1 overflow-hidden px-1 text-left text-[10px] text-muted-foreground outline-none backdrop-blur-md transition hover:bg-accent hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-2 sm:text-xs"
                                 onClick={(e) => e.stopPropagation()}
                               >
-                                + {remainingCount} <span className="max-sm:sr-only">Ver tudo</span>
+                                + {remainingCount} <span className="max-sm:sr-only">{t('view.all')}</span>
                               </UnstyledButton>
                             </PopoverTrigger>
                             <PopoverContent align="center" className="max-w-52 p-3" style={{ '--event-height': `${EventHeight}px` } as React.CSSProperties}>

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { useClinicStore } from '@/hooks/clinic';
 import { GET, POST, request } from '@/lib/api/client.api';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { addKey } from '@/lib/helpers/validate.helper';
 import { useClinicApi } from '@/query/clinic';
 import { useUserQuery } from '@/query/user';
@@ -72,7 +73,7 @@ export function useScheduleAddForm(patientId: string | undefined, onCancel: () =
   const fetchOdontograms = useCallback(async (pid: string) => {
     const res = await request(`odontogram/patient/${pid}`, GET());
     if (!res.success) return [];
-    return (res.data || []).map((o: any) => ({ value: o._id, label: `${o._id?.slice(-6)} - ${o.finished ? 'Finalizado' : 'Em andamento'}` }));
+    return (res.data || []).map((o: any) => ({ value: o._id, label: `${o._id?.slice(-6)} - ${o.finished ? t('finished') : t('in.progress')}` }));
   }, []);
 
   const handleSubmit = async () => {
@@ -80,7 +81,7 @@ export function useScheduleAddForm(patientId: string | undefined, onCancel: () =
     const values = form.getValues();
 
     if (!values.Room && !selectedRoom) {
-      toast.error('Selecione a sala do atendimento');
+      toast.error(t('select.appointment.room'));
       return;
     }
 
@@ -109,7 +110,7 @@ export function useScheduleAddForm(patientId: string | undefined, onCancel: () =
       toast.success(res.message);
       onCancel();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao criar agendamento');
+      toast.error(e instanceof Error ? e.message : t('error.create.schedule'));
     } finally {
       setIsSubmitting(false);
     }

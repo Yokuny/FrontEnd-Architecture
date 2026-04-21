@@ -10,6 +10,7 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { type Profile, profileSchema } from '@/lib/interfaces/schemas/user.schema';
+import { t } from '@/lib/helpers/translate.helper';
 import { useUserQuery } from '@/query/user';
 import { ProfileForm } from './@components/profile-form';
 import { useSettingsMutations } from './@hooks/use-settings-api';
@@ -17,8 +18,8 @@ import { useSettingsMutations } from './@hooks/use-settings-api';
 export const Route = createFileRoute('/_private/settings/profile/')({
   component: SettingsProfile,
   staticData: {
-    title: 'Perfil',
-    description: 'Edite seu perfil e ajuste suas configurações de conta.',
+    title: t('profile'),
+    description: t('profile.page.description'),
   },
 });
 
@@ -64,7 +65,7 @@ export function SettingsProfile() {
         <CardAction>
           <Button type="submit" form="profile-form" disabled={updateProfile.isPending}>
             {updateProfile.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Salvar</span>
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>
       </CardHeader>

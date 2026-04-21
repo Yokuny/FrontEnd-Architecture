@@ -6,6 +6,7 @@ import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
 import { EndHour, StartHour, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 import type { DayViewProps, PositionedEvent } from '../@interface/schedule.interface';
@@ -98,7 +99,7 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
         <div className="rounded-t-sm border-accent bg-accent/50">
           <div className="grid grid-cols-[3rem_1fr] sm:grid-cols-[4rem_1fr]">
             <div className="relative flex items-center justify-center">
-              <div className="text-center text-muted-foreground text-xs">Dia inteiro</div>
+              <div className="text-center text-muted-foreground text-xs">{t('all.day')}</div>
             </div>
             <div className="relative border-accent border-r p-1 last:border-r-0">
               {allDayEvents.map((event) => {

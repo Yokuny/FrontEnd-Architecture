@@ -28,7 +28,7 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
   {
     key: '_id',
     header: (
-      <Checkbox checked={allSelected ? true : someSelected ? 'indeterminate' : false} onCheckedChange={handleSelectAll} aria-label="Selecionar todos" className="translate-y-0.5" />
+      <Checkbox checked={allSelected ? true : someSelected ? 'indeterminate' : false} onCheckedChange={handleSelectAll} aria-label={t('select.all')} className="translate-y-0.5" />
     ),
     width: '40px',
     render: (_, reminder) => {
@@ -42,36 +42,36 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
   },
   {
     key: 'Patient',
-    header: 'Paciente',
+    header: t('patient'),
     sortable: true,
     render: (_, reminder) => <span>{reminder.Patient.name}</span>,
   },
   {
     key: 'description',
-    header: 'Descrição',
+    header: t('description'),
     sortable: true,
     render: (_, reminder) => <span className="text-muted-foreground">{reminder.description}</span>,
   },
   {
     key: 'scheduledDate',
-    header: 'Retorno',
+    header: t('return.date'),
     sortable: true,
     render: (_, reminder) => <div>{formatDate(reminder.scheduledDate)}</div>,
   },
   {
     key: 'status',
-    header: 'Status',
+    header: t('status'),
     sortable: true,
     render: (_, reminder) => (
       <div className="flex items-center gap-2">
         <BadgeIndicator variant={reminder.status === 'done' ? 'completed' : 'pending'} pulse />
-        <span className="text-sm">{reminder.status === 'done' ? 'Concluído' : 'Pendente'}</span>
+        <span className="text-sm">{reminder.status === 'done' ? t('completed') : t('pending')}</span>
       </div>
     ),
   },
   {
     key: 'createdAt',
-    header: 'Ações',
+    header: t('actions'),
     sortable: false,
     width: '60px',
     render: (_, reminder) => (
@@ -88,7 +88,7 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={async (e) => {
                 e.stopPropagation();
@@ -113,7 +113,7 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
                   }}
                 >
                   <Phone className="mr-2 size-4 text-muted-foreground" />
-                  Conversar (WhatsApp)
+                  {t('whatsapp.chat')}
                 </DropdownMenuItem>
               </>
             )}

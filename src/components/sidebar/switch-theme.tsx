@@ -8,6 +8,7 @@ import { SunIcon } from '@/components/icons/SunTheme.Icon';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
+import { t } from '@/lib/helpers/translate.helper';
 
 // --- Switcher ---
 
@@ -42,29 +43,29 @@ export function ThemeSwitcher() {
           ) : (
             <SunIcon size={16} className="flex h-full w-full items-center justify-center" />
           )}
-          <span className="sr-only">Toggle theme</span>
+          <span className="sr-only">{t('theme.toggle')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem onClick={() => setTheme('system')} className={theme === 'system' ? 'bg-accent font-medium' : ''}>
           <Gear />
-          System {theme === 'system' && '✓'}
+          {t('system')} {theme === 'system' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('light')} className={theme === 'light' ? 'bg-accent font-medium' : ''}>
           <SunIcon />
-          Light {theme === 'light' && '✓'}
+          {t('light')} {theme === 'light' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('sunset')} className={theme === 'sunset' ? 'bg-accent font-medium' : ''}>
           <SunDimIcon />
-          Sunset {theme === 'sunset' && '✓'}
+          {t('sunset')} {theme === 'sunset' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('dark')} className={theme === 'dark' ? 'bg-accent font-medium' : ''}>
           <MoonIcon />
-          Dark {theme === 'dark' && '✓'}
+          {t('dark')} {theme === 'dark' && '✓'}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('ocean-blue')} className={theme === 'ocean-blue' ? 'bg-accent font-medium' : ''}>
           <CloudSunIcon />
-          Ocean Blue {theme === 'ocean-blue' && '✓'}
+          {t('ocean')} {theme === 'ocean-blue' && '✓'}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -16,6 +16,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientQuery } from '@/query/patient';
 import { useScheduleAddForm } from './@hooks/use-schedule-add-form';
 
@@ -26,8 +27,8 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/patient/details/schedule-add/')({
   component: ScheduleAddPage,
   staticData: {
-    title: 'Novo Agendamento',
-    description: 'Agende uma nova consulta para o paciente.',
+    title: t('new.schedule'),
+    description: t('new.schedule.description'),
   },
   validateSearch: searchSchema,
 });
@@ -69,8 +70,8 @@ function ScheduleAddPage() {
 
   const sections = [
     {
-      title: 'Informações do Agendamento',
-      description: 'Profissional, financeiro e odontograma',
+      title: t('schedule.information'),
+      description: t('schedule.information.description'),
       fields: [
         <div key="info" className="flex flex-col gap-4 md:flex-row">
           <FormField
@@ -78,7 +79,7 @@ function ScheduleAddPage() {
             name="Professional"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Profissional</FormLabel>
+                <FormLabel>{t('professional')}</FormLabel>
                 <FormControl>
                   <ProfessionalCombobox
                     controller={{
@@ -107,7 +108,7 @@ function ScheduleAddPage() {
             name="Financial"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Financeiro / Orçamento</FormLabel>
+                <FormLabel>{t('financial.budget')}</FormLabel>
                 <FormControl>
                   <FinancialCombobox
                     controller={{
@@ -137,7 +138,7 @@ function ScheduleAddPage() {
             name="Odontogram"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Odontograma</FormLabel>
+                <FormLabel>{t('odontogram')}</FormLabel>
                 <FormControl>
                   <OdontogramCombobox
                     controller={{
@@ -166,8 +167,8 @@ function ScheduleAddPage() {
       ],
     },
     {
-      title: 'Procedimentos',
-      description: 'Procedimentos a serem realizados',
+      title: t('procedures'),
+      description: t('procedures.to.perform'),
       fields: [
         <div key="procedures" className="rounded-lg md:border md:p-6">
           <ProcedureComponent
@@ -180,12 +181,14 @@ function ScheduleAddPage() {
       ],
     },
     {
-      title: selectedRoomName ? `${selectedRoomName} | Data, Horário` : 'Local, Data e Horário',
-      description: selectedRoomName ? `Agendamento na sala ${selectedRoomName}. Selecione a data e o horário.` : 'Selecione a sala, data e o horário da consulta',
+      title: selectedRoomName ? `${selectedRoomName} | ${t('date.time')}` : t('location.date.time'),
+      description: selectedRoomName
+        ? `${t('schedule.in.room')} ${selectedRoomName}. ${t('select.datetime')}`
+        : t('select.room.datetime.description'),
       fields: [
         <div key="datetime-room" className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <FormLabel>Sala do Atendimento</FormLabel>
+            <FormLabel>{t('appointment.room')}</FormLabel>
             <div className="flex w-full gap-2">
               {!(form.getValues('Room') || selectedRoom) ? (
                 <Select
@@ -197,7 +200,7 @@ function ScheduleAddPage() {
                   }}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={rooms.length ? 'Selecione a sala' : 'Sem salas disponíveis'} />
+                    <SelectValue placeholder={rooms.length ? t('select.room.placeholder') : t('no.rooms.available')} />
                   </SelectTrigger>
                   <SelectContent>
                     {rooms.map((room) => (
@@ -219,7 +222,7 @@ function ScheduleAddPage() {
                       setSelectedRoom('');
                       setSelectedRoomName('');
                     }}
-                    aria-label="Alterar sala"
+                    aria-label={t('change.room.aria')}
                   >
                     <Edit className="size-4" />
                   </Button>
@@ -250,7 +253,7 @@ function ScheduleAddPage() {
         <CardAction>
           <Button form="schedule-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient || !selectedRoom}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">{selectedRoomName ? `Agendar em ${selectedRoomName}` : 'Agendar'}</span>
+            <span className="sr-only md:not-sr-only">{selectedRoomName ? `${t('schedule.at')} ${selectedRoomName}` : t('book.appointment')}</span>
           </Button>
         </CardAction>
       </CardHeader>

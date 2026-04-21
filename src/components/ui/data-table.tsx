@@ -23,6 +23,7 @@ import {
   Table as TablePrimitive,
   TableRow as TableRowPrimitive,
 } from '@/components/ui/table';
+import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
 import DefaultLoading from '../default-loading';
 
@@ -110,11 +111,11 @@ export function DataTableColumnHeader<TData, TValue>({ column, title, className 
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={handleSortAsc}>
             <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
-            Crescente
+            {t('sort.ascending')}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleSortDesc}>
             <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
-            Decrescente
+            {t('sort.descending')}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -155,7 +156,7 @@ export function DataTable<T extends Record<string, any>>({
   data,
   columns,
   className,
-  searchPlaceholder = 'Buscar...',
+  searchPlaceholder = t('search.placeholder'),
   searchable = true,
   columnSelector = true,
   itemsPerPage = 10,
@@ -258,7 +259,7 @@ export function DataTable<T extends Record<string, any>>({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         {showPagination ? (
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground text-sm">Exibir</span>
+            <span className="text-muted-foreground text-sm">{t('data.table.show')}</span>
             <Select
               value={String(pageSize)}
               onValueChange={(val) => {
@@ -276,7 +277,7 @@ export function DataTable<T extends Record<string, any>>({
                 <SelectItem value="50">50</SelectItem>
               </SelectContent>
             </Select>
-            <span className="text-muted-foreground text-sm">resultados</span>
+            <span className="text-muted-foreground text-sm">{t('data.table.results')}</span>
           </div>
         ) : (
           <div /> /* spacer */
@@ -304,7 +305,7 @@ export function DataTable<T extends Record<string, any>>({
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
                     <ColumnIcon className="mr-2 hidden size-3.5 sm:inline" />
-                    Colunas
+                    {t('data.table.columns')}
                     <ArrowDownIcon className="ml-2 size-3" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -359,11 +360,11 @@ export function DataTable<T extends Record<string, any>>({
                           <DropdownMenuContent align="start">
                             <DropdownMenuItem onClick={() => handleSort(column.key)}>
                               <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
-                              Crescente
+                              {t('sort.ascending')}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setSortConfig({ key: column.key, direction: 'desc' })}>
                               <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
-                              Decrescente
+                              {t('sort.descending')}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -413,7 +414,8 @@ export function DataTable<T extends Record<string, any>>({
       {showPagination && sortedData.length > 0 && (
         <div className="flex flex-col gap-4 pt-1 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-pretty text-muted-foreground text-sm">
-            Exibindo {(currentPage - 1) * pageSize + 1} a {Math.min(currentPage * pageSize, sortedData.length)} de {sortedData.length} resultados
+            {t('data.table.showing')} {(currentPage - 1) * pageSize + 1} {t('data.table.to')} {Math.min(currentPage * pageSize, sortedData.length)} {t('data.table.of')}{' '}
+            {sortedData.length} {t('data.table.results')}
           </p>
           <div className="flex items-center gap-1">
             <Button
@@ -422,10 +424,10 @@ export function DataTable<T extends Record<string, any>>({
               className="h-8 w-8"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              aria-label="Página anterior"
+              aria-label={t('previous.page')}
             >
               <ChevronLeft className="size-4" />
-              <span className="sr-only">Anterior</span>
+              <span className="sr-only">{t('pagination.previous')}</span>
             </Button>
 
             {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
@@ -449,7 +451,7 @@ export function DataTable<T extends Record<string, any>>({
                   size="icon"
                   className="h-8 w-8"
                   onClick={() => setCurrentPage(pageNumber)}
-                  aria-label={`Ir para a página ${pageNumber}`}
+                  aria-label={`${t('pagination.go.to.page')} ${pageNumber}`}
                 >
                   {pageNumber}
                 </Button>
@@ -468,10 +470,10 @@ export function DataTable<T extends Record<string, any>>({
               className="h-8 w-8"
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              aria-label="Próxima página"
+              aria-label={t('next.page')}
             >
               <ChevronRight className="size-4" />
-              <span className="sr-only">Próxima</span>
+              <span className="sr-only">{t('pagination.next')}</span>
             </Button>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientQuery } from '@/query/patient';
 import Teeth from '@/routes/_private/odontogram/@components/teeth';
 import { useOdontogramAddForm } from './@hooks/use-odontogram-add-form';
@@ -20,8 +21,8 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/patient/details/odontogram-add/')({
   component: OdontogramAddPage,
   staticData: {
-    title: 'Novo Odontograma',
-    description: 'Adicione um novo odontograma para o paciente.',
+    title: t('new.odontogram'),
+    description: t('new.odontogram.description'),
   },
   validateSearch: searchSchema,
 });
@@ -38,8 +39,8 @@ function OdontogramAddPage() {
 
   const sections = [
     {
-      title: 'Profissional Responsável',
-      description: 'Indique o profissional que realizará os procedimentos deste odontograma.',
+      title: t('responsible.professional'),
+      description: t('odontogram.professional.description'),
       fields: [
         <FormField
           key="professional"
@@ -47,7 +48,7 @@ function OdontogramAddPage() {
           name="Professional"
           render={({ field }) => (
             <FormItem className="w-full max-w-xs">
-              <FormLabel>Profissional</FormLabel>
+              <FormLabel>{t('professional')}</FormLabel>
               <FormControl>
                 <ProfessionalCombobox controller={field} fetchProfessionals={fetchProfessionals} />
               </FormControl>
@@ -57,8 +58,8 @@ function OdontogramAddPage() {
       ],
     },
     {
-      title: 'Mapa de Execução',
-      description: 'Seleção dos dentes para a prestação dos serviços odontológicos planejados.',
+      title: t('execution.map'),
+      description: t('execution.map.description'),
       layout: 'vertical' as const,
       fields: [
         <div key="teeth-map" className="rounded-lg md:bg-muted md:p-6">
@@ -84,7 +85,7 @@ function OdontogramAddPage() {
         <CardAction>
           <Button form="odontogram-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Cadastrar</span>
+            <span className="sr-only md:not-sr-only">{t('register')}</span>
           </Button>
         </CardAction>
       </CardHeader>

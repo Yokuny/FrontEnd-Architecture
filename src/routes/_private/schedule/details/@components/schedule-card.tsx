@@ -5,12 +5,13 @@ import Dollar from '@/components/icons/Dollar.Icon';
 import Mail from '@/components/icons/Mail.Icon';
 import MapIcon from '@/components/icons/Map.Icon';
 import Right from '@/components/icons/Right.Icon';
+import { translatedStatusLabel } from '@/components/schedule/status-label';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Item, ItemContent, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
-import { getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { getStatusColor } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { DbSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
@@ -94,7 +95,7 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
         <ItemTitle className="capitalize">{formatDate(schedule.start, 'EEEE')}</ItemTitle>
         <Badge variant="outline" className="gap-1.5">
           <div className={cn('size-2 rounded-full', getStatusColor(schedule.status))} />
-          {statusDictionary(schedule.status)}
+          {translatedStatusLabel(schedule.status)}
         </Badge>
       </ItemHeader>
 

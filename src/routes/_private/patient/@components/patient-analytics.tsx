@@ -10,6 +10,7 @@ import { type ChartConfig, ChartContainer, ChartTooltip } from '@/components/ui/
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { DbPatientAnalytics, PatientDemographics, PatientPeriodChart, PatientRegistrationTrends } from '@/lib/interfaces/analytics.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { usePatientAnalyticsQuery } from '@/query/analytics';
@@ -23,7 +24,9 @@ function CustomTooltip({ active, payload, label, labelFormatter }: any) {
   return (
     <div className="rounded-lg border bg-background p-2 shadow-md">
       <span className="block text-[0.70rem] text-muted-foreground">{formattedLabel}</span>
-      <span className="font-semibold text-muted-foreground">{data.value} cadastros</span>
+      <span className="font-semibold text-muted-foreground">
+        {data.value} {t('registrations.count.suffix')}
+      </span>
     </div>
   );
 }
@@ -38,7 +41,7 @@ function LineChartCard({
   strokeColor?: string;
 }) {
   const config: ChartConfig = {
-    cadastros: { label: 'Cadastros', color: strokeColor },
+    cadastros: { label: t('registrations'), color: strokeColor },
   };
 
   return (
@@ -66,7 +69,7 @@ function PatientPeriodChartCard({ chartData }: { chartData: PatientPeriodChart }
   return (
     <ItemContent className="h-full space-y-4 pb-2">
       <div className="flex flex-row items-center justify-between space-y-0">
-        <ItemTitle>Histórico de Cadastros</ItemTitle>
+        <ItemTitle>{t('registration.history')}</ItemTitle>
         <ToggleGroup type="single" value={timeRange} variant="outline" onValueChange={(value) => value && setTimeRange(value as typeof timeRange)}>
           {Object.keys(dataMap).map((period) => (
             <ToggleGroupItem key={period} value={period} size="sm">
@@ -78,13 +81,13 @@ function PatientPeriodChartCard({ chartData }: { chartData: PatientPeriodChart }
 
       {currentData.length > 0 ? (
         <div className="h-36 w-full">
-          <LineChartCard data={data} labelFormatter={(label: string) => `Dia ${label}`} />
+          <LineChartCard data={data} labelFormatter={(label: string) => `${t('day.prefix')} ${label}`} />
         </div>
       ) : (
         <div className="flex h-36 items-center justify-center">
           <div className="flex items-center gap-2 text-muted-foreground">
             <IconUser className="size-4" />
-            <p className="text-sm">Nenhum cadastro no período selecionado</p>
+            <p className="text-sm">{t('no.registrations.in.period')}</p>
           </div>
         </div>
       )}
@@ -103,24 +106,24 @@ function RegistrationTrendsCard({ trends }: { trends: PatientRegistrationTrends 
   const GrowthIcon = isNegativeGrowth ? IconTrendingDown : IconTrendingUp;
 
   const data = [
-    { label: 'Há 90 dias', cadastros: trends.previous90Days },
-    { label: 'Há 60 dias', cadastros: trends.previous60Days },
-    { label: 'Últimos 30 dias', cadastros: trends.previous30Days },
+    { label: t('ago.90.days'), cadastros: trends.previous90Days },
+    { label: t('ago.60.days'), cadastros: trends.previous60Days },
+    { label: t('last.30.days'), cadastros: trends.previous30Days },
   ];
 
   return (
     <ItemContent className="h-full space-y-4 pb-2">
-      <ItemTitle>Novos Cadastros</ItemTitle>
+      <ItemTitle>{t('new.registrations')}</ItemTitle>
 
       <div className="flex items-end justify-between gap-4">
         <div className="flex flex-col items-center">
           <span className="font-bold text-2xl tabular-nums leading-5">+{trends.previous60Days}</span>
-          <p className="text-right text-muted-foreground text-sm">Mês passado</p>
+          <p className="text-right text-muted-foreground text-sm">{t('last.month')}</p>
         </div>
         <div className="flex flex-row items-end justify-end gap-4">
           <div className="flex flex-col items-center">
             <span className="font-bold text-2xl tabular-nums leading-5">+{trends.previous30Days}</span>
-            <p className="text-right text-muted-foreground text-sm">Há 30 dias</p>
+            <p className="text-right text-muted-foreground text-sm">{t('ago.30.days')}</p>
           </div>
           <div>
             <GrowthIcon className={cn('size-4 stroke-2', growthColorClass)} />
@@ -145,10 +148,12 @@ function PatientDemographicsCard({ demographics, total: totalPatients }: { demog
   return (
     <ItemContent className="h-full space-y-4 pb-2">
       <div className="flex flex-row items-center justify-between space-y-0">
-        <p className="font-medium text-sm">Total de Pacientes</p>
+        <p className="font-medium text-sm">{t('total.patients')}</p>
         <div className="flex items-center gap-2 text-muted-foreground">
           <IconPatients className="size-4" />
-          <p className="tabular-nums tracking-tight">{totalPatients} registrados</p>
+          <p className="tabular-nums tracking-tight">
+            {totalPatients} {t('registered.suffix')}
+          </p>
         </div>
       </div>
 
@@ -156,8 +161,10 @@ function PatientDemographicsCard({ demographics, total: totalPatients }: { demog
         <div className="space-y-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <p className="font-medium text-sm">Masculino</p>
-              <p className="font-medium text-sm">{demographics.male} pacientes</p>
+              <p className="font-medium text-sm">{t('male')}</p>
+              <p className="font-medium text-sm">
+                {demographics.male} {t('patients.count.suffix')}
+              </p>
             </div>
             <div className="relative">
               <div className="h-8 overflow-hidden rounded-md bg-muted">
@@ -175,8 +182,10 @@ function PatientDemographicsCard({ demographics, total: totalPatients }: { demog
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <p className="font-medium text-sm">Feminino</p>
-              <p className="font-medium text-sm">{demographics.female} pacientes</p>
+              <p className="font-medium text-sm">{t('female')}</p>
+              <p className="font-medium text-sm">
+                {demographics.female} {t('patients.count.suffix')}
+              </p>
             </div>
             <div className="relative">
               <div className="h-8 overflow-hidden rounded-md bg-muted">
@@ -196,7 +205,7 @@ function PatientDemographicsCard({ demographics, total: totalPatients }: { demog
         <div className="flex items-center justify-center py-4">
           <div className="flex items-center gap-2 text-muted-foreground">
             <IconUser className="size-4" />
-            <p className="text-sm">{totalPatients > 0 ? 'Dados demográficos não disponíveis' : 'Nenhum paciente cadastrado'}</p>
+            <p className="text-sm">{totalPatients > 0 ? t('demographics.unavailable') : t('no.patients.registered')}</p>
           </div>
         </div>
       )}
@@ -219,7 +228,7 @@ function AnalyticsCards({ analytics }: { analytics: DbPatientAnalytics }) {
         </Item>
       </div>
       <div className="flex items-baseline justify-end gap-2">
-        <ItemDescription>Última atualização:</ItemDescription>
+        <ItemDescription>{t('last.updated')}</ItemDescription>
         <ItemTitle>{formatDate(analytics.updatedAt)}</ItemTitle>
       </div>
     </div>
@@ -241,10 +250,10 @@ export default function PatientAnalytics() {
     >
       <AccordionItem value="analytics">
         <AccordionTrigger className="hover:no-underline *:data-[slot=accordion-trigger-icon]:hidden">
-          <ItemTitle className="underline decoration-dashed underline-offset-4">Análises de Pacientes</ItemTitle>
+          <ItemTitle className="underline decoration-dashed underline-offset-4">{t('patient.analytics.title')}</ItemTitle>
         </AccordionTrigger>
         <AccordionContent>
-          {isLoading && <div className="mb-4 text-muted-foreground text-xs italic">Sincronizando estatísticas em tempo real...</div>}
+          {isLoading && <div className="mb-4 text-muted-foreground text-xs italic">{t('syncing.stats')}</div>}
           {analytics && <AnalyticsCards analytics={analytics} />}
           {!isLoading && !analytics && <DefaultEmptyData />}
         </AccordionContent>

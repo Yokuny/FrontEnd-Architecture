@@ -30,7 +30,7 @@ export function SignUp({ isLoading, setIsLoading }: LogInProps) {
     try {
       const res = await validateEmail.mutateAsync({ email: values.email });
       setIsDisabled(true);
-      toast.success(res.message || 'Email validado com sucesso');
+      toast.success(res.message || t('email.validated.success'));
     } catch {
       setIsDisabled(false);
       // error handled globally via MutationCache.onError

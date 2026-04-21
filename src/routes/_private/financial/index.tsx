@@ -7,6 +7,7 @@ import Add from '@/components/icons/Add.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { DataTableAccordion } from '@/components/ui/data-table-accordion';
+import { t } from '@/lib/helpers/translate.helper';
 import { useFinancialsPartialQuery } from '@/query/financials';
 import { FinancialView } from './@components/financial-view';
 import { financialColumns } from './@utils/columns';
@@ -21,8 +22,8 @@ type SearchParams = z.infer<typeof searchSchema>;
 export const Route = createFileRoute('/_private/financial/')({
   component: FinancialListPage,
   staticData: {
-    title: 'Financeiro',
-    description: 'Lista registros financeiros pagos, cancelados ou em aberto.',
+    title: t('financial'),
+    description: t('financial.records.summary'),
   },
   validateSearch: (search: Record<string, unknown>): SearchParams => searchSchema.parse(search),
 });
@@ -58,7 +59,7 @@ function FinancialListPage() {
         <CardAction>
           <Button onClick={() => navigate({ to: '/financial/add' })}>
             <Add className="size-4" />
-            <span className="sr-only md:not-sr-only">Adicionar</span>
+            <span className="sr-only md:not-sr-only">{t('add')}</span>
           </Button>
         </CardAction>
       </CardHeader>

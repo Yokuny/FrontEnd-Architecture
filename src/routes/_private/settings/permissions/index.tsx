@@ -11,6 +11,7 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { Switch } from '@/components/ui/switch';
+import { t } from '@/lib/helpers/translate.helper';
 import type { UpdateRoleAndRoom } from '@/lib/interfaces/schemas/user.schema';
 import { useClinicApi } from '@/query/clinic';
 import { useRolesAndRoomsQuery, useSettingsMutations } from '../profile/@hooks/use-settings-api';
@@ -18,8 +19,8 @@ import { useRolesAndRoomsQuery, useSettingsMutations } from '../profile/@hooks/u
 export const Route = createFileRoute('/_private/settings/permissions/')({
   component: SettingsPermissions,
   staticData: {
-    title: 'Permissões',
-    description: 'Gerencie as funções e salas de atendimento dos usuários da clínica.',
+    title: t('permissions'),
+    description: t('permissions.page.description'),
   },
 });
 
@@ -96,7 +97,7 @@ export function SettingsPermissions() {
         <CardAction>
           <Button onClick={handleSavePermissions} disabled={updatePermissions.isPending}>
             {updatePermissions.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Salvar Alterações</span>
+            <span className="sr-only md:not-sr-only">{t('save.changes')}</span>
           </Button>
         </CardAction>
       </CardHeader>
@@ -124,14 +125,14 @@ export function SettingsPermissions() {
                           {permissions.roles.length > 0 ? (
                             permissions.roles.map((role) => (
                               <span key={role}>
-                                {(role === 'admin' && 'Administrador') ||
-                                  (role === 'professional' && 'Profissional') ||
-                                  (role === 'assistant' && 'Recepcionista') ||
-                                  (role === 'guest' && 'Visitante')}
+                                {(role === 'admin' && t('role.admin')) ||
+                                  (role === 'professional' && t('role.professional')) ||
+                                  (role === 'assistant' && t('role.assistant')) ||
+                                  (role === 'guest' && t('role.guest'))}
                               </span>
                             ))
                           ) : (
-                            <span>Sem permissões cadastradas</span>
+                            <span>{t('permissions.none')}</span>
                           )}
                         </div>
                       </div>
@@ -139,22 +140,22 @@ export function SettingsPermissions() {
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-6 p-2 md:p-6">
-                      <h5 className="font-semibold text-primary">Funções</h5>
+                      <h5 className="font-semibold text-primary">{t('roles')}</h5>
                       <div className="flex flex-col gap-4">
                         {['admin', 'professional', 'assistant', 'guest'].map((role) => (
                           <div className="flex items-center justify-between rounded-lg border p-6" key={`${user._id}-${role}`}>
                             <Label htmlFor={`${user._id}-${role}`} className="flex cursor-pointer flex-col items-start hover:opacity-80">
                               <span className="mb-1 font-semibold text-base">
-                                {(role === 'admin' && 'Administrador') ||
-                                  (role === 'professional' && 'Profissional') ||
-                                  (role === 'assistant' && 'Recepcionista') ||
-                                  (role === 'guest' && 'Visitante')}
+                                {(role === 'admin' && t('role.admin')) ||
+                                  (role === 'professional' && t('role.professional')) ||
+                                  (role === 'assistant' && t('role.assistant')) ||
+                                  (role === 'guest' && t('role.guest'))}
                               </span>
                               <span className="w-3/4 font-normal text-muted-foreground leading-relaxed">
-                                {role === 'admin' && 'Acesso total ao sistema, sem restrições, incluindo gerenciamento de usuários, configurações e dados da clínica.'}
-                                {role === 'professional' && 'Visível nos seletores de profissional. Pode criar, visualizar, editar e excluir dados associados ao seu nome.'}
-                                {role === 'assistant' && 'Tem foco em agendamentos e dados dos clientes. Pode criar, visualizar e editar todos os dados da clínica.'}
-                                {role === 'guest' && 'Permite visualizar dados da agenda e pacientes cadastrados.'}
+                                {role === 'admin' && t('role.admin.description')}
+                                {role === 'professional' && t('role.professional.description.permissions')}
+                                {role === 'assistant' && t('role.assistant.description')}
+                                {role === 'guest' && t('role.guest.description.permissions')}
                               </span>
                             </Label>
                             <Switch
@@ -172,8 +173,8 @@ export function SettingsPermissions() {
 
                     <div className="space-y-6 p-2 pt-6 md:p-6">
                       <div className="flex flex-col gap-1">
-                        <h5 className="font-semibold text-primary">Salas de Atendimento</h5>
-                        <span className="text-muted-foreground text-sm">Permitir a visualização e o agendamento nas salas selecionadas.</span>
+                        <h5 className="font-semibold text-primary">{t('rooms.service')}</h5>
+                        <span className="text-muted-foreground text-sm">{t('rooms.service.hint')}</span>
                       </div>
                       <div className="flex flex-col gap-4">
                         {clinic.rooms?.map((room) => (

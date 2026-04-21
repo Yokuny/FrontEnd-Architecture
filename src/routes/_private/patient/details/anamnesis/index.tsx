@@ -10,6 +10,7 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientQuery } from '@/query/patient';
 import { YesNoSelect } from './@components/yes-no-select';
 import { useAnamnesisForm } from './@hooks/use-anamnesis-form';
@@ -21,8 +22,8 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/patient/details/anamnesis/')({
   component: AnamnesisPage,
   staticData: {
-    title: 'Anamnese',
-    description: 'Histórico de saúde do paciente.',
+    title: t('medical.anamnesis'),
+    description: t('anamnesis.page.description'),
   },
   validateSearch: searchSchema,
 });
@@ -39,8 +40,8 @@ function AnamnesisPage() {
 
   const sections = [
     {
-      title: 'Histórico Médico',
-      description: 'Queixa principal e informações de saúde',
+      title: t('medical.history'),
+      description: t('medical.history.description'),
       fields: [
         <div key="medical-history" className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
@@ -48,9 +49,9 @@ function AnamnesisPage() {
             name="mainComplaint"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Queixa principal</FormLabel>
+                <FormLabel>{t('main.complaint.form.label')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Descreva a queixa principal..." disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.main.complaint')} disabled={isSubmitting} {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -60,9 +61,9 @@ function AnamnesisPage() {
             name="infectiousDisease"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Doença infecciosa</FormLabel>
+                <FormLabel>{t('infectious.disease.form')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Digite a doença infecciosa..." disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.infectious.disease')} disabled={isSubmitting} {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -72,9 +73,9 @@ function AnamnesisPage() {
             name="importantHealthInformation"
             render={({ field }) => (
               <FormItem className="md:col-span-2">
-                <FormLabel>Informações importantes de saúde</FormLabel>
+                <FormLabel>{t('important.health.form')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Digite informações importantes..." disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.important.health')} disabled={isSubmitting} {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -83,8 +84,8 @@ function AnamnesisPage() {
       ],
     },
     {
-      title: 'Hábitos Prejudiciais',
-      description: 'Fumante, álcool e outros hábitos',
+      title: t('harmful.habits.section'),
+      description: t('harmful.habits.description'),
       fields: [
         <div key="habits" className="grid grid-cols-2 gap-6 md:grid-cols-2">
           <FormField
@@ -92,7 +93,7 @@ function AnamnesisPage() {
             name="smoker"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Fumante</FormLabel>
+                <FormLabel>{t('smoker')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -104,7 +105,7 @@ function AnamnesisPage() {
             name="alcoholConsumer"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Álcool</FormLabel>
+                <FormLabel>{t('alcohol')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -116,7 +117,7 @@ function AnamnesisPage() {
             name="bitesPenOrPencil"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Rói caneta/lápis</FormLabel>
+                <FormLabel>{t('bites.pen.pencil')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -128,7 +129,7 @@ function AnamnesisPage() {
             name="nailsBiting"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Rói unhas</FormLabel>
+                <FormLabel>{t('nails.biting')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -140,9 +141,9 @@ function AnamnesisPage() {
             name="otherHarmfulHabits"
             render={({ field }) => (
               <FormItem className="col-span-2">
-                <FormLabel>Outros hábitos prejudiciais</FormLabel>
+                <FormLabel>{t('other.harmful.habits')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Descreva outros hábitos..." disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.other.habits')} disabled={isSubmitting} {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -151,8 +152,8 @@ function AnamnesisPage() {
       ],
     },
     {
-      title: 'Condições Especiais',
-      description: 'Alergias, medicamentos e condições médicas',
+      title: t('special.conditions'),
+      description: t('special.conditions.form.description'),
       fields: [
         <div key="conditions" className="grid grid-cols-2 gap-6 md:grid-cols-2">
           <FormField
@@ -160,7 +161,7 @@ function AnamnesisPage() {
             name="allergicToMedication"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Alergia a medicamentos</FormLabel>
+                <FormLabel>{t('medication.allergy.label')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -173,9 +174,9 @@ function AnamnesisPage() {
               name="medicationAllergy"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel>Quais medicamentos?</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Descreva a alergia..." disabled={isSubmitting} {...field} />
+                  <FormLabel>{t('which.medications')}</FormLabel>
+                <FormControl>
+                    <Input placeholder={t('placeholder.allergy')} disabled={isSubmitting} {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -186,7 +187,7 @@ function AnamnesisPage() {
             name="gumsBleedEasily"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Gengiva sangra</FormLabel>
+                <FormLabel>{t('gums.bleed.label')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -198,7 +199,7 @@ function AnamnesisPage() {
             name="sensitiveTeeth"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Dentes sensíveis</FormLabel>
+                <FormLabel>{t('sensitive.teeth')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -212,7 +213,7 @@ function AnamnesisPage() {
                 name="pregnant"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Grávida</FormLabel>
+                    <FormLabel>{t('pregnant')}</FormLabel>
                     <FormControl>
                       <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                     </FormControl>
@@ -225,7 +226,7 @@ function AnamnesisPage() {
                   name="pregnancyMonth"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Mês de gestação</FormLabel>
+                      <FormLabel>{t('pregnancy.month.label')}</FormLabel>
                       <FormControl>
                         <Input type="number" min={0} max={10} disabled={isSubmitting} {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
                       </FormControl>
@@ -238,7 +239,7 @@ function AnamnesisPage() {
                 name="breastfeeding"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Amamentando</FormLabel>
+                    <FormLabel>{t('breastfeeding')}</FormLabel>
                     <FormControl>
                       <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                     </FormControl>
@@ -252,7 +253,7 @@ function AnamnesisPage() {
             name="underMedicalTreatment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Em tratamento médico</FormLabel>
+                <FormLabel>{t('under.medical.treatment')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -265,9 +266,9 @@ function AnamnesisPage() {
               name="medicalTreatmentDetails"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel>Detalhes do tratamento</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Descreva o tratamento..." disabled={isSubmitting} {...field} />
+                  <FormLabel>{t('treatment.details')}</FormLabel>
+                <FormControl>
+                    <Input placeholder={t('placeholder.treatment')} disabled={isSubmitting} {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -278,7 +279,7 @@ function AnamnesisPage() {
             name="takingMedication"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tomando medicamentos</FormLabel>
+                <FormLabel>{t('taking.medications')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -291,9 +292,9 @@ function AnamnesisPage() {
               name="medicationDetails"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel>Detalhes dos medicamentos</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Descreva os medicamentos..." disabled={isSubmitting} {...field} />
+                  <FormLabel>{t('medication.details.label')}</FormLabel>
+                <FormControl>
+                    <Input placeholder={t('placeholder.medications')} disabled={isSubmitting} {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -303,8 +304,8 @@ function AnamnesisPage() {
       ],
     },
     {
-      title: 'Doenças Crônicas',
-      description: 'Condições médicas pré-existentes',
+      title: t('chronic.diseases'),
+      description: t('chronic.diseases.description'),
       fields: [
         <div key="illnesses" className="grid grid-cols-2 gap-6 md:grid-cols-2">
           <FormField
@@ -312,7 +313,7 @@ function AnamnesisPage() {
             name="illnesses.diabetes"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Diabetes</FormLabel>
+                <FormLabel>{t('illness.diabetes')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -324,7 +325,7 @@ function AnamnesisPage() {
             name="illnesses.tuberculosis"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tuberculose</FormLabel>
+                <FormLabel>{t('illness.tuberculosis')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -336,7 +337,7 @@ function AnamnesisPage() {
             name="illnesses.heartProblems"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Problemas cardíacos</FormLabel>
+                <FormLabel>{t('illness.heart')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -348,7 +349,7 @@ function AnamnesisPage() {
             name="illnesses.arthritis"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Artrite</FormLabel>
+                <FormLabel>{t('illness.arthritis')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -360,7 +361,7 @@ function AnamnesisPage() {
             name="illnesses.asthma"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Asma</FormLabel>
+                <FormLabel>{t('illness.asthma')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -372,7 +373,7 @@ function AnamnesisPage() {
             name="illnesses.highBloodPressure"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Pressão alta</FormLabel>
+                <FormLabel>{t('illness.hypertension')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -384,7 +385,7 @@ function AnamnesisPage() {
             name="illnesses.kidneyProblems"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Problemas renais</FormLabel>
+                <FormLabel>{t('illness.kidney')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -396,7 +397,7 @@ function AnamnesisPage() {
             name="illnesses.liverProblems"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Problemas hepáticos</FormLabel>
+                <FormLabel>{t('illness.liver')}</FormLabel>
                 <FormControl>
                   <YesNoSelect value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                 </FormControl>
@@ -408,9 +409,9 @@ function AnamnesisPage() {
             name="illnesses.otherIllnesses"
             render={({ field }) => (
               <FormItem className="col-span-2">
-                <FormLabel>Outras doenças</FormLabel>
+                <FormLabel>{t('illness.other')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Descreva outras doenças..." disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.other.illnesses')} disabled={isSubmitting} {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -426,11 +427,11 @@ function AnamnesisPage() {
         <CardAction>
           <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
             <Cross className="size-4" />
-            <span className="sr-only md:not-sr-only">Cancelar</span>
+            <span className="sr-only md:not-sr-only">{t('cancel')}</span>
           </Button>
           <Button type="button" onClick={onSubmit} disabled={isSubmitting || isLoadingPatient || !patient}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">{hasExisting ? 'Atualizar' : 'Cadastrar'}</span>
+            <span className="sr-only md:not-sr-only">{hasExisting ? t('update') : t('register')}</span>
           </Button>
         </CardAction>
       </CardHeader>

@@ -46,13 +46,13 @@ export function useRemindersList() {
 
   const handleBulkCheck = async () => {
     if (selectedIds.length === 0) {
-      toast.error('Selecione pelo menos um lembrete');
+      toast.error(t('reminders.select.min'));
       return;
     }
 
     try {
       await checkReminders.mutateAsync({ ids: selectedIds, status: 'done' });
-      const label = selectedIds.length > 1 ? t('reminder.completed.plural') : t('reminder.completed.singular');
+      const label = selectedIds.length > 1 ? t('reminders.completed') : t('reminder.completed.singular');
       toast.success(`${selectedIds.length} ${label}`);
       setSelectedIds([]);
     } catch {

@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientQuery } from '@/query/patient';
 import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from './@consts/financial-options';
 import { useFinancialAddForm } from './@hooks/use-financial-add-form';
@@ -25,8 +26,8 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/patient/details/financial-add/')({
   component: FinancialAddPage,
   staticData: {
-    title: 'Novo Registro Financeiro',
-    description: 'Crie um novo registro financeiro para o paciente.',
+    title: t('new.financial.record'),
+    description: t('new.financial.record.description'),
   },
   validateSearch: searchSchema,
 });
@@ -43,8 +44,8 @@ function FinancialAddPage() {
 
   const sections = [
     {
-      title: 'Profissional',
-      description: 'Selecione o profissional responsável',
+      title: t('professional'),
+      description: t('select.responsible.professional'),
       fields: [
         <div key="professional">
           <FormField
@@ -52,7 +53,7 @@ function FinancialAddPage() {
             name="Professional"
             render={({ field }) => (
               <FormItem className="w-full max-w-xs">
-                <FormLabel>Profissional</FormLabel>
+                <FormLabel>{t('professional')}</FormLabel>
                 <FormControl>
                   <ProfessionalCombobox controller={{ ...field }} fetchProfessionals={fetchProfessionals} />
                 </FormControl>
@@ -63,8 +64,8 @@ function FinancialAddPage() {
       ],
     },
     {
-      title: 'Procedimentos',
-      description: 'Adicione os procedimentos realizados',
+      title: t('procedures'),
+      description: t('add.completed.procedures'),
       fields: [
         <div key="procedures" className="rounded-lg md:border md:p-6">
           <ProcedureComponent form={form} disabled={isSubmitting} currencyFormat={(v) => String(currencyFormat(v) ?? '')} statusDictionary={statusDictionary} />
@@ -72,8 +73,8 @@ function FinancialAddPage() {
       ],
     },
     {
-      title: 'Pagamento',
-      description: 'Informações de pagamento e status',
+      title: t('payment'),
+      description: t('payment.info.description'),
       fields: [
         <div key="payment" className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
@@ -81,9 +82,9 @@ function FinancialAddPage() {
             name="price"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Valor total</FormLabel>
+                <FormLabel>{t('total.amount')}</FormLabel>
                 <FormControl>
-                  <Input type="number" className="w-full" placeholder="R$ 0,00" value={field.value || 0} onChange={(e) => field.onChange(Number(e.target.value))} />
+                  <Input type="number" className="w-full" placeholder={t('currency.placeholder')} value={field.value || 0} onChange={(e) => field.onChange(Number(e.target.value))} />
                 </FormControl>
               </FormItem>
             )}
@@ -93,9 +94,9 @@ function FinancialAddPage() {
             name="paid"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Valor pago</FormLabel>
+                <FormLabel>{t('amount.paid')}</FormLabel>
                 <FormControl>
-                  <Input type="number" className="w-full" placeholder="R$ 0,00" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
+                  <Input type="number" className="w-full" placeholder={t('currency.placeholder')} {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                 </FormControl>
               </FormItem>
             )}
@@ -105,7 +106,7 @@ function FinancialAddPage() {
             name="paymentMethod"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Forma de pagamento</FormLabel>
+                <FormLabel>{t('payment.method')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full">
@@ -128,7 +129,7 @@ function FinancialAddPage() {
             name="status"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Status</FormLabel>
+                <FormLabel>{t('status')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full">
@@ -151,7 +152,7 @@ function FinancialAddPage() {
             name="installments"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Parcelas</FormLabel>
+                <FormLabel>{t('installments')}</FormLabel>
                 <FormControl>
                   <Input type="number" className="w-full" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                 </FormControl>
@@ -169,11 +170,11 @@ function FinancialAddPage() {
         <CardAction>
           <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
             <Cross className="size-4" />
-            <span className="sr-only md:not-sr-only">Cancelar</span>
+            <span className="sr-only md:not-sr-only">{t('cancel')}</span>
           </Button>
           <Button type="submit" form="financial-add-form" disabled={isSubmitting || isLoadingPatient || !patient}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Cadastrar</span>
+            <span className="sr-only md:not-sr-only">{t('register')}</span>
           </Button>
         </CardAction>
       </CardHeader>

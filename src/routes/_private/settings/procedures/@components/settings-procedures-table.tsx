@@ -4,6 +4,7 @@ import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { Input } from '@/components/ui/input';
 import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { currencyFormat } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { ProcedureData } from '@/lib/interfaces';
 
 const EditableCell = ({
@@ -40,7 +41,7 @@ const EditableCell = ({
       {columnId === 'procedure' || columnId === 'group' ? (
         cellValue
       ) : columnId === 'periodicity' ? (
-        <span className="text-muted-foreground">{cellValue ? `${cellValue} dias` : '-'}</span>
+        <span className="text-muted-foreground">{cellValue ? `${cellValue} ${t('days')}` : '-'}</span>
       ) : (
         <BadgeIndicator variant={columnId === 'costPrice' ? 'pending' : columnId === 'suggestedPrice' ? 'waiting' : 'paid'} className="flex w-fit gap-2">
           {currencyFormat(cellValue)}
@@ -91,37 +92,37 @@ export function SettingsProceduresTable({ data, onUpdate }: ProcedureTableProps)
   const columns: DataTableColumn<ProcedureData>[] = [
     {
       key: 'procedure',
-      header: 'Procedimento',
+      header: t('procedure.singular'),
       sortable: true,
       render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="procedure" updateData={updateData} />,
     },
     {
       key: 'group',
-      header: 'Agrupador',
+      header: t('procedure.group'),
       sortable: true,
       render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="group" updateData={updateData} />,
     },
     {
       key: 'costPrice',
-      header: 'Custo',
+      header: t('cost'),
       sortable: true,
       render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="costPrice" updateData={updateData} />,
     },
     {
       key: 'suggestedPrice',
-      header: 'Sugerido',
+      header: t('suggested'),
       sortable: true,
       render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="suggestedPrice" updateData={updateData} />,
     },
     {
       key: 'savedPrice',
-      header: 'Salvo',
+      header: t('saved'),
       sortable: true,
       render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="savedPrice" updateData={updateData} />,
     },
     {
       key: 'periodicity',
-      header: 'Periodicidade',
+      header: t('periodicity'),
       sortable: true,
       render: (val, _, i) => <EditableCell value={val} rowIndex={i as number} columnId="periodicity" updateData={updateData} />,
     },

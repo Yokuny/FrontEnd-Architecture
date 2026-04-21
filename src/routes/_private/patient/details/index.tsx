@@ -5,6 +5,7 @@ import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientQuery } from '@/query/patient';
 import { PatientAnamnesisView } from './@components/anamnesis-view';
 import { PatientFinancialView } from './@components/financial-view';
@@ -25,8 +26,8 @@ type SearchParams = z.infer<typeof searchSchema>;
 export const Route = createFileRoute('/_private/patient/details/')({
   component: PatientDetailsPage,
   staticData: {
-    title: 'Prontuário do Paciente',
-    description: 'Visão completa, prontuário, odontograma e histórico do paciente.',
+    title: t('patient.record.title'),
+    description: t('patient.record.description'),
   },
   validateSearch: searchSchema,
 });

@@ -42,7 +42,7 @@ export function UserSwitcher() {
         <DropdownMenuTrigger asChild>
           <Button size="icon" variant="secondary">
             <UserAnimatedIcon className="flex h-full w-full items-center justify-center text-foreground" size={16} />
-            <span className="sr-only">User actions</span>
+            <span className="sr-only">{t('user.actions')}</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

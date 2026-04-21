@@ -5,6 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { AgendaDaysToShow } from '@/lib/config/calendar.config';
 import { getAgendaEventsForDay } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import type { AgendaViewProps } from '../@interface/schedule.interface';
 import { EventItem } from './event-item';
@@ -26,8 +27,8 @@ export function AgendaView({ currentDate, events, onEventSelect }: AgendaViewPro
       {!hasEvents ? (
         <div className="flex min-h-[70svh] flex-col items-center justify-center py-16 text-center">
           <Calender className="mb-2 size-10 text-muted-foreground" />
-          <p className="font-semibold">Nenhum agendamento</p>
-          <p className="text-muted-foreground text-sm">Não há agendamentos para este período.</p>
+          <p className="font-semibold">{t('agenda.empty')}</p>
+          <p className="text-muted-foreground text-sm">{t('agenda.period.empty')}</p>
         </div>
       ) : (
         <ScrollArea className="md:h-[calc(100vh-10.7rem)]">

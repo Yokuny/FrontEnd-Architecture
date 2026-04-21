@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { formatCpfCnpj } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { NewClinic } from '@/lib/interfaces/schemas/clinic.schema';
 
 const RoomField = ({ index, remove, control }: { index: number; remove: () => void; control: Control<NewClinic> }) => {
@@ -17,7 +18,7 @@ const RoomField = ({ index, remove, control }: { index: number; remove: () => vo
         render={({ field }) => (
           <FormItem className="flex-1">
             <FormControl>
-              <Input placeholder={`Nome da sala ${index + 1}`} {...field} />
+              <Input placeholder={`${t('room.name.prefix')} ${index + 1}`} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -38,8 +39,8 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
 
   const sections: FormSection[] = [
     {
-      title: 'Dados da Clínica',
-      description: 'Atualize o nome e o email da sua clínica.',
+      title: t('clinic.data'),
+      description: t('clinic.data.description'),
       fields: [
         <FormField
           key="name"
@@ -47,9 +48,9 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome</FormLabel>
+              <FormLabel>{t('name')}</FormLabel>
               <FormControl>
-                <Input placeholder="Digite o nome da clínica" disabled={isPending} {...field} />
+                <Input placeholder={t('clinic.name.placeholder')} disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -61,9 +62,9 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('email')}</FormLabel>
               <FormControl>
-                <Input placeholder="Digite o email da clínica" disabled={isPending} {...field} />
+                <Input placeholder={t('clinic.email.placeholder')} disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -75,11 +76,11 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
           name="code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Código</FormLabel>
+              <FormLabel>{t('code')}</FormLabel>
               <FormControl>
-                <Input placeholder="Digite um código para a clínica" disabled={isPending} {...field} />
+                <Input placeholder={t('clinic.code.placeholder')} disabled={isPending} {...field} />
               </FormControl>
-              <FormDescription>Código utilizado para convidar novos integrantes ao sistema.</FormDescription>
+              <FormDescription>{t('clinic.code.help')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -87,8 +88,8 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
       ],
     },
     {
-      title: 'Informações Fiscais',
-      description: 'Informe o CNPJ da clínica para emissão de notas fiscais.',
+      title: t('fiscal.info'),
+      description: t('clinic.cnpj.description'),
       fields: [
         <FormField
           key="cnpj"
@@ -96,10 +97,10 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
           name="cnpj"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>CNPJ</FormLabel>
+              <FormLabel>{t('cnpj')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite o CNPJ da clínica"
+                  placeholder={t('clinic.cnpj.placeholder')}
                   disabled={isPending}
                   {...field}
                   onChange={(e) => {
@@ -115,23 +116,23 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
       ],
     },
     {
-      title: 'Salas e Acesso',
-      description: 'Adicione as salas de atendimento disponíveis e configure o código da clínica.',
+      title: t('rooms.and.access'),
+      description: t('rooms.and.access.description'),
       fields: [
         <div key="rooms" className="space-y-4">
           <div>
             <div className="flex items-center justify-between">
-              <FormLabel>Salas de Atendimento</FormLabel>
+              <FormLabel>{t('rooms.service')}</FormLabel>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
-                onClick={() => append({ name: `Sala ${fields.length + 1}` })}
+                onClick={() => append({ name: `${t('room.prefix')} ${fields.length + 1}` })}
                 disabled={isPending}
                 className="flex items-center gap-2"
               >
                 <Add className="size-4" />
-                Adicionar Sala
+                {t('room.add')}
               </Button>
             </div>
           </div>

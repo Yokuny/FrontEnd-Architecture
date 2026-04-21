@@ -8,6 +8,7 @@ import IconUploadCloud from '@/components/icons/UploadCloud.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { t } from '@/lib/helpers/translate.helper';
 import { getPresignedUrl, uploadToS3 } from '@/lib/helpers/upload.helper';
 import { cn } from '@/lib/utils/index';
 
@@ -81,7 +82,7 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
 
         setUploadingFile((prev) => (prev ? { ...prev, progress: 100, status: 'completed' } : prev));
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido no upload';
+        const errorMessage = err instanceof Error ? err.message : t('upload.unknown.error');
         setUploadingFile((prev) => (prev ? { ...prev, progress: 0, status: 'error', error: errorMessage } : prev));
         setError(errorMessage);
       }
@@ -92,11 +93,11 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
   const validateAndUpload = useCallback(
     (file: File) => {
       if (!file.type.startsWith('image/')) {
-        setError('Por favor, selecione apenas arquivos de imagem');
+        setError(t('upload.images.only'));
         return;
       }
       if (file.size > 30 * 1024 * 1024) {
-        setError('O arquivo deve ter no máximo 30 MB');
+        setError(t('upload.max.size.30mb'));
         return;
       }
       handleUpload(file);
@@ -169,7 +170,7 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
       <div className="mt-4 w-full">
         <div className="mb-3 grid grid-cols-4 gap-2.5">
           <Card className="group/item relative flex shrink-0 items-center justify-center rounded-md bg-accent/50 p-0 shadow-none">
-            <img src={imageUrl} alt="Imagem do registro" className="h-[120px] w-full rounded-md object-cover" />
+            <img src={imageUrl} alt={t('record.image.alt')} className="h-[120px] w-full rounded-md object-cover" />
             <Button
               onClick={() => handleRemoveImage()}
               variant="outline"
@@ -184,11 +185,11 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
         <div className="flex gap-2">
           <Button variant="outline" size="sm" className="gap-2" onClick={() => setIsEditing(true)}>
             <IconEdit className="size-4" />
-            Alterar
+            {t('change')}
           </Button>
           <Button variant="outline" size="sm" className="gap-2" onClick={() => handleRemoveImage()}>
             <IconDelete className="size-4" />
-            Apagar
+            {t('erase')}
           </Button>
         </div>
       </div>
@@ -213,10 +214,10 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
           <div className="mx-auto mb-3 flex size-[32px] items-center justify-center rounded-full border border-border">
             <IconUploadCloud className="size-4" />
           </div>
-          <h3 className="mb-0.5 font-semibold text-2sm text-foreground">Arraste ou selecione uma imagem</h3>
-          <span className="mb-3 block font-normal text-secondary-foreground text-xs">JPEG, PNG, GIF (max 30 MB)</span>
+          <h3 className="mb-0.5 font-semibold text-2sm text-foreground">{t('upload.drag.or.select')}</h3>
+          <span className="mb-3 block font-normal text-secondary-foreground text-xs">{t('upload.image.formats')}</span>
           <Button size="sm" onClick={openFileDialog}>
-            Selecionar Arquivo
+            {t('select.file')}
           </Button>
         </CardContent>
       </Card>
@@ -234,7 +235,11 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
                   <div className="flex items-center gap-2.5">
                     <span className="font-medium text-foreground text-xs leading-none">{uploadingFile.name}</span>
                     <span className="font-normal text-muted-foreground text-xs leading-none">{formatBytes(uploadingFile.size)}</span>
-                    {uploadingFile.status === 'uploading' && <span className="text-muted-foreground text-xs">Enviando... {Math.round(uploadingFile.progress)}%</span>}
+                    {uploadingFile.status === 'uploading' && (
+                      <span className="text-muted-foreground text-xs">
+                        {t('uploading')} {Math.round(uploadingFile.progress)}%
+                      </span>
+                    )}
                   </div>
                   <Button onClick={cancelUpload} variant="blank" size="icon" className="size-6">
                     <IconCross className="size-3.5" />
@@ -262,7 +267,7 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
             setError(null);
           }}
         >
-          Cancelar
+          {t('cancel')}
         </Button>
       )}
     </div>

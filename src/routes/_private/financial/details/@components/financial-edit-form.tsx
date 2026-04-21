@@ -4,6 +4,7 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { t } from '@/lib/helpers/translate.helper';
 import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '../../@consts/financial.consts';
 import type { FinancialUpdateData } from '../../@interface/financial.interface';
 
@@ -12,8 +13,8 @@ export function FinancialEditForm() {
 
   const sections = [
     {
-      title: 'Editar Informações Financeiras',
-      description: 'Atualize os dados de pagamento',
+      title: t('financial.edit.title'),
+      description: t('payment.data.update'),
       fields: [
         <div key="edit-fields" className="flex w-full flex-col gap-4">
           <div className="flex w-full gap-4">
@@ -22,7 +23,7 @@ export function FinancialEditForm() {
               name="price"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Valor Total</FormLabel>
+                  <FormLabel>{t('amount.total')}</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="R$ 0,00" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                   </FormControl>
@@ -35,7 +36,7 @@ export function FinancialEditForm() {
               name="paid"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Valor Pago</FormLabel>
+                  <FormLabel>{t('amount.paid')}</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="R$ 0,00" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                   </FormControl>
@@ -50,7 +51,7 @@ export function FinancialEditForm() {
               name="paymentMethod"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Método de Pagamento</FormLabel>
+                  <FormLabel>{t('payment.method.label')}</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <SelectTrigger className="w-full!">
@@ -74,7 +75,7 @@ export function FinancialEditForm() {
               name="installments"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Parcelas</FormLabel>
+                  <FormLabel>{t('installments')}</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                   </FormControl>
@@ -87,7 +88,7 @@ export function FinancialEditForm() {
               name="status"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>{t('status')}</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <SelectTrigger className="w-full!">

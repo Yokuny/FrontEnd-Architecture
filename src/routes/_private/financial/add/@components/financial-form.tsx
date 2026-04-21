@@ -7,6 +7,7 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientStore } from '@/hooks/patients';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
@@ -33,8 +34,8 @@ export function FinancialForm() {
 
   const sections = [
     {
-      title: 'Paciente e Profissional',
-      description: 'Selecione o paciente e o profissional responsável',
+      title: t('patient.and.professional'),
+      description: t('patient.professional.select'),
       fields: [
         <div key="patient-professional" className="flex flex-col gap-4 md:flex-row">
           <FormField
@@ -42,7 +43,7 @@ export function FinancialForm() {
             name="Patient"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Paciente</FormLabel>
+                <FormLabel>{t('patient')}</FormLabel>
                 <FormControl>
                   <PatientCombobox controller={{ ...field }} fetchPatients={fetchPatients} />
                 </FormControl>
@@ -54,7 +55,7 @@ export function FinancialForm() {
             name="Professional"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Profissional</FormLabel>
+                <FormLabel>{t('professional')}</FormLabel>
                 <FormControl>
                   <ProfessionalCombobox controller={{ ...field }} fetchProfessionals={fetchProfessionals} />
                 </FormControl>
@@ -65,8 +66,8 @@ export function FinancialForm() {
       ],
     },
     {
-      title: 'Procedimentos',
-      description: 'Adicione os procedimentos realizados',
+      title: t('procedures'),
+      description: t('procedures.add.done'),
       fields: [
         <div key="procedures" className="rounded-lg md:border md:p-6">
           <ProcedureComponent form={form} disabled={false} currencyFormat={(v) => String(currencyFormat(v) ?? '')} statusDictionary={statusDictionary} />
@@ -74,8 +75,8 @@ export function FinancialForm() {
       ],
     },
     {
-      title: 'Pagamento',
-      description: 'Informações de pagamento e status',
+      title: t('payment'),
+      description: t('payment.info.status'),
       fields: [
         <div key="payment" className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
@@ -83,7 +84,7 @@ export function FinancialForm() {
             name="price"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Valor total</FormLabel>
+                <FormLabel>{t('amount.total')}</FormLabel>
                 <FormControl>
                   <Input type="number" className="w-full" placeholder="R$ 0,00" value={field.value || 0} onChange={(e) => field.onChange(Number(e.target.value))} />
                 </FormControl>
@@ -95,7 +96,7 @@ export function FinancialForm() {
             name="paid"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Valor pago</FormLabel>
+                <FormLabel>{t('amount.paid')}</FormLabel>
                 <FormControl>
                   <Input type="number" className="w-full" placeholder="R$ 0,00" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                 </FormControl>
@@ -107,7 +108,7 @@ export function FinancialForm() {
             name="paymentMethod"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Forma de pagamento</FormLabel>
+                <FormLabel>{t('payment.method.way')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger className="w-full md:w-full">
@@ -130,7 +131,7 @@ export function FinancialForm() {
             name="status"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Status</FormLabel>
+                <FormLabel>{t('status')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full md:w-full">
@@ -153,7 +154,7 @@ export function FinancialForm() {
             name="installments"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Parcelas</FormLabel>
+                <FormLabel>{t('installments')}</FormLabel>
                 <FormControl>
                   <Input type="number" className="w-full" {...field} onChange={(e) => field.onChange(Number(e.target.value))} value={field.value || ''} />
                 </FormControl>

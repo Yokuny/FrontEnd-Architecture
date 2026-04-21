@@ -8,14 +8,15 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { DataTable } from '@/components/ui/data-table';
 import PatientAnalytics from './@components/patient-analytics';
 import { usePatientList } from './@hooks/use-patient-list';
+import { t } from '@/lib/helpers/translate.helper';
 import { searchSchema } from './@interface/patient.interface';
 import { patientColumns } from './@utils/columns';
 
 export const Route = createFileRoute('/_private/patient/')({
   component: PatientListPage,
   staticData: {
-    title: 'Pacientes',
-    description: 'Gestão e listagem de pacientes cadastrados na clínica',
+    title: t('patients'),
+    description: t('patients.management.description'),
   },
   validateSearch: (search: Record<string, unknown>) => searchSchema.parse(search),
 });
@@ -31,7 +32,7 @@ function PatientListPage() {
         <CardAction>
           <Button onClick={() => navigate({ to: '/patient/add' })}>
             <Add className="size-4" />
-            <span className="sr-only md:not-sr-only">Adicionar</span>
+            <span className="sr-only md:not-sr-only">{t('add')}</span>
           </Button>
         </CardAction>
       </CardHeader>
@@ -46,7 +47,7 @@ function PatientListPage() {
             data={data}
             columns={columns}
             searchable
-            searchPlaceholder="Buscar por nome ou email"
+            searchPlaceholder={t('search.by.name.or.email')}
             page={page}
             size={size}
             onPageChange={handlePageChange}

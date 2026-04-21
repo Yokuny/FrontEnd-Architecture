@@ -14,6 +14,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
 import DefaultLoading from '../default-loading';
 
@@ -68,7 +69,7 @@ function AccordionRow<T>({
             <TableCell className="w-14 px-4 align-middle">
               <Button
                 data-expand-toggle
-                aria-label={isOpen ? 'Recolher linha' : 'Expandir linha'}
+                aria-label={isOpen ? t('collapse.row') : t('expand.row')}
                 className="h-7 w-12 text-muted-foreground"
                 variant="outline"
                 onClick={(e) => {
@@ -107,7 +108,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
   columns,
   renderExpanded,
   className,
-  searchPlaceholder = 'Buscar...',
+  searchPlaceholder = t('search.placeholder'),
   searchable = true,
   columnSelector = true,
   itemsPerPage = 10,
@@ -213,7 +214,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         {showPagination ? (
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground text-sm">Exibir</span>
+            <span className="text-muted-foreground text-sm">{t('data.table.show')}</span>
             <Select
               value={String(pageSize)}
               onValueChange={(val) => {
@@ -231,7 +232,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
                 <SelectItem value="50">50</SelectItem>
               </SelectContent>
             </Select>
-            <span className="text-muted-foreground text-sm">resultados</span>
+            <span className="text-muted-foreground text-sm">{t('data.table.results')}</span>
           </div>
         ) : (
           <div /> /* spacer */
@@ -259,7 +260,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
                     <ColumnIcon className="mr-2 hidden size-3.5 sm:inline" />
-                    Colunas
+                    {t('data.table.columns')}
                     <ArrowDownIcon className="ml-2 size-3" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -315,11 +316,11 @@ export function DataTableAccordion<T extends Record<string, any>>({
                           <DropdownMenuContent align="start">
                             <DropdownMenuItem onClick={() => handleSort(column.key)}>
                               <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
-                              Crescente
+                              {t('sort.ascending')}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setSortConfig({ key: column.key, direction: 'desc' })}>
                               <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
-                              Decrescente
+                              {t('sort.descending')}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -366,7 +367,8 @@ export function DataTableAccordion<T extends Record<string, any>>({
       {showPagination && sortedData.length > 0 && (
         <div className="flex flex-col gap-4 pt-1 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-pretty text-muted-foreground text-sm">
-            Exibindo {(currentPage - 1) * pageSize + 1} a {Math.min(currentPage * pageSize, sortedData.length)} de {sortedData.length} resultados
+            {t('data.table.showing')} {(currentPage - 1) * pageSize + 1} {t('data.table.to')} {Math.min(currentPage * pageSize, sortedData.length)} {t('data.table.of')}{' '}
+            {sortedData.length} {t('data.table.results')}
           </p>
           <div className="flex items-center gap-1">
             <Button
@@ -375,10 +377,10 @@ export function DataTableAccordion<T extends Record<string, any>>({
               className="h-8 w-8"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              aria-label="Página anterior"
+              aria-label={t('previous.page')}
             >
               <ChevronLeft className="size-4" />
-              <span className="sr-only">Anterior</span>
+              <span className="sr-only">{t('pagination.previous')}</span>
             </Button>
 
             {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
@@ -402,7 +404,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
                   size="icon"
                   className="h-8 w-8"
                   onClick={() => setCurrentPage(pageNumber)}
-                  aria-label={`Ir para a página ${pageNumber}`}
+                  aria-label={`${t('pagination.go.to.page')} ${pageNumber}`}
                 >
                   {pageNumber}
                 </Button>
@@ -421,10 +423,10 @@ export function DataTableAccordion<T extends Record<string, any>>({
               className="h-8 w-8"
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              aria-label="Próxima página"
+              aria-label={t('next.page')}
             >
               <ChevronRight className="size-4" />
-              <span className="sr-only">Próxima</span>
+              <span className="sr-only">{t('pagination.next')}</span>
             </Button>
           </div>
         </div>

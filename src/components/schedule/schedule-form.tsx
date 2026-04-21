@@ -1,4 +1,5 @@
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { ScheduleFormContent } from './schedule-form-content';
 
@@ -13,8 +14,8 @@ export function ScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFormP
   return (
     <DialogContent className="max-h-[90vh] overflow-y-auto">
       <DialogHeader>
-        <DialogTitle>Agendamento</DialogTitle>
-        <DialogDescription>{event?._id ? 'Editar detalhes do agendamento' : 'Adicionar um novo agendamento'}</DialogDescription>
+        <DialogTitle>{t('dialog.appointment')}</DialogTitle>
+        <DialogDescription>{event?._id ? t('dialog.appointment.edit') : t('dialog.appointment.add')}</DialogDescription>
       </DialogHeader>
 
       <ScheduleFormContent event={event} onClose={onClose} onSave={onSave} onDelete={onDelete} />

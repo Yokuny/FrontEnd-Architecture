@@ -15,9 +15,9 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatPhone } from '@/lib/helpers/formatter.helper';
-import { cn } from '@/lib/utils/cn.util';
+import { t } from '@/lib/helpers/translate.helper';
 import { useScheduleForm } from '@/routes/_private/schedule/@hooks/use-schedule-form';
-import type { ScheduleFormProps } from '@/routes/_private/schedule/@interface/schedule.interface';
+import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 
 export type ScheduleFormContentProps = ScheduleFormProps & {
   /** Quando true, não renderiza o rodapé (ex.: página com botão Salvar no header). */
@@ -93,13 +93,13 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
               <ScrollArea className="w-full max-w-xs md:max-w-none">
                 <TabsList className="gap-1">
                   <TabsTrigger value="appointment" className="rounded-md data-[state=active]:shadow-none">
-                    Atendimento
+                    {t('appointment')}
                   </TabsTrigger>
                   <TabsTrigger value="newpatient" className="rounded-md data-[state=active]:shadow-none">
-                    Novo Paciente
+                    {t('new.patient.tab')}
                   </TabsTrigger>
                   <TabsTrigger value="roomevent" className="rounded-md data-[state=active]:shadow-none">
-                    Evento na sala
+                    {t('room.event')}
                   </TabsTrigger>
                 </TabsList>
                 <ScrollBar orientation="horizontal" />
@@ -109,8 +109,8 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                     className={layoutClassName}
                     sections={[
                       {
-                        title: 'Paciente e profissional',
-                        description: 'Selecione quem será atendido e o profissional responsável.',
+                        title: t('section.patient.professional'),
+                        description: t('section.patient.professional.description'),
                         fields: [
                           <div key="patient-professional" className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             <FormField
@@ -118,7 +118,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                               name="Patient"
                               render={({ field }) => (
                                 <FormItem className="flex flex-col">
-                                  <FormLabel>Paciente</FormLabel>
+                                  <FormLabel>{t('patient')}</FormLabel>
                                   <FormControl>
                                     <PatientCombobox
                                       controller={{
@@ -140,7 +140,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                               name="Professional"
                               render={({ field }) => (
                                 <FormItem className="flex flex-col">
-                                  <FormLabel>Profissional</FormLabel>
+                                  <FormLabel>{t('professional.label')}</FormLabel>
                                   <FormControl>
                                     <ProfessionalCombobox
                                       controller={{
@@ -169,8 +169,8 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                     className={layoutClassName}
                     sections={[
                       {
-                        title: 'Evento na sala',
-                        description: 'Defina um título para o bloqueio ou uso da sala.',
+                        title: t('room.event'),
+                        description: t('room.event.description'),
                         fields: [
                           <FormField
                             key="title"
@@ -178,9 +178,9 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                             name="title"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Título do evento</FormLabel>
+                                <FormLabel>{t('event.title')}</FormLabel>
                                 <FormControl>
-                                  <Input {...field} placeholder="Descreva o evento da sala" />
+                                  <Input {...field} placeholder={t('room.event.placeholder')} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -197,8 +197,8 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                     className={layoutClassName}
                     sections={[
                       {
-                        title: 'Novo paciente',
-                        description: 'Cadastre os dados básicos e o profissional do atendimento.',
+                        title: t('new.patient.section'),
+                        description: t('new.patient.section.description'),
                         fields: [
                           <div key="new-patient-fields" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <FormField
@@ -206,9 +206,9 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                               name="patient.name"
                               render={({ field }) => (
                                 <FormItem className="flex flex-col sm:col-span-2">
-                                  <FormLabel>Nome do paciente</FormLabel>
+                                  <FormLabel>{t('patient.name')}</FormLabel>
                                   <FormControl>
-                                    <Input {...field} placeholder="Nome completo" />
+                                    <Input {...field} placeholder={t('full.name')} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
@@ -219,15 +219,15 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                               name="patient.sex"
                               render={({ field }) => (
                                 <FormItem className="flex flex-col">
-                                  <FormLabel>Sexo</FormLabel>
+                                  <FormLabel>{t('sex')}</FormLabel>
                                   <FormControl>
                                     <Select value={field.value} onValueChange={field.onChange}>
                                       <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Selecione" />
+                                        <SelectValue placeholder={t('select.generic')} />
                                       </SelectTrigger>
                                       <SelectContent>
-                                        <SelectItem value="M">Masculino</SelectItem>
-                                        <SelectItem value="F">Feminino</SelectItem>
+                                        <SelectItem value="M">{t('sex.male')}</SelectItem>
+                                        <SelectItem value="F">{t('sex.female')}</SelectItem>
                                       </SelectContent>
                                     </Select>
                                   </FormControl>
@@ -240,7 +240,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                               name="patient.phone"
                               render={({ field }) => (
                                 <FormItem className="flex flex-col">
-                                  <FormLabel>Telefone</FormLabel>
+                                  <FormLabel>{t('phone')}</FormLabel>
                                   <FormControl>
                                     <Input
                                       placeholder="(00) 0000-0000"
@@ -260,7 +260,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                               name="Professional"
                               render={({ field }) => (
                                 <FormItem className="flex flex-col sm:col-span-2">
-                                  <FormLabel>Profissional</FormLabel>
+                                  <FormLabel>{t('professional.label')}</FormLabel>
                                   <FormControl>
                                     <ProfessionalCombobox
                                       controller={{
@@ -290,8 +290,8 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
               className={layoutClassName}
               sections={[
                 {
-                  title: 'Data e horário',
-                  description: 'Defina início, fim e se o evento é o dia inteiro.',
+                  title: t('section.datetime'),
+                  description: t('section.datetime.description'),
                   fields: [
                     <DateTimePicker
                       key="schedule-datetime"
@@ -317,13 +317,13 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
       {(!hideFooter || (hideFooter && formId)) && (
         <FooterShell hideFooter={hideFooter} formId={formId}>
           {event?._id && (
-            <Button variant="outline" onClick={handleDelete} disabled={isLoading} aria-label="Apagar agendamento">
+            <Button variant="outline" onClick={handleDelete} disabled={isLoading} aria-label={t('delete.appointment')}>
               <Delete className="size-4 text-destructive" aria-hidden="true" />
             </Button>
           )}
           <Button variant="outline" onClick={handleCancel} disabled={isLoading}>
             <Back className="size-4 md:hidden" />
-            <span className="hidden md:block">Cancelar</span>
+            <span className="hidden md:block">{t('cancel')}</span>
           </Button>
           {!(form.getValues('Room') || selectedRoom) ? (
             <Select
@@ -335,7 +335,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
               }}
             >
               <SelectTrigger className="w-full overflow-x-hidden">
-                <SelectValue placeholder={rooms.length ? 'Selecione a sala' : 'Sem salas disponíveis'} />
+                <SelectValue placeholder={rooms.length ? t('select.room.field') : t('no.rooms.available')} />
               </SelectTrigger>
               <SelectContent>
                 {rooms.map((room) => (
@@ -355,14 +355,14 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                   setSelectedRoom('');
                   setSelectedRoomName('');
                 }}
-                aria-label="Alterar sala"
+                aria-label={t('change.room')}
               >
                 <Edit className="size-4" />
               </Button>
               {!(hideFooter && formId) && (
                 <Button type={formId ? 'submit' : 'button'} form={formId} onClick={formId ? undefined : () => void handleSave()} disabled={isLoading} className="w-full">
                   {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
-                  {isEditMode ? 'Salvar' : `Agendar em ${selectedRoomName || ''}`}
+                  {isEditMode ? t('save') : `${t('book.in')} ${selectedRoomName || ''}`}
                 </Button>
               )}
             </>

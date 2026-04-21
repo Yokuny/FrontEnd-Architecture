@@ -5,6 +5,7 @@ import { ScheduleFormContent } from '@/components/schedule';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 
 const SCHEDULE_ADD_FORM_ID = 'schedule-add-form';
@@ -12,8 +13,8 @@ const SCHEDULE_ADD_FORM_ID = 'schedule-add-form';
 export const Route = createFileRoute('/_private/schedule/add/')({
   component: ScheduleAddPage,
   staticData: {
-    title: 'Novo Agendamento',
-    description: 'Criação de atendimentos e eventos na agenda clínica.',
+    title: t('new.appointment.page'),
+    description: t('new.appointment.page.description'),
   },
 });
 
@@ -39,7 +40,7 @@ function ScheduleAddPage() {
         <CardAction>
           <Button type="submit" form={SCHEDULE_ADD_FORM_ID} disabled={isBusy} className="ml-auto">
             {isBusy ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Salvar</span>
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>
       </CardHeader>

@@ -33,7 +33,7 @@ export default function UploadImage({ value, onAddFile, maxSize, className, heig
       {value ? (
         <>
           <ItemMedia variant="image" className="h-full w-full">
-            <img src={value} alt="Preview" className="h-full w-full object-contain" />
+            <img src={value} alt={t('image.preview')} className="h-full w-full object-contain" />
           </ItemMedia>
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
             <div className="flex size-10 items-center justify-center rounded-md text-white hover:bg-white/20">

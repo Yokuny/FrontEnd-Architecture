@@ -2,13 +2,14 @@ import type { UseFormReturn } from 'react-hook-form';
 import DefaultFormLayout, { type FormSection } from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { t } from '@/lib/helpers/translate.helper';
 import type { PasswordUpdate } from '@/lib/interfaces/schemas/user.schema';
 
 export function AccessForm({ form, isPending }: AccessFormProps) {
   const sections: FormSection[] = [
     {
-      title: 'Alteração de Senha',
-      description: 'Atualize sua senha para manter sua conta segura.',
+      title: t('password.change.title'),
+      description: t('password.change.description'),
       fields: [
         <FormField
           key="oldPassword"
@@ -16,9 +17,9 @@ export function AccessForm({ form, isPending }: AccessFormProps) {
           name="oldPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Senha antiga</FormLabel>
+              <FormLabel>{t('password.old')}</FormLabel>
               <FormControl>
-                <Input placeholder="Digite sua senha antiga" type="password" disabled={isPending} {...field} />
+                <Input placeholder={t('password.old.placeholder')} type="password" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -30,9 +31,9 @@ export function AccessForm({ form, isPending }: AccessFormProps) {
           name="newPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nova senha</FormLabel>
+              <FormLabel>{t('new.password')}</FormLabel>
               <FormControl>
-                <Input placeholder="Digite uma nova senha" type="password" disabled={isPending} {...field} />
+                <Input placeholder={t('password.new.placeholder')} type="password" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -44,9 +45,9 @@ export function AccessForm({ form, isPending }: AccessFormProps) {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirmar senha</FormLabel>
+              <FormLabel>{t('password.confirm.label')}</FormLabel>
               <FormControl>
-                <Input placeholder="Repita a nova senha" type="password" disabled={isPending} {...field} />
+                <Input placeholder={t('password.repeat.placeholder')} type="password" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

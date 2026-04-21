@@ -2,6 +2,7 @@ import { differenceInMinutes, isPast } from 'date-fns';
 import { useMemo } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { getBorderRadiusClasses, getEventColorClasses } from '@/lib/helpers/calendar.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
 import type { EventItemProps, EventWrapperProps } from '../@interface/schedule.interface';
 import { formatTimeWithOptionalMinutes } from '../@utils/schedule.utils';
@@ -78,7 +79,7 @@ export function EventItem({
   }, [displayStart, displayEnd]);
 
   const getEventTime = () => {
-    if (event.allDay) return 'Dia inteiro';
+    if (event.allDay) return t('all.day');
     if (durationMinutes < 45) {
       return formatTimeWithOptionalMinutes(displayStart);
     }
@@ -157,7 +158,7 @@ export function EventItem({
     >
       <span className="font-semibold text-md">{event.title}</span>
       {event.allDay ? (
-        <span className="text-xs opacity-70">Dia inteiro</span>
+        <span className="text-xs opacity-70">{t('all.day')}</span>
       ) : (
         <span className="text-xs opacity-70">
           {formatTimeWithOptionalMinutes(displayStart)} - {formatTimeWithOptionalMinutes(displayEnd)}

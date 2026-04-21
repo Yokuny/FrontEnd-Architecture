@@ -5,6 +5,7 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { GET, request } from '@/lib/api/client.api';
+import { t } from '@/lib/helpers/translate.helper';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import type { ReminderFormData } from '../@interface/reminder.interface';
 
@@ -19,8 +20,8 @@ export function ReminderForm() {
 
   const sections = [
     {
-      title: 'Informações do Lembrete',
-      description: 'Adicione um novo lembrete para um paciente',
+      title: t('reminder.info.title'),
+      description: t('reminder.info.description'),
       fields: [
         <div key="patient-and-date" className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
@@ -29,7 +30,7 @@ export function ReminderForm() {
             name="Patient"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Paciente *</FormLabel>
+                <FormLabel>{t('patient.required')}</FormLabel>
                 <FormControl>
                   <PatientCombobox controller={field} fetchPatients={fetchPatientsCombobox} />
                 </FormControl>
@@ -43,7 +44,7 @@ export function ReminderForm() {
             name="scheduledDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Data do lembrete *</FormLabel>
+                <FormLabel>{t('reminder.date.required')}</FormLabel>
                 <FormControl>
                   <DatePickerButton date={field.value ? new Date(field.value) : undefined} onSelect={(date) => field.onChange(date?.toISOString())} />
                 </FormControl>
@@ -55,8 +56,8 @@ export function ReminderForm() {
       ],
     },
     {
-      title: 'Descrição',
-      description: 'Detalhes do lembrete',
+      title: t('description'),
+      description: t('reminder.details'),
       fields: [
         <FormField
           key="description"
@@ -64,9 +65,9 @@ export function ReminderForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Descrição *</FormLabel>
+              <FormLabel>{t('description.required')}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Ex: Ligar para confirmar consulta" />
+                <Input {...field} placeholder={t('reminder.description.example')} />
               </FormControl>
               <FormMessage />
             </FormItem>

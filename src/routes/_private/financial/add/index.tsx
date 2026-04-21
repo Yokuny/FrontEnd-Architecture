@@ -5,14 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import { FinancialForm } from './@components/financial-form';
 import { useFinancialCreateForm } from './@hooks/use-financial-form';
 
 export const Route = createFileRoute('/_private/financial/add/')({
   component: FinancialAddPage,
   staticData: {
-    title: 'Novo Registro',
-    description: 'Criação de transações financeiras manuais.',
+    title: t('record.new.title'),
+    description: t('record.new.description'),
   },
 });
 
@@ -25,7 +26,7 @@ function FinancialAddPage() {
         <CardAction>
           <Button type="submit" form="financial-form" disabled={isPending} className="ml-auto">
             {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Cadastrar</span>
+            <span className="sr-only md:not-sr-only">{t('register')}</span>
           </Button>
         </CardAction>
       </CardHeader>

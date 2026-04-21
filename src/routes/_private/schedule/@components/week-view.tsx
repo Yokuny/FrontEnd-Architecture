@@ -22,6 +22,7 @@ import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
 import { EndHour, StartHour, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 import type { PositionedEvent, WeekViewProps } from '../@interface/schedule.interface';
@@ -154,7 +155,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
       {showAllDaySection && (
         <div className="border-accent border-b bg-muted">
           <div className="grid grid-cols-8">
-            <div className="flex items-center justify-center border-accent border-r text-center text-muted-foreground text-xs">Dia inteiro</div>
+            <div className="flex items-center justify-center border-accent border-r text-center text-muted-foreground text-xs">{t('all.day')}</div>
             {days.map((day, dayIndex) => {
               const dayAllDayEvents = allDayEvents.filter((event) => {
                 const eventStart = new Date(event.start);

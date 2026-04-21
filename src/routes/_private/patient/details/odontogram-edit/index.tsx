@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Spinner } from '@/components/ui/spinner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientQuery } from '@/query/patient';
 import { ToothStatusPicker } from './@components/tooth-status-picker';
 import { deciduousTeethNumbers, permanentTeethNumbers } from './@consts/tooth-data';
@@ -22,8 +23,8 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/patient/details/odontogram-edit/')({
   component: OdontogramEditPage,
   staticData: {
-    title: 'Atualizar Odontograma',
-    description: 'Atualize o status dos dentes do paciente.',
+    title: t('update.odontogram'),
+    description: t('update.odontogram.description'),
   },
   validateSearch: searchSchema,
 });
@@ -40,8 +41,8 @@ function OdontogramEditPage() {
 
   const sections = [
     {
-      title: 'Mapa do Estado Atual',
-      description: 'Acompanhamento detalhado da saúde bucal. Registre as condições atuais dos dentes (cáries, restaurações, extrações e outras observações).',
+      title: t('current.state.map'),
+      description: t('current.state.map.description'),
       layout: 'vertical' as const,
       fields: [
         <div key="odontogram-tabs" className="space-y-5">
@@ -84,8 +85,8 @@ function OdontogramEditPage() {
                       })}
                       <div className="flex w-full justify-center">
                         <TabsList className="grid h-auto w-fit grid-cols-2">
-                          <TabsTrigger value="permanentes">Permanentes</TabsTrigger>
-                          <TabsTrigger value="deciduos">Decíduos</TabsTrigger>
+                          <TabsTrigger value="permanentes">{t('teeth.permanent')}</TabsTrigger>
+                          <TabsTrigger value="deciduos">{t('teeth.deciduous')}</TabsTrigger>
                         </TabsList>
                       </div>
                     </Tabs>
@@ -106,7 +107,7 @@ function OdontogramEditPage() {
         <CardAction>
           <Button type="button" onClick={onSubmit} disabled={isSubmitting || isLoadingPatient || !patient}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Salvar</span>
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>
       </CardHeader>

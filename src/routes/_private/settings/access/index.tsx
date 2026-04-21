@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import { type PasswordUpdate, passwordUpdateSchema } from '@/lib/interfaces/schemas/user.schema';
 import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
 import { AccessForm } from './@components/access-form';
@@ -14,8 +15,8 @@ import { AccessForm } from './@components/access-form';
 export const Route = createFileRoute('/_private/settings/access/')({
   component: SettingsAccess,
   staticData: {
-    title: 'Acesso',
-    description: 'Configure a senha de acesso ao sistema.',
+    title: t('access'),
+    description: t('access.page.description'),
   },
 });
 
@@ -34,7 +35,7 @@ export function SettingsAccess() {
 
   const onSubmit = async (values: PasswordUpdate) => {
     if (values.newPassword !== values.confirmPassword) {
-      toast.error('Você digitou senhas diferentes');
+      toast.error(t('password.mismatch'));
       return;
     }
 
@@ -53,7 +54,7 @@ export function SettingsAccess() {
         <CardAction>
           <Button type="submit" form="access-form" disabled={changePassword.isPending}>
             {changePassword.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Atualizar senha</span>
+            <span className="sr-only md:not-sr-only">{t('password.update')}</span>
           </Button>
         </CardAction>
       </CardHeader>

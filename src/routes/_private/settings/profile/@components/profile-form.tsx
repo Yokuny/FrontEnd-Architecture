@@ -3,14 +3,15 @@ import DefaultFormLayout, { type FormSection } from '@/components/default-form-l
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { t } from '@/lib/helpers/translate.helper';
 import type { Profile } from '@/lib/interfaces/schemas/user.schema';
 import type { PartialUser } from '@/lib/interfaces/user.interface';
 
 export function ProfileForm({ form, isPending, user }: ProfileFormProps) {
   const sections: FormSection[] = [
     {
-      title: 'Informações Básicas',
-      description: 'Atualize seus dados pessoais e de acesso.',
+      title: t('basic.info'),
+      description: t('profile.basic.description'),
       fields: [
         <FormField
           key="name"
@@ -18,16 +19,16 @@ export function ProfileForm({ form, isPending, user }: ProfileFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome</FormLabel>
+              <FormLabel>{t('name')}</FormLabel>
               <FormControl>
-                <Input placeholder="Nome de usuário" disabled={isPending} {...field} />
+                <Input placeholder={t('username')} disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />,
         <div key="email" className="flex flex-col gap-2">
-          <FormLabel>E-mail</FormLabel>
+          <FormLabel>{t('email')}</FormLabel>
           <Input disabled value={user?.email || ''} />
         </div>,
         <FormField
@@ -41,9 +42,9 @@ export function ProfileForm({ form, isPending, user }: ProfileFormProps) {
                 <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
               </Avatar>
               <div className="w-full space-y-2">
-                <FormLabel>Imagem de perfil (URL)</FormLabel>
+                <FormLabel>{t('profile.image.url')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="URL da imagem..." disabled={isPending} {...field} />
+                  <Input placeholder={t('image.url.placeholder')} disabled={isPending} {...field} />
                 </FormControl>
                 <FormMessage />
               </div>

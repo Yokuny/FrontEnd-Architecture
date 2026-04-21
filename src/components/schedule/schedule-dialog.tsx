@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ItemDescription } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
+import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { useScheduleDetailQuery } from '@/query/schedule';
 import { ScheduleForm } from './schedule-form';
@@ -100,7 +101,7 @@ function EventRenderWrapper({ event, onEdit, onClose }: { event: PartialSchedule
             <Skeleton className="h-7 w-[200px] md:h-8 md:w-[250px]" />
           </div>
           <div className="flex flex-col gap-4 md:gap-6 md:px-6">
-            <ItemDescription>Atendimento</ItemDescription>
+            <ItemDescription>{t('appointment')}</ItemDescription>
             <div className="flex w-full flex-col gap-4 md:flex-row md:gap-6">
               <Skeleton className="flex w-full flex-row items-start py-16 md:max-w-lg md:flex-col" />
               <div className="flex w-full flex-row items-start justify-between gap-4 md:flex-col">

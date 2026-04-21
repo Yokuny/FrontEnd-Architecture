@@ -4,6 +4,7 @@ import { ClipboardCheckIcon } from '@/components/icons/ClipboardCheck.Icon';
 import { ScheduleDialog } from '@/components/schedule/schedule-dialog';
 import { Button } from '@/components/ui/button';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import { t } from '@/lib/helpers/translate.helper';
 import { scheduleKeys } from '@/query/schedule';
 
 export function ScheduleDialogSwitcher() {
@@ -24,9 +25,9 @@ export function ScheduleDialogSwitcher() {
 
   return (
     <>
-      <Button type="button" size="icon" variant="secondary" onClick={() => setOpen(true)} aria-label="Novo agendamento">
+      <Button type="button" size="icon" variant="secondary" onClick={() => setOpen(true)} aria-label={t('schedule.new')}>
         <ClipboardCheckIcon size={16} className="text-foreground" />
-        <span className="sr-only">Novo agendamento</span>
+        <span className="sr-only">{t('schedule.new')}</span>
       </Button>
       <ScheduleDialog open={open} onOpenChange={setOpen} onClose={handleClose} event={null} onSave={handleSave} onDelete={handleDelete} />
     </>

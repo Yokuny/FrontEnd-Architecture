@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { PUT, request } from '@/lib/api/client.api';
+import { t } from '@/lib/helpers/translate.helper';
 import { type NewPatientOdontogram, patientOdontogramSchema } from '@/lib/interfaces/schemas/patient.schema';
 import type { ToothStatusType } from '../@consts/tooth-data';
 
@@ -53,7 +54,7 @@ export function useOdontogramEditForm(patientId: string | undefined, initialOdon
       toast.success(res.message);
       onCancel();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao atualizar odontograma');
+      toast.error(e instanceof Error ? e.message : t('error.update.odontogram'));
     } finally {
       setIsSubmitting(false);
     }

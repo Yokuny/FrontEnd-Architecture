@@ -13,7 +13,6 @@ export const Route = createFileRoute('/_public/auth/finish-signup/$code/')({
 function FinishSignupPage() {
   const { code } = Route.useParams();
   const { data, isPending, isError, error } = usePasskeyQuery(code);
-  alert(JSON.stringify({ data, isPending, isError, error }, null, 2));
 
   if (isPending) {
     return (
@@ -41,7 +40,7 @@ function FinishSignupPage() {
       <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
         <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
           <div className="flex flex-col items-center gap-4 py-4 text-center">
-            <ItemDescription>Não foi possível carregar as informações de cadastro.</ItemDescription>
+            <ItemDescription>{t('signup.load.error')}</ItemDescription>
             <Link to="/auth" className="font-medium text-foreground text-sm hover:underline">
               ← {t('back')}
             </Link>

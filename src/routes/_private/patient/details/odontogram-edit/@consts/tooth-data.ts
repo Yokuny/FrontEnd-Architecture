@@ -1,13 +1,15 @@
+import { t } from '@/lib/helpers/translate.helper';
+
 export const toothStatusOptions = [
-  { value: 'normal', label: 'Normal' },
-  { value: 'restored', label: 'Restaurado' },
-  { value: 'caries', label: 'Cárie' },
-  { value: 'missing', label: 'Ausente' },
-  { value: 'implant', label: 'Implante' },
-  { value: 'periodontitis', label: 'Periodontite' },
-  { value: 'prosthesis', label: 'Prótese' },
-  { value: 'extracted', label: 'Extraído' },
-  { value: 'other', label: 'Outro' },
+  { value: 'normal', label: t('tooth.status.normal') },
+  { value: 'restored', label: t('tooth.status.restored') },
+  { value: 'caries', label: t('tooth.status.caries') },
+  { value: 'missing', label: t('tooth.status.missing') },
+  { value: 'implant', label: t('tooth.status.implant') },
+  { value: 'periodontitis', label: t('tooth.status.periodontitis') },
+  { value: 'prosthesis', label: t('tooth.status.prosthesis') },
+  { value: 'extracted', label: t('tooth.status.extracted') },
+  { value: 'other', label: t('tooth.status.other') },
 ] as const;
 
 export type ToothStatusType = (typeof toothStatusOptions)[number]['value'];

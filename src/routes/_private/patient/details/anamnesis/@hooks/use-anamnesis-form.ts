@@ -4,6 +4,7 @@ import { type UseFormReturn, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 import { PUT, request } from '@/lib/api/client.api';
+import { t } from '@/lib/helpers/translate.helper';
 import { anamnesisSchema, type UpdateAnamnesis } from '@/lib/interfaces/schemas/patient.schema';
 import { booleanToString, stringToBoolean } from '../@utils/anamnesis-utils';
 
@@ -110,7 +111,7 @@ export function useAnamnesisForm(
       toast.success(res.message);
       onCancel();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao salvar anamnese');
+      toast.error(e instanceof Error ? e.message : t('error.save.anamnesis'));
     } finally {
       setIsSubmitting(false);
     }

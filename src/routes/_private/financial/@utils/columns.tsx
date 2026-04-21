@@ -5,6 +5,7 @@ import type { DataTableColumn } from '@/components/ui/data-table';
 import { Dialog } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { currencyFormat, handleCopy, statusDictionary } from '@/lib/helpers/formatter.helper';
 import type { PartialFinancial } from '@/lib/interfaces/financial.interface';
 import { STATUS_TO_BADGE_VARIANT } from '../@consts/financial.consts';
@@ -12,25 +13,25 @@ import { STATUS_TO_BADGE_VARIANT } from '../@consts/financial.consts';
 export const financialColumns = (navigate: (opts: { to: string; search?: Record<string, string> }) => void): DataTableColumn<PartialFinancial>[] => [
   {
     key: 'updatedAt',
-    header: 'Data',
+    header: t('date'),
     sortable: true,
     render: (_, row) => <span className="text-muted-foreground text-sm">{formatDate(row.updatedAt)}</span>,
   },
   {
     key: 'patient',
-    header: 'Paciente',
+    header: t('patient'),
     sortable: true,
     render: (_, row) => <span className="font-medium text-base">{row.patient}</span>,
   },
   {
     key: 'price',
-    header: 'Valor',
+    header: t('amount'),
     sortable: true,
     render: (_, row) => <span className="text-muted-foreground text-sm">{currencyFormat(row.price)}</span>,
   },
   {
     key: 'status',
-    header: 'Status',
+    header: t('status'),
     sortable: true,
     render: (_, row) => {
       const badgeVariant = STATUS_TO_BADGE_VARIANT[row.status] || 'pending';
@@ -44,7 +45,7 @@ export const financialColumns = (navigate: (opts: { to: string; search?: Record<
   },
   {
     key: '_id',
-    header: 'Ações',
+    header: t('actions'),
     width: '60px',
     render: (_, row) => (
       <Dialog>
@@ -60,14 +61,14 @@ export const financialColumns = (navigate: (opts: { to: string; search?: Record<
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={(e) => {
                 e.stopPropagation();
                 navigate({ to: '/financial/details', search: { id: row._id } });
               }}
             >
-              Editar financeiro
+              {t('financial.edit.menu')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -76,7 +77,7 @@ export const financialColumns = (navigate: (opts: { to: string; search?: Record<
                 handleCopy(row.price.toString());
               }}
             >
-              Copiar preço
+              {t('copy.price')}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={(e) => {
@@ -84,7 +85,7 @@ export const financialColumns = (navigate: (opts: { to: string; search?: Record<
                 handleCopy(row.patient);
               }}
             >
-              Copiar nome do paciente
+              {t('copy.patient.name')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -9,6 +9,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemHeader
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { Anamnesis } from '@/lib/interfaces';
 import { cn } from '@/lib/utils/cn.util';
 
@@ -69,31 +70,34 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
 
   if (anamnesis.mainComplaint) {
     sections.push({
-      title: 'Queixa Principal',
+      title: t('main.complaint.title'),
       fields: [<span key="main-complaint">{capitalizeString(anamnesis.mainComplaint)}</span>],
     });
   }
 
   if (hasIllnesses) {
     sections.push({
-      title: 'Condições Médicas',
+      title: t('medical.conditions'),
       fields: [
         <Table key="illnesses-table" className="border">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-5/12 font-semibold text-xs">Condição</TableHead>
-              <TableHead className="w-1/12 font-semibold text-xs">Status</TableHead>
-              <TableHead className="w-5/12 font-semibold text-xs">Detalhes</TableHead>
+              <TableHead className="w-5/12 font-semibold text-xs">{t('condition')}</TableHead>
+              <TableHead className="w-1/12 font-semibold text-xs">{t('status')}</TableHead>
+              <TableHead className="w-5/12 font-semibold text-xs">{t('details')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {anamnesis.illnesses?.diabetes && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Diabetes{getSeverityDot(true, 'high')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.diabetes')}
+                    {getSeverityDot(true, 'high')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="red">Sim</Badge>
+                  <Badge variant="red">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -101,10 +105,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.illnesses?.tuberculosis && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Tuberculose{getSeverityDot(true, 'high')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.tuberculosis')}
+                    {getSeverityDot(true, 'high')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="red">Sim</Badge>
+                  <Badge variant="red">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -112,10 +119,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.illnesses?.heartProblems && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Problemas cardíacos{getSeverityDot(true, 'high')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.heart')}
+                    {getSeverityDot(true, 'high')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="red">Sim</Badge>
+                  <Badge variant="red">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -123,10 +133,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.illnesses?.highBloodPressure && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Pressão alta{getSeverityDot(true, 'high')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.hypertension')}
+                    {getSeverityDot(true, 'high')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="red">Sim</Badge>
+                  <Badge variant="red">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -134,10 +147,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.illnesses?.arthritis && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Artrite{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.arthritis')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -145,10 +161,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.illnesses?.asthma && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Asma{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.asthma')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -156,10 +175,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.illnesses?.kidneyProblems && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Problemas renais{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.kidney')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -167,10 +189,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.illnesses?.liverProblems && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Problemas hepáticos{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.liver')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -178,10 +203,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.illnesses?.otherIllnesses && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Outras doenças{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('illness.other')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">{capitalizeString(anamnesis.illnesses.otherIllnesses)}</TableCell>
               </TableRow>
@@ -194,24 +222,27 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
 
   if (hasMedication) {
     sections.push({
-      title: 'Medicamentos e Alergias',
+      title: t('medications.allergies'),
       fields: [
         <Table key="medication-table" className="border">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-5/12 font-semibold text-xs">Aspecto</TableHead>
-              <TableHead className="w-1/12 font-semibold text-xs">Status</TableHead>
-              <TableHead className="w-5/12 font-semibold text-xs">Detalhes</TableHead>
+              <TableHead className="w-5/12 font-semibold text-xs">{t('aspect')}</TableHead>
+              <TableHead className="w-1/12 font-semibold text-xs">{t('status')}</TableHead>
+              <TableHead className="w-5/12 font-semibold text-xs">{t('details')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {anamnesis.allergicToMedication && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Alérgico a medicamentos{getSeverityDot(true, 'high')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('allergic.medications')}
+                    {getSeverityDot(true, 'high')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="red">Sim</Badge>
+                  <Badge variant="red">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">{anamnesis.medicationAllergy ? capitalizeString(anamnesis.medicationAllergy) : '-'}</TableCell>
               </TableRow>
@@ -219,10 +250,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.takingMedication && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Tomando medicamentos{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('taking.medications')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">{anamnesis.medicationDetails ? capitalizeString(anamnesis.medicationDetails) : '-'}</TableCell>
               </TableRow>
@@ -230,10 +264,13 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
             {anamnesis.underMedicalTreatment && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Em tratamento médico{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('under.medical.treatment')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">{anamnesis.medicalTreatmentDetails ? capitalizeString(anamnesis.medicalTreatmentDetails) : '-'}</TableCell>
               </TableRow>
@@ -246,53 +283,59 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
 
   if (hasSpecialConditions) {
     sections.push({
-      title: 'Condições Especiais',
+      title: t('special.conditions'),
       fields: [
         <Table key="special-conditions-table" className="border">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-5/12 font-semibold text-xs">Condição</TableHead>
-              <TableHead className="w-1/12 font-semibold text-xs">Status</TableHead>
-              <TableHead className="w-5/12 font-semibold text-xs">Detalhes</TableHead>
+              <TableHead className="w-5/12 font-semibold text-xs">{t('condition')}</TableHead>
+              <TableHead className="w-1/12 font-semibold text-xs">{t('status')}</TableHead>
+              <TableHead className="w-5/12 font-semibold text-xs">{t('details')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {anamnesis.pregnant && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Grávida{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('pregnant')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
-                <TableCell className="text-sm">{anamnesis.pregnancyMonth ? `${anamnesis.pregnancyMonth}º mês` : '-'}</TableCell>
+                <TableCell className="text-sm">{anamnesis.pregnancyMonth ? `${anamnesis.pregnancyMonth}${t('pregnancy.month.suffix')}` : '-'}</TableCell>
               </TableRow>
             )}
             {anamnesis.breastfeeding && (
               <TableRow>
                 <TableCell className="text-sm">
-                  <span className="flex items-center gap-1">Amamentando{getSeverityDot(true, 'medium')}</span>
+                  <span className="flex items-center gap-1">
+                    {t('breastfeeding')}
+                    {getSeverityDot(true, 'medium')}
+                  </span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
             )}
             {anamnesis.gumsBleedEasily && (
               <TableRow>
-                <TableCell className="text-sm">Gengiva sangra facilmente</TableCell>
+                <TableCell className="text-sm">{t('gums.bleed.easily')}</TableCell>
                 <TableCell>
-                  <Badge variant="muted">Sim</Badge>
+                  <Badge variant="muted">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
             )}
             {anamnesis.sensitiveTeeth && (
               <TableRow>
-                <TableCell className="text-sm">Dentes sensíveis</TableCell>
+                <TableCell className="text-sm">{t('sensitive.teeth')}</TableCell>
                 <TableCell>
-                  <Badge variant="muted">Sim</Badge>
+                  <Badge variant="muted">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
@@ -305,58 +348,58 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
 
   if (hasHabits) {
     sections.push({
-      title: 'Hábitos',
+      title: t('habits'),
       fields: [
         <Table key="habits-table" className="border">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-5/12 font-semibold text-xs">Hábito</TableHead>
-              <TableHead className="w-1/12 font-semibold text-xs">Status</TableHead>
-              <TableHead className="w-5/12 font-semibold text-xs">Detalhes</TableHead>
+              <TableHead className="w-5/12 font-semibold text-xs">{t('habit')}</TableHead>
+              <TableHead className="w-1/12 font-semibold text-xs">{t('status')}</TableHead>
+              <TableHead className="w-5/12 font-semibold text-xs">{t('details')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {anamnesis.smoker && (
               <TableRow>
-                <TableCell className="text-sm">Fumante</TableCell>
+                <TableCell className="text-sm">{t('smoker')}</TableCell>
                 <TableCell>
-                  <Badge variant="red">Sim</Badge>
+                  <Badge variant="red">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
             )}
             {anamnesis.alcoholConsumer && (
               <TableRow>
-                <TableCell className="text-sm">Consome álcool</TableCell>
+                <TableCell className="text-sm">{t('alcohol.consumer')}</TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
             )}
             {anamnesis.bitesPenOrPencil && (
               <TableRow>
-                <TableCell className="text-sm">Morde caneta/lápis</TableCell>
+                <TableCell className="text-sm">{t('bites.pen.pencil')}</TableCell>
                 <TableCell>
-                  <Badge variant="muted">Sim</Badge>
+                  <Badge variant="muted">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
             )}
             {anamnesis.nailsBiting && (
               <TableRow>
-                <TableCell className="text-sm">Rói unhas</TableCell>
+                <TableCell className="text-sm">{t('nails.biting')}</TableCell>
                 <TableCell>
-                  <Badge variant="muted">Sim</Badge>
+                  <Badge variant="muted">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">-</TableCell>
               </TableRow>
             )}
             {anamnesis.otherHarmfulHabits && (
               <TableRow>
-                <TableCell className="text-sm">Outros hábitos prejudiciais</TableCell>
+                <TableCell className="text-sm">{t('other.harmful.habits')}</TableCell>
                 <TableCell>
-                  <Badge variant="amber">Sim</Badge>
+                  <Badge variant="amber">{t('yes')}</Badge>
                 </TableCell>
                 <TableCell className="text-sm">{capitalizeString(anamnesis.otherHarmfulHabits)}</TableCell>
               </TableRow>
@@ -369,7 +412,7 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
 
   if (hasCriticalInfo) {
     sections.push({
-      title: 'Informações Críticas',
+      title: t('critical.information'),
       fields: [
         <div key="critical-info" className="space-y-2">
           {anamnesis.importantHealthInformation && (
@@ -377,11 +420,11 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
               <div>
                 <div className="flex items-center gap-1">
                   {getSeverityDot(true, 'high')}
-                  <span className="text-muted-foreground text-sm">Informações importantes de saúde:</span>
+                  <span className="text-muted-foreground text-sm">{t('important.health.info.label')}</span>
                 </div>
                 <span className="font-semibold">{capitalizeString(anamnesis.importantHealthInformation)}</span>
               </div>
-              <Badge variant="red">Atenção</Badge>
+              <Badge variant="red">{t('attention')}</Badge>
             </div>
           )}
           {anamnesis.infectiousDisease && (
@@ -389,11 +432,11 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
               <div>
                 <div className="flex items-center gap-1">
                   {getSeverityDot(true, 'high')}
-                  <span className="text-muted-foreground text-sm">Doença infecciosa:</span>
+                  <span className="text-muted-foreground text-sm">{t('infectious.disease.label')}</span>
                 </div>
                 <span className="font-semibold">{capitalizeString(anamnesis.infectiousDisease)}</span>
               </div>
-              <Badge variant="red">Atenção</Badge>
+              <Badge variant="red">{t('attention')}</Badge>
             </div>
           )}
         </div>,
@@ -406,7 +449,7 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
       {attentionCount > 0 && (
         <div className="flex items-center gap-2 rounded-md bg-destructive/5 px-4 py-3 text-destructive">
           <Badge variant="red">{attentionCount}</Badge>
-          <span className="font-semibold">Pontos de atenção encontrados nesta ficha médica.</span>
+          <span className="font-semibold">{t('attention.points.message')}</span>
         </div>
       )}
 
@@ -422,15 +465,15 @@ export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Ana
   return (
     <Item>
       <ItemHeader>
-        <ItemTitle className="text-xl">Registro de Anamnese</ItemTitle>
+        <ItemTitle className="text-xl">{t('anamnesis.record')}</ItemTitle>
         <ItemActions>
           <Button onClick={() => navigate({ to: '/patient/details/anamnesis', search: { id: patientId } })}>
             {hasData ? (
               <>
-                <Edit className="mr-2 size-4" /> Editar
+                <Edit className="mr-2 size-4" /> {t('edit')}
               </>
             ) : (
-              'Cadastrar'
+              t('register')
             )}
           </Button>
         </ItemActions>
@@ -441,7 +484,7 @@ export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Ana
       {hasData && (
         <ItemFooter>
           <div className="flex w-full items-center justify-end gap-2">
-            <ItemDescription>Última atualização:</ItemDescription>
+            <ItemDescription>{t('last.updated')}</ItemDescription>
             <ItemTitle>{formatDate(anamnesis.updatedAt)}</ItemTitle>
           </div>
         </ItemFooter>

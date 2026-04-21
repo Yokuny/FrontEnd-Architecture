@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientQuery } from '@/query/patient';
 import { useIntraoralForm } from './@hooks/use-intraoral-form';
 
@@ -21,8 +22,8 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/patient/details/intraoral/')({
   component: IntraoralFormPage,
   staticData: {
-    title: 'Intraoral',
-    description: 'Avaliação da saúde bucal do paciente.',
+    title: t('intraoral'),
+    description: t('intraoral.page.description'),
   },
   validateSearch: searchSchema,
 });
@@ -42,8 +43,8 @@ function IntraoralFormPage() {
 
   const sections = [
     {
-      title: 'Avaliação da Saúde Bucal',
-      description: 'Higiene, hálito, tártaro, gengiva e mucosa',
+      title: t('oral.health.assessment'),
+      description: t('intraoral.health.fields.description'),
       fields: [
         <div key="health" className="grid grid-cols-2 gap-6 md:grid-cols-3">
           <FormField
@@ -51,16 +52,16 @@ function IntraoralFormPage() {
             name="hygiene"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Higiene</FormLabel>
+                <FormLabel>{t('hygiene')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="normal">Normal</SelectItem>
-                      <SelectItem value="regular">Regular</SelectItem>
-                      <SelectItem value="deficiente">Deficiente</SelectItem>
+                      <SelectItem value="normal">{t('tooth.status.normal')}</SelectItem>
+                      <SelectItem value="regular">{t('condition.regular')}</SelectItem>
+                      <SelectItem value="deficiente">{t('condition.deficient')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -73,16 +74,16 @@ function IntraoralFormPage() {
             name="halitosis"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Hálito</FormLabel>
+                <FormLabel>{t('halitosis')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="ausente">Ausente</SelectItem>
-                      <SelectItem value="moderada">Moderado</SelectItem>
-                      <SelectItem value="forte">Forte</SelectItem>
+                      <SelectItem value="ausente">{t('tooth.status.missing')}</SelectItem>
+                      <SelectItem value="moderada">{t('intensity.moderate')}</SelectItem>
+                      <SelectItem value="forte">{t('intensity.strong')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -95,16 +96,16 @@ function IntraoralFormPage() {
             name="tartar"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tártaro</FormLabel>
+                <FormLabel>{t('tartar')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="ausente">Ausente</SelectItem>
-                      <SelectItem value="pouco">Pouco</SelectItem>
-                      <SelectItem value="muito">Muito</SelectItem>
+                      <SelectItem value="ausente">{t('absent')}</SelectItem>
+                      <SelectItem value="pouco">{t('amount.little')}</SelectItem>
+                      <SelectItem value="muito">{t('amount.much')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -117,16 +118,16 @@ function IntraoralFormPage() {
             name="gums"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Gengiva</FormLabel>
+                <FormLabel>{t('gum')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="normal">Normal</SelectItem>
-                      <SelectItem value="gengivite">Gengivite</SelectItem>
-                      <SelectItem value="periodontite">Periodontite</SelectItem>
+                      <SelectItem value="normal">{t('tooth.status.normal')}</SelectItem>
+                      <SelectItem value="gengivite">{t('gingivitis')}</SelectItem>
+                      <SelectItem value="periodontite">{t('tooth.status.periodontitis')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -139,15 +140,15 @@ function IntraoralFormPage() {
             name="mucosa"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Mucosa</FormLabel>
+                <FormLabel>{t('mucosa')}</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="normal">Normal</SelectItem>
-                      <SelectItem value="alterada">Alterada</SelectItem>
+                      <SelectItem value="normal">{t('tooth.status.normal')}</SelectItem>
+                      <SelectItem value="alterada">{t('altered')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -159,8 +160,8 @@ function IntraoralFormPage() {
       ],
     },
     {
-      title: 'Exame das Partes da Boca',
-      description: 'Língua, palato, assoalho, lábios e observações',
+      title: t('oral.parts.exam'),
+      description: t('oral.parts.exam.description'),
       fields: [
         <div key="regions" className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
@@ -168,9 +169,9 @@ function IntraoralFormPage() {
             name="tongue"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Língua</FormLabel>
+                <FormLabel>{t('tongue')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Como está a língua?" disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.tongue')} disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -181,9 +182,9 @@ function IntraoralFormPage() {
             name="palate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Céu da boca</FormLabel>
+                <FormLabel>{t('palate.roof')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Como está o céu da boca?" disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.palate')} disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -194,9 +195,9 @@ function IntraoralFormPage() {
             name="oralFloor"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Assoalho bucal</FormLabel>
+                <FormLabel>{t('oral.floor')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Descreva o assoalho bucal." disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.oral.floor')} disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -207,9 +208,9 @@ function IntraoralFormPage() {
             name="lips"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Lábios</FormLabel>
+                <FormLabel>{t('lips')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Como estão os lábios?" disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.lips')} disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -220,9 +221,9 @@ function IntraoralFormPage() {
             name="otherObservations"
             render={({ field }) => (
               <FormItem className="md:col-span-2">
-                <FormLabel>Outras Observações</FormLabel>
+                <FormLabel>{t('other.observations')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Outros sintomas? Preocupações?" disabled={isSubmitting} {...field} />
+                  <Input placeholder={t('placeholder.other.symptoms')} disabled={isSubmitting} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -239,11 +240,11 @@ function IntraoralFormPage() {
         <CardAction>
           <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
             <Cross className="size-4" />
-            <span className="sr-only md:not-sr-only">Cancelar</span>
+            <span className="sr-only md:not-sr-only">{t('cancel')}</span>
           </Button>
           <Button type="submit" form="intraoral-form" disabled={isSubmitting || isLoadingPatient || !patient}>
             {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">{hasExisting ? 'Atualizar' : 'Cadastrar'}</span>
+            <span className="sr-only md:not-sr-only">{hasExisting ? t('update') : t('register')}</span>
           </Button>
         </CardAction>
       </CardHeader>

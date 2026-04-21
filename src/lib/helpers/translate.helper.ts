@@ -6,7 +6,7 @@ import translations from '../config/translations.json';
  *
  * @example
  * t('pending') // → "Pendente"
- * t('unknown') // → "unknown"
+ * // chave inexistente devolve o próprio identificador
  */
 export const t = (key: string): string => {
   return (translations as Record<string, string>)[key] ?? key;

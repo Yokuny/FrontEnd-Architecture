@@ -10,6 +10,7 @@ import Upload from '@/components/icons/Upload.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import type { ProcedureData } from '@/lib/interfaces';
 import { useProceduresQuery } from '@/query/procedures';
 import { useSettingsMutations } from '../profile/@hooks/use-settings-api';
@@ -18,8 +19,8 @@ import { SettingsProceduresTable } from './@components/settings-procedures-table
 export const Route = createFileRoute('/_private/settings/procedures/')({
   component: SettingsProcedures,
   staticData: {
-    title: 'Serviços',
-    description: 'Configure os serviços prestados pela clínica.',
+    title: t('services'),
+    description: t('services.page.description'),
   },
 });
 
@@ -49,20 +50,20 @@ export function SettingsProcedures() {
         const content = e.target?.result as string;
         const lines = content.split('\n').filter((line) => line.trim());
         if (lines.length === 0) {
-          toast.error('Arquivo CSV vazio');
+          toast.error(t('csv.empty'));
           return;
         }
 
         const [header, ...rows] = lines;
         if (!header || !header.includes('procedimento') || !header.includes('agrupador')) {
-          toast.error('Formato de CSV inválido. Use o modelo inserido nas planilhas.');
+          toast.error(t('csv.invalid.format'));
           return;
         }
 
         try {
           const data: ProcedureData[] = rows.map((row) => {
             const [procedure, group, costPrice, suggestedPrice, savedPrice, periodicity] = row.split(',').map((val) => val.trim());
-            if (!procedure || !group) throw new Error('Procedimento e agrupador são obrigatórios');
+            if (!procedure || !group) throw new Error(t('procedure.group.required'));
             return {
               procedure,
               group,
@@ -75,9 +76,9 @@ export function SettingsProcedures() {
 
           setProcedures(data);
           setHasChanges(true);
-          toast.success('CSV importado com sucesso!');
+          toast.success(t('csv.import.success'));
         } catch (e: any) {
-          toast.error(`Erro ao processar CSV: ${e.message}`);
+          toast.error(`${t('csv.process.error')}: ${e.message}`);
         }
       };
       reader.readAsText(file);
@@ -98,9 +99,9 @@ export function SettingsProcedures() {
       link.download = 'procedimentos_modelo.csv';
       link.click();
       URL.revokeObjectURL(url);
-      toast.success('CSV baixado com sucesso!');
+      toast.success(t('csv.download.success'));
     } catch (e: any) {
-      toast.error(`Erro ao gerar CSV: ${e.message}`);
+      toast.error(`${t('csv.generate.error')}: ${e.message}`);
     }
   };
 
@@ -134,20 +135,20 @@ export function SettingsProcedures() {
           {hasChanges && (
             <Button onClick={saveProcedure} disabled={updateProcedures.isPending}>
               {updateProcedures.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-              <span className="sr-only md:not-sr-only">Salvar</span>
+              <span className="sr-only md:not-sr-only">{t('save')}</span>
             </Button>
           )}
           <Button onClick={uploadNewCSV}>
             <Upload className="size-4" />
-            <span className="sr-only md:not-sr-only">Upload CSV</span>
+            <span className="sr-only md:not-sr-only">{t('csv.upload')}</span>
           </Button>
           <Button onClick={downloadModelCSV} variant="outline">
             <Download className="size-4" />
-            <span className="sr-only md:not-sr-only">Modelo CSV</span>
+            <span className="sr-only md:not-sr-only">{t('csv.template')}</span>
           </Button>
           <Button onClick={fetchFromBackend} variant="outline">
             <Cloud className="size-4" />
-            <span className="sr-only md:not-sr-only">Buscar dados</span>
+            <span className="sr-only md:not-sr-only">{t('fetch.data')}</span>
           </Button>
         </CardAction>
       </CardHeader>

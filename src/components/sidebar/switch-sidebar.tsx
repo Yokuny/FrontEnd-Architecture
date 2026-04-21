@@ -3,6 +3,7 @@ import { MaximizeIcon } from '@/components/icons/MaximizeSidebar.Icon';
 import { MinimizeIcon } from '@/components/icons/MinimizeSidebar.Icon';
 import { Button } from '@/components/ui/button';
 import { useSidebar } from '@/hooks/use-sidebar-toggle';
+import { t } from '@/lib/helpers/translate.helper';
 
 export function SidebarSwitcher() {
   const { open, isHovered, toggle } = useSidebar();
@@ -16,9 +17,9 @@ export function SidebarSwitcher() {
   const Icon = getIconData();
 
   return (
-    <Button size="icon" variant="secondary" onClick={toggle} aria-label="Toggle Sidebar">
+    <Button size="icon" variant="secondary" onClick={toggle} aria-label={t('sidebar.toggle')}>
       <Icon size={16} />
-      <span className="sr-only">Toggle Sidebar</span>
+      <span className="sr-only">{t('sidebar.toggle')}</span>
     </Button>
   );
 }

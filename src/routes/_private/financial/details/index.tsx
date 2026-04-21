@@ -8,6 +8,7 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
+import { t } from '@/lib/helpers/translate.helper';
 import { useFinancialDetailQuery } from '@/query/financials';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { FinancialDetailContent } from './@components/financial-detail-content';
@@ -19,8 +20,8 @@ export const Route = createFileRoute('/_private/financial/details/')({
   component: FinancialDetailPage,
   validateSearch: searchSchema,
   staticData: {
-    title: 'Detalhes do Registro',
-    description: 'Visualização completa e edição de registro financeiro.',
+    title: t('record.detail.title'),
+    description: t('record.detail.description'),
   },
 });
 
@@ -49,7 +50,7 @@ function FinancialDetailPage() {
         <CardAction>
           <Button type="submit" form="financial-edit-form" disabled={isPending}>
             {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Salvar</span>
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>
       </CardHeader>

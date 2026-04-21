@@ -17,6 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PATCH, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import type { FullPatient, Tooth } from '@/lib/interfaces';
 import type { DbOdontogram, ToothFace } from '@/lib/interfaces/odontogram.interface';
 import { usePatientQuery } from '@/query/patient';
@@ -78,18 +79,18 @@ const OdontogramTeethGrid = ({ odontogram, type }: { odontogram: Tooth[] | null;
 
 const OdontogramLegend = ({ odontogram }: { odontogram: Tooth[] | null }) => {
   const legendItems = [
-    { label: 'Cáries e Periodontites', statuses: ['caries', 'periodontitis'], color: 'bg-amber-100' },
-    { label: 'Próteses e Implantes', statuses: ['prosthesis', 'implant'], color: 'bg-stone-200' },
-    { label: 'Extraídos ou Faltando', statuses: ['missing', 'extracted'], color: 'border bg-transparent' },
-    { label: 'Restaurados, Normal e Outros', statuses: ['restored', 'normal', 'other'], color: 'bg-white' },
+    { label: t('odontogram.legend.caries.periodontitis'), statuses: ['caries', 'periodontitis'], color: 'bg-amber-100' },
+    { label: t('odontogram.legend.prosthesis.implant'), statuses: ['prosthesis', 'implant'], color: 'bg-stone-200' },
+    { label: t('odontogram.legend.extracted.missing'), statuses: ['missing', 'extracted'], color: 'border bg-transparent' },
+    { label: t('odontogram.legend.restored.normal.other'), statuses: ['restored', 'normal', 'other'], color: 'bg-white' },
   ];
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Legenda</TableHead>
-          <TableHead>Dentes</TableHead>
+          <TableHead>{t('legend')}</TableHead>
+          <TableHead>{t('teeth')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -128,8 +129,8 @@ const OdontogramSummaryContent = ({ patient }: { patient: FullPatient }) => {
       ))}
       <div className="flex w-full justify-center">
         <TabsList className="grid h-auto w-fit grid-cols-2">
-          <TabsTrigger value="permanentes">Permanentes</TabsTrigger>
-          <TabsTrigger value="deciduos">Decíduos</TabsTrigger>
+          <TabsTrigger value="permanentes">{t('teeth.permanent')}</TabsTrigger>
+          <TabsTrigger value="deciduos">{t('teeth.deciduous')}</TabsTrigger>
         </TabsList>
       </div>
     </Tabs>
@@ -153,7 +154,7 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
       toast.success(res.message);
       refetch();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao atualizar status');
+      toast.error(e instanceof Error ? e.message : t('error.update.status'));
     } finally {
       setIsLoading(false);
       setIsEditing(null);
@@ -168,14 +169,14 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
             <AccordionItem key={el._id} value={el._id} className="w-full rounded-lg py-1">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex w-full items-center justify-between">
-                  <BadgeIndicator variant={el.finished ? 'completed' : 'in_progress'}>{el.finished ? 'Finalizado' : 'Em andamento'}</BadgeIndicator>
+                  <BadgeIndicator variant={el.finished ? 'completed' : 'in_progress'}>{el.finished ? t('finished') : t('in.progress')}</BadgeIndicator>
                   <p className="text-muted-foreground text-sm tabular-nums">{formatDate(String(el.createdAt))}</p>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="my-6 space-y-6 px-2">
                 <div className="flex items-end gap-2">
                   <div className="flex flex-col gap-2">
-                    <span className="text-muted-foreground text-sm">Status do odontograma</span>
+                    <span className="text-muted-foreground text-sm">{t('odontogram.status.label')}</span>
                     <Select
                       value={String(selectedStatus[el._id] ?? el.finished)}
                       onValueChange={(value: string) => {
@@ -185,27 +186,27 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
                       disabled={isLoading}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue>{(selectedStatus[el._id] ?? el.finished) ? 'Finalizado' : 'Em andamento'}</SelectValue>
+                        <SelectValue>{(selectedStatus[el._id] ?? el.finished) ? t('finished') : t('in.progress')}</SelectValue>
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="true">Finalizado</SelectItem>
-                        <SelectItem value="false">Em andamento</SelectItem>
+                        <SelectItem value="true">{t('finished')}</SelectItem>
+                        <SelectItem value="false">{t('in.progress')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   {isEditing === el._id && (
                     <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.finished)} disabled={isLoading}>
-                      Salvar
+                      {t('save')}
                     </Button>
                   )}
                   <Button onClick={() => navigate({ to: '/odontogram/details', search: { id: el._id } })}>
                     <Edit className="mr-2 size-4" />
-                    Editar
+                    {t('edit')}
                   </Button>
                 </div>
 
                 <div className="w-full">
-                  <span className="mb-4 block font-medium text-sm">Procedimentos por Dente</span>
+                  <span className="mb-4 block font-medium text-sm">{t('procedures.per.tooth')}</span>
                   <div className="flex w-full max-w-md flex-col gap-4 overflow-y-auto">
                     {el.teeth.map((tooth) => {
                       const facesWithProcedures = getFacesWithProcedures(tooth.faces);
@@ -216,7 +217,7 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
                           <ToothNumber toothNumber={tooth.number} />
                           <div className="flex flex-col gap-2">
                             <div className="flex items-baseline gap-2">
-                              <span className="text-muted-foreground text-sm">Dente:</span>
+                              <span className="text-muted-foreground text-sm">{t('tooth.label')}</span>
                               <span className="font-medium">{tooth.number}</span>
                             </div>
                             <div className="space-y-1">
@@ -250,15 +251,15 @@ export const PatientOdontogramView = ({ patient }: { patient: FullPatient }) => 
     <ItemGroup>
       <Item>
         <ItemHeader>
-          <ItemTitle className="text-xl">Histórico de Odontogramas</ItemTitle>
+          <ItemTitle className="text-xl">{t('odontogram.history')}</ItemTitle>
           <ItemActions>
             <Button onClick={() => navigate({ to: '/patient/details/odontogram-add', search: { id: patient._id } })}>
               <Add className="size-4" />
-              <span className="ml-2 hidden md:block">Adicionar</span>
+              <span className="ml-2 hidden md:block">{t('add')}</span>
             </Button>
             <Button onClick={() => navigate({ to: '/patient/details/odontogram-edit', search: { id: patient._id } })}>
               <Dental className="size-4" />
-              <span className="ml-2 hidden md:block">Atualizar</span>
+              <span className="ml-2 hidden md:block">{t('update')}</span>
             </Button>
           </ItemActions>
         </ItemHeader>

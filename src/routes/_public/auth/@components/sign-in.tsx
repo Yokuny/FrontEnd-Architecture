@@ -96,7 +96,7 @@ export function SignIn({ isLoading, setIsLoading }: LogInProps) {
       </div>
       <div className="flex items-center gap-4">
         <Separator className="flex-1" />
-        <span className="text-muted-foreground text-xs uppercase tracking-wide">ou</span>
+        <span className="text-muted-foreground text-xs uppercase tracking-wide">{t('or')}</span>
         <Separator className="flex-1" />
       </div>
 

@@ -7,6 +7,7 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } 
 import { Textarea } from '@/components/ui/textarea';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 import { removeRecordImage, updateRecordImage } from '@/lib/helpers/upload.helper';
 import type { FullPatient } from '@/lib/interfaces';
 import { MedicalRecordImageUpload } from './medicalrecord-image-upload';
@@ -21,8 +22,8 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     if (patient.anamnesis && patient.anamnesis.createdAt !== patient.anamnesis.updatedAt) {
       events.push({
         id: 'anamnesis',
-        title: 'Anamnese Registrada',
-        description: 'Anamnese do paciente foi preenchida e registrada',
+        title: t('anamnesis.recorded.title'),
+        description: t('anamnesis.recorded.description'),
         date: patient.anamnesis.createdAt,
         type: 'anamnesis',
       });
@@ -31,8 +32,8 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     if (patient.intraoral && patient.intraoral.createdAt !== patient.intraoral.updatedAt) {
       events.push({
         id: 'intraoral',
-        title: 'Exame Intraoral',
-        description: 'Exame intraoral foi realizado e documentado',
+        title: t('intraoral.exam.title'),
+        description: t('intraoral.exam.description'),
         date: patient.intraoral.createdAt,
         type: 'intraoral',
       });
@@ -41,8 +42,8 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     patient.odontograms?.forEach((odontogram, index) => {
       events.push({
         id: odontogram._id,
-        title: `Odontograma ${index + 1}`,
-        description: 'Odontograma criado no sistema',
+        title: `${t('odontogram')} ${index + 1}`,
+        description: t('odontogram.created.description'),
         date: odontogram.createdAt,
         type: 'odontogram',
         image: odontogram.image,
@@ -52,7 +53,7 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     patient.schedules?.forEach((schedule) => {
       events.push({
         id: schedule._id,
-        title: 'Consulta Agendada',
+        title: t('appointment.scheduled.title'),
         description: `${statusDictionary(schedule.status)}`,
         date: schedule.start,
         type: 'schedule',
@@ -62,8 +63,8 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     patient.financials?.forEach((financial, index) => {
       events.push({
         id: financial._id,
-        title: `Registro Financeiro ${index + 1}`,
-        description: `${financial.procedures.length} procedimento(s) - ${currencyFormat(financial.procedures.reduce((acc, p) => acc + p.price, 0))}`,
+        title: `${t('financial.record')} ${index + 1}`,
+        description: `${financial.procedures.length} ${t('procedures.count.label')} - ${currencyFormat(financial.procedures.reduce((acc, p) => acc + p.price, 0))}`,
         date: financial.createdAt,
         type: 'financial',
         image: financial.image,
@@ -75,8 +76,8 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     if (sorted.length > 0) {
       sorted.push({
         id: 'patient-creation',
-        title: 'Cadastro do Paciente',
-        description: `${patient.name} foi cadastrado no sistema`,
+        title: t('patient.registration.title'),
+        description: `${patient.name} ${t('patient.registered.suffix')}`,
         date: patient.createdAt,
         type: 'patient',
       });
@@ -111,7 +112,7 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
     <ItemGroup>
       <Item>
         <ItemHeader>
-          <ItemTitle className="text-xl">Histórico de Registros</ItemTitle>
+          <ItemTitle className="text-xl">{t('records.history')}</ItemTitle>
         </ItemHeader>
 
         <ItemContent>
@@ -137,12 +138,12 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
                   <div className="mt-1 flex flex-col gap-2">
                     <Button variant="basic" size="sm" className="w-fit gap-2" onClick={() => toggleDescription(event.id)}>
                       {openDescriptions[event.id] ? <Cross className="size-4" /> : <Chat className="size-4" />}
-                      {openDescriptions[event.id] ? 'Fechar descrição' : 'Adicionar descrição'}
+                      {openDescriptions[event.id] ? t('close.description') : t('add.description')}
                     </Button>
 
                     {openDescriptions[event.id] && (
                       <Textarea
-                        placeholder="Adicione uma descrição..."
+                        placeholder={t('placeholder.add.description')}
                         value={descriptions[event.id] ?? ''}
                         onChange={(e) => setDescriptions((prev) => ({ ...prev, [event.id]: e.target.value }))}
                       />

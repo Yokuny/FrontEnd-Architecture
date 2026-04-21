@@ -23,6 +23,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { usePatientQuery } from '@/query/patient';
 import { PatientForm } from './@components/patient-form';
 import { usePatientApi } from './@hooks/use-patient-api';
+import { t } from '@/lib/helpers/translate.helper';
 import { usePatientForm } from './@hooks/use-patient-form';
 
 const searchSchema = z.object({
@@ -32,8 +33,8 @@ const searchSchema = z.object({
 export const Route = createFileRoute('/_private/patient/add/')({
   component: PatientAddPage,
   staticData: {
-    title: 'Adicionar Paciente',
-    description: 'Página de criação de novo cadastro de paciente.',
+    title: t('add.patient'),
+    description: t('add.patient.page.description'),
   },
   validateSearch: searchSchema,
 });
@@ -101,16 +102,16 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
               <AlertDialogTrigger asChild>
                 <Button type="button" variant="destructive" disabled={deletePatient.isPending || isPending}>
                   {deletePatient.isPending ? <Spinner className="size-4" /> : <Delete className="size-4" />}
-                  <span className="sr-only md:not-sr-only">Excluir</span>
+                  <span className="sr-only md:not-sr-only">{t('exclude')}</span>
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
-                  <AlertDialogDescription>Esta ação não pode ser desfeita e excluirá todos os registros vinculados ao paciente.</AlertDialogDescription>
+                  <AlertDialogTitle>{t('confirm.delete.title')}</AlertDialogTitle>
+                  <AlertDialogDescription>{t('confirm.delete.patient.description')}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                  <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
                   <AlertDialogAction onClick={handleDelete} className="bg-destructive">
                     <Delete className="size-4" />
                   </AlertDialogAction>
@@ -120,7 +121,7 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
           )}
           <Button type="submit" form="patient-form" disabled={isPending} className="ml-auto">
             {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
-            <span className="sr-only md:not-sr-only">Salvar</span>
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>
       </CardHeader>

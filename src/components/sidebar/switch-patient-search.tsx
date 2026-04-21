@@ -56,7 +56,7 @@ export function PatientSearchSwitcher() {
   return (
     <>
       <Button type="button" size="icon" variant="secondary" onClick={() => setOpen(true)} aria-label={t('search.patients')}>
-        <Search size={16} className="text-foreground" />
+        <Search className="size-4 text-foreground" />
         <span className="sr-only">{t('search.patients')}</span>
       </Button>
 
@@ -80,7 +80,7 @@ export function PatientSearchSwitcher() {
                   <div className="flex items-center gap-1">
                     <Button
                       type="button"
-                      variant="ghost"
+                      variant="outline"
                       size="icon"
                       className="size-7"
                       aria-label={`${t('schedule.view')} ${patient.name}`}
@@ -90,7 +90,7 @@ export function PatientSearchSwitcher() {
                     </Button>
                     <Button
                       type="button"
-                      variant="ghost"
+                      variant="outline"
                       size="icon"
                       className="size-7"
                       aria-label={`${t('patient.view')} ${patient.name}`}

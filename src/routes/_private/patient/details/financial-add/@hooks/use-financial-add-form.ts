@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { GET, POST, request } from '@/lib/api/client.api';
 import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+import { t } from '@/lib/helpers/translate.helper';
 
 export function useFinancialAddForm(patientId: string | undefined, onCancel: () => void) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,7 +44,7 @@ export function useFinancialAddForm(patientId: string | undefined, onCancel: () 
     const values = form.getValues();
 
     if (!values.Professional) {
-      toast.error('Selecione o profissional');
+      toast.error(t('select.professional.required'));
       return;
     }
 
@@ -65,7 +66,7 @@ export function useFinancialAddForm(patientId: string | undefined, onCancel: () 
       toast.success(res.message);
       onCancel();
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : 'Erro ao criar registro financeiro');
+      toast.error(e instanceof Error ? e.message : t('error.create.financial'));
     } finally {
       setIsSubmitting(false);
     }
