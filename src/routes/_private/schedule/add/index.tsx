@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import Check from '@/components/icons/Check.Icon';
-import { ScheduleFormContent } from '@/components/schedule/schedule-form-content';
+import { ScheduleFormContent } from '@/components/schedule';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';

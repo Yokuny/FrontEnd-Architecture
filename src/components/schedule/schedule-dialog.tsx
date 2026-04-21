@@ -4,8 +4,8 @@ import { ItemDescription } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { useScheduleDetailQuery } from '@/query/schedule';
-import { ScheduleForm } from '@/routes/_private/schedule/@components/schedule-form';
-import { ScheduleRender } from '@/routes/_private/schedule/@components/schedule-render';
+import { ScheduleForm } from './schedule-form';
+import { ScheduleRender } from './schedule-render';
 
 export type ScheduleDialogProps = {
   /** Elemento que abre o dialog (modo não controlado). */

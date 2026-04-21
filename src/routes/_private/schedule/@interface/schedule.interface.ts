@@ -1,7 +1,7 @@
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import type React from 'react';
-import type { CalendarView, FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import type { CalendarView, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 
 export type CustomDateRange = { from: Date; to: Date };
 
@@ -12,37 +12,12 @@ export interface ScheduleApiParams {
   selectedRoomID: string;
 }
 
-// schedule-form.tsx
-export type ScheduleFormProps = {
-  event: PartialSchedule | null;
-  onClose: () => void;
-  onSave: (event: PartialSchedule) => void;
-  onDelete: (eventId: string) => void;
-};
-
-// event-dialog.tsx
-export type EventDialogProps = {
-  event: PartialSchedule | null;
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (event: PartialSchedule) => void;
-  onDelete: (eventId: string) => void;
-};
-
 // time-update-dialog.tsx
 export type TimeUpdateProps = {
   isOpen: boolean;
   onClose: () => void;
   pendingEvent: PartialSchedule | null;
   onConfirm: (updatedEvent: PartialSchedule) => void;
-};
-
-// schedule-render.tsx
-export type ScheduleRenderProps = {
-  schedule: FullSchedule;
-  event: PartialSchedule;
-  onEdit: () => void;
-  onClose: () => void;
 };
 
 // calendar-dnd-context.tsx

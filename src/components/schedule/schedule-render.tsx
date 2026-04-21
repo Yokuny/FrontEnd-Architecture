@@ -21,11 +21,25 @@ import { PATCH, POST, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
+import type { FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { usePatientsQuery } from '@/query/patients';
 import { useProfessionalsQuery } from '@/query/professionals';
-import { statusOptions } from '../@consts/schedule.consts';
-import type { ScheduleRenderProps } from '../@interface/schedule.interface';
+
+export type ScheduleRenderProps = {
+  schedule: FullSchedule;
+  event: PartialSchedule;
+  onEdit: () => void;
+  onClose: () => void;
+};
+
+const statusOptions = [
+  { value: 'pending', label: 'Pendente' },
+  { value: 'confirmed', label: 'Confirmado' },
+  { value: 'completed', label: 'Concluído' },
+  { value: 'canceled', label: 'Cancelado' },
+  { value: 'noshow', label: 'Não compareceu' },
+];
 
 export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps) {
   const { data: professionals } = useProfessionalsQuery();

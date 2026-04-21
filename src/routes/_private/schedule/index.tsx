@@ -32,10 +32,10 @@ import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { useUserQuery } from '@/query/user';
+import { ScheduleDialog } from '@/components/schedule';
 import { AgendaView } from './@components/agenda-view';
 import { CalendarDndProvider } from './@components/calendar-dnd-context';
 import { DayView } from './@components/day-view';
-import { EventDialog } from './@components/event-dialog';
 import { MonthView } from './@components/month-view';
 import { TimeUpdateDialog } from './@components/time-update-dialog';
 import { WeekView } from './@components/week-view';
@@ -403,9 +403,10 @@ function SchedulePage() {
             <div className={view === 'agenda' ? '' : 'hidden'}>
               <AgendaView currentDate={currentDate} events={events} onEventSelect={handleEventSelect} />
             </div>
-            <EventDialog
+            <ScheduleDialog
               event={selectedEvent}
-              isOpen={isEventDialogOpen}
+              open={isEventDialogOpen}
+              onOpenChange={setIsEventDialogOpen}
               onClose={() => {
                 setIsEventDialogOpen(false);
                 setSelectedEvent(null);
