@@ -51,7 +51,7 @@ export function FinishSignupForm({ userEmail, passkeyId }: FinishSignupFormProps
       <div className="w-full">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-3">
-            <Input value={userEmail} placeholder={t('email')} type="email" className="h-12!" disabled />
+            <Input value={userEmail} placeholder={t('email')} type="email" className="h-14!" disabled />
 
             <FormField
               control={form.control}
@@ -59,7 +59,7 @@ export function FinishSignupForm({ userEmail, passkeyId }: FinishSignupFormProps
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder={t('username')} type="text" autoCapitalize="none" className="h-12!" disabled={completeSignup.isPending} {...field} />
+                    <Input placeholder={t('username')} type="text" autoCapitalize="none" className="h-14!" disabled={completeSignup.isPending} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -78,7 +78,7 @@ export function FinishSignupForm({ userEmail, passkeyId }: FinishSignupFormProps
                       autoCapitalize="none"
                       autoComplete="new-password"
                       autoCorrect="off"
-                      className="h-12!"
+                      className="h-14!"
                       disabled={completeSignup.isPending}
                       {...field}
                     />
@@ -88,8 +88,8 @@ export function FinishSignupForm({ userEmail, passkeyId }: FinishSignupFormProps
               )}
             />
 
-            <Button type="submit" className="h-12! w-full" size="lg" disabled={completeSignup.isPending}>
-              {completeSignup.isPending && <Loader className="mr-2 size-4 animate-spin" />}
+            <Button type="submit" className="w-full" size="lg" disabled={completeSignup.isPending}>
+              {completeSignup.isPending && <Loader className="size-4 animate-spin" />}
               {t('finish.signup')}
             </Button>
           </form>

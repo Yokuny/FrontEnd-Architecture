@@ -52,7 +52,7 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
       <div className="w-full">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-3">
-            <Input value={userEmail} placeholder={t('email')} type="email" className="h-12!" disabled />
+            <Input value={userEmail} placeholder={t('email')} type="email" className="h-14!" disabled />
 
             <FormField
               control={form.control}
@@ -66,7 +66,7 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
                       autoCapitalize="none"
                       autoComplete="new-password"
                       autoCorrect="off"
-                      className="h-12!"
+                      className="h-14!"
                       disabled={resetPassword.isPending}
                       {...field}
                     />
@@ -88,7 +88,7 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
                       autoCapitalize="none"
                       autoComplete="new-password"
                       autoCorrect="off"
-                      className="h-12!"
+                      className="h-14!"
                       disabled={resetPassword.isPending}
                       {...field}
                     />
@@ -98,8 +98,8 @@ export function NewPasswordForm({ userEmail, passkeyId }: NewPasswordFormProps) 
               )}
             />
 
-            <Button type="submit" className="h-12! w-full" size="lg" disabled={resetPassword.isPending}>
-              {resetPassword.isPending && <Loader className="mr-2 size-4 animate-spin" />}
+            <Button type="submit" className="w-full" size="lg" disabled={resetPassword.isPending}>
+              {resetPassword.isPending && <Loader className="size-4 animate-spin" />}
               {t('reset.password')}
             </Button>
           </form>

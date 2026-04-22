@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { ItemDescription } from '@/components/ui/item';
 import { Skeleton } from '@/components/ui/skeleton';
 import { t } from '@/lib/helpers/translate.helper';
 import { usePasskeyQuery } from '@/query/passkey';
-
+import DentalEaseLogo from '../../@components/dental-ease-logo';
 import { FinishSignupForm } from './@components/finish-signup-form';
 
 export const Route = createFileRoute('/_public/auth/finish-signup/$code/')({
@@ -17,6 +18,10 @@ function FinishSignupPage() {
   if (isPending) {
     return (
       <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full items-center justify-between gap-4">
+          <DentalEaseLogo />
+          <ThemeSwitcher />
+        </div>
         <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
           <div className="flex w-full flex-col gap-8">
             <div className="flex flex-col items-center gap-1.5">
@@ -38,6 +43,10 @@ function FinishSignupPage() {
   if (isError) {
     return (
       <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full items-center justify-between gap-4">
+          <DentalEaseLogo />
+          <ThemeSwitcher />
+        </div>
         <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
           <div className="flex flex-col items-center gap-4 py-4 text-center">
             <ItemDescription>{t('signup.load.error')}</ItemDescription>
@@ -53,6 +62,10 @@ function FinishSignupPage() {
   if (data?.content?.email) {
     return (
       <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+        <div className="flex w-full items-center justify-between gap-4">
+          <DentalEaseLogo />
+          <ThemeSwitcher />
+        </div>
         <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
           <FinishSignupForm userEmail={data.content.email} passkeyId={data.id} />
         </div>

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 import Loader from '@/components/icons/Loader.Icon';
+import { ThemeSwitcher } from '@/components/sidebar/switch-theme';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,7 @@ import { ItemDescription, ItemTitle } from '@/components/ui/item';
 import { t } from '@/lib/helpers/translate.helper';
 import { emailSchema } from '@/lib/interfaces/schemas/user.schema';
 import { useAuthApi } from '@/query/auth';
+import DentalEaseLogo from '../@components/dental-ease-logo';
 
 export const Route = createFileRoute('/_public/auth/recovery/')({
   component: RecoveryPasswordPage,
@@ -43,6 +45,10 @@ function RecoveryPasswordPage() {
 
   return (
     <div className="flex w-full max-w-2xl flex-1 flex-col items-center">
+      <div className="flex w-full items-center justify-between gap-4">
+        <DentalEaseLogo />
+        <ThemeSwitcher />
+      </div>
       <div className="flex w-full max-w-sm flex-1 items-center justify-center gap-8">
         <div className="flex w-full flex-col gap-8">
           {/* Header */}
@@ -67,7 +73,7 @@ function RecoveryPasswordPage() {
                           autoCapitalize="none"
                           autoComplete="email"
                           autoCorrect="off"
-                          className="h-12!"
+                          className="h-14!"
                           disabled={isLoading || isDisabled}
                           {...field}
                         />

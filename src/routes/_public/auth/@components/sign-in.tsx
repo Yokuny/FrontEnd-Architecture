@@ -60,7 +60,7 @@ export function SignIn({ isLoading, setIsLoading }: LogInProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder={t('email')} type="email" autoCapitalize="none" autoComplete="email" autoCorrect="off" className="h-12!" disabled={isLoading} {...field} />
+                    <Input placeholder={t('email')} type="email" autoCapitalize="none" autoComplete="email" autoCorrect="off" className="h-14!" disabled={isLoading} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -78,7 +78,7 @@ export function SignIn({ isLoading, setIsLoading }: LogInProps) {
                       autoCapitalize="none"
                       autoComplete="current-password"
                       autoCorrect="off"
-                      className="h-12!"
+                      className="h-14!"
                       disabled={isLoading}
                       {...field}
                     />
@@ -88,7 +88,7 @@ export function SignIn({ isLoading, setIsLoading }: LogInProps) {
               )}
             />
             <Button className="w-full" size="lg" disabled={isLoading}>
-              {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
+              {isLoading && <Loader className="size-4 animate-spin" />}
               {t('login')}
             </Button>
           </form>

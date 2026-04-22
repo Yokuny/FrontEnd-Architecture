@@ -62,7 +62,7 @@ export function SignUp({ isLoading, setIsLoading }: LogInProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder={t('email')} type="email" autoCapitalize="none" autoComplete="email" autoCorrect="off" className="h-12!" disabled={isLoading} {...field} />
+                    <Input placeholder={t('email')} type="email" autoCapitalize="none" autoComplete="email" autoCorrect="off" className="h-14!" disabled={isLoading} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
