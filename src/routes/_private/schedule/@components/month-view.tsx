@@ -73,7 +73,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
       <Header />
       <div className="grid auto-rows-fr">
         {weeks.map((week, weekIndex) => (
-          <div key={`week-${weekIndex}`} className="grid grid-cols-7 [&:last-child>*]:border-b-0">
+          <div key={week[weekIndex].toString()} className="grid grid-cols-7 [&:last-child>*]:border-b-0">
             {week.map((day, dayIndex) => {
               if (!day) return null;
               const dayEvents = getEventsForDay(events, day);

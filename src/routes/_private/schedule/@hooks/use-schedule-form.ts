@@ -26,16 +26,16 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
   const getRoomName = useCallback((id: string | undefined) => getRoomNameUtil(clinic, id), [clinic, getRoomNameUtil]);
   const getPatientName = useCallback((id: string | undefined) => usePatientStore.getState().getName(patients, id), [patients]);
 
-  const [startDateTime, setStartDateTime] = useState<string>('');
-  const [endDateTime, setEndDateTime] = useState<string | undefined>(undefined);
+  const [startDateTime, setStartDateTime] = useState<string>(() => (event ? new Date(event.start).toISOString() : ''));
+  const [endDateTime, setEndDateTime] = useState<string | undefined>(() => (event?.end ? new Date(event.end).toISOString() : undefined));
   const [_selectedPatient, setSelectedPatient] = useState<string>('');
   const [_selectedProfessional, setSelectedProfessional] = useState<string>('');
   const [_selectedFinancial, setSelectedFinancial] = useState<string>('');
   const [_selectedOdontogram, setSelectedOdontogram] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [selectedRoom, setSelectedRoom] = useState<string>('');
+  const [selectedRoom, setSelectedRoom] = useState<string>(() => event?.Room || '');
   const [selectedRoomName, setSelectedRoomName] = useState('');
-  const [allDay, setAllDay] = useState(false);
+  const [allDay, setAllDay] = useState<boolean>(() => event?.allDay || false);
   const [activeTab, setActiveTab] = useState('appointment');
   const [roomEvent, setRoomEvent] = useState(false);
 
