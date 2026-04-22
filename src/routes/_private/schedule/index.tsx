@@ -34,7 +34,7 @@ import { useClinicApi } from '@/query/clinic';
 import { useProfessionalsQuery } from '@/query/professionals';
 import { useUserQuery } from '@/query/user';
 import { AgendaView } from './@components/agenda-view';
-import { CalendarDndProvider } from './@components/calendar-dnd-context';
+import { CalendarDndProvider } from './@components/calendar-dnd-provider';
 import { DayView } from './@components/day-view';
 import { MonthView } from './@components/month-view';
 import { TimeUpdateDialog } from './@components/time-update-dialog';

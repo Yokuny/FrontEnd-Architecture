@@ -4,7 +4,7 @@ import { differenceInDays } from 'date-fns';
 import { useRef, useState } from 'react';
 import type { DraggableEventProps } from '../@interface/schedule.interface';
 
-import { useCalendarDnd } from './calendar-dnd-context';
+import { useCalendarDnd } from './calendar-dnd-provider';
 import { EventItem } from './event-item';
 
 export function DraggableEvent({ event, view, showTime, onClick, height, isMultiDay, multiDayWidth, isFirstDay = true, isLastDay = true }: DraggableEventProps) {

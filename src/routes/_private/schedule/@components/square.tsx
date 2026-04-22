@@ -1,7 +1,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import { cn } from '@/lib/utils/cn.util';
 import type { DroppableCellProps } from '../@interface/schedule.interface';
-import { useCalendarDnd } from './calendar-dnd-context';
+import { useCalendarDnd } from './calendar-dnd-provider';
 
 export function DroppableCell({ id, date, time, children, className, onClick }: DroppableCellProps) {
   const { activeEvent } = useCalendarDnd();
