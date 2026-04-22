@@ -11,10 +11,11 @@ import { translatedStatusLabel } from '@/components/schedule/status-label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DataTable } from '@/components/ui/data-table';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
+import { Item, ItemActions, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { usePatientStore } from '@/hooks/patients';
 import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -33,6 +34,14 @@ export type ScheduleRenderProps = {
   onEdit: () => void;
   onClose: () => void;
 };
+
+function SectionCard({ className, children }: { className?: string; children: React.ReactNode }) {
+  return <div className={cn('rounded-xl border bg-card p-4 md:p-5', className)}>{children}</div>;
+}
+
+function FieldLabel({ children }: { children: React.ReactNode }) {
+  return <span className="font-medium text-muted-foreground text-xs uppercase tracking-wide">{children}</span>;
+}
 
 export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps) {
   const { data: professionals } = useProfessionalsQuery();
@@ -93,7 +102,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
     }
   };
 
-  const renderScheduleDateTime = () => {
+  const renderDateTimeSection = () => {
     const startDate = new Date(schedule.start);
     const endDate = schedule.end ? new Date(schedule.end) : startDate;
     const isSameDay = formatDate(startDate, 'yyyy-MM-dd') === formatDate(endDate, 'yyyy-MM-dd');
@@ -101,101 +110,102 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
     if (schedule.allDay) {
       const daysDuration = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
       return (
-        <Item className="flex-row items-center justify-between gap-4 md:flex-col">
-          <ItemContent className="w-full space-y-2 p-4 md:px-6">
-            <ItemActions className="w-full items-center justify-between gap-2">
-              <ItemDescription>{t('date')}</ItemDescription>
-              <Button variant="outline" size="sm" className="gap-1 text-xs">
-                <Calender className="hidden size-4 md:block" />
-                <ItemTitle className="text-muted-foreground tabular-nums tracking-tight">{t('all.day')}</ItemTitle>
-              </Button>
-            </ItemActions>
-            <ItemActions className="w-full items-center justify-between space-y-0">
-              <ItemTitle className="text-md tabular-nums md:text-xl">{formatDate(startDate, 'dd - MMM')}</ItemTitle>
-              <ItemDescription className="tracking-tight">{formatDate(startDate, 'EEEEEE')}</ItemDescription>
-            </ItemActions>
-          </ItemContent>
+        <div className="flex flex-col gap-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex flex-col gap-1">
+              <FieldLabel>{t('date')}</FieldLabel>
+              <div className="flex items-baseline gap-2">
+                <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(startDate, 'dd MMM yyyy')}</span>
+              </div>
+            </div>
+            <Badge variant="outline" className="gap-1 rounded-full">
+              <Calender className="size-3" />
+              {t('all.day')}
+            </Badge>
+          </div>
 
           {!isSameDay && (
-            <ItemContent className="w-full space-y-2 p-4 md:px-6">
-              <ItemActions className="w-full items-center justify-between gap-2">
-                <ItemDescription>{t('date.end')}</ItemDescription>
-                <Button variant="outline" size="sm" className="gap-1 px-2 text-xs">
-                  <Clock className="hidden size-4 md:block" />
-                  <ItemTitle className="text-muted-foreground tabular-nums tracking-tight">
-                    {daysDuration} {t('duration.days')}
-                  </ItemTitle>
-                </Button>
-              </ItemActions>
-              <ItemActions className="w-full items-center justify-between space-y-0">
-                <ItemTitle className="text-md tabular-nums md:text-xl">{formatDate(endDate, 'dd - MMM')}</ItemTitle>
-                <ItemDescription className="tracking-tight">{formatDate(endDate, 'EEEEEE')}</ItemDescription>
-              </ItemActions>
-            </ItemContent>
+            <>
+              <Separator />
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-col gap-1">
+                  <FieldLabel>{t('date.end')}</FieldLabel>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(endDate, 'dd MMM yyyy')}</span>
+                  </div>
+                </div>
+                <Badge variant="outline" className="gap-1 rounded-full">
+                  <Clock className="size-3" />
+                  {daysDuration} {t('duration.days')}
+                </Badge>
+              </div>
+            </>
           )}
-        </Item>
+        </div>
       );
     }
 
     if (isSameDay) {
       return (
-        <Item className="flex-row items-center justify-between gap-4 md:flex-col">
-          <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
-            <ItemDescription>{t('day')}</ItemDescription>
-            <ItemTitle className="tabular-nums md:text-xl">{formatDate(schedule?.start)}</ItemTitle>
-          </Item>
-          <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
-            <ItemDescription>{t('time.label')}</ItemDescription>
-            <ItemActions className="items-center gap-2">
-              <ItemTitle className="text-md tabular-nums md:text-xl">{formatDate(schedule?.start, 'HH:mm')}</ItemTitle>
-              <Right className="size-4" />
-              <ItemTitle className="text-md tabular-nums md:text-xl">{formatDate(schedule?.end || event.end, 'HH:mm')}</ItemTitle>
-            </ItemActions>
-          </Item>
-        </Item>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <FieldLabel>{t('day')}</FieldLabel>
+            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.start, 'dd MMM yyyy')}</span>
+          </div>
+
+          <Separator />
+
+          <div className="flex flex-col gap-1">
+            <FieldLabel>{t('time.label')}</FieldLabel>
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.start, 'HH:mm')}</span>
+              <Right className="size-4 text-muted-foreground" />
+              <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.end || event.end, 'HH:mm')}</span>
+            </div>
+          </div>
+        </div>
       );
     }
 
     return (
-      <Item className="flex-row items-center justify-between gap-4 md:flex-col">
-        <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
-          <ItemDescription>{t('date.start')}</ItemDescription>
-          <ItemActions className="items-baseline gap-3">
-            <ItemTitle className="tabular-nums md:text-xl">{formatDate(schedule?.start, 'HH:mm')}</ItemTitle>
-            <ItemActions className="items-start gap-1">
-              <Calender className="size-4" />
-              <ItemDescription className="md:text-lg">{formatDate(schedule?.start, 'dd/MM')}</ItemDescription>
-            </ItemActions>
-          </ItemActions>
-        </Item>
-        <Item className="w-full flex-col items-start gap-2 rounded-lg p-2 md:border md:p-4">
-          <ItemDescription>{t('date.end')}</ItemDescription>
-          <ItemActions className="items-baseline gap-3">
-            <ItemTitle className="tabular-nums md:text-xl">{formatDate(schedule?.end || event.end, 'HH:mm')}</ItemTitle>
-            <ItemActions className="items-start gap-1">
-              <Calender className="size-4" />
-              <ItemDescription className="md:text-lg">{formatDate(schedule?.end || event.end, 'dd/MM')}</ItemDescription>
-            </ItemActions>
-          </ItemActions>
-        </Item>
-      </Item>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <FieldLabel>{t('date.start')}</FieldLabel>
+          <div className="flex items-baseline gap-2">
+            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.start, 'HH:mm')}</span>
+            <span className="inline-flex items-center gap-1 text-muted-foreground text-sm">
+              <Calender className="size-3.5" />
+              {formatDate(schedule?.start, 'dd/MM')}
+            </span>
+          </div>
+        </div>
+
+        <Separator />
+
+        <div className="flex flex-col gap-1">
+          <FieldLabel>{t('date.end')}</FieldLabel>
+          <div className="flex items-baseline gap-2">
+            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.end || event.end, 'HH:mm')}</span>
+            <span className="inline-flex items-center gap-1 text-muted-foreground text-sm">
+              <Calender className="size-3.5" />
+              {formatDate(schedule?.end || event.end, 'dd/MM')}
+            </span>
+          </div>
+        </div>
+      </div>
     );
   };
 
   return (
     <>
-      <DialogHeader className="w-full">
-        <Item className="w-full flex-col items-start justify-between gap-2 md:flex-row">
-          <DialogTitle className="truncate text-sky-blue tracking-wide md:text-2xl dark:text-primary-blue">{t('dialog.appointment')}</DialogTitle>
-          <ItemActions className="items-end gap-2">
-            <ItemActions className="items-end gap-2">
-              {isEditing && (
-                <Button size={isMobile ? 'sm' : 'sm'} variant="default" onClick={handleStatusChange} disabled={isLoading}>
-                  {t('save')}
-                </Button>
-              )}
-              <Item className="flex-col gap-2">
-                <ItemDescription>{t('appointment.status')}</ItemDescription>
+      <DialogHeader className="w-full gap-4">
+        <div className="flex w-full flex-col items-start justify-between gap-3 md:flex-row md:items-center">
+          <DialogTitle className="truncate font-semibold text-sky-blue text-xl tracking-tight md:text-2xl dark:text-primary-blue">{t('dialog.appointment')}</DialogTitle>
+
+          <ItemActions className="flex-wrap items-center justify-end gap-2">
+            <Item className="flex-col items-start gap-1 p-0">
+              <ItemDescription className="text-xs">{t('appointment.status')}</ItemDescription>
+              <div className="flex items-center gap-2">
                 <Select
                   value={selectedStatus}
                   disabled={isLoading}
@@ -204,130 +214,160 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                     setIsEditing(true);
                   }}
                 >
-                  <SelectTrigger size="sm" className="w-full">
-                    <ItemActions className="items-center gap-2">
-                      <div className={cn('size-2 rounded-full', getStatusColor(selectedStatus))} />
+                  <SelectTrigger size="sm" className="h-8 w-[140px]">
+                    <div className="flex items-center gap-2">
+                      <span className={cn('size-2 rounded-full', getStatusColor(selectedStatus))} />
                       <SelectValue className="text-xs">{translatedStatusLabel(selectedStatus)}</SelectValue>
-                    </ItemActions>
+                    </div>
                   </SelectTrigger>
                   <SelectContent>
                     {statusOptions.map((opt) => (
                       <SelectItem key={opt.value} className="text-xs" disabled={isLoading} value={opt.value}>
-                        <ItemActions className="items-center gap-2">
-                          <div className={cn('size-2 rounded-full', getStatusColor(opt.value))} />
+                        <div className="flex items-center gap-2">
+                          <span className={cn('size-2 rounded-full', getStatusColor(opt.value))} />
                           {opt.label}
-                        </ItemActions>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-              </Item>
-            </ItemActions>
-            {schedule.status === 'pending' && schedule.Patient && (
-              <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={handleRequestScheduleConfirmation}>
-                <Chat className="size-4 text-green-600" />
+                {isEditing && (
+                  <Button size="sm" variant="default" onClick={handleStatusChange} disabled={isLoading}>
+                    {t('save')}
+                  </Button>
+                )}
+              </div>
+            </Item>
+
+            <div className="flex items-center gap-2 self-end">
+              {schedule.status === 'pending' && schedule.Patient && (
+                <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={handleRequestScheduleConfirmation}>
+                  <Chat className="size-4 text-green-600" />
+                </Button>
+              )}
+              <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={onEdit}>
+                <Edit className="size-4 md:mr-2" />
+                <span className="hidden md:inline">{t('edit')}</span>
               </Button>
-            )}
-            <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={onEdit}>
-              <Edit className="size-4 md:mr-2" />
-              <ItemTitle className="hidden md:block">{t('edit')}</ItemTitle>
-            </Button>
-            {schedule.Financial && (
-              <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details', search: { id: schedule.Financial! } })}>
-                <Link className="size-4 md:mr-2" />
-                <ItemTitle className="hidden md:block">{t('finance.short')}</ItemTitle>
-              </Button>
-            )}
+              {schedule.Financial && (
+                <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details', search: { id: schedule.Financial! } })}>
+                  <Link className="size-4 md:mr-2" />
+                  <span className="hidden md:inline">{t('finance.short')}</span>
+                </Button>
+              )}
+            </div>
           </ItemActions>
-        </Item>
+        </div>
       </DialogHeader>
 
-      <Item className="flex-col gap-4 md:gap-6 md:px-6">
-        <ItemTitle className="mt-2 font-medium text-muted-foreground text-sm md:mt-0">{!schedule.Patient ? t('event.kind') : t('appointment')}</ItemTitle>
-        <ItemActions className="flex-col gap-4 md:flex-row md:gap-6">
+      <div className="flex flex-col gap-4 md:px-2">
+        <div className="flex items-center justify-between">
+          <ItemTitle className="font-medium text-muted-foreground text-sm">{!schedule.Patient ? t('event.kind') : t('appointment')}</ItemTitle>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_1fr]">
           {schedule.Patient ? (
-            <Item className="w-full flex-row items-start gap-6 rounded-lg p-0 md:max-w-md md:flex-col md:border md:p-6">
-              <ItemActions className="w-full items-center gap-1 md:gap-4">
-                <Avatar className="group relative flex items-center justify-center">
-                  <AvatarImage src={patientImage} alt={t('image.patient.alt')} />
-                  <AvatarFallback>{patientName?.slice(0, 2)}</AvatarFallback>
-                </Avatar>
-                <Item className="w-full">
-                  <ItemActions className="w-full items-center justify-between">
-                    <ItemDescription>{t('patient')}</ItemDescription>
-                    {schedule?.Patient && (
-                      <Button type="button" variant="outline" size="sm" onClick={() => window.open(`/patient/${schedule?.Patient}`, '_blank')}>
-                        <Link className="size-4 md:mr-2" />
-                        <ItemTitle className="hidden text-xs md:block">{t('patient')}</ItemTitle>
-                      </Button>
-                    )}
-                  </ItemActions>
-                  <ItemTitle className="max-w-32 overflow-hidden truncate font-medium md:max-w-none">{patientName}</ItemTitle>
-                </Item>
-              </ItemActions>
-              <ItemActions className="w-full items-center gap-1 md:gap-4">
-                <Avatar className="group relative flex items-center justify-center">
+            <SectionCard className="flex flex-col gap-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex min-w-0 flex-1 items-center gap-3">
+                  <Avatar className="size-11 shrink-0">
+                    <AvatarImage src={patientImage} alt={t('image.patient.alt')} />
+                    <AvatarFallback>{patientName?.slice(0, 2)}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex min-w-0 flex-col gap-0.5">
+                    <FieldLabel>{t('patient')}</FieldLabel>
+                    <ItemTitle className="truncate font-semibold text-base">{patientName}</ItemTitle>
+                  </div>
+                </div>
+
+                {schedule?.Patient && (
+                  <Button type="button" variant="outline" size="sm" className="shrink-0" onClick={() => window.open(`/patient/${schedule?.Patient}`, '_blank')}>
+                    <Link className="size-3.5 md:mr-2" />
+                    <span className="hidden text-xs md:inline">{t('patient')}</span>
+                  </Button>
+                )}
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center gap-3">
+                <Avatar className="size-11 shrink-0">
                   <AvatarImage src={professionalImage} alt={t('image.professional.alt')} />
                   <AvatarFallback>{professionalName?.slice(0, 2)}</AvatarFallback>
                 </Avatar>
-                <ItemActions className="w-full items-center justify-between">
-                  <Item className="space-y-1">
-                    <ItemDescription>{t('professional.label')}</ItemDescription>
-                    <ItemTitle className="truncate font-medium">{professionalName}</ItemTitle>
-                  </Item>
-                </ItemActions>
-              </ItemActions>
-            </Item>
+                <div className="flex min-w-0 flex-col gap-0.5">
+                  <FieldLabel>{t('professional.label')}</FieldLabel>
+                  <ItemTitle className="truncate font-semibold text-base">{professionalName}</ItemTitle>
+                </div>
+              </div>
+            </SectionCard>
           ) : (
-            <Item className="w-full flex-row items-start justify-between gap-4 rounded-lg border p-4 md:max-w-md md:flex-col md:p-6">
-              <Item className="space-y-1">
-                <ItemDescription>{t('description')}</ItemDescription>
-                <ItemTitle className="truncate font-semibold text-md">{schedule.title}</ItemTitle>
-              </Item>
-            </Item>
+            <SectionCard className="flex flex-col gap-1">
+              <FieldLabel>{t('description')}</FieldLabel>
+              <ItemTitle className="truncate font-semibold text-base">{schedule.title}</ItemTitle>
+            </SectionCard>
           )}
 
-          {renderScheduleDateTime()}
-        </ItemActions>
+          <SectionCard>{renderDateTimeSection()}</SectionCard>
+        </div>
 
-        <ItemActions className="flex-col gap-4 md:flex-row md:gap-6">
-          {schedule.Patient && (
-            <DataTable
-              className="w-full rounded-xl py-4 md:max-w-md md:border md:py-8"
-              data={schedule.financial?.procedures || []}
-              columns={[
-                { key: 'procedure', header: t('procedure') },
-                { key: 'price', header: t('price'), render: (v) => <ItemTitle className="tabular-nums">{currencyFormat(v)}</ItemTitle> },
-                { key: 'status', header: t('status'), render: (v) => <Badge variant="outline">{translatedStatusLabel(String(v))}</Badge> },
-              ]}
-              searchable={false}
-              showPagination={false}
-              compact
-              bordered={false}
-            />
-          )}
-          {schedule.financial && schedule.financial._id !== null && !schedule.Patient && (
-            <Item className="h-fit flex-row flex-wrap justify-between gap-4 p-4 md:max-w-md md:flex-col md:p-8 md:px-4">
-              <Item className="w-1/4 space-y-1 md:w-full">
-                <ItemDescription>{t('total')}</ItemDescription>
-                <ItemTitle className="font-semibold text-md tabular-nums">{currencyFormat(schedule.financial?.price || 0)}</ItemTitle>
-              </Item>
-              <Item className="w-1/4 space-y-1 md:w-full">
-                <ItemDescription>{t('paid')}</ItemDescription>
-                <ItemTitle className="font-semibold text-md tabular-nums">{currencyFormat(schedule.financial?.paid || 0)}</ItemTitle>
-              </Item>
-              <Item className="w-1/4 space-y-1 md:w-full">
-                <ItemDescription>{t('payment.status')}</ItemDescription>
-                <ItemTitle className="font-semibold text-md">{translatedStatusLabel(schedule.financial?.status || '')}</ItemTitle>
-              </Item>
-              <Item className="w-1/4 space-y-1 md:w-full">
-                <ItemDescription>{t('consultation.status')}</ItemDescription>
-                <ItemTitle className="font-semibold text-md">{translatedStatusLabel(schedule.status)}</ItemTitle>
-              </Item>
-            </Item>
-          )}
-        </ItemActions>
-      </Item>
+        {schedule.Patient && (
+          <SectionCard className="overflow-hidden p-0">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent">
+                  <TableHead>{t('procedure')}</TableHead>
+                  <TableHead>{t('price')}</TableHead>
+                  <TableHead>{t('status')}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {(schedule.financial?.procedures || []).length === 0 ? (
+                  <TableRow className="hover:bg-transparent">
+                    <TableCell colSpan={3} className="text-center text-muted-foreground text-sm">
+                      {t('no.data')}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  (schedule.financial?.procedures || []).map((proc, index) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: procedures list is static within the dialog
+                    <TableRow key={index}>
+                      <TableCell className="font-medium">{proc.procedure}</TableCell>
+                      <TableCell className="tabular-nums">{currencyFormat(proc.price)}</TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{translatedStatusLabel(String(proc.status))}</Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </SectionCard>
+        )}
+
+        {schedule.financial && schedule.financial._id !== null && !schedule.Patient && (
+          <SectionCard>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+              <div className="flex flex-col gap-1">
+                <FieldLabel>{t('total')}</FieldLabel>
+                <span className="font-semibold text-base tabular-nums">{currencyFormat(schedule.financial?.price || 0)}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <FieldLabel>{t('paid')}</FieldLabel>
+                <span className="font-semibold text-base tabular-nums">{currencyFormat(schedule.financial?.paid || 0)}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <FieldLabel>{t('payment.status')}</FieldLabel>
+                <span className="font-semibold text-base">{translatedStatusLabel(schedule.financial?.status || '')}</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <FieldLabel>{t('consultation.status')}</FieldLabel>
+                <span className="font-semibold text-base">{translatedStatusLabel(schedule.status)}</span>
+              </div>
+            </div>
+          </SectionCard>
+        )}
+      </div>
     </>
   );
 }
