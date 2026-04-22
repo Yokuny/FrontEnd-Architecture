@@ -1,15 +1,15 @@
-import { addHours, areIntervalsOverlapping, differenceInMinutes, eachHourOfInterval, getHours, getMinutes, isSameDay, startOfDay } from 'date-fns';
+import { addHours, differenceInMinutes, eachHourOfInterval, getHours, isSameDay, startOfDay } from 'date-fns';
 import type React from 'react';
 import { useMemo } from 'react';
 import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
-import { EndHour, StartHour, WeekCellsHeight } from '@/lib/config/calendar.config';
+import { EndHour, StartHour } from '@/lib/config/calendar.config';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
-import type { DayViewProps, PositionedEvent } from '../@interface/schedule.interface';
-
+import type { DayViewProps } from '../@interface/schedule.interface';
+import { computePositionedEvents } from '../@utils/schedule.utils';
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
 import { DroppableCell } from './square';
@@ -42,8 +42,6 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
   }, [dayEvents]);
 
   const positionedEvents = useMemo(() => {
-    const result: PositionedEvent[] = [];
-    const dayStart = startOfDay(currentDate);
     const sortedEvents = [...timeEvents].sort((a, b) => {
       const aStart = new Date(a.start);
       const bStart = new Date(b.start);
@@ -51,37 +49,7 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
       if (aStart > bStart) return 1;
       return differenceInMinutes(new Date(b.end || b.start), bStart) - differenceInMinutes(new Date(a.end || a.start), aStart);
     });
-
-    const columns: { event: PartialSchedule; end: Date }[][] = [];
-    sortedEvents.forEach((event) => {
-      const eventStart = new Date(event.start);
-      const eventEnd = new Date(event.end || event.start);
-      const adjustedStart = isSameDay(currentDate, eventStart) ? eventStart : dayStart;
-      const adjustedEnd = isSameDay(currentDate, eventEnd) ? eventEnd : addHours(dayStart, 24);
-      const startHour = getHours(adjustedStart) + getMinutes(adjustedStart) / 60;
-      const endHour = getHours(adjustedEnd) + getMinutes(adjustedEnd) / 60;
-      const top = (startHour - StartHour) * WeekCellsHeight;
-      const height = (endHour - startHour) * WeekCellsHeight;
-
-      let columnIndex = 0;
-      let placed = false;
-      while (!placed) {
-        const col = columns[columnIndex] || [];
-        if (col.length === 0) {
-          columns[columnIndex] = col;
-          placed = true;
-        } else {
-          const overlaps = col.some((c) => areIntervalsOverlapping({ start: adjustedStart, end: adjustedEnd }, { start: new Date(c.event.start), end: new Date(c.event.end) }));
-          if (!overlaps) placed = true;
-          else columnIndex++;
-        }
-      }
-      const currentColumn = columns[columnIndex] || [];
-      columns[columnIndex] = currentColumn;
-      currentColumn.push({ event, end: adjustedEnd });
-      result.push({ event, top, height, left: columnIndex === 0 ? 0 : columnIndex * 0.1, width: columnIndex === 0 ? 1 : 0.9, zIndex: 10 + columnIndex });
-    });
-    return result;
+    return computePositionedEvents(sortedEvents, currentDate);
   }, [currentDate, timeEvents]);
 
   const handleEventClick = (event: PartialSchedule, e: React.MouseEvent) => {
@@ -158,7 +126,7 @@ export function DayView({ currentDate, events, onEventSelect, onEventCreate }: D
             <div className="pointer-events-none absolute right-0 left-0 z-20" style={{ top: `${currentTimePosition}%` }}>
               <div className="relative flex items-center">
                 <div className="absolute -left-1 size-2 rounded-full bg-primary"></div>
-                <div className="h-[2px] w-full bg-primary"></div>
+                <div className="h-0.5 w-full bg-primary"></div>
               </div>
             </div>
           )}

@@ -1,31 +1,17 @@
-import {
-  addHours,
-  areIntervalsOverlapping,
-  differenceInMinutes,
-  eachDayOfInterval,
-  eachHourOfInterval,
-  endOfWeek,
-  getDay,
-  getHours,
-  getMinutes,
-  isBefore,
-  isSameDay,
-  isToday,
-  startOfDay,
-  startOfWeek,
-} from 'date-fns';
+import { addHours, differenceInMinutes, eachDayOfInterval, eachHourOfInterval, endOfWeek, getDay, getHours, isBefore, isSameDay, isToday, startOfDay, startOfWeek } from 'date-fns';
 import type React from 'react';
 import { useMemo } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { useCurrentTimeIndicator } from '@/hooks/use-current-time-indicator';
-import { EndHour, StartHour, WeekCellsHeight } from '@/lib/config/calendar.config';
+import { EndHour, StartHour } from '@/lib/config/calendar.config';
 import { isMultiDayEvent } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
-import type { PositionedEvent, WeekViewProps } from '../@interface/schedule.interface';
+import type { WeekViewProps } from '../@interface/schedule.interface';
+import { computePositionedEvents } from '../@utils/schedule.utils';
 import { DraggableEvent } from './draggable-event';
 import { EventItem } from './event-item';
 import { DroppableCell } from './square';
@@ -79,65 +65,22 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
 
   const processedDayEvents = useMemo(() => {
     return days.map((day) => {
-      const dayEvents = events.filter((event) => {
-        if (event.allDay || isMultiDayEvent(event)) return false;
-        const eventStart = new Date(event.start);
-        const eventEnd = new Date(event.end);
-        return isSameDay(day, eventStart) || isSameDay(day, eventEnd) || (eventStart < day && eventEnd > day);
-      });
-
-      const sortedEvents = [...dayEvents].sort((a, b) => {
-        const aStart = new Date(a.start);
-        const bStart = new Date(b.start);
-        if (aStart < bStart) return -1;
-        if (aStart > bStart) return 1;
-        return differenceInMinutes(new Date(b.end), bStart) - differenceInMinutes(new Date(a.end), aStart);
-      });
-
-      const positionedEvents: PositionedEvent[] = [];
-      const dayStart = startOfDay(day);
-      const columns: { event: PartialSchedule; end: Date }[][] = [];
-
-      sortedEvents.forEach((event) => {
-        const eventStart = new Date(event.start);
-        const eventEnd = new Date(event.end);
-        const adjustedStart = isSameDay(day, eventStart) ? eventStart : dayStart;
-        const adjustedEnd = isSameDay(day, eventEnd) ? eventEnd : addHours(dayStart, 24);
-
-        const startHour = getHours(adjustedStart) + getMinutes(adjustedStart) / 60;
-        const endHour = getHours(adjustedEnd) + getMinutes(adjustedEnd) / 60;
-        const top = (startHour - StartHour) * WeekCellsHeight;
-        const height = (endHour - startHour) * WeekCellsHeight;
-
-        let columnIndex = 0;
-        let placed = false;
-        while (!placed) {
-          const col = columns[columnIndex] || [];
-          if (col.length === 0) {
-            columns[columnIndex] = col;
-            placed = true;
-          } else {
-            const overlaps = col.some((c) => areIntervalsOverlapping({ start: adjustedStart, end: adjustedEnd }, { start: new Date(c.event.start), end: new Date(c.event.end) }));
-            if (!overlaps) placed = true;
-            else columnIndex++;
-          }
-        }
-
-        const currentColumn = columns[columnIndex] || [];
-        columns[columnIndex] = currentColumn;
-        currentColumn.push({ event, end: adjustedEnd });
-
-        positionedEvents.push({
-          event,
-          top,
-          height,
-          left: columnIndex === 0 ? 0 : columnIndex * 0.1,
-          width: columnIndex === 0 ? 1 : 0.9,
-          zIndex: 10 + columnIndex,
+      const dayEvents = events
+        .filter((event) => {
+          if (event.allDay || isMultiDayEvent(event)) return false;
+          const eventStart = new Date(event.start);
+          const eventEnd = new Date(event.end);
+          return isSameDay(day, eventStart) || isSameDay(day, eventEnd) || (eventStart < day && eventEnd > day);
+        })
+        .sort((a, b) => {
+          const aStart = new Date(a.start);
+          const bStart = new Date(b.start);
+          if (aStart < bStart) return -1;
+          if (aStart > bStart) return 1;
+          return differenceInMinutes(new Date(b.end), bStart) - differenceInMinutes(new Date(a.end), aStart);
         });
-      });
 
-      return positionedEvents;
+      return computePositionedEvents(dayEvents, day);
     });
   }, [days, events]);
 

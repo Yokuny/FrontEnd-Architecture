@@ -15,7 +15,7 @@ import { addMinutes, differenceInMinutes } from 'date-fns';
 import { createContext, useContext, useId, useRef, useState } from 'react';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import type { CalendarDndContextType, CalendarDndProviderProps } from '../@interface/schedule.interface';
-
+import { snapToQuarterHour } from '../@utils/schedule.utils';
 import { EventItem } from './event-item';
 
 const CalendarDndContext = createContext<CalendarDndContextType>({
@@ -96,41 +96,31 @@ export function CalendarDndProvider({ children, onEventUpdate }: CalendarDndProv
   const handleDragOver = (event: DragOverEvent) => {
     const { over } = event;
 
-    if (over && activeEvent && over.data.current) {
-      const { date, time } = over.data.current as { date: Date; time?: number };
+    if (!over || !activeEvent || !over.data.current) return;
 
-      if (time !== undefined && activeView !== 'month') {
-        const newTime = new Date(date);
-        const hours = Math.floor(time);
-        const fractionalHour = time - hours;
+    const { date, time } = over.data.current as { date: Date; time?: number };
 
-        let minutes = 0;
-        if (fractionalHour < 0.125) minutes = 0;
-        else if (fractionalHour < 0.375) minutes = 15;
-        else if (fractionalHour < 0.625) minutes = 30;
-        else minutes = 45;
+    if (time !== undefined && activeView !== 'month') {
+      const newTime = snapToQuarterHour(new Date(date), time);
 
-        newTime.setHours(hours, minutes, 0, 0);
+      if (
+        !currentTime ||
+        newTime.getHours() !== currentTime.getHours() ||
+        newTime.getMinutes() !== currentTime.getMinutes() ||
+        newTime.getDate() !== currentTime.getDate() ||
+        newTime.getMonth() !== currentTime.getMonth() ||
+        newTime.getFullYear() !== currentTime.getFullYear()
+      ) {
+        setCurrentTime(newTime);
+      }
+    } else if (activeView === 'month') {
+      const newTime = new Date(date);
+      if (currentTime) {
+        newTime.setHours(currentTime.getHours(), currentTime.getMinutes(), currentTime.getSeconds(), currentTime.getMilliseconds());
+      }
 
-        if (
-          !currentTime ||
-          newTime.getHours() !== currentTime.getHours() ||
-          newTime.getMinutes() !== currentTime.getMinutes() ||
-          newTime.getDate() !== currentTime.getDate() ||
-          newTime.getMonth() !== currentTime.getMonth() ||
-          newTime.getFullYear() !== currentTime.getFullYear()
-        ) {
-          setCurrentTime(newTime);
-        }
-      } else if (activeView === 'month') {
-        const newTime = new Date(date);
-        if (currentTime) {
-          newTime.setHours(currentTime.getHours(), currentTime.getMinutes(), currentTime.getSeconds(), currentTime.getMilliseconds());
-        }
-
-        if (!currentTime || newTime.getDate() !== currentTime.getDate() || newTime.getMonth() !== currentTime.getMonth() || newTime.getFullYear() !== currentTime.getFullYear()) {
-          setCurrentTime(newTime);
-        }
+      if (!currentTime || newTime.getDate() !== currentTime.getDate() || newTime.getMonth() !== currentTime.getMonth() || newTime.getFullYear() !== currentTime.getFullYear()) {
+        setCurrentTime(newTime);
       }
     }
   };
@@ -149,67 +139,43 @@ export function CalendarDndProvider({ children, onEventUpdate }: CalendarDndProv
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (!over || !activeEvent || !currentTime) {
+    if (!over || !activeEvent || !currentTime || !active.data.current || !over.data.current) {
       resetState();
       return;
     }
 
-    try {
-      if (!active.data.current || !over.data.current) {
-        throw new Error('Missing data in drag event');
-      }
+    const activeData = active.data.current as { event?: PartialSchedule };
+    const overData = over.data.current as { date?: Date; time?: number };
 
-      const activeData = active.data.current as { event?: PartialSchedule };
-      const overData = over.data.current as { date?: Date; time?: number };
-
-      if (!activeData.event || !overData.date) {
-        throw new Error('Missing required event data');
-      }
-
-      const partialSchedule = activeData.event;
-      const date = overData.date;
-      const time = overData.time;
-
-      const newStart = new Date(date);
-
-      if (time !== undefined) {
-        const hours = Math.floor(time);
-        const fractionalHour = time - hours;
-
-        let minutes = 0;
-        if (fractionalHour < 0.125) minutes = 0;
-        else if (fractionalHour < 0.375) minutes = 15;
-        else if (fractionalHour < 0.625) minutes = 30;
-        else minutes = 45;
-
-        newStart.setHours(hours, minutes, 0, 0);
-      } else {
-        newStart.setHours(currentTime.getHours(), currentTime.getMinutes(), currentTime.getSeconds(), currentTime.getMilliseconds());
-      }
-
-      const originalStart = new Date(partialSchedule.start);
-      const originalEnd = new Date(partialSchedule.end);
-      const durationMinutes = differenceInMinutes(originalEnd, originalStart);
-      const newEnd = addMinutes(newStart, durationMinutes);
-
-      const hasStartChanged =
-        originalStart.getFullYear() !== newStart.getFullYear() ||
-        originalStart.getMonth() !== newStart.getMonth() ||
-        originalStart.getDate() !== newStart.getDate() ||
-        originalStart.getHours() !== newStart.getHours() ||
-        originalStart.getMinutes() !== newStart.getMinutes();
-
-      if (hasStartChanged) {
-        onEventUpdate({
-          ...partialSchedule,
-          start: newStart,
-          end: newEnd,
-        });
-      }
-    } catch (_e) {
-    } finally {
+    if (!activeData.event || !overData.date) {
       resetState();
+      return;
     }
+
+    const partialSchedule = activeData.event;
+    const newStart = overData.time !== undefined ? snapToQuarterHour(new Date(overData.date), overData.time) : new Date(overData.date);
+
+    if (overData.time === undefined) {
+      newStart.setHours(currentTime.getHours(), currentTime.getMinutes(), currentTime.getSeconds(), currentTime.getMilliseconds());
+    }
+
+    const originalStart = new Date(partialSchedule.start);
+    const originalEnd = new Date(partialSchedule.end);
+    const durationMinutes = differenceInMinutes(originalEnd, originalStart);
+    const newEnd = addMinutes(newStart, durationMinutes);
+
+    const hasStartChanged =
+      originalStart.getFullYear() !== newStart.getFullYear() ||
+      originalStart.getMonth() !== newStart.getMonth() ||
+      originalStart.getDate() !== newStart.getDate() ||
+      originalStart.getHours() !== newStart.getHours() ||
+      originalStart.getMinutes() !== newStart.getMinutes();
+
+    if (hasStartChanged) {
+      onEventUpdate({ ...partialSchedule, start: newStart, end: newEnd });
+    }
+
+    resetState();
   };
 
   return (

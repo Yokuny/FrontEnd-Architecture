@@ -66,7 +66,7 @@ export function DraggableEvent({ event, view, showTime, onClick, height, isMulti
     <div
       ref={(node) => {
         setNodeRef(node);
-        if (elementRef) elementRef.current = node;
+        elementRef.current = node;
       }}
       style={style}
       className="touch-none"

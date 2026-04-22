@@ -4,26 +4,22 @@ import type React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import Add from '@/components/icons/Add.Icon';
-import Cross from '@/components/icons/Cross.Icon';
 import Down from '@/components/icons/Down.Icon';
-import Eye from '@/components/icons/Eye.Icon';
 import Grid from '@/components/icons/Grid.Icon';
 import Left from '@/components/icons/Left.Icon';
 import Right from '@/components/icons/Right.Icon';
 import { ScheduleDialog } from '@/components/schedule';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import { Calendar } from '@/components/ui/calendar';
 import { CardAction, CardContent, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { ItemContent, ItemDescription } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useClinicStore } from '@/hooks/clinic';
 import { useProfessionalColors, useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { AgendaDaysToShow, EventGap, EventHeight, WeekCellsHeight } from '@/lib/config/calendar.config';
-import { addHoursToDate, eventColors } from '@/lib/helpers/calendar.helper';
+import { addHoursToDate } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString, getEventColorByProfessional } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
@@ -37,12 +33,13 @@ import { AgendaView } from './@components/agenda-view';
 import { CalendarDndProvider } from './@components/calendar-dnd-provider';
 import { DayView } from './@components/day-view';
 import { MonthView } from './@components/month-view';
+import { ScheduleSidebar } from './@components/schedule-sidebar';
 import { TimeUpdateDialog } from './@components/time-update-dialog';
 import { WeekView } from './@components/week-view';
 import { viewDictionary } from './@consts/schedule.consts';
 import { useScheduleApi } from './@hooks/use-schedule-api';
 import type { CustomDateRange } from './@interface/schedule.interface';
-import { computeUpcomingPerProfessional } from './@utils/schedule.utils';
+import { computeUpcomingPerProfessional, snapToQuarterHour } from './@utils/schedule.utils';
 
 export const Route = createFileRoute('/_private/schedule/')({
   component: SchedulePage,
@@ -115,7 +112,7 @@ function SchedulePage() {
   }, [currentDate, view, customDateRange, isMobile]);
 
   const uniqueProfessionalIds = useMemo(() => {
-    const allIds = events.map((event) => event.Professional).filter(Boolean);
+    const allIds = events.map((event) => event.Professional).filter((id): id is string => Boolean(id));
     return Array.from(new Set(allIds));
   }, [events]);
 
@@ -183,19 +180,12 @@ function SchedulePage() {
   };
 
   const handleEventCreate = (start: Date) => {
-    const minutes = start.getMinutes();
-    const remainder = minutes % 15;
-    if (remainder !== 0) {
-      if (remainder < 7.5) start.setMinutes(minutes - remainder);
-      else start.setMinutes(minutes + (15 - remainder));
-      start.setSeconds(0);
-      start.setMilliseconds(0);
-    }
+    const snapped = snapToQuarterHour(start);
     setSelectedEvent({
       _id: '',
       title: '',
-      start,
-      end: addHoursToDate(start, 1),
+      start: snapped,
+      end: addHoursToDate(snapped, 1),
       allDay: false,
       Patient: '',
       Professional: '',
@@ -373,7 +363,7 @@ function SchedulePage() {
               <SelectValue placeholder={t('select.room')} />
             </SelectTrigger>
             <SelectContent>
-              {user?.rooms?.map((room: any) => (
+              {user?.rooms?.map((room: { _id: string }) => (
                 <SelectItem key={room._id} value={room._id}>
                   {getRoomName(room._id)}
                 </SelectItem>
@@ -424,18 +414,19 @@ function SchedulePage() {
             <div className={view === 'agenda' ? '' : 'hidden'}>
               <AgendaView currentDate={currentDate} events={events} onEventSelect={handleEventSelect} />
             </div>
-            <ScheduleDialog
-              event={selectedEvent}
-              open={isEventDialogOpen}
-              onOpenChange={setIsEventDialogOpen}
-              onClose={() => {
-                setIsEventDialogOpen(false);
-                setSelectedEvent(null);
-              }}
-              onSave={handleEventSave}
-              onDelete={handleEventDelete}
-            />
           </CalendarDndProvider>
+
+          <ScheduleDialog
+            event={selectedEvent}
+            open={isEventDialogOpen}
+            onOpenChange={setIsEventDialogOpen}
+            onClose={() => {
+              setIsEventDialogOpen(false);
+              setSelectedEvent(null);
+            }}
+            onSave={handleEventSave}
+            onDelete={handleEventDelete}
+          />
 
           <TimeUpdateDialog
             isOpen={isConfirmTimeUpdateDialogOpen}
@@ -445,164 +436,32 @@ function SchedulePage() {
           />
         </CardContent>
 
-        <CardContent
-          className={cn('flex flex-col gap-4 md:self-start', isMobile ? 'w-full' : 'w-72', isMobile ? 'opacity-100' : isSidebarOpen ? 'opacity-100' : 'opacity-0 md:hidden')}
-        >
-          {/* Mini Calendar Navigation */}
-          <ItemContent className="w-full gap-3">
-            {view === 'day' && (
-              <Calendar
-                mode="single"
-                selected={currentDate}
-                onSelect={handleDateSelect}
-                className="w-full rounded-md"
-                month={currentDate}
-                captionLayout="dropdown"
-                onMonthChange={setCurrentDate}
-              />
-            )}
-            {view === 'month' && (
-              <Calendar
-                mode="single"
-                selected={currentDate}
-                onSelect={handleDateSelect}
-                className="w-full rounded-md"
-                month={currentDate}
-                captionLayout="dropdown"
-                onMonthChange={setCurrentDate}
-                disabled={{ before: startDate, after: endDate }}
-              />
-            )}
-            {['agenda', 'week'].includes(view) && (
-              <Calendar
-                mode="range"
-                selected={customDateRange || { from: startDate, to: endDate }}
-                onSelect={handleRangeSelect}
-                className="w-full rounded-md"
-                month={currentDate}
-                captionLayout="dropdown"
-                onMonthChange={setCurrentDate}
-              />
-            )}
-            <ItemHeader className="px-4">
-              <ItemActions className="w-2/3">
-                <Button variant="outline" size="sm" onClick={handlePrevious} className="w-1/3 rounded-none rounded-l-md border-r-0 px-2">
-                  <Left className="size-5" />
-                </Button>
-                <Button variant="outline" size="sm" onClick={() => setCurrentDate(new Date())} className="w-1/3 rounded-none border-x-0">
-                  {t('today')}
-                </Button>
-                <Button variant="outline" size="sm" onClick={handleNext} className="w-1/3 rounded-none rounded-r-md border-l-0 px-2">
-                  <Right className="size-5" />
-                </Button>
-              </ItemActions>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="w-1/3 justify-evenly">
-                    <span className="overflow-hidden">{viewDictionary[view]}</span>
-                    <Down className="-me-1 size-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="min-w-32">
-                  <DropdownMenuItem onClick={() => setView('month')}>{t('month')}</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setView('week')}>{t('week')}</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setView('day')}>{t('day')}</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setView('agenda')}>{t('agenda')}</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </ItemHeader>
-          </ItemContent>
-
-          {/* Upcoming Appointments */}
-          <ItemGroup className="w-full">
-            {upcomingPerProfessional.length === 0 ? (
-              <Item className="flex-col gap-1 p-6">
-                <ItemTitle>{t('upcoming.consults')}</ItemTitle>
-                <ItemDescription>{t('no.upcoming.consults')}</ItemDescription>
-              </Item>
-            ) : (
-              upcomingPerProfessional.map((doc) => (
-                <Item key={doc.Professional} className="flex-col gap-2 rounded-md p-4">
-                  <ItemHeader>
-                    <ItemActions>
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={getProfessionalImage(doc.Professional) || undefined} />
-                        <AvatarFallback>{getProfessionalName(doc.Professional).slice(0, 2)}</AvatarFallback>
-                      </Avatar>
-                      <ItemDescription className="line-clamp-1">{getProfessionalName(doc.Professional)}</ItemDescription>
-                    </ItemActions>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setSelectedEvent(doc.nextEvent || null);
-                        setIsEventDialogOpen(true);
-                      }}
-                      className="gap-1 transition-colors"
-                    >
-                      <Eye className="size-4" />
-                      <ItemDescription className="text-xs tabular-nums">{t('view')}</ItemDescription>
-                    </Button>
-                  </ItemHeader>
-                  <ItemActions className="items-baseline gap-4">
-                    <ItemTitle className="text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
-                      {doc.nextEvent?.start ? formatDate(doc.nextEvent.start, 'HH:mm') : '--:--'}
-                    </ItemTitle>
-                    <ItemDescription className="text-sm">{doc.nextEvent?.start ? formatDate(doc.nextEvent.start) : '--:--'}</ItemDescription>
-                  </ItemActions>
-                </Item>
-              ))
-            )}
-          </ItemGroup>
-
-          {/* Professional Color Manager */}
-          <ItemGroup className="w-full px-2">
-            {uniqueProfessionalIds.map((profId) => {
-              const hasCustomColor = getProfessionalColor(profId);
-              const displayColor = hasCustomColor ? eventColors.find((c) => c.value === hasCustomColor) : null;
-
-              return (
-                <Item key={profId} className="flex-nowrap items-center justify-evenly gap-2 p-3 md:justify-between">
-                  <ItemActions className="gap-3">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage src={getProfessionalImage(profId) || undefined} />
-                      <AvatarFallback>{getProfessionalName(profId).slice(0, 2)}</AvatarFallback>
-                    </Avatar>
-                    <ItemContent className="flex-none">
-                      <ItemTitle className="truncate text-md leading-none">{getProfessionalName(profId).slice(0, 8)}</ItemTitle>
-                      <ItemDescription className="truncate">{hasCustomColor ? displayColor?.label : t('color.from.status')}</ItemDescription>
-                    </ItemContent>
-                  </ItemActions>
-                  <Select
-                    value={hasCustomColor || ''}
-                    onValueChange={(color: EventColor) => {
-                      if (color && profId) handleColorChange(profId, color);
-                    }}
-                  >
-                    <SelectTrigger size="sm" className="w-30 truncate px-2">
-                      <SelectValue placeholder={t('color')} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {eventColors.map((color) => (
-                        <SelectItem key={color.value} value={color.value}>
-                          <div className="flex items-center gap-1">
-                            <div className={`size-3 rounded-full ${color.color}`} />
-                            {color.label}
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {hasCustomColor && (
-                    <Button variant="outline" size="sm" onClick={() => handleRemoveColor(profId)} className="size-8 p-0">
-                      <Cross className="size-4" />
-                    </Button>
-                  )}
-                </Item>
-              );
-            })}
-          </ItemGroup>
-        </CardContent>
+        <ScheduleSidebar
+          view={view}
+          currentDate={currentDate}
+          customDateRange={customDateRange}
+          startDate={startDate}
+          endDate={endDate}
+          isMobile={isMobile}
+          isSidebarOpen={isSidebarOpen}
+          upcomingPerProfessional={upcomingPerProfessional}
+          uniqueProfessionalIds={uniqueProfessionalIds}
+          getProfessionalName={getProfessionalName}
+          getProfessionalImage={getProfessionalImage}
+          getProfessionalColor={getProfessionalColor}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          onTodayClick={() => setCurrentDate(new Date())}
+          onViewChange={setView}
+          onDateSelect={handleDateSelect}
+          onRangeSelect={handleRangeSelect}
+          onViewEvent={(event) => {
+            setSelectedEvent(event);
+            setIsEventDialogOpen(true);
+          }}
+          onColorChange={handleColorChange}
+          onRemoveColor={handleRemoveColor}
+        />
       </div>
     </div>
   );
