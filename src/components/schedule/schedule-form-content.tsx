@@ -51,8 +51,6 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
     setSelectedRoomName,
     getRoomName,
     clearFields,
-    fetchPatients,
-    fetchProfessionals,
     handleSave,
     handleDelete,
     handleCancel,
@@ -128,7 +126,6 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                                         setSelectedPatient(value);
                                       },
                                     }}
-                                    fetchPatients={fetchPatients}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -150,7 +147,6 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                                         setSelectedProfessional(value);
                                       },
                                     }}
-                                    fetchProfessionals={fetchProfessionals}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -270,7 +266,6 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                                         setSelectedProfessional(value);
                                       },
                                     }}
-                                    fetchProfessionals={fetchProfessionals}
                                   />
                                 </FormControl>
                                 <FormMessage />

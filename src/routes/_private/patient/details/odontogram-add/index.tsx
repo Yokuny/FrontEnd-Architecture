@@ -35,7 +35,7 @@ function OdontogramAddPage() {
 
   const goBack = () => navigate({ to: '/patient/details', search: { id: id!, tab: 'odontogram' } });
 
-  const { form, isSubmitting, fetchProfessionals, onSubmit } = useOdontogramAddForm(id, goBack);
+  const { form, isSubmitting, onSubmit } = useOdontogramAddForm(id, goBack);
 
   const sections = [
     {
@@ -50,7 +50,7 @@ function OdontogramAddPage() {
             <FormItem className="w-full max-w-xs">
               <FormLabel>{t('professional')}</FormLabel>
               <FormControl>
-                <ProfessionalCombobox controller={field} fetchProfessionals={fetchProfessionals} />
+                <ProfessionalCombobox controller={field} />
               </FormControl>
             </FormItem>
           )}

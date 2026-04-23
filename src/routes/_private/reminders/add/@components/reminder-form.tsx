@@ -4,16 +4,8 @@ import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import DefaultFormLayout from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { GET, request } from '@/lib/api/client.api';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { ReminderFormData } from '../@interface/reminder.interface';
-
-async function fetchPatientsCombobox() {
-  const res = await request('patient/partial', GET());
-  if (!res.success) throw new Error(res.message);
-  return comboboxWithImgFormat(res.data);
-}
 
 export function ReminderForm() {
   const form = useFormContext<ReminderFormData>();
@@ -32,7 +24,7 @@ export function ReminderForm() {
               <FormItem className="flex flex-col">
                 <FormLabel>{t('patient.required')}</FormLabel>
                 <FormControl>
-                  <PatientCombobox controller={field} fetchPatients={fetchPatientsCombobox} />
+                  <PatientCombobox controller={field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -7,30 +7,13 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { usePatientStore } from '@/hooks/patients';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { currencyFormat, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
-import { usePatientsQuery } from '@/query/patients';
-import { useProfessionalsQuery } from '@/query/professionals';
 import { FINANCIAL_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from '../../@consts/financial.consts';
 import type { FinancialCreateData } from '../@interface/financial.interface';
 
 export function FinancialForm() {
   const form = useFormContext<FinancialCreateData>();
-  const { data: patients } = usePatientsQuery();
-  const { data: professionals } = useProfessionalsQuery();
-
-  const fetchPatients = async () =>
-    usePatientStore
-      .getState()
-      .mapToCombobox(patients)
-      .map((p) => ({ ...p, image: p.image || '' }));
-  const fetchProfessionals = async () =>
-    useProfessionalStore
-      .getState()
-      .mapToCombobox(professionals)
-      .map((p) => ({ ...p, image: p.image || '' }));
 
   const sections = [
     {
@@ -45,7 +28,7 @@ export function FinancialForm() {
               <FormItem className="w-full">
                 <FormLabel>{t('patient')}</FormLabel>
                 <FormControl>
-                  <PatientCombobox controller={{ ...field }} fetchPatients={fetchPatients} />
+                  <PatientCombobox controller={{ ...field }} />
                 </FormControl>
               </FormItem>
             )}
@@ -57,7 +40,7 @@ export function FinancialForm() {
               <FormItem className="w-full">
                 <FormLabel>{t('professional')}</FormLabel>
                 <FormControl>
-                  <ProfessionalCombobox controller={{ ...field }} fetchProfessionals={fetchProfessionals} />
+                  <ProfessionalCombobox controller={{ ...field }} />
                 </FormControl>
               </FormItem>
             )}

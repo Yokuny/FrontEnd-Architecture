@@ -1,14 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { t } from '@/lib/helpers/translate.helper';
 import { useFinancialMutations } from '@/query/financials';
-import { useProfessionalsQuery } from '@/query/professionals';
 
 export function useFinancialAddForm(patientId: string | undefined, onCancel: () => void) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { data: professionals } = useProfessionalsQuery();
   const { create } = useFinancialMutations();
 
   const form = useForm<any>({
@@ -36,13 +33,6 @@ export function useFinancialAddForm(patientId: string | undefined, onCancel: () 
     form.setValue('status', currentStatus);
     form.setValue('price', totalPrice);
   }, [currentStatus, totalPrice, form]);
-
-  const fetchProfessionals = useCallback(async () => {
-    return useProfessionalStore
-      .getState()
-      .mapToCombobox(professionals)
-      .map((p) => ({ ...p, image: p.image || '' }));
-  }, [professionals]);
 
   const handleSubmit = async () => {
     if (!patientId) return;
@@ -79,7 +69,6 @@ export function useFinancialAddForm(patientId: string | undefined, onCancel: () 
   return {
     form,
     isSubmitting,
-    fetchProfessionals,
     handleSubmit,
   };
 }

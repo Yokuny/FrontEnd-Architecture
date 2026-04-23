@@ -1,34 +1,28 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useMemo, useState } from 'react';
 import Check from '@/components/icons/Check.Icon';
 import Down from '@/components/icons/Down.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
+import { useProfessionalsQuery } from '@/query/professionals';
 
-const ProfessionalCombobox = ({ controller, disabled, fetchProfessionals }: ProfessionalComboboxProps) => {
+const ProfessionalCombobox = ({ controller, disabled }: ProfessionalComboboxProps) => {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [professional, setProfessional] = useState('');
-  const [professionals, setProfessionals] = useState([{ value: '', label: t('select.professional'), image: '' }]);
 
-  useEffect(() => {
-    const loadProfessionals = async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchProfessionals();
-        setProfessionals(data);
-      } catch (e: any) {
-        toast.error(e.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadProfessionals();
-  }, [fetchProfessionals]);
+  const { data, isLoading } = useProfessionalsQuery();
+  const professionals = useMemo(
+    () =>
+      useProfessionalStore
+        .getState()
+        .mapToCombobox(data)
+        .map((p) => ({ ...p, image: p.image || '' })),
+    [data],
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -86,5 +80,4 @@ export default ProfessionalCombobox;
 type ProfessionalComboboxProps = {
   controller: any;
   disabled?: boolean;
-  fetchProfessionals: () => Promise<{ value: string; label: string; image: string }[]>;
 };

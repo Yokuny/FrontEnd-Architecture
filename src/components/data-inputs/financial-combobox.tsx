@@ -1,33 +1,20 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useMemo, useState } from 'react';
 import Check from '@/components/icons/Check.Icon';
 import Down from '@/components/icons/Down.Icon';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useFinancialStore } from '@/hooks/financials';
 import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
+import { useFinancialsPartialQuery } from '@/query/financials';
 
-const FinancialCombobox = ({ controller, patient, disabled, fetchFinancials }: FinancialComboboxProps) => {
+const FinancialCombobox = ({ controller, patient, disabled }: FinancialComboboxProps) => {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [financial, setFinancial] = useState('');
-  const [financials, setFinancials] = useState([{ value: '', label: t('select.record') }]);
 
-  useEffect(() => {
-    const loadFinancials = async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchFinancials(patient);
-        setFinancials(data);
-      } catch (e: any) {
-        toast.error(e.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadFinancials();
-  }, [patient, fetchFinancials]);
+  const { data, isLoading } = useFinancialsPartialQuery();
+  const financials = useMemo(() => useFinancialStore.getState().mapToCombobox(data, patient), [data, patient]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -74,5 +61,4 @@ type FinancialComboboxProps = {
   controller: any;
   patient: string;
   disabled?: boolean;
-  fetchFinancials: (patient: string) => Promise<{ value: string; label: string }[]>;
 };

@@ -31,7 +31,7 @@ function OdontogramAddPage() {
     }
   };
 
-  const { form, patientOdontogram, isPending, fetchPatients, fetchProfessionals, fetchPatientOdontogram, clearPatientOdontogram, onSubmit } = useOdontogramAddForm(handleSuccess);
+  const { form, patientOdontogram, isPending, fetchPatientOdontogram, clearPatientOdontogram, onSubmit } = useOdontogramAddForm(handleSuccess);
 
   const sections = [
     {
@@ -58,7 +58,6 @@ function OdontogramAddPage() {
                       }
                     },
                   }}
-                  fetchPatients={fetchPatients}
                 />
               </FormControl>
             </FormItem>
@@ -78,7 +77,7 @@ function OdontogramAddPage() {
             <FormItem className="w-full max-w-xs">
               <FormLabel>Profissional</FormLabel>
               <FormControl>
-                <ProfessionalCombobox controller={field} fetchProfessionals={fetchProfessionals} />
+                <ProfessionalCombobox controller={field} />
               </FormControl>
             </FormItem>
           )}

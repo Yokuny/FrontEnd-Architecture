@@ -40,7 +40,7 @@ function FinancialAddPage() {
 
   const goBack = () => navigate({ to: '/patient/details', search: { id: id!, tab: 'financial' } });
 
-  const { form, isSubmitting, fetchProfessionals, handleSubmit } = useFinancialAddForm(id, goBack);
+  const { form, isSubmitting, handleSubmit } = useFinancialAddForm(id, goBack);
 
   const sections = [
     {
@@ -55,7 +55,7 @@ function FinancialAddPage() {
               <FormItem className="w-full max-w-xs">
                 <FormLabel>{t('professional')}</FormLabel>
                 <FormControl>
-                  <ProfessionalCombobox controller={{ ...field }} fetchProfessionals={fetchProfessionals} />
+                  <ProfessionalCombobox controller={{ ...field }} />
                 </FormControl>
               </FormItem>
             )}

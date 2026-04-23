@@ -1,33 +1,20 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useMemo, useState } from 'react';
 import Check from '@/components/icons/Check.Icon';
 import Down from '@/components/icons/Down.Icon';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useOdontogramStore } from '@/hooks/odontogram';
 import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
+import { useOdontogramsQuery } from '@/query/odontogram';
 
-const OdontogramCombobox = ({ controller, patient, disabled, fetchOdontograms }: OdontogramComboboxProps) => {
+const OdontogramCombobox = ({ controller, patient, disabled }: OdontogramComboboxProps) => {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [odontogram, setOdontogram] = useState('');
-  const [odontograms, setOdontograms] = useState([{ value: '', label: t('select.odontogram') }]);
 
-  useEffect(() => {
-    const loadOdontograms = async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchOdontograms(patient);
-        setOdontograms(data);
-      } catch (e: any) {
-        toast.error(e.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadOdontograms();
-  }, [patient, fetchOdontograms]);
+  const { data, isLoading } = useOdontogramsQuery();
+  const odontograms = useMemo(() => useOdontogramStore.getState().mapToCombobox(data, patient), [data, patient]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -74,5 +61,4 @@ type OdontogramComboboxProps = {
   controller: any;
   patient: string;
   disabled: boolean;
-  fetchOdontograms: (patient: string) => Promise<{ value: string; label: string }[]>;
 };

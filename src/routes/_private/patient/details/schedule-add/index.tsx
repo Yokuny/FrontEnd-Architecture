@@ -62,9 +62,6 @@ function ScheduleAddPage() {
     setSelectedRoomName,
     rooms,
     getRoomName,
-    fetchProfessionals,
-    fetchFinancials,
-    fetchOdontograms,
     handleSubmit,
   } = useScheduleAddForm(id, goBack);
 
@@ -95,7 +92,6 @@ function ScheduleAddPage() {
                         }
                       },
                     }}
-                    fetchProfessionals={fetchProfessionals}
                     disabled={selectedFinancial !== '' || selectedOdontogram !== ''}
                   />
                 </FormControl>
@@ -125,7 +121,6 @@ function ScheduleAddPage() {
                       },
                     }}
                     patient={String(id)}
-                    fetchFinancials={fetchFinancials}
                     disabled={selectedProfessional !== '' || selectedOdontogram !== ''}
                   />
                 </FormControl>
@@ -155,7 +150,6 @@ function ScheduleAddPage() {
                       },
                     }}
                     patient={String(id)}
-                    fetchOdontograms={fetchOdontograms}
                     disabled={selectedProfessional !== '' || selectedFinancial !== ''}
                   />
                 </FormControl>
