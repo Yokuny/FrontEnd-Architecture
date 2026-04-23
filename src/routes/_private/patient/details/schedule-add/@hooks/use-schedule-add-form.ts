@@ -2,17 +2,25 @@ import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useClinicStore } from '@/hooks/clinic';
-import { GET, POST, request } from '@/lib/api/client.api';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+import { useFinancialStore } from '@/hooks/financials';
+import { useOdontogramStore } from '@/hooks/odontogram';
+import { useProfessionalStore } from '@/hooks/professionals';
+import { POST, request } from '@/lib/api/client.api';
 import { t } from '@/lib/helpers/translate.helper';
 import { addKey } from '@/lib/helpers/validate.helper';
 import { useClinicApi } from '@/query/clinic';
+import { useFinancialsPartialQuery } from '@/query/financials';
+import { useOdontogramsQuery } from '@/query/odontogram';
+import { useProfessionalsQuery } from '@/query/professionals';
 import { useUserQuery } from '@/query/user';
 
 export function useScheduleAddForm(patientId: string | undefined, onCancel: () => void) {
   const { data: user } = useUserQuery();
   const { data: clinic } = useClinicApi();
   const { getRoomName: getRoomNameUtil } = useClinicStore();
+  const { data: professionals } = useProfessionalsQuery();
+  const { data: financials } = useFinancialsPartialQuery();
+  const { data: odontograms } = useOdontogramsQuery();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [startDateTime, setStartDateTime] = useState<string>(() => {
@@ -60,21 +68,25 @@ export function useScheduleAddForm(patientId: string | undefined, onCancel: () =
   });
 
   const fetchProfessionals = useCallback(async () => {
-    const res = await request('user/professionals', GET());
-    return comboboxWithImgFormat(res.data);
-  }, []);
+    return useProfessionalStore
+      .getState()
+      .mapToCombobox(professionals)
+      .map((p) => ({ ...p, image: p.image || '' }));
+  }, [professionals]);
 
-  const fetchFinancials = useCallback(async (pid: string) => {
-    const res = await request(`financial/patient/${pid}`, GET());
-    if (!res.success) return [];
-    return (res.data || []).map((f: any) => ({ value: f._id, label: `${f._id?.slice(-6)} - R$ ${f.price}` }));
-  }, []);
+  const fetchFinancials = useCallback(
+    async (pid: string) => {
+      return useFinancialStore.getState().mapToCombobox(financials, pid);
+    },
+    [financials],
+  );
 
-  const fetchOdontograms = useCallback(async (pid: string) => {
-    const res = await request(`odontogram/patient/${pid}`, GET());
-    if (!res.success) return [];
-    return (res.data || []).map((o: any) => ({ value: o._id, label: `${o._id?.slice(-6)} - ${o.finished ? t('finished') : t('in.progress')}` }));
-  }, []);
+  const fetchOdontograms = useCallback(
+    async (pid: string) => {
+      return useOdontogramStore.getState().mapToCombobox(odontograms, pid);
+    },
+    [odontograms],
+  );
 
   const handleSubmit = async () => {
     if (!patientId) return;

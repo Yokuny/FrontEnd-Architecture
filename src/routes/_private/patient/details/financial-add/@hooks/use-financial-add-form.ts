@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { GET, POST, request } from '@/lib/api/client.api';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { t } from '@/lib/helpers/translate.helper';
+import { useFinancialMutations } from '@/query/financials';
+import { useProfessionalsQuery } from '@/query/professionals';
 
 export function useFinancialAddForm(patientId: string | undefined, onCancel: () => void) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: professionals } = useProfessionalsQuery();
+  const { create } = useFinancialMutations();
 
   const form = useForm<any>({
     defaultValues: {
@@ -34,10 +37,12 @@ export function useFinancialAddForm(patientId: string | undefined, onCancel: () 
     form.setValue('price', totalPrice);
   }, [currentStatus, totalPrice, form]);
 
-  const fetchProfessionals = async () => {
-    const res = await request('user/professionals', GET());
-    return comboboxWithImgFormat(res.data);
-  };
+  const fetchProfessionals = useCallback(async () => {
+    return useProfessionalStore
+      .getState()
+      .mapToCombobox(professionals)
+      .map((p) => ({ ...p, image: p.image || '' }));
+  }, [professionals]);
 
   const handleSubmit = async () => {
     if (!patientId) return;
@@ -61,8 +66,7 @@ export function useFinancialAddForm(patientId: string | undefined, onCancel: () 
 
     setIsSubmitting(true);
     try {
-      const res = await request('financial/create', POST(body));
-      if (!res.success) throw new Error(res.message);
+      const res = await create.mutateAsync(body);
       toast.success(res.message);
       onCancel();
     } catch (e: unknown) {

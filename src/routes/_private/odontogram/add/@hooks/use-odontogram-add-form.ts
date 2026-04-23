@@ -1,14 +1,19 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { usePatientStore } from '@/hooks/patients';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { GET, request } from '@/lib/api/client.api';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
 import { useOdontogramMutations } from '@/query/odontogram';
+import { usePatientsQuery } from '@/query/patients';
+import { useProfessionalsQuery } from '@/query/professionals';
 
 export function useOdontogramAddForm(onSuccess: (patientId: string) => void) {
   const [patientOdontogram, setPatientOdontogram] = useState<any>(null);
+  const { data: patients } = usePatientsQuery();
+  const { data: professionals } = useProfessionalsQuery();
   const { create } = useOdontogramMutations();
 
   const form = useForm<NewOdontogram>({
@@ -22,15 +27,19 @@ export function useOdontogramAddForm(onSuccess: (patientId: string) => void) {
     mode: 'onChange',
   });
 
-  const fetchPatients = async () => {
-    const res = await request('patient/partial', GET());
-    return comboboxWithImgFormat(res.data);
-  };
+  const fetchPatients = useCallback(async () => {
+    return usePatientStore
+      .getState()
+      .mapToCombobox(patients)
+      .map((p) => ({ ...p, image: p.image || '' }));
+  }, [patients]);
 
-  const fetchProfessionals = async () => {
-    const res = await request('user/professionals', GET());
-    return comboboxWithImgFormat(res.data);
-  };
+  const fetchProfessionals = useCallback(async () => {
+    return useProfessionalStore
+      .getState()
+      .mapToCombobox(professionals)
+      .map((p) => ({ ...p, image: p.image || '' }));
+  }, [professionals]);
 
   const fetchPatientOdontogram = async (patientId: string) => {
     try {

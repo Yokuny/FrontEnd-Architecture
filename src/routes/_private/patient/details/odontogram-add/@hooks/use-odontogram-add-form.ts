@@ -1,14 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { GET, POST, request } from '@/lib/api/client.api';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
+import { useProfessionalStore } from '@/hooks/professionals';
 import { t } from '@/lib/helpers/translate.helper';
 import { type NewOdontogram, odontogramSchema } from '@/lib/interfaces/schemas/odontogram.schema';
+import { useOdontogramMutations } from '@/query/odontogram';
+import { useProfessionalsQuery } from '@/query/professionals';
 
 export function useOdontogramAddForm(patientId: string | undefined, onCancel: () => void) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: professionals } = useProfessionalsQuery();
+  const { create } = useOdontogramMutations();
 
   const form = useForm<NewOdontogram>({
     resolver: zodResolver(odontogramSchema) as any,
@@ -21,10 +24,12 @@ export function useOdontogramAddForm(patientId: string | undefined, onCancel: ()
     mode: 'onChange',
   });
 
-  const fetchProfessionals = async () => {
-    const res = await request('user/professionals', GET());
-    return comboboxWithImgFormat(res.data);
-  };
+  const fetchProfessionals = useCallback(async () => {
+    return useProfessionalStore
+      .getState()
+      .mapToCombobox(professionals)
+      .map((p) => ({ ...p, image: p.image || '' }));
+  }, [professionals]);
 
   const onSubmit = async (values: NewOdontogram) => {
     if (!patientId) return;
@@ -36,8 +41,7 @@ export function useOdontogramAddForm(patientId: string | undefined, onCancel: ()
 
     setIsSubmitting(true);
     try {
-      const res = await request('odontogram/create', POST(body));
-      if (!res.success) throw new Error(res.message);
+      const res = await create.mutateAsync(body);
       toast.success(res.message);
       onCancel();
     } catch (e: unknown) {
