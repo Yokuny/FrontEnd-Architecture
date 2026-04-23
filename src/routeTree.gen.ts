@@ -13,6 +13,7 @@ import { Route as PublicRouteImport } from './routes/_public';
 import { Route as PrivateRouteImport } from './routes/_private';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as PublicAuthIndexRouteImport } from './routes/_public/auth/index';
+import { Route as PrivateSettingsIndexRouteImport } from './routes/_private/settings/index';
 import { Route as PrivateScheduleIndexRouteImport } from './routes/_private/schedule/index';
 import { Route as PrivateRemindersIndexRouteImport } from './routes/_private/reminders/index';
 import { Route as PrivatePatientIndexRouteImport } from './routes/_private/patient/index';
@@ -62,6 +63,11 @@ const PublicAuthIndexRoute = PublicAuthIndexRouteImport.update({
   id: '/auth/',
   path: '/auth/',
   getParentRoute: () => PublicRoute,
+} as any);
+const PrivateSettingsIndexRoute = PrivateSettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => PrivateRoute,
 } as any);
 const PrivateScheduleIndexRoute = PrivateScheduleIndexRouteImport.update({
   id: '/schedule/',
@@ -247,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/patient/': typeof PrivatePatientIndexRoute;
   '/reminders/': typeof PrivateRemindersIndexRoute;
   '/schedule/': typeof PrivateScheduleIndexRoute;
+  '/settings/': typeof PrivateSettingsIndexRoute;
   '/auth/': typeof PublicAuthIndexRoute;
   '/financial/add/': typeof PrivateFinancialAddIndexRoute;
   '/financial/details/': typeof PrivateFinancialDetailsIndexRoute;
@@ -282,6 +289,7 @@ export interface FileRoutesByTo {
   '/patient': typeof PrivatePatientIndexRoute;
   '/reminders': typeof PrivateRemindersIndexRoute;
   '/schedule': typeof PrivateScheduleIndexRoute;
+  '/settings': typeof PrivateSettingsIndexRoute;
   '/auth': typeof PublicAuthIndexRoute;
   '/financial/add': typeof PrivateFinancialAddIndexRoute;
   '/financial/details': typeof PrivateFinancialDetailsIndexRoute;
@@ -320,6 +328,7 @@ export interface FileRoutesById {
   '/_private/patient/': typeof PrivatePatientIndexRoute;
   '/_private/reminders/': typeof PrivateRemindersIndexRoute;
   '/_private/schedule/': typeof PrivateScheduleIndexRoute;
+  '/_private/settings/': typeof PrivateSettingsIndexRoute;
   '/_public/auth/': typeof PublicAuthIndexRoute;
   '/_private/financial/add/': typeof PrivateFinancialAddIndexRoute;
   '/_private/financial/details/': typeof PrivateFinancialDetailsIndexRoute;
@@ -357,6 +366,7 @@ export interface FileRouteTypes {
     | '/patient/'
     | '/reminders/'
     | '/schedule/'
+    | '/settings/'
     | '/auth/'
     | '/financial/add/'
     | '/financial/details/'
@@ -392,6 +402,7 @@ export interface FileRouteTypes {
     | '/patient'
     | '/reminders'
     | '/schedule'
+    | '/settings'
     | '/auth'
     | '/financial/add'
     | '/financial/details'
@@ -429,6 +440,7 @@ export interface FileRouteTypes {
     | '/_private/patient/'
     | '/_private/reminders/'
     | '/_private/schedule/'
+    | '/_private/settings/'
     | '/_public/auth/'
     | '/_private/financial/add/'
     | '/_private/financial/details/'
@@ -493,6 +505,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/';
       preLoaderRoute: typeof PublicAuthIndexRouteImport;
       parentRoute: typeof PublicRoute;
+    };
+    '/_private/settings/': {
+      id: '/_private/settings/';
+      path: '/settings';
+      fullPath: '/settings/';
+      preLoaderRoute: typeof PrivateSettingsIndexRouteImport;
+      parentRoute: typeof PrivateRoute;
     };
     '/_private/schedule/': {
       id: '/_private/schedule/';
@@ -720,6 +739,7 @@ interface PrivateRouteChildren {
   PrivatePatientIndexRoute: typeof PrivatePatientIndexRoute;
   PrivateRemindersIndexRoute: typeof PrivateRemindersIndexRoute;
   PrivateScheduleIndexRoute: typeof PrivateScheduleIndexRoute;
+  PrivateSettingsIndexRoute: typeof PrivateSettingsIndexRoute;
   PrivateFinancialAddIndexRoute: typeof PrivateFinancialAddIndexRoute;
   PrivateFinancialDetailsIndexRoute: typeof PrivateFinancialDetailsIndexRoute;
   PrivateOdontogramAddIndexRoute: typeof PrivateOdontogramAddIndexRoute;
@@ -749,6 +769,7 @@ const PrivateRouteChildren: PrivateRouteChildren = {
   PrivatePatientIndexRoute: PrivatePatientIndexRoute,
   PrivateRemindersIndexRoute: PrivateRemindersIndexRoute,
   PrivateScheduleIndexRoute: PrivateScheduleIndexRoute,
+  PrivateSettingsIndexRoute: PrivateSettingsIndexRoute,
   PrivateFinancialAddIndexRoute: PrivateFinancialAddIndexRoute,
   PrivateFinancialDetailsIndexRoute: PrivateFinancialDetailsIndexRoute,
   PrivateOdontogramAddIndexRoute: PrivateOdontogramAddIndexRoute,

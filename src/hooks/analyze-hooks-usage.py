@@ -76,17 +76,19 @@ def find_usages(hooks: dict):
         relative_path = file_path.relative_to(PROJECT_ROOT)
 
         for hook_name in hooks:
-            # Busca por chamadas do hook: hookName( ou import { hookName
+            # Chamada como hook React: useFoo(
             call_pattern = rf"\b{hook_name}\s*\("
+            # Zustand fora de componentes / helpers: useFoo.getState
+            get_state_pattern = rf"\b{hook_name}\.getState\b"
             import_pattern = rf"import\s*\{{[^}}]*\b{hook_name}\b"
-            
-            # Conta chamadas do hook (não imports)
+
             call_matches = re.findall(call_pattern, content)
+            get_state_matches = re.findall(get_state_pattern, content)
             import_matches = re.findall(import_pattern, content)
 
-            # Só conta se foi importado E chamado
-            if call_matches and import_matches:
-                usage_count = len(call_matches)
+            # Import nomeado + (chamada como hook OU .getState())
+            if import_matches and (call_matches or get_state_matches):
+                usage_count = len(call_matches) + len(get_state_matches)
 
                 if usage_count > 0:
                     hooks[hook_name]["usages"].append({
