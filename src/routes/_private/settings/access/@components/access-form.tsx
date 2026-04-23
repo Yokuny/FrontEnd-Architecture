@@ -19,7 +19,7 @@ export function AccessForm({ form, isPending }: AccessFormProps) {
             <FormItem>
               <FormLabel>{t('password.old')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('password.old.placeholder')} type="password" disabled={isPending} {...field} />
+                <Input placeholder={t('password.old.placeholder')} type="password" className="h-14!" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -33,7 +33,7 @@ export function AccessForm({ form, isPending }: AccessFormProps) {
             <FormItem>
               <FormLabel>{t('new.password')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('password.new.placeholder')} type="password" disabled={isPending} {...field} />
+                <Input placeholder={t('password.new.placeholder')} type="password" className="h-14!" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -47,7 +47,7 @@ export function AccessForm({ form, isPending }: AccessFormProps) {
             <FormItem>
               <FormLabel>{t('password.confirm.label')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('password.repeat.placeholder')} type="password" disabled={isPending} {...field} />
+                <Input placeholder={t('password.repeat.placeholder')} type="password" className="h-14!" disabled={isPending} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

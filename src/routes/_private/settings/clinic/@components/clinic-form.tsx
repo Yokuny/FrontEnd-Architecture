@@ -18,13 +18,13 @@ const RoomField = ({ index, remove, control }: { index: number; remove: () => vo
         render={({ field }) => (
           <FormItem className="flex-1">
             <FormControl>
-              <Input placeholder={`${t('room.name.prefix')} ${index + 1}`} {...field} />
+              <Input placeholder={`${t('room.name.prefix')} ${index + 1}`} className="h-14!" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      <Button className="size-10" type="button" variant="destructive" size="icon" onClick={remove}>
+      <Button className="size-10 h-14!" type="button" variant="destructive" size="icon" onClick={remove}>
         <Delete className="size-4" />
       </Button>
     </div>
@@ -50,7 +50,7 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
             <FormItem>
               <FormLabel>{t('name')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('clinic.name.placeholder')} disabled={isPending} {...field} />
+                <Input placeholder={t('clinic.name.placeholder')} disabled={isPending} className="h-14!" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -64,7 +64,7 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
             <FormItem>
               <FormLabel>{t('email')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('clinic.email.placeholder')} disabled={isPending} {...field} />
+                <Input placeholder={t('clinic.email.placeholder')} disabled={isPending} className="h-14!" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -78,7 +78,7 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
             <FormItem>
               <FormLabel>{t('code')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('clinic.code.placeholder')} disabled={isPending} {...field} />
+                <Input placeholder={t('clinic.code.placeholder')} disabled={isPending} className="h-14!" {...field} />
               </FormControl>
               <FormDescription>{t('clinic.code.help')}</FormDescription>
               <FormMessage />
@@ -102,6 +102,7 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
                 <Input
                   placeholder={t('clinic.cnpj.placeholder')}
                   disabled={isPending}
+                  className="h-14!"
                   {...field}
                   onChange={(e) => {
                     const formattedValue = formatCpfCnpj(e.target.value);

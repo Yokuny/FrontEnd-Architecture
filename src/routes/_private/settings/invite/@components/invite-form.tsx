@@ -21,7 +21,7 @@ export function InviteForm({ form, isPending, clinic }: InviteFormProps) {
             <FormItem>
               <FormLabel>{t('user.email')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('user.email.placeholder')} disabled={isPending} {...field} />
+                <Input placeholder={t('user.email.placeholder')} disabled={isPending} className="h-14!" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
