@@ -12,7 +12,7 @@ const dockItems = [
   { to: '/patient', icon: IconPatients, labelKey: 'patient' },
   { to: '/odontogram', icon: IconDental, labelKey: 'odontogram' },
   { to: '/financial', icon: IconDollar, labelKey: 'financial' },
-  { to: '/settings/profile', icon: IconGear, labelKey: 'settings' },
+  { to: '/settings', icon: IconGear, labelKey: 'settings' },
 ] as const;
 
 export function MobileDock() {

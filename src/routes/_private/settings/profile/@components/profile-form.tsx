@@ -21,7 +21,7 @@ export function ProfileForm({ form, isPending, user }: ProfileFormProps) {
             <FormItem>
               <FormLabel>{t('name')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('username')} disabled={isPending} {...field} />
+                <Input placeholder={t('username')} disabled={isPending} className="h-14!" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -29,7 +29,7 @@ export function ProfileForm({ form, isPending, user }: ProfileFormProps) {
         />,
         <div key="email" className="flex flex-col gap-2">
           <FormLabel>{t('email')}</FormLabel>
-          <Input disabled value={user?.email || ''} />
+          <Input disabled value={user?.email || ''} className="h-14!" />
         </div>,
         <FormField
           key="image"
@@ -44,7 +44,7 @@ export function ProfileForm({ form, isPending, user }: ProfileFormProps) {
               <div className="w-full space-y-2">
                 <FormLabel>{t('profile.image.url')}</FormLabel>
                 <FormControl>
-                  <Input placeholder={t('image.url.placeholder')} disabled={isPending} {...field} />
+                  <Input placeholder={t('image.url.placeholder')} disabled={isPending} className="h-14!" {...field} />
                 </FormControl>
                 <FormMessage />
               </div>

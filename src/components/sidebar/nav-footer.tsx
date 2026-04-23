@@ -31,22 +31,28 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
           return (
             <SidebarMenuItem key={route.id}>
               {hasSubRoutes ? (
-                <Collapsible open={isOpen} onOpenChange={(open) => setOpenCollapsible(open ? route.id : null)} className="w-full">
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton
-                      className={cn(
-                        'flex w-full items-center transition-colors',
-                        isOpen ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
-                        isCollapsed && 'justify-center',
-                      )}
-                    >
+                isCollapsed ? (
+                  <SidebarMenuButton className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', 'justify-center')} asChild>
+                    <Link to={route.link} className="flex items-center justify-center rounded-lg px-2">
                       {route.icon}
-                      {!isCollapsed && <span className="ml-2 flex-1 truncate text-left">{route.title}</span>}
-                      {!isCollapsed && hasSubRoutes && <span className="ml-auto">{isOpen ? <Up className="size-4" /> : <Down className="size-4" />}</span>}
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
+                      <span className="sr-only">{route.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                ) : (
+                  <Collapsible open={isOpen} onOpenChange={(open) => setOpenCollapsible(open ? route.id : null)} className="w-full">
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton
+                        className={cn(
+                          'flex w-full items-center transition-colors',
+                          isOpen ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
+                        )}
+                      >
+                        {route.icon}
+                        <span className="ml-2 flex-1 truncate text-left">{route.title}</span>
+                        {hasSubRoutes && <span className="ml-auto">{isOpen ? <Up className="size-4" /> : <Down className="size-4" />}</span>}
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
 
-                  {!isCollapsed && (
                     <CollapsibleContent>
                       <SidebarMenuSub>
                         {route.subs?.map((subRoute) => {
@@ -73,8 +79,8 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
                         })}
                       </SidebarMenuSub>
                     </CollapsibleContent>
-                  )}
-                </Collapsible>
+                  </Collapsible>
+                )
               ) : (
                 <SidebarMenuButton className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', isCollapsed && 'justify-center')} asChild>
                   <Link to={route.link} className={cn('flex items-center rounded-lg px-2', isCollapsed && 'justify-center')}>

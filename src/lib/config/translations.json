@@ -608,6 +608,7 @@
   "services": "Serviços",
   "services.page.description": "Configure os serviços prestados pela clínica.",
   "settings": "Configurações",
+  "settings.index.description": "Escolha uma área para editar dados da conta, da clínica ou do sistema.",
   "sex": "Sexo",
   "sex.female": "Feminino",
   "sex.male": "Masculino",
