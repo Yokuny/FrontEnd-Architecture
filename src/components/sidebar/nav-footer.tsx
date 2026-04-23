@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Down from '@/components/icons/Down.Icon';
 import Star from '@/components/icons/Star.Icon';
 import Up from '@/components/icons/Up.Icon';
+import { FavoritesSwitcher } from '@/components/sidebar/switch-favorites';
 import { PatientSearchSwitcher } from '@/components/sidebar/switch-patient-search';
 import { ScheduleDialogSwitcher } from '@/components/sidebar/switch-schedule-dialog';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -18,81 +19,75 @@ export function FooterNavigation({ routes }: { routes: Route[] }) {
   const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
 
   return (
-    <>
-      <div className={cn('mb-2 flex w-full gap-2', isCollapsed ? 'justify-center' : 'justify-start')}>
-        <PatientSearchSwitcher />
-        <ScheduleDialogSwitcher />
-      </div>
-      <SidebarMenu>
-        {routes.map((route) => {
-          const isOpen = !isCollapsed && openCollapsible === route.id;
-          const hasSubRoutes = !!route.subs?.length;
+    <SidebarMenu>
+      <PatientSearchSwitcher />
+      <ScheduleDialogSwitcher />
+      <FavoritesSwitcher />
+      {routes.map((route) => {
+        const isOpen = !isCollapsed && openCollapsible === route.id;
+        const hasSubRoutes = !!route.subs?.length;
 
-          return (
-            <SidebarMenuItem key={route.id}>
-              {hasSubRoutes ? (
-                isCollapsed ? (
-                  <SidebarMenuButton className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', 'justify-center')} asChild>
-                    <Link to={route.link} className="flex items-center justify-center rounded-lg px-2">
-                      {route.icon}
-                      <span className="sr-only">{route.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                ) : (
-                  <Collapsible open={isOpen} onOpenChange={(open) => setOpenCollapsible(open ? route.id : null)} className="w-full">
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton
-                        className={cn(
-                          'flex w-full items-center transition-colors',
-                          isOpen ? 'bg-sidebar-muted text-foreground' : 'text-muted-foreground hover:bg-sidebar-muted hover:text-foreground',
-                        )}
-                      >
-                        {route.icon}
-                        <span className="ml-2 flex-1 truncate text-left">{route.title}</span>
-                        {hasSubRoutes && <span className="ml-auto">{isOpen ? <Up className="size-4" /> : <Down className="size-4" />}</span>}
-                      </SidebarMenuButton>
-                    </CollapsibleTrigger>
-
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {route.subs?.map((subRoute) => {
-                          const favorited = isFavorite(subRoute.link);
-                          return (
-                            <SidebarMenuSubItem key={`${route.id}${subRoute.title}`} className="group/sub flex h-auto items-center">
-                              <button
-                                type="button"
-                                onClick={() => toggleFavorite({ title: subRoute.title, link: subRoute.link })}
-                                className={cn(
-                                  'mb-0.5 cursor-pointer transition-opacity duration-2000 ease-initial',
-                                  favorited ? 'text-amber-500/50 opacity-100' : 'text-muted-foreground opacity-0 hover:text-yellow-400 group-hover/sub:opacity-100',
-                                )}
-                              >
-                                <Star className={cn('size-3', favorited && 'fill-current')} />
-                              </button>
-                              <SidebarMenuSubButton size="sm" asChild>
-                                <Link to={subRoute.link} className="text-foreground hover:bg-sidebar-muted hover:text-muted-foreground">
-                                  {subRoute.title}
-                                </Link>
-                              </SidebarMenuSubButton>
-                            </SidebarMenuSubItem>
-                          );
-                        })}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </Collapsible>
-                )
-              ) : (
-                <SidebarMenuButton className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', isCollapsed && 'justify-center')} asChild>
-                  <Link to={route.link} className={cn('flex items-center rounded-lg px-2', isCollapsed && 'justify-center')}>
+        return (
+          <SidebarMenuItem key={route.id}>
+            {hasSubRoutes ? (
+              isCollapsed ? (
+                <SidebarMenuButton className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', 'justify-center')} asChild>
+                  <Link to={route.link} className="flex items-center justify-center rounded-lg px-2">
                     {route.icon}
-                    {!isCollapsed && <span className="ml-2">{route.title}</span>}
+                    <span className="sr-only">{route.title}</span>
                   </Link>
                 </SidebarMenuButton>
-              )}
-            </SidebarMenuItem>
-          );
-        })}
-      </SidebarMenu>
-    </>
+              ) : (
+                <Collapsible open={isOpen} onOpenChange={(open) => setOpenCollapsible(open ? route.id : null)} className="w-full">
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton
+                      className={cn('flex w-full items-center transition-colors', isOpen ? 'bg-sidebar-muted text-foreground' : 'text-foreground hover:bg-sidebar-muted')}
+                    >
+                      {route.icon}
+                      <span className="ml-2 flex-1 truncate text-left">{route.title}</span>
+                      {hasSubRoutes && <span className="ml-auto">{isOpen ? <Up className="size-4" /> : <Down className="size-4" />}</span>}
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {route.subs?.map((subRoute) => {
+                        const favorited = isFavorite(subRoute.link);
+                        return (
+                          <SidebarMenuSubItem key={`${route.id}${subRoute.title}`} className="group/sub flex h-auto items-center">
+                            <button
+                              type="button"
+                              onClick={() => toggleFavorite({ title: subRoute.title, link: subRoute.link })}
+                              className={cn(
+                                'mb-0.5 cursor-pointer transition-opacity duration-2000 ease-initial',
+                                favorited ? 'text-amber-500/50 opacity-100' : 'text-muted-foreground opacity-0 hover:text-yellow-400 group-hover/sub:opacity-100',
+                              )}
+                            >
+                              <Star className={cn('size-3', favorited && 'fill-current')} />
+                            </button>
+                            <SidebarMenuSubButton size="sm" asChild>
+                              <Link to={subRoute.link} className="text-foreground hover:bg-sidebar-muted hover:text-muted-foreground">
+                                {subRoute.title}
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </Collapsible>
+              )
+            ) : (
+              <SidebarMenuButton className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', isCollapsed && 'justify-center')} asChild>
+                <Link to={route.link} className={cn('flex items-center rounded-lg px-2', isCollapsed && 'justify-center')}>
+                  {route.icon}
+                  {!isCollapsed && <span className="ml-2">{route.title}</span>}
+                </Link>
+              </SidebarMenuButton>
+            )}
+          </SidebarMenuItem>
+        );
+      })}
+    </SidebarMenu>
   );
 }

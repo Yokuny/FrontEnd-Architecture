@@ -9,7 +9,6 @@ import type { SidebarRoute } from '@/lib/config/sidebarRoutes.config';
 import { buildSidebarRoutes } from '@/lib/config/sidebarRoutes.config';
 import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
-import { FavoritesSwitcher } from './switch-favorites';
 import { NotificationsSwitcher } from './switch-notifications';
 
 const convertToNavRoutes = (routes: SidebarRoute[]): Route[] => {
@@ -50,7 +49,6 @@ export function AppSidebar() {
           </div>
           {!isCollapsed && (
             <>
-              <FavoritesSwitcher />
               <ThemeSwitcher />
               <UserSwitcher />
             </>

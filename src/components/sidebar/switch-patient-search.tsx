@@ -6,15 +6,22 @@ import Patients from '@/components/icons/Patients.Icon';
 import Search from '@/components/icons/Search.Icon';
 import { Button } from '@/components/ui/button';
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Kbd } from '@/components/ui/kbd';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
+import { useModifierKeyLabel } from '@/hooks/use-modifier-key-label';
 import { useSidebarToggle } from '@/hooks/use-sidebar-toggle';
 import { t } from '@/lib/helpers/translate.helper';
+import { cn } from '@/lib/utils/cn.util';
 import { usePatientsQuery } from '@/query/patients';
 
 const COMMAND_KEYBOARD_SHORTCUT = 'k';
 
 export function PatientSearchSwitcher() {
   const { setMenuOpen } = useSidebarToggle();
+  const { state } = useSidebar();
+  const isCollapsed = state === 'collapsed';
+  const modifierLabel = useModifierKeyLabel();
   const [open, setOpen] = useState(false);
   const { data: patients } = usePatientsQuery();
   const navigate = useNavigate();
@@ -55,10 +62,25 @@ export function PatientSearchSwitcher() {
 
   return (
     <>
-      <Button type="button" size="icon" variant="secondary" onClick={() => setOpen(true)} aria-label={t('search.patients')}>
-        <Search className="size-4 text-foreground" />
-        <span className="sr-only">{t('search.patients')}</span>
-      </Button>
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          onClick={() => setOpen(true)}
+          aria-label={t('search.patients')}
+          tooltip={t('search.patients')}
+          className={cn('text-muted-foreground hover:bg-sidebar-muted hover:text-foreground', isCollapsed && 'justify-center')}
+        >
+          <Search className="size-3.5 shrink-0" />
+          {!isCollapsed && (
+            <>
+              <span className="ml-2 flex-1 truncate text-left">{t('search.patients')}</span>
+              <Kbd className="uppercase">
+                {modifierLabel}
+                {COMMAND_KEYBOARD_SHORTCUT}
+              </Kbd>
+            </>
+          )}
+        </SidebarMenuButton>
+      </SidebarMenuItem>
 
       <CommandDialog open={open} onOpenChange={handleOpenChange} title={t('search.patients')} description={t('search.patients.description')}>
         <CommandInput placeholder={t('search.patient.placeholder')} className="h-12" />
