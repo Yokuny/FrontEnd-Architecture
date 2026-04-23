@@ -21,11 +21,9 @@
 
 | Hook | Arquivo | Proposito |
 |------|---------|-----------|
-| `usePatientStore` | `patients.ts` | `getName(patients, id)`, `getImage(patients, id)`, `mapToCombobox(patients)` |
-| `useProfessionalStore` | `professionals.ts` | `getName(professionals, id)`, `getImage(professionals, id)`, `mapToCombobox(professionals)` |
-| `useFinancialStore` | `financials.ts` | `mapToCombobox(financials, patientId?)` — filtra financeiros por paciente |
-| `useOdontogramStore` | `odontogram.ts` | `mapToCombobox(odontograms, patientId?)` — filtra odontogramas por paciente |
 | `useClinicStore` | `clinic.ts` | `selectedRoom`, `setSelectedRoom`, `getRoomName(clinic, id)` — sala selecionada (persist) e nome da sala pelo ID |
+
+> **Nota:** utilitarios para pacientes, profissionais, financeiro e odontograma foram migrados para `src/query/` como funcoes puras (`getPatientName`, `getProfessionalImage`, `mapFinancialsToCombobox`, etc.) e hooks derivados (`usePatientsComboboxQuery`, `useFinancialsComboboxQuery(patientId?)`, etc.). Veja a secao "Helpers e Comboboxes derivados".
 
 ---
 
@@ -56,7 +54,9 @@
 
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
-| Lista parcial | `../query/patients.ts` | `usePatientsQuery` — lista resumida para comboboxes |
+| Lista parcial | `../query/patients.ts` | `usePatientsQuery` — lista resumida |
+| Combobox | `../query/patients.ts` | `usePatientsComboboxQuery()` — `{ options, isLoading }` ja formatado |
+| Helpers | `../query/patients.ts` | `getPatientName(patients, id)`, `getPatientImage(patients, id)`, `mapPatientsToCombobox(patients)` |
 | Detalhe completo | `../query/patient.ts` | `usePatientQuery(id?)` — dados completos do paciente |
 | Analytics | `../query/analytics.ts` | `usePatientAnalyticsQuery({ enabled? })` — metricas e estatisticas |
 
@@ -80,7 +80,9 @@
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
 | Lista completa | `../query/financials.ts` | `useFinancialsQuery` |
-| Lista parcial | `../query/financials.ts` | `useFinancialsPartialQuery` — para comboboxes |
+| Lista parcial | `../query/financials.ts` | `useFinancialsPartialQuery` |
+| Combobox | `../query/financials.ts` | `useFinancialsComboboxQuery(patientId?)` — `{ options, isLoading }` ja filtrado e formatado |
+| Helpers | `../query/financials.ts` | `mapFinancialsToCombobox(financials, patientId?)` |
 | Detalhe | `../query/financials.ts` | `useFinancialDetailQuery(id?)` |
 | Mutations | `../query/financials.ts` | `useFinancialMutations` → `create`, `update`, `updateStatus` |
 
@@ -89,6 +91,8 @@
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
 | Lista | `../query/odontogram.ts` | `useOdontogramsQuery` |
+| Combobox | `../query/odontogram.ts` | `useOdontogramsComboboxQuery(patientId?)` — `{ options, isLoading }` ja filtrado e formatado |
+| Helpers | `../query/odontogram.ts` | `mapOdontogramsToCombobox(odontograms, patientId?)` |
 | Detalhe | `../query/odontogram.ts` | `useOdontogramDetailQuery(id?)` |
 | Mutations | `../query/odontogram.ts` | `useOdontogramMutations` → `create`, `updateStatus` |
 
@@ -104,6 +108,8 @@
 | Hook | Arquivo | Exporta |
 |------|---------|---------|
 | Lista | `../query/professionals.ts` | `useProfessionalsQuery` — todos profissionais da clinica |
+| Combobox | `../query/professionals.ts` | `useProfessionalsComboboxQuery()` — `{ options, isLoading }` ja formatado |
+| Helpers | `../query/professionals.ts` | `getProfessionalName(professionals, id)`, `getProfessionalImage(professionals, id)`, `mapProfessionalsToCombobox(professionals)` |
 
 ### Procedimentos
 
@@ -147,18 +153,43 @@ function MyComponent() {
 }
 ```
 
-### Combobox com store utilitario
+### Combobox derivado (formato ja pronto)
 
 ```tsx
-import { usePatientsQuery } from '@/query/patients';
-import { usePatientStore } from '@/hooks/patients';
+import { usePatientsComboboxQuery } from '@/query/patients';
+import { useFinancialsComboboxQuery } from '@/query/financials';
 
 function MyForm() {
-  const { data: patients = [] } = usePatientsQuery();
-  const { mapToCombobox } = usePatientStore();
-  const options = mapToCombobox(patients);
-  // options: { value, label, image }[]
+  const { options: patientOptions, isLoading } = usePatientsComboboxQuery();
+  const { options: financialOptions } = useFinancialsComboboxQuery(patientId);
+  // options: { value, label, image? }[]
 }
+```
+
+### Resolver nome/imagem a partir de uma lista ja buscada
+
+```tsx
+import { getPatientName, getPatientImage, usePatientsQuery } from '@/query/patients';
+
+function Row({ id }: { id: string }) {
+  const { data: patients } = usePatientsQuery();
+  const name = getPatientName(patients, id);
+  const image = getPatientImage(patients, id);
+}
+```
+
+### Componentes de input controlado
+
+Todos os comboboxes (`PatientCombobox`, `ProfessionalCombobox`, `FinancialCombobox`, `OdontogramCombobox`) seguem a interface padrao `value` + `onChange`:
+
+```tsx
+<PatientCombobox value={field.value} onChange={field.onChange} />
+
+<FinancialCombobox
+  value={field.value}
+  onChange={(v) => field.onChange(v)}
+  patient={patientId}
+/>
 ```
 
 ### Mutations

@@ -1,41 +1,38 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Check from '@/components/icons/Check.Icon';
 import Down from '@/components/icons/Down.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { usePatientStore } from '@/hooks/patients';
 import { t } from '@/lib/helpers/translate.helper';
 import { cn } from '@/lib/utils/cn.util';
-import { usePatientsQuery } from '@/query/patients';
+import { usePatientsComboboxQuery } from '@/query/patients';
 
-const PatientCombobox = ({ controller, disabled }: PatientComboboxProps) => {
+type PatientComboboxProps = {
+  value: string;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+};
+
+const PatientCombobox = ({ value, onChange, disabled }: PatientComboboxProps) => {
   const [open, setOpen] = useState(false);
-  const [patient, setPatient] = useState('');
+  const { options, isLoading } = usePatientsComboboxQuery();
 
-  const { data, isLoading } = usePatientsQuery();
-  const patients = useMemo(
-    () =>
-      usePatientStore
-        .getState()
-        .mapToCombobox(data)
-        .map((p) => ({ ...p, image: p.image || '' })),
-    [data],
-  );
+  const selected = options.find((item) => item.value === value);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button role="combobox" variant="outline" aria-expanded={open} disabled={disabled || isLoading}>
           <div className="flex items-center gap-2 truncate">
-            {patient && (
+            {selected && (
               <Avatar className="size-8">
-                <AvatarImage src={patients.find((item) => item.value === patient)?.image} alt="img do paciente" />
-                <AvatarFallback className="text-xs">{patients.find((item) => item.value === patient)?.label.slice(0, 2)}</AvatarFallback>
+                <AvatarImage src={selected.image} alt="img do paciente" />
+                <AvatarFallback className="text-xs">{selected.label.slice(0, 2)}</AvatarFallback>
               </Avatar>
             )}
-            <span className="text-foreground/90">{patients.find((item) => item.value === patient)?.label || t('patients')}</span>
+            <span className="text-foreground/90">{selected?.label || t('patients')}</span>
           </div>
           <Down className={cn('ml-2 size-3 shrink-0 stroke-2 opacity-50 transition-transform duration-200', open && 'rotate-180')} />
         </Button>
@@ -45,16 +42,15 @@ const PatientCombobox = ({ controller, disabled }: PatientComboboxProps) => {
           <CommandInput placeholder={t('search.patient')} className="h-9" disabled={isLoading} />
           <CommandEmpty>{t('patient.not.found')}</CommandEmpty>
           <CommandGroup>
-            {patients.map((item) => (
+            {options.map((item) => (
               <CommandItem
                 key={item.value}
                 value={item.label}
                 className="gap-2 text-md"
                 onSelect={(currentLabel) => {
-                  const selectedItem = patients.find((pat) => pat.label === currentLabel);
+                  const selectedItem = options.find((pat) => pat.label === currentLabel);
                   const selectedValue = selectedItem?.value || '';
-                  setPatient(selectedValue === patient ? '' : selectedValue);
-                  controller.onChange(selectedValue === patient ? '' : selectedValue);
+                  onChange(selectedValue === value ? '' : selectedValue);
                   setOpen(false);
                 }}
               >
@@ -65,7 +61,7 @@ const PatientCombobox = ({ controller, disabled }: PatientComboboxProps) => {
                   </Avatar>
                   <span className="truncate">{item.label}</span>
                 </div>
-                <Check className={cn('ml-auto size-3', patient === item.value ? 'opacity-100' : 'opacity-0')} />
+                <Check className={cn('ml-auto size-3', value === item.value ? 'opacity-100' : 'opacity-0')} />
               </CommandItem>
             ))}
           </CommandGroup>
@@ -76,8 +72,3 @@ const PatientCombobox = ({ controller, disabled }: PatientComboboxProps) => {
 };
 
 export default PatientCombobox;
-
-type PatientComboboxProps = {
-  controller: any;
-  disabled?: boolean;
-};

@@ -16,7 +16,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ItemContent, ItemDescription } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useClinicStore } from '@/hooks/clinic';
-import { useProfessionalColors, useProfessionalStore } from '@/hooks/professionals';
+import { useProfessionalColors } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { AgendaDaysToShow, EventGap, EventHeight, WeekCellsHeight } from '@/lib/config/calendar.config';
 import { addHoursToDate } from '@/lib/helpers/calendar.helper';
@@ -27,7 +27,7 @@ import type { CalendarView, EventColor, PartialSchedule } from '@/lib/interfaces
 import { scheduleTimeSchema } from '@/lib/interfaces/schemas/schedule.schema';
 import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
-import { useProfessionalsQuery } from '@/query/professionals';
+import { getProfessionalImage, getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
 import { useUserQuery } from '@/query/user';
 import { AgendaView } from './@components/agenda-view';
 import { CalendarDndProvider } from './@components/calendar-dnd-provider';
@@ -55,7 +55,6 @@ function SchedulePage() {
 
   // Zustand hooks
   const { selectedRoom, setSelectedRoom, getRoomName: getRoomNameUtil } = useClinicStore();
-  const professionalStore = useProfessionalStore();
   const { setColor: setProfessionalColor, clearColor: clearProfessionalColor } = useProfessionalColors();
 
   // Query hooks
@@ -65,8 +64,8 @@ function SchedulePage() {
 
   // Derived values
   const getRoomName = (id: string | undefined) => getRoomNameUtil(clinic, id);
-  const getProfessionalName = (id: string | undefined) => professionalStore.getName(professionals, id);
-  const getProfessionalImage = (id: string | undefined) => professionalStore.getImage(professionals, id);
+  const getProfessionalNameById = (id: string | undefined) => getProfessionalName(professionals, id);
+  const getProfessionalImageById = (id: string | undefined) => getProfessionalImage(professionals, id);
 
   // useState
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -446,8 +445,8 @@ function SchedulePage() {
           isSidebarOpen={isSidebarOpen}
           upcomingPerProfessional={upcomingPerProfessional}
           uniqueProfessionalIds={uniqueProfessionalIds}
-          getProfessionalName={getProfessionalName}
-          getProfessionalImage={getProfessionalImage}
+          getProfessionalName={getProfessionalNameById}
+          getProfessionalImage={getProfessionalImageById}
           getProfessionalColor={getProfessionalColor}
           onPrevious={handlePrevious}
           onNext={handleNext}

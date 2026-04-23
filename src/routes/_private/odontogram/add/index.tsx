@@ -47,16 +47,14 @@ function OdontogramAddPage() {
               <FormLabel>Paciente</FormLabel>
               <FormControl>
                 <PatientCombobox
-                  controller={{
-                    ...field,
-                    onChange: (value: string) => {
-                      field.onChange(value);
-                      if (value) {
-                        fetchPatientOdontogram(value);
-                      } else {
-                        clearPatientOdontogram();
-                      }
-                    },
+                  value={field.value}
+                  onChange={(value: string) => {
+                    field.onChange(value);
+                    if (value) {
+                      fetchPatientOdontogram(value);
+                    } else {
+                      clearPatientOdontogram();
+                    }
                   }}
                 />
               </FormControl>
@@ -77,7 +75,7 @@ function OdontogramAddPage() {
             <FormItem className="w-full max-w-xs">
               <FormLabel>Profissional</FormLabel>
               <FormControl>
-                <ProfessionalCombobox controller={field} />
+                <ProfessionalCombobox value={field.value} onChange={field.onChange} />
               </FormControl>
             </FormItem>
           )}

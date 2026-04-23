@@ -28,7 +28,7 @@ export function FinancialForm() {
               <FormItem className="w-full">
                 <FormLabel>{t('patient')}</FormLabel>
                 <FormControl>
-                  <PatientCombobox controller={{ ...field }} />
+                  <PatientCombobox value={field.value} onChange={field.onChange} />
                 </FormControl>
               </FormItem>
             )}
@@ -40,7 +40,7 @@ export function FinancialForm() {
               <FormItem className="w-full">
                 <FormLabel>{t('professional')}</FormLabel>
                 <FormControl>
-                  <ProfessionalCombobox controller={{ ...field }} />
+                  <ProfessionalCombobox value={field.value} onChange={field.onChange} />
                 </FormControl>
               </FormItem>
             )}

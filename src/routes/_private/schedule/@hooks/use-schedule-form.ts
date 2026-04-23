@@ -3,14 +3,13 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 import { useClinicStore } from '@/hooks/clinic';
-import { usePatientStore } from '@/hooks/patients';
 import { DELETE, POST, PUT, request } from '@/lib/api/client.api';
 import { DefaultEndHour, DefaultStartHour } from '@/lib/config/calendar.config';
 import { t } from '@/lib/helpers/translate.helper';
 import { addKey } from '@/lib/helpers/validate.helper';
 import type { NewSchedule, UpdateSchedule } from '@/lib/interfaces/schemas/schedule.schema';
 import { useClinicApi } from '@/query/clinic';
-import { usePatientsQuery } from '@/query/patients';
+import { getPatientName, usePatientsQuery } from '@/query/patients';
 import { useUserQuery } from '@/query/user';
 import { extractTimeFromISO } from '../@utils/schedule.utils';
 
@@ -21,7 +20,7 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
   const { getRoomName: getRoomNameUtil } = useClinicStore();
 
   const getRoomName = useCallback((id: string | undefined) => getRoomNameUtil(clinic, id), [clinic, getRoomNameUtil]);
-  const getPatientName = useCallback((id: string | undefined) => usePatientStore.getState().getName(patients, id), [patients]);
+  const getPatientNameById = useCallback((id: string | undefined) => getPatientName(patients, id), [patients]);
 
   const [startDateTime, setStartDateTime] = useState<string>(() => (event ? new Date(event.start).toISOString() : ''));
   const [endDateTime, setEndDateTime] = useState<string | undefined>(() => (event?.end ? new Date(event.end).toISOString() : undefined));
@@ -245,7 +244,7 @@ export function useScheduleForm({ event, onClose, onSave, onDelete }: ScheduleFo
       toast.success(res.message);
       onSave({
         _id: res.data._id,
-        title: getPatientName(values.Patient),
+        title: getPatientNameById(values.Patient),
         start: new Date(startDateTime),
         end: endDateTime ? new Date(endDateTime) : new Date(startDateTime),
         allDay,

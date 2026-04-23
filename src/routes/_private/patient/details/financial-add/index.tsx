@@ -55,7 +55,7 @@ function FinancialAddPage() {
               <FormItem className="w-full max-w-xs">
                 <FormLabel>{t('professional')}</FormLabel>
                 <FormControl>
-                  <ProfessionalCombobox controller={{ ...field }} />
+                  <ProfessionalCombobox value={field.value} onChange={field.onChange} />
                 </FormControl>
               </FormItem>
             )}

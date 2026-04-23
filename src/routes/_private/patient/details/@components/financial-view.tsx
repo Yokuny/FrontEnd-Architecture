@@ -17,7 +17,6 @@ import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
@@ -27,7 +26,7 @@ import type { DbFinancial } from '@/lib/interfaces/financial.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { usePatientQuery } from '@/query/patient';
-import { useProfessionalsQuery } from '@/query/professionals';
+import { getProfessionalImage, getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
 
 const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
   const summary = useMemo(() => {
@@ -180,9 +179,8 @@ const FinancialRecordDetail = ({
   selectedStatus: Record<string, string>;
 }) => {
   const navigate = useNavigate();
-  const professionalStore = useProfessionalStore();
-  const getProfessionalName = (id?: string) => professionalStore.getName(professionals, id);
-  const getProfessionalImage = (id?: string) => professionalStore.getImage(professionals, id);
+  const getProfessionalNameById = (id?: string) => getProfessionalName(professionals, id);
+  const getProfessionalImageById = (id?: string) => getProfessionalImage(professionals, id);
 
   const [openCategories, setOpenCategories] = useState<string[]>(['general', 'procedures', 'financial']);
 
@@ -259,12 +257,12 @@ const FinancialRecordDetail = ({
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                   <div className="flex items-center gap-3">
                     <Avatar className="size-8 rounded-md">
-                      <AvatarImage src={getProfessionalImage(el.Professional)} />
-                      <AvatarFallback>{getProfessionalName(el.Professional).slice(0, 2)}</AvatarFallback>
+                      <AvatarImage src={getProfessionalImageById(el.Professional)} />
+                      <AvatarFallback>{getProfessionalNameById(el.Professional).slice(0, 2)}</AvatarFallback>
                     </Avatar>
                     <ItemDescription className="font-sans">{t('professional')}</ItemDescription>
                   </div>
-                  <ItemTitle className="font-mono">{getProfessionalName(el.Professional)}</ItemTitle>
+                  <ItemTitle className="font-mono">{getProfessionalNameById(el.Professional)}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">

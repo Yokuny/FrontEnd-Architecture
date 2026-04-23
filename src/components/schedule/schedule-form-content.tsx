@@ -119,12 +119,10 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                                 <FormLabel>{t('patient')}</FormLabel>
                                 <FormControl>
                                   <PatientCombobox
-                                    controller={{
-                                      ...field,
-                                      onChange: (value: string) => {
-                                        field.onChange(value);
-                                        setSelectedPatient(value);
-                                      },
+                                    value={field.value}
+                                    onChange={(value: string) => {
+                                      field.onChange(value);
+                                      setSelectedPatient(value);
                                     }}
                                   />
                                 </FormControl>
@@ -140,12 +138,10 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                                 <FormLabel>{t('professional.label')}</FormLabel>
                                 <FormControl>
                                   <ProfessionalCombobox
-                                    controller={{
-                                      ...field,
-                                      onChange: (value: string) => {
-                                        field.onChange(value);
-                                        setSelectedProfessional(value);
-                                      },
+                                    value={field.value}
+                                    onChange={(value: string) => {
+                                      field.onChange(value);
+                                      setSelectedProfessional(value);
                                     }}
                                   />
                                 </FormControl>
@@ -259,12 +255,10 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                                 <FormLabel>{t('professional.label')}</FormLabel>
                                 <FormControl>
                                   <ProfessionalCombobox
-                                    controller={{
-                                      ...field,
-                                      onChange: (value: string) => {
-                                        field.onChange(value);
-                                        setSelectedProfessional(value);
-                                      },
+                                    value={field.value}
+                                    onChange={(value: string) => {
+                                      field.onChange(value);
+                                      setSelectedProfessional(value);
                                     }}
                                   />
                                 </FormControl>

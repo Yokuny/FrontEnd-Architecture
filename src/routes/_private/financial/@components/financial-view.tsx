@@ -3,12 +3,11 @@ import { toast } from 'sonner';
 import DefaultLoading from '@/components/default-loading';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import { useFinancialDetailQuery, useFinancialMutations } from '@/query/financials';
-import { useProfessionalsQuery } from '@/query/professionals';
+import { getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
 import { FINANCIAL_STATUS_OPTIONS } from '../@consts/financial.consts';
 
 type FinancialViewProps = {
@@ -88,8 +87,8 @@ export function FinancialView({ id, isOpen = true }: FinancialViewProps) {
         <TableBody>
           <TableRow className="hover:bg-transparent">
             <TableCell className="w-[180px] px-4 py-3 text-xs">
-              <span className="max-w-[120px] truncate font-medium" title={useProfessionalStore.getState().getName(professionals, financial.Professional)}>
-                {useProfessionalStore.getState().getName(professionals, financial.Professional)}
+              <span className="max-w-[120px] truncate font-medium" title={getProfessionalName(professionals, financial.Professional)}>
+                {getProfessionalName(professionals, financial.Professional)}
               </span>
             </TableCell>
             <TableCell className="w-[180px] px-4 py-3 text-xs">

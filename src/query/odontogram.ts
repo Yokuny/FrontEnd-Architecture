@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import { GET, PATCH, POST, request } from '@/lib/api/client.api';
+import { type Combobox, valueAndLabel } from '@/lib/helpers/formatter.helper';
 
 import type { DbOdontogram, PartialOdontogram } from '@/lib/interfaces/odontogram.interface';
 
@@ -72,4 +74,16 @@ export function useOdontogramMutations() {
   });
 
   return { create, updateStatus };
+}
+
+export function mapOdontogramsToCombobox(odontograms: PartialOdontogram[] | undefined, patientId?: string): Combobox[] {
+  if (!odontograms?.length) return [];
+  const filtered = patientId ? odontograms.filter((o) => o.patientID === patientId) : odontograms;
+  return filtered.map((o) => valueAndLabel(o._id, new Date(o.createdAt).toLocaleDateString('pt-BR').trim()));
+}
+
+export function useOdontogramsComboboxQuery(patientId?: string) {
+  const { data, isLoading } = useOdontogramsQuery();
+  const options = useMemo(() => mapOdontogramsToCombobox(data, patientId), [data, patientId]);
+  return { options, isLoading };
 }

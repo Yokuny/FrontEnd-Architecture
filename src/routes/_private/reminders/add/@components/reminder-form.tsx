@@ -24,7 +24,7 @@ export function ReminderForm() {
               <FormItem className="flex flex-col">
                 <FormLabel>{t('patient.required')}</FormLabel>
                 <FormControl>
-                  <PatientCombobox controller={field} />
+                  <PatientCombobox value={field.value} onChange={field.onChange} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

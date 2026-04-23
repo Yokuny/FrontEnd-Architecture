@@ -79,18 +79,16 @@ function ScheduleAddPage() {
                 <FormLabel>{t('professional')}</FormLabel>
                 <FormControl>
                   <ProfessionalCombobox
-                    controller={{
-                      ...field,
-                      onChange: (value: string) => {
-                        field.onChange(value);
-                        setSelectedProfessional(value);
-                        if (value) {
-                          form.setValue('Financial', '');
-                          form.setValue('Odontogram', '');
-                          setSelectedFinancial('');
-                          setSelectedOdontogram('');
-                        }
-                      },
+                    value={field.value}
+                    onChange={(value: string) => {
+                      field.onChange(value);
+                      setSelectedProfessional(value);
+                      if (value) {
+                        form.setValue('Financial', '');
+                        form.setValue('Odontogram', '');
+                        setSelectedFinancial('');
+                        setSelectedOdontogram('');
+                      }
                     }}
                     disabled={selectedFinancial !== '' || selectedOdontogram !== ''}
                   />
@@ -107,18 +105,16 @@ function ScheduleAddPage() {
                 <FormLabel>{t('financial.budget')}</FormLabel>
                 <FormControl>
                   <FinancialCombobox
-                    controller={{
-                      ...field,
-                      onChange: (value: string) => {
-                        field.onChange(value);
-                        setSelectedFinancial(value);
-                        if (value) {
-                          form.setValue('Professional', '');
-                          form.setValue('Odontogram', '');
-                          setSelectedProfessional('');
-                          setSelectedOdontogram('');
-                        }
-                      },
+                    value={field.value}
+                    onChange={(value: string) => {
+                      field.onChange(value);
+                      setSelectedFinancial(value);
+                      if (value) {
+                        form.setValue('Professional', '');
+                        form.setValue('Odontogram', '');
+                        setSelectedProfessional('');
+                        setSelectedOdontogram('');
+                      }
                     }}
                     patient={String(id)}
                     disabled={selectedProfessional !== '' || selectedOdontogram !== ''}
@@ -136,18 +132,16 @@ function ScheduleAddPage() {
                 <FormLabel>{t('odontogram')}</FormLabel>
                 <FormControl>
                   <OdontogramCombobox
-                    controller={{
-                      ...field,
-                      onChange: (value: string) => {
-                        field.onChange(value);
-                        setSelectedOdontogram(value);
-                        if (value) {
-                          form.setValue('Professional', '');
-                          form.setValue('Financial', '');
-                          setSelectedProfessional('');
-                          setSelectedFinancial('');
-                        }
-                      },
+                    value={field.value}
+                    onChange={(value: string) => {
+                      field.onChange(value);
+                      setSelectedOdontogram(value);
+                      if (value) {
+                        form.setValue('Professional', '');
+                        form.setValue('Financial', '');
+                        setSelectedProfessional('');
+                        setSelectedFinancial('');
+                      }
                     }}
                     patient={String(id)}
                     disabled={selectedProfessional !== '' || selectedFinancial !== ''}

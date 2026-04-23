@@ -16,8 +16,6 @@ import { Item, ItemActions, ItemDescription, ItemTitle } from '@/components/ui/i
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { usePatientStore } from '@/hooks/patients';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PATCH, POST, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
@@ -25,8 +23,8 @@ import { currencyFormat, getStatusColor } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { FullSchedule, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
-import { usePatientsQuery } from '@/query/patients';
-import { useProfessionalsQuery } from '@/query/professionals';
+import { getPatientImage, getPatientName, usePatientsQuery } from '@/query/patients';
+import { getProfessionalImage, getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
 
 export type ScheduleRenderProps = {
   schedule: FullSchedule;
@@ -47,13 +45,10 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
   const { data: professionals } = useProfessionalsQuery();
   const { data: patients } = usePatientsQuery();
 
-  const professionalNameStore = useProfessionalStore();
-  const patientStore = usePatientStore();
-
-  const getProfessionalName = (profId: string | undefined) => professionalNameStore.getName(professionals, profId);
-  const getProfessionalImage = (profId: string | undefined) => professionalNameStore.getImage(professionals, profId);
-  const getPatientName = (patientId: string | undefined) => patientStore.getName(patients, patientId);
-  const getPatientImage = (patientId: string | undefined) => patientStore.getImage(patients, patientId);
+  const getProfessionalNameById = (profId: string | undefined) => getProfessionalName(professionals, profId);
+  const getProfessionalImageById = (profId: string | undefined) => getProfessionalImage(professionals, profId);
+  const getPatientNameById = (patientId: string | undefined) => getPatientName(patients, patientId);
+  const getPatientImageById = (patientId: string | undefined) => getPatientImage(patients, patientId);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -69,10 +64,10 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
     { value: 'noshow', label: t('no.show') },
   ];
 
-  const professionalImage = schedule?.Professional ? getProfessionalImage(schedule.Professional) : '';
-  const professionalName = schedule?.Professional ? getProfessionalName(schedule.Professional) : '';
-  const patientImage = schedule?.Patient ? getPatientImage(schedule.Patient) : '';
-  const patientName = schedule?.Patient ? getPatientName(schedule.Patient) : '';
+  const professionalImage = schedule?.Professional ? getProfessionalImageById(schedule.Professional) : '';
+  const professionalName = schedule?.Professional ? getProfessionalNameById(schedule.Professional) : '';
+  const patientImage = schedule?.Patient ? getPatientImageById(schedule.Patient) : '';
+  const patientName = schedule?.Patient ? getPatientNameById(schedule.Patient) : '';
 
   const handleStatusChange = async () => {
     setIsLoading(true);

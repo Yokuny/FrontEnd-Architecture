@@ -1,7 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
-import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 import type { EventColor } from '@/lib/interfaces/schedule.interface';
 
 export const useProfessionalColors = create<ProfessionalColorsStore>()(
@@ -28,21 +26,6 @@ export const useProfessionalColors = create<ProfessionalColorsStore>()(
   ),
 );
 
-export const useProfessionalStore = create<ProfessionalStore>()(() => ({
-  getName: (professionals, id) => {
-    if (!id || !professionals) return '';
-    return professionals.find((p) => p._id === id)?.name || '';
-  },
-  getImage: (professionals, id) => {
-    if (!id || !professionals) return undefined;
-    return professionals.find((p) => p._id === id)?.image || undefined;
-  },
-  mapToCombobox: (professionals) => {
-    if (!professionals?.length) return [];
-    return comboboxWithImgFormat(professionals);
-  },
-}));
-
 type ProfessionalColors = Record<string, EventColor>;
 
 type ProfessionalColorsStore = {
@@ -50,10 +33,4 @@ type ProfessionalColorsStore = {
   getColor: (id: string | undefined) => EventColor | null;
   setColor: (id: string, color: EventColor) => void;
   clearColor: (id: string) => void;
-};
-
-type ProfessionalStore = {
-  getName: (professionals: ProfessionalList[] | undefined, id: string | undefined) => string;
-  getImage: (professionals: ProfessionalList[] | undefined, id: string | undefined) => string | undefined;
-  mapToCombobox: (professionals: ProfessionalList[] | undefined) => { value: string; label: string; image?: string }[];
 };

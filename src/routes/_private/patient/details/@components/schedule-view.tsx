@@ -18,7 +18,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useClinicStore } from '@/hooks/clinic';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { PATCH, request } from '@/lib/api/client.api';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, getStatusColor, statusDictionary } from '@/lib/helpers/formatter.helper';
@@ -30,7 +29,7 @@ import type { DbSchedule } from '@/lib/interfaces/schedule.interface';
 import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
 import { usePatientQuery } from '@/query/patient';
-import { useProfessionalsQuery } from '@/query/professionals';
+import { getProfessionalImage, getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
 
 const scheduleStatuses = ['pending', 'waiting', 'confirmed', 'completed', 'in_progress', 'no_show', 'canceled', 'canceled_by_patient', 'canceled_by_professional'] as const;
 
@@ -175,10 +174,9 @@ const ScheduleRecordDetail = ({
   selectedStatus: Record<string, string>;
 }) => {
   const navigate = useNavigate();
-  const professionalStore = useProfessionalStore();
   const clinicStore = useClinicStore();
-  const getProfessionalName = (id?: string) => professionalStore.getName(professionals, id);
-  const getProfessionalImage = (id?: string) => professionalStore.getImage(professionals, id);
+  const getProfessionalNameById = (id?: string) => getProfessionalName(professionals, id);
+  const getProfessionalImageById = (id?: string) => getProfessionalImage(professionals, id);
   const getRoomName = (id?: string) => clinicStore.getRoomName(clinic, id);
 
   const [openCategories, setOpenCategories] = useState<string[]>(['general', 'procedures', 'details']);
@@ -248,12 +246,12 @@ const ScheduleRecordDetail = ({
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">
                   <div className="flex items-center gap-3">
                     <Avatar className="size-8 rounded-md">
-                      <AvatarImage src={getProfessionalImage(el.Professional)} />
-                      <AvatarFallback>{getProfessionalName(el.Professional).slice(0, 2)}</AvatarFallback>
+                      <AvatarImage src={getProfessionalImageById(el.Professional)} />
+                      <AvatarFallback>{getProfessionalNameById(el.Professional).slice(0, 2)}</AvatarFallback>
                     </Avatar>
                     <ItemDescription className="font-sans">{t('professional')}</ItemDescription>
                   </div>
-                  <ItemTitle className="font-mono">{getProfessionalName(el.Professional)}</ItemTitle>
+                  <ItemTitle className="font-mono">{getProfessionalNameById(el.Professional)}</ItemTitle>
                 </Item>
                 <ItemSeparator />
                 <Item variant="default" size="sm" className="justify-between py-2 hover:bg-secondary">

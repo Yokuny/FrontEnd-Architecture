@@ -16,7 +16,7 @@ export const valueAndLabel = (value: string, label: string) => ({ value, label }
 export type Combobox = { value: string; label: string };
 export type ComboboxWithImg = Combobox & { image: string };
 export const comboboxWithImgFormat = (register: PartialPatient[] | ProfessionalList[]): ComboboxWithImg[] => {
-  if (!register.length) return [{ value: '', label: 'Nenhum registro encontrado', image: '' }];
+  if (!register.length) return [];
   return register.map((data) => ({
     value: data._id,
     label: data.name.trim(),

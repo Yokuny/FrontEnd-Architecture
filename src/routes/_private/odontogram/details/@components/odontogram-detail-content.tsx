@@ -7,14 +7,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
-import { usePatientStore } from '@/hooks/patients';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import type { DbOdontogram } from '@/lib/interfaces/odontogram.interface';
 import type { PartialPatient } from '@/lib/interfaces/patient.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 import { cn } from '@/lib/utils/cn.util';
+import { getPatientImage, getPatientName } from '@/query/patients';
+import { getProfessionalImage, getProfessionalName } from '@/query/professionals';
 
 interface OdontogramDetailContentProps {
   odontogram: DbOdontogram;
@@ -32,10 +32,10 @@ function getFacesWithProcedures(faces: any) {
 }
 
 export function OdontogramDetailContent({ odontogram, patients, professionals }: OdontogramDetailContentProps) {
-  const patientName = usePatientStore((state) => state.getName(patients, odontogram.Patient));
-  const patientImage = usePatientStore((state) => state.getImage(patients, odontogram.Patient));
-  const professionalName = useProfessionalStore((state) => state.getName(professionals, odontogram.Professional));
-  const professionalImage = useProfessionalStore((state) => state.getImage(professionals, odontogram.Professional));
+  const patientName = getPatientName(patients, odontogram.Patient);
+  const patientImage = getPatientImage(patients, odontogram.Patient);
+  const professionalName = getProfessionalName(professionals, odontogram.Professional);
+  const professionalImage = getProfessionalImage(professionals, odontogram.Professional);
 
   const [openTeeth, setOpenTeeth] = useState(true);
 

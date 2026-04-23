@@ -1,9 +1,7 @@
 import { useClinicStore } from '@/hooks/clinic';
-import { usePatientStore } from '@/hooks/patients';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { useClinicApi } from '@/query/clinic';
-import { usePatientsQuery } from '@/query/patients';
-import { useProfessionalsQuery } from '@/query/professionals';
+import { getPatientName, usePatientsQuery } from '@/query/patients';
+import { getProfessionalName, useProfessionalsQuery } from '@/query/professionals';
 import { usePatientSchedulesQuery } from '@/query/schedule';
 
 export function useScheduleDetails(id: string | undefined) {
@@ -13,15 +11,15 @@ export function useScheduleDetails(id: string | undefined) {
   const { data: professionals } = useProfessionalsQuery();
   const { data, isLoading } = usePatientSchedulesQuery(id);
 
-  const getPatientName = (patientId: string | undefined) => usePatientStore.getState().getName(patients, patientId);
+  const getPatientNameById = (patientId: string | undefined) => getPatientName(patients, patientId);
   const getRoomName = (roomId: string | undefined) => getRoomNameUtil(clinic, roomId);
-  const getProfessionalName = (profId: string | undefined) => useProfessionalStore.getState().getName(professionals, profId);
+  const getProfessionalNameById = (profId: string | undefined) => getProfessionalName(professionals, profId);
 
   return {
     data,
     isLoading,
-    getPatientName,
+    getPatientName: getPatientNameById,
     getRoomName,
-    getProfessionalName,
+    getProfessionalName: getProfessionalNameById,
   };
 }

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import { GET, request } from '@/lib/api/client.api';
-
+import { type ComboboxWithImg, comboboxWithImgFormat } from '@/lib/helpers/formatter.helper';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 
 export const professionalsKeys = {
@@ -20,4 +21,25 @@ export function useProfessionalsQuery() {
     queryKey: professionalsKeys.list(),
     queryFn: fetchProfessionals,
   });
+}
+
+export function getProfessionalName(professionals: ProfessionalList[] | undefined, id: string | undefined): string {
+  if (!id || !professionals) return '';
+  return professionals.find((p) => p._id === id)?.name || '';
+}
+
+export function getProfessionalImage(professionals: ProfessionalList[] | undefined, id: string | undefined): string | undefined {
+  if (!id || !professionals) return undefined;
+  return professionals.find((p) => p._id === id)?.image || undefined;
+}
+
+export function mapProfessionalsToCombobox(professionals: ProfessionalList[] | undefined): ComboboxWithImg[] {
+  if (!professionals?.length) return [];
+  return comboboxWithImgFormat(professionals);
+}
+
+export function useProfessionalsComboboxQuery() {
+  const { data, isLoading } = useProfessionalsQuery();
+  const options = useMemo(() => mapProfessionalsToCombobox(data), [data]);
+  return { options, isLoading };
 }

@@ -9,13 +9,13 @@ import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
-import { useProfessionalStore } from '@/hooks/professionals';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { currencyFormat, financialPaymentMethod, statusDictionary } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { FullFinancial } from '@/lib/interfaces/financial.interface';
 import type { ProfessionalList } from '@/lib/interfaces/professional.interface';
 import { cn } from '@/lib/utils/cn.util';
+import { getProfessionalImage, getProfessionalName } from '@/query/professionals';
 import { STATUS_TO_BADGE_VARIANT } from '../../@consts/financial.consts';
 
 interface FinancialDetailContentProps {
@@ -25,8 +25,8 @@ interface FinancialDetailContentProps {
 
 export function FinancialDetailContent({ financial, professionals }: FinancialDetailContentProps) {
   const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
-  const professionalName = useProfessionalStore.getState().getName(professionals, financial.Professional);
-  const professionalImage = useProfessionalStore.getState().getImage(professionals, financial.Professional);
+  const professionalName = getProfessionalName(professionals, financial.Professional);
+  const professionalImage = getProfessionalImage(professionals, financial.Professional);
 
   const [openCategories, setOpenCategories] = useState<string[]>(['values', 'payment', 'dates', 'procedures']);
 

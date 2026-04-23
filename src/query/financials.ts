@@ -1,7 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import { GET, PATCH, POST, PUT, request } from '@/lib/api/client.api';
+import { type Combobox, valueAndLabel } from '@/lib/helpers/formatter.helper';
 
 import type { FinancialList, FullFinancial, PartialFinancial } from '@/lib/interfaces/financial.interface';
+
+type FinancialComboboxRow = FinancialList | PartialFinancial;
 
 export const financialsKeys = {
   all: ['financials'] as const,
@@ -102,4 +106,31 @@ export function useFinancialMutations() {
   });
 
   return { create, update, updateStatus };
+}
+
+function getFinancialPatientId(f: FinancialComboboxRow): string {
+  if ('patientID' in f && f.patientID) return f.patientID;
+  return (f as FinancialList).Patient;
+}
+
+function getFinancialLabelDate(f: FinancialComboboxRow): string {
+  if ('updatedAt' in f && f.updatedAt) {
+    return new Date(f.updatedAt).toLocaleDateString('pt-BR').trim();
+  }
+  if ('createdAt' in f && f.createdAt) {
+    return new Date(f.createdAt as string | Date).toLocaleDateString('pt-BR').trim();
+  }
+  return '';
+}
+
+export function mapFinancialsToCombobox(financials: FinancialComboboxRow[] | undefined, patientId?: string): Combobox[] {
+  if (!financials?.length) return [];
+  const filtered = patientId ? financials.filter((f) => getFinancialPatientId(f) === patientId) : financials;
+  return filtered.map((f) => valueAndLabel(f._id, getFinancialLabelDate(f)));
+}
+
+export function useFinancialsComboboxQuery(patientId?: string) {
+  const { data, isLoading } = useFinancialsPartialQuery();
+  const options = useMemo(() => mapFinancialsToCombobox(data, patientId), [data, patientId]);
+  return { options, isLoading };
 }
