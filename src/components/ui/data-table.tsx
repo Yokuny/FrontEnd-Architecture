@@ -421,7 +421,7 @@ export function DataTable<T extends Record<string, any>>({
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8"
+              className="size-8"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               aria-label={t('previous.page')}
@@ -449,7 +449,7 @@ export function DataTable<T extends Record<string, any>>({
                   key={pageNumber}
                   variant={currentPage === pageNumber ? 'default' : 'outline'}
                   size="icon"
-                  className="h-8 w-8"
+                  className="size-8"
                   onClick={() => setCurrentPage(pageNumber)}
                   aria-label={`${t('pagination.go.to.page')} ${pageNumber}`}
                 >
@@ -459,7 +459,7 @@ export function DataTable<T extends Record<string, any>>({
             })}
 
             {totalPages > 5 && currentPage < totalPages - 2 && (
-              <Button variant="blank" size="icon" className="h-8 w-8 cursor-default" disabled>
+              <Button variant="blank" size="icon" className="size-8 cursor-default" disabled>
                 ...
               </Button>
             )}
@@ -467,7 +467,7 @@ export function DataTable<T extends Record<string, any>>({
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8"
+              className="size-8"
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               aria-label={t('next.page')}

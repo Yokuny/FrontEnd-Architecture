@@ -1,14 +1,13 @@
 import type { DraggableAttributes, UniqueIdentifier } from '@dnd-kit/core';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import type React from 'react';
-import type { CalendarView, PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 
 export type CustomDateRange = { from: Date; to: Date };
 
 export interface ScheduleApiParams {
-  currentDate: Date;
-  view: CalendarView;
-  customDateRange: CustomDateRange | null;
+  startDate: Date;
+  endDate: Date;
   selectedRoomID: string;
 }
 

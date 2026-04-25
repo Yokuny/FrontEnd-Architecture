@@ -1,0 +1,199 @@
+import Cross from '@/components/icons/Cross.Icon';
+import Down from '@/components/icons/Down.Icon';
+import Eye from '@/components/icons/Eye.Icon';
+import Left from '@/components/icons/Left.Icon';
+import Right from '@/components/icons/Right.Icon';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { CardContent } from '@/components/ui/card';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { eventColors } from '@/lib/helpers/calendar.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
+import { t } from '@/lib/helpers/translate.helper';
+import type { EventColor, PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import { viewDictionary } from '../@consts/schedule.consts';
+import type { ScheduleCalendar } from '../@hooks/use-schedule-calendar';
+
+interface ScheduleOptionsProps {
+  calendar: ScheduleCalendar;
+  upcomingPerProfessional: Array<{ Professional: string; nextEvent: PartialSchedule }>;
+  uniqueProfessionalIds: string[];
+  getProfessionalName: (id: string | undefined) => string;
+  getProfessionalImage: (id: string | undefined) => string | null | undefined;
+  getProfessionalColor: (id: string) => string | null | undefined;
+  onViewEvent: (event: PartialSchedule) => void;
+  onColorChange: (professionalId: string, color: EventColor) => void;
+  onRemoveColor: (professionalId: string | undefined) => void;
+}
+
+export function ScheduleOptions({
+  calendar,
+  upcomingPerProfessional,
+  uniqueProfessionalIds,
+  getProfessionalName,
+  getProfessionalImage,
+  getProfessionalColor,
+  onViewEvent,
+  onColorChange,
+  onRemoveColor,
+}: ScheduleOptionsProps) {
+  const { view, setView, currentDate, customDateRange, startDate, endDate, handlePrevious, handleNext, handleTodayClick, handleDateSelect, handleRangeSelect } = calendar;
+
+  return (
+    <CardContent className="flex w-full flex-col gap-4 px-4 pt-0 pb-6 md:px-6">
+      <div className="flex w-full flex-col gap-4 lg:flex-row lg:items-start lg:gap-4">
+        {/* Mini Calendar Navigation */}
+        <ItemContent className="flex min-w-0 flex-1 flex-col gap-3">
+          {view === 'day' && (
+            <Calendar
+              mode="single"
+              selected={currentDate}
+              onSelect={handleDateSelect}
+              className="w-full rounded-md"
+              month={currentDate}
+              captionLayout="dropdown"
+              onMonthChange={handleDateSelect}
+            />
+          )}
+          {view === 'month' && (
+            <Calendar
+              mode="single"
+              selected={currentDate}
+              onSelect={handleDateSelect}
+              className="w-full rounded-md"
+              month={currentDate}
+              captionLayout="dropdown"
+              onMonthChange={handleDateSelect}
+              disabled={{ before: startDate, after: endDate }}
+            />
+          )}
+          {['agenda', 'week'].includes(view) && (
+            <Calendar
+              mode="range"
+              selected={customDateRange || { from: startDate, to: endDate }}
+              onSelect={handleRangeSelect}
+              className="w-full rounded-md"
+              month={currentDate}
+              captionLayout="dropdown"
+              onMonthChange={handleDateSelect}
+            />
+          )}
+          <ItemHeader className="w-full px-4">
+            <ItemActions className="min-w-0 grow-2 basis-0 gap-0">
+              <Button variant="outline" size="sm" onClick={handlePrevious} className="w-full rounded-none rounded-l-md border-r-0">
+                <Left className="size-5" />
+              </Button>
+              <Button variant="outline" size="sm" onClick={handleTodayClick} className="w-full rounded-none border-x-0">
+                {t('today')}
+              </Button>
+              <Button variant="outline" size="sm" onClick={handleNext} className="w-full rounded-none rounded-r-md border-l-0">
+                <Right className="size-5" />
+              </Button>
+            </ItemActions>
+            <div className="min-w-0 grow basis-0">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="w-full justify-evenly">
+                    <span className="overflow-hidden">{viewDictionary[view]}</span>
+                    <Down className="-me-1 size-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => setView('month')}>{t('month')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setView('week')}>{t('week')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setView('day')}>{t('day')}</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setView('agenda')}>{t('agenda')}</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </ItemHeader>
+        </ItemContent>
+
+        {/* Upcoming Appointments */}
+        <ItemGroup className="min-w-0 flex-1">
+          {upcomingPerProfessional.length === 0 ? (
+            <Item className="flex-col gap-1 p-6">
+              <ItemTitle>{t('upcoming.consults')}</ItemTitle>
+              <ItemDescription>{t('no.upcoming.consults')}</ItemDescription>
+            </Item>
+          ) : (
+            upcomingPerProfessional.map((doc) => (
+              <Item key={doc.Professional} className="flex-col gap-2 rounded-md p-4">
+                <ItemHeader className="w-full justify-between">
+                  <ItemActions>
+                    <Avatar className="size-8">
+                      <AvatarImage src={getProfessionalImage(doc.Professional) || undefined} />
+                      <AvatarFallback>{getProfessionalName(doc.Professional).slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                    <ItemDescription className="line-clamp-1">{getProfessionalName(doc.Professional)}</ItemDescription>
+                  </ItemActions>
+                  <Button variant="outline" size="sm" onClick={() => onViewEvent(doc.nextEvent)} className="gap-1 transition-colors">
+                    <Eye className="size-4" />
+                    <ItemDescription className="text-xs tabular-nums">{t('view')}</ItemDescription>
+                  </Button>
+                </ItemHeader>
+                <ItemActions className="items-baseline gap-4">
+                  <ItemTitle className="text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
+                    {doc.nextEvent?.start ? formatDate(doc.nextEvent.start, 'HH:mm') : '--:--'}
+                  </ItemTitle>
+                  <ItemDescription className="text-sm">{doc.nextEvent?.start ? formatDate(doc.nextEvent.start) : '--:--'}</ItemDescription>
+                </ItemActions>
+              </Item>
+            ))
+          )}
+        </ItemGroup>
+
+        {/* Professional Color Manager */}
+        <ItemGroup className="min-w-0 flex-1 px-0 lg:px-2">
+          {uniqueProfessionalIds.map((profId) => {
+            const hasCustomColor = getProfessionalColor(profId);
+            const displayColor = hasCustomColor ? eventColors.find((c) => c.value === hasCustomColor) : null;
+
+            return (
+              <Item key={profId} className="flex-nowrap items-center justify-evenly gap-2 p-3 md:justify-between">
+                <ItemActions className="gap-3">
+                  <Avatar className="size-10">
+                    <AvatarImage src={getProfessionalImage(profId) || undefined} />
+                    <AvatarFallback>{getProfessionalName(profId).slice(0, 2)}</AvatarFallback>
+                  </Avatar>
+                  <ItemContent className="flex-none">
+                    <ItemTitle className="truncate text-md leading-none">{getProfessionalName(profId).slice(0, 8)}</ItemTitle>
+                    <ItemDescription className="truncate">{hasCustomColor ? displayColor?.label : t('color.from.status')}</ItemDescription>
+                  </ItemContent>
+                </ItemActions>
+                <Select
+                  value={hasCustomColor || ''}
+                  onValueChange={(color: EventColor) => {
+                    if (color && profId) onColorChange(profId, color);
+                  }}
+                >
+                  <SelectTrigger size="sm" className="w-30 truncate px-2">
+                    <SelectValue placeholder={t('color')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {eventColors.map((color) => (
+                      <SelectItem key={color.value} value={color.value}>
+                        <div className="flex items-center gap-1">
+                          <div className={`size-3 rounded-full ${color.color}`} />
+                          {color.label}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {hasCustomColor && (
+                  <Button variant="outline" size="icon-sm" onClick={() => onRemoveColor(profId)}>
+                    <Cross className="size-4" />
+                  </Button>
+                )}
+              </Item>
+            );
+          })}
+        </ItemGroup>
+      </div>
+    </CardContent>
+  );
+}

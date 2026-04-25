@@ -1,11 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { addDays, addMonths, addWeeks, endOfWeek, isSameMonth, startOfWeek, subMonths, subWeeks } from 'date-fns';
+import { addDays, endOfWeek, isSameMonth, startOfWeek } from 'date-fns';
 import type React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import Add from '@/components/icons/Add.Icon';
 import Down from '@/components/icons/Down.Icon';
-import Grid from '@/components/icons/Grid.Icon';
 import Left from '@/components/icons/Left.Icon';
 import Right from '@/components/icons/Right.Icon';
 import { ScheduleDialog } from '@/components/schedule';
@@ -23,7 +22,7 @@ import { addHoursToDate } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString, getEventColorByProfessional } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
-import type { CalendarView, EventColor, PartialSchedule } from '@/lib/interfaces/schedule.interface';
+import type { EventColor, PartialSchedule } from '@/lib/interfaces/schedule.interface';
 import { scheduleTimeSchema } from '@/lib/interfaces/schemas/schedule.schema';
 import { cn } from '@/lib/utils/cn.util';
 import { useClinicApi } from '@/query/clinic';
@@ -33,12 +32,12 @@ import { AgendaView } from './@components/agenda-view';
 import { CalendarDndProvider } from './@components/calendar-dnd-provider';
 import { DayView } from './@components/day-view';
 import { MonthView } from './@components/month-view';
-import { ScheduleSidebar } from './@components/schedule-sidebar';
+import { ScheduleOptions } from './@components/schedule-options';
 import { TimeUpdateDialog } from './@components/time-update-dialog';
 import { WeekView } from './@components/week-view';
 import { viewDictionary } from './@consts/schedule.consts';
 import { useScheduleApi } from './@hooks/use-schedule-api';
-import type { CustomDateRange } from './@interface/schedule.interface';
+import { useScheduleCalendar } from './@hooks/use-schedule-calendar';
 import { computeUpcomingPerProfessional, snapToQuarterHour } from './@utils/schedule.utils';
 
 export const Route = createFileRoute('/_private/schedule/')({
@@ -67,24 +66,19 @@ function SchedulePage() {
   const getProfessionalNameById = (id: string | undefined) => getProfessionalName(professionals, id);
   const getProfessionalImageById = (id: string | undefined) => getProfessionalImage(professionals, id);
 
+  // Route-specific calendar hook
+  const calendar = useScheduleCalendar();
+  const { currentDate, customDateRange, view, setView, startDate, endDate, handlePrevious, handleNext, handleTodayClick } = calendar;
+
   // useState
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [customDateRange, setCustomDateRange] = useState<CustomDateRange | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<PartialSchedule | null>(null);
   const [isEventDialogOpen, setIsEventDialogOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isConfirmTimeUpdateDialogOpen, setIsConfirmTimeUpdateDialogOpen] = useState(false);
   const [pendingEventUpdate, setPendingEventUpdate] = useState<PartialSchedule | null>(null);
   const [selectedRoomID, setSelectedRoomID] = useState('');
-  const [view, setView] = useState<CalendarView>('week');
 
   // Route-specific API hook (events state + query + mutation)
-  const { events, setEvents, startDate, endDate, updateScheduleTime, getProfessionalColor } = useScheduleApi({
-    currentDate,
-    view,
-    customDateRange,
-    selectedRoomID,
-  });
+  const { events, setEvents, updateScheduleTime, getProfessionalColor } = useScheduleApi({ startDate, endDate, selectedRoomID });
 
   // useMemo
   const headerTitle = useMemo(() => {
@@ -128,10 +122,6 @@ function SchedulePage() {
   }, [selectedRoom]);
 
   useEffect(() => {
-    if (view !== 'agenda') setCustomDateRange(null);
-  }, [view]);
-
-  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const avoidHotKey =
         isEventDialogOpen ||
@@ -153,31 +143,13 @@ function SchedulePage() {
         case 'a':
           setView('agenda');
           break;
-        case 'o':
-        case 'i':
-          setIsSidebarOpen(!isSidebarOpen);
-          break;
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isEventDialogOpen, isConfirmTimeUpdateDialogOpen, isSidebarOpen]);
+  }, [isEventDialogOpen, isConfirmTimeUpdateDialogOpen, setView]);
 
   // Handlers
-  const handlePrevious = () => {
-    if (view === 'month') setCurrentDate(subMonths(currentDate, 1));
-    else if (view === 'week') setCurrentDate(subWeeks(currentDate, 1));
-    else if (view === 'day') setCurrentDate(addDays(currentDate, -1));
-    else if (view === 'agenda') setCurrentDate(addDays(currentDate, -AgendaDaysToShow));
-  };
-
-  const handleNext = () => {
-    if (view === 'month') setCurrentDate(addMonths(currentDate, 1));
-    else if (view === 'week') setCurrentDate(addWeeks(currentDate, 1));
-    else if (view === 'day') setCurrentDate(addDays(currentDate, 1));
-    else if (view === 'agenda') setCurrentDate(addDays(currentDate, AgendaDaysToShow));
-  };
-
   const handleEventCreate = (start: Date) => {
     const snapped = snapToQuarterHour(start);
     setSelectedEvent({
@@ -277,23 +249,6 @@ function SchedulePage() {
     toast.success(t('toast.color.from.status'));
   };
 
-  const handleRangeSelect = (range: { from: Date | undefined; to?: Date | undefined } | undefined) => {
-    if (range?.from && range?.to) {
-      setCustomDateRange({ from: range.from, to: range.to });
-      setView('agenda');
-      setCurrentDate(range.from);
-    } else if (range?.from) {
-      setCurrentDate(range.from);
-    }
-  };
-
-  const handleDateSelect = (date: Date | undefined) => {
-    if (date) {
-      setCurrentDate(date);
-      if (view === 'month') setView('week');
-    }
-  };
-
   return (
     <div className="flex h-full w-full flex-col gap-6 rounded-lg border bg-background py-6 pb-14 text-card-foreground md:pb-0">
       <div className="flex items-end justify-between gap-2 px-4 md:px-6">
@@ -313,7 +268,7 @@ function SchedulePage() {
             >
               <Left className="size-5" aria-hidden="true" />
             </Button>
-            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={() => setCurrentDate(new Date())} className="hidden rounded-none border-x-0 px-1 md:block">
+            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handleTodayClick} className="hidden rounded-none border-x-0 px-1 md:block">
               {t('today')}
             </Button>
             <Button
@@ -370,11 +325,6 @@ function SchedulePage() {
               {user?.role?.includes('assistant') && <SelectItem value="all">{t('all.rooms')}</SelectItem>}
             </SelectContent>
           </Select>
-          {!isMobile && (
-            <Button size="sm" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-              <Grid className="size-4" />
-            </Button>
-          )}
           <Button
             size={isMobile ? 'default' : 'sm'}
             className="px-2"
@@ -389,7 +339,7 @@ function SchedulePage() {
         </CardAction>
       </div>
 
-      <div className={cn('flex transition-all duration-300 ease-in-out', isMobile ? 'flex-col gap-1' : 'gap-3')}>
+      <div className="flex flex-col gap-4">
         <CardContent
           className="flex flex-1 flex-col p-0 pb-4"
           style={
@@ -435,25 +385,13 @@ function SchedulePage() {
           />
         </CardContent>
 
-        <ScheduleSidebar
-          view={view}
-          currentDate={currentDate}
-          customDateRange={customDateRange}
-          startDate={startDate}
-          endDate={endDate}
-          isMobile={isMobile}
-          isSidebarOpen={isSidebarOpen}
+        <ScheduleOptions
+          calendar={calendar}
           upcomingPerProfessional={upcomingPerProfessional}
           uniqueProfessionalIds={uniqueProfessionalIds}
           getProfessionalName={getProfessionalNameById}
           getProfessionalImage={getProfessionalImageById}
           getProfessionalColor={getProfessionalColor}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onTodayClick={() => setCurrentDate(new Date())}
-          onViewChange={setView}
-          onDateSelect={handleDateSelect}
-          onRangeSelect={handleRangeSelect}
           onViewEvent={(event) => {
             setSelectedEvent(event);
             setIsEventDialogOpen(true);
