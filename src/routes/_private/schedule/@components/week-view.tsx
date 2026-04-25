@@ -93,7 +93,7 @@ export function WeekView({ currentDate, events, onEventSelect, onEventCreate }: 
   const { currentTimePosition, currentTimeVisible } = useCurrentTimeIndicator(currentDate, 'week');
 
   return (
-    <div data-slot="week-view" className="flex h-full flex-col rounded-md border">
+    <div data-slot="week-view" className="flex h-full flex-col rounded-md md:border">
       <Header days={days} />
       {showAllDaySection && (
         <div className="border-accent border-b bg-muted">

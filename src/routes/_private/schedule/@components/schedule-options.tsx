@@ -121,74 +121,83 @@ export function ScheduleOptions({
             </Item>
           ) : (
             upcomingPerProfessional.map((doc) => (
-              <Item key={doc.Professional} className="flex-col gap-2 rounded-md p-4">
-                <ItemHeader className="w-full justify-between">
-                  <ItemActions>
-                    <Avatar className="size-8">
+              <Item key={doc.Professional}>
+                <ItemHeader>
+                  <div className="flex items-center gap-2">
+                    <Avatar className="size-10">
                       <AvatarImage src={getProfessionalImage(doc.Professional) || undefined} />
                       <AvatarFallback>{getProfessionalName(doc.Professional).slice(0, 2)}</AvatarFallback>
                     </Avatar>
-                    <ItemDescription className="line-clamp-1">{getProfessionalName(doc.Professional)}</ItemDescription>
-                  </ItemActions>
-                  <Button variant="outline" size="sm" onClick={() => onViewEvent(doc.nextEvent)} className="gap-1 transition-colors">
-                    <Eye className="size-4" />
-                    <ItemDescription className="text-xs tabular-nums">{t('view')}</ItemDescription>
-                  </Button>
+                    <div>
+                      <ItemDescription className="truncate">{t('professional')}</ItemDescription>
+                      <ItemTitle className="truncate text-md leading-none">{getProfessionalName(doc.Professional).slice(0, 8)}</ItemTitle>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex flex-col items-baseline">
+                      <ItemDescription className="text-sm">{doc.nextEvent?.start ? formatDate(doc.nextEvent.start) : '--:--'}</ItemDescription>
+                      <ItemTitle className="text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
+                        {doc.nextEvent?.start ? formatDate(doc.nextEvent.start, 'HH:mm') : '--:--'}
+                      </ItemTitle>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => onViewEvent(doc.nextEvent)}>
+                      <Eye className="size-4" />
+                      <ItemDescription>{t('view')}</ItemDescription>
+                    </Button>
+                  </div>
                 </ItemHeader>
-                <ItemActions className="items-baseline gap-4">
-                  <ItemTitle className="text-xl text-yellow-500 tabular-nums dark:text-yellow-400">
-                    {doc.nextEvent?.start ? formatDate(doc.nextEvent.start, 'HH:mm') : '--:--'}
-                  </ItemTitle>
-                  <ItemDescription className="text-sm">{doc.nextEvent?.start ? formatDate(doc.nextEvent.start) : '--:--'}</ItemDescription>
-                </ItemActions>
               </Item>
             ))
           )}
         </ItemGroup>
 
         {/* Professional Color Manager */}
-        <ItemGroup className="min-w-0 flex-1 px-0 lg:px-2">
+        <ItemGroup className="min-w-0 flex-1">
           {uniqueProfessionalIds.map((profId) => {
             const hasCustomColor = getProfessionalColor(profId);
             const displayColor = hasCustomColor ? eventColors.find((c) => c.value === hasCustomColor) : null;
 
             return (
-              <Item key={profId} className="flex-nowrap items-center justify-evenly gap-2 p-3 md:justify-between">
-                <ItemActions className="gap-3">
-                  <Avatar className="size-10">
-                    <AvatarImage src={getProfessionalImage(profId) || undefined} />
-                    <AvatarFallback>{getProfessionalName(profId).slice(0, 2)}</AvatarFallback>
-                  </Avatar>
-                  <ItemContent className="flex-none">
-                    <ItemTitle className="truncate text-md leading-none">{getProfessionalName(profId).slice(0, 8)}</ItemTitle>
-                    <ItemDescription className="truncate">{hasCustomColor ? displayColor?.label : t('color.from.status')}</ItemDescription>
-                  </ItemContent>
-                </ItemActions>
-                <Select
-                  value={hasCustomColor || ''}
-                  onValueChange={(color: EventColor) => {
-                    if (color && profId) onColorChange(profId, color);
-                  }}
-                >
-                  <SelectTrigger size="sm" className="w-30 truncate px-2">
-                    <SelectValue placeholder={t('color')} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {eventColors.map((color) => (
-                      <SelectItem key={color.value} value={color.value}>
-                        <div className="flex items-center gap-1">
-                          <div className={`size-3 rounded-full ${color.color}`} />
-                          {color.label}
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {hasCustomColor && (
-                  <Button variant="outline" size="icon-sm" onClick={() => onRemoveColor(profId)}>
-                    <Cross className="size-4" />
-                  </Button>
-                )}
+              <Item key={profId}>
+                <ItemHeader>
+                  <div className="flex items-center gap-2">
+                    <Avatar className="size-10">
+                      <AvatarImage src={getProfessionalImage(profId) || undefined} />
+                      <AvatarFallback>{getProfessionalName(profId).slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <ItemTitle className="truncate text-md leading-none">{getProfessionalName(profId).slice(0, 8)}</ItemTitle>
+                      <ItemDescription className="truncate">{hasCustomColor ? displayColor?.label : t('color.from.status')}</ItemDescription>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Select
+                      value={hasCustomColor || ''}
+                      onValueChange={(color: EventColor) => {
+                        if (color && profId) onColorChange(profId, color);
+                      }}
+                    >
+                      <SelectTrigger className="min-w-30 truncate">
+                        <SelectValue placeholder={t('color')} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {eventColors.map((color) => (
+                          <SelectItem key={color.value} value={color.value}>
+                            <div className="flex items-center gap-1">
+                              <div className={`size-3 rounded-full ${color.color}`} />
+                              {color.label}
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {hasCustomColor && (
+                      <Button variant="outline" size="icon" onClick={() => onRemoveColor(profId)}>
+                        <Cross className="size-4" />
+                      </Button>
+                    )}
+                  </div>
+                </ItemHeader>
               </Item>
             );
           })}

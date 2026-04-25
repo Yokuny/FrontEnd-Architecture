@@ -69,7 +69,7 @@ export function MonthView({ currentDate, events, onEventSelect, onEventCreate }:
   }, []);
 
   return (
-    <div data-slot="month-view" className="flex h-full flex-col rounded-md border">
+    <div data-slot="month-view" className="flex h-full flex-col rounded-md md:border">
       <Header />
       <div className="grid auto-rows-fr">
         {weeks.map((week, weekIndex) => (

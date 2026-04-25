@@ -251,7 +251,7 @@ function SchedulePage() {
 
   return (
     <div className="flex h-full w-full flex-col gap-6 rounded-lg border bg-background py-6 pb-14 text-card-foreground md:pb-0">
-      <div className="flex items-end justify-between gap-2 px-4 md:px-6">
+      <div className="flex flex-col items-end justify-between gap-2 px-4 md:flex-row md:px-6">
         <ItemContent className="flex-row items-baseline gap-2 text-sky-blue text-xl dark:text-primary-blue">
           <CardTitle>{String(currentDate.getDate()).padStart(2, '0')}</CardTitle>
           <CardTitle className="leading-none">{weekdayShortLabels[currentDate.getDay()]}</CardTitle>
