@@ -446,5 +446,6 @@ export {
   SidebarMenuSubItem,
   SidebarProvider,
   SidebarSeparator,
+  SIDEBAR_KEYBOARD_SHORTCUT,
   useSidebar,
 };

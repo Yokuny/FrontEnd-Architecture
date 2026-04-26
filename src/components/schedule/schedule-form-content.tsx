@@ -296,7 +296,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, formId }
         </form>
       </Form>
 
-      <CardFooter className="mt-4 flex-row flex-nowrap items-center justify-between gap-2 border-t px-0 pt-4">
+      <CardFooter className="justify-between">
         {event?._id && (
           <Button variant="destructive" onClick={handleDelete} disabled={isLoading} aria-label={t('delete.appointment')}>
             <Delete className="size-4 text-destructive" aria-hidden="true" />
