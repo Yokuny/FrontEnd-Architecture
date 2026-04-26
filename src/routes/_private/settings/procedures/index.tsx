@@ -142,11 +142,11 @@ export function SettingsProcedures() {
             <Upload className="size-4" />
             <span className="sr-only md:not-sr-only">{t('csv.upload')}</span>
           </Button>
-          <Button onClick={downloadModelCSV} variant="outline">
+          <Button onClick={downloadModelCSV} variant="info">
             <Download className="size-4" />
             <span className="sr-only md:not-sr-only">{t('csv.template')}</span>
           </Button>
-          <Button onClick={fetchFromBackend} variant="outline">
+          <Button onClick={fetchFromBackend} variant="info">
             <Cloud className="size-4" />
             <span className="sr-only md:not-sr-only">{t('fetch.data')}</span>
           </Button>

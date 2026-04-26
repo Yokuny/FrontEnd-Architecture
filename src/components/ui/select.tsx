@@ -13,6 +13,7 @@ const selectTriggerVariants = cva(
   {
     variants: {
       variant: {
+        basic: 'border-input/50 bg-background ring-1 ring-zinc-300 hover:bg-secondary dark:border-input dark:ring-input',
         default: 'border-input/50 border-b-2 bg-background ring-1 ring-zinc-300 hover:bg-secondary dark:border-input dark:ring-input',
         primary:
           'inset-shadow-sm inset-shadow-white border bg-secondary ring-0 duration-150 hover:bg-background dark:inset-shadow-black dark:border-border dark:bg-muted/25 dark:hover:bg-muted/50',
@@ -27,7 +28,7 @@ const selectTriggerVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'basic',
       size: 'default',
     },
   },
@@ -49,11 +50,11 @@ function SelectTrigger({
   className,
   size = 'default',
   children,
-  variant = 'default',
+  variant = 'basic',
   ...props
 }: ComponentProps<typeof SelectPrimitive.Trigger> & {
   size?: SelectTriggerSize;
-  variant?: 'default' | 'primary';
+  variant?: 'basic' | 'default' | 'primary';
 }) {
   return (
     <SelectPrimitive.Trigger data-slot="select-trigger" data-variant={variant} data-size={size} className={cn(selectTriggerVariants({ variant, size, className }))} {...props}>

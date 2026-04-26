@@ -173,7 +173,7 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
             <img src={imageUrl} alt={t('record.image.alt')} className="h-[120px] w-full rounded-md object-cover" />
             <Button
               onClick={() => handleRemoveImage()}
-              variant="outline"
+              variant="info"
               size="icon"
               className="absolute inset-e-1 top-1 size-6 rounded-full opacity-0 shadow-sm group-hover/item:opacity-100 dark:bg-zinc-800 hover:dark:bg-zinc-700"
             >
@@ -183,11 +183,11 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
         </div>
 
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="gap-2" onClick={() => setIsEditing(true)}>
+          <Button variant="info" size="sm" className="gap-2" onClick={() => setIsEditing(true)}>
             <IconEdit className="size-4" />
             {t('change')}
           </Button>
-          <Button variant="outline" size="sm" className="gap-2" onClick={() => handleRemoveImage()}>
+          <Button variant="info" size="sm" className="gap-2" onClick={() => handleRemoveImage()}>
             <IconDelete className="size-4" />
             {t('erase')}
           </Button>

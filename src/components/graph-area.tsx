@@ -131,7 +131,7 @@ export function GraphArea() {
         const color = item.changeType === 'positive' ? getChartColor(1) : getChartColor(11);
 
         return (
-          <Item key={item.name} variant="outline" className="flex-col items-stretch">
+          <Item key={item.name} variant="info" className="flex-col items-stretch">
             <ItemContent>
               <ItemTitle>
                 {item.name} <span className="font-normal text-muted-foreground">({item.tickerSymbol})</span>

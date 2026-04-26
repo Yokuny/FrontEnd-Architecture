@@ -77,7 +77,7 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
 
   return (
     <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Item variant="outline" className="flex-col items-start bg-secondary">
+      <Item variant="info" className="flex-col items-start bg-secondary">
         <ItemTitle className="text-muted-foreground text-xs uppercase">{t('next.appointment.lower')}</ItemTitle>
         <ItemContent className="w-full text-center">
           <p className="font-bold text-sky-400 text-xl dark:text-blue-400">
@@ -89,7 +89,7 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
         </ItemContent>
       </Item>
 
-      <Item variant="outline" className="flex-col items-start bg-secondary">
+      <Item variant="info" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
           <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('appointments')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
@@ -110,7 +110,7 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
         </ItemContent>
       </Item>
 
-      <Item variant="outline" className="flex-col items-start bg-secondary">
+      <Item variant="info" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
           <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('procedures')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
@@ -131,7 +131,7 @@ const ScheduleSummaryContent = ({ patient }: { patient: FullPatient }) => {
         </ItemContent>
       </Item>
 
-      <Item variant="outline" className="flex-col items-start bg-secondary">
+      <Item variant="info" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
           <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total.in.procedures')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">

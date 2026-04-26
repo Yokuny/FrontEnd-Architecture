@@ -24,7 +24,7 @@ const FinancialCombobox = ({ value, onChange, patient, disabled }: FinancialComb
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button role="combobox" variant="outline" aria-expanded={open} disabled={disabled || isLoading}>
+        <Button role="combobox" variant="info" aria-expanded={open} disabled={disabled || isLoading}>
           <div className="flex items-center gap-2 truncate">
             <span className="text-foreground/90">{selected?.label || t('financials')}</span>
           </div>

@@ -15,7 +15,7 @@ interface KPICardProps {
 
 export function DefaultKPI({ title, value, icon, change, changeType, valueColor, className }: KPICardProps) {
   return (
-    <Item variant="outline" className={cn('flex-col', className)}>
+    <Item variant="info" className={cn('flex-col', className)}>
       <ItemContent className="flex w-full flex-row items-center justify-between gap-2">
         {icon}
         <ItemDescription className="font-bold text-xs">{title}</ItemDescription>

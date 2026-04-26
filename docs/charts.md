@@ -89,7 +89,7 @@ const chartConfig = {
 
 function MyChart() {
   return (
-    <Item variant="outline">
+    <Item variant="info">
       <ItemHeader className="flex-col items-center justify-center">
         <ItemTitle>Titulo do Grafico</ItemTitle>
         <ItemDescription>Descricao</ItemDescription>

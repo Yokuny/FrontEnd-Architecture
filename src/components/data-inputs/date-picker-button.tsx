@@ -10,7 +10,7 @@ const DatePickerButton = ({ date, onSelect }: DatePickerButtonProps) => {
     <div className="relative">
       <Popover>
         <PopoverTrigger asChild>
-          <Button className={cn('group w-full max-w-72 justify-between px-3 focus-visible:outline-[3px]', !date && 'text-muted-foreground')}>
+          <Button variant="basic" className={cn('w-full justify-between', !date && 'text-muted-foreground')}>
             <span className={cn('truncate', !date && 'text-muted-foreground')}>{date ? formatDate(date) : 'Selecione uma data'}</span>
             <Calender className="size-4 shrink-0" aria-hidden="true" />
           </Button>

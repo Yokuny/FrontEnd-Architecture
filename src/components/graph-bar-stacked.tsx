@@ -26,7 +26,7 @@ const chartConfig = {
 
 export function GraphBarStacked() {
   return (
-    <Item variant="outline">
+    <Item variant="info">
       <ItemHeader className="flex-col items-center justify-center">
         <ItemTitle>Bar Chart - Stacked + Legend</ItemTitle>
         <ItemDescription>Description</ItemDescription>

@@ -108,7 +108,7 @@ export function ScheduleConfirmationForm({ scheduleData, scheduleID }: ScheduleC
             {isLoading ? <Loader className="size-5 animate-spin" /> : <Check className="hidden size-5 md:block" />}
             Confirmar presença
           </Button>
-          <Button type="button" onClick={() => handleConfirm('canceled_by_patient')} disabled={isLoading} variant="outline" className="w-full gap-2 font-medium tracking-wide">
+          <Button type="button" onClick={() => handleConfirm('canceled_by_patient')} disabled={isLoading} variant="info" className="w-full gap-2 font-medium tracking-wide">
             {isLoading && <Loader className="size-5 animate-spin" />}
             <span>Não comparecerei</span>
           </Button>

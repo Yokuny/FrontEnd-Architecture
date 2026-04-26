@@ -201,7 +201,7 @@ function ScheduleAddPage() {
                   <span className="flex-1 font-medium text-sm">{selectedRoomName}</span>
                   <Button
                     type="button"
-                    variant="outline"
+                    variant="info"
                     size="sm"
                     onClick={() => {
                       form.setValue('Room', '');

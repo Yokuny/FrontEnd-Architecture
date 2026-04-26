@@ -66,7 +66,7 @@ export function GraphBreakParts() {
   }, []);
 
   return (
-    <Item variant="outline">
+    <Item variant="info">
       <ItemHeader className="flex-col items-center">
         <ItemTitle>Breakdown Chart - Parts</ItemTitle>
         <ItemDescription>Description</ItemDescription>

@@ -307,11 +307,11 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
       {(!hideFooter || (hideFooter && formId)) && (
         <FooterShell hideFooter={hideFooter} formId={formId}>
           {event?._id && (
-            <Button variant="outline" onClick={handleDelete} disabled={isLoading} aria-label={t('delete.appointment')}>
+            <Button variant="destructive" onClick={handleDelete} disabled={isLoading} aria-label={t('delete.appointment')}>
               <Delete className="size-4 text-destructive" aria-hidden="true" />
             </Button>
           )}
-          <Button variant="outline" onClick={handleCancel} disabled={isLoading}>
+          <Button variant="primary" onClick={handleCancel} disabled={isLoading}>
             <Back className="size-4 md:hidden" />
             <span className="hidden md:block">{t('cancel')}</span>
           </Button>
@@ -324,7 +324,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                 setSelectedRoomName(getRoomName(value));
               }}
             >
-              <SelectTrigger className="w-full overflow-x-hidden">
+              <SelectTrigger variant="default" className="w-full overflow-x-hidden">
                 <SelectValue placeholder={rooms.length ? t('select.room.field') : t('no.rooms.available')} />
               </SelectTrigger>
               <SelectContent>
@@ -339,7 +339,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
             <>
               <Button
                 type="button"
-                variant="outline"
+                variant="info"
                 onClick={() => {
                   form.setValue('Room', '');
                   setSelectedRoom('');

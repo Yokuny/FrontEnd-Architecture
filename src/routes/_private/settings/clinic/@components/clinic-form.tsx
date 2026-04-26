@@ -126,7 +126,7 @@ export function ClinicForm({ form, isPending }: ClinicFormProps) {
               <FormLabel>{t('rooms.service')}</FormLabel>
               <Button
                 type="button"
-                variant="outline"
+                variant="info"
                 size="sm"
                 onClick={() => append({ name: `${t('room.prefix')} ${fields.length + 1}` })}
                 disabled={isPending}

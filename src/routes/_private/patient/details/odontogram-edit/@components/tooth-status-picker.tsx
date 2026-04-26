@@ -29,7 +29,7 @@ export function ToothStatusPicker({ number, bottom, currentStatus, onStatusChang
       <ToothNumber toothNumber={number} status={status} />
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
-          <Button size="icon" className="border p-1" variant="outline">
+          <Button size="icon" className="border p-1" variant="info">
             {number}
           </Button>
         </PopoverTrigger>

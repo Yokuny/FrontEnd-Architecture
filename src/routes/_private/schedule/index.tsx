@@ -302,6 +302,7 @@ function SchedulePage() {
             }}
           >
             <SelectTrigger
+              variant="default"
               size={isMobile ? 'default' : 'sm'}
               aria-invalid={!selectedRoomID}
               aria-required
@@ -320,6 +321,7 @@ function SchedulePage() {
           </Select>
           <Button
             size={isMobile ? 'default' : 'sm'}
+            variant="primary"
             className="px-2"
             onClick={() => {
               setSelectedEvent(null);

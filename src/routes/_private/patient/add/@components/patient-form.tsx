@@ -161,7 +161,7 @@ export function PatientForm() {
               <FormItem>
                 <FormLabel>{t('full.address')}</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ''} placeholder={t('placeholder.full.address')} />
+                  <Input {...field} value={field.value || ''} placeholder={t('placeholder.full.address')} variant="basic" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -177,7 +177,7 @@ export function PatientForm() {
         <div key="phones" className="space-y-4">
           <div className="flex items-center justify-between">
             <h4 className="font-medium text-sm">{t('phone.list')}</h4>
-            <Button type="button" variant="outline" onClick={() => append({ number: '', tag: fields.length === 0 ? 'WhatsApp' : '' })}>
+            <Button type="button" variant="basic" onClick={() => append({ number: '', tag: fields.length === 0 ? 'WhatsApp' : '' })}>
               <Add className="size-4" />
               {t('add.phone')}
             </Button>

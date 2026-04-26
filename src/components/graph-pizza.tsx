@@ -53,7 +53,7 @@ export function GraphPizza() {
   }, []);
 
   return (
-    <Item variant="outline">
+    <Item variant="info">
       <ItemHeader className="flex-col items-center justify-center">
         <ItemTitle>Pie Chart - Donut with Text</ItemTitle>
         <ItemDescription>Description</ItemDescription>

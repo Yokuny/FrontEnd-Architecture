@@ -114,7 +114,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                 <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(startDate)}</span>
               </div>
             </div>
-            <Badge variant="outline" className="gap-1 rounded-full">
+            <Badge variant="info" className="gap-1 rounded-full">
               <Calender className="size-3" />
               {t('all.day')}
             </Badge>
@@ -130,7 +130,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                     <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(endDate)}</span>
                   </div>
                 </div>
-                <Badge variant="outline" className="gap-1 rounded-full">
+                <Badge variant="info" className="gap-1 rounded-full">
                   <Clock className="size-3" />
                   {daysDuration} {t('duration.days')}
                 </Badge>
@@ -238,16 +238,16 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
 
             <div className="flex items-center gap-2 self-end">
               {schedule.status === 'pending' && schedule.Patient && (
-                <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={handleRequestScheduleConfirmation}>
+                <Button type="button" variant="info" size={isMobile ? 'sm' : 'sm'} onClick={handleRequestScheduleConfirmation}>
                   <Chat className="size-4 text-green-600" />
                 </Button>
               )}
-              <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={onEdit}>
+              <Button type="button" variant="info" size={isMobile ? 'sm' : 'sm'} onClick={onEdit}>
                 <Edit className="size-4 md:mr-2" />
                 <span className="hidden md:inline">{t('edit')}</span>
               </Button>
               {schedule.Financial && (
-                <Button type="button" variant="outline" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details', search: { id: schedule.Financial! } })}>
+                <Button type="button" variant="info" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details', search: { id: schedule.Financial! } })}>
                   <Link className="size-4 md:mr-2" />
                   <span className="hidden md:inline">{t('finance.short')}</span>
                 </Button>
@@ -278,7 +278,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                 </div>
 
                 {schedule?.Patient && (
-                  <Button type="button" variant="outline" size="sm" className="shrink-0" onClick={() => window.open(`/patient/${schedule?.Patient}`, '_blank')}>
+                  <Button type="button" variant="info" size="sm" className="shrink-0" onClick={() => window.open(`/patient/${schedule?.Patient}`, '_blank')}>
                     <Link className="size-3.5 md:mr-2" />
                     <span className="hidden text-xs md:inline">{t('patient')}</span>
                   </Button>
@@ -332,7 +332,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                       <TableCell className="font-medium">{proc.procedure}</TableCell>
                       <TableCell className="tabular-nums">{currencyFormat(proc.price)}</TableCell>
                       <TableCell>
-                        <Badge variant="outline">{translatedStatusLabel(String(proc.status))}</Badge>
+                        <Badge variant="info">{translatedStatusLabel(String(proc.status))}</Badge>
                       </TableCell>
                     </TableRow>
                   ))

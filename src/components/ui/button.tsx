@@ -11,7 +11,7 @@ const btnVars = cva(
         default: 'relative border-input/50 border-b-2 bg-background ring-1 ring-zinc-300 hover:bg-secondary dark:border-input dark:ring-input',
         primary:
           'relative inset-shadow-sm inset-shadow-white flex border bg-secondary ring-0 duration-150 hover:bg-background dark:inset-shadow-black dark:border-border dark:bg-muted/25 dark:hover:bg-muted/50',
-        outline: 'relative inset-shadow-2xs inset-shadow-background border border-input bg-secondary text-secondary-foreground shadow-zinc-950/10 duration-150 hover:bg-muted',
+        basic: 'relative border border-zinc-300 bg-background text-secondary-foreground duration-150 hover:bg-secondary',
         info: 'border-none bg-linear-to-r from-blue-600 to-blue-500 text-white transition-all duration-200 hover:scale-[1.02] hover:from-blue-500 hover:to-blue-600 hover:text-white active:scale-[0.98]',
         success:
           'border-none bg-linear-to-r from-green-600 to-green-500 text-white transition-all duration-200 hover:scale-[1.02] hover:from-green-500 hover:to-green-600 hover:text-white active:scale-[0.98]',

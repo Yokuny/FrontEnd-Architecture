@@ -73,7 +73,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
                   {visibleItems.map((val) => {
                     const option = options.find((opt) => String(opt.value) === String(val));
                     return option ? (
-                      <Badge key={String(val)} variant="outline" className="rounded-sm">
+                      <Badge key={String(val)} variant="info" className="rounded-sm">
                         {option.label}
                         <Button
                           variant="primary"
@@ -94,7 +94,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
                   })}
                   {hiddenCount > 0 || expanded ? (
                     <Badge
-                      variant="outline"
+                      variant="info"
                       onClick={(e) => {
                         e.stopPropagation();
                         setExpanded((prev) => !prev);

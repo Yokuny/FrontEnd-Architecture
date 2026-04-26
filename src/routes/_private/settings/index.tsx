@@ -37,7 +37,7 @@ function SettingsIndexPage() {
       <CardHeader />
       <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {SETTINGS_SECTIONS.map(({ to, titleKey, descriptionKey, icon: Icon }: SettingsSection) => (
-          <Item key={to} variant="outline" className="h-full min-h-28 cursor-pointer p-5" asChild>
+          <Item key={to} variant="info" className="h-full min-h-28 cursor-pointer p-5" asChild>
             <Link to={to}>
               <ItemMedia variant="icon" className="size-10">
                 <Icon className="size-6" />

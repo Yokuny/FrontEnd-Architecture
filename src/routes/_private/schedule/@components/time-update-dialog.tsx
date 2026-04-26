@@ -35,7 +35,7 @@ export function TimeUpdateDialog({ isOpen, onClose, pendingEvent, onConfirm }: T
           </Item>
         )}
         <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="info" onClick={onClose}>
             {t('cancel')}
           </Button>
           <Button onClick={handleConfirm}>{t('confirm.time.action')}</Button>

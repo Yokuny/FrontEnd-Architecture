@@ -45,7 +45,7 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
             <ItemTitle className="text-md tabular-nums md:text-base">{endDateStr}</ItemTitle>
           </div>
           {!isMobile && (
-            <Badge variant="outline" className="gap-2 [&>svg]:size-4">
+            <Badge variant="info" className="gap-2 [&>svg]:size-4">
               <Clock />
               {t('all.day')}
             </Badge>
@@ -90,10 +90,10 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
   };
 
   return (
-    <Item variant="outline" className="flex-col items-start gap-2 p-4 md:p-6">
+    <Item variant="info" className="flex-col items-start gap-2 p-4 md:p-6">
       <ItemHeader className="w-full">
         <ItemTitle className="capitalize">{formatDate(schedule.start, 'EEEE')}</ItemTitle>
-        <Badge variant="outline" className="gap-1.5">
+        <Badge variant="info" className="gap-1.5">
           <div className={cn('size-2 rounded-full', getStatusColor(schedule.status))} />
           {translatedStatusLabel(schedule.status)}
         </Badge>
