@@ -133,11 +133,11 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
               </TooltipProvider>
             </div>
             <div className="flex items-center gap-1">
-              <Button variant="secondary" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
+              <Button variant="primary" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
                 {t('expand')}
               </Button>
               <Separator orientation="vertical" className="h-4 self-center" />
-              <Button variant="secondary" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
+              <Button variant="primary" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
                 {t('collapse')}
               </Button>
               <Separator orientation="vertical" className="h-4 self-center" />
@@ -153,7 +153,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
             <Collapsible open={openCategories.includes('contact')} onOpenChange={() => toggleCategory('contact')}>
               <CollapsibleTrigger asChild>
                 <Button
-                  variant="secondary"
+                  variant="primary"
                   className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
                 >
                   <div className="flex items-center gap-3">
@@ -210,7 +210,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
             <Collapsible open={openCategories.includes('documents')} onOpenChange={() => toggleCategory('documents')}>
               <CollapsibleTrigger asChild>
                 <Button
-                  variant="secondary"
+                  variant="primary"
                   className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
                 >
                   <div className="flex items-center gap-3">
@@ -247,7 +247,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
             <Collapsible open={openCategories.includes('personal')} onOpenChange={() => toggleCategory('personal')}>
               <CollapsibleTrigger asChild>
                 <Button
-                  variant="secondary"
+                  variant="primary"
                   className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
                 >
                   <div className="flex items-center gap-3">
@@ -286,7 +286,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
             <Collapsible open={openCategories.includes('address')} onOpenChange={() => toggleCategory('address')}>
               <CollapsibleTrigger asChild>
                 <Button
-                  variant="secondary"
+                  variant="primary"
                   className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
                 >
                   <div className="flex items-center gap-3">
@@ -343,11 +343,11 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <Button variant="primary" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
+                <Button size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
                   <Add className="size-4" />
                   <span className="hidden md:inline">{t('book.appointment')}</span>
                 </Button>
-                <Button variant="primary" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'schedule' } })}>
+                <Button size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'schedule' } })}>
                   <Eye className="size-4" />
                   <span className="hidden md:inline">{t('see.more')}</span>
                 </Button>
@@ -403,11 +403,11 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <Button variant="primary" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
+                <Button size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
                   <Add className="size-4" />
                   <span className="hidden md:inline">{t('add')}</span>
                 </Button>
-                <Button variant="primary" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'financial' } })}>
+                <Button size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'financial' } })}>
                   <Eye className="size-4" />
                   <span className="hidden md:inline">{t('see.more')}</span>
                 </Button>

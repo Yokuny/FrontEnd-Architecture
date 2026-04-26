@@ -75,7 +75,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
                       <Badge key={String(val)} variant="outline" className="rounded-sm">
                         {option.label}
                         <Button
-                          variant="secondary"
+                          variant="primary"
                           size="icon"
                           className="size-4"
                           onClick={(e) => {

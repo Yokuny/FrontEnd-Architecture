@@ -97,10 +97,7 @@ export function OdontogramDetailContent({ odontogram, patients, professionals }:
       <div className="overflow-hidden rounded-lg border bg-card">
         <Collapsible open={openTeeth} onOpenChange={setOpenTeeth}>
           <CollapsibleTrigger asChild>
-            <Button
-              variant="secondary"
-              className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
-            >
+            <Button variant="primary" className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2">
               <div className="flex items-center gap-3">
                 <ItemMedia variant="icon" className="text-foreground">
                   <Pulse className="size-4" />

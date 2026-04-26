@@ -242,7 +242,7 @@ const FinancialRecordDetail = ({
           <Collapsible open={openCategories.includes('general')} onOpenChange={() => toggleCategory('general')}>
             <CollapsibleTrigger asChild>
               <Button
-                variant="secondary"
+                variant="primary"
                 className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
               >
                 <div className="flex items-center gap-3">
@@ -284,7 +284,7 @@ const FinancialRecordDetail = ({
           <Collapsible open={openCategories.includes('procedures')} onOpenChange={() => toggleCategory('procedures')}>
             <CollapsibleTrigger asChild>
               <Button
-                variant="secondary"
+                variant="primary"
                 className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
               >
                 <div className="flex items-center gap-3">
@@ -321,7 +321,7 @@ const FinancialRecordDetail = ({
           <Collapsible open={openCategories.includes('financial')} onOpenChange={() => toggleCategory('financial')}>
             <CollapsibleTrigger asChild>
               <Button
-                variant="secondary"
+                variant="primary"
                 className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
               >
                 <div className="flex items-center gap-3">

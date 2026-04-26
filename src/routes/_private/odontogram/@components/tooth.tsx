@@ -93,7 +93,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
           <div className="absolute top-0 left-0 size-10 cursor-pointer">
             <Popover open={midPopover} onOpenChange={setMidPopover}>
               <PopoverTrigger asChild className="w-full">
-                <Button className="absolute top-1/3 left-1/3 h-1/3 w-1/3 rounded-none border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="secondary" type="button" />
+                <Button className="absolute top-1/3 left-1/3 h-1/3 w-1/3 rounded-none border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="primary" type="button" />
               </PopoverTrigger>
               <PopoverContent className="w-60">
                 <div className="flex flex-col space-y-3">
@@ -107,7 +107,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
                       <Button
                         size="sm"
                         className="w-1/3"
-                        variant="secondary"
+                        variant="primary"
                         onClick={() => {
                           setProcedure(null);
                           setMidPopover(false);
@@ -137,7 +137,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
 
             <Popover open={leftPopover} onOpenChange={setLeftPopover}>
               <PopoverTrigger asChild className="w-full">
-                <Button className="absolute top-0 left-0 h-full w-1/3 rounded-lg border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="secondary" type="button" />
+                <Button className="absolute top-0 left-0 h-full w-1/3 rounded-lg border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="primary" type="button" />
               </PopoverTrigger>
               <PopoverContent className="w-60">
                 <div className="flex flex-col space-y-3">
@@ -151,7 +151,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
                       <Button
                         size="sm"
                         className="w-1/3"
-                        variant="secondary"
+                        variant="primary"
                         onClick={() => {
                           setProcedure(null);
                           setLeftPopover(false);
@@ -181,7 +181,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
 
             <Popover open={rightPopover} onOpenChange={setRightPopover}>
               <PopoverTrigger asChild className="w-full">
-                <Button className="absolute top-0 right-0 h-full w-1/3 rounded-lg border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="secondary" type="button" />
+                <Button className="absolute top-0 right-0 h-full w-1/3 rounded-lg border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="primary" type="button" />
               </PopoverTrigger>
               <PopoverContent className="w-60">
                 <div className="flex flex-col space-y-3">
@@ -195,7 +195,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
                       <Button
                         size="sm"
                         className="w-1/3"
-                        variant="secondary"
+                        variant="primary"
                         onClick={() => {
                           setProcedure(null);
                           setRightPopover(false);
@@ -225,7 +225,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
 
             <Popover open={topPopover} onOpenChange={setTopPopover}>
               <PopoverTrigger asChild className="w-full">
-                <Button className="absolute top-0 left-0 h-1/3 w-full rounded-lg border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="secondary" type="button" />
+                <Button className="absolute top-0 left-0 h-1/3 w-full rounded-lg border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="primary" type="button" />
               </PopoverTrigger>
               <PopoverContent className="w-60">
                 <div className="flex flex-col space-y-3">
@@ -239,7 +239,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
                       <Button
                         size="sm"
                         className="w-1/3"
-                        variant="secondary"
+                        variant="primary"
                         onClick={() => {
                           setProcedure(null);
                           setTopPopover(false);
@@ -269,7 +269,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
 
             <Popover open={bottomPopover} onOpenChange={setBottomPopover}>
               <PopoverTrigger asChild className="w-full">
-                <Button className="absolute bottom-0 left-0 h-1/3 w-full rounded-lg border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="secondary" type="button" />
+                <Button className="absolute bottom-0 left-0 h-1/3 w-full rounded-lg border-sky-blue/30 p-0 hover:border hover:bg-sky-blue/10" variant="primary" type="button" />
               </PopoverTrigger>
               <PopoverContent className="w-60">
                 <div className="flex flex-col space-y-3">
@@ -283,7 +283,7 @@ export default function Tooth({ handleFace, number, bottom, status }: any) {
                       <Button
                         size="sm"
                         className="w-1/3"
-                        variant="secondary"
+                        variant="primary"
                         onClick={() => {
                           setProcedure(null);
                           setBottomPopover(false);

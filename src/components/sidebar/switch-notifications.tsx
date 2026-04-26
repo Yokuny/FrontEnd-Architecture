@@ -15,13 +15,13 @@ export function NotificationsSwitcher({ notifications }: { notifications: Notifi
   return (
     <DropdownMenu onOpenChange={setMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="secondary" aria-label={t('notifications.open')} className="group/notif relative">
+        <Button size="icon" variant="blank" aria-label={t('notifications.open')} className="group/notif relative">
+          <span className="sr-only">{t('notifications.open')}</span>
           {hasNotifications ? <MessageSquareMoreIcon size={16} /> : <MessageSquareCheckIcon size={16} />}
           <span className="absolute top-1.5 right-1.5 flex size-2">
             <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${hasNotifications ? 'bg-amber-400' : 'bg-green-400'}`} />
             <span className={`relative inline-flex size-2 rounded-full ${hasNotifications ? 'bg-amber-500' : 'bg-green-500'}`} />
           </span>
-          <span className="sr-only">{t('notifications.open')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" className="my-6 w-full min-w-80">

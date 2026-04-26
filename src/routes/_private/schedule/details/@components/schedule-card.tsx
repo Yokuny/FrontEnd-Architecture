@@ -102,24 +102,24 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
       <ItemContent className="w-full">{renderScheduleDateTime()}</ItemContent>
 
       <ItemFooter className="flex-wrap justify-start gap-2 pt-1 md:pt-2">
-        <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-2 py-1">
+        <Button variant="primary" size="sm" className="h-auto items-center gap-2 px-2 py-1">
           <MapIcon className="size-4" />
           <span className="text-muted-foreground text-xs">{getRoomName(schedule.Room)}</span>
         </Button>
         {schedule.Professional && (
-          <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-2 py-1">
+          <Button variant="primary" size="sm" className="h-auto items-center gap-2 px-2 py-1">
             <Clinic className="size-4" />
             <span className="text-muted-foreground text-xs">{getProfessionalName(schedule.Professional)}</span>
           </Button>
         )}
         {schedule.Financial && (
-          <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-2 py-1">
+          <Button variant="primary" size="sm" className="h-auto items-center gap-2 px-2 py-1">
             <Dollar className="size-4" />
             <span className="text-muted-foreground text-xs">{t('linked')}</span>
           </Button>
         )}
         {schedule.title && (
-          <Button variant="secondary" size="sm" className="h-auto items-center gap-2 px-2 py-1">
+          <Button variant="primary" size="sm" className="h-auto items-center gap-2 px-2 py-1">
             <Mail className="size-4" />
             <span className="text-muted-foreground text-xs">{schedule.title}</span>
           </Button>

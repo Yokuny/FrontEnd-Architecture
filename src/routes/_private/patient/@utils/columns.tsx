@@ -70,7 +70,7 @@ export const patientColumns = (navigate: (opts: any) => void): DataTableColumn<P
                 e.stopPropagation();
               }}
             >
-              <Button variant="outline" className="h-7 w-12">
+              <Button className="h-7 w-12">
                 <Mixer className="size-3.5" />
               </Button>
             </DropdownMenuTrigger>

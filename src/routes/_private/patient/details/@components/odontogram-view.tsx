@@ -4,12 +4,13 @@ import { toast } from 'sonner';
 import DefaultEmptyData from '@/components/default-empty-data';
 import Add from '@/components/icons/Add.Icon';
 import Dental from '@/components/icons/Dental.Icon';
+import Down from '@/components/icons/Down.Icon';
 import Edit from '@/components/icons/Edit.Icon';
 import Save from '@/components/icons/Save.Icon';
 import ToothNumber from '@/components/odontogram/tooth-number';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemActions, ItemContent, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -163,86 +164,96 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
   };
 
   return (
-    <Item variant="outline">
-      <ItemContent className="flex gap-0">
-        <Accordion type="single" collapsible className="w-full">
-          {sortedOdontograms.map((el) => (
-            <AccordionItem key={el._id} value={el._id} className="w-full rounded-lg py-1">
-              <AccordionTrigger className="hover:no-underline">
-                <div className="flex w-full items-center justify-between">
+    <Item>
+      <ItemContent className="w-full gap-0">
+        <div className="flex h-12 items-center border-b px-2 text-left text-foreground/80 text-sm">
+          <div className="flex-1 font-semibold">{t('odontogram.status.label')}</div>
+          <div className="flex-1 font-semibold">{t('creation.date')}</div>
+          <div className="w-8" />
+        </div>
+        {sortedOdontograms.map((el) => (
+          <Collapsible key={el._id} className="w-full border-b">
+            <CollapsibleTrigger className="group w-full transition-colors hover:bg-secondary">
+              <div className="flex h-16 items-center px-2 text-left text-foreground/60 text-sm">
+                <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <BadgeIndicator variant={el.finished ? 'completed' : 'in_progress'} pulse />
                     <ItemTitle className="text-lg">{el.finished ? t('finished') : t('in.progress')}</ItemTitle>
                   </div>
-                  <p className="text-muted-foreground text-sm tabular-nums">{formatDate(String(el.createdAt))}</p>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent className="my-6 space-y-6 px-2">
-                <div className="flex items-end gap-2">
-                  <div className="flex flex-col gap-2">
-                    <span className="text-muted-foreground text-sm">{t('odontogram.status.label')}</span>
-                    <Select
-                      value={String(selectedStatus[el._id] ?? el.finished)}
-                      onValueChange={(value: string) => {
-                        setIsEditing(el._id);
-                        setSelectedStatus((prev) => ({ ...prev, [el._id]: value === 'true' }));
-                      }}
-                      disabled={isLoading}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue>{(selectedStatus[el._id] ?? el.finished) ? t('finished') : t('in.progress')}</SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="true">{t('finished')}</SelectItem>
-                        <SelectItem value="false">{t('in.progress')}</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  {isEditing === el._id && (
-                    <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.finished)} disabled={isLoading}>
-                      <Save className="size-4" />
-                      <span className="sr-only md:not-sr-only">{t('save')}</span>
-                    </Button>
-                  )}
-                  <Button onClick={() => navigate({ to: '/odontogram/details', search: { id: el._id } })}>
-                    <Edit className="size-4" />
-                    {t('edit')}
+                <div className="flex-1">
+                  <p className="tabular-nums">{formatDate(String(el.createdAt))}</p>
+                </div>
+                <div className="ml-4 flex items-center justify-end">
+                  <Down className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </div>
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="my-6 space-y-6 px-2">
+              <div className="flex items-end gap-2">
+                <div className="flex flex-col gap-2">
+                  <span className="text-muted-foreground text-sm">{t('odontogram.status.label')}</span>
+                  <Select
+                    value={String(selectedStatus[el._id] ?? el.finished)}
+                    onValueChange={(value: string) => {
+                      setIsEditing(el._id);
+                      setSelectedStatus((prev) => ({ ...prev, [el._id]: value === 'true' }));
+                    }}
+                    disabled={isLoading}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue>{(selectedStatus[el._id] ?? el.finished) ? t('finished') : t('in.progress')}</SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="true">{t('finished')}</SelectItem>
+                      <SelectItem value="false">{t('in.progress')}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {isEditing === el._id && (
+                  <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.finished)} disabled={isLoading}>
+                    <Save className="size-4" />
+                    <span className="sr-only md:not-sr-only">{t('save')}</span>
                   </Button>
-                </div>
+                )}
+                <Button onClick={() => navigate({ to: '/odontogram/details', search: { id: el._id } })}>
+                  <Edit className="size-4" />
+                  {t('edit')}
+                </Button>
+              </div>
 
-                <div className="w-full">
-                  <span className="mb-4 block font-medium text-sm">{t('procedures.per.tooth')}</span>
-                  <div className="flex w-full max-w-md flex-col gap-4 overflow-y-auto">
-                    {el.teeth.map((tooth) => {
-                      const facesWithProcedures = getFacesWithProcedures(tooth.faces);
-                      if (facesWithProcedures.length === 0) return null;
+              <div className="w-full">
+                <span className="mb-4 block font-medium text-sm">{t('procedures.per.tooth')}</span>
+                <div className="flex w-full max-w-md flex-col gap-4 overflow-y-auto">
+                  {el.teeth.map((tooth) => {
+                    const facesWithProcedures = getFacesWithProcedures(tooth.faces);
+                    if (facesWithProcedures.length === 0) return null;
 
-                      return (
-                        <div key={tooth.number} className="flex gap-6 rounded-xl border p-6">
-                          <ToothNumber toothNumber={tooth.number} />
-                          <div className="flex flex-col gap-2">
-                            <div className="flex items-baseline gap-2">
-                              <span className="text-muted-foreground text-sm">{t('tooth.label')}</span>
-                              <span className="font-medium">{tooth.number}</span>
-                            </div>
-                            <div className="space-y-1">
-                              {facesWithProcedures.map((item) => (
-                                <div key={item.face} className="flex items-baseline gap-2">
-                                  <span className="font-medium">{item.face}</span>
-                                  <span className="text-muted-foreground text-sm">{item.procedure}</span>
-                                </div>
-                              ))}
-                            </div>
+                    return (
+                      <div key={tooth.number} className="flex gap-6 rounded-xl border p-6">
+                        <ToothNumber toothNumber={tooth.number} />
+                        <div className="flex flex-col gap-2">
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-muted-foreground text-sm">{t('tooth.label')}</span>
+                            <span className="font-medium">{tooth.number}</span>
+                          </div>
+                          <div className="space-y-1">
+                            {facesWithProcedures.map((item) => (
+                              <div key={item.face} className="flex items-baseline gap-2">
+                                <span className="font-medium">{item.face}</span>
+                                <span className="text-muted-foreground text-sm">{item.procedure}</span>
+                              </div>
+                            ))}
                           </div>
                         </div>
-                      );
-                    })}
-                  </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        ))}
       </ItemContent>
     </Item>
   );

@@ -93,10 +93,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
         {/* Valores */}
         <Collapsible open={openCategories.includes('values')} onOpenChange={() => toggleCategory('values')}>
           <CollapsibleTrigger asChild>
-            <Button
-              variant="secondary"
-              className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
-            >
+            <Button variant="primary" className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2">
               <div className="flex items-center gap-3">
                 <ItemMedia variant="icon" className="text-foreground">
                   <IconDollar className="size-4" />
@@ -129,10 +126,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
         {/* Pagamento */}
         <Collapsible open={openCategories.includes('payment')} onOpenChange={() => toggleCategory('payment')}>
           <CollapsibleTrigger asChild>
-            <Button
-              variant="secondary"
-              className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
-            >
+            <Button variant="primary" className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2">
               <div className="flex items-center gap-3">
                 <ItemMedia variant="icon" className="text-foreground">
                   <IconCard className="size-4" />
@@ -163,10 +157,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
         {/* Datas */}
         <Collapsible open={openCategories.includes('dates')} onOpenChange={() => toggleCategory('dates')}>
           <CollapsibleTrigger asChild>
-            <Button
-              variant="secondary"
-              className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
-            >
+            <Button variant="primary" className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2">
               <div className="flex items-center gap-3">
                 <ItemMedia variant="icon" className="text-foreground">
                   <IconCalendar className="size-4" />
@@ -196,7 +187,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
           <Collapsible open={openCategories.includes('procedures')} onOpenChange={() => toggleCategory('procedures')}>
             <CollapsibleTrigger asChild>
               <Button
-                variant="secondary"
+                variant="primary"
                 className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
               >
                 <div className="flex items-center gap-3">

@@ -121,11 +121,11 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
       <ItemHeader className="mb-6">
         <ItemTitle className="text-xl md:text-2xl">{title}</ItemTitle>
         <div className="flex gap-1">
-          <Button variant="secondary" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
+          <Button variant="primary" size="sm" onClick={expandAll} className="text-muted-foreground text-xs hover:text-foreground">
             {'expand.all'}
           </Button>
           <Separator orientation="vertical" className="h-4 self-center" />
-          <Button variant="secondary" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
+          <Button variant="primary" size="sm" onClick={collapseAll} className="text-muted-foreground text-xs hover:text-foreground">
             {'collapse.all'}
           </Button>
         </div>
@@ -136,7 +136,7 @@ const ProductSpecs1 = ({ categories = DEFAULT_CATEGORIES, title = 'Technical Spe
           <Collapsible key={category.id} open={openCategories.includes(category.id)} onOpenChange={() => toggleCategory(category.id)}>
             <CollapsibleTrigger asChild>
               <Button
-                variant="secondary"
+                variant="primary"
                 className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
               >
                 <div className="flex items-center gap-3">

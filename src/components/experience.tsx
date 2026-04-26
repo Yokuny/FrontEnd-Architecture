@@ -42,7 +42,7 @@ const Experience = ({ className }: Experience1Props) => {
       <div className="container space-y-10 lg:space-y-20">
         <div className="flex w-full items-end justify-between">
           <h1 className="font-semibold text-5xl tracking-tighter lg:text-6xl">Experience</h1>
-          <Button variant="secondary" size="lg" className="font-semibold">
+          <Button variant="primary" size="lg" className="font-semibold">
             Download CV <Download className="size-4" />
           </Button>
         </div>

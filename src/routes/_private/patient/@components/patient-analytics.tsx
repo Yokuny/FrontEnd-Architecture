@@ -70,7 +70,7 @@ function PatientPeriodChartCard({ chartData }: { chartData: PatientPeriodChart }
     <ItemContent className="h-full space-y-4 pb-2">
       <div className="flex flex-row items-center justify-between space-y-0">
         <ItemTitle>{t('registration.history')}</ItemTitle>
-        <ToggleGroup type="single" value={timeRange} variant="outline" onValueChange={(value) => value && setTimeRange(value as typeof timeRange)}>
+        <ToggleGroup type="single" value={timeRange} onValueChange={(value) => value && setTimeRange(value as typeof timeRange)}>
           {Object.keys(dataMap).map((period) => (
             <ToggleGroupItem key={period} value={period} size="sm">
               {period}
