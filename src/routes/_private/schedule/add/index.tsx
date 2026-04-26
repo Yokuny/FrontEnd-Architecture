@@ -1,10 +1,8 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
 import Save from '@/components/icons/Save.Icon';
 import { ScheduleFormContent } from '@/components/schedule';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
-import { Spinner } from '@/components/ui/spinner';
 import { t } from '@/lib/helpers/translate.helper';
 import type { PartialSchedule } from '@/lib/interfaces/schedule.interface';
 
@@ -20,7 +18,6 @@ export const Route = createFileRoute('/_private/schedule/add/')({
 
 function ScheduleAddPage() {
   const navigate = useNavigate();
-  const [isBusy, setIsBusy] = useState(false);
 
   const handleClose = () => {
     navigate({ to: '/schedule' });
@@ -38,14 +35,14 @@ function ScheduleAddPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="submit" form={SCHEDULE_ADD_FORM_ID} disabled={isBusy} className="ml-auto">
-            {isBusy ? <Spinner className="size-4" /> : <Save className="size-4" />}
+          <Button type="submit" form={SCHEDULE_ADD_FORM_ID} className="ml-auto">
+            <Save className="size-4" />
             <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>
       </CardHeader>
       <CardContent>
-        <ScheduleFormContent event={null} onClose={handleClose} onSave={handleSave} onDelete={handleDelete} hideFooter formId={SCHEDULE_ADD_FORM_ID} onBusyChange={setIsBusy} />
+        <ScheduleFormContent event={null} onClose={handleClose} onSave={handleSave} onDelete={handleDelete} formId={SCHEDULE_ADD_FORM_ID} />
       </CardContent>
     </Card>
   );

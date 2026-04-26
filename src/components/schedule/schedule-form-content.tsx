@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import type { FormEvent } from 'react';
 import DateTimePicker from '@/components/data-inputs/date-time-picker';
 import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
@@ -21,15 +21,11 @@ import { t } from '@/lib/helpers/translate.helper';
 import { useScheduleForm } from '@/routes/_private/schedule/@hooks/use-schedule-form';
 
 export type ScheduleFormContentProps = ScheduleFormProps & {
-  /** Quando true, não renderiza o rodapé (ex.: página com botão Salvar no header). */
-  hideFooter?: boolean;
   /** `id` do `<form>` para submit externo via `form="..."`. */
   formId?: string;
-  /** Notifica estado de envio (para botão Salvar em página com `hideFooter`). */
-  onBusyChange?: (busy: boolean) => void;
 };
 
-export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFooter = false, formId, onBusyChange }: ScheduleFormContentProps) {
+export function ScheduleFormContent({ event, onClose, onSave, onDelete, formId }: ScheduleFormContentProps) {
   const {
     form,
     isEditMode,
@@ -58,11 +54,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
     extractTimeFromISO,
   } = useScheduleForm({ event, onClose, onSave, onDelete });
 
-  useEffect(() => {
-    onBusyChange?.(isLoading);
-  }, [isLoading, onBusyChange]);
-
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     void handleSave();
   };
@@ -72,7 +64,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
   return (
     <>
       <Form {...(form as any)}>
-        <form id={formId} className="!p-0" onSubmit={formId ? handleFormSubmit : undefined}>
+        <form id={formId} className="p-0!" onSubmit={handleFormSubmit}>
           {!isEditMode && (
             <Tabs
               value={activeTab}
@@ -304,61 +296,57 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
         </form>
       </Form>
 
-      {(!hideFooter || (hideFooter && formId)) && (
-        <CardFooter className="mt-4 flex-row flex-nowrap items-center justify-between gap-2 border-t px-0 pt-4">
-          {event?._id && (
-            <Button variant="destructive" onClick={handleDelete} disabled={isLoading} aria-label={t('delete.appointment')}>
-              <Delete className="size-4 text-destructive" aria-hidden="true" />
-            </Button>
-          )}
-          <Button variant="primary" onClick={handleCancel} disabled={isLoading}>
-            <Back className="size-4 md:hidden" />
-            <span className="hidden md:block">{t('cancel')}</span>
+      <CardFooter className="mt-4 flex-row flex-nowrap items-center justify-between gap-2 border-t px-0 pt-4">
+        {event?._id && (
+          <Button variant="destructive" onClick={handleDelete} disabled={isLoading} aria-label={t('delete.appointment')}>
+            <Delete className="size-4 text-destructive" aria-hidden="true" />
           </Button>
-          {!(form.getValues('Room') || selectedRoom) ? (
-            <Select
-              value={form.getValues('Room')}
-              onValueChange={(value) => {
-                form.setValue('Room', value);
-                setSelectedRoom(value);
-                setSelectedRoomName(getRoomName(value));
+        )}
+        <Button variant="primary" onClick={handleCancel} disabled={isLoading}>
+          <Back className="size-4 md:hidden" />
+          <span className="hidden md:block">{t('cancel')}</span>
+        </Button>
+        {!(form.getValues('Room') || selectedRoom) ? (
+          <Select
+            value={form.getValues('Room')}
+            onValueChange={(value) => {
+              form.setValue('Room', value);
+              setSelectedRoom(value);
+              setSelectedRoomName(getRoomName(value));
+            }}
+          >
+            <SelectTrigger variant="default" className="min-w-0 flex-1 overflow-x-hidden">
+              <SelectValue placeholder={rooms.length ? t('select.room.field') : t('no.rooms.available')} />
+            </SelectTrigger>
+            <SelectContent>
+              {rooms.map((room) => (
+                <SelectItem key={room._id} value={room._id}>
+                  {room.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        ) : (
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              variant="basic"
+              onClick={() => {
+                form.setValue('Room', '');
+                setSelectedRoom('');
+                setSelectedRoomName('');
               }}
+              aria-label={t('change.room')}
             >
-              <SelectTrigger variant="default" className="min-w-0 flex-1 overflow-x-hidden">
-                <SelectValue placeholder={rooms.length ? t('select.room.field') : t('no.rooms.available')} />
-              </SelectTrigger>
-              <SelectContent>
-                {rooms.map((room) => (
-                  <SelectItem key={room._id} value={room._id}>
-                    {room.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          ) : (
-            <>
-              <Button
-                type="button"
-                variant="info"
-                onClick={() => {
-                  form.setValue('Room', '');
-                  setSelectedRoom('');
-                  setSelectedRoomName('');
-                }}
-                aria-label={t('change.room')}
-              >
-                <Edit className="size-4" />
-              </Button>
-              {!(hideFooter && formId) && (
-                <Button type={formId ? 'submit' : 'button'} form={formId} onClick={formId ? undefined : () => void handleSave()} disabled={isLoading} className="shrink-0">
-                  {isLoading ? <Loader className="size-4 animate-spin" /> : isEditMode && <Save className="size-4" />}
-                  <span className={isEditMode ? 'sr-only md:not-sr-only' : undefined}>{isEditMode ? t('save') : `${t('book.in')} ${selectedRoomName || ''}`}</span>
-                </Button>
-              )}
-            </>
-          )}
-        </CardFooter>
-      )}
+              <Edit className="size-4" />
+            </Button>
+            <Button type="button" onClick={() => void handleSave()} disabled={isLoading} className="shrink-0">
+              {isLoading ? <Loader className="size-4 animate-spin" /> : <Save className="size-4" />}
+              <span className={isEditMode ? 'sr-only md:not-sr-only' : undefined}>{isEditMode ? t('save') : `${t('book.in')} ${selectedRoomName || ''}`}</span>
+            </Button>
+          </div>
+        )}
+      </CardFooter>
     </>
   );
 }
