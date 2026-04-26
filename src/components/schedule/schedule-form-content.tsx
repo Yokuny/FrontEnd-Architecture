@@ -5,7 +5,6 @@ import ProfessionalCombobox from '@/components/data-inputs/professional-combobox
 import DefaultFormLayout from '@/components/default-form-layout';
 import Back from '@/components/icons/Back.Icon';
 import Delete from '@/components/icons/Delete.Icon';
-import Edit from '@/components/icons/Edit.Icon';
 import Loader from '@/components/icons/Loader.Icon';
 import Save from '@/components/icons/Save.Icon';
 import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
@@ -18,6 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatPhone } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
+import { cn } from '@/lib/utils/cn.util';
 import { useScheduleForm } from '@/routes/_private/schedule/@hooks/use-schedule-form';
 
 export type ScheduleFormContentProps = ScheduleFormProps & {
@@ -36,7 +36,6 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, formId }
     allDay,
     activeTab,
     selectedRoom,
-    selectedRoomName,
     setStartDateTime,
     setEndDateTime,
     setAllDay,
@@ -60,6 +59,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, formId }
   };
 
   const layoutClassName = 'p-0';
+  const selectedRoomValue = form.watch('Room') || selectedRoom;
 
   return (
     <>
@@ -296,7 +296,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, formId }
         </form>
       </Form>
 
-      <CardFooter className="justify-between">
+      <CardFooter className="flex-wrap justify-between gap-2">
         {event?._id && (
           <Button variant="destructive" onClick={handleDelete} disabled={isLoading} aria-label={t('delete.appointment')}>
             <Delete className="size-4 text-destructive" aria-hidden="true" />
@@ -306,16 +306,21 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, formId }
           <Back className="size-4 md:hidden" />
           <span className="hidden md:block">{t('cancel')}</span>
         </Button>
-        {!(form.getValues('Room') || selectedRoom) ? (
+        <div className="ml-auto flex min-w-0 items-center gap-2">
           <Select
-            value={form.getValues('Room')}
+            value={selectedRoomValue}
             onValueChange={(value) => {
               form.setValue('Room', value);
               setSelectedRoom(value);
               setSelectedRoomName(getRoomName(value));
             }}
           >
-            <SelectTrigger variant="default" className="min-w-0 flex-1 overflow-x-hidden">
+            <SelectTrigger
+              variant="default"
+              aria-invalid={!selectedRoomValue}
+              aria-required
+              className={cn('w-36 min-w-0 px-2 sm:w-44', !selectedRoomValue && 'data-placeholder:text-destructive [&_svg]:text-destructive')}
+            >
               <SelectValue placeholder={rooms.length ? t('select.room.field') : t('no.rooms.available')} />
             </SelectTrigger>
             <SelectContent>
@@ -326,26 +331,13 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, formId }
               ))}
             </SelectContent>
           </Select>
-        ) : (
-          <div className="flex gap-2">
-            <Button
-              type="button"
-              variant="basic"
-              onClick={() => {
-                form.setValue('Room', '');
-                setSelectedRoom('');
-                setSelectedRoomName('');
-              }}
-              aria-label={t('change.room')}
-            >
-              <Edit className="size-4" />
-            </Button>
+          {selectedRoomValue && (
             <Button type="button" onClick={() => void handleSave()} disabled={isLoading} className="shrink-0">
               {isLoading ? <Loader className="size-4 animate-spin" /> : <Save className="size-4" />}
-              <span className={isEditMode ? 'sr-only md:not-sr-only' : undefined}>{isEditMode ? t('save') : `${t('book.in')} ${selectedRoomName || ''}`}</span>
+              <span className={isEditMode ? 'sr-only md:not-sr-only' : undefined}>{t('save')}</span>
             </Button>
-          </div>
-        )}
+          )}
+        </div>
       </CardFooter>
     </>
   );
