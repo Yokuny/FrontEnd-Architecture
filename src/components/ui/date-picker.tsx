@@ -1,6 +1,5 @@
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { useState } from 'react';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import IconCalendar from '../icons/Calender.Icon';
 import { Button } from './button';
 import { Calendar } from './calendar';
@@ -14,7 +13,7 @@ const DatePicker = () => {
       <PopoverTrigger asChild>
         <Button variant={date ? 'outline' : 'primary'} className="justify-start font-normal md:w-full md:min-w-[220px]">
           <IconCalendar className="mr-4 size-4" />
-          {date ? <p className="font-mono">{format(date, 'P', { locale: ptBR })}</p> : <span>Escolha o dia</span>}
+          {date ? <p className="font-mono">{formatDate(date)}</p> : <span>Escolha o dia</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

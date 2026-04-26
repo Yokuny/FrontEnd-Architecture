@@ -11,6 +11,7 @@ import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTable } from '@/components/ui/data-table';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import { useRemindersList } from './@hooks/use-reminders-list';
@@ -27,6 +28,7 @@ export const Route = createFileRoute('/_private/reminders/')({
 });
 
 function RemindersListPage() {
+  const isMobile = useIsMobile();
   const {
     reminders,
     isLoading,
@@ -63,14 +65,14 @@ function RemindersListPage() {
 
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className="flex gap-2">
+                <Button className="flex gap-2">
                   <Calender className="size-4" />
                   <span className="sr-only md:not-sr-only">
                     {dateRange?.from && dateRange?.to ? `${formatDate(dateRange.from, 'dd/MM')} - ${formatDate(dateRange.to, 'dd/MM')}` : t('select.period')}
                   </span>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="end">
+              <PopoverContent className="w-auto max-w-[calc(100vw-2rem)] p-0" align="end" collisionPadding={16}>
                 <Calendar
                   mode="range"
                   selected={dateRange}
@@ -81,7 +83,7 @@ function RemindersListPage() {
                       to: range.to ? endOfDay(range.to) : undefined,
                     } as unknown as DateRange);
                   }}
-                  numberOfMonths={2}
+                  numberOfMonths={isMobile ? 1 : 2}
                 />
               </PopoverContent>
             </Popover>

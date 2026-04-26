@@ -136,7 +136,7 @@ export const PatientMedicalRecordView = ({ patient }: { patient: FullPatient }) 
                   )}
 
                   <div className="mt-1 flex flex-col gap-2">
-                    <Button variant="basic" size="sm" className="w-fit gap-2" onClick={() => toggleDescription(event.id)}>
+                    <Button variant="primary" size="sm" className="w-fit gap-2" onClick={() => toggleDescription(event.id)}>
                       {openDescriptions[event.id] ? <Cross className="size-4" /> : <Chat className="size-4" />}
                       {openDescriptions[event.id] ? t('close.description') : t('add.description')}
                     </Button>

@@ -2,6 +2,7 @@ import { ptBR } from 'date-fns/locale';
 import type { ComponentProps } from 'react';
 import * as React from 'react';
 import { type DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { cn } from '@/lib/utils/cn.util';
 import IconDown from '../icons/Down.Icon';
 import IconLeft from '../icons/Left.Icon';
@@ -36,7 +37,7 @@ function Calendar({
       startMonth={new Date(2010, 0)}
       endMonth={new Date(2045, 11)}
       formatters={{
-        formatMonthDropdown: (date) => date.toLocaleString('pt-BR', { month: 'long' }),
+        formatMonthDropdown: (date) => formatDate(date, 'LLLL'),
         ...formatters,
       }}
       classNames={{
@@ -117,7 +118,7 @@ function CalendarDayButton({ className, day, modifiers, ...props }: ComponentPro
       ref={ref}
       variant="blank"
       size="icon"
-      data-day={day.date.toLocaleDateString()}
+      data-day={formatDate(day.date, 'yyyy-MM-dd')}
       data-selected-single={modifiers.selected && !modifiers.range_start && !modifiers.range_end && !modifiers.range_middle}
       data-range-start={modifiers.range_start}
       data-range-end={modifiers.range_end}

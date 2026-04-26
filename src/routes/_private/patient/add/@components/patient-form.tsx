@@ -1,4 +1,6 @@
+import { isValid, parse } from 'date-fns';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import DatePickerButton from '@/components/data-inputs/date-picker-button';
 import DefaultFormLayout from '@/components/default-form-layout';
 import Add from '@/components/icons/Add.Icon';
 import Delete from '@/components/icons/Delete.Icon';
@@ -6,10 +8,17 @@ import { Button } from '@/components/ui/button';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { maskDate } from '@/lib/helpers/formatDate.helper';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { formatCpfCnpj, formatPhone } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { NewPatient } from '@/lib/interfaces/schemas/patient.schema';
+
+const parseBirthdate = (value: string | undefined) => {
+  if (!value) return undefined;
+
+  const parsedDate = parse(value, 'yyyy-MM-dd', new Date());
+  return isValid(parsedDate) ? parsedDate : undefined;
+};
 
 export function PatientForm() {
   const form = useFormContext<NewPatient>();
@@ -81,16 +90,10 @@ export function PatientForm() {
             control={form.control}
             name="birthdate"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex flex-col">
                 <FormLabel>{t('birthdate')}</FormLabel>
                 <FormControl>
-                  <Input
-                    className="w-full max-w-48"
-                    {...field}
-                    value={field.value || ''}
-                    placeholder={t('date.placeholder.br')}
-                    onChange={(e) => field.onChange(maskDate(e.target.value))}
-                  />
+                  <DatePickerButton date={parseBirthdate(field.value)} onSelect={(date) => field.onChange(date ? formatDate(date, 'yyyy-MM-dd') : undefined)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -175,7 +178,7 @@ export function PatientForm() {
           <div className="flex items-center justify-between">
             <h4 className="font-medium text-sm">{t('phone.list')}</h4>
             <Button type="button" variant="outline" onClick={() => append({ number: '', tag: fields.length === 0 ? 'WhatsApp' : '' })}>
-              <Add className="mr-2 size-4" />
+              <Add className="size-4" />
               {t('add.phone')}
             </Button>
           </div>

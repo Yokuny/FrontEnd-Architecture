@@ -37,7 +37,7 @@ export function ProfileForm({ form, isPending, user }: ProfileFormProps) {
           name="image"
           render={({ field }) => (
             <FormItem className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-              <Avatar className="size-14">
+              <Avatar className="size-20">
                 <AvatarImage src={form.watch('image')} alt="User Image" />
                 <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
               </Avatar>

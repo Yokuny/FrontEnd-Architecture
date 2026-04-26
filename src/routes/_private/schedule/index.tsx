@@ -169,7 +169,7 @@ function SchedulePage() {
   const handleEventSave = (event: PartialSchedule) => {
     if (event._id && event.color) {
       setEvents(events.map((e) => (e._id === event._id ? { ...event, color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status) } : e)));
-      toast(t('toast.appointment.updated'), { description: formatDate(event.start, 'd MMM yyyy') });
+      toast(t('toast.appointment.updated'), { description: formatDate(event.start) });
     } else {
       setEvents([
         ...events,
@@ -179,7 +179,7 @@ function SchedulePage() {
           color: getEventColorByProfessional(event.Professional || '', getProfessionalColor, event.status),
         },
       ]);
-      toast(t('toast.appointment.added'), { description: formatDate(event.start, 'd MMM yyyy') });
+      toast(t('toast.appointment.added'), { description: formatDate(event.start) });
     }
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
@@ -201,7 +201,7 @@ function SchedulePage() {
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
     if (deletedEvent) {
-      toast(`"${deletedEvent.title}" ${t('removed')}`, { description: formatDate(deletedEvent.start, 'd MMM yyy') });
+      toast(`"${deletedEvent.title}" ${t('removed')}`, { description: formatDate(deletedEvent.start) });
     }
   };
 
@@ -219,7 +219,7 @@ function SchedulePage() {
             : event,
         ),
       );
-      toast(t('toast.appointment.time.updated'), { description: formatDate(confirmedEvent.start, 'dd/MM/yyyy HH:mm') });
+      toast(t('toast.appointment.time.updated'), { description: formatDate(confirmedEvent.start, 'dd MMM yyy HH:ss') });
     } catch {
       // error handled globally via MutationCache.onError
     } finally {
@@ -259,31 +259,19 @@ function SchedulePage() {
         </ItemContent>
         <CardAction>
           <ButtonGroup>
-            <Button
-              variant="outline"
-              size={isMobile ? 'default' : 'sm'}
-              onClick={handlePrevious}
-              aria-label={t('pagination.previous')}
-              className="rounded-none rounded-l-md border-r-0 px-2"
-            >
+            <Button size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label={t('pagination.previous')} className="rounded-none rounded-l-md border-r-0 px-2">
               <Left className="size-5" aria-hidden="true" />
             </Button>
-            <Button variant="outline" size={isMobile ? 'default' : 'sm'} onClick={handleTodayClick} className="hidden rounded-none border-x-0 px-1 md:block">
+            <Button size={isMobile ? 'default' : 'sm'} onClick={handleTodayClick} className="hidden rounded-none border-x-0 px-1 md:block">
               {t('today')}
             </Button>
-            <Button
-              variant="outline"
-              size={isMobile ? 'default' : 'sm'}
-              onClick={handleNext}
-              aria-label={t('pagination.next')}
-              className="rounded-none rounded-r-md border-l-0 px-2"
-            >
+            <Button size={isMobile ? 'default' : 'sm'} onClick={handleNext} aria-label={t('pagination.next')} className="rounded-none rounded-r-md border-l-0 px-2">
               <Right className="size-5" aria-hidden="true" />
             </Button>
           </ButtonGroup>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size={isMobile ? 'default' : 'sm'} className="gap-1 px-2">
+              <Button size={isMobile ? 'default' : 'sm'} className="gap-1 px-2">
                 <span>
                   <span className="min-[480px]:hidden" aria-hidden="true">
                     {viewDictionary[view].charAt(0).toUpperCase()}

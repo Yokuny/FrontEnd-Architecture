@@ -10,6 +10,7 @@ import { CardContent } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import { eventColors } from '@/lib/helpers/calendar.helper';
 import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { t } from '@/lib/helpers/translate.helper';
@@ -44,7 +45,7 @@ export function ScheduleOptions({
 
   return (
     <CardContent className="flex w-full flex-col gap-4 px-4 pt-0 pb-6 md:px-6">
-      <div className="flex w-full flex-col gap-4 lg:flex-row lg:items-start lg:gap-4">
+      <div className="flex w-full flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-4">
         {/* Mini Calendar Navigation */}
         <ItemContent className="flex min-w-0 flex-1 flex-col gap-3">
           {view === 'day' && (
@@ -83,20 +84,20 @@ export function ScheduleOptions({
           )}
           <ItemHeader className="w-full px-4">
             <ItemActions className="min-w-0 grow-2 basis-0 gap-0">
-              <Button variant="outline" size="sm" onClick={handlePrevious} className="w-full rounded-none rounded-l-md border-r-0">
+              <Button size="sm" onClick={handlePrevious} className="w-full rounded-none rounded-l-md border-r-0">
                 <Left className="size-5" />
               </Button>
-              <Button variant="outline" size="sm" onClick={handleTodayClick} className="w-full rounded-none border-x-0">
+              <Button size="sm" onClick={handleTodayClick} className="w-full rounded-none border-x-0">
                 {t('today')}
               </Button>
-              <Button variant="outline" size="sm" onClick={handleNext} className="w-full rounded-none rounded-r-md border-l-0">
+              <Button size="sm" onClick={handleNext} className="w-full rounded-none rounded-r-md border-l-0">
                 <Right className="size-5" />
               </Button>
             </ItemActions>
             <div className="min-w-0 grow basis-0">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="w-full justify-evenly">
+                  <Button size="sm" className="w-full justify-evenly">
                     <span className="overflow-hidden">{viewDictionary[view]}</span>
                     <Down className="-me-1 size-5" />
                   </Button>
@@ -111,6 +112,9 @@ export function ScheduleOptions({
             </div>
           </ItemHeader>
         </ItemContent>
+
+        <Separator className="lg:hidden" />
+        <Separator orientation="vertical" className="hidden lg:block lg:h-auto lg:self-stretch" />
 
         {/* Upcoming Appointments */}
         <ItemGroup className="min-w-0 flex-1">
@@ -140,7 +144,7 @@ export function ScheduleOptions({
                         {doc.nextEvent?.start ? formatDate(doc.nextEvent.start, 'HH:mm') : '--:--'}
                       </ItemTitle>
                     </div>
-                    <Button variant="outline" size="sm" onClick={() => onViewEvent(doc.nextEvent)}>
+                    <Button onClick={() => onViewEvent(doc.nextEvent)}>
                       <Eye className="size-4" />
                       <ItemDescription>{t('view')}</ItemDescription>
                     </Button>
@@ -150,6 +154,9 @@ export function ScheduleOptions({
             ))
           )}
         </ItemGroup>
+
+        <Separator className="lg:hidden" />
+        <Separator orientation="vertical" className="hidden lg:block lg:h-auto lg:self-stretch" />
 
         {/* Professional Color Manager */}
         <ItemGroup className="min-w-0 flex-1">
@@ -192,7 +199,7 @@ export function ScheduleOptions({
                       </SelectContent>
                     </Select>
                     {hasCustomColor && (
-                      <Button variant="outline" size="icon" onClick={() => onRemoveColor(profId)}>
+                      <Button onClick={() => onRemoveColor(profId)}>
                         <Cross className="size-4" />
                       </Button>
                     )}

@@ -166,12 +166,11 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                   </div>
 
                   <div className="grid grid-cols-3 gap-2 px-1 pb-2 md:gap-4 md:px-0">
-                    <div className="flex flex-col gap-1 text-center">
+                    <div className="flex flex-col items-center gap-1 text-center">
                       <span className="text-muted-foreground text-xs">{t('cost.price')}</span>
                       <Button
-                        variant="secondary"
                         size="sm"
-                        className="flex w-full gap-2 transition-transform active:scale-90"
+                        className="flex w-fit transition-transform"
                         onClick={(e) => {
                           e.stopPropagation();
                           handlePriceClick(procedure.costPrice);
@@ -184,12 +183,11 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                         </span>
                       </Button>
                     </div>
-                    <div className="flex flex-col gap-1 text-center">
+                    <div className="flex flex-col items-center gap-1 text-center">
                       <span className="text-muted-foreground text-xs">{t('suggested.price')}</span>
                       <Button
-                        variant="secondary"
                         size="sm"
-                        className="flex w-full gap-2 transition-transform active:scale-90"
+                        className="flex w-fit transition-transform"
                         onClick={(e) => {
                           e.stopPropagation();
                           handlePriceClick(procedure.suggestedPrice);
@@ -205,9 +203,8 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                     <div className="flex flex-col gap-1 text-center">
                       <span className="text-muted-foreground text-xs">{t('saved.price')}</span>
                       <Button
-                        variant="secondary"
                         size="sm"
-                        className="flex w-full gap-2 transition-transform active:scale-90"
+                        className="flex w-fit transition-transform"
                         onClick={(e) => {
                           e.stopPropagation();
                           handlePriceClick(procedure.savedPrice);
@@ -222,17 +219,17 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                     </div>
                   </div>
                 </div>
-                <Button variant="default" className="w-full" onClick={form.handleSubmit(onSubmit)} disabled={isLoading}>
+                <Button variant="green" className="w-full" onClick={form.handleSubmit(onSubmit)} disabled={isLoading}>
                   {t('add')}
                 </Button>
               </div>
             )}
           </Form>
 
-          <Accordion type="single" collapsible className="rounded-md border p-2 px-4">
+          <Accordion type="single" collapsible className="rounded-md px-4">
             {procedures.map((group) => (
               <AccordionItem key={group.groupName} value={group.groupName}>
-                <AccordionTrigger>{group.groupName.toUpperCase()}</AccordionTrigger>
+                <AccordionTrigger className="py-2">{group.groupName.toUpperCase()}</AccordionTrigger>
                 <AccordionContent className="space-y-1">
                   {group.procedures.map((proc: any) => (
                     <button
@@ -254,7 +251,6 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
         <SheetFooter>
           <div className="flex gap-2">
             <Button
-              variant="outline"
               className="w-full"
               onClick={() => {
                 setOpen(false);
@@ -262,9 +258,8 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
             >
               {t('close')}
             </Button>
-            {/* TODO: AINDA FALTA MIGRAR ESSA PAGINA */}
-            <Link to="/">
-              <Button variant="outline">
+            <Link to="/settings/procedures">
+              <Button>
                 <Gear className="size-5" />
               </Button>
             </Link>

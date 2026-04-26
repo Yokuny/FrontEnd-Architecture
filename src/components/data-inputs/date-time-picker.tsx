@@ -1,5 +1,4 @@
-import { addHours, endOfDay, format, parse, set, startOfDay } from 'date-fns';
-import { ptBR } from 'date-fns/locale/pt-BR';
+import { addHours, endOfDay, parse, set, startOfDay } from 'date-fns';
 import { useEffect, useMemo, useState } from 'react';
 import Calender from '@/components/icons/Calender.Icon';
 import Clock from '@/components/icons/Clock.Icon';
@@ -10,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { EndHour, StartHour } from '@/lib/config/calendar.config';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { cn } from '@/lib/utils/cn.util';
 
 interface DateTimePickerProps {
@@ -39,7 +39,7 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
         const formattedMinute = minute.toString().padStart(2, '0');
         const value = `${formattedHour}:${formattedMinute}`;
         const date = new Date(2000, 0, 1, hour, minute);
-        const label = format(date, 'HH:mm');
+        const label = formatDate(date, 'HH:mm');
         options.push({ value, label });
       }
     }
@@ -126,7 +126,7 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
     if (candidate.getHours() > EndHour) {
       candidate = set(candidate, { hours: EndHour, minutes: 0, seconds: 0, milliseconds: 0 });
     }
-    const newEndTime = format(candidate, 'HH:mm');
+    const newEndTime = formatDate(candidate, 'HH:mm');
     setInternalEndTime(newEndTime);
 
     notifyChange({ startTime: time, endTime: newEndTime });
@@ -149,7 +149,7 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
       if (candidate.getHours() > EndHour) {
         candidate = set(candidate, { hours: EndHour, minutes: 0, seconds: 0, milliseconds: 0 });
       }
-      const defaultEnd = format(candidate, 'HH:mm');
+      const defaultEnd = formatDate(candidate, 'HH:mm');
       setInternalStartTime(defaultStart);
       setInternalEndTime(defaultEnd);
       notifyChange({ allDay: checked, startTime: defaultStart, endTime: defaultEnd });
@@ -167,12 +167,11 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
             <PopoverTrigger asChild>
               <Button
                 id="start-date"
-                variant="outline"
                 disabled={disabled}
                 className={cn('group w-full justify-between px-3 focus-visible:outline-[3px]', !internalStartDate && 'text-muted-foreground')}
               >
                 <span className={cn('truncate', !internalStartDate && 'text-muted-foreground')}>
-                  {internalStartDate ? format(internalStartDate, 'PPP', { locale: ptBR }) : 'Selecione a data de início'}
+                  {internalStartDate ? formatDate(internalStartDate) : 'Selecione a data de início'}
                 </span>
                 <Calender className="size-4 shrink-0" aria-hidden="true" />
               </Button>
@@ -212,13 +211,10 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
             <PopoverTrigger asChild>
               <Button
                 id="end-date"
-                variant="outline"
                 disabled={disabled}
                 className={cn('group w-full justify-between px-3 focus-visible:outline-[3px]', !internalEndDate && 'text-muted-foreground')}
               >
-                <span className={cn('truncate', !internalEndDate && 'text-muted-foreground')}>
-                  {internalEndDate ? format(internalEndDate, 'PPP', { locale: ptBR }) : 'Selecione a data final'}
-                </span>
+                <span className={cn('truncate', !internalEndDate && 'text-muted-foreground')}>{internalEndDate ? formatDate(internalEndDate) : 'Selecione a data final'}</span>
                 <Calender className="size-4 shrink-0" aria-hidden="true" />
               </Button>
             </PopoverTrigger>

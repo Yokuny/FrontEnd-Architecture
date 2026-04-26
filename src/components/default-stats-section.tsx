@@ -62,7 +62,7 @@ export function DefaultStatsSection() {
             <Item className="flex-col items-center justify-center">
               <ItemContent className="items-center">
                 <ItemTitle className="font-bold text-5xl text-emerald-500 leading-snug">
-                  <Pulse className="mr-2 inline size-10" />
+                  <Pulse className="inline size-10" />
                   1,000Kg
                 </ItemTitle>
                 <ItemDescription className="mt-2 font-bold text-foreground">CO2 Emissions Offset</ItemDescription>

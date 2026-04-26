@@ -3,7 +3,7 @@ import DefaultEmptyData from '@/components/default-empty-data';
 
 import DefaultFormLayout, { type FormSection } from '@/components/default-form-layout';
 import Edit from '@/components/icons/Edit.Icon';
-import { Badge } from '@/components/ui/badge';
+import { Badge, BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from '@/components/ui/item';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -11,7 +11,6 @@ import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { capitalizeString } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { Anamnesis } from '@/lib/interfaces';
-import { cn } from '@/lib/utils/cn.util';
 
 export const ANAMNESIS_SEVERITY_MAP = {
   allergicToMedication: 'high',
@@ -35,7 +34,7 @@ export const ANAMNESIS_SEVERITY_MAP = {
 const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
   const getSeverityDot = (condition: boolean, severity: 'high' | 'medium' = 'medium') => {
     if (!condition) return null;
-    return <div className={cn('ml-2 size-2 rounded-full', severity === 'high' ? 'bg-red-500' : 'bg-yellow-500')} />;
+    return <BadgeIndicator variant={severity === 'high' ? 'no_show' : 'pending'} pulse />;
   };
 
   const attentionCount = Object.entries(ANAMNESIS_SEVERITY_MAP).filter(([key, severity]) => {
@@ -470,7 +469,7 @@ export const PatientAnamnesisView = ({ anamnesis, patientId }: { anamnesis?: Ana
           <Button onClick={() => navigate({ to: '/patient/details/anamnesis', search: { id: patientId } })}>
             {hasData ? (
               <>
-                <Edit className="mr-2 size-4" /> {t('edit')}
+                <Edit className="size-4" /> {t('edit')}
               </>
             ) : (
               t('register')

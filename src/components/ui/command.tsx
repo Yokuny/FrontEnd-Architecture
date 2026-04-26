@@ -34,7 +34,7 @@ function CommandDialog({ title = 'Pequisar', description = '...', children, ...p
 function CommandInput({ className, ...props }: ComponentProps<typeof CommandPrimitive.Input>) {
   return (
     <div data-slot="command-input-wrapper" className="flex h-9 items-center border-b px-3">
-      <IconSearch className="mr-2 size-4 shrink-0 opacity-50" />
+      <IconSearch className="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(

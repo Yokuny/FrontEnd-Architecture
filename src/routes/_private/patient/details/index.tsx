@@ -57,7 +57,7 @@ function PatientDetailsPage() {
             <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2">
               {tabs.map(({ value, label, icon: Icon }) => (
                 <TabsTrigger key={value} value={value}>
-                  <Icon className="mr-2 size-4" /> {label}
+                  <Icon className="size-4" /> {label}
                 </TabsTrigger>
               ))}
             </TabsList>

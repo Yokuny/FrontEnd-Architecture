@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import Check from '@/components/icons/Check.Icon';
+import Save from '@/components/icons/Save.Icon';
 import { ScheduleFormContent } from '@/components/schedule';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
@@ -39,7 +39,7 @@ function ScheduleAddPage() {
       <CardHeader>
         <CardAction>
           <Button type="submit" form={SCHEDULE_ADD_FORM_ID} disabled={isBusy} className="ml-auto">
-            {isBusy ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            {isBusy ? <Spinner className="size-4" /> : <Save className="size-4" />}
             <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>

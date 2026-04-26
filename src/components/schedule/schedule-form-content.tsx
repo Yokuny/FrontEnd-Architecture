@@ -7,6 +7,7 @@ import Back from '@/components/icons/Back.Icon';
 import Delete from '@/components/icons/Delete.Icon';
 import Edit from '@/components/icons/Edit.Icon';
 import Loader from '@/components/icons/Loader.Icon';
+import Save from '@/components/icons/Save.Icon';
 import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
@@ -350,8 +351,8 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
               </Button>
               {!(hideFooter && formId) && (
                 <Button type={formId ? 'submit' : 'button'} form={formId} onClick={formId ? undefined : () => void handleSave()} disabled={isLoading} className="w-full">
-                  {isLoading && <Loader className="mr-2 size-4 animate-spin" />}
-                  {isEditMode ? t('save') : `${t('book.in')} ${selectedRoomName || ''}`}
+                  {isLoading ? <Loader className="size-4 animate-spin" /> : isEditMode && <Save className="size-4" />}
+                  <span className={isEditMode ? 'sr-only md:not-sr-only' : undefined}>{isEditMode ? t('save') : `${t('book.in')} ${selectedRoomName || ''}`}</span>
                 </Button>
               )}
             </>

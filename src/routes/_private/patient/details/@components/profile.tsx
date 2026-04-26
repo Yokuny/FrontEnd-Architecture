@@ -343,11 +343,11 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <Button variant="basic" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
+                <Button variant="primary" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/schedule-add', search: { id: patient._id } })}>
                   <Add className="size-4" />
                   <span className="hidden md:inline">{t('book.appointment')}</span>
                 </Button>
-                <Button variant="basic" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'schedule' } })}>
+                <Button variant="primary" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'schedule' } })}>
                   <Eye className="size-4" />
                   <span className="hidden md:inline">{t('see.more')}</span>
                 </Button>
@@ -361,7 +361,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                   {scheduleSummary.nextSchedule && (
                     <ItemDescription className="flex items-center gap-1">
                       <Clock className="size-3" />
-                      {new Date(scheduleSummary.nextSchedule.start).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} {t('hour.suffix')}
+                      {formatDate(scheduleSummary.nextSchedule.start, 'HH:mm')} {t('hour.suffix')}
                     </ItemDescription>
                   )}
                 </ItemContent>
@@ -403,11 +403,11 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <Button variant="basic" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
+                <Button variant="primary" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details/financial-add', search: { id: patient._id } })}>
                   <Add className="size-4" />
                   <span className="hidden md:inline">{t('add')}</span>
                 </Button>
-                <Button variant="basic" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'financial' } })}>
+                <Button variant="primary" size="sm" className="gap-1.5" onClick={() => navigate({ to: '/patient/details', search: { id: patient._id, tab: 'financial' } })}>
                   <Eye className="size-4" />
                   <span className="hidden md:inline">{t('see.more')}</span>
                 </Button>

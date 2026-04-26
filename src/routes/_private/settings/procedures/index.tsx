@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
-import Check from '@/components/icons/Check.Icon';
 import Cloud from '@/components/icons/Cloud.Icon';
 import Download from '@/components/icons/Download.Icon';
+import Save from '@/components/icons/Save.Icon';
 import Upload from '@/components/icons/Upload.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
@@ -134,7 +134,7 @@ export function SettingsProcedures() {
         <CardAction>
           {hasChanges && (
             <Button onClick={saveProcedure} disabled={updateProcedures.isPending}>
-              {updateProcedures.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+              {updateProcedures.isPending ? <Spinner className="size-4" /> : <Save className="size-4" />}
               <span className="sr-only md:not-sr-only">{t('save')}</span>
             </Button>
           )}

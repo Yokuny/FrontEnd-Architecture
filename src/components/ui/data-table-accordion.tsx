@@ -70,8 +70,7 @@ function AccordionRow<T>({
               <Button
                 data-expand-toggle
                 aria-label={isOpen ? t('collapse.row') : t('expand.row')}
-                className="h-7 w-12 text-muted-foreground"
-                variant="outline"
+                className="h-7 text-muted-foreground"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsOpen(!isOpen);
@@ -212,7 +211,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
     <div className={cn('w-full space-y-4', className)}>
       {/* Top area: Page size & Search */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        {showPagination ? (
+        {showPagination && (
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground text-sm">{t('data.table.show')}</span>
             <Select
@@ -222,7 +221,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
                 setCurrentPage(1);
               }}
             >
-              <SelectTrigger className="h-8 w-16">
+              <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -234,8 +233,6 @@ export function DataTableAccordion<T extends Record<string, any>>({
             </Select>
             <span className="text-muted-foreground text-sm">{t('data.table.results')}</span>
           </div>
-        ) : (
-          <div /> /* spacer */
         )}
 
         {(searchable || columnSelector) && (
@@ -258,8 +255,8 @@ export function DataTableAccordion<T extends Record<string, any>>({
             {columnSelector && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
-                    <ColumnIcon className="mr-2 hidden size-3.5 sm:inline" />
+                  <Button variant="primary">
+                    <ColumnIcon className="hidden size-3.5 sm:inline" />
                     {t('data.table.columns')}
                     <ArrowDownIcon className="ml-2 size-3" />
                   </Button>
@@ -315,11 +312,11 @@ export function DataTableAccordion<T extends Record<string, any>>({
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="start">
                             <DropdownMenuItem onClick={() => handleSort(column.key)}>
-                              <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+                              <ArrowUpIcon className="size-3.5 text-muted-foreground/70" />
                               {t('sort.ascending')}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setSortConfig({ key: column.key, direction: 'desc' })}>
-                              <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+                              <ArrowDownIcon className="size-3.5 text-muted-foreground/70" />
                               {t('sort.descending')}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
@@ -346,7 +343,7 @@ export function DataTableAccordion<T extends Record<string, any>>({
             ) : (
               paginatedData.map((row, index) => (
                 <AccordionRow
-                  key={index}
+                  key={String(row[visibleColumns[index]?.key])}
                   row={row}
                   index={index}
                   columns={visibleColumns}

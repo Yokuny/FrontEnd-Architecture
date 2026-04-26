@@ -9,6 +9,7 @@ import ChartPie from '@/components/icons/ChartPie.Icon';
 import IconDollar from '@/components/icons/Dollar.Icon';
 import Down from '@/components/icons/Down.Icon';
 import Edit from '@/components/icons/Edit.Icon';
+import Save from '@/components/icons/Save.Icon';
 import IconService from '@/components/icons/Service.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -226,11 +227,12 @@ const FinancialRecordDetail = ({
           </div>
           {isEditing === el._id && (
             <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
-              {t('save')}
+              <Save className="size-4" />
+              <span className="sr-only md:not-sr-only">{t('save')}</span>
             </Button>
           )}
           <Button onClick={() => navigate({ to: '/financial/details', search: { id: el._id } })}>
-            <Edit className="mr-2 size-4" />
+            <Edit className="size-4" />
             {t('edit')}
           </Button>
         </div>

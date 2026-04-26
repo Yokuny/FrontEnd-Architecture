@@ -5,6 +5,7 @@ import DefaultEmptyData from '@/components/default-empty-data';
 import Add from '@/components/icons/Add.Icon';
 import Dental from '@/components/icons/Dental.Icon';
 import Edit from '@/components/icons/Edit.Icon';
+import Save from '@/components/icons/Save.Icon';
 import ToothNumber from '@/components/odontogram/tooth-number';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BadgeIndicator } from '@/components/ui/badge';
@@ -169,7 +170,10 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
             <AccordionItem key={el._id} value={el._id} className="w-full rounded-lg py-1">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex w-full items-center justify-between">
-                  <BadgeIndicator variant={el.finished ? 'completed' : 'in_progress'}>{el.finished ? t('finished') : t('in.progress')}</BadgeIndicator>
+                  <div className="flex items-center gap-2">
+                    <BadgeIndicator variant={el.finished ? 'completed' : 'in_progress'} pulse />
+                    <ItemTitle className="text-lg">{el.finished ? t('finished') : t('in.progress')}</ItemTitle>
+                  </div>
                   <p className="text-muted-foreground text-sm tabular-nums">{formatDate(String(el.createdAt))}</p>
                 </div>
               </AccordionTrigger>
@@ -196,11 +200,12 @@ const OdontogramHistorySection = ({ odontograms, patientId }: { odontograms: DbO
                   </div>
                   {isEditing === el._id && (
                     <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.finished)} disabled={isLoading}>
-                      {t('save')}
+                      <Save className="size-4" />
+                      <span className="sr-only md:not-sr-only">{t('save')}</span>
                     </Button>
                   )}
                   <Button onClick={() => navigate({ to: '/odontogram/details', search: { id: el._id } })}>
-                    <Edit className="mr-2 size-4" />
+                    <Edit className="size-4" />
                     {t('edit')}
                   </Button>
                 </div>

@@ -9,6 +9,7 @@ import ChartPie from '@/components/icons/ChartPie.Icon';
 import IconDollar from '@/components/icons/Dollar.Icon';
 import Down from '@/components/icons/Down.Icon';
 import Link from '@/components/icons/Link.Icon';
+import Save from '@/components/icons/Save.Icon';
 import IconService from '@/components/icons/Service.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -219,7 +220,8 @@ const ScheduleRecordDetail = ({
           </div>
           {isEditing === el._id && (
             <Button onClick={() => handleStatusChange(el._id, selectedStatus[el._id] ?? el.status)} disabled={isLoading}>
-              {t('save')}
+              <Save className="size-4" />
+              <span className="sr-only md:not-sr-only">{t('save')}</span>
             </Button>
           )}
         </div>
@@ -347,7 +349,7 @@ const ScheduleRecordDetail = ({
                     <ItemSeparator />
                     <Item variant="default" size="sm" className="justify-center py-2 hover:bg-secondary">
                       <Badge variant="outline" className="cursor-pointer" onClick={() => navigate({ to: '/financial/details', search: { id: el.Financial } })}>
-                        <Link className="mr-2 size-4" />
+                        <Link className="size-4" />
                         {t('view.financial')}
                       </Badge>
                     </Item>

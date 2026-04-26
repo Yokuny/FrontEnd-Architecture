@@ -59,7 +59,7 @@ export function ReminderForm() {
             <FormItem>
               <FormLabel>{t('description.required')}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder={t('reminder.description.example')} />
+                <Input {...field} className="h-14!" placeholder={t('reminder.description.example')} />
               </FormControl>
               <FormMessage />
             </FormItem>

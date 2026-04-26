@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { GET, PATCH, POST, PUT, request } from '@/lib/api/client.api';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { type Combobox, valueAndLabel } from '@/lib/helpers/formatter.helper';
 
 import type { FinancialList, FullFinancial, PartialFinancial } from '@/lib/interfaces/financial.interface';
@@ -115,10 +116,10 @@ function getFinancialPatientId(f: FinancialComboboxRow): string {
 
 function getFinancialLabelDate(f: FinancialComboboxRow): string {
   if ('updatedAt' in f && f.updatedAt) {
-    return new Date(f.updatedAt).toLocaleDateString('pt-BR').trim();
+    return formatDate(f.updatedAt);
   }
   if ('createdAt' in f && f.createdAt) {
-    return new Date(f.createdAt as string | Date).toLocaleDateString('pt-BR').trim();
+    return formatDate(f.createdAt as string | Date);
   }
   return '';
 }

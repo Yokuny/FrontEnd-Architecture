@@ -110,11 +110,11 @@ export function DataTableColumnHeader<TData, TValue>({ column, title, className 
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={handleSortAsc}>
-            <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+            <ArrowUpIcon className="size-3.5 text-muted-foreground/70" />
             {t('sort.ascending')}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleSortDesc}>
-            <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+            <ArrowDownIcon className="size-3.5 text-muted-foreground/70" />
             {t('sort.descending')}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -303,8 +303,8 @@ export function DataTable<T extends Record<string, any>>({
             {columnSelector && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
-                    <ColumnIcon className="mr-2 hidden size-3.5 sm:inline" />
+                  <Button>
+                    <ColumnIcon className="hidden size-3.5 sm:inline" />
                     {t('data.table.columns')}
                     <ArrowDownIcon className="ml-2 size-3" />
                   </Button>
@@ -359,11 +359,11 @@ export function DataTable<T extends Record<string, any>>({
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="start">
                             <DropdownMenuItem onClick={() => handleSort(column.key)}>
-                              <ArrowUpIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+                              <ArrowUpIcon className="size-3.5 text-muted-foreground/70" />
                               {t('sort.ascending')}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setSortConfig({ key: column.key, direction: 'desc' })}>
-                              <ArrowDownIcon className="mr-2 size-3.5 text-muted-foreground/70" />
+                              <ArrowDownIcon className="size-3.5 text-muted-foreground/70" />
                               {t('sort.descending')}
                             </DropdownMenuItem>
                           </DropdownMenuContent>

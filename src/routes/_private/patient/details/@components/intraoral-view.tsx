@@ -93,7 +93,7 @@ export const PatientIntraoralView = ({ intraoral, patientId }: { intraoral?: Int
           <Button onClick={() => navigate({ to: '/patient/details/intraoral', search: { id: patientId } })}>
             {hasData ? (
               <>
-                <Edit className="mr-2 size-4" /> {t('edit')}
+                <Edit className="size-4" /> {t('edit')}
               </>
             ) : (
               t('register')

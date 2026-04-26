@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import DefaultLoading from '@/components/default-loading';
-import Check from '@/components/icons/Check.Icon';
 import Delete from '@/components/icons/Delete.Icon';
+import Save from '@/components/icons/Save.Icon';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -120,7 +120,7 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
             </AlertDialog>
           )}
           <Button type="submit" form="patient-form" disabled={isPending} className="ml-auto">
-            {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            {isPending ? <Spinner className="size-4" /> : <Save className="size-4" />}
             <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>

@@ -7,6 +7,7 @@ import Clock from '@/components/icons/Clock.Icon';
 import Edit from '@/components/icons/Edit.Icon';
 import Link from '@/components/icons/Link.Icon';
 import Right from '@/components/icons/Right.Icon';
+import Save from '@/components/icons/Save.Icon';
 import { translatedStatusLabel } from '@/components/schedule/status-label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -110,7 +111,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
             <div className="flex flex-col gap-1">
               <FieldLabel>{t('date')}</FieldLabel>
               <div className="flex items-baseline gap-2">
-                <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(startDate, 'dd MMM yyyy')}</span>
+                <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(startDate)}</span>
               </div>
             </div>
             <Badge variant="outline" className="gap-1 rounded-full">
@@ -126,7 +127,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                 <div className="flex flex-col gap-1">
                   <FieldLabel>{t('date.end')}</FieldLabel>
                   <div className="flex items-baseline gap-2">
-                    <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(endDate, 'dd MMM yyyy')}</span>
+                    <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(endDate)}</span>
                   </div>
                 </div>
                 <Badge variant="outline" className="gap-1 rounded-full">
@@ -145,7 +146,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <FieldLabel>{t('day')}</FieldLabel>
-            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.start, 'dd MMM yyyy')}</span>
+            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.start)}</span>
           </div>
 
           <Separator />
@@ -228,7 +229,8 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                 </Select>
                 {isEditing && (
                   <Button size="sm" variant="default" onClick={handleStatusChange} disabled={isLoading}>
-                    {t('save')}
+                    <Save className="size-4" />
+                    <span className="sr-only md:not-sr-only">{t('save')}</span>
                   </Button>
                 )}
               </div>

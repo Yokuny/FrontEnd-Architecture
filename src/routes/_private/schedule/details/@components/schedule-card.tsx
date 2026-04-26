@@ -28,8 +28,8 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
   const renderScheduleDateTime = () => {
     const startDate = new Date(schedule.start);
     const endDate = new Date(schedule.end);
-    const startDateStr = formatDate(startDate, 'dd MMM yyyy');
-    const endDateStr = formatDate(endDate, 'dd MMM yyyy');
+    const startDateStr = formatDate(startDate);
+    const endDateStr = formatDate(endDate);
     const isSameDay = startDateStr === endDateStr;
 
     if (schedule.allDay) {
@@ -78,12 +78,12 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
       <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-2">
           <Calender className="size-5" />
-          <ItemTitle className="text-xl tabular-nums md:text-2xl">{formatDate(startDate, 'dd/MM HH:mm')}</ItemTitle>
+          <ItemTitle className="text-xl tabular-nums md:text-2xl">{formatDate(startDate, 'dd MMM yyy HH:ss')}</ItemTitle>
         </div>
         <div className="flex items-center gap-2">
           <Right className="size-4" />
           <Calender className="size-5" />
-          <ItemTitle className="text-md tabular-nums md:text-base">{formatDate(endDate, 'dd/MM HH:mm')}</ItemTitle>
+          <ItemTitle className="text-md tabular-nums md:text-base">{formatDate(endDate, 'dd MMM yyy HH:ss')}</ItemTitle>
         </div>
       </div>
     );

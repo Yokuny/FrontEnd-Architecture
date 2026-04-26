@@ -43,9 +43,10 @@ const EditableCell = ({
       ) : columnId === 'periodicity' ? (
         <span className="text-muted-foreground">{cellValue ? `${cellValue} ${t('days')}` : '-'}</span>
       ) : (
-        <BadgeIndicator variant={columnId === 'costPrice' ? 'pending' : columnId === 'suggestedPrice' ? 'waiting' : 'paid'} className="flex w-fit gap-2">
+        <span className="flex w-fit items-center gap-2 underline decoration-dashed underline-offset-4">
+          <BadgeIndicator variant={columnId === 'costPrice' ? 'pending' : columnId === 'suggestedPrice' ? 'waiting' : 'paid'} pulse />
           {currencyFormat(cellValue)}
-        </BadgeIndicator>
+        </span>
       )}
     </UnstyledButton>
   );

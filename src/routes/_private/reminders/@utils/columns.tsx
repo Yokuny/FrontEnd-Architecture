@@ -100,7 +100,7 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
                 }
               }}
             >
-              <Check className="mr-2 size-4 text-muted-foreground" />
+              <Check className="size-4 text-muted-foreground" />
               {t('mark.as.completed')}
             </DropdownMenuItem>
             {reminder.Patient.phone?.[0] && (
@@ -112,7 +112,7 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
                     openWhatsApp(reminder.Patient.phone?.[0]?.number || '');
                   }}
                 >
-                  <Phone className="mr-2 size-4 text-muted-foreground" />
+                  <Phone className="size-4 text-muted-foreground" />
                   {t('whatsapp.chat')}
                 </DropdownMenuItem>
               </>

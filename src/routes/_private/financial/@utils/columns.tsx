@@ -56,7 +56,7 @@ export const financialColumns = (navigate: (opts: { to: string; search?: Record<
               e.stopPropagation();
             }}
           >
-            <Button variant="outline" className="h-7 w-12">
+            <Button className="h-7 w-12">
               <Mixer className="size-3.5" />
             </Button>
           </DropdownMenuTrigger>

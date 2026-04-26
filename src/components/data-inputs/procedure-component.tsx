@@ -81,12 +81,12 @@ const ProcedureComponent = ({ form, disabled, currencyFormat, statusDictionary }
                 <TableCell className="pr-0 text-right">
                   {proc?.procedure && (
                     <div className="flex items-center justify-end gap-2">
-                      <Button type="button" variant="outline" size="sm" onClick={() => removeProcedure(index)} disabled={disabled}>
+                      <Button type="button" variant="destructive" size="sm" onClick={() => removeProcedure(index)} disabled={disabled}>
                         <Delete className="size-4" />
                       </Button>
                       {isLastItem && (
                         <Button type="button" variant="default" size="sm" className="whitespace-nowrap" onClick={addProcedure} disabled={disabled}>
-                          <Add className="size-4 stroke-3 md:mr-2" />
+                          <Add className="size-4 stroke-3" />
                           <span className="hidden md:block">Adicionar</span>
                         </Button>
                       )}

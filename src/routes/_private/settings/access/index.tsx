@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import Check from '@/components/icons/Check.Icon';
+import SaveIcon from '@/components/icons/Save.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -53,7 +53,7 @@ export function SettingsAccess() {
       <CardHeader>
         <CardAction>
           <Button type="submit" form="access-form" disabled={changePassword.isPending}>
-            {changePassword.isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            {changePassword.isPending ? <Spinner className="size-4" /> : <SaveIcon className="size-4" />}
             <span className="sr-only md:not-sr-only">{t('password.update')}</span>
           </Button>
         </CardAction>

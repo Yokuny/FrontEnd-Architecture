@@ -2,6 +2,7 @@ import Calender from '@/components/icons/Calender.Icon';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { formatDate } from '@/lib/helpers/formatDate.helper';
 import { cn } from '@/lib/utils/cn.util';
 
 const DatePickerButton = ({ date, onSelect }: DatePickerButtonProps) => {
@@ -9,13 +10,13 @@ const DatePickerButton = ({ date, onSelect }: DatePickerButtonProps) => {
     <div className="relative">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className={cn('w-full max-w-72 justify-start gap-2', date && 'font-normal')}>
-            <Calender className="size-5" />
-            {date ? String(date.toLocaleDateString('pt-BR')) : <span>Selecione uma data</span>}
+          <Button className={cn('group w-full max-w-72 justify-between px-3 focus-visible:outline-[3px]', !date && 'text-muted-foreground')}>
+            <span className={cn('truncate', !date && 'text-muted-foreground')}>{date ? formatDate(date) : 'Selecione uma data'}</span>
+            <Calender className="size-4 shrink-0" aria-hidden="true" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent align="start" className="w-auto bg-white p-0">
-          <Calendar mode="single" selected={date} onSelect={onSelect} />
+        <PopoverContent align="start" className="w-auto p-2">
+          <Calendar mode="single" selected={date} defaultMonth={date} onSelect={onSelect} />
         </PopoverContent>
       </Popover>
     </div>

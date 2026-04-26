@@ -3,7 +3,7 @@ import Down from '@/components/icons/Down.Icon';
 import Pulse from '@/components/icons/Pulse.Icon';
 import ToothNumber from '@/components/odontogram/tooth-number';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
@@ -67,7 +67,10 @@ export function OdontogramDetailContent({ odontogram, patients, professionals }:
             </ItemContent>
           </div>
         </div>
-        <div className="flex items-center gap-2">{odontogram.finished ? <Badge variant="completed">Finalizado</Badge> : <Badge variant="pending">Em andamento</Badge>}</div>
+        <div className="flex items-center gap-2">
+          <BadgeIndicator variant={odontogram.finished ? 'completed' : 'in_progress'} pulse />
+          <ItemTitle className="text-2xl">{odontogram.finished ? 'Finalizado' : 'Em andamento'}</ItemTitle>
+        </div>
       </Item>
 
       {/* Grid strip */}

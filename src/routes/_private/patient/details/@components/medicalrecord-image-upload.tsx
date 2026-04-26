@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { toast } from 'sonner';
 
 import IconCross from '@/components/icons/Cross.Icon';
 import IconDelete from '@/components/icons/Delete.Icon';
@@ -25,8 +26,7 @@ interface UploadingFile {
   size: number;
   preview: string;
   progress: number;
-  status: 'uploading' | 'completed' | 'error';
-  error?: string;
+  status: 'uploading' | 'completed';
 }
 
 export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, onImageRemove }: MedicalRecordImageUploadProps) {
@@ -34,7 +34,6 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
   const [isEditing, setIsEditing] = useState(false);
   const [uploadingFile, setUploadingFile] = useState<UploadingFile | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const formatBytes = (bytes: number): string => {
     if (bytes === 0) return '0 Bytes';
@@ -56,7 +55,6 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
       };
 
       setUploadingFile(fileEntry);
-      setError(null);
 
       try {
         setUploadingFile((prev) => (prev ? { ...prev, progress: 20 } : prev));
@@ -83,8 +81,11 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
         setUploadingFile((prev) => (prev ? { ...prev, progress: 100, status: 'completed' } : prev));
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : t('upload.unknown.error');
-        setUploadingFile((prev) => (prev ? { ...prev, progress: 0, status: 'error', error: errorMessage } : prev));
-        setError(errorMessage);
+        toast.error(errorMessage);
+        setUploadingFile((prev) => {
+          if (prev) URL.revokeObjectURL(prev.preview);
+          return null;
+        });
       }
     },
     [recordID, onUploadComplete],
@@ -93,11 +94,11 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
   const validateAndUpload = useCallback(
     (file: File) => {
       if (!file.type.startsWith('image/')) {
-        setError(t('upload.images.only'));
+        toast.error(t('upload.images.only'));
         return;
       }
       if (file.size > 30 * 1024 * 1024) {
-        setError(t('upload.max.size.30mb'));
+        toast.error(t('upload.max.size.30mb'));
         return;
       }
       handleUpload(file);
@@ -108,7 +109,6 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
   const handleRemoveImage = () => {
     setImageUrl(undefined);
     setIsEditing(false);
-    setError(null);
     if (onImageRemove) {
       onImageRemove();
     }
@@ -175,7 +175,7 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
               onClick={() => handleRemoveImage()}
               variant="outline"
               size="icon"
-              className="absolute end-1 top-1 size-6 rounded-full opacity-0 shadow-sm group-hover/item:opacity-100 dark:bg-zinc-800 hover:dark:bg-zinc-700"
+              className="absolute inset-e-1 top-1 size-6 rounded-full opacity-0 shadow-sm group-hover/item:opacity-100 dark:bg-zinc-800 hover:dark:bg-zinc-700"
             >
               <IconCross className="size-3.5" />
             </Button>
@@ -252,19 +252,13 @@ export function MedicalRecordImageUpload({ recordID, imgURL, onUploadComplete, o
         </div>
       )}
 
-      {/* Error Message */}
-      {error && <div className="mt-3 rounded-md border border-red-200 bg-red-50 p-2 text-destructive text-xs dark:border-red-800 dark:bg-red-950">{error}</div>}
-
-      {/* Cancel editing link */}
       {isEditing && (
         <Button
-          variant="link"
+          variant="destructive"
           size="sm"
-          className="mt-2 h-auto p-0 text-muted-foreground text-xs"
           onClick={(e) => {
             e.preventDefault();
             setIsEditing(false);
-            setError(null);
           }}
         >
           {t('cancel')}

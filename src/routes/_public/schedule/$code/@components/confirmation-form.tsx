@@ -52,7 +52,7 @@ export function ScheduleConfirmationForm({ scheduleData, scheduleID }: ScheduleC
     {
       icon: <Calender className="size-5" aria-hidden />,
       label: 'Data',
-      values: [formatDate(scheduleData.start, 'PP')],
+      values: [formatDate(scheduleData.start)],
     },
     {
       icon: <Clock className="size-5" aria-hidden />,

@@ -77,47 +77,47 @@ export const patientColumns = (navigate: (opts: any) => void): DataTableColumn<P
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>{t('actions')}</DropdownMenuLabel>
               <DropdownMenuItem onClick={() => navigate({ to: '/patient/details', search: { id: patient._id } })}>
-                <User className="mr-2 size-4 text-muted-foreground" />
+                <User className="size-4 text-muted-foreground" />
                 {t('view.registration')}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate({ to: '/patient/add', search: { id: patient._id } })}>
-                <Edit className="mr-2 size-4 text-muted-foreground" />
+                <Edit className="size-4 text-muted-foreground" />
                 {t('edit.registration')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Mail className="mr-2 size-4 text-muted-foreground" />
+                <Mail className="size-4 text-muted-foreground" />
                 {t('create.odontogram')}
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Package className="mr-2 size-4 text-muted-foreground" />
+                <Package className="size-4 text-muted-foreground" />
                 {t('create.billing')}
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Calender className="mr-2 size-4 text-muted-foreground" />
+                <Calender className="size-4 text-muted-foreground" />
                 {t('create.schedule')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {patient.phone1 && (
                 <DropdownMenuItem onClick={() => handleCopy(patient.phone1)}>
-                  <Copy className="mr-2 size-4 text-muted-foreground" />
+                  <Copy className="size-4 text-muted-foreground" />
                   {t('copy.phone')}
                 </DropdownMenuItem>
               )}
               {patient.phone2 && (
                 <DropdownMenuItem onClick={() => handleCopy(patient.phone2)}>
-                  <Copy className="mr-2 size-4 text-muted-foreground" />
+                  <Copy className="size-4 text-muted-foreground" />
                   {t('copy.phone.secondary')}
                 </DropdownMenuItem>
               )}
               {patient.email && (
                 <DropdownMenuItem onClick={() => handleCopy(patient.email!)}>
-                  <Copy className="mr-2 size-4 text-muted-foreground" />
+                  <Copy className="size-4 text-muted-foreground" />
                   {t('copy.email')}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onClick={() => handleCopy(patient.name)}>
-                <Copy className="mr-2 size-4 text-muted-foreground" />
+                <Copy className="size-4 text-muted-foreground" />
                 {t('copy.name')}
               </DropdownMenuItem>
             </DropdownMenuContent>

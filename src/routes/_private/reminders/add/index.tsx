@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import Check from '@/components/icons/Check.Icon';
+import Save from '@/components/icons/Save.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
@@ -30,7 +30,7 @@ function ReminderAddPage() {
       <CardHeader>
         <CardAction>
           <Button type="submit" form="reminder-form" disabled={isPending} className="ml-auto">
-            {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            {isPending ? <Spinner className="size-4" /> : <Save className="size-4" />}
             <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>

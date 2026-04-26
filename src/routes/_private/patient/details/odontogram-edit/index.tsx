@@ -3,7 +3,7 @@ import { z } from 'zod';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
-import Check from '@/components/icons/Check.Icon';
+import Save from '@/components/icons/Save.Icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -106,7 +106,7 @@ function OdontogramEditPage() {
       <CardHeader>
         <CardAction>
           <Button type="button" onClick={onSubmit} disabled={isSubmitting || isLoadingPatient || !patient}>
-            {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            {isSubmitting ? <Spinner className="size-4" /> : <Save className="size-4" />}
             <span className="sr-only md:not-sr-only">{t('save')}</span>
           </Button>
         </CardAction>

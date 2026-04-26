@@ -110,8 +110,8 @@ function CardHeader({ className, title, children, ...props }: ComponentProps<'di
 
   return (
     <div data-slot="card-header" className={cn('flex items-start justify-between gap-2 px-4 sm:items-center md:px-6', className)} {...props}>
-      <div className="flex items-center gap-2">
-        <Button size="icon" variant="outline" onClick={() => router.history.back()}>
+      <div className="flex items-center gap-2 md:gap-4">
+        <Button size="icon" className="md:px-6" onClick={() => router.history.back()}>
           <ArrowLeftIcon />
         </Button>
         {resolvedTitle && <CardTitle>{resolvedTitle}</CardTitle>}
