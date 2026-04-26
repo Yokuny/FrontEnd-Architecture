@@ -86,7 +86,7 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
 
   return (
     <ItemGroup className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Item variant="info" className="flex-col items-start bg-secondary">
+      <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
           <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
@@ -104,7 +104,7 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
         </ItemContent>
       </Item>
 
-      <Item variant="info" className="flex-col items-start bg-secondary">
+      <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
           <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total.paid')}</ItemTitle>
           <ItemDescription className="tabular-nums leading-none">
@@ -119,7 +119,7 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
         </ItemContent>
       </Item>
 
-      <Item variant="info" className="flex-col items-start bg-secondary">
+      <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
           <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('total.pending')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">
@@ -137,7 +137,7 @@ const FinancialSummaryContent = ({ patient }: { patient: FullPatient }) => {
         </ItemContent>
       </Item>
 
-      <Item variant="info" className="flex-col items-start bg-secondary">
+      <Item variant="outline" className="flex-col items-start bg-secondary">
         <div className="flex w-full items-center justify-between">
           <ItemTitle className="font-semibold text-muted-foreground text-xs uppercase">{t('procedures')}</ItemTitle>
           <div className="flex items-baseline gap-1 text-muted-foreground">

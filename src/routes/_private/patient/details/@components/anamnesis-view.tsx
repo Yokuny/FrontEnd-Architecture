@@ -79,7 +79,7 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
       title: t('medical.conditions'),
       fields: [
         <Table key="illnesses-table" className="border">
-          <TableHeader>
+          <TableHeader className="bg-secondary">
             <TableRow>
               <TableHead className="w-5/12 font-semibold text-xs">{t('condition')}</TableHead>
               <TableHead className="w-1/12 font-semibold text-xs">{t('status')}</TableHead>
@@ -224,7 +224,7 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
       title: t('medications.allergies'),
       fields: [
         <Table key="medication-table" className="border">
-          <TableHeader>
+          <TableHeader className="bg-secondary">
             <TableRow>
               <TableHead className="w-5/12 font-semibold text-xs">{t('aspect')}</TableHead>
               <TableHead className="w-1/12 font-semibold text-xs">{t('status')}</TableHead>
@@ -285,7 +285,7 @@ const AnamnesisContent = ({ anamnesis }: { anamnesis: Anamnesis }) => {
       title: t('special.conditions'),
       fields: [
         <Table key="special-conditions-table" className="border">
-          <TableHeader>
+          <TableHeader className="bg-secondary">
             <TableRow>
               <TableHead className="w-5/12 font-semibold text-xs">{t('condition')}</TableHead>
               <TableHead className="w-1/12 font-semibold text-xs">{t('status')}</TableHead>

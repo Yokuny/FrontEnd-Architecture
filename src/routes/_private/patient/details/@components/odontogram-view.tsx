@@ -89,7 +89,7 @@ const OdontogramLegend = ({ odontogram }: { odontogram: Tooth[] | null }) => {
 
   return (
     <Table>
-      <TableHeader>
+      <TableHeader className="bg-secondary">
         <TableRow>
           <TableHead>{t('legend')}</TableHead>
           <TableHead>{t('teeth')}</TableHead>
@@ -271,11 +271,11 @@ export const PatientOdontogramView = ({ patient }: { patient: FullPatient }) => 
           <ItemActions>
             <Button onClick={() => navigate({ to: '/patient/details/odontogram-add', search: { id: patient._id } })}>
               <Add className="size-4" />
-              <span className="ml-2 hidden md:block">{t('add')}</span>
+              <span className="hidden md:block">{t('add')}</span>
             </Button>
             <Button onClick={() => navigate({ to: '/patient/details/odontogram-edit', search: { id: patient._id } })}>
               <Dental className="size-4" />
-              <span className="ml-2 hidden md:block">{t('update')}</span>
+              <span className="hidden md:block">{t('update')}</span>
             </Button>
           </ItemActions>
         </ItemHeader>

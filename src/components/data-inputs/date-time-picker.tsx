@@ -167,6 +167,7 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
             <PopoverTrigger asChild>
               <Button
                 id="start-date"
+                variant="basic"
                 disabled={disabled}
                 className={cn('group w-full justify-between px-3 focus-visible:outline-[3px]', !internalStartDate && 'text-muted-foreground')}
               >
@@ -211,6 +212,7 @@ export default function DateTimePicker({ startDate, endDate, startTime, endTime,
             <PopoverTrigger asChild>
               <Button
                 id="end-date"
+                variant="basic"
                 disabled={disabled}
                 className={cn('group w-full justify-between px-3 focus-visible:outline-[3px]', !internalEndDate && 'text-muted-foreground')}
               >

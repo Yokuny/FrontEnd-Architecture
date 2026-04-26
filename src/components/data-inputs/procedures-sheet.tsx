@@ -86,7 +86,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
-          variant={btnValue?.procedure ? 'outline' : 'default'}
+          variant={btnValue?.procedure ? 'basic' : 'default'}
           size={'default'}
           className={'flex items-center justify-center gap-2 font-normal'}
           aria-expanded={open}

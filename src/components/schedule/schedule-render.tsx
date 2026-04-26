@@ -114,7 +114,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                 <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(startDate)}</span>
               </div>
             </div>
-            <Badge variant="info" className="gap-1 rounded-full">
+            <Badge variant="lime" className="gap-1 rounded-full">
               <Calender className="size-3" />
               {t('all.day')}
             </Badge>
@@ -130,7 +130,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                     <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(endDate)}</span>
                   </div>
                 </div>
-                <Badge variant="info" className="gap-1 rounded-full">
+                <Badge variant="emerald" className="gap-1 rounded-full">
                   <Clock className="size-3" />
                   {daysDuration} {t('duration.days')}
                 </Badge>
@@ -168,11 +168,11 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
         <div className="flex flex-col gap-1">
           <FieldLabel>{t('date.start')}</FieldLabel>
           <div className="flex items-baseline gap-2">
-            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.start, 'HH:mm')}</span>
-            <span className="inline-flex items-center gap-1 text-muted-foreground text-sm">
+            <span className="inline-flex items-center gap-1 text-lg text-muted-foreground">
               <Calender className="size-3.5" />
-              {formatDate(schedule?.start, 'dd/MM')}
+              {formatDate(schedule?.start, 'dd MMM')}
             </span>
+            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.start, 'HH:mm')}</span>
           </div>
         </div>
 
@@ -181,11 +181,11 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
         <div className="flex flex-col gap-1">
           <FieldLabel>{t('date.end')}</FieldLabel>
           <div className="flex items-baseline gap-2">
-            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.end || event.end, 'HH:mm')}</span>
-            <span className="inline-flex items-center gap-1 text-muted-foreground text-sm">
+            <span className="inline-flex items-center gap-1 text-lg text-muted-foreground">
               <Calender className="size-3.5" />
-              {formatDate(schedule?.end || event.end, 'dd/MM')}
+              {formatDate(schedule?.end || event.end, 'dd MMM')}
             </span>
+            <span className="font-semibold text-xl tabular-nums tracking-tight">{formatDate(schedule?.end || event.end, 'HH:mm')}</span>
           </div>
         </div>
       </div>
@@ -238,17 +238,17 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
 
             <div className="flex items-center gap-2 self-end">
               {schedule.status === 'pending' && schedule.Patient && (
-                <Button type="button" variant="info" size={isMobile ? 'sm' : 'sm'} onClick={handleRequestScheduleConfirmation}>
+                <Button type="button" size={isMobile ? 'sm' : 'sm'} onClick={handleRequestScheduleConfirmation}>
                   <Chat className="size-4 text-green-600" />
                 </Button>
               )}
-              <Button type="button" variant="info" size={isMobile ? 'sm' : 'sm'} onClick={onEdit}>
-                <Edit className="size-4 md:mr-2" />
+              <Button type="button" size={isMobile ? 'sm' : 'sm'} onClick={onEdit}>
+                <Edit className="size-4" />
                 <span className="hidden md:inline">{t('edit')}</span>
               </Button>
               {schedule.Financial && (
-                <Button type="button" variant="info" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details', search: { id: schedule.Financial! } })}>
-                  <Link className="size-4 md:mr-2" />
+                <Button type="button" size={isMobile ? 'sm' : 'sm'} onClick={() => navigate({ to: '/financial/details', search: { id: schedule.Financial! } })}>
+                  <Link className="size-4" />
                   <span className="hidden md:inline">{t('finance.short')}</span>
                 </Button>
               )}
@@ -278,8 +278,8 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                 </div>
 
                 {schedule?.Patient && (
-                  <Button type="button" variant="info" size="sm" className="shrink-0" onClick={() => window.open(`/patient/${schedule?.Patient}`, '_blank')}>
-                    <Link className="size-3.5 md:mr-2" />
+                  <Button type="button" variant="link" className="shrink-0" onClick={() => window.open(`/patient/${schedule?.Patient}`, '_blank')}>
+                    <Link className="size-3.5" />
                     <span className="hidden text-xs md:inline">{t('patient')}</span>
                   </Button>
                 )}
@@ -332,7 +332,7 @@ export function ScheduleRender({ schedule, event, onEdit }: ScheduleRenderProps)
                       <TableCell className="font-medium">{proc.procedure}</TableCell>
                       <TableCell className="tabular-nums">{currencyFormat(proc.price)}</TableCell>
                       <TableCell>
-                        <Badge variant="info">{translatedStatusLabel(String(proc.status))}</Badge>
+                        <Badge variant="amber">{translatedStatusLabel(String(proc.status))}</Badge>
                       </TableCell>
                     </TableRow>
                   ))

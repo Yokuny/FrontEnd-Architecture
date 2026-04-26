@@ -425,7 +425,7 @@ function AnamnesisPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
-          <Button type="button" variant="info" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
+          <Button type="button" variant="primary" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
             <Cross className="size-4" />
             <span className="sr-only md:not-sr-only">{t('cancel')}</span>
           </Button>
@@ -448,7 +448,7 @@ function AnamnesisPage() {
       </CardContent>
       <CardFooter>
         <CardAction>
-          <Button type="button" variant="info" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
+          <Button type="button" variant="primary" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
             <Cross className="size-4" />
             <span className="sr-only md:not-sr-only">{t('cancel')}</span>
           </Button>

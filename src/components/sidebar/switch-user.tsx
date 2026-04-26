@@ -48,19 +48,19 @@ export function UserSwitcher() {
         <DropdownMenuContent>
           <DropdownMenuItem asChild>
             <Link to="/settings/profile" className="flex w-full cursor-pointer items-center">
-              <IconUser className="mr-2" />
+              <IconUser />
               {t('profile')}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link to="/settings/access" className="flex w-full cursor-pointer items-center">
-              <IconAccess className="mr-2" />
+              <IconAccess />
               {t('access')}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive" className="cursor-pointer" onSelect={() => setShowLogoutDialog(true)}>
-            <IconExit className="mr-2" />
+            <IconExit />
             {t('logout')}
           </DropdownMenuItem>
         </DropdownMenuContent>

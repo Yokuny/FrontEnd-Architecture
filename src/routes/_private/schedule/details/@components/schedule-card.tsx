@@ -90,7 +90,7 @@ export function ScheduleCard({ schedule, getRoomName, getProfessionalName }: Sch
   };
 
   return (
-    <Item variant="info" className="flex-col items-start gap-2 p-4 md:p-6">
+    <Item variant="outline" className="flex-col items-start gap-2 p-4 md:p-6">
       <ItemHeader className="w-full">
         <ItemTitle className="capitalize">{formatDate(schedule.start, 'EEEE')}</ItemTitle>
         <Badge variant="info" className="gap-1.5">

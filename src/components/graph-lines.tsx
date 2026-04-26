@@ -26,7 +26,7 @@ const chartConfig = {
 
 export function GraphLines() {
   return (
-    <Item variant="info">
+    <Item variant="outline">
       <ItemHeader className="flex-col items-center justify-center">
         <ItemTitle>Line Chart - Multiple</ItemTitle>
         <ItemDescription>Description</ItemDescription>

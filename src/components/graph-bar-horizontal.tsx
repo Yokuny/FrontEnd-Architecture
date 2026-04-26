@@ -40,7 +40,7 @@ const chartConfig = {
 
 export function GraphBarHorizontal() {
   return (
-    <Item variant="info" className="items-stretch">
+    <Item variant="outline" className="items-stretch">
       <ItemHeader className="flex-col items-center justify-center">
         <ItemTitle>Bar Chart - Horizontal</ItemTitle>
         <ItemDescription>Description</ItemDescription>

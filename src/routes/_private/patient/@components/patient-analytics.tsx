@@ -217,13 +217,13 @@ function AnalyticsCards({ analytics }: { analytics: DbPatientAnalytics }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Item variant="info" className="md:col-span-2 lg:col-span-1">
+        <Item variant="outline" className="md:col-span-2 lg:col-span-1">
           <PatientPeriodChartCard chartData={analytics.periodChart} />
         </Item>
-        <Item variant="info">
+        <Item variant="outline">
           <RegistrationTrendsCard trends={analytics.registrationTrends} />
         </Item>
-        <Item variant="info">
+        <Item variant="outline">
           <PatientDemographicsCard demographics={analytics.demographics} total={analytics.totalPatients} />
         </Item>
       </div>

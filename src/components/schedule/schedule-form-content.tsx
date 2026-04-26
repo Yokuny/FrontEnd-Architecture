@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
 import DateTimePicker from '@/components/data-inputs/date-time-picker';
 import PatientCombobox from '@/components/data-inputs/patient-combobox';
 import ProfessionalCombobox from '@/components/data-inputs/professional-combobox';
@@ -10,7 +10,7 @@ import Loader from '@/components/icons/Loader.Icon';
 import Save from '@/components/icons/Save.Icon';
 import type { ScheduleFormProps } from '@/components/schedule/schedule-form';
 import { Button } from '@/components/ui/button';
-import { DialogFooter } from '@/components/ui/dialog';
+import { CardFooter } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -305,7 +305,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
       </Form>
 
       {(!hideFooter || (hideFooter && formId)) && (
-        <FooterShell hideFooter={hideFooter} formId={formId}>
+        <CardFooter className="mt-4 flex-row flex-nowrap items-center justify-between gap-2 border-t px-0 pt-4">
           {event?._id && (
             <Button variant="destructive" onClick={handleDelete} disabled={isLoading} aria-label={t('delete.appointment')}>
               <Delete className="size-4 text-destructive" aria-hidden="true" />
@@ -324,7 +324,7 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                 setSelectedRoomName(getRoomName(value));
               }}
             >
-              <SelectTrigger variant="default" className="w-full overflow-x-hidden">
+              <SelectTrigger variant="default" className="min-w-0 flex-1 overflow-x-hidden">
                 <SelectValue placeholder={rooms.length ? t('select.room.field') : t('no.rooms.available')} />
               </SelectTrigger>
               <SelectContent>
@@ -350,22 +350,15 @@ export function ScheduleFormContent({ event, onClose, onSave, onDelete, hideFoot
                 <Edit className="size-4" />
               </Button>
               {!(hideFooter && formId) && (
-                <Button type={formId ? 'submit' : 'button'} form={formId} onClick={formId ? undefined : () => void handleSave()} disabled={isLoading} className="w-full">
+                <Button type={formId ? 'submit' : 'button'} form={formId} onClick={formId ? undefined : () => void handleSave()} disabled={isLoading} className="shrink-0">
                   {isLoading ? <Loader className="size-4 animate-spin" /> : isEditMode && <Save className="size-4" />}
                   <span className={isEditMode ? 'sr-only md:not-sr-only' : undefined}>{isEditMode ? t('save') : `${t('book.in')} ${selectedRoomName || ''}`}</span>
                 </Button>
               )}
             </>
           )}
-        </FooterShell>
+        </CardFooter>
       )}
     </>
   );
-}
-
-function FooterShell({ hideFooter, formId, children }: { hideFooter: boolean; formId?: string; children: ReactNode }) {
-  if (hideFooter && formId) {
-    return <div className="mt-4 flex flex-row flex-wrap items-center justify-between gap-2 border-t pt-4 md:justify-between">{children}</div>;
-  }
-  return <DialogFooter className="flex-row items-center justify-between space-x-2 md:justify-between">{children}</DialogFooter>;
 }

@@ -35,7 +35,7 @@ const IntraoralContent = ({ intraoral }: { intraoral: Intraoral }) => {
       title: t('oral.health.assessment'),
       fields: [
         <Table key="health-table" className="border">
-          <TableHeader>
+          <TableHeader className="bg-secondary">
             <TableRow>
               <TableHead className="w-1/2 font-semibold text-xs">{t('aspect')}</TableHead>
               <TableHead className="w-1/2 font-semibold text-xs">{t('condition')}</TableHead>
@@ -59,7 +59,7 @@ const IntraoralContent = ({ intraoral }: { intraoral: Intraoral }) => {
       title: t('specific.regions'),
       fields: [
         <Table key="region-table" className="border">
-          <TableHeader>
+          <TableHeader className="bg-secondary">
             <TableRow>
               <TableHead className="w-1/2 font-semibold text-xs">{t('region')}</TableHead>
               <TableHead className="w-1/2 font-semibold text-xs">{t('description.findings')}</TableHead>

@@ -65,7 +65,7 @@ function AlertDialogAction({ className, variant = 'default', size = 'default', .
   return <AlertDialogPrimitive.Action className={cn(btnVars({ variant, size }), className)} {...props} />;
 }
 
-function AlertDialogCancel({ className, variant = 'outline', size = 'default', ...props }: ComponentProps<typeof AlertDialogPrimitive.Cancel> & VariantProps<typeof btnVars>) {
+function AlertDialogCancel({ className, variant = 'basic', size = 'default', ...props }: ComponentProps<typeof AlertDialogPrimitive.Cancel> & VariantProps<typeof btnVars>) {
   return <AlertDialogPrimitive.Cancel className={cn(btnVars({ variant, size }), className)} {...props} />;
 }
 

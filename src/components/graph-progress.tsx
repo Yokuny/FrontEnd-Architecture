@@ -26,7 +26,7 @@ export function GraphProgress() {
   return (
     <div className="flex flex-col gap-4">
       {data.map((item) => (
-        <Item key={item.name} variant="info">
+        <Item key={item.name} variant="outline">
           <ItemContent>
             <ItemDescription>{item.name}</ItemDescription>
             <ItemTitle className="break-all font-semibold text-2xl">{item.stat}</ItemTitle>

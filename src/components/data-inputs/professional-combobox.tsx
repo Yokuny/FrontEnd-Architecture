@@ -24,7 +24,7 @@ const ProfessionalCombobox = ({ value, onChange, disabled }: ProfessionalCombobo
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button role="combobox" aria-expanded={open} disabled={disabled || isLoading}>
+        <Button role="combobox" variant="basic" aria-expanded={open} disabled={disabled || isLoading}>
           <div className="flex items-center gap-2 truncate">
             {selected && (
               <Avatar className="size-8">

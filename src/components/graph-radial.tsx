@@ -19,7 +19,7 @@ const chartConfig = {
 
 export function GraphRadial() {
   return (
-    <Item variant="info">
+    <Item variant="outline">
       <ItemHeader className="flex-col items-center">
         <ItemTitle>Radial Chart - Shape</ItemTitle>
         <ItemDescription>Description</ItemDescription>
