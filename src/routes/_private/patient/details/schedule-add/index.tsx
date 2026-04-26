@@ -11,7 +11,7 @@ import DefaultLoading from '@/components/default-loading';
 import Check from '@/components/icons/Check.Icon';
 import Edit from '@/components/icons/Edit.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
@@ -262,6 +262,14 @@ function ScheduleAddPage() {
           </Form>
         )}
       </CardContent>
+      <CardFooter>
+        <CardAction>
+          <Button form="schedule-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient || !selectedRoom}>
+            {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">{selectedRoomName ? `${t('schedule.at')} ${selectedRoomName}` : t('book.appointment')}</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }

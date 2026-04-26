@@ -324,12 +324,21 @@ const FinancialRecordDetail = ({
                 variant="primary"
                 className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
               >
-                <div className="flex items-center gap-3">
-                  <ItemMedia variant="icon" className="text-foreground">
-                    <IconDollar className="size-4" />
-                  </ItemMedia>
-                  <ItemTitle className="text-base">{t('financial')}</ItemTitle>
-                </div>
+                <Button
+                  variant="link"
+                  asChild
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    navigate({ to: '/financial/details', search: { id: el._id } });
+                  }}
+                >
+                  <span className="flex items-center gap-3">
+                    <ItemMedia variant="icon" className="text-foreground">
+                      <IconDollar className="size-4" />
+                    </ItemMedia>
+                    <ItemTitle className="text-base">{t('financial')}</ItemTitle>
+                  </span>
+                </Button>
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('financial') && 'rotate-180')} />
               </Button>
             </CollapsibleTrigger>

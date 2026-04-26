@@ -4,7 +4,7 @@ import EmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Save from '@/components/icons/Save.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
@@ -71,6 +71,14 @@ function FinancialDetailPage() {
           </div>
         )}
       </CardContent>
+      <CardFooter>
+        <CardAction>
+          <Button type="submit" form="financial-edit-form" disabled={isPending}>
+            {isPending ? <Spinner className="size-4" /> : <Save className="size-4" />}
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }

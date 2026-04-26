@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
 import DefaultEmptyData from '@/components/default-empty-data';
 import IconPatients from '@/components/icons/Patients.Icon';
 import IconTrendingDown from '@/components/icons/TrendingDown.Icon';
 import IconTrendingUp from '@/components/icons/TrendingUp.Icon';
 import IconUser from '@/components/icons/User.Icon';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Accordion, AccordionContent, AccordionItem } from '@/components/ui/accordion';
 import { type ChartConfig, ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/components/ui/item';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
@@ -235,23 +235,17 @@ function AnalyticsCards({ analytics }: { analytics: DbPatientAnalytics }) {
   );
 }
 
-export default function PatientAnalytics() {
-  const [opened, setOpened] = useState(false);
-  const { data: analytics, isLoading } = usePatientAnalyticsQuery({ enabled: opened });
+export default function PatientAnalytics({ opened }: { opened: boolean }) {
+  const [hasOpened, setHasOpened] = useState(false);
+  const { data: analytics, isLoading } = usePatientAnalyticsQuery({ enabled: hasOpened });
+
+  useEffect(() => {
+    if (opened) setHasOpened(true);
+  }, [opened]);
 
   return (
-    <Accordion
-      type="single"
-      collapsible
-      className="w-full"
-      onValueChange={(value) => {
-        if (value) setOpened(true);
-      }}
-    >
+    <Accordion type="single" collapsible value={opened ? 'analytics' : ''} className="w-full">
       <AccordionItem value="analytics">
-        <AccordionTrigger className="hover:no-underline *:data-[slot=accordion-trigger-icon]:hidden">
-          <ItemTitle className="underline decoration-dashed underline-offset-4">{t('patient.analytics.title')}</ItemTitle>
-        </AccordionTrigger>
         <AccordionContent>
           {isLoading && <div className="mb-4 text-muted-foreground text-xs italic">{t('syncing.stats')}</div>}
           {analytics && <AnalyticsCards analytics={analytics} />}

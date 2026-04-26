@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import Down from '@/components/icons/Down.Icon';
 import Pulse from '@/components/icons/Pulse.Icon';
@@ -34,6 +35,7 @@ function getFacesWithProcedures(faces: any) {
 export function OdontogramDetailContent({ odontogram, patients, professionals }: OdontogramDetailContentProps) {
   const patientName = getPatientName(patients, odontogram.Patient);
   const patientImage = getPatientImage(patients, odontogram.Patient);
+  const patientId = odontogram.Patient;
   const professionalName = getProfessionalName(professionals, odontogram.Professional);
   const professionalImage = getProfessionalImage(professionals, odontogram.Professional);
 
@@ -53,7 +55,11 @@ export function OdontogramDetailContent({ odontogram, patients, professionals }:
             </Avatar>
             <ItemContent className="gap-1">
               <ItemDescription className="font-medium text-xs uppercase tracking-widest">Paciente</ItemDescription>
-              <ItemTitle className="font-semibold text-2xl tracking-tighter">{patientName}</ItemTitle>
+              <Button variant="link" asChild className="font-semibold text-2xl tracking-tighter">
+                <Link to="/patient/details" search={{ id: patientId, tab: 'profile' }}>
+                  {patientName}
+                </Link>
+              </Button>
             </ItemContent>
           </div>
           <div className="flex items-center gap-3">

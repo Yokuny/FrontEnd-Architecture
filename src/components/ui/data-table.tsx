@@ -303,7 +303,7 @@ export function DataTable<T extends Record<string, any>>({
             {columnSelector && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button>
+                  <Button variant="primary">
                     <ColumnIcon className="hidden size-3.5 sm:inline" />
                     {t('data.table.columns')}
                     <ArrowDownIcon className="ml-2 size-3" />
@@ -388,7 +388,7 @@ export function DataTable<T extends Record<string, any>>({
               ) : (
                 paginatedData.map((row, index) => (
                   <tr
-                    key={index}
+                    key={row.id}
                     className={cn(
                       'border-accent border-b transition-colors last:border-0',
                       striped && index % 2 === 0 && 'bg-muted/5',

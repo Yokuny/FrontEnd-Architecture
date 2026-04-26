@@ -46,9 +46,9 @@ export function SignUp({ isLoading, setIsLoading }: LogInProps) {
         <ItemTitle className="font-semibold text-3xl tracking-tight">{t('signup')}</ItemTitle>
         <ItemDescription className="flex gap-2">
           {t('has.account')}
-          <Link to="/auth" className="font-medium text-foreground decoration-dashed">
-            {t('signin')}
-          </Link>
+          <Button variant="link" asChild className="text-foreground">
+            <Link to="/auth">{t('signin')}</Link>
+          </Button>
         </ItemDescription>
       </div>
 
@@ -77,13 +77,13 @@ export function SignUp({ isLoading, setIsLoading }: LogInProps) {
 
         <ItemDescription className="mx-auto w-11/12 text-center text-xs">
           {t('terms.agree')}{' '}
-          <Link to="/auth" className="decoration-dashed hover:text-foreground">
-            {t('terms')}
-          </Link>{' '}
+          <Button variant="link" asChild className="hover:text-foreground">
+            <Link to="/auth">{t('terms')}</Link>
+          </Button>{' '}
           {t('and')}{' '}
-          <Link to="/auth" className="decoration-dashed hover:text-foreground">
-            {t('privacy')}
-          </Link>
+          <Button variant="link" asChild className="hover:text-foreground">
+            <Link to="/auth">{t('privacy')}</Link>
+          </Button>
           .
         </ItemDescription>
       </div>

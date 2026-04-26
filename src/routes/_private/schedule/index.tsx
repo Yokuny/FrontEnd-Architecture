@@ -259,7 +259,12 @@ function SchedulePage() {
         </ItemContent>
         <CardAction>
           <ButtonGroup>
-            <Button size={isMobile ? 'default' : 'sm'} onClick={handlePrevious} aria-label={t('pagination.previous')} className="rounded-none rounded-l-md border-r-0 px-2">
+            <Button
+              size={isMobile ? 'default' : 'sm'}
+              onClick={handlePrevious}
+              aria-label={t('pagination.previous')}
+              className="rounded-none rounded-l-md border-r-0 border-l-0 px-2"
+            >
               <Left className="size-5" aria-hidden="true" />
             </Button>
             <Button size={isMobile ? 'default' : 'sm'} onClick={handleTodayClick} className="hidden rounded-none border-x-0 px-1 md:block">

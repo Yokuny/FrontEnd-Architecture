@@ -8,7 +8,7 @@ import DefaultLoading from '@/components/default-loading';
 import Check from '@/components/icons/Check.Icon';
 import Cross from '@/components/icons/Cross.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -210,6 +210,18 @@ function FinancialAddPage() {
           </Form>
         )}
       </CardContent>
+      <CardFooter>
+        <CardAction>
+          <Button type="button" variant="outline" onClick={goBack} disabled={isSubmitting || isLoadingPatient || !patient}>
+            <Cross className="size-4" />
+            <span className="sr-only md:not-sr-only">{t('cancel')}</span>
+          </Button>
+          <Button type="submit" form="financial-add-form" disabled={isSubmitting || isLoadingPatient || !patient}>
+            {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">{t('register')}</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }

@@ -219,7 +219,7 @@ const ProceduresSheet = ({ handleProcedure, disabled, stringPriceClean, handleCo
                     </div>
                   </div>
                 </div>
-                <Button variant="green" className="w-full" onClick={form.handleSubmit(onSubmit)} disabled={isLoading}>
+                <Button variant="success" className="w-full" onClick={form.handleSubmit(onSubmit)} disabled={isLoading}>
                   {t('add')}
                 </Button>
               </div>

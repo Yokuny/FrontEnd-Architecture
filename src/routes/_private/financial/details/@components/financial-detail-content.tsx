@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import IconCalendar from '@/components/icons/Calender.Icon';
 import IconCard from '@/components/icons/Card.Icon';
@@ -27,6 +28,7 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
   const badgeVariant = STATUS_TO_BADGE_VARIANT[financial.status] || 'pending';
   const professionalName = getProfessionalName(professionals, financial.Professional);
   const professionalImage = getProfessionalImage(professionals, financial.Professional);
+  const patientId = financial.patient?._id;
 
   const [openCategories, setOpenCategories] = useState<string[]>(['values', 'payment', 'dates', 'procedures']);
 
@@ -46,7 +48,15 @@ export function FinancialDetailContent({ financial, professionals }: FinancialDe
             </Avatar>
             <div className="flex flex-col gap-1">
               <ItemDescription className="font-medium text-xs uppercase tracking-widest">{t('patient')}</ItemDescription>
-              <ItemTitle className="font-semibold text-2xl tracking-tighter">{financial.patient?.name}</ItemTitle>
+              {patientId ? (
+                <Button variant="link" asChild className="font-semibold text-2xl tracking-tighter">
+                  <Link to="/patient/details" search={{ id: patientId, tab: 'profile' }}>
+                    {financial.patient?.name}
+                  </Link>
+                </Button>
+              ) : (
+                <ItemTitle className="font-semibold text-2xl tracking-tighter">{financial.patient?.name}</ItemTitle>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-3">

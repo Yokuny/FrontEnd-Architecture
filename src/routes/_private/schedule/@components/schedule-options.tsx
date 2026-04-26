@@ -5,6 +5,7 @@ import Left from '@/components/icons/Left.Icon';
 import Right from '@/components/icons/Right.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Calendar } from '@/components/ui/calendar';
 import { CardContent } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -84,15 +85,17 @@ export function ScheduleOptions({
           )}
           <ItemHeader className="w-full px-4">
             <ItemActions className="min-w-0 grow-2 basis-0 gap-0">
-              <Button size="sm" onClick={handlePrevious} className="w-full rounded-none rounded-l-md border-r-0">
-                <Left className="size-5" />
-              </Button>
-              <Button size="sm" onClick={handleTodayClick} className="w-full rounded-none border-x-0">
-                {t('today')}
-              </Button>
-              <Button size="sm" onClick={handleNext} className="w-full rounded-none rounded-r-md border-l-0">
-                <Right className="size-5" />
-              </Button>
+              <ButtonGroup className="w-full">
+                <Button size="sm" onClick={handlePrevious} className="w-1/3">
+                  <Left className="size-5" />
+                </Button>
+                <Button size="sm" onClick={handleTodayClick} className="w-1/3">
+                  {t('today')}
+                </Button>
+                <Button size="sm" onClick={handleNext} className="w-1/3">
+                  <Right className="size-5" />
+                </Button>
+              </ButtonGroup>
             </ItemActions>
             <div className="min-w-0 grow basis-0">
               <DropdownMenu>
@@ -144,7 +147,7 @@ export function ScheduleOptions({
                         {doc.nextEvent?.start ? formatDate(doc.nextEvent.start, 'HH:mm') : '--:--'}
                       </ItemTitle>
                     </div>
-                    <Button onClick={() => onViewEvent(doc.nextEvent)}>
+                    <Button size="sm" onClick={() => onViewEvent(doc.nextEvent)}>
                       <Eye className="size-4" />
                       <ItemDescription>{t('view')}</ItemDescription>
                     </Button>

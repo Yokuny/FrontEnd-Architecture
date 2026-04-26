@@ -175,10 +175,10 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                           <ItemTitle className="font-mono tabular-nums">{formatPhone(phone.number)}</ItemTitle>
                         </ItemContent>
                         <ItemActions>
-                          <Button variant="outline" size="icon" className="size-7" onClick={() => handleCopyWithFeedback(phone.number, 'phone', i)}>
+                          <Button size="icon" className="size-7" onClick={() => handleCopyWithFeedback(phone.number, 'phone', i)}>
                             {copiedPhones[i] ? <Check className="size-3" /> : <Copy className="size-3" />}
                           </Button>
-                          <Button variant="outline" size="icon" className="size-7 text-green-600" onClick={() => openWhatsApp(phone.number)}>
+                          <Button size="icon" className="size-7 text-green-600" onClick={() => openWhatsApp(phone.number)}>
                             <Whatsapp className="size-3" />
                           </Button>
                         </ItemActions>
@@ -196,7 +196,7 @@ export function PatientProfile({ patient }: { patient: FullPatient }) {
                     </ItemContent>
                     {patient.email && (
                       <ItemActions>
-                        <Button variant="outline" size="icon" className="size-7" onClick={() => handleCopyWithFeedback(patient.email ?? '', 'email')}>
+                        <Button size="icon" className="size-7" onClick={() => handleCopyWithFeedback(patient.email ?? '', 'email')}>
                           {copiedEmail ? <Check className="size-3" /> : <Copy className="size-3" />}
                         </Button>
                       </ItemActions>

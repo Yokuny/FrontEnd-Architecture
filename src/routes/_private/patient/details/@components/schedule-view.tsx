@@ -8,12 +8,11 @@ import IconCalendar from '@/components/icons/Calender.Icon';
 import ChartPie from '@/components/icons/ChartPie.Icon';
 import IconDollar from '@/components/icons/Dollar.Icon';
 import Down from '@/components/icons/Down.Icon';
-import Link from '@/components/icons/Link.Icon';
 import Save from '@/components/icons/Save.Icon';
 import IconService from '@/components/icons/Service.Icon';
 import TrendingUp from '@/components/icons/TrendingUp.Icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge, BadgeIndicator } from '@/components/ui/badge';
+import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemHeader, ItemMedia, ItemSeparator, ItemTitle } from '@/components/ui/item';
@@ -319,12 +318,30 @@ const ScheduleRecordDetail = ({
                 variant="primary"
                 className="w-full items-center justify-between rounded-none border-none bg-secondary outline-none hover:bg-secondary/80 focus-visible:ring-2"
               >
-                <div className="flex items-center gap-3">
-                  <ItemMedia variant="icon" className="text-foreground">
-                    <IconDollar className="size-4" />
-                  </ItemMedia>
-                  <ItemTitle className="text-base">{t('details')}</ItemTitle>
-                </div>
+                {el.Financial ? (
+                  <Button
+                    variant="link"
+                    asChild
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      navigate({ to: '/financial/details', search: { id: el.Financial } });
+                    }}
+                  >
+                    <span className="flex items-center gap-3">
+                      <ItemMedia variant="icon" className="text-foreground">
+                        <IconDollar className="size-4" />
+                      </ItemMedia>
+                      <ItemTitle className="text-base">{t('details')}</ItemTitle>
+                    </span>
+                  </Button>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <ItemMedia variant="icon" className="text-foreground">
+                      <IconDollar className="size-4" />
+                    </ItemMedia>
+                    <ItemTitle className="text-base">{t('details')}</ItemTitle>
+                  </div>
+                )}
                 <Down className={cn('size-5 stroke-2 text-muted-foreground transition-transform duration-200', openCategories.includes('details') && 'rotate-180')} />
               </Button>
             </CollapsibleTrigger>
@@ -344,17 +361,6 @@ const ScheduleRecordDetail = ({
                   <ItemDescription className="font-sans">{t('created.at')}</ItemDescription>
                   <ItemTitle className="font-mono">{formatDate(String(el.createdAt))}</ItemTitle>
                 </Item>
-                {el.Financial && (
-                  <>
-                    <ItemSeparator />
-                    <Item variant="default" size="sm" className="justify-center py-2 hover:bg-secondary">
-                      <Badge variant="outline" className="cursor-pointer" onClick={() => navigate({ to: '/financial/details', search: { id: el.Financial } })}>
-                        <Link className="size-4" />
-                        {t('view.financial')}
-                      </Badge>
-                    </Item>
-                  </>
-                )}
               </ItemGroup>
             </CollapsibleContent>
           </Collapsible>

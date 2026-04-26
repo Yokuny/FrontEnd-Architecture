@@ -17,7 +17,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from '@/lib/helpers/translate.helper';
@@ -132,6 +132,36 @@ function PatientAddFormContent({ initialData }: { initialData?: any }) {
           </CardContent>
         </form>
       </Form>
+      <CardFooter>
+        <CardAction>
+          {initialData && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button type="button" variant="destructive" disabled={deletePatient.isPending || isPending}>
+                  {deletePatient.isPending ? <Spinner className="size-4" /> : <Delete className="size-4" />}
+                  <span className="sr-only md:not-sr-only">{t('exclude')}</span>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{t('confirm.delete.title')}</AlertDialogTitle>
+                  <AlertDialogDescription>{t('confirm.delete.patient.description')}</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete} className="bg-destructive">
+                    <Delete className="size-4" />
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
+          <Button type="submit" form="patient-form" disabled={isPending} className="ml-auto">
+            {isPending ? <Spinner className="size-4" /> : <Save className="size-4" />}
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }

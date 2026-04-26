@@ -44,9 +44,9 @@ export function SignIn({ isLoading, setIsLoading }: LogInProps) {
         <ItemTitle className="font-semibold text-3xl tracking-tight">{t('welcome.back')}</ItemTitle>
         <ItemDescription className="flex gap-2">
           {t('no.account')}
-          <Link to="/auth/signup" className="font-medium text-foreground decoration-dashed">
-            {t('start.using')}
-          </Link>
+          <Button variant="link" asChild className="text-foreground">
+            <Link to="/auth/signup">{t('start.using')}</Link>
+          </Button>
         </ItemDescription>
       </div>
 
@@ -102,9 +102,9 @@ export function SignIn({ isLoading, setIsLoading }: LogInProps) {
 
       <ItemDescription className="flex justify-center gap-2">
         {t('forgot.password')}
-        <Link to="/auth/recovery" className="font-medium text-foreground decoration-dashed">
-          {t('recover.password')}
-        </Link>
+        <Button variant="link" asChild className="text-foreground">
+          <Link to="/auth/recovery">{t('recover.password')}</Link>
+        </Button>
       </ItemDescription>
     </div>
   );

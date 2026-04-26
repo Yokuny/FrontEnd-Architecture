@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { BadgeIndicator } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { Input } from '@/components/ui/input';
-import { UnstyledButton } from '@/components/ui/unstyled-button';
 import { currencyFormat } from '@/lib/helpers/formatter.helper';
 import { t } from '@/lib/helpers/translate.helper';
 import type { ProcedureData } from '@/lib/interfaces';
@@ -37,18 +37,22 @@ const EditableCell = ({
   }
 
   return (
-    <UnstyledButton className="w-full py-1 text-left font-normal" onClick={() => setEditing(true)}>
+    <Button variant="link" size="sm" onClick={() => setEditing(true)}>
       {columnId === 'procedure' || columnId === 'group' ? (
         cellValue
       ) : columnId === 'periodicity' ? (
-        <span className="text-muted-foreground">{cellValue ? `${cellValue} ${t('days')}` : '-'}</span>
+        cellValue ? (
+          `${cellValue} ${t('days')}`
+        ) : (
+          '-'
+        )
       ) : (
-        <span className="flex w-fit items-center gap-2 underline decoration-dashed underline-offset-4">
+        <>
           <BadgeIndicator variant={columnId === 'costPrice' ? 'pending' : columnId === 'suggestedPrice' ? 'waiting' : 'paid'} pulse />
           {currencyFormat(cellValue)}
-        </span>
+        </>
       )}
-    </UnstyledButton>
+    </Button>
   );
 };
 

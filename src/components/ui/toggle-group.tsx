@@ -10,12 +10,18 @@ const ToggleGroupContext = createContext<VariantProps<typeof toggleVariants>>({
 });
 
 function ToggleGroup({ className, variant, size, children, ...props }: ComponentProps<typeof ToggleGroupPrimitive.Root> & VariantProps<typeof toggleVariants>) {
+  const groupVariant = variant || 'default';
+  const groupSize = size || 'default';
+
   return (
     <ToggleGroupPrimitive.Root
       data-slot="toggle-group"
-      data-variant={variant}
-      data-size={size}
-      className={cn('group/toggle-group flex w-fit items-center rounded-md', className)}
+      data-variant={groupVariant}
+      data-size={groupSize}
+      className={cn(
+        'group/toggle-group flex w-fit items-center rounded-md has-[>[data-slot=toggle-group-item][data-variant=default]]:ring-1 has-[>[data-slot=toggle-group-item][data-variant=default]]:ring-zinc-300 dark:has-[>[data-slot=toggle-group-item][data-variant=default]]:ring-input [&>[data-slot=toggle-group-item][data-variant=default]]:ring-0',
+        className,
+      )}
       {...props}
     >
       <ToggleGroupContext.Provider value={{ variant, size }}>{children}</ToggleGroupContext.Provider>
@@ -25,16 +31,18 @@ function ToggleGroup({ className, variant, size, children, ...props }: Component
 
 function ToggleGroupItem({ className, children, variant, size, ...props }: ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>) {
   const context = useContext(ToggleGroupContext);
+  const itemVariant = context.variant || variant || 'default';
+  const itemSize = context.size || size || 'default';
 
   return (
     <ToggleGroupPrimitive.Item
       data-slot="toggle-group-item"
-      data-variant={context.variant || variant}
-      data-size={context.size || size}
+      data-variant={itemVariant}
+      data-size={itemSize}
       className={cn(
         toggleVariants({
-          variant: context.variant || variant,
-          size: context.size || size,
+          variant: itemVariant,
+          size: itemSize,
         }),
         'min-w-0 flex-1 shrink-0 truncate rounded-none first:rounded-l-md last:rounded-r-md focus:z-10 focus-visible:z-10 data-[variant=outline]:border-l-0 data-[variant=outline]:first:border-l',
         className,

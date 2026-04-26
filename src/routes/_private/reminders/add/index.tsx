@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import Save from '@/components/icons/Save.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from '@/lib/helpers/translate.helper';
@@ -42,6 +42,14 @@ function ReminderAddPage() {
           </CardContent>
         </form>
       </Form>
+      <CardFooter>
+        <CardAction>
+          <Button type="submit" form="reminder-form" disabled={isPending} className="ml-auto">
+            {isPending ? <Spinner className="size-4" /> : <Save className="size-4" />}
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }

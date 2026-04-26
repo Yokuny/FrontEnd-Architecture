@@ -6,7 +6,7 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import Check from '@/components/icons/Check.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from '@/lib/helpers/translate.helper';
@@ -108,6 +108,14 @@ function OdontogramAddPage() {
           </Form>
         )}
       </CardContent>
+      <CardFooter>
+        <CardAction>
+          <Button form="odontogram-add-form" type="submit" disabled={isSubmitting || isLoadingPatient || !patient}>
+            {isSubmitting ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">{t('register')}</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }

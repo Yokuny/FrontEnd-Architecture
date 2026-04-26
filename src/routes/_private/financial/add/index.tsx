@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import Check from '@/components/icons/Check.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from '@/lib/helpers/translate.helper';
@@ -37,6 +37,14 @@ function FinancialAddPage() {
           </CardContent>
         </form>
       </Form>
+      <CardFooter>
+        <CardAction>
+          <Button type="submit" form="financial-form" disabled={isPending} className="ml-auto">
+            {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">{t('register')}</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }

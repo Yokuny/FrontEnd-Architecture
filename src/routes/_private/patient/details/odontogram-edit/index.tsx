@@ -5,7 +5,7 @@ import DefaultFormLayout from '@/components/default-form-layout';
 import DefaultLoading from '@/components/default-loading';
 import Save from '@/components/icons/Save.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Spinner } from '@/components/ui/spinner';
@@ -122,6 +122,14 @@ function OdontogramEditPage() {
           </Form>
         )}
       </CardContent>
+      <CardFooter>
+        <CardAction>
+          <Button type="button" onClick={onSubmit} disabled={isSubmitting || isLoadingPatient || !patient}>
+            {isSubmitting ? <Spinner className="size-4" /> : <Save className="size-4" />}
+            <span className="sr-only md:not-sr-only">{t('save')}</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }

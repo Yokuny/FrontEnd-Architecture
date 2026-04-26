@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import DefaultEmptyData from '@/components/default-empty-data';
 import DefaultLoading from '@/components/default-loading';
 import Add from '@/components/icons/Add.Icon';
@@ -22,6 +22,7 @@ export const Route = createFileRoute('/_private/patient/')({
 });
 
 function PatientListPage() {
+  const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
   const { page, size, data, isLoading, handlePageChange, handlePageSizeChange, navigate } = usePatientList();
 
   const columns = useMemo(() => patientColumns(navigate), [navigate]);
@@ -30,6 +31,9 @@ function PatientListPage() {
     <Card asPage>
       <CardHeader>
         <CardAction>
+          <Button variant="link" className="px-4!" onClick={() => setIsAnalyticsOpen((opened) => !opened)}>
+            {t('patient.analytics.title')}
+          </Button>
           <Button onClick={() => navigate({ to: '/patient/add' })}>
             <Add className="size-4" />
             <span className="sr-only md:not-sr-only">{t('add')}</span>
@@ -38,7 +42,7 @@ function PatientListPage() {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <PatientAnalytics />
+        <PatientAnalytics opened={isAnalyticsOpen} />
 
         {isLoading && <DefaultLoading />}
         {data.length === 0 && !isLoading && <DefaultEmptyData />}

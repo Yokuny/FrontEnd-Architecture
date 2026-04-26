@@ -1,7 +1,9 @@
+import { Link } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import Check from '@/components/icons/Check.Icon';
 import Mixer from '@/components/icons/Mixer.Icon';
 import Phone from '@/components/icons/Phone.Icon';
+import User from '@/components/icons/User.Icon';
 import { BadgeIndicator } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -103,19 +105,29 @@ export const reminderColumns = ({ selectedIds, allSelected, someSelected, handle
               <Check className="size-4 text-muted-foreground" />
               {t('mark.as.completed')}
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link
+                to="/patient/details"
+                search={{ id: reminder.Patient._id, tab: 'profile' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <User className="size-4 text-muted-foreground" />
+                {t('view.registration')}
+              </Link>
+            </DropdownMenuItem>
             {reminder.Patient.phone?.[0] && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openWhatsApp(reminder.Patient.phone?.[0]?.number || '');
-                  }}
-                >
-                  <Phone className="size-4 text-muted-foreground" />
-                  {t('whatsapp.chat')}
-                </DropdownMenuItem>
-              </>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openWhatsApp(reminder.Patient.phone?.[0]?.number || '');
+                }}
+              >
+                <Phone className="size-4 text-muted-foreground" />
+                {t('whatsapp.chat')}
+              </DropdownMenuItem>
             )}
           </DropdownMenuContent>
         </DropdownMenu>

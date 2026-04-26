@@ -4,7 +4,7 @@ import ProfessionalCombobox from '@/components/data-inputs/professional-combobox
 import DefaultFormLayout from '@/components/default-form-layout';
 import Check from '@/components/icons/Check.Icon';
 import { Button } from '@/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Spinner } from '@/components/ui/spinner';
@@ -130,6 +130,14 @@ function OdontogramAddPage() {
           </form>
         </Form>
       </CardContent>
+      <CardFooter>
+        <CardAction>
+          <Button form="odontogram-add-form" type="submit" disabled={isPending} className="min-w-30">
+            {isPending ? <Spinner className="size-4" /> : <Check className="size-4" />}
+            <span className="sr-only md:not-sr-only">Cadastrar</span>
+          </Button>
+        </CardAction>
+      </CardFooter>
     </Card>
   );
 }
