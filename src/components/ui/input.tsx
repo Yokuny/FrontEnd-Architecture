@@ -1,28 +1,33 @@
+import { cva, type VariantProps } from 'class-variance-authority';
 import type { InputHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils/cn.util';
 
-function Input({ className, type, inputSize = 'default', ...props }: InputProps) {
-  return (
-    <input
-      type={type}
-      data-slot="input"
-      data-size={inputSize}
-      className={cn(
-        'flex w-full min-w-0 cursor-text items-center gap-2 whitespace-nowrap rounded-md font-medium font-mono text-sm leading-none outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
-        'border-input/50 border-b-2 bg-background ring-1 ring-zinc-300 hover:bg-secondary dark:border-input dark:ring-input',
-        'px-4 py-2 selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground',
-        'file:inline-flex file:h-7 file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm',
-        'data-[size=default]:h-11 data-[size=sm]:h-8 data-[size=sm]:px-2',
-        className,
-      )}
-      {...props}
-    />
-  );
+const inputVariants = cva(
+  'flex w-full min-w-0 cursor-text items-center gap-2 whitespace-nowrap rounded-md font-medium font-mono text-sm leading-none outline-none transition-all selection:bg-primary selection:text-primary-foreground file:inline-flex file:h-7 file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
+  {
+    variants: {
+      variant: {
+        default: 'border-input/50 border-b-2 bg-background ring-1 ring-zinc-300 hover:bg-secondary dark:border-input dark:ring-input',
+        primary:
+          'relative inset-shadow-sm inset-shadow-white border bg-secondary ring-0 duration-150 hover:bg-background dark:inset-shadow-black dark:border-border dark:bg-muted/25 dark:hover:bg-muted/50',
+      },
+      inputSize: {
+        default: 'h-11 px-4 py-2',
+        sm: 'h-8 px-2 py-2',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      inputSize: 'default',
+    },
+  },
+);
+
+function Input({ className, type, inputSize = 'default', variant = 'default', ...props }: InputProps) {
+  return <input type={type} data-slot="input" data-variant={variant} data-size={inputSize} className={cn(inputVariants({ variant, inputSize, className }))} {...props} />;
 }
 
 export { Input };
 
-type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> & {
-  inputSize?: 'sm' | 'default';
-};
+type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> & VariantProps<typeof inputVariants>;
 export type { InputProps };

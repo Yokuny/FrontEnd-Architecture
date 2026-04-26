@@ -22,6 +22,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
   noResultsMessage = 'No results found.',
   disabled = false,
   className,
+  variant = 'default',
   searchPlaceholder = 'Search...',
   maxShownItems = 3,
 }: DataMultiSelectProps<TQuery, TMapped>) {
@@ -63,7 +64,7 @@ export function DataMultiSelect<TQuery = unknown, TMapped = TQuery>({
     <div className={cn('w-full', className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button id={id} variant="outline" role="combobox" aria-expanded={open} disabled={disabled || isLoading} className="w-full justify-between">
+          <Button id={id} variant={variant} role="combobox" aria-expanded={open} disabled={disabled || isLoading} className="w-full justify-between">
             <div className="flex flex-wrap items-center gap-1 pr-2.5">
               {isLoading ? (
                 <span className="text-muted-foreground">Loading...</span>
@@ -171,6 +172,8 @@ interface DataMultiSelectProps<TQuery = unknown, TMapped = TQuery> {
   disabled?: boolean;
   /** Additional CSS classes */
   className?: string;
+  /** Visual variant for the trigger */
+  variant?: 'default' | 'primary';
   /** Search placeholder text */
   searchPlaceholder?: string;
   /** Maximum number of badges to show before collapsing */

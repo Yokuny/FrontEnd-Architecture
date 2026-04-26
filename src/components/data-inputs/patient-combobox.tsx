@@ -24,7 +24,7 @@ const PatientCombobox = ({ value, onChange, disabled }: PatientComboboxProps) =>
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button role="combobox" variant="outline" aria-expanded={open} disabled={disabled || isLoading}>
+        <Button role="combobox" aria-expanded={open} disabled={disabled || isLoading}>
           <div className="flex items-center gap-2 truncate">
             {selected && (
               <Avatar className="size-8">

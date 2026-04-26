@@ -100,24 +100,10 @@ export function PatientSearchSwitcher() {
                     {patient.name}
                   </div>
                   <div className="flex items-center gap-1">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="icon"
-                      className="size-7"
-                      aria-label={`${t('schedule.view')} ${patient.name}`}
-                      onClick={(e) => handleScheduleClick(e, patient._id)}
-                    >
+                    <Button type="button" size="icon" className="size-7" aria-label={`${t('schedule.view')} ${patient.name}`} onClick={(e) => handleScheduleClick(e, patient._id)}>
                       <Calender className="size-4" />
                     </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="icon"
-                      className="size-7"
-                      aria-label={`${t('patient.view')} ${patient.name}`}
-                      onClick={(e) => handlePatientClick(e, patient._id)}
-                    >
+                    <Button type="button" size="icon" className="size-7" aria-label={`${t('patient.view')} ${patient.name}`} onClick={(e) => handlePatientClick(e, patient._id)}>
                       <Eye className="size-4" />
                     </Button>
                   </div>

@@ -31,7 +31,7 @@ function PaginationLink({ className, isActive, size = 'icon', ...props }: Pagina
       data-active={isActive}
       className={cn(
         btnVars({
-          variant: isActive ? 'primary' : 'default',
+          variant: isActive ? 'primary' : undefined,
           size,
         }),
         className,

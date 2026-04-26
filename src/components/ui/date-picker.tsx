@@ -11,7 +11,7 @@ const DatePicker = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant={date ? 'outline' : 'primary'} className="justify-start font-normal md:w-full md:min-w-[220px]">
+        <Button variant={date ? undefined : 'primary'} className="justify-start font-normal md:w-full md:min-w-[220px]">
           <IconCalendar className="mr-4 size-4" />
           {date ? <p className="font-mono">{formatDate(date)}</p> : <span>Escolha o dia</span>}
         </Button>

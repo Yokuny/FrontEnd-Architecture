@@ -267,7 +267,7 @@ export function DataTable<T extends Record<string, any>>({
                 setCurrentPage(1);
               }}
             >
-              <SelectTrigger className="h-8 w-16">
+              <SelectTrigger variant="primary" size="sm">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -296,6 +296,7 @@ export function DataTable<T extends Record<string, any>>({
                     setSearch(e.target.value);
                     setCurrentPage(1);
                   }}
+                  variant="primary"
                   className="w-full pl-9"
                 />
               </div>

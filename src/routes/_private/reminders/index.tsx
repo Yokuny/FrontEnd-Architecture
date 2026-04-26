@@ -65,10 +65,10 @@ function RemindersListPage() {
 
             <Popover>
               <PopoverTrigger asChild>
-                <Button className="flex gap-2">
+                <Button variant="primary" className="flex gap-2">
                   <Calender className="size-4" />
                   <span className="sr-only md:not-sr-only">
-                    {dateRange?.from && dateRange?.to ? `${formatDate(dateRange.from, 'dd/MM')} - ${formatDate(dateRange.to, 'dd/MM')}` : t('select.period')}
+                    {dateRange?.from && dateRange?.to ? `${formatDate(dateRange.from, 'dd MMM')} - ${formatDate(dateRange.to, 'dd MMM yyyy')}` : t('select.period')}
                   </span>
                 </Button>
               </PopoverTrigger>

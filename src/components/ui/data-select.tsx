@@ -22,6 +22,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
   disabled = false,
   clearable = false,
   className,
+  variant = 'default',
   searchPlaceholder = 'Search...',
 }: DataSelectProps<TQuery, TMapped>) {
   const [open, setOpen] = useState(false);
@@ -68,7 +69,7 @@ export function DataSelect<TQuery = unknown, TMapped = TQuery>({
         <PopoverTrigger asChild>
           <Button
             id={id}
-            variant="outline"
+            variant={variant}
             role="combobox"
             aria-expanded={open}
             disabled={isDisabled || isLoading}
@@ -142,6 +143,8 @@ interface DataSelectProps<TQuery = unknown, TMapped = TQuery> {
   clearable?: boolean;
   /** Additional CSS classes */
   className?: string;
+  /** Visual variant for the trigger */
+  variant?: 'default' | 'primary';
   /** Search placeholder text */
   searchPlaceholder?: string;
 }

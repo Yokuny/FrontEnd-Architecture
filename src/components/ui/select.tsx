@@ -1,13 +1,37 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
-import type { VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import type { ComponentProps } from 'react';
 import { cn } from '@/lib/utils/cn.util';
 import IconCheck from '../icons/Check.Icon';
 import IconDown from '../icons/Down.Icon';
 import IconUp from '../icons/Up.Icon';
-import { btnVars } from './button.tsx';
 
-type SelectTriggerSize = VariantProps<typeof btnVars>['size'];
+type SelectTriggerSize = 'default' | 'sm' | 'lg' | 'icon' | 'icon-sm' | 'icon-lg';
+
+const selectTriggerVariants = cva(
+  'relative flex w-fit items-center justify-between gap-2 whitespace-nowrap rounded-md font-mono text-sm leading-none outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*="size-"])]:size-4 [&_svg:not([class*="text-"])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  {
+    variants: {
+      variant: {
+        default: 'border-input/50 border-b-2 bg-background ring-1 ring-zinc-300 hover:bg-secondary dark:border-input dark:ring-input',
+        primary:
+          'inset-shadow-sm inset-shadow-white border bg-secondary ring-0 duration-150 hover:bg-background dark:inset-shadow-black dark:border-border dark:bg-muted/25 dark:hover:bg-muted/50',
+      },
+      size: {
+        default: 'h-11 px-3 py-2',
+        sm: 'h-8 px-3 py-2',
+        lg: 'h-12 px-3 py-2',
+        icon: 'size-9',
+        'icon-sm': 'size-8',
+        'icon-lg': 'size-10',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  },
+);
 
 function Select({ ...props }: ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
@@ -32,23 +56,7 @@ function SelectTrigger({
   variant?: 'default' | 'primary';
 }) {
   return (
-    <SelectPrimitive.Trigger
-      data-slot="select-trigger"
-      data-size={size}
-      className={cn(
-        variant === 'primary'
-          ? cn(
-              btnVars({
-                variant: 'default',
-                size,
-              }),
-              'w-full justify-between gap-1',
-            )
-          : "relative flex w-fit items-center justify-between gap-2 whitespace-nowrap rounded-md border-input/50 border-b-2 bg-background px-3 py-2 font-mono text-sm leading-none outline-none ring-1 ring-zinc-300 transition-all hover:bg-secondary focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-[size=icon-lg]:size-10 data-[size=icon-sm]:size-8 data-[size=icon]:size-9 data-[size=default]:h-11 data-[size=lg]:h-12 data-[size=sm]:h-8 data-placeholder:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 dark:border-input dark:ring-input dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
-        className,
-      )}
-      {...props}
-    >
+    <SelectPrimitive.Trigger data-slot="select-trigger" data-variant={variant} data-size={size} className={cn(selectTriggerVariants({ variant, size, className }))} {...props}>
       {children}
       <SelectPrimitive.Icon asChild>
         <IconDown className="stroke-2" />
